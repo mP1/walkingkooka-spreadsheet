@@ -90,7 +90,7 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     // doImportAndCheck.................................................................................................
 
     default void doImportAndCheck(final WebEntity cells,
-                                  final ImportCellValue... expected) {
+                                  final SpreadsheetImporterCellValue... expected) {
         this.doImportAndCheck(
                 cells,
                 Lists.of(expected)
@@ -98,7 +98,7 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     }
 
     default void doImportAndCheck(final WebEntity cells,
-                                  final List<ImportCellValue> expected) {
+                                  final List<SpreadsheetImporterCellValue> expected) {
         this.doImportAndCheck(
                 cells,
                 this.createContext(),
@@ -108,7 +108,7 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
 
     default void doImportAndCheck(final WebEntity cells,
                                   final SpreadsheetImporterContext context,
-                                  final ImportCellValue... expected) {
+                                  final SpreadsheetImporterCellValue... expected) {
         this.doImportAndCheck(
                 cells,
                 context,
@@ -118,7 +118,7 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
 
     default void doImportAndCheck(final WebEntity cells,
                                   final SpreadsheetImporterContext context,
-                                  final List<ImportCellValue> expected) {
+                                  final List<SpreadsheetImporterCellValue> expected) {
         this.doImportAndCheck(
                 this.createSpreadsheetImporter(),
                 cells,
@@ -129,7 +129,7 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
 
     default void doImportAndCheck(final I importer,
                                   final WebEntity cells,
-                                  final ImportCellValue... expected) {
+                                  final SpreadsheetImporterCellValue... expected) {
         this.doImportAndCheck(
                 importer,
                 cells,
@@ -139,7 +139,7 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
 
     default void doImportAndCheck(final I importer,
                                   final WebEntity cells,
-                                  final List<ImportCellValue> expected) {
+                                  final List<SpreadsheetImporterCellValue> expected) {
         this.doImportAndCheck(
                 importer,
                 cells,
@@ -151,7 +151,7 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     default void doImportAndCheck(final I importer,
                                   final WebEntity cells,
                                   final SpreadsheetImporterContext context,
-                                  final ImportCellValue... expected) {
+                                  final SpreadsheetImporterCellValue... expected) {
         this.doImportAndCheck(
                 importer,
                 cells,
@@ -165,7 +165,7 @@ public interface SpreadsheetImporterTesting<I extends SpreadsheetImporter> exten
     default void doImportAndCheck(final I importer,
                                   final WebEntity cells,
                                   final SpreadsheetImporterContext context,
-                                  final List<ImportCellValue> expected) {
+                                  final List<SpreadsheetImporterCellValue> expected) {
         this.canImportAndCheck(
                 importer,
                 cells,

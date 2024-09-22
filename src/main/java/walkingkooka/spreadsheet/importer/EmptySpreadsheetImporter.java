@@ -44,8 +44,8 @@ final class EmptySpreadsheetImporter implements SpreadsheetImporter {
     }
 
     @Override
-    public List<ImportCellValue> doImport(final WebEntity cells,
-                                          final SpreadsheetImporterContext context) {
+    public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
+                                                       final SpreadsheetImporterContext context) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(context, "context");
 

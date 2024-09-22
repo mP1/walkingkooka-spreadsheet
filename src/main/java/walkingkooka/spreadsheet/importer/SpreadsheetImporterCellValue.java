@@ -38,87 +38,87 @@ import java.util.Objects;
  * Holds a single cell or patch value. This is necessary to support clipboard operations such as PASTING of a cell range
  * of only formulas as well as PASTING a cell range of entire cells.
  */
-public final class ImportCellValue implements HasSpreadsheetReference<SpreadsheetCellReference>,
+public final class SpreadsheetImporterCellValue implements HasSpreadsheetReference<SpreadsheetCellReference>,
         Value<Object>,
         TreePrintable {
 
-    public static ImportCellValue cell(final SpreadsheetCell cell) {
+    public static SpreadsheetImporterCellValue cell(final SpreadsheetCell cell) {
         Objects.requireNonNull(cell, "cell");
 
-        return new ImportCellValue(
+        return new SpreadsheetImporterCellValue(
                 cell.reference(),
                 cell
         );
     }
 
-    public static ImportCellValue formula(final SpreadsheetCellReference cell,
-                                          final SpreadsheetFormula formula) {
+    public static SpreadsheetImporterCellValue formula(final SpreadsheetCellReference cell,
+                                                       final SpreadsheetFormula formula) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(formula, "formula");
 
-        return new ImportCellValue(
+        return new SpreadsheetImporterCellValue(
                 cell,
                 formula
         );
     }
 
-    public static ImportCellValue formatter(final SpreadsheetCellReference cell,
-                                            final OptionalSpreadsheetFormatterSelector formatterSelector) {
+    public static SpreadsheetImporterCellValue formatter(final SpreadsheetCellReference cell,
+                                                         final OptionalSpreadsheetFormatterSelector formatterSelector) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(formatterSelector, "formatterSelector");
 
-        return new ImportCellValue(
+        return new SpreadsheetImporterCellValue(
                 cell,
                 formatterSelector
         );
     }
 
-    public static ImportCellValue parser(final SpreadsheetCellReference cell,
-                                         final OptionalSpreadsheetParserSelector parserSelector) {
+    public static SpreadsheetImporterCellValue parser(final SpreadsheetCellReference cell,
+                                                      final OptionalSpreadsheetParserSelector parserSelector) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(parserSelector, "parserSelector");
 
-        return new ImportCellValue(
+        return new SpreadsheetImporterCellValue(
                 cell,
                 parserSelector
         );
     }
 
-    public static ImportCellValue textStyle(final SpreadsheetCellReference cell,
-                                            final TextStyle textStyle) {
+    public static SpreadsheetImporterCellValue textStyle(final SpreadsheetCellReference cell,
+                                                         final TextStyle textStyle) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(textStyle, "textStyle");
 
-        return new ImportCellValue(
+        return new SpreadsheetImporterCellValue(
                 cell,
                 textStyle
         );
     }
 
-    public static ImportCellValue value(final SpreadsheetCellReference cell,
-                                        final OptionalSpreadsheetValue<?> value) {
+    public static SpreadsheetImporterCellValue value(final SpreadsheetCellReference cell,
+                                                     final OptionalSpreadsheetValue<?> value) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(value, "value");
 
-        return new ImportCellValue(
+        return new SpreadsheetImporterCellValue(
                 cell,
                 value
         );
     }
 
-    public static ImportCellValue formattedValue(final SpreadsheetCellReference cell,
-                                                 final OptionalTextNode value) {
+    public static SpreadsheetImporterCellValue formattedValue(final SpreadsheetCellReference cell,
+                                                              final OptionalTextNode value) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(value, "value");
 
-        return new ImportCellValue(
+        return new SpreadsheetImporterCellValue(
                 cell,
                 value
         );
     }
 
-    private ImportCellValue(final SpreadsheetCellReference reference,
-                            final Object value) {
+    private SpreadsheetImporterCellValue(final SpreadsheetCellReference reference,
+                                         final Object value) {
         this.reference = reference;
         this.value = value;
     }
@@ -154,11 +154,11 @@ public final class ImportCellValue implements HasSpreadsheetReference<Spreadshee
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof ImportCellValue &&
+                other instanceof SpreadsheetImporterCellValue &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final ImportCellValue other) {
+    private boolean equals0(final SpreadsheetImporterCellValue other) {
         return this.reference.equals(other.reference()) &&
                 this.value.equals(other.value);
     }

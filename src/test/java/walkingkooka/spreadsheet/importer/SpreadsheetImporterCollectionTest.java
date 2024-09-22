@@ -63,8 +63,8 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
         );
     }
 
-    private final static List<ImportCellValue> IMPORTED = Lists.of(
-            ImportCellValue.cell(
+    private final static List<SpreadsheetImporterCellValue> IMPORTED = Lists.of(
+            SpreadsheetImporterCellValue.cell(
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             )
     );
@@ -97,8 +97,8 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
                                     }
 
                                     @Override
-                                    public List<ImportCellValue> doImport(final WebEntity cells,
-                                                                          final SpreadsheetImporterContext context) {
+                                    public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
+                                                                                       final SpreadsheetImporterContext context) {
                                         checkEquals(WEB_ENTITY, cells, "cells");
                                         return IMPORTED;
                                     }
