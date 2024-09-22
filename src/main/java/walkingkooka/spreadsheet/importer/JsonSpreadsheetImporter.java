@@ -72,18 +72,18 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
     }
 
     @Override
-    public List<ImportCellValue> doImport(final WebEntity cells,
-                                          final SpreadsheetImporterContext context) {
+    public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
+                                                       final SpreadsheetImporterContext context) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(context, "context");
 
-        final Function<JsonNode, ImportCellValue> value;
+        final Function<JsonNode, SpreadsheetImporterCellValue> value;
 
         final MediaType contentType = cells.contentType()
                 .orElseThrow(() -> new IllegalArgumentException("Missing content-type"));
 
         if (SpreadsheetMediaTypes.JSON_CELLS.test(contentType)) {
-            value = (j) -> ImportCellValue.cell(
+            value = (j) -> SpreadsheetImporterCellValue.cell(
                     context.unmarshall(
                             JsonNode.object()
                                     .appendChild(j),
@@ -92,7 +92,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
             );
         } else {
             if (SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType)) {
-                value = (j) -> ImportCellValue.formula(
+                value = (j) -> SpreadsheetImporterCellValue.formula(
                         cell(j),
                         SpreadsheetFormula.EMPTY.setText(
                                 j.stringOrFail()
@@ -100,7 +100,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                 );
             } else {
                 if (SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType)) {
-                    value = (j) -> ImportCellValue.formatter(
+                    value = (j) -> SpreadsheetImporterCellValue.formatter(
                             cell(j),
                             OptionalSpreadsheetFormatterSelector.with(
                                     Optional.ofNullable(
@@ -113,7 +113,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                     );
                 } else {
                     if (SpreadsheetMediaTypes.JSON_PARSERS.test(contentType)) {
-                        value = (j) -> ImportCellValue.parser(
+                        value = (j) -> SpreadsheetImporterCellValue.parser(
                                 cell(j),
                                 OptionalSpreadsheetParserSelector.with(
                                         Optional.ofNullable(
@@ -126,7 +126,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                         );
                     } else {
                         if (SpreadsheetMediaTypes.JSON_STYLES.test(contentType)) {
-                            value = (j) -> ImportCellValue.textStyle(
+                            value = (j) -> SpreadsheetImporterCellValue.textStyle(
                                     cell(j),
                                     context.unmarshall(
                                             j,
@@ -135,7 +135,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                             );
                         } else {
                             if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType)) {
-                                value = (j) -> ImportCellValue.formattedValue(
+                                value = (j) -> SpreadsheetImporterCellValue.formattedValue(
                                         cell(j),
                                         OptionalTextNode.with(
                                                 Optional.ofNullable(

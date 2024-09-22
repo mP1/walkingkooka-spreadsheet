@@ -84,10 +84,10 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_CELLS,
-                ImportCellValue.cell(
+                SpreadsheetImporterCellValue.cell(
                       cellA1
                 ),
-                ImportCellValue.cell(
+                SpreadsheetImporterCellValue.cell(
                         cellA2
                 )
         );
@@ -115,11 +115,11 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_FORMULAS,
-                ImportCellValue.formula(
+                SpreadsheetImporterCellValue.formula(
                      cellA1.reference(),
                      cellA1.formula()
                 ),
-                ImportCellValue.formula(
+                SpreadsheetImporterCellValue.formula(
                         cellA2.reference(),
                         cellA2.formula()
                 )
@@ -148,13 +148,13 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_FORMATTERS,
-                ImportCellValue.formatter(
+                SpreadsheetImporterCellValue.formatter(
                         cellA1.reference(),
                         OptionalSpreadsheetFormatterSelector.with(
                                 cellA1.formatter()
                         )
                 ),
-                ImportCellValue.formatter(
+                SpreadsheetImporterCellValue.formatter(
                         cellA2.reference(),
                         OptionalSpreadsheetFormatterSelector.with(
                                 cellA2.formatter()
@@ -185,13 +185,13 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_PARSERS,
-                ImportCellValue.parser(
+                SpreadsheetImporterCellValue.parser(
                         cellA1.reference(),
                         OptionalSpreadsheetParserSelector.with(
                                 cellA1.parser()
                         )
                 ),
-                ImportCellValue.parser(
+                SpreadsheetImporterCellValue.parser(
                         cellA2.reference(),
                         OptionalSpreadsheetParserSelector.with(
                                 cellA2.parser()
@@ -222,11 +222,11 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_STYLES,
-                ImportCellValue.textStyle(
+                SpreadsheetImporterCellValue.textStyle(
                         cellA1.reference(),
                         cellA1.style()
                 ),
-                ImportCellValue.textStyle(
+                SpreadsheetImporterCellValue.textStyle(
                         cellA2.reference(),
                         cellA2.style()
                 )
@@ -257,13 +257,13 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
-                ImportCellValue.formattedValue(
+                SpreadsheetImporterCellValue.formattedValue(
                         cellA1.reference(),
                         OptionalTextNode.with(
                                 cellA1.formattedValue()
                         )
                 ),
-                ImportCellValue.formattedValue(
+                SpreadsheetImporterCellValue.formattedValue(
                         cellA2.reference(),
                         OptionalTextNode.with(
                                 cellA2.formattedValue()
@@ -274,7 +274,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     
     private void doImportAndCheck(final SpreadsheetCellRange cells,
                                   final MediaType contentType,
-                                  final ImportCellValue... values) {
+                                  final SpreadsheetImporterCellValue... values) {
         this.doImportAndCheck(
                 cells,
                 contentType,
@@ -284,7 +284,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
 
     private void doImportAndCheck(final SpreadsheetCellRange cells,
                                   final MediaType contentType,
-                                  final List<ImportCellValue> values) {
+                                  final List<SpreadsheetImporterCellValue> values) {
         this.doImportAndCheck(
                 SpreadsheetExporters.json()
                         .export(

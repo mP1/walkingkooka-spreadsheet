@@ -30,8 +30,8 @@ import java.util.Optional;
 
 public final class SpreadsheetImporterTestingTest implements SpreadsheetImporterTesting<SpreadsheetImporterTestingTest.TestSpreadsheetImporter> {
 
-    private final static List<ImportCellValue> IMPORTED = Lists.of(
-            ImportCellValue.cell(
+    private final static List<SpreadsheetImporterCellValue> IMPORTED = Lists.of(
+            SpreadsheetImporterCellValue.cell(
                     SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             )
     );
@@ -47,8 +47,8 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
         this.doImportAndCheck(
                 new TestSpreadsheetImporter() {
                     @Override
-                    public List<ImportCellValue> doImport(final WebEntity w,
-                                                          final SpreadsheetImporterContext context) {
+                    public List<SpreadsheetImporterCellValue> doImport(final WebEntity w,
+                                                                       final SpreadsheetImporterContext context) {
                         checkEquals(webEntity, w);
                         return IMPORTED;
                     }
@@ -65,8 +65,8 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
         this.doImportFails(
                 new TestSpreadsheetImporter() {
                     @Override
-                    public List<ImportCellValue> doImport(final WebEntity cells,
-                                                          final SpreadsheetImporterContext context) {
+                    public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
+                                                                       final SpreadsheetImporterContext context) {
                         throw new IllegalArgumentException(message);
                     }
                 },
@@ -97,8 +97,8 @@ public final class SpreadsheetImporterTestingTest implements SpreadsheetImporter
         }
 
         @Override
-        public List<ImportCellValue> doImport(final WebEntity cells,
-                                              final SpreadsheetImporterContext context) {
+        public List<SpreadsheetImporterCellValue> doImport(final WebEntity cells,
+                                                           final SpreadsheetImporterContext context) {
             Objects.requireNonNull(cells, "cells");
             Objects.requireNonNull(context, "context");
 
