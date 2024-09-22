@@ -78,7 +78,7 @@ public interface SpreadsheetEngineContext extends Context,
         return this.spreadsheetMetadata()
                 .expressionSpreadsheetConverterContext(
                         this::now,
-                        this::resolveIfLabel,
+                        this, // SpreadsheetLabelNameResolver
                         this, // ConverterProvider
                         this // ProviderContext
                 ).convertOrFail(
