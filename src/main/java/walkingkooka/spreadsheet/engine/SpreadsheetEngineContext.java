@@ -52,15 +52,21 @@ public interface SpreadsheetEngineContext extends Context,
         ProviderContext,
         SpreadsheetLabelNameResolver {
 
+    // parseFormula.....................................................................................................
+
     /**
      * Parses the formula into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
      */
     SpreadsheetParserToken parseFormula(final TextCursor formula);
 
+    // toExpresssion....................................................................................................
+
     /**
      * Helps by converting the given {@link SpreadsheetParserToken} into its {@link Expression} equivalent.
      */
     Optional<Expression> toExpression(final SpreadsheetParserToken token);
+
+    // evaluate.........................................................................................................
 
     /**
      * Evaluates the expression into a value.
@@ -125,6 +131,8 @@ public interface SpreadsheetEngineContext extends Context,
                 Optional.empty() // ignore cell formatter
         );
     }
+
+    // stores...........................................................................................................
 
     /**
      * Getter that returns the {@link SpreadsheetStoreRepository} for this spreadsheet.
