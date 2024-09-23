@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.list.ImmutableListDefaults;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -32,6 +33,7 @@ import java.util.AbstractList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * {@link List} that holds multiple {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} typically one for each sortable
@@ -111,6 +113,20 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR.toSeparatedString(
                 this,
                 Object::toString
+        );
+    }
+
+    // SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.............................................................
+
+    /**
+     * Extracts all {@link SpreadsheetComparatorName}.
+     */
+    public Set<SpreadsheetComparatorName> names() {
+        return Sets.immutable(
+                this.stream()
+                .flatMap(n -> n.comparatorNameAndDirections().stream())
+                .map(nad -> nad.name())
+                .collect(Collectors.toCollection(Sets::ordered))
         );
     }
 

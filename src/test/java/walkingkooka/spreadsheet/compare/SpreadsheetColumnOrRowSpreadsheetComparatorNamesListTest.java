@@ -23,6 +23,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
@@ -33,6 +34,8 @@ import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -398,6 +401,60 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         this.urlFragmentAndCheck(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
                 UrlFragment.with(string)
+        );
+    }
+
+    // names............................................................................................................
+
+    @Test
+    public void testNamesWithNoDuplicates() {
+        this.namesAndCheck(
+                "A=month-of-year;B=year",
+                SpreadsheetComparatorName.MONTH_OF_YEAR,
+                SpreadsheetComparatorName.YEAR);
+    }
+
+    @Test
+    public void testNamesIncludesDuplicates() {
+        this.namesAndCheck(
+                "A=month-of-year,year;B=year",
+                SpreadsheetComparatorName.MONTH_OF_YEAR,
+                SpreadsheetComparatorName.YEAR
+        );
+    }
+
+    @Test
+    public void testNamesWithDuplicates() {
+        this.namesAndCheck(
+                "A=day-of-month,month-of-year,year;B=month-of-year,year;C=year",
+                SpreadsheetComparatorName.DAY_OF_MONTH,
+                SpreadsheetComparatorName.MONTH_OF_YEAR,
+                SpreadsheetComparatorName.YEAR
+        );
+    }
+
+    private void namesAndCheck(final String parse,
+                               final SpreadsheetComparatorName... names) {
+        this.namesAndCheck(
+                parse,
+                Sets.of(names)
+        );
+    }
+
+    private void namesAndCheck(final String parse,
+                               final Set<SpreadsheetComparatorName> names) {
+        this.namesAndCheck(
+                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(parse),
+                names
+        );
+    }
+
+    private void namesAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList list,
+                               final Set<SpreadsheetComparatorName> names) {
+        this.checkEquals(
+                names,
+                list.names(),
+                list::toString
         );
     }
 
