@@ -32,6 +32,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -41,6 +42,8 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -136,7 +139,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -13638,6 +13643,40 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ) :
                         cell;
+            }
+
+            @Override
+            public SpreadsheetCellRange sortCells(final SpreadsheetCellRange cells,
+                                                  final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
+                                                  final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedFromTo) {
+                return cells.sort(
+                        comparators.stream()
+                                .map(
+                                        crn ->
+                                                SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                                                        crn.columnOrRow(),
+                                                        crn.comparatorNameAndDirections()
+                                                                .stream()
+                                                                .map(
+                                                                        cnad -> cnad.direction()
+                                                                                .apply(
+                                                                                        SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
+                                                                                                cnad.name(),
+                                                                                                PROVIDER_CONTEXT
+                                                                                        )
+                                                                                )
+                                                                ).collect(Collectors.toList())
+                                                )
+                                ).collect(Collectors.toList()),
+                        movedFromTo, // moved cells
+                        this.spreadsheetMetadata()
+                                .sortSpreadsheetComparatorContext(
+                                        this::now, // now supplier
+                                        this, // ConverterProvider
+                                        this, // SpreadsheetLabelNameResolver
+                                        this // ProviderContext
+                                )
+                );
             }
 
             @Override
