@@ -22,6 +22,7 @@ import walkingkooka.plugin.ProviderContext;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +35,25 @@ public interface SpreadsheetComparatorProvider extends Provider {
      */
     SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
                                                    final ProviderContext context);
+
+    /**
+     * Returns an {@link Optional#empty()} if the {@link SpreadsheetComparator} was not found.
+     */
+    default Optional<SpreadsheetComparator<?>> spreadsheetComparatorOrEmpty(final SpreadsheetComparatorName name,
+                                                                            final ProviderContext context) {
+        SpreadsheetComparator<?> comparator;
+
+        try {
+            comparator = this.spreadsheetComparator(
+                    name,
+                    context
+            );
+        } catch (final RuntimeException failed) {
+            comparator = null;
+        }
+
+        return Optional.ofNullable(comparator);
+    }
 
     /**
      * Returns all available {@link SpreadsheetComparatorInfo}
