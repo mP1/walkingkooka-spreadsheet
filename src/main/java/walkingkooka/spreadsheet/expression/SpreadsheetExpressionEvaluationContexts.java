@@ -44,20 +44,20 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     public static SpreadsheetExpressionEvaluationContext basic(final Optional<SpreadsheetCell> cell,
                                                                final SpreadsheetCellStore cellStore,
                                                                final AbsoluteUrl serverUrl,
-                                                               final SpreadsheetMetadata spreadsheetMetadata,
-                                                               final ExpressionFunctionProvider expressionFunctionProvider,
-                                                               final ProviderContext providerContext,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                               final SpreadsheetConverterContext spreadsheetConverterContext) {
+                                                               final SpreadsheetMetadata spreadsheetMetadata,
+                                                               final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                               final ExpressionFunctionProvider expressionFunctionProvider,
+                                                               final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 cell,
                 cellStore,
                 serverUrl,
-                spreadsheetMetadata,
-                expressionFunctionProvider,
-                providerContext,
                 references,
-                spreadsheetConverterContext
+                spreadsheetMetadata,
+                spreadsheetConverterContext,
+                expressionFunctionProvider,
+                providerContext
         );
     }
 

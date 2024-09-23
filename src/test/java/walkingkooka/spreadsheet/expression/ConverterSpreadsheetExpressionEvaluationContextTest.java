@@ -519,16 +519,16 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         CELL,
                         CELL_STORE,
                         SERVER_URL,
-                        METADATA,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        PROVIDER_CONTEXT,
                         REFERENCES,
+                        METADATA,
                         METADATA.expressionSpreadsheetConverterContext(
                                 LocalDateTime::now,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
                                 PROVIDER_CONTEXT
-                        )
+                        ),
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
                 )
         );
     }

@@ -53,52 +53,52 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                             final SpreadsheetCellStore cellStore,
                                                             final AbsoluteUrl serverUrl,
-                                                            final SpreadsheetMetadata spreadsheetMetadata,
-                                                            final ExpressionFunctionProvider expressionFunctionProvider,
-                                                            final ProviderContext providerContext,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                            final SpreadsheetConverterContext spreadsheetConverterContext) {
+                                                            final SpreadsheetMetadata spreadsheetMetadata,
+                                                            final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                            final ExpressionFunctionProvider expressionFunctionProvider,
+                                                            final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(serverUrl, "serverUrl");
+        Objects.requireNonNull(references, "references");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+        Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(providerContext, "providerContext");
-        Objects.requireNonNull(references, "references");
-        Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
                 cell,
                 cellStore,
                 serverUrl,
-                spreadsheetMetadata,
-                expressionFunctionProvider,
-                providerContext,
                 references,
-                spreadsheetConverterContext
+                spreadsheetMetadata,
+                spreadsheetConverterContext,
+                expressionFunctionProvider,
+                providerContext
         );
     }
 
     private BasicSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                         final SpreadsheetCellStore cellStore,
                                                         final AbsoluteUrl serverUrl,
-                                                        final SpreadsheetMetadata spreadsheetMetadata,
-                                                        final ExpressionFunctionProvider expressionFunctionProvider,
-                                                        final ProviderContext providerContext,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                                                        final SpreadsheetConverterContext spreadsheetConverterContext) {
+                                                        final SpreadsheetMetadata spreadsheetMetadata,
+                                                        final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                        final ExpressionFunctionProvider expressionFunctionProvider,
+                                                        final ProviderContext providerContext) {
         super();
         this.cell = cell;
         this.cellStore = cellStore;
         this.serverUrl = serverUrl;
-
-        this.spreadsheetMetadata = spreadsheetMetadata;
-        this.expressionFunctionProvider = expressionFunctionProvider;
-        this.providerContext = providerContext;
-
         this.references = references;
 
+        this.spreadsheetMetadata = spreadsheetMetadata;
+
         this.spreadsheetConverterContext = spreadsheetConverterContext;
+
+        this.expressionFunctionProvider = expressionFunctionProvider;
+        this.providerContext = providerContext;
     }
 
     // SpreadsheetExpressionEvaluationContext............................................................................
