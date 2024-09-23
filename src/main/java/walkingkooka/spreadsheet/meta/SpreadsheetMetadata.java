@@ -490,6 +490,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
+    // sort.............................................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
+     */
+    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final Supplier<LocalDateTime> now,
+                                                                               final SpreadsheetLabelNameResolver resolveIfLabel,
+                                                                               final SpreadsheetProvider spreadsheetProvider,
+                                                                               final ProviderContext providerContext) {
+        return this.spreadsheetComparatorContext(
+                SpreadsheetMetadataPropertyName.SORT_CONVERTER,
+                now, // now supplier
+                resolveIfLabel,
+                spreadsheetProvider, // ConverterProvider
+                providerContext // ProviderContext
+        );
+    }
+
     // Converter........................................................................................................
 
     /**
@@ -595,22 +613,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                           final ProviderContext providerContext) {
         return this.converterContext(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
-                now,
-                labelNameResolver,
-                converterProvider,
-                providerContext
-        );
-    }
-
-    /**
-     * Creates a {@link SpreadsheetConverterContext} to be used when sorting values
-     */
-    public final SpreadsheetConverterContext sortSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
-                                                                             final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                             final ConverterProvider converterProvider,
-                                                                             final ProviderContext providerContext) {
-        return this.converterContext(
-                SpreadsheetMetadataPropertyName.SORT_CONVERTER,
                 now,
                 labelNameResolver,
                 converterProvider,
@@ -759,34 +761,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // sort.............................................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
-     */
-    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final Supplier<LocalDateTime> now,
-                                                                               final SpreadsheetLabelNameResolver resolveIfLabel,
-                                                                               final SpreadsheetProvider spreadsheetProvider,
-                                                                               final ProviderContext providerContext) {
-        return this.spreadsheetComparatorContext(
-                now, // now supplier
-                resolveIfLabel,
-                spreadsheetProvider, // ConverterProvider
-                providerContext // ProviderContext
-        );
-    }
-
     // SpreadsheetComparatorContext.....................................................................................
 
     /**
      * Returns a {@link SpreadsheetComparatorContext}
      */
-    private SpreadsheetComparatorContext spreadsheetComparatorContext(final Supplier<LocalDateTime> now,
+    private SpreadsheetComparatorContext spreadsheetComparatorContext(final SpreadsheetMetadataPropertyName<ConverterSelector> metadataPropertyName,
+                                                                      final Supplier<LocalDateTime> now,
                                                                       final SpreadsheetLabelNameResolver resolveIfLabel,
                                                                       final SpreadsheetProvider spreadsheetProvider,
                                                                       final ProviderContext providerContext) {
         return SpreadsheetComparatorContexts.basic(
-                this.sortSpreadsheetConverterContext(
+                this.converterContext(
+                        metadataPropertyName,
                         now, // now supplier
                         resolveIfLabel,
                         spreadsheetProvider, // ConverterProvider
