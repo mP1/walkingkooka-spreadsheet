@@ -13386,18 +13386,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Optional.empty(), // cell
                                 SpreadsheetCellStores.fake(),
                                 SERVER_URL,
-                                metadata,
-                                this.expressionFunctionProvider(),
-                                PROVIDER_CONTEXT,
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
+                                metadata,
                                 metadata.expressionSpreadsheetConverterContext(
                                         NOW,
                                         SPREADSHEET_LABEL_NAME_RESOLVER,
                                         CONVERTER_PROVIDER,
                                         PROVIDER_CONTEXT
-                                )
+                                ),
+                                this.expressionFunctionProvider(),
+                                PROVIDER_CONTEXT
                         )
                 );
             }
@@ -13412,11 +13412,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 cell,
                                 storeRepository.cells(),
                                 Url.parseAbsolute("http://server123"), // serverUrl
-                                metadata, // metadata
-                                this.expressionFunctionProvider(),
-                                PROVIDER_CONTEXT,
                                 this.references(), // references
-                                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
+                                metadata, // metadata
+                                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                                this.expressionFunctionProvider(),
+                                PROVIDER_CONTEXT
                         )
                 );
             }

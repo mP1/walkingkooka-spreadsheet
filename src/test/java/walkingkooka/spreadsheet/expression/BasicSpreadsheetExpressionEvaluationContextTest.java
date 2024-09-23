@@ -70,11 +70,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 CELL_STORE,
                 SERVER_URL,
-                METADATA,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
+                METADATA,
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
         );
     }
 
@@ -84,11 +84,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 null,
                 SERVER_URL,
-                METADATA,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
+                METADATA,
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
         );
     }
 
@@ -98,53 +98,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 null,
+                REFERENCES,
                 METADATA,
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                REFERENCES,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testWithNullMetadataFails() {
-        this.withFails(
-                CELL,
-                CELL_STORE,
-                SERVER_URL,
-                null,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                REFERENCES,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testWithNullExpressionFunctionProviderFails() {
-        this.withFails(
-                CELL,
-                CELL_STORE,
-                SERVER_URL,
-                METADATA,
-                null,
-                PROVIDER_CONTEXT,
-                REFERENCES,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testWithNullProviderContextFails() {
-        this.withFails(
-                CELL,
-                CELL_STORE,
-                SERVER_URL,
-                METADATA,
-                EXPRESSION_FUNCTION_PROVIDER,
-                null,
-                REFERENCES,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
+                PROVIDER_CONTEXT
         );
     }
 
@@ -154,11 +112,25 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 SERVER_URL,
-                METADATA,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
                 null,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
+                METADATA,
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testWithNullMetadataFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                REFERENCES,
+                null,
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
         );
     }
 
@@ -168,10 +140,39 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 SERVER_URL,
-                METADATA,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
                 REFERENCES,
+                METADATA,
+                null,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
+
+        );
+    }
+
+    @Test
+    public void testWithNullExpressionFunctionProviderFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                REFERENCES,
+                METADATA,
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                null,
+                PROVIDER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        this.withFails(
+                CELL,
+                CELL_STORE,
+                SERVER_URL,
+                REFERENCES,
+                METADATA,
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
                 null
         );
     }
@@ -179,22 +180,22 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private void withFails(final Optional<SpreadsheetCell> cell,
                            final SpreadsheetCellStore cellStore,
                            final AbsoluteUrl serverUrl,
-                           final SpreadsheetMetadata spreadsheetMetadata,
-                           final ExpressionFunctionProvider expressionFunctionProvider,
-                           final ProviderContext providerContext,
                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
-                           final SpreadsheetConverterContext spreadsheetConverterContext) {
+                           final SpreadsheetMetadata spreadsheetMetadata,
+                           final SpreadsheetConverterContext spreadsheetConverterContext,
+                           final ExpressionFunctionProvider expressionFunctionProvider,
+                           final ProviderContext providerContext) {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetExpressionEvaluationContext.with(
                         cell,
                         cellStore,
                         serverUrl,
-                        spreadsheetMetadata,
-                        expressionFunctionProvider,
-                        providerContext,
                         references,
-                        spreadsheetConverterContext
+                        spreadsheetMetadata,
+                        spreadsheetConverterContext,
+                        expressionFunctionProvider,
+                        providerContext
                 )
         );
     }
@@ -417,11 +418,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 cellStore,
                 SERVER_URL,
-                METADATA,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
                 REFERENCES,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
+                METADATA,
+                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
         );
     }
 
