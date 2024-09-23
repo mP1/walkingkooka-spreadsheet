@@ -605,22 +605,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     /**
-     * Creates a {@link SpreadsheetConverterContext} to be used when formatting values
-     */
-    private SpreadsheetConverterContext formatSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
-                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                          final ConverterProvider converterProvider,
-                                                                          final ProviderContext providerContext) {
-        return this.converterContext(
-                SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
-                now,
-                labelNameResolver,
-                converterProvider,
-                providerContext
-        );
-    }
-
-    /**
      * Returns a {@link ExpressionNumberConverterContext}
      */
     public final SpreadsheetConverterContext converterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
@@ -1066,7 +1050,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         spreadsheetFormatterProvider,
                         providerContext
                 ),
-                this.formatSpreadsheetConverterContext(
+                this.converterContext(
+                        SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                         now,
                         labelNameResolver,
                         converterProvider,
