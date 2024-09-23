@@ -51,18 +51,6 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testSortConverterContext() {
-        METADATA_EN_AU.sortSpreadsheetConverterContext(
-                LocalDateTime::now,
-                (label) -> {
-                    throw new UnsupportedOperationException();
-                },
-                CONVERTER_PROVIDER,
-                PROVIDER_CONTEXT
-        );
-    }
-
-    @Test
     public void testEffectiveStyle() {
         METADATA_EN_AU.effectiveStyle();
     }
