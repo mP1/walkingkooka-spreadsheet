@@ -17,12 +17,32 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetParserInfoTest implements PluginInfoLikeTesting<SpreadsheetParserInfo, SpreadsheetParserName> {
+
+    @Test
+    public void testSetNameWithDifferent() {
+        final AbsoluteUrl url = Url.parseAbsolute("https://example/parser123");
+        final SpreadsheetParserName different = SpreadsheetParserName.with("different");
+
+        this.setNameAndCheck(
+                SpreadsheetParserInfo.with(
+                        url,
+                        SpreadsheetParserName.with("original-parser-name")
+                ),
+                different,
+                SpreadsheetParserInfo.with(
+                        url,
+                        different
+                )
+        );
+    }
 
     // ClassTesting.....................................................................................................
 

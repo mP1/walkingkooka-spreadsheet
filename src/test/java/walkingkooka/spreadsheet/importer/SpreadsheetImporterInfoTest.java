@@ -17,13 +17,33 @@
 
 package walkingkooka.spreadsheet.importer;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetImporterInfoTest implements PluginInfoLikeTesting<SpreadsheetImporterInfo, SpreadsheetImporterName> {
 
+    @Test
+    public void testSetNameWithDifferent() {
+        final AbsoluteUrl url = Url.parseAbsolute("https://example/importer123");
+        final SpreadsheetImporterName different = SpreadsheetImporterName.with("different");
+
+        this.setNameAndCheck(
+                SpreadsheetImporterInfo.with(
+                        url,
+                        SpreadsheetImporterName.with("original-importer-name")
+                ),
+                different,
+                SpreadsheetImporterInfo.with(
+                        url,
+                        different
+                )
+        );
+    }
+    
     // ClassTesting.....................................................................................................
 
     @Override

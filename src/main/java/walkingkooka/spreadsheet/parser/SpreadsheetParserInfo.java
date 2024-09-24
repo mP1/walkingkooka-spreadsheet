@@ -71,6 +71,18 @@ public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetPa
         return this.name;
     }
 
+    @Override
+    public SpreadsheetParserInfo setName(final SpreadsheetParserName name) {
+        Objects.requireNonNull(name, "name");
+
+        return this.name.equals(name) ?
+                this :
+                new SpreadsheetParserInfo(
+                        this.url,
+                        name
+                );
+    }
+
     private final SpreadsheetParserName name;
 
     // Object...........................................................................................................

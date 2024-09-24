@@ -69,6 +69,18 @@ public final class SpreadsheetComparatorInfo implements PluginInfoLike<Spreadshe
         return this.name;
     }
 
+    @Override
+    public SpreadsheetComparatorInfo setName(final SpreadsheetComparatorName name) {
+        Objects.requireNonNull(name, "name");
+
+        return this.name.equals(name) ?
+                this :
+                new SpreadsheetComparatorInfo(
+                        this.url,
+                        name
+                );
+    }
+
     private final SpreadsheetComparatorName name;
 
     // Object...........................................................................................................

@@ -70,6 +70,18 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
         return this.name;
     }
 
+    @Override
+    public SpreadsheetImporterInfo setName(final SpreadsheetImporterName name) {
+        Objects.requireNonNull(name, "name");
+
+        return this.name.equals(name) ?
+                this :
+                new SpreadsheetImporterInfo(
+                        this.url,
+                        name
+                );
+    }
+
     private final SpreadsheetImporterName name;
 
     // Object...........................................................................................................
