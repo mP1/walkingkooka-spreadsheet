@@ -70,6 +70,18 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
         return this.name;
     }
 
+    @Override
+    public SpreadsheetFormatterInfo setName(final SpreadsheetFormatterName name) {
+        Objects.requireNonNull(name, "name");
+
+        return this.name.equals(name) ?
+                this :
+                new SpreadsheetFormatterInfo(
+                        this.url,
+                        name
+                );
+    }
+
     private final SpreadsheetFormatterName name;
 
     // Object...........................................................................................................

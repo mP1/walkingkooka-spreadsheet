@@ -70,6 +70,18 @@ public final class SpreadsheetExporterInfo implements PluginInfoLike<Spreadsheet
         return this.name;
     }
 
+    @Override
+    public SpreadsheetExporterInfo setName(final SpreadsheetExporterName name) {
+        Objects.requireNonNull(name, "name");
+
+        return this.name.equals(name) ?
+                this :
+                new SpreadsheetExporterInfo(
+                        this.url,
+                        name
+                );
+    }
+    
     private final SpreadsheetExporterName name;
 
     // Object...........................................................................................................

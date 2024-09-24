@@ -17,13 +17,33 @@
 
 package walkingkooka.spreadsheet.format;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetFormatterInfoTest implements PluginInfoLikeTesting<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
 
+    @Test
+    public void testSetNameWithDifferent() {
+        final AbsoluteUrl url = Url.parseAbsolute("https://example/formatter123");
+        final SpreadsheetFormatterName different = SpreadsheetFormatterName.with("different");
+
+        this.setNameAndCheck(
+                SpreadsheetFormatterInfo.with(
+                        url,
+                        SpreadsheetFormatterName.with("original-formatter-name")
+                ),
+                different,
+                SpreadsheetFormatterInfo.with(
+                        url,
+                        different
+                )
+        );
+    }
+    
     // ClassTesting.....................................................................................................
 
     @Override

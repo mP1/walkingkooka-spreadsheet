@@ -17,13 +17,33 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginInfoLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class SpreadsheetComparatorInfoTest implements PluginInfoLikeTesting<SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
+    @Test
+    public void testSetNameWithDifferent() {
+        final AbsoluteUrl url = Url.parseAbsolute("https://example/comparator123");
+        final SpreadsheetComparatorName different = SpreadsheetComparatorName.with("different");
+
+        this.setNameAndCheck(
+                SpreadsheetComparatorInfo.with(
+                        url,
+                        SpreadsheetComparatorName.with("original-comparator-name")
+                ),
+                different,
+                SpreadsheetComparatorInfo.with(
+                        url,
+                        different
+                )
+        );
+    }
+    
     // ClassTesting.....................................................................................................
 
     @Override
