@@ -19,79 +19,80 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.PluginInfo;
 import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Objects;
-
 /**
- * Provides a few bits of info describing a {@link SpreadsheetFormatter}. The {@link AbsoluteUrl} must be a unique identifier,
- * with the {@link SpreadsheetFormatterName} being a shorter human friendly reference.
+ * Captures a unique {@link AbsoluteUrl} and {@link SpreadsheetFormatterName} for a {@link SpreadsheetFormatter}.
  */
-public final class SpreadsheetFormatterInfo implements PluginInfoLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
+public final class SpreadsheetFormatterInfo implements PluginInfoLike<SpreadsheetFormatterInfo, SpreadsheetFormatterName>,
+        HateosResource<SpreadsheetFormatterName> {
 
     public static SpreadsheetFormatterInfo parse(final String text) {
-        return PluginInfoLike.parse(
-                text,
-                SpreadsheetFormatterName::with,
-                SpreadsheetFormatterInfo::with
+        return new SpreadsheetFormatterInfo(
+                PluginInfo.parse(
+                        text,
+                        SpreadsheetFormatterName::with
+                )
         );
     }
-    
+
     public static SpreadsheetFormatterInfo with(final AbsoluteUrl url,
                                                 final SpreadsheetFormatterName name) {
         return new SpreadsheetFormatterInfo(
-                Objects.requireNonNull(url, "url"),
-                Objects.requireNonNull(name, "name")
+                PluginInfo.with(
+                        url,
+                        name
+                )
         );
     }
 
-    private SpreadsheetFormatterInfo(final AbsoluteUrl url,
-                                     final SpreadsheetFormatterName name) {
-        this.url = url;
-        this.name = name;
+    private SpreadsheetFormatterInfo(final PluginInfo<SpreadsheetFormatterName> pluginInfo) {
+        this.pluginInfo = pluginInfo;
     }
 
     // HasAbsoluteUrl...................................................................................................
 
     @Override
     public AbsoluteUrl url() {
-        return this.url;
+        return this.pluginInfo.url();
     }
-
-    private final AbsoluteUrl url;
 
     // HasName..........................................................................................................
 
     @Override
     public SpreadsheetFormatterName name() {
-        return this.name;
+        return this.pluginInfo.name();
     }
 
     @Override
     public SpreadsheetFormatterInfo setName(final SpreadsheetFormatterName name) {
-        Objects.requireNonNull(name, "name");
-
-        return this.name.equals(name) ?
+        return this.name().equals(name) ?
                 this :
                 new SpreadsheetFormatterInfo(
-                        this.url,
-                        name
+                        this.pluginInfo.setName(name)
                 );
     }
 
-    private final SpreadsheetFormatterName name;
+    private final PluginInfo<SpreadsheetFormatterName> pluginInfo;
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetFormatterInfo other) {
+        return this.pluginInfo.compareTo(other.pluginInfo);
+    }
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.url,
-                this.name
-        );
+        return this.pluginInfo.hashCode();
     }
 
     @Override
@@ -102,29 +103,28 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
     }
 
     private boolean equals0(final SpreadsheetFormatterInfo other) {
-        return this.url.equals(other.url) &&
-                this.name.equals(other.name);
+        return this.pluginInfo.equals(other.pluginInfo);
     }
 
     @Override
     public String toString() {
-        return PluginInfoLike.toString(this);
+        return this.pluginInfo.toString();
     }
 
     // Json.............................................................................................................
 
     static void register() {
-        // required to FORCE json register
-        SpreadsheetFormatterName.AUTOMATIC.value();
+        // helps force registry of json marshaller
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
     }
 
     static SpreadsheetFormatterInfo unmarshall(final JsonNode node,
                                                final JsonNodeUnmarshallContext context) {
-        return PluginInfoLike.unmarshall(
-                node,
-                context,
-                SpreadsheetFormatterName::with,
-                SpreadsheetFormatterInfo::with
+        return SpreadsheetFormatterInfo.parse(
+                node.stringOrFail()
         );
     }
 
@@ -135,5 +135,6 @@ public final class SpreadsheetFormatterInfo implements PluginInfoLike<Spreadshee
                 SpreadsheetFormatterInfo::marshall,
                 SpreadsheetFormatterInfo.class
         );
+        SpreadsheetFormatterName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }
 }

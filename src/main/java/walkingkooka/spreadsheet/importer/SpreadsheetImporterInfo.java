@@ -19,79 +19,80 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.PluginInfo;
 import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Objects;
-
 /**
- * Provides a few bits of info describing a {@link SpreadsheetImporter}. The {@link AbsoluteUrl} must be a unique identifier,
- * with the {@link SpreadsheetImporterName} being a shorter human friendly reference.
+ * Captures a unique {@link AbsoluteUrl} and {@link SpreadsheetImporterName} for a {@link SpreadsheetImporter}.
  */
-public final class SpreadsheetImporterInfo implements PluginInfoLike<SpreadsheetImporterInfo, SpreadsheetImporterName> {
+public final class SpreadsheetImporterInfo implements PluginInfoLike<SpreadsheetImporterInfo, SpreadsheetImporterName>,
+        HateosResource<SpreadsheetImporterName> {
 
     public static SpreadsheetImporterInfo parse(final String text) {
-        return PluginInfoLike.parse(
-                text,
-                SpreadsheetImporterName::with,
-                SpreadsheetImporterInfo::with
+        return new SpreadsheetImporterInfo(
+                PluginInfo.parse(
+                        text,
+                        SpreadsheetImporterName::with
+                )
         );
     }
 
     public static SpreadsheetImporterInfo with(final AbsoluteUrl url,
                                                final SpreadsheetImporterName name) {
         return new SpreadsheetImporterInfo(
-                Objects.requireNonNull(url, "url"),
-                Objects.requireNonNull(name, "name")
+                PluginInfo.with(
+                        url,
+                        name
+                )
         );
     }
 
-    private SpreadsheetImporterInfo(final AbsoluteUrl url,
-                                    final SpreadsheetImporterName name) {
-        this.url = url;
-        this.name = name;
+    private SpreadsheetImporterInfo(final PluginInfo<SpreadsheetImporterName> pluginInfo) {
+        this.pluginInfo = pluginInfo;
     }
 
     // HasAbsoluteUrl...................................................................................................
 
     @Override
     public AbsoluteUrl url() {
-        return this.url;
+        return this.pluginInfo.url();
     }
-
-    private final AbsoluteUrl url;
 
     // HasName..........................................................................................................
 
     @Override
     public SpreadsheetImporterName name() {
-        return this.name;
+        return this.pluginInfo.name();
     }
 
     @Override
     public SpreadsheetImporterInfo setName(final SpreadsheetImporterName name) {
-        Objects.requireNonNull(name, "name");
-
-        return this.name.equals(name) ?
+        return this.name().equals(name) ?
                 this :
                 new SpreadsheetImporterInfo(
-                        this.url,
-                        name
+                        this.pluginInfo.setName(name)
                 );
     }
 
-    private final SpreadsheetImporterName name;
+    private final PluginInfo<SpreadsheetImporterName> pluginInfo;
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetImporterInfo other) {
+        return this.pluginInfo.compareTo(other.pluginInfo);
+    }
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.url,
-                this.name
-        );
+        return this.pluginInfo.hashCode();
     }
 
     @Override
@@ -102,29 +103,28 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
     }
 
     private boolean equals0(final SpreadsheetImporterInfo other) {
-        return this.url.equals(other.url) &&
-                this.name.equals(other.name);
+        return this.pluginInfo.equals(other.pluginInfo);
     }
 
     @Override
     public String toString() {
-        return PluginInfoLike.toString(this);
+        return this.pluginInfo.toString();
     }
 
     // Json.............................................................................................................
 
     static void register() {
-        // required to FORCE json register
-        SpreadsheetImporterName.COLLECTION.value();
+        // helps force registry of json marshaller
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
     }
 
     static SpreadsheetImporterInfo unmarshall(final JsonNode node,
                                               final JsonNodeUnmarshallContext context) {
-        return PluginInfoLike.unmarshall(
-                node,
-                context,
-                SpreadsheetImporterName::with,
-                SpreadsheetImporterInfo::with
+        return SpreadsheetImporterInfo.parse(
+                node.stringOrFail()
         );
     }
 
@@ -135,5 +135,6 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
                 SpreadsheetImporterInfo::marshall,
                 SpreadsheetImporterInfo.class
         );
+        SpreadsheetImporterName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }
 }
