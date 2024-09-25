@@ -17,81 +17,83 @@
 
 package walkingkooka.spreadsheet.export;
 
+
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.PluginInfo;
 import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Objects;
-
 /**
- * Provides a few bits of info describing a {@link SpreadsheetExporter}. The {@link AbsoluteUrl} must be a unique identifier,
- * with the {@link SpreadsheetExporterName} being a shorter human friendly reference.
+ * Captures a unique {@link AbsoluteUrl} and {@link SpreadsheetExporterName} for a {@link SpreadsheetExporter}.
  */
-public final class SpreadsheetExporterInfo implements PluginInfoLike<SpreadsheetExporterInfo, SpreadsheetExporterName> {
+public final class SpreadsheetExporterInfo implements PluginInfoLike<SpreadsheetExporterInfo, SpreadsheetExporterName>,
+        HateosResource<SpreadsheetExporterName> {
 
     public static SpreadsheetExporterInfo parse(final String text) {
-        return PluginInfoLike.parse(
-                text,
-                SpreadsheetExporterName::with,
-                SpreadsheetExporterInfo::with
+        return new SpreadsheetExporterInfo(
+                PluginInfo.parse(
+                        text,
+                        SpreadsheetExporterName::with
+                )
         );
     }
 
     public static SpreadsheetExporterInfo with(final AbsoluteUrl url,
                                                final SpreadsheetExporterName name) {
         return new SpreadsheetExporterInfo(
-                Objects.requireNonNull(url, "url"),
-                Objects.requireNonNull(name, "name")
+                PluginInfo.with(
+                        url,
+                        name
+                )
         );
     }
 
-    private SpreadsheetExporterInfo(final AbsoluteUrl url,
-                                    final SpreadsheetExporterName name) {
-        this.url = url;
-        this.name = name;
+    private SpreadsheetExporterInfo(final PluginInfo<SpreadsheetExporterName> pluginInfo) {
+        this.pluginInfo = pluginInfo;
     }
 
     // HasAbsoluteUrl...................................................................................................
 
     @Override
     public AbsoluteUrl url() {
-        return this.url;
+        return this.pluginInfo.url();
     }
-
-    private final AbsoluteUrl url;
 
     // HasName..........................................................................................................
 
     @Override
     public SpreadsheetExporterName name() {
-        return this.name;
+        return this.pluginInfo.name();
     }
 
     @Override
     public SpreadsheetExporterInfo setName(final SpreadsheetExporterName name) {
-        Objects.requireNonNull(name, "name");
-
-        return this.name.equals(name) ?
+        return this.name().equals(name) ?
                 this :
                 new SpreadsheetExporterInfo(
-                        this.url,
-                        name
+                        this.pluginInfo.setName(name)
                 );
     }
-    
-    private final SpreadsheetExporterName name;
+
+    private final PluginInfo<SpreadsheetExporterName> pluginInfo;
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetExporterInfo other) {
+        return this.pluginInfo.compareTo(other.pluginInfo);
+    }
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.url,
-                this.name
-        );
+        return this.pluginInfo.hashCode();
     }
 
     @Override
@@ -102,29 +104,28 @@ public final class SpreadsheetExporterInfo implements PluginInfoLike<Spreadsheet
     }
 
     private boolean equals0(final SpreadsheetExporterInfo other) {
-        return this.url.equals(other.url) &&
-                this.name.equals(other.name);
+        return this.pluginInfo.equals(other.pluginInfo);
     }
 
     @Override
     public String toString() {
-        return PluginInfoLike.toString(this);
+        return this.pluginInfo.toString();
     }
 
     // Json.............................................................................................................
 
     static void register() {
-        // required to FORCE json register
-        SpreadsheetExporterName.COLLECTION.value();
+        // helps force registry of json marshaller
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
     }
 
     static SpreadsheetExporterInfo unmarshall(final JsonNode node,
                                               final JsonNodeUnmarshallContext context) {
-        return PluginInfoLike.unmarshall(
-                node,
-                context,
-                SpreadsheetExporterName::with,
-                SpreadsheetExporterInfo::with
+        return SpreadsheetExporterInfo.parse(
+                node.stringOrFail()
         );
     }
 
@@ -135,5 +136,6 @@ public final class SpreadsheetExporterInfo implements PluginInfoLike<Spreadsheet
                 SpreadsheetExporterInfo::marshall,
                 SpreadsheetExporterInfo.class
         );
+        SpreadsheetExporterName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }
 }

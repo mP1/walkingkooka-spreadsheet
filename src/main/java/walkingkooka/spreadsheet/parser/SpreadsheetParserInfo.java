@@ -19,80 +19,80 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.plugin.PluginInfo;
 import walkingkooka.plugin.PluginInfoLike;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Objects;
-
 /**
- * Provides a few bits of info describing a {@link Parser}. The {@link AbsoluteUrl} must be a unique identifier,
- * with the {@link SpreadsheetParserName} being a shorter human friendly reference.
+ * Captures a unique {@link AbsoluteUrl} and {@link SpreadsheetParserName} for a {@link SpreadsheetParser}.
  */
-public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetParserInfo, SpreadsheetParserName> {
+public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetParserInfo, SpreadsheetParserName>,
+        HateosResource<SpreadsheetParserName> {
 
     public static SpreadsheetParserInfo parse(final String text) {
-        return PluginInfoLike.parse(
-                text,
-                SpreadsheetParserName::with,
-                SpreadsheetParserInfo::with
+        return new SpreadsheetParserInfo(
+                PluginInfo.parse(
+                        text,
+                        SpreadsheetParserName::with
+                )
         );
     }
 
     public static SpreadsheetParserInfo with(final AbsoluteUrl url,
                                              final SpreadsheetParserName name) {
         return new SpreadsheetParserInfo(
-                Objects.requireNonNull(url, "url"),
-                Objects.requireNonNull(name, "name")
+                PluginInfo.with(
+                        url,
+                        name
+                )
         );
     }
 
-    private SpreadsheetParserInfo(final AbsoluteUrl url,
-                                  final SpreadsheetParserName name) {
-        this.url = url;
-        this.name = name;
+    private SpreadsheetParserInfo(final PluginInfo<SpreadsheetParserName> pluginInfo) {
+        this.pluginInfo = pluginInfo;
     }
 
     // HasAbsoluteUrl...................................................................................................
 
     @Override
     public AbsoluteUrl url() {
-        return this.url;
+        return this.pluginInfo.url();
     }
-
-    private final AbsoluteUrl url;
 
     // HasName..........................................................................................................
 
     @Override
     public SpreadsheetParserName name() {
-        return this.name;
+        return this.pluginInfo.name();
     }
 
     @Override
     public SpreadsheetParserInfo setName(final SpreadsheetParserName name) {
-        Objects.requireNonNull(name, "name");
-
-        return this.name.equals(name) ?
+        return this.name().equals(name) ?
                 this :
                 new SpreadsheetParserInfo(
-                        this.url,
-                        name
+                        this.pluginInfo.setName(name)
                 );
     }
 
-    private final SpreadsheetParserName name;
+    private final PluginInfo<SpreadsheetParserName> pluginInfo;
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetParserInfo other) {
+        return this.pluginInfo.compareTo(other.pluginInfo);
+    }
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.url,
-                this.name
-        );
+        return this.pluginInfo.hashCode();
     }
 
     @Override
@@ -103,29 +103,28 @@ public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetPa
     }
 
     private boolean equals0(final SpreadsheetParserInfo other) {
-        return this.url.equals(other.url) &&
-                this.name.equals(other.name);
+        return this.pluginInfo.equals(other.pluginInfo);
     }
 
     @Override
     public String toString() {
-        return PluginInfoLike.toString(this);
+        return this.pluginInfo.toString();
     }
 
     // Json.............................................................................................................
 
     static void register() {
-        // required to FORCE json register
-        SpreadsheetParserName.DATE_PARSER_PATTERN.value();
+        // helps force registry of json marshaller
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
     }
 
     static SpreadsheetParserInfo unmarshall(final JsonNode node,
                                             final JsonNodeUnmarshallContext context) {
-        return PluginInfoLike.unmarshall(
-                node,
-                context,
-                SpreadsheetParserName::with,
-                SpreadsheetParserInfo::with
+        return SpreadsheetParserInfo.parse(
+                node.stringOrFail()
         );
     }
 
@@ -136,5 +135,6 @@ public final class SpreadsheetParserInfo implements PluginInfoLike<SpreadsheetPa
                 SpreadsheetParserInfo::marshall,
                 SpreadsheetParserInfo.class
         );
+        SpreadsheetParserName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }
 }
