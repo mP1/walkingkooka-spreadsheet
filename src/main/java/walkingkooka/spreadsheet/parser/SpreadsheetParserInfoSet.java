@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.SortedSets;
-import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.plugin.PluginInfoSet;
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -31,89 +33,158 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetParserInfo} sorted by {@link SpreadsheetParserName}.
  */
-public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParserInfo>
-        implements PluginInfoSetLike<SpreadsheetParserInfoSet, SpreadsheetParserInfo, SpreadsheetParserName> {
+public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParserInfo> implements PluginInfoSetLike<SpreadsheetParserInfoSet, SpreadsheetParserInfo, SpreadsheetParserName> {
 
     public final static SpreadsheetParserInfoSet EMPTY = new SpreadsheetParserInfoSet(
-            Sets.empty()
+            PluginInfoSet.with(
+                    Sets.<SpreadsheetParserInfo>empty()
+            )
     );
 
-    /**
-     * Parses the CSV text into a {@link SpreadsheetParserInfoSet}.
-     */
     public static SpreadsheetParserInfoSet parse(final String text) {
-        return PluginInfoSetLike.parse(
-                text,
-                SpreadsheetParserInfo::parse,
-                SpreadsheetParserInfoSet::with
+        return new SpreadsheetParserInfoSet(
+                PluginInfoSet.parse(
+                        text,
+                        SpreadsheetParserInfo::parse
+                )
         );
     }
 
-    /**
-     * Factory that creates a {@link SpreadsheetParserInfoSet} with the provided {@link SpreadsheetParserInfo}.
-     */
     public static SpreadsheetParserInfoSet with(final Set<SpreadsheetParserInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetParserInfo> copy = SortedSets.tree(HateosResource.comparator());
-        copy.addAll(infos);
-        return new SpreadsheetParserInfoSet(copy);
+        final PluginInfoSet<SpreadsheetParserName, SpreadsheetParserInfo> pluginInfoSet = PluginInfoSet.with(infos);
+        return pluginInfoSet.isEmpty() ?
+                EMPTY :
+                new SpreadsheetParserInfoSet(pluginInfoSet);
     }
 
-    private SpreadsheetParserInfoSet(final Set<SpreadsheetParserInfo> infos) {
-        this.infos = infos;
+    private SpreadsheetParserInfoSet(final PluginInfoSet<SpreadsheetParserName, SpreadsheetParserInfo> pluginInfoSet) {
+        this.pluginInfoSet = pluginInfoSet;
+    }
+
+    // PluginInfoSetLike................................................................................................
+
+    @Override
+    public Set<SpreadsheetParserName> names() {
+        return this.pluginInfoSet.names();
+    }
+
+    @Override
+    public Set<AbsoluteUrl> url() {
+        return this.pluginInfoSet.url();
+    }
+
+    @Override
+    public UrlFragment urlFragment() {
+        return this.pluginInfoSet.urlFragment();
+    }
+
+    @Override
+    public SpreadsheetParserInfoSet filter(final SpreadsheetParserInfoSet infos) {
+        return this.setElements(
+                this.pluginInfoSet.filter(
+                        infos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetParserInfoSet renameIfPresent(SpreadsheetParserInfoSet renameInfos) {
+        return this.setElements(
+                this.pluginInfoSet.renameIfPresent(
+                        renameInfos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetParserInfoSet concat(final SpreadsheetParserInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.concat(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetParserInfoSet delete(final SpreadsheetParserInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.delete(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetParserInfoSet replace(final SpreadsheetParserInfo oldInfo,
+                                    final SpreadsheetParserInfo newInfo) {
+        return this.setElements(
+                this.pluginInfoSet.replace(
+                        oldInfo,
+                        newInfo
+                )
+        );
+    }
+
+    @Override
+    public ImmutableSet<SpreadsheetParserInfo> setElementsFailIfDifferent(final Set<SpreadsheetParserInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.setElementsFailIfDifferent(
+                        infos
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetParserInfoSet setElements(final Set<SpreadsheetParserInfo> infos) {
+        final SpreadsheetParserInfoSet after = new SpreadsheetParserInfoSet(
+                this.pluginInfoSet.setElements(infos)
+        );
+        return this.pluginInfoSet.equals(infos) ?
+                this :
+                after;
+    }
+
+    @Override
+    public Set<SpreadsheetParserInfo> toSet() {
+        return this.pluginInfoSet.toSet();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public String text() {
+        return this.pluginInfoSet.text();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.pluginInfoSet.printTree(printer);
+        }
+        printer.outdent();
     }
 
     // AbstractSet......................................................................................................
 
     @Override
     public Iterator<SpreadsheetParserInfo> iterator() {
-        return Iterators.readOnly(
-                this.infos.iterator()
-        );
+        return this.pluginInfoSet.iterator();
     }
 
     @Override
     public int size() {
-        return this.infos.size();
+        return this.pluginInfoSet.size();
     }
 
-    private final Set<SpreadsheetParserInfo> infos;
+    private final PluginInfoSet<SpreadsheetParserName, SpreadsheetParserInfo> pluginInfoSet;
 
-    // ImmutableSet.....................................................................................................
-
-    @Override
-    public SpreadsheetParserInfoSet setElements(final Set<SpreadsheetParserInfo> elements) {
-        final SpreadsheetParserInfoSet copy = with(elements);
-        return this.equals(copy) ?
-                this :
-                copy;
-    }
-
-    @Override
-    public Set<SpreadsheetParserInfo> toSet() {
-        return new TreeSet<>(
-                this.infos
-        );
-    }
-    
     // json.............................................................................................................
-
-    static {
-        SpreadsheetParserInfo.register(); // force registry of json marshaller
-
-        JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetParserInfoSet.class),
-                SpreadsheetParserInfoSet::unmarshall,
-                SpreadsheetParserInfoSet::marshall,
-                SpreadsheetParserInfoSet.class
-        );
-    }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return context.marshallCollection(this);
@@ -121,12 +192,21 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
 
     // @VisibleForTesting
     static SpreadsheetParserInfoSet unmarshall(final JsonNode node,
-                                               final JsonNodeUnmarshallContext context) {
-
+                                       final JsonNodeUnmarshallContext context) {
         return with(
                 context.unmarshallSet(
                         node,
                         SpreadsheetParserInfo.class
-                ));
+                )
+        );
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetParserInfoSet.class),
+                SpreadsheetParserInfoSet::unmarshall,
+                SpreadsheetParserInfoSet::marshall,
+                SpreadsheetParserInfoSet.class
+        );
     }
 }
