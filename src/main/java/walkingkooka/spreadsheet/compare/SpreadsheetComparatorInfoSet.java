@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.SortedSets;
-import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.plugin.PluginInfoSet;
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -31,91 +33,158 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetComparatorInfo} sorted by {@link SpreadsheetComparatorName}.
  */
 public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
 
-    /**
-     * Empty {@link SpreadsheetComparatorInfoSet}.
-     */
-    public final static SpreadsheetComparatorInfoSet EMPTY = new SpreadsheetComparatorInfoSet(Sets.empty());
+    public final static SpreadsheetComparatorInfoSet EMPTY = new SpreadsheetComparatorInfoSet(
+            PluginInfoSet.with(
+                    Sets.<SpreadsheetComparatorInfo>empty()
+            )
+    );
 
-    /**
-     * Parses the CSV text into a {@link SpreadsheetComparatorInfoSet}.
-     */
     public static SpreadsheetComparatorInfoSet parse(final String text) {
-        return PluginInfoSetLike.parse(
-                text,
-                SpreadsheetComparatorInfo::parse,
-                SpreadsheetComparatorInfoSet::with
+        return new SpreadsheetComparatorInfoSet(
+                PluginInfoSet.parse(
+                        text,
+                        SpreadsheetComparatorInfo::parse
+                )
         );
     }
 
-    /**
-     * Factory that creates a {@link SpreadsheetComparatorInfoSet} with the provided {@link SpreadsheetComparatorInfo}.
-     */
     public static SpreadsheetComparatorInfoSet with(final Set<SpreadsheetComparatorInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetComparatorInfo> copy = SortedSets.tree(HateosResource.comparator());
-        copy.addAll(infos);
-        return copy.isEmpty() ?
+        final PluginInfoSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo> pluginInfoSet = PluginInfoSet.with(infos);
+        return pluginInfoSet.isEmpty() ?
                 EMPTY :
-                new SpreadsheetComparatorInfoSet(copy);
+                new SpreadsheetComparatorInfoSet(pluginInfoSet);
     }
 
-    private SpreadsheetComparatorInfoSet(final Set<SpreadsheetComparatorInfo> infos) {
-        this.infos = infos;
+    private SpreadsheetComparatorInfoSet(final PluginInfoSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo> pluginInfoSet) {
+        this.pluginInfoSet = pluginInfoSet;
+    }
+
+    // PluginInfoSetLike................................................................................................
+
+    @Override
+    public Set<SpreadsheetComparatorName> names() {
+        return this.pluginInfoSet.names();
+    }
+
+    @Override
+    public Set<AbsoluteUrl> url() {
+        return this.pluginInfoSet.url();
+    }
+
+    @Override
+    public UrlFragment urlFragment() {
+        return this.pluginInfoSet.urlFragment();
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet filter(final SpreadsheetComparatorInfoSet infos) {
+        return this.setElements(
+                this.pluginInfoSet.filter(
+                        infos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet renameIfPresent(SpreadsheetComparatorInfoSet renameInfos) {
+        return this.setElements(
+                this.pluginInfoSet.renameIfPresent(
+                        renameInfos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet concat(final SpreadsheetComparatorInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.concat(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet delete(final SpreadsheetComparatorInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.delete(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet replace(final SpreadsheetComparatorInfo oldInfo,
+                                    final SpreadsheetComparatorInfo newInfo) {
+        return this.setElements(
+                this.pluginInfoSet.replace(
+                        oldInfo,
+                        newInfo
+                )
+        );
+    }
+
+    @Override
+    public ImmutableSet<SpreadsheetComparatorInfo> setElementsFailIfDifferent(final Set<SpreadsheetComparatorInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.setElementsFailIfDifferent(
+                        infos
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet setElements(final Set<SpreadsheetComparatorInfo> infos) {
+        final SpreadsheetComparatorInfoSet after = new SpreadsheetComparatorInfoSet(
+                this.pluginInfoSet.setElements(infos)
+        );
+        return this.pluginInfoSet.equals(infos) ?
+                this :
+                after;
+    }
+
+    @Override
+    public Set<SpreadsheetComparatorInfo> toSet() {
+        return this.pluginInfoSet.toSet();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public String text() {
+        return this.pluginInfoSet.text();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.pluginInfoSet.printTree(printer);
+        }
+        printer.outdent();
     }
 
     // AbstractSet......................................................................................................
 
     @Override
     public Iterator<SpreadsheetComparatorInfo> iterator() {
-        return Iterators.readOnly(
-                this.infos.iterator()
-        );
+        return this.pluginInfoSet.iterator();
     }
 
     @Override
     public int size() {
-        return this.infos.size();
+        return this.pluginInfoSet.size();
     }
 
-    private final Set<SpreadsheetComparatorInfo> infos;
+    private final PluginInfoSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo> pluginInfoSet;
 
-    // ImmutableSet.....................................................................................................
-
-    @Override
-    public SpreadsheetComparatorInfoSet setElements(final Set<SpreadsheetComparatorInfo> elements) {
-        final SpreadsheetComparatorInfoSet copy = with(elements);
-        return this.equals(copy) ?
-                this :
-                copy;
-    }
-
-    @Override
-    public Set<SpreadsheetComparatorInfo> toSet() {
-        return new TreeSet<>(
-                this.infos
-        );
-    }
-    
     // json.............................................................................................................
-
-    static {
-        SpreadsheetComparatorInfo.register(); // force registry of json marshaller
-
-        JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetComparatorInfoSet.class),
-                SpreadsheetComparatorInfoSet::unmarshall,
-                SpreadsheetComparatorInfoSet::marshall,
-                SpreadsheetComparatorInfoSet.class
-        );
-    }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return context.marshallCollection(this);
@@ -123,12 +192,21 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
 
     // @VisibleForTesting
     static SpreadsheetComparatorInfoSet unmarshall(final JsonNode node,
-                                                   final JsonNodeUnmarshallContext context) {
+                                       final JsonNodeUnmarshallContext context) {
         return with(
                 context.unmarshallSet(
                         node,
                         SpreadsheetComparatorInfo.class
                 )
+        );
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetComparatorInfoSet.class),
+                SpreadsheetComparatorInfoSet::unmarshall,
+                SpreadsheetComparatorInfoSet::marshall,
+                SpreadsheetComparatorInfoSet.class
         );
     }
 }

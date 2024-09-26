@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet.export;
 
-import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.SortedSets;
-import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.plugin.PluginInfoSet;
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -31,91 +33,158 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetExporterInfo} sorted by {@link SpreadsheetExporterName}.
  */
-public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExporterInfo>
-        implements PluginInfoSetLike<SpreadsheetExporterInfoSet, SpreadsheetExporterInfo, SpreadsheetExporterName> {
+public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExporterInfo> implements PluginInfoSetLike<SpreadsheetExporterInfoSet, SpreadsheetExporterInfo, SpreadsheetExporterName> {
 
     public final static SpreadsheetExporterInfoSet EMPTY = new SpreadsheetExporterInfoSet(
-            Sets.empty()
+            PluginInfoSet.with(
+                    Sets.<SpreadsheetExporterInfo>empty()
+            )
     );
 
-    /**
-     * Parses the CSV text into a {@link SpreadsheetExporterInfoSet}.
-     */
     public static SpreadsheetExporterInfoSet parse(final String text) {
-        return PluginInfoSetLike.parse(
-                text,
-                SpreadsheetExporterInfo::parse,
-                SpreadsheetExporterInfoSet::with
+        return new SpreadsheetExporterInfoSet(
+                PluginInfoSet.parse(
+                        text,
+                        SpreadsheetExporterInfo::parse
+                )
         );
     }
 
-    /**
-     * Factory that creates a {@link SpreadsheetExporterInfoSet} with the provided {@link SpreadsheetExporterInfo}.
-     */
     public static SpreadsheetExporterInfoSet with(final Set<SpreadsheetExporterInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetExporterInfo> copy = SortedSets.tree(HateosResource.comparator());
-        copy.addAll(infos);
-        return copy.isEmpty() ?
+        final PluginInfoSet<SpreadsheetExporterName, SpreadsheetExporterInfo> pluginInfoSet = PluginInfoSet.with(infos);
+        return pluginInfoSet.isEmpty() ?
                 EMPTY :
-                new SpreadsheetExporterInfoSet(copy);
+                new SpreadsheetExporterInfoSet(pluginInfoSet);
     }
 
-    private SpreadsheetExporterInfoSet(final Set<SpreadsheetExporterInfo> infos) {
-        this.infos = infos;
+    private SpreadsheetExporterInfoSet(final PluginInfoSet<SpreadsheetExporterName, SpreadsheetExporterInfo> pluginInfoSet) {
+        this.pluginInfoSet = pluginInfoSet;
+    }
+
+    // PluginInfoSetLike................................................................................................
+
+    @Override
+    public Set<SpreadsheetExporterName> names() {
+        return this.pluginInfoSet.names();
+    }
+
+    @Override
+    public Set<AbsoluteUrl> url() {
+        return this.pluginInfoSet.url();
+    }
+
+    @Override
+    public UrlFragment urlFragment() {
+        return this.pluginInfoSet.urlFragment();
+    }
+
+    @Override
+    public SpreadsheetExporterInfoSet filter(final SpreadsheetExporterInfoSet infos) {
+        return this.setElements(
+                this.pluginInfoSet.filter(
+                        infos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterInfoSet renameIfPresent(SpreadsheetExporterInfoSet renameInfos) {
+        return this.setElements(
+                this.pluginInfoSet.renameIfPresent(
+                        renameInfos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterInfoSet concat(final SpreadsheetExporterInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.concat(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterInfoSet delete(final SpreadsheetExporterInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.delete(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterInfoSet replace(final SpreadsheetExporterInfo oldInfo,
+                                    final SpreadsheetExporterInfo newInfo) {
+        return this.setElements(
+                this.pluginInfoSet.replace(
+                        oldInfo,
+                        newInfo
+                )
+        );
+    }
+
+    @Override
+    public ImmutableSet<SpreadsheetExporterInfo> setElementsFailIfDifferent(final Set<SpreadsheetExporterInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.setElementsFailIfDifferent(
+                        infos
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterInfoSet setElements(final Set<SpreadsheetExporterInfo> infos) {
+        final SpreadsheetExporterInfoSet after = new SpreadsheetExporterInfoSet(
+                this.pluginInfoSet.setElements(infos)
+        );
+        return this.pluginInfoSet.equals(infos) ?
+                this :
+                after;
+    }
+
+    @Override
+    public Set<SpreadsheetExporterInfo> toSet() {
+        return this.pluginInfoSet.toSet();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public String text() {
+        return this.pluginInfoSet.text();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.pluginInfoSet.printTree(printer);
+        }
+        printer.outdent();
     }
 
     // AbstractSet......................................................................................................
 
     @Override
     public Iterator<SpreadsheetExporterInfo> iterator() {
-        return Iterators.readOnly(
-                this.infos.iterator()
-        );
+        return this.pluginInfoSet.iterator();
     }
 
     @Override
     public int size() {
-        return this.infos.size();
+        return this.pluginInfoSet.size();
     }
 
-    private final Set<SpreadsheetExporterInfo> infos;
-
-    // ImmutableSet.....................................................................................................
-
-    @Override
-    public SpreadsheetExporterInfoSet setElements(final Set<SpreadsheetExporterInfo> elements) {
-        final SpreadsheetExporterInfoSet copy = with(elements);
-        return this.equals(copy) ?
-                this :
-                copy;
-    }
-
-    @Override
-    public Set<SpreadsheetExporterInfo> toSet() {
-        return new TreeSet<>(
-                this.infos
-        );
-    }
+    private final PluginInfoSet<SpreadsheetExporterName, SpreadsheetExporterInfo> pluginInfoSet;
 
     // json.............................................................................................................
-
-    static {
-        SpreadsheetExporterInfo.register(); // force registry of json marshaller
-
-        JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetExporterInfoSet.class),
-                SpreadsheetExporterInfoSet::unmarshall,
-                SpreadsheetExporterInfoSet::marshall,
-                SpreadsheetExporterInfoSet.class
-        );
-    }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return context.marshallCollection(this);
@@ -123,12 +192,21 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
 
     // @VisibleForTesting
     static SpreadsheetExporterInfoSet unmarshall(final JsonNode node,
-                                                 final JsonNodeUnmarshallContext context) {
-
+                                       final JsonNodeUnmarshallContext context) {
         return with(
                 context.unmarshallSet(
                         node,
                         SpreadsheetExporterInfo.class
-                ));
+                )
+        );
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetExporterInfoSet.class),
+                SpreadsheetExporterInfoSet::unmarshall,
+                SpreadsheetExporterInfoSet::marshall,
+                SpreadsheetExporterInfoSet.class
+        );
     }
 }

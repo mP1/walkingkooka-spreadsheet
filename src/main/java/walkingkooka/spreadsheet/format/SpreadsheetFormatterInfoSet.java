@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.collect.iterator.Iterators;
+import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.SortedSets;
-import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.UrlFragment;
+import walkingkooka.plugin.PluginInfoSet;
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -31,91 +33,158 @@ import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetFormatterInfo} sorted by {@link SpreadsheetFormatterName}.
  */
-public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo>
-        implements PluginInfoSetLike<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
+public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo> implements PluginInfoSetLike<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
 
     public final static SpreadsheetFormatterInfoSet EMPTY = new SpreadsheetFormatterInfoSet(
-            Sets.empty()
+            PluginInfoSet.with(
+                    Sets.<SpreadsheetFormatterInfo>empty()
+            )
     );
 
-    /**
-     * Parses the CSV text into a {@link SpreadsheetFormatterInfoSet}.
-     */
     public static SpreadsheetFormatterInfoSet parse(final String text) {
-        return PluginInfoSetLike.parse(
-                text,
-                SpreadsheetFormatterInfo::parse,
-                SpreadsheetFormatterInfoSet::with
+        return new SpreadsheetFormatterInfoSet(
+                PluginInfoSet.parse(
+                        text,
+                        SpreadsheetFormatterInfo::parse
+                )
         );
     }
-    
-    /**
-     * Factory that creates a {@link SpreadsheetFormatterInfoSet} with the provided {@link SpreadsheetFormatterInfo}.
-     */
+
     public static SpreadsheetFormatterInfoSet with(final Set<SpreadsheetFormatterInfo> infos) {
         Objects.requireNonNull(infos, "infos");
 
-        final Set<SpreadsheetFormatterInfo> copy = SortedSets.tree(HateosResource.comparator());
-        copy.addAll(infos);
-        return copy.isEmpty() ?
+        final PluginInfoSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo> pluginInfoSet = PluginInfoSet.with(infos);
+        return pluginInfoSet.isEmpty() ?
                 EMPTY :
-                new SpreadsheetFormatterInfoSet(copy);
+                new SpreadsheetFormatterInfoSet(pluginInfoSet);
     }
 
-    private SpreadsheetFormatterInfoSet(final Set<SpreadsheetFormatterInfo> infos) {
-        this.infos = infos;
+    private SpreadsheetFormatterInfoSet(final PluginInfoSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo> pluginInfoSet) {
+        this.pluginInfoSet = pluginInfoSet;
+    }
+
+    // PluginInfoSetLike................................................................................................
+
+    @Override
+    public Set<SpreadsheetFormatterName> names() {
+        return this.pluginInfoSet.names();
+    }
+
+    @Override
+    public Set<AbsoluteUrl> url() {
+        return this.pluginInfoSet.url();
+    }
+
+    @Override
+    public UrlFragment urlFragment() {
+        return this.pluginInfoSet.urlFragment();
+    }
+
+    @Override
+    public SpreadsheetFormatterInfoSet filter(final SpreadsheetFormatterInfoSet infos) {
+        return this.setElements(
+                this.pluginInfoSet.filter(
+                        infos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterInfoSet renameIfPresent(SpreadsheetFormatterInfoSet renameInfos) {
+        return this.setElements(
+                this.pluginInfoSet.renameIfPresent(
+                        renameInfos.pluginInfoSet
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterInfoSet concat(final SpreadsheetFormatterInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.concat(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterInfoSet delete(final SpreadsheetFormatterInfo info) {
+        return this.setElements(
+                this.pluginInfoSet.delete(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterInfoSet replace(final SpreadsheetFormatterInfo oldInfo,
+                                               final SpreadsheetFormatterInfo newInfo) {
+        return this.setElements(
+                this.pluginInfoSet.replace(
+                        oldInfo,
+                        newInfo
+                )
+        );
+    }
+
+    @Override
+    public ImmutableSet<SpreadsheetFormatterInfo> setElementsFailIfDifferent(final Set<SpreadsheetFormatterInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.setElementsFailIfDifferent(
+                        infos
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterInfoSet setElements(final Set<SpreadsheetFormatterInfo> infos) {
+        final SpreadsheetFormatterInfoSet after = new SpreadsheetFormatterInfoSet(
+                this.pluginInfoSet.setElements(infos)
+        );
+        return this.pluginInfoSet.equals(infos) ?
+                this :
+                after;
+    }
+
+    @Override
+    public Set<SpreadsheetFormatterInfo> toSet() {
+        return this.pluginInfoSet.toSet();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public String text() {
+        return this.pluginInfoSet.text();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.pluginInfoSet.printTree(printer);
+        }
+        printer.outdent();
     }
 
     // AbstractSet......................................................................................................
 
     @Override
     public Iterator<SpreadsheetFormatterInfo> iterator() {
-        return Iterators.readOnly(
-                this.infos.iterator()
-        );
+        return this.pluginInfoSet.iterator();
     }
 
     @Override
     public int size() {
-        return this.infos.size();
+        return this.pluginInfoSet.size();
     }
 
-    private final Set<SpreadsheetFormatterInfo> infos;
-
-    // ImmutableSet.....................................................................................................
-
-    @Override
-    public SpreadsheetFormatterInfoSet setElements(final Set<SpreadsheetFormatterInfo> elements) {
-        final SpreadsheetFormatterInfoSet copy = with(elements);
-        return this.equals(copy) ?
-                this :
-                copy;
-    }
-
-    @Override
-    public Set<SpreadsheetFormatterInfo> toSet() {
-        return new TreeSet<>(
-                this.infos
-        );
-    }
+    private final PluginInfoSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo> pluginInfoSet;
 
     // json.............................................................................................................
-
-    static {
-        SpreadsheetFormatterInfo.register(); // force registry of json marshaller
-
-        JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetFormatterInfoSet.class),
-                SpreadsheetFormatterInfoSet::unmarshall,
-                SpreadsheetFormatterInfoSet::marshall,
-                SpreadsheetFormatterInfoSet.class
-        );
-    }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return context.marshallCollection(this);
@@ -124,11 +193,20 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     // @VisibleForTesting
     static SpreadsheetFormatterInfoSet unmarshall(final JsonNode node,
                                                   final JsonNodeUnmarshallContext context) {
-
         return with(
                 context.unmarshallSet(
                         node,
                         SpreadsheetFormatterInfo.class
-                ));
+                )
+        );
+    }
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetFormatterInfoSet.class),
+                SpreadsheetFormatterInfoSet::unmarshall,
+                SpreadsheetFormatterInfoSet::marshall,
+                SpreadsheetFormatterInfoSet.class
+        );
     }
 }
