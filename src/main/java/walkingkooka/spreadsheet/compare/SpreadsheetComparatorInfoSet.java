@@ -192,7 +192,7 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
 
     // @VisibleForTesting
     static SpreadsheetComparatorInfoSet unmarshall(final JsonNode node,
-                                       final JsonNodeUnmarshallContext context) {
+                                                   final JsonNodeUnmarshallContext context) {
         return with(
                 context.unmarshallSet(
                         node,
@@ -202,6 +202,8 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     }
 
     static {
+        SpreadsheetComparatorInfo.register(); // force registry of json marshaller
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetComparatorInfoSet.class),
                 SpreadsheetComparatorInfoSet::unmarshall,

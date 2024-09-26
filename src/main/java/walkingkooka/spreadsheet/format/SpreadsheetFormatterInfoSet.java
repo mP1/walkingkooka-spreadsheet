@@ -202,6 +202,8 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     static {
+        SpreadsheetFormatterInfo.register(); // force registry of json marshaller
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetFormatterInfoSet.class),
                 SpreadsheetFormatterInfoSet::unmarshall,

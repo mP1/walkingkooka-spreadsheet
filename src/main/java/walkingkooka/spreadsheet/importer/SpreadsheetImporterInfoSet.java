@@ -202,6 +202,8 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
     }
 
     static {
+        SpreadsheetImporterInfo.register(); // force registry of json marshaller
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetImporterInfoSet.class),
                 SpreadsheetImporterInfoSet::unmarshall,
