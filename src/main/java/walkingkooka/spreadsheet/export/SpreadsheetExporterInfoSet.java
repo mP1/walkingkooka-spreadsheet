@@ -192,7 +192,7 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
 
     // @VisibleForTesting
     static SpreadsheetExporterInfoSet unmarshall(final JsonNode node,
-                                       final JsonNodeUnmarshallContext context) {
+                                                 final JsonNodeUnmarshallContext context) {
         return with(
                 context.unmarshallSet(
                         node,
@@ -202,6 +202,8 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     }
 
     static {
+        SpreadsheetExporterInfo.register(); // force registry of json marshaller
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetExporterInfoSet.class),
                 SpreadsheetExporterInfoSet::unmarshall,
