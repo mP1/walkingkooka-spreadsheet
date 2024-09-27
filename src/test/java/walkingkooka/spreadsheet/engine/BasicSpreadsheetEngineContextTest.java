@@ -1015,10 +1015,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"decimal-separator\": \".\",\n" +
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
-                        "  \"expression-converter\": \"collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"expression-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"expression-functions\": [],\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"format-converter\": \"collection (error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +
@@ -1031,7 +1031,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
                         "  \"sort-comparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sort-converter\": \"collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"spreadsheet-comparators\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\",\n" +
@@ -1228,10 +1228,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"decimal-separator\": \".\",\n" +
                         "  \"default-year\": 1900,\n" +
                         "  \"exponent-symbol\": \"e\",\n" +
-                        "  \"expression-converter\": \"collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"expression-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"expression-functions\": [],\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"format-converter\": \"collection (error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +
@@ -1244,7 +1244,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
                         "  \"sort-comparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sort-converter\": \"collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"spreadsheet-comparators\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date date\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetComparator/date-time date-time\",\n" +
