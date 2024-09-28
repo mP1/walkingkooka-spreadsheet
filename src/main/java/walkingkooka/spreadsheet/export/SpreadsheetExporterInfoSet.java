@@ -125,6 +125,13 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     }
 
     @Override
+    public SpreadsheetExporterInfoSet deleteAll(final Collection<SpreadsheetExporterInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
     public SpreadsheetExporterInfoSet replace(final SpreadsheetExporterInfo oldInfo,
                                     final SpreadsheetExporterInfo newInfo) {
         return this.setElements(

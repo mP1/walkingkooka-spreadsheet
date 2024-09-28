@@ -125,6 +125,13 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     }
 
     @Override
+    public SpreadsheetComparatorInfoSet deleteAll(final Collection<SpreadsheetComparatorInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
     public SpreadsheetComparatorInfoSet replace(final SpreadsheetComparatorInfo oldInfo,
                                     final SpreadsheetComparatorInfo newInfo) {
         return this.setElements(

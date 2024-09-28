@@ -125,6 +125,13 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     }
 
     @Override
+    public SpreadsheetParserInfoSet deleteAll(final Collection<SpreadsheetParserInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
     public SpreadsheetParserInfoSet replace(final SpreadsheetParserInfo oldInfo,
                                     final SpreadsheetParserInfo newInfo) {
         return this.setElements(

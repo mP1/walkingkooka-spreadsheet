@@ -125,6 +125,13 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     @Override
+    public SpreadsheetFormatterInfoSet deleteAll(final Collection<SpreadsheetFormatterInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
     public SpreadsheetFormatterInfoSet replace(final SpreadsheetFormatterInfo oldInfo,
                                                final SpreadsheetFormatterInfo newInfo) {
         return this.setElements(

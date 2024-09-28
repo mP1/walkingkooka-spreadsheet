@@ -125,6 +125,13 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
     }
 
     @Override
+    public SpreadsheetImporterInfoSet deleteAll(final Collection<SpreadsheetImporterInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
     public SpreadsheetImporterInfoSet replace(final SpreadsheetImporterInfo oldInfo,
                                     final SpreadsheetImporterInfo newInfo) {
         return this.setElements(
