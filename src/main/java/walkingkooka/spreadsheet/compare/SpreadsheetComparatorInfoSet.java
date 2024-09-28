@@ -30,6 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
@@ -106,6 +107,13 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     public SpreadsheetComparatorInfoSet concat(final SpreadsheetComparatorInfo info) {
         return this.setElements(
                 this.pluginInfoSet.concat(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet concatAll(final Collection<SpreadsheetComparatorInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.concatAll(infos)
         );
     }
 
