@@ -30,6 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
@@ -106,6 +107,13 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     public SpreadsheetParserInfoSet concat(final SpreadsheetParserInfo info) {
         return this.setElements(
                 this.pluginInfoSet.concat(info)
+        );
+    }
+
+    @Override
+    public SpreadsheetParserInfoSet concatAll(final Collection<SpreadsheetParserInfo> infos) {
+        return this.setElements(
+                this.pluginInfoSet.concatAll(infos)
         );
     }
 
