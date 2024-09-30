@@ -64,11 +64,6 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
         return RoundingMode.class;
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

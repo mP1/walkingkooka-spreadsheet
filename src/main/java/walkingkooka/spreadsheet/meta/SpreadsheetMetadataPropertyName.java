@@ -711,11 +711,28 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     @Override
     public int compareTo(final SpreadsheetMetadataPropertyName<?> other) {
-        return this.caseSensitivity().comparator().compare(this.compareToName(), other.compareToName());
+        return this.caseSensitivity()
+                .comparator()
+                .compare(
+                        this.compareToValue(),
+                        other.compareToValue()
+                );
     }
 
-    abstract String compareToName();
+    private String compareToValue() {
+        String value = this.value();
 
+        if (this instanceof SpreadsheetMetadataPropertyNameSpreadsheetId) {
+            value = ""; // make ids sort first
+        } else {
+            if (this instanceof SpreadsheetMetadataPropertyNameNumberedColor) {
+                final SpreadsheetMetadataPropertyNameNumberedColor numberedColor = (SpreadsheetMetadataPropertyNameNumberedColor) this;
+                value = numberedColor.compareToValue;
+            }
+        }
+
+        return value;
+    }
 
     abstract Class<T> type();
 

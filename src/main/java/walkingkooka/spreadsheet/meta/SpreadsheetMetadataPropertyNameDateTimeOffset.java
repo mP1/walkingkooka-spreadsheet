@@ -63,11 +63,6 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
         return Long.class;
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

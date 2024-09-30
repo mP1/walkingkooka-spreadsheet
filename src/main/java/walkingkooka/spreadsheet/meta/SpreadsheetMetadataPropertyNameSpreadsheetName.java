@@ -66,11 +66,6 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
         return SpreadsheetName.class;
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

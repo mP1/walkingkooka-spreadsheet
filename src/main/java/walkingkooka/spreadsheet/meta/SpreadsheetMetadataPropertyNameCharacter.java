@@ -64,11 +64,6 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
         return Character.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

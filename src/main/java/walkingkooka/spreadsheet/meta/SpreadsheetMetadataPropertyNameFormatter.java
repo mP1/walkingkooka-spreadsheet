@@ -71,11 +71,6 @@ abstract class SpreadsheetMetadataPropertyNameFormatter extends SpreadsheetMetad
         return SpreadsheetFormatterSelector.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

@@ -65,11 +65,6 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
         return ExpressionNumberKind.class;
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

@@ -67,11 +67,6 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
         visitor.visitStyle(value);
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

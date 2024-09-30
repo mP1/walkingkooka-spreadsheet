@@ -66,11 +66,6 @@ final class SpreadsheetMetadataPropertyNameClipboardImporter extends Spreadsheet
         return SpreadsheetImporterSelector.class;
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

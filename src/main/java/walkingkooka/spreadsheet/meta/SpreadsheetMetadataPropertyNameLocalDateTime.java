@@ -51,11 +51,6 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
         return LocalDateTime.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

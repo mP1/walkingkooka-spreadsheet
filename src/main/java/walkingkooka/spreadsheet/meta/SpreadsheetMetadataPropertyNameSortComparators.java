@@ -71,11 +71,6 @@ final class SpreadsheetMetadataPropertyNameSortComparators extends SpreadsheetMe
         return SpreadsheetComparatorNameList.class;
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

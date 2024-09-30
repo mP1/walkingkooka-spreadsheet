@@ -57,11 +57,6 @@ abstract class SpreadsheetMetadataPropertyNameConverter extends SpreadsheetMetad
         return ConverterSelector.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
