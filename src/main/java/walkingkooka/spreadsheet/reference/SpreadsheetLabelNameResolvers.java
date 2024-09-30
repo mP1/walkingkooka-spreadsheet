@@ -19,10 +19,13 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
+/**
+ * A collection of {@link SpreadsheetLabelNameResolver} factory methods
+ */
 public final class SpreadsheetLabelNameResolvers implements PublicStaticHelper {
 
     /**
-     *
+     * {@see FakeSpreadsheetLabelNameResolver}
      */
     public static SpreadsheetLabelNameResolver fake() {
         return new FakeSpreadsheetLabelNameResolver();
