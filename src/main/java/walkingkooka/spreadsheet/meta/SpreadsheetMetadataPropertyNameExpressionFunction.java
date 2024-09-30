@@ -57,11 +57,6 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunction extends Spreads
         return ExpressionFunctionAliases.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

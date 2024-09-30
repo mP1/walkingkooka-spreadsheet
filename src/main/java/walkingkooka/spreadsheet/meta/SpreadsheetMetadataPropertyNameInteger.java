@@ -48,11 +48,6 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
         return Integer.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

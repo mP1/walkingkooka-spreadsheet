@@ -66,11 +66,6 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
         return SpreadsheetId.class;
     }
 
-    @Override
-    String compareToName() {
-        return ""; // ensure id always appears first.
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

@@ -71,11 +71,6 @@ abstract class SpreadsheetMetadataPropertyNameParser extends SpreadsheetMetadata
         return SpreadsheetParserSelector.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

@@ -52,11 +52,6 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
         return Boolean.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

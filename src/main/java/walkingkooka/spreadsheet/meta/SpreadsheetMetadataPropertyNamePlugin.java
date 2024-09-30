@@ -47,11 +47,6 @@ abstract class SpreadsheetMetadataPropertyNamePlugin<S extends PluginInfoSetLike
     }
 
     @Override
-    final String compareToName() {
-        return this.value();
-    }
-
-    @Override
     final Optional<S> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }

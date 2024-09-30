@@ -68,11 +68,6 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
     }
 
     @Override
-    String compareToName() {
-        return this.value();
-    }
-
-    @Override
     void accept(final SpreadsheetViewport value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitViewport(value);

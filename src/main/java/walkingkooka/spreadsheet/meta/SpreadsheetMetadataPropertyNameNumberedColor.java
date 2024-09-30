@@ -71,7 +71,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     private SpreadsheetMetadataPropertyNameNumberedColor(final int number) {
         super(COLOR_PREFIX + number);
         this.number = number;
-        this.compareToName = COLOR_PREFIX + CharSequences.padLeft(String.valueOf(number), 5, '0');
+        this.compareToValue = COLOR_PREFIX + CharSequences.padLeft(String.valueOf(number), 5, '0');
     }
 
     final int number;
@@ -114,10 +114,5 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
         visitor.visitNumberedColor(this.number, value);
     }
 
-    @Override
-    String compareToName() {
-        return this.compareToName;
-    }
-
-    private final String compareToName;
+    final String compareToValue;
 }

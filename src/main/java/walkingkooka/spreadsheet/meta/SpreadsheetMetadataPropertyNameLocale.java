@@ -63,11 +63,6 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
         return Locale.class;
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

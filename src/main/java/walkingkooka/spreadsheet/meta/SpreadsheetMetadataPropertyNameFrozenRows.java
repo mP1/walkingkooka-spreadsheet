@@ -76,11 +76,6 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
         visitor.visitFrozenRows(value);
     }
 
-    @Override
-    String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override

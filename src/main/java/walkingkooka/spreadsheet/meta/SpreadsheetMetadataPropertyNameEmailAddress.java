@@ -52,11 +52,6 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
         return EmailAddress.class;
     }
 
-    @Override
-    final String compareToName() {
-        return this.value();
-    }
-
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
