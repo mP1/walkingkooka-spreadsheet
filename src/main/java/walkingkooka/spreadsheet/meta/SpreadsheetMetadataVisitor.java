@@ -115,6 +115,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitComparators(final SpreadsheetComparatorInfoSet value) {
+        // nop
+    }
+
     protected void visitConverters(final ConverterInfoSet converters) {
         // nop
     }
@@ -163,11 +167,19 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitExporters(final SpreadsheetExporterInfoSet value) {
+        // nop
+    }
+
     protected void visitExpressionNumberKind(final ExpressionNumberKind expressionNumberKind) {
         // nop
     }
 
     protected void visitFormatConverter(final ConverterSelector selector) {
+        // nop
+    }
+
+    protected void visitFormatters(final SpreadsheetFormatterInfoSet value) {
         // nop
     }
 
@@ -200,6 +212,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitHideZeroValues(final boolean value) {
+        // nop
+    }
+
+    protected void visitImporters(final SpreadsheetImporterInfoSet value) {
         // nop
     }
 
@@ -236,6 +252,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitParsers(final SpreadsheetParserInfoSet infos) {
+        // nop
+    }
+
     protected void visitPercentageSymbol(final char percentageSymbol) {
         // nop
     }
@@ -260,31 +280,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitSpreadsheetComparators(final SpreadsheetComparatorInfoSet value) {
-        // nop
-    }
-
-    protected void visitSpreadsheetExporters(final SpreadsheetExporterInfoSet value) {
-        // nop
-    }
-
-    protected void visitSpreadsheetFormatters(final SpreadsheetFormatterInfoSet value) {
-        // nop
-    }
-
     protected void visitSpreadsheetId(final SpreadsheetId id) {
         // nop
     }
 
-    protected void visitSpreadsheetImporters(final SpreadsheetImporterInfoSet value) {
-        // nop
-    }
-
     protected void visitSpreadsheetName(final SpreadsheetName name) {
-        // nop
-    }
-
-    protected void visitSpreadsheetParsers(final SpreadsheetParserInfoSet infos) {
         // nop
     }
 

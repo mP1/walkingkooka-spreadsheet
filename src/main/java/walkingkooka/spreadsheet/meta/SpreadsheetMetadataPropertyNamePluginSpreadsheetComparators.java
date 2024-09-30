@@ -42,13 +42,13 @@ final class SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators extends 
      * Private ctor use getter.
      */
     private SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators() {
-        super("spreadsheet-comparators");
+        super("comparators");
     }
 
     @Override
     void accept(final SpreadsheetComparatorInfoSet value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitSpreadsheetComparators(value);
+        visitor.visitComparators(value);
     }
 
     @Override

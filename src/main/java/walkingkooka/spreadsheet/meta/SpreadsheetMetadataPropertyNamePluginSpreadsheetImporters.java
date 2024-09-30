@@ -42,13 +42,13 @@ final class SpreadsheetMetadataPropertyNamePluginSpreadsheetImporters extends Sp
      * Private ctor use getter.
      */
     private SpreadsheetMetadataPropertyNamePluginSpreadsheetImporters() {
-        super("spreadsheet-importers");
+        super("importers");
     }
 
     @Override
     void accept(final SpreadsheetImporterInfoSet value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitSpreadsheetImporters(value);
+        visitor.visitImporters(value);
     }
 
     @Override

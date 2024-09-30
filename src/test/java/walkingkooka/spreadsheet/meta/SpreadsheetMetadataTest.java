@@ -858,7 +858,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetComparator<?> comparator1 = SpreadsheetComparators.dayOfMonth();
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
+                SpreadsheetMetadataPropertyName.COMPARATORS,
                 SpreadsheetComparatorInfoSet.parse(SpreadsheetComparatorProviders.BASE_URL + "/day-of-month xyz,https://example/SpreadsheetComparators/test-comparator-22 zzz")
         );
 
@@ -900,7 +900,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetExporter exporter = SpreadsheetExporters.empty();
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
+                SpreadsheetMetadataPropertyName.EXPORTERS,
                 SpreadsheetExporterInfoSet.parse(SpreadsheetExporterProviders.BASE_URL + "/empty empty")
         );
 
@@ -943,7 +943,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .formatter();
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
+                SpreadsheetMetadataPropertyName.FORMATTERS,
                 SpreadsheetFormatterInfoSet.parse(SpreadsheetFormatterProviders.BASE_URL + "/text-format-pattern xyz,https://example/SpreadsheetFormatters/test-formatter-22 zzz")
         );
 
@@ -985,7 +985,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetImporter importer = SpreadsheetImporters.empty();
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
+                SpreadsheetMetadataPropertyName.IMPORTERS,
                 SpreadsheetImporterInfoSet.parse(SpreadsheetImporterProviders.BASE_URL + "/empty empty")
         );
 
@@ -1028,7 +1028,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .parser();
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
+                SpreadsheetMetadataPropertyName.PARSERS,
                 SpreadsheetParserInfoSet.parse(SpreadsheetParserProviders.BASE_URL + "/date-parse-pattern xyz,https://example/SpreadsheetParsers/test-parser-22 zzz")
         );
 

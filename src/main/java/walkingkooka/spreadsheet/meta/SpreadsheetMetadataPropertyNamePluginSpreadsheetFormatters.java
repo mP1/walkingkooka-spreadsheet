@@ -42,13 +42,13 @@ final class SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters extends S
      * Private ctor use getter.
      */
     private SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters() {
-        super("spreadsheet-formatters");
+        super("formatters");
     }
 
     @Override
     void accept(final SpreadsheetFormatterInfoSet value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitSpreadsheetFormatters(value);
+        visitor.visitFormatters(value);
     }
 
     @Override

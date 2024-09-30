@@ -2755,26 +2755,26 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterSelector.parse("general")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
+                SpreadsheetMetadataPropertyName.COMPARATORS,
                 SpreadsheetComparatorProviders.spreadsheetComparators().spreadsheetComparatorInfos()
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
+                SpreadsheetMetadataPropertyName.EXPORTERS,
                 SpreadsheetExporterInfoSet.EMPTY
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
+                SpreadsheetMetadataPropertyName.FORMATTERS,
                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         .spreadsheetFormatterInfos()
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
+                SpreadsheetMetadataPropertyName.IMPORTERS,
                 SpreadsheetImporterInfoSet.EMPTY
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
         properties.put(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
+                SpreadsheetMetadataPropertyName.PARSERS,
                 SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
         );
         properties.put(SpreadsheetMetadataPropertyName.STYLE,

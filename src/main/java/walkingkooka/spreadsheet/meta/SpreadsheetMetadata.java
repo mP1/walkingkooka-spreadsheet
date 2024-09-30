@@ -770,14 +770,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Returns a {@link SpreadsheetComparatorProvider} that only contains the selected {@link SpreadsheetComparator}
-     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_COMPARATORS}
+     * in {@link SpreadsheetMetadataPropertyName#COMPARATORS}
      */
     public final SpreadsheetComparatorProvider spreadsheetComparatorProvider(final SpreadsheetComparatorProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetComparatorInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS);
+        final SpreadsheetComparatorInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
 
         components.reportIfMissing();
 
@@ -791,14 +791,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Returns a {@link SpreadsheetExporterProvider} that only contains the selected {@link SpreadsheetExporter}
-     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_EXPORTERS}
+     * in {@link SpreadsheetMetadataPropertyName#EXPORTERS}
      */
     public final SpreadsheetExporterProvider spreadsheetExporterProvider(final SpreadsheetExporterProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetExporterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS);
+        final SpreadsheetExporterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
 
         components.reportIfMissing();
 
@@ -812,14 +812,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Returns a {@link SpreadsheetFormatterProvider} that only contains the selected {@link SpreadsheetFormatter}
-     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_FORMATTERS}
+     * in {@link SpreadsheetMetadataPropertyName#FORMATTERS}
      */
     public final SpreadsheetFormatterProvider spreadsheetFormatterProvider(final SpreadsheetFormatterProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetFormatterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS);
+        final SpreadsheetFormatterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
 
         components.reportIfMissing();
 
@@ -833,14 +833,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Returns a {@link SpreadsheetImporterProvider} that only contains the selected {@link SpreadsheetImporter}
-     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_IMPORTERS}
+     * in {@link SpreadsheetMetadataPropertyName#IMPORTERS}
      */
     public final SpreadsheetImporterProvider spreadsheetImporterProvider(final SpreadsheetImporterProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetImporterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS);
+        final SpreadsheetImporterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
 
         components.reportIfMissing();
 
@@ -854,14 +854,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Returns a {@link SpreadsheetParserProvider} that only contains the selected {@link Parser}
-     * in {@link SpreadsheetMetadataPropertyName#SPREADSHEET_PARSERS}
+     * in {@link SpreadsheetMetadataPropertyName#PARSERS}
      */
     public final SpreadsheetParserProvider spreadsheetParserProvider(final SpreadsheetParserProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final SpreadsheetParserInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS);
+        final SpreadsheetParserInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
 
         components.reportIfMissing();
 
@@ -1374,22 +1374,22 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
                 ExpressionFunctionInfoSet.EMPTY
         ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
+                SpreadsheetMetadataPropertyName.COMPARATORS,
                 SpreadsheetComparatorProviders.spreadsheetComparators()
                                 .spreadsheetComparatorInfos()
         ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
+                SpreadsheetMetadataPropertyName.EXPORTERS,
                 SpreadsheetExporterProviders.spreadsheetExport()
                         .spreadsheetExporterInfos()
         ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
+                SpreadsheetMetadataPropertyName.FORMATTERS,
                 spreadsheetFormatterProvider.spreadsheetFormatterInfos()
         ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
+                SpreadsheetMetadataPropertyName.IMPORTERS,
                 SpreadsheetImporterProviders.spreadsheetImport()
                         .spreadsheetImporterInfos()
         ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
+                SpreadsheetMetadataPropertyName.PARSERS,
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         spreadsheetFormatterProvider
                 ).spreadsheetParserInfos()
