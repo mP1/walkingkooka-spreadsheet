@@ -465,7 +465,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * Validates the value, returning the value that will be saved.
      */
     @SuppressWarnings("UnusedReturnValue")
-    public T checkValue(final Object value) {
+    public final T checkValue(final Object value) {
         if (null == value) {
             throw new SpreadsheetMetadataPropertyValueException("Missing value", this, value);
         }
