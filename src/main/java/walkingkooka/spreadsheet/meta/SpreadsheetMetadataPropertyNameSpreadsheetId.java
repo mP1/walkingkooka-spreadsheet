@@ -74,11 +74,6 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseUrlFragmentSaveValueSupported() {
-        return false;
-    }
-
-    @Override
     public SpreadsheetId parseUrlFragmentSaveValue0(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }

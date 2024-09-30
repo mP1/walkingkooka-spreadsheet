@@ -73,11 +73,6 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
-    }
-
-    @Override
     public ExpressionNumberKind parseUrlFragmentSaveValue0(final String value) {
         return ExpressionNumberKind.valueOf(value);
     }

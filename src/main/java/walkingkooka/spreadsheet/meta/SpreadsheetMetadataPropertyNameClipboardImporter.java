@@ -74,11 +74,6 @@ final class SpreadsheetMetadataPropertyNameClipboardImporter extends Spreadsheet
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
-    }
-
-    @Override
     public SpreadsheetImporterSelector parseUrlFragmentSaveValue0(final String value) {
         return SpreadsheetImporterSelector.parse(value);
     }

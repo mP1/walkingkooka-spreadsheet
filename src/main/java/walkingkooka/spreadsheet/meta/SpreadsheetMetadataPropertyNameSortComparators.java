@@ -79,11 +79,6 @@ final class SpreadsheetMetadataPropertyNameSortComparators extends SpreadsheetMe
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
-    }
-
-    @Override
     public SpreadsheetComparatorNameList parseUrlFragmentSaveValue0(final String value) {
         return SpreadsheetComparatorNameList.parse(value);
     }

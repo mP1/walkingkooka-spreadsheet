@@ -532,16 +532,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     private final UrlFragment urlFragment;
 
-    /**
-     * Not all values may be represented by a {@link UrlFragment} which indicates that a property may have its value
-     * updated.
-     */
-    public abstract boolean isParseUrlFragmentSaveValueSupported();
+
+    // parseUrlFragmentSaveValue........................................................................................
 
     /**
      * This parse method is called with the encoded text from a {@link UrlFragment} representing a save operation of this
-     * property. Not all properties support this operation, the {@link #isParseUrlFragmentSaveValueSupported()} provides
-     * the answer.
+     * property. Not all properties support this operation, and will throw a {@link UnsupportedOperationException}.
      */
     public final T parseUrlFragmentSaveValue(final String value) {
         Objects.requireNonNull(value, value);
@@ -554,7 +550,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     abstract T parseUrlFragmentSaveValue0(final String value);
 
     /**
-     * This common method should be called by sub-classes where {@link #isParseUrlFragmentSaveValueSupported()} returns false.
+     * This common method should be called by sub-classes to indicate {@link #parseUrlFragmentSaveValue(String)} is not supported.
      */
     final T failParseUrlFragmentSaveValueUnsupported() {
         throw new UnsupportedOperationException("UrlFragment save value not supported for " + CharSequences.quoteAndEscape(this.value()));
