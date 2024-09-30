@@ -98,6 +98,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext>,
         SpreadsheetMetadataTesting {
 
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
+
     private final static String CURRENCY = "CURR";
     private final static char DECIMAL = '.';
     private final static String EXPONENT = "e";
@@ -302,123 +304,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static SpreadsheetStoreRepository STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
-
-    @Test
-    public void testWithNullMetadataFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        null,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT,
-                        ENGINE,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetProviderFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        null,
-                        PROVIDER_CONTEXT,
-                        ENGINE,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullProviderContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        SPREADSHEET_PROVIDER,
-                        null,
-                        ENGINE,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullEngineFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT,
-                        null,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullFractionFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT,
-                        ENGINE,
-                        null,
-                        STORE_REPOSITORY,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullStoreRepositoryFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        METADATA,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT,
-                        ENGINE,
-                        FRACTIONER,
-                        null,
-                        SERVER_URL,
-                        NOW
-                )
-        );
-    }
-
     @Test
     public void testWithNullServerUrlFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
+                        null,
+                        NOW,
                         METADATA,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
-                        null,
-                        NOW
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
                 )
         );
     }
@@ -428,13 +326,115 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
+                        SERVER_URL,
+                        null,
                         METADATA,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT,
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullMetadataFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
+                        NOW,
+                        null,
+                        ENGINE,
+                        FRACTIONER,
+                        STORE_REPOSITORY,
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullEngineFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        SERVER_URL,
+                        NOW,
+                        METADATA,
+                        null,
+                        FRACTIONER,
+                        STORE_REPOSITORY,
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullFractionerFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        SERVER_URL,
+                        NOW,
+                        METADATA,
+                        ENGINE,
+                        null,
+                        STORE_REPOSITORY,
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullStoreRepositoryFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        SERVER_URL,
+                        NOW,
+                        METADATA,
+                        ENGINE,
+                        FRACTIONER,
+                        null,
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        SERVER_URL,
+                        NOW,
+                        METADATA,
+                        ENGINE,
+                        FRACTIONER,
+                        STORE_REPOSITORY,
+                        null,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        SERVER_URL,
+                        NOW,
+                        METADATA,
+                        ENGINE,
+                        FRACTIONER,
+                        STORE_REPOSITORY,
+                        SPREADSHEET_PROVIDER,
                         null
                 )
         );
@@ -926,7 +926,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "metadata={\n" +
+                "serverUrl=https://example.com/path123 \"\n" +
+                        "\" metadata={\n" +
                         "  \"cell-character-width\": 1,\n" +
                         "  \"clipboard-exporter\": \"json\",\n" +
                         "  \"clipboard-importer\": \"json\",\n" +
@@ -1120,9 +1121,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"viewport\": {\n" +
                         "    \"rectangle\": \"A1:100.0:100.0\"\n" +
                         "  }\n" +
-                        "}\n" +
-                        "fractioner=Fractioner123\n" +
-                        "serverUrl=https://example.com/path123"
+                        "}"
         );
     }
 
@@ -1139,7 +1138,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         metadata,
                         SpreadsheetLabelStores.treeMap()
                 ),
-                "metadata={\n" +
+                "serverUrl=https://example.com/path123 \"\n" +
+                        "\" metadata={\n" +
                         "  \"cell-character-width\": 1,\n" +
                         "  \"clipboard-exporter\": \"json\",\n" +
                         "  \"clipboard-importer\": \"json\",\n" +
@@ -1333,9 +1333,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"viewport\": {\n" +
                         "    \"rectangle\": \"A1:100.0:100.0\"\n" +
                         "  }\n" +
-                        "}\n" +
-                        "fractioner=Fractioner123\n" +
-                        "serverUrl=https://example.com/path123"
+                        "}"
         );
     }
 
@@ -1382,17 +1380,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
 
         return BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                NOW,
                 metadata,
-                SpreadsheetProviders.basic(
-                        CONVERTER_PROVIDER,
-                        EXPRESSION_FUNCTION_PROVIDER,
-                        SPREADSHEET_COMPARATOR_PROVIDER,
-                        SPREADSHEET_EXPORTER_PROVIDER,
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_IMPORTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER
-                ),
-                PROVIDER_CONTEXT,
                 ENGINE,
                 FRACTIONER,
                 new FakeSpreadsheetStoreRepository() {
@@ -1412,8 +1402,16 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         return labelStore;
                     }
                 },
-                SERVER_URL,
-                NOW
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER
+                ),
+                PROVIDER_CONTEXT
         );
     }
 
