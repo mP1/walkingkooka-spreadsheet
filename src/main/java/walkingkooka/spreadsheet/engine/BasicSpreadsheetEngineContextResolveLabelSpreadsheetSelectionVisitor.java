@@ -31,8 +31,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import java.util.Objects;
 
 /**
- * A {@link SpreadsheetSelectionVisitor} that resolves an {@link SpreadsheetSelection} to a {@link SpreadsheetSelection}
- * if it is a label..
+ * A {@link SpreadsheetSelectionVisitor} that handles all selections with special logic to resolve {@link SpreadsheetLabelName}
+ * to a non {@link SpreadsheetLabelName} result.
  */
 final class BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
