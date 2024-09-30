@@ -634,8 +634,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     // time-parse-pattern -> TIME_PARSER
     @Override
     public final Optional<SpreadsheetPatternKind> patternKind() {
-        final String name = this.value();
-
         SpreadsheetPatternKind kind;
         if (this instanceof SpreadsheetMetadataPropertyNameFormatter) {
             final SpreadsheetMetadataPropertyNameFormatter formatter = (SpreadsheetMetadataPropertyNameFormatter) this;
