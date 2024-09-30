@@ -132,10 +132,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 2000)
-            .set(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)"))
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS, ExpressionFunctionInfoSet.parse(""))
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
             .set(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)"))
+            .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)"))
             .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
             .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
             .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, NOW.get())
@@ -182,7 +182,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
-    SpreadsheetConverterContext SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT = METADATA_EN_AU.expressionSpreadsheetConverterContext(
+    SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.formulaSpreadsheetConverterContext(
             NOW,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
@@ -190,7 +190,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     SpreadsheetComparatorContext SPREADSHEET_COMPARATOR_CONTEXT = SpreadsheetComparatorContexts.basic(
-            SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT
+            SPREADSHEET_FORMULA_CONVERTER_CONTEXT
     );
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.formatterContext(

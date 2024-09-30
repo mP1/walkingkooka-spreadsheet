@@ -13390,7 +13390,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
                                 metadata,
-                                metadata.expressionSpreadsheetConverterContext(
+                                metadata.formulaSpreadsheetConverterContext(
                                         NOW,
                                         SPREADSHEET_LABEL_NAME_RESOLVER,
                                         CONVERTER_PROVIDER,
@@ -13414,7 +13414,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Url.parseAbsolute("http://server123"), // serverUrl
                                 this.references(), // references
                                 metadata, // metadata
-                                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                                 this.expressionFunctionProvider(),
                                 PROVIDER_CONTEXT
                         )
@@ -13588,7 +13588,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             private ConverterContext converterContext() {
                 final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-                return metadata.expressionSpreadsheetConverterContext(
+                return metadata.formulaSpreadsheetConverterContext(
                         NOW,
                         SPREADSHEET_LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(

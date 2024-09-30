@@ -72,7 +72,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 REFERENCES,
                 METADATA,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -86,7 +86,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 REFERENCES,
                 METADATA,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -100,7 +100,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 REFERENCES,
                 METADATA,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -114,7 +114,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 null,
                 METADATA,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -128,7 +128,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 REFERENCES,
                 null,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -157,7 +157,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 REFERENCES,
                 METADATA,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
         );
@@ -171,7 +171,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 REFERENCES,
                 METADATA,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 null
         );
@@ -420,7 +420,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 REFERENCES,
                 METADATA,
-                SPREADSHEET_EXPRESSION_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );

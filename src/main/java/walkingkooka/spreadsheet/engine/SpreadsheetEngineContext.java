@@ -86,7 +86,7 @@ public interface SpreadsheetEngineContext extends Context,
     default boolean evaluateAsBoolean(final Expression node,
                                       final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetMetadata()
-                .expressionSpreadsheetConverterContext(
+                .formulaSpreadsheetConverterContext(
                         this::now,
                         this, // SpreadsheetLabelNameResolver
                         this, // ConverterProvider

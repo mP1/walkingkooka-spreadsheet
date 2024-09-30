@@ -277,14 +277,14 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitExpressionConverter() {
+    public void testVisitFormulaConverter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitExpressionConverter(final ConverterSelector s) {
+            protected void visitFormulaConverter(final ConverterSelector s) {
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 ConverterSelector.parse("general")
         );
     }

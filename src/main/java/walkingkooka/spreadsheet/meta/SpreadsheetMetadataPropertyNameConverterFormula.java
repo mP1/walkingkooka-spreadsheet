@@ -24,27 +24,27 @@ import walkingkooka.convert.provider.ConverterSelector;
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link walkingkooka.convert.provider.ConverterSelector} used during
  * expression evaluation.
  */
-final class SpreadsheetMetadataPropertyNameConverterExpression extends SpreadsheetMetadataPropertyNameConverter {
+final class SpreadsheetMetadataPropertyNameConverterFormula extends SpreadsheetMetadataPropertyNameConverter {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameConverterExpression instance() {
-        return new SpreadsheetMetadataPropertyNameConverterExpression();
+    static SpreadsheetMetadataPropertyNameConverterFormula instance() {
+        return new SpreadsheetMetadataPropertyNameConverterFormula();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameConverterExpression() {
+    private SpreadsheetMetadataPropertyNameConverterFormula() {
         super(
-                "expression-converter"
+                "formula-converter"
         );
     }
 
     @Override
     void accept(final ConverterSelector selector,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitExpressionConverter(selector);
+        visitor.visitFormulaConverter(selector);
     }
 }

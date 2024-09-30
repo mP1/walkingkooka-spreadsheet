@@ -162,10 +162,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitExpressionConverter(final ConverterSelector selector) {
-        // nop
-    }
-
     protected void visitExpressionFunctions(final ExpressionFunctionInfoSet set) {
         // nop
     }
@@ -175,6 +171,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitFormatConverter(final ConverterSelector selector) {
+        // nop
+    }
+
+    protected void visitFormulaConverter(final ConverterSelector selector) {
         // nop
     }
 

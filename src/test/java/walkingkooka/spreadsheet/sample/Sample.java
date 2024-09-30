@@ -153,10 +153,10 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM").spreadsheetParserSelector())
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
                     .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
-                    .set(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-throwing, general)"))
                     .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                     .set(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-to-string, general)"))
+                    .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-throwing, general)"))
                     .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
                     .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
                     .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, ',')
@@ -254,7 +254,7 @@ public final class Sample {
                                 this.references(),
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
-                                metadata.expressionSpreadsheetConverterContext(
+                                metadata.formulaSpreadsheetConverterContext(
                                         NOW,
                                         LABEL_NAME_RESOLVER,
                                         converterProvider,

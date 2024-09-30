@@ -1734,7 +1734,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private void converterConvertAndCheck(final Object value,
                                           final Object expected) {
-        final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector = SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER;
+        final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(converterSelector);
 
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
@@ -1817,7 +1817,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         SPREADSHEET_PARSER_PROVIDER,
                         PROVIDER_CONTEXT
                 ),
-                metadata.expressionSpreadsheetConverterContext(
+                metadata.formulaSpreadsheetConverterContext(
                         NOW,
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -1840,7 +1840,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private final static char VALUE_SEPARATOR = '\'';
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithConverterAndConverterContext() {
-        return this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER)
+        return this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER)
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
@@ -2714,10 +2714,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
         properties.put(
-                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
-                ConverterSelector.parse("general")
-        );
-        properties.put(
                 SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
                 ExpressionFunctionInfoSet.with(Sets.empty())
         );
@@ -2725,6 +2721,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
         properties.put(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                ConverterSelector.parse("general")
+        );
+        properties.put(
+                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 ConverterSelector.parse("general")
         );
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));

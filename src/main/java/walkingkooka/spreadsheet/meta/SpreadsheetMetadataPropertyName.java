@@ -175,11 +175,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameExponentSymbol.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an expression.
-     */
-    public static final SpreadsheetMetadataPropertyName<ConverterSelector> EXPRESSION_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterExpression.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionInfoSet> EXPRESSION_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNamePluginExpressionFunctions.instance());
@@ -193,6 +188,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMAT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormat.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an expression.
+     */
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnRangeReference}</code>
