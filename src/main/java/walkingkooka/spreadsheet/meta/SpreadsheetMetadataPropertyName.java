@@ -191,6 +191,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliases}</code> which will be used to pick available functions within find expressions.
+     */
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliases> FIND_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFind.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMAT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormat.instance());
