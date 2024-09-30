@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.convert.provider.ConverterSelector;
 
-public final class SpreadsheetMetadataPropertyNameConverterExpressionTest extends SpreadsheetMetadataPropertyNameConverterTestCase<SpreadsheetMetadataPropertyNameConverterExpression> {
+public final class SpreadsheetMetadataPropertyNameConverterFormulaTest extends SpreadsheetMetadataPropertyNameConverterTestCase<SpreadsheetMetadataPropertyNameConverterFormula> {
 
     @Override
-    SpreadsheetMetadataPropertyNameConverterExpression createName() {
-        return SpreadsheetMetadataPropertyNameConverterExpression.instance();
+    SpreadsheetMetadataPropertyNameConverterFormula createName() {
+        return SpreadsheetMetadataPropertyNameConverterFormula.instance();
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class SpreadsheetMetadataPropertyNameConverterExpressionTest extend
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameConverterExpression> type() {
-        return SpreadsheetMetadataPropertyNameConverterExpression.class;
+    public Class<SpreadsheetMetadataPropertyNameConverterFormula> type() {
+        return SpreadsheetMetadataPropertyNameConverterFormula.class;
     }
 }

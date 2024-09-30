@@ -148,17 +148,17 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitExpressionConverter(final ConverterSelector selector) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitExpressionFunctions(final ExpressionFunctionInfoSet set) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visitExpressionNumberKind(final ExpressionNumberKind expressionNumberKind) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitFormulaConverter(final ConverterSelector selector) {
         throw new UnsupportedOperationException();
     }
 

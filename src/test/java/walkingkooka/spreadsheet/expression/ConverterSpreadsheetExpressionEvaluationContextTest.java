@@ -99,7 +99,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, 0L)
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
-            .set(SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER, ConverterSelector.parse("general"))
+            .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("general"))
             .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
@@ -521,7 +521,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         SERVER_URL,
                         REFERENCES,
                         METADATA,
-                        METADATA.expressionSpreadsheetConverterContext(
+                        METADATA.formulaSpreadsheetConverterContext(
                                 LocalDateTime::now,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,

@@ -576,7 +576,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.converter(
-                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -588,7 +588,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.converter(
-                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         ConverterProviders.fake(),
                         null
                 )
@@ -596,23 +596,23 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testConverterWithMissingPropertyFails() {
+    public void testFormulaConverterWithMissingPropertyFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.converter(
-                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         ConverterProviders.fake(),
                         PROVIDER_CONTEXT
                 )
         );
         this.checkEquals(
-                "Required properties \"expression-converter\" missing.",
+                "Required properties \"formula-converter\" missing.",
                 thrown.getMessage()
         );
     }
 
     @Test
-    public void testConverter() {
+    public void testFormulaConverter() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(
                         SpreadsheetMetadataPropertyName.LOCALE,
@@ -621,7 +621,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         final Converter<SpreadsheetConverterContext> converter = metadata
                 .converter(
-                        SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
                                 spreadsheetFormatterProvider(),

@@ -39,8 +39,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testExpressionConverterContext() {
-        METADATA_EN_AU.expressionSpreadsheetConverterContext(
+    public void testFormulaConverterContext() {
+        METADATA_EN_AU.formulaSpreadsheetConverterContext(
                 LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();

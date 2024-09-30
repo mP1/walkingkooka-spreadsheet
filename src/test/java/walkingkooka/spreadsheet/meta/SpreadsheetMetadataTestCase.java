@@ -443,12 +443,12 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
-    public final void testExpressionConverterWithNullConverterProviderFails() {
+    public final void testFormulaConverterWithNullConverterProviderFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createObject()
                         .converter(
-                                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 null,
                                 PROVIDER_CONTEXT
                         )
@@ -456,12 +456,12 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
-    public final void testExpressionConverterWithNullProviderContextFails() {
+    public final void testFormulaConverterWithNullProviderContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createObject()
                         .converter(
-                                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 ConverterProviders.fake(),
                                 null
                         )
@@ -470,19 +470,19 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
 
     @Test
-    public final void testExpressionConverterRequiredPropertiesAbsentFails() {
+    public final void testFormulaConverterRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> this.createObject()
                         .converter(
-                                SpreadsheetMetadataPropertyName.EXPRESSION_CONVERTER,
+                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 ConverterProviders.fake(),
                                 PROVIDER_CONTEXT
                         )
         );
         checkMessage(
                 thrown,
-                "Required properties \"expression-converter\" missing."
+                "Required properties \"formula-converter\" missing."
         );
     }
 
