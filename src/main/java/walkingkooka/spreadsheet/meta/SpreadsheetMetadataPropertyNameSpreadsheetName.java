@@ -74,11 +74,6 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
-    }
-
-    @Override
     public SpreadsheetName parseUrlFragmentSaveValue0(final String value) {
         return SpreadsheetName.with(value);
     }

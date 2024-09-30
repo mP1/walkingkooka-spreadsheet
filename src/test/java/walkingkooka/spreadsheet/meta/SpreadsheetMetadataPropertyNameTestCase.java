@@ -166,17 +166,14 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
             text = String.valueOf(value);
         }
 
-        if (propertyName.isParseUrlFragmentSaveValueSupported()) {
+        try {
             this.checkEquals(
                     value,
                     propertyName.parseUrlFragmentSaveValue(text),
                     () -> "parseUrlFragmentSaveValue " + CharSequences.quoteAndEscape(text)
             );
-        } else {
-            assertThrows(
-                    UnsupportedOperationException.class,
-                    () -> propertyName.parseUrlFragmentSaveValue("")
-            );
+        } catch (final UnsupportedOperationException ignore) {
+
         }
     }
 

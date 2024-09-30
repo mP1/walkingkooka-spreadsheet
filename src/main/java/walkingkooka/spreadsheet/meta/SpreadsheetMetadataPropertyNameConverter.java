@@ -65,11 +65,6 @@ abstract class SpreadsheetMetadataPropertyNameConverter extends SpreadsheetMetad
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
-    }
-
-    @Override
     public final ConverterSelector parseUrlFragmentSaveValue0(final String value) {
         return ConverterSelector.parse(value);
     }

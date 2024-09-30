@@ -59,11 +59,6 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
-    }
-
-    @Override
     public final LocalDateTime parseUrlFragmentSaveValue0(final String value) {
         return LocalDateTime.parse(value);
     }

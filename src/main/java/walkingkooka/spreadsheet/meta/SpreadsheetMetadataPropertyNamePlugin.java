@@ -55,12 +55,4 @@ abstract class SpreadsheetMetadataPropertyNamePlugin<S extends PluginInfoSetLike
     final Optional<S> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
-
-    /**
-     * The parse value is the PLUGIN-NAME SPACE ABSOLUTE_URL.
-     */
-    @Override
-    public final boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
-    }
 }

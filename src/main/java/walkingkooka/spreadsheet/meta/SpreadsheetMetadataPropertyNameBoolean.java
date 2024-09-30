@@ -60,11 +60,6 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final boolean isParseUrlFragmentSaveValueSupported() {
-        return true;
-    }
-
-    @Override
     public final Boolean parseUrlFragmentSaveValue0(final String value) {
         return Boolean.valueOf(value);
     }
