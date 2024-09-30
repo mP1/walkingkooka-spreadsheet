@@ -45,7 +45,10 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceMissingStoreException;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
@@ -120,6 +123,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         this.metadata = metadata;
 
+        this.labelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
+                storeRepository.labels()
+        );
+
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
 
@@ -151,12 +158,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return BasicSpreadsheetEngineContextResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
-                labelName,
-                this.storeRepository()
-                        .labels()
-        );
+        try {
+            return this.labelNameResolver.resolveLabel(labelName);
+        } catch (final IllegalArgumentException notFound) {
+            // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/5180
+            throw new SpreadsheetExpressionReferenceMissingStoreException(
+                    notFound.getMessage(),
+                    labelName
+            );
+        }
     }
+
+    private final SpreadsheetLabelNameResolver labelNameResolver;
 
     // SpreadsheetProvider..............................................................................................
 
