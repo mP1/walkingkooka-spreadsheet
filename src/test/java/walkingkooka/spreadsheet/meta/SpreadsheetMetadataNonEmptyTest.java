@@ -2700,6 +2700,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetImporterSelector.parse("json")
         );
         properties.put(
+                SpreadsheetMetadataPropertyName.COMPARATORS,
+                SpreadsheetComparatorProviders.spreadsheetComparators().spreadsheetComparatorInfos()
+        );
+        properties.put(
                 SpreadsheetMetadataPropertyName.CONVERTERS,
                 ConverterInfoSet.parse(SpreadsheetConvertersConverterProviders.BASE_URL + "/General general")
         );
@@ -2713,8 +2717,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
-        properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
+        properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
+        properties.put(
+                SpreadsheetMetadataPropertyName.EXPORTERS,
+                SpreadsheetExporterInfoSet.EMPTY
+        );
         properties.put(
                 SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
                 ConverterSelector.parse("find-something-something")
@@ -2722,6 +2730,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                 ConverterSelector.parse("general")
+        );
+        properties.put(
+                SpreadsheetMetadataPropertyName.FORMATTERS,
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                        .spreadsheetFormatterInfos()
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -2737,15 +2750,23 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
                 ExpressionFunctionInfoSet.with(Sets.empty())
         );
+        properties.put(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8);
         properties.put(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES, true);
+        properties.put(
+                SpreadsheetMetadataPropertyName.IMPORTERS,
+                SpreadsheetImporterInfoSet.EMPTY
+        );
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN);
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
-        properties.put(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8);
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#0.0;$#0.00").spreadsheetParserSelector());
+        properties.put(
+                SpreadsheetMetadataPropertyName.PARSERS,
+                SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
+        );
         properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT);
         properties.put(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN);
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
@@ -2758,29 +2779,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.SORT_CONVERTER,
                 ConverterSelector.parse("general")
         );
-        properties.put(
-                SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorProviders.spreadsheetComparators().spreadsheetComparatorInfos()
-        );
-        properties.put(
-                SpreadsheetMetadataPropertyName.EXPORTERS,
-                SpreadsheetExporterInfoSet.EMPTY
-        );
-        properties.put(
-                SpreadsheetMetadataPropertyName.FORMATTERS,
-                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        .spreadsheetFormatterInfos()
-        );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
-        properties.put(
-                SpreadsheetMetadataPropertyName.IMPORTERS,
-                SpreadsheetImporterInfoSet.EMPTY
-        );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
-        properties.put(
-                SpreadsheetMetadataPropertyName.PARSERS,
-                SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
-        );
         properties.put(SpreadsheetMetadataPropertyName.STYLE,
                 TextStyle.EMPTY
                         .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
