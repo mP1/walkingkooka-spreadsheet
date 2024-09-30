@@ -71,7 +71,7 @@
   "expression-number-kind": "BIG_DECIMAL",
   "format-converter": "collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)",
   "formula-converter": "collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)",
-  "formula-expression-functions": "",
+  "formula-functions": "",
   "general-number-format-digit-count": 9,
   "hide-zero-values": false,
   "precision": 10,
