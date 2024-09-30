@@ -506,6 +506,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 value);
     }
 
+    abstract Class<T> type();
+
     /**
      * Provides the specific text about an invalid value for {@link #spreadsheetMetadataPropertyValueException(Object)}.
      */
@@ -733,8 +735,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
         return value;
     }
-
-    abstract Class<T> type();
 
     // JsonNode.........................................................................................................
 
