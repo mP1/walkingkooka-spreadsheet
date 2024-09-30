@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionFormula extends Spr
      */
     private SpreadsheetMetadataPropertyNameExpressionFunctionFormula() {
         super(
-                "formula-expression-functions"
+                "formula-functions"
         );
     }
 

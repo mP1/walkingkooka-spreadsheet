@@ -176,11 +176,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameExponentSymbol.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionInfoSet> EXPRESSION_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNamePluginExpressionFunctions.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>expression-number-kind {@link walkingkooka.tree.expression.ExpressionNumberKind}</code>
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
@@ -198,7 +193,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliases}</code> which will be used to pick available functions within formulas.
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliases> FORMULA_EXPRESSION_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFormula.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliases> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnRangeReference}</code>
@@ -209,6 +204,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-rows {@link .SpreadsheetRow}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetRowRangeReference> FROZEN_ROWS = registerConstant(SpreadsheetMetadataPropertyNameFrozenRows.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionInfoSet> FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNamePluginExpressionFunctions.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>general-number-format-digit-count {@link Integer}</code>

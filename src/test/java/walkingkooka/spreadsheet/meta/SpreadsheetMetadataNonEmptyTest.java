@@ -2713,10 +2713,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
-        properties.put(
-                SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
-                ExpressionFunctionInfoSet.with(Sets.empty())
-        );
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
         properties.put(
@@ -2728,11 +2724,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterSelector.parse("general")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.FORMULA_EXPRESSION_FUNCTIONS,
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 ConverterSelector.parse("hello")
         );
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"));
+        properties.put(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                ExpressionFunctionInfoSet.with(Sets.empty())
+        );
         properties.put(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR);
         properties.put(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES, true);
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);

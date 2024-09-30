@@ -163,10 +163,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitExpressionFunctions(final ExpressionFunctionInfoSet set) {
-        // nop
-    }
-
     protected void visitExpressionNumberKind(final ExpressionNumberKind expressionNumberKind) {
         // nop
     }
@@ -188,6 +184,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitFrozenRows(final SpreadsheetRowRangeReference range) {
+        // nop
+    }
+
+    protected void visitFunctions(final ExpressionFunctionInfoSet set) {
         // nop
     }
 
