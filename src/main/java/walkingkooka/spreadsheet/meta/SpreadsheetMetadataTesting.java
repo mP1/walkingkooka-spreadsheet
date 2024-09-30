@@ -123,6 +123,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .loadFromLocale()
             .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 1)
             .set(
+                    SpreadsheetMetadataPropertyName.COMPARATORS,
+                    SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
+            ).set(
                     SpreadsheetMetadataPropertyName.CONVERTERS,
                     CONVERTER_PROVIDER.converterInfos()
             ).set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
@@ -133,17 +136,29 @@ public interface SpreadsheetMetadataTesting extends Testing {
             .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 2000)
-            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+            .set(
+                    SpreadsheetMetadataPropertyName.EXPORTERS,
+                    SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
+            ).set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
             .set(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)"))
-            .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)"))
+            .set(
+                    SpreadsheetMetadataPropertyName.FORMATTERS,
+                    SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
+            ).set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)"))
             .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, ExpressionFunctionAliases.parse(""))
             .set(SpreadsheetMetadataPropertyName.FUNCTIONS, ExpressionFunctionInfoSet.parse(""))
             .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
-            .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
+            .set(
+                    SpreadsheetMetadataPropertyName.IMPORTERS,
+                    SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
+            ).set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
             .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, NOW.get())
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+            .set(
+                    SpreadsheetMetadataPropertyName.PARSERS,
+                    SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
+            ).set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
             .set(
                     SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
@@ -151,21 +166,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.SORT_CONVERTER,
                     ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)")
-            ).set(
-                    SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
-                    SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
-            ).set(
-                    SpreadsheetMetadataPropertyName.SPREADSHEET_EXPORTERS,
-                    SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
-            ).set(
-                    SpreadsheetMetadataPropertyName.SPREADSHEET_FORMATTERS,
-                    SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
-            ).set(
-                    SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
-                    SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
-            ).set(
-                    SpreadsheetMetadataPropertyName.SPREADSHEET_PARSERS,
-                    SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
             ).set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                     .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
                     .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))

@@ -89,6 +89,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitComparators(final SpreadsheetComparatorInfoSet value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitConverters(final ConverterInfoSet converters) {
         throw new UnsupportedOperationException();
     }
@@ -149,12 +154,22 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitExporters(final SpreadsheetExporterInfoSet value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitFunctions(final ExpressionFunctionInfoSet set) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visitExpressionNumberKind(final ExpressionNumberKind expressionNumberKind) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitFormatters(final SpreadsheetFormatterInfoSet value) {
         throw new UnsupportedOperationException();
     }
 
@@ -195,6 +210,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitHideZeroValues(final boolean value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitImporters(final SpreadsheetImporterInfoSet value) {
         throw new UnsupportedOperationException();
     }
 
@@ -240,6 +260,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitParsers(final SpreadsheetParserInfoSet infos) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitPercentageSymbol(final char percentageSymbol) {
         throw new UnsupportedOperationException();
     }
@@ -270,37 +295,12 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitSpreadsheetComparators(final SpreadsheetComparatorInfoSet value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitSpreadsheetExporters(final SpreadsheetExporterInfoSet value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitSpreadsheetFormatters(final SpreadsheetFormatterInfoSet value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitSpreadsheetId(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitSpreadsheetImporters(final SpreadsheetImporterInfoSet value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitSpreadsheetName(final SpreadsheetName name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitSpreadsheetParsers(final SpreadsheetParserInfoSet infos) {
         throw new UnsupportedOperationException();
     }
 

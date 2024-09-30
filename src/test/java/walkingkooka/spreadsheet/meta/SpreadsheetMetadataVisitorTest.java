@@ -540,11 +540,11 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitSpreadsheetImporters() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitSpreadsheetImporters(final SpreadsheetImporterInfoSet s) {
+            protected void visitImporters(final SpreadsheetImporterInfoSet s) {
                 this.visited = s;
             }
         }.accept(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_IMPORTERS,
+                SpreadsheetMetadataPropertyName.IMPORTERS,
                 SpreadsheetImporterInfoSet.EMPTY
         );
     }

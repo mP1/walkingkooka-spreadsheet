@@ -116,6 +116,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterSelector> CLIPBOARD_IMPORTER = registerConstant(SpreadsheetMetadataPropertyNameClipboardImporter.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorInfoSet> COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterInfoSet}</code>
      */
     public static final SpreadsheetMetadataPropertyName<ConverterInfoSet> CONVERTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginConverters.instance());
@@ -176,6 +181,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameExponentSymbol.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetExporterInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterInfoSet> EXPORTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>expression-number-kind {@link walkingkooka.tree.expression.ExpressionNumberKind}</code>
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
@@ -184,6 +194,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMAT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormat.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterInfoSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an expression.
@@ -226,6 +241,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Boolean> HIDE_ZERO_VALUES = registerConstant(SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetImporterInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterInfoSet> IMPORTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetImporters.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Locale> LOCALE = registerConstant(SpreadsheetMetadataPropertyNameLocale.instance());
@@ -254,6 +274,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parser</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> NUMBER_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserNumber.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetParserInfoSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserInfoSet> PARSERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
@@ -286,39 +311,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> SORT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSort.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorInfoSet}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorInfoSet> SPREADSHEET_COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetExporterInfoSet}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterInfoSet> SPREADSHEET_EXPORTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterInfoSet> SPREADSHEET_FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetId.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetImporterInfoSet}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterInfoSet> SPREADSHEET_IMPORTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetImporters.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-name {@link SpreadsheetName}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetName> SPREADSHEET_NAME = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetName.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetParserInfoSet}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserInfoSet> SPREADSHEET_PARSERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers.instance());
     
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>style {@link walkingkooka.tree.text.TextStyle}</code>

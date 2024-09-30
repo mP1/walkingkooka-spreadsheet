@@ -42,13 +42,13 @@ final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers extends Spre
      * Private ctor use getter.
      */
     private SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers() {
-        super("spreadsheet-parsers");
+        super("parsers");
     }
 
     @Override
     void accept(final SpreadsheetParserInfoSet value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitSpreadsheetParsers(value);
+        visitor.visitParsers(value);
     }
 
     @Override
