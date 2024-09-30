@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -54,7 +53,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     // SpreadsheetLabelNameResolverTesting..............................................................................
 
     @Override
-    default SpreadsheetLabelNameResolver spreadsheetLabelNameResolver() {
+    default C createSpreadsheetLabelNameResolver() {
         return this.createContext();
     }
 

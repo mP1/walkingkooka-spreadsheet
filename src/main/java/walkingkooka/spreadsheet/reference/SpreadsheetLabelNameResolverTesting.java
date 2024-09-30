@@ -22,13 +22,13 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTesting {
+public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelNameResolver> extends TreePrintableTesting {
 
     @Test
     default void testResolveIfLabelWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.spreadsheetLabelNameResolver()
+                () -> this.createSpreadsheetLabelNameResolver()
                         .resolveIfLabel(null)
         );
     }
@@ -78,7 +78,7 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
     default void resolveIfLabelAndCheck(final SpreadsheetSelection selection,
                                         final SpreadsheetSelection expected) {
         this.resolveIfLabelAndCheck(
-                this.spreadsheetLabelNameResolver(),
+                this.createSpreadsheetLabelNameResolver(),
                 selection,
                 expected
         );
@@ -98,7 +98,7 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
 
     default void resolveIfLabelFails(final SpreadsheetSelection selection) {
         this.resolveIfLabelFails(
-                this.spreadsheetLabelNameResolver(),
+                this.createSpreadsheetLabelNameResolver(),
                 selection
         );
     }
@@ -118,7 +118,7 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
     default void testResolveLabelWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.spreadsheetLabelNameResolver()
+                () -> this.createSpreadsheetLabelNameResolver()
                         .resolveLabel(null)
         );
     }
@@ -134,7 +134,7 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
     default void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
                                       final SpreadsheetSelection expected) {
         this.resolveLabelAndCheck(
-                this.spreadsheetLabelNameResolver(),
+                this.createSpreadsheetLabelNameResolver(),
                 labelName,
                 expected
         );
@@ -170,7 +170,7 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
 
     default void resolveLabelFails(final SpreadsheetLabelName labelName) {
         this.resolveLabelFails(
-                this.spreadsheetLabelNameResolver(),
+                this.createSpreadsheetLabelNameResolver(),
                 labelName
         );
     }
@@ -192,7 +192,7 @@ public interface SpreadsheetLabelNameResolverTesting extends TreePrintableTestin
         );
     }
 
-    // spreadsheetLabelNameResolver.....................................................................................
+    // createSpreadsheetLabelNameResolver.....................................................................................
 
-    SpreadsheetLabelNameResolver spreadsheetLabelNameResolver();
+    R createSpreadsheetLabelNameResolver();
 }
