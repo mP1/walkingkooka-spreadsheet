@@ -171,15 +171,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetLabelNameResolver labelNameResolver;
 
-    // SpreadsheetProvider..............................................................................................
-
-    @Override
-    public SpreadsheetProvider spreadsheetProvider() {
-        return this.spreadsheetProvider;
-    }
-
-    private final SpreadsheetProvider spreadsheetProvider;
-
     // parsing formula and executing.....................................................................................
 
     @Override
@@ -449,6 +440,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     private final SpreadsheetStoreRepository storeRepository;
+
+    // SpreadsheetProvider..............................................................................................
+
+    @Override
+    public SpreadsheetProvider spreadsheetProvider() {
+        return this.spreadsheetProvider;
+    }
+
+    private final SpreadsheetProvider spreadsheetProvider;
 
     // ProviderContextDelegator.........................................................................................
 
