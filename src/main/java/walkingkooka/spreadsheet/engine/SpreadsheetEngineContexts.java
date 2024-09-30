@@ -35,23 +35,23 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
-                                                 final SpreadsheetProvider spreadsheetProvider,
-                                                 final ProviderContext providerContext,
+    public static SpreadsheetEngineContext basic(final AbsoluteUrl serverUrl,
+                                                 final Supplier<LocalDateTime> now,
+                                                 final SpreadsheetMetadata metadata,
                                                  final SpreadsheetEngine engine,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetStoreRepository storeRepository,
-                                                 final AbsoluteUrl serverUrl,
-                                                 final Supplier<LocalDateTime> now) {
+                                                 final SpreadsheetProvider spreadsheetProvider,
+                                                 final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
+                serverUrl,
+                now,
                 metadata,
-                spreadsheetProvider,
-                providerContext,
                 engine,
                 fractioner,
                 storeRepository,
-                serverUrl,
-                now
+                spreadsheetProvider,
+                providerContext
         );
     }
 

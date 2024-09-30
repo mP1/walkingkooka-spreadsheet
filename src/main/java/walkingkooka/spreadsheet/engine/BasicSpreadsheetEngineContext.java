@@ -79,49 +79,61 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
-                                              final SpreadsheetProvider spreadsheetProvider,
-                                              final ProviderContext providerContext,
+    static BasicSpreadsheetEngineContext with(final AbsoluteUrl serverUrl,
+                                              final Supplier<LocalDateTime> now,
+                                              final SpreadsheetMetadata metadata,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetStoreRepository storeRepository,
-                                              final AbsoluteUrl serverUrl,
-                                              final Supplier<LocalDateTime> now) {
+                                              final SpreadsheetProvider spreadsheetProvider,
+                                              final ProviderContext providerContext) {
+        Objects.requireNonNull(serverUrl, "serverUrl");
+        Objects.requireNonNull(now, "now");
         Objects.requireNonNull(metadata, "metadata");
-        Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
-        Objects.requireNonNull(providerContext, "providerContext");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(storeRepository, "storeRepository");
-        Objects.requireNonNull(serverUrl, "serverUrl");
-        Objects.requireNonNull(now, "now");
+        Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
+        Objects.requireNonNull(providerContext, "providerContext");
+
 
         return new BasicSpreadsheetEngineContext(
+                serverUrl,
+                now,
                 metadata,
-                spreadsheetProvider,
-                providerContext,
                 engine,
                 fractioner,
                 storeRepository,
-                serverUrl,
-                now
+                spreadsheetProvider,
+                providerContext
         );
     }
 
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
-                                          final SpreadsheetProvider spreadsheetProvider,
-                                          final ProviderContext providerContext,
+    private BasicSpreadsheetEngineContext(final AbsoluteUrl serverUrl,
+                                          final Supplier<LocalDateTime> now,
+                                          final SpreadsheetMetadata metadata,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetStoreRepository storeRepository,
-                                          final AbsoluteUrl serverUrl,
-                                          final Supplier<LocalDateTime> now) {
+                                          final SpreadsheetProvider spreadsheetProvider,
+                                          final ProviderContext providerContext) {
         super();
 
+        this.serverUrl = serverUrl;
+        this.now = now;
+
         this.metadata = metadata;
+
+        this.referenceFunction = SpreadsheetEnginesExpressionReferenceFunction.with(
+                engine,
+                this
+        );
+
+        this.fractioner = fractioner;
+        this.storeRepository = storeRepository;
 
         this.labelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
                 storeRepository.labels()
@@ -131,18 +143,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.providerContext = providerContext;
 
         this.parserContext = metadata.parserContext(now);
-
-        this.referenceFunction = SpreadsheetEnginesExpressionReferenceFunction.with(
-                engine,
-                this
-        );
-
-        this.fractioner = fractioner;
-
-        this.storeRepository = storeRepository;
-        this.serverUrl = serverUrl;
-
-        this.now = now;
     }
 
     // metadata........................................................................................................
@@ -441,15 +441,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         );
     }
 
-    // ProviderContextDelegator.........................................................................................
-
-    @Override
-    public ProviderContext providerContext() {
-        return this.providerContext;
-    }
-
-    private final ProviderContext providerContext;
-
     // Store............................................................................................................
 
     @Override
@@ -459,6 +450,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetStoreRepository storeRepository;
 
+    // ProviderContextDelegator.........................................................................................
+
+    @Override
+    public ProviderContext providerContext() {
+        return this.providerContext;
+    }
+
+    private final ProviderContext providerContext;
+
     // Object...........................................................................................................
 
     @Override
@@ -466,12 +466,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return ToStringBuilder.empty()
                 .globalLength(Integer.MAX_VALUE)
                 .valueLength(Integer.MAX_VALUE)
+                .label("serverUrl").value(this.serverUrl)
+                .value(LineEnding.NL)
                 .label("metadata")
                 .value(this.metadata)
-                .append(LineEnding.SYSTEM)
-                .label("fractioner").value(this.fractioner)
-                .append(LineEnding.SYSTEM)
-                .label("serverUrl").value(this.serverUrl)
                 .build();
     }
 }
