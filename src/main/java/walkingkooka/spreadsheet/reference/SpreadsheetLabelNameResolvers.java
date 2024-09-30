@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 
 /**
  * A collection of {@link SpreadsheetLabelNameResolver} factory methods
@@ -31,6 +32,16 @@ public final class SpreadsheetLabelNameResolvers implements PublicStaticHelper {
         return new FakeSpreadsheetLabelNameResolver();
     }
 
+    /**
+     * {@see SpreadsheetLabelStoreSpreadsheetLabelNameResolver}
+     */
+    public static SpreadsheetLabelNameResolver labelStore(final SpreadsheetLabelStore labelStore) {
+        return SpreadsheetLabelStoreSpreadsheetLabelNameResolver.with(labelStore);
+    }
+
+    /**
+     * Stop creation
+     */
     private SpreadsheetLabelNameResolvers() {
         throw new UnsupportedOperationException();
     }
