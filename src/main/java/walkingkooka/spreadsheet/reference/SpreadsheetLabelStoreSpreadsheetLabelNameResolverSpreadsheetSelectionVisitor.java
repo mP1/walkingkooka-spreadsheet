@@ -66,7 +66,7 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverSpreadsheetSelectio
     protected void visit(final SpreadsheetLabelName label) {
         this.accept(
                 this.store.load(label)
-                        .orElseThrow(() -> new IllegalArgumentException("Unknown label " + label))
+                        .orElseThrow(() -> new IllegalArgumentException("Label not found: " + label))
                         .target()
         );
     }
