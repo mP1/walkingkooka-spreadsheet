@@ -175,6 +175,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitFindFunctions(final ExpressionFunctionAliases aliases) {
+        // nop
+    }
+
     protected void visitFormatConverter(final ConverterSelector selector) {
         // nop
     }

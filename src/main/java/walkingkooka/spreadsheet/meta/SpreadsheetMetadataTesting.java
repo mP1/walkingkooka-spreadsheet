@@ -140,6 +140,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.EXPORTERS,
                     SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
             ).set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+            .set(SpreadsheetMetadataPropertyName.FIND_FUNCTIONS, ExpressionFunctionAliases.parse(""))
             .set(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)"))
             .set(
                     SpreadsheetMetadataPropertyName.FORMATTERS,

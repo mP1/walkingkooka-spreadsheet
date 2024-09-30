@@ -1039,6 +1039,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\"\n" +
                         "  ],\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
+                        "  \"find-functions\": \"\",\n" +
                         "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\",\n" +
@@ -1252,6 +1253,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\"\n" +
                         "  ],\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
+                        "  \"find-functions\": \"\",\n" +
                         "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": [\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\",\n" +

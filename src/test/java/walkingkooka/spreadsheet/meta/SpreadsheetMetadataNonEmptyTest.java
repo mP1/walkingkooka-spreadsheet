@@ -2716,6 +2716,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL);
         properties.put(
+                SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+                ConverterSelector.parse("find-something-something")
+        );
+        properties.put(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                 ConverterSelector.parse("general")
         );
