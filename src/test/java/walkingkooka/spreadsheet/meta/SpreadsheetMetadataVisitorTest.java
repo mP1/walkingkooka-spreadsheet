@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
@@ -286,6 +287,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 ConverterSelector.parse("general")
+        );
+    }
+
+    @Test
+    public void testVisitFormulaExpressionFunctions() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormulaExpressionFunctions(final ExpressionFunctionAliases a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FORMULA_EXPRESSION_FUNCTIONS,
+                ExpressionFunctionAliases.parse("abs")
         );
     }
 

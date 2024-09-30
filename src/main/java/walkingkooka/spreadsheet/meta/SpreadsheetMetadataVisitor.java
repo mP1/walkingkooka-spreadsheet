@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
@@ -175,6 +176,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitFormulaConverter(final ConverterSelector selector) {
+        // nop
+    }
+
+    protected void visitFormulaExpressionFunctions(final ExpressionFunctionAliases aliases) {
         // nop
     }
 

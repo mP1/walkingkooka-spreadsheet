@@ -2727,6 +2727,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 ConverterSelector.parse("general")
         );
+        properties.put(
+                SpreadsheetMetadataPropertyName.FORMULA_EXPRESSION_FUNCTIONS,
+                ConverterSelector.parse("hello")
+        );
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"));
         properties.put(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR);

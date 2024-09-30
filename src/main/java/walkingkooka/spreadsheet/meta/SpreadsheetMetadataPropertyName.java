@@ -57,6 +57,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -193,6 +194,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an expression.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormula.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliases}</code> which will be used to pick available functions within formulas.
+     */
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliases> FORMULA_EXPRESSION_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnRangeReference}</code>
@@ -740,6 +746,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         ConverterSelector.parse("Dummy");
         EmailAddress.tryParse("user@example.com");
         ExpressionNumberKind.DEFAULT.name();
+        ExpressionFunctionAliases.parse("hello");
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
         SpreadsheetComparatorNameList.parse(
