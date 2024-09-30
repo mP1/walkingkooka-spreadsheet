@@ -42,13 +42,13 @@ final class SpreadsheetMetadataPropertyNamePluginExpressionFunctions extends Spr
      * Private ctor use getter.
      */
     private SpreadsheetMetadataPropertyNamePluginExpressionFunctions() {
-        super("expression-functions");
+        super("functions");
     }
 
     @Override
     void accept(final ExpressionFunctionInfoSet value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitExpressionFunctions(value);
+        visitor.visitFunctions(value);
     }
 
     @Override

@@ -798,7 +798,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         };
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
                 ExpressionFunctionInfoSet.parse("https://example/ExpressionFunctions/test-function-111 sin,https://example/ExpressionFunctions/test-function-22 sum")
         );
 

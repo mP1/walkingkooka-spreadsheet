@@ -149,7 +149,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitExpressionFunctions(final ExpressionFunctionInfoSet set) {
+    protected void visitFunctions(final ExpressionFunctionInfoSet set) {
         throw new UnsupportedOperationException();
     }
 

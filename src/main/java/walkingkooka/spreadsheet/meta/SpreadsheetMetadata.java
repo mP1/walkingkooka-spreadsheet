@@ -728,14 +728,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Returns a {@link ExpressionFunctionProvider} that only contains the selected {@link walkingkooka.tree.expression.function.ExpressionFunction}
-     * in {@link SpreadsheetMetadataPropertyName#EXPRESSION_FUNCTIONS}
+     * in {@link SpreadsheetMetadataPropertyName#FUNCTIONS}
      */
     public final ExpressionFunctionProvider expressionFunctionProvider(final ExpressionFunctionProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final ExpressionFunctionInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS);
+        final ExpressionFunctionInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
 
         components.reportIfMissing();
 
@@ -1371,7 +1371,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         SpreadsheetParserProviders.fake()
                 ).converterInfos()
         ).set(
-                SpreadsheetMetadataPropertyName.EXPRESSION_FUNCTIONS,
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
                 ExpressionFunctionInfoSet.EMPTY
         ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_COMPARATORS,
