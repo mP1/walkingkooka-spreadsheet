@@ -42,7 +42,7 @@ final class FilteredSpreadsheetParserProvider implements SpreadsheetParserProvid
                                               final SpreadsheetParserInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
                 infos.names(),
-                (n) -> new IllegalArgumentException("Unknown parser " + n)
+                SpreadsheetParserPluginHelper.INSTANCE
         );
 
         this.provider = provider;

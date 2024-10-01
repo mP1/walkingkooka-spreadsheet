@@ -44,7 +44,7 @@ final class MergedMappedSpreadsheetExporterProvider implements SpreadsheetExport
         this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetExporterInfos(),
-                (n) -> new IllegalArgumentException("Unknown exporter " + n)
+                SpreadsheetExporterPluginHelper.INSTANCE
         );
         this.provider = provider;
     }

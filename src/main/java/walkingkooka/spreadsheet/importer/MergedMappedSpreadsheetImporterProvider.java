@@ -45,7 +45,7 @@ final class MergedMappedSpreadsheetImporterProvider implements SpreadsheetImport
         this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetImporterInfos(),
-                (n) -> new IllegalArgumentException("Unknown importer " + n)
+                SpreadsheetImporterPluginHelper.INSTANCE
         );
     }
 

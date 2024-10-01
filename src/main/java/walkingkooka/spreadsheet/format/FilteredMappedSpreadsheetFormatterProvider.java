@@ -47,7 +47,7 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetFormatterInfos(),
-                (n) -> new IllegalArgumentException("Unknown formatter " + n)
+                SpreadsheetFormatterPluginHelper.INSTANCE
         );
     }
 

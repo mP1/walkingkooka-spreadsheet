@@ -39,6 +39,11 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
     }
 
     /**
+     * The minimum valid length
+     */
+    public final static int MIN_LENGTH = 1;
+
+    /**
      * The maximum valid length
      */
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;

@@ -40,7 +40,7 @@ final class FilteredSpreadsheetExporterProvider implements SpreadsheetExporterPr
                                                 final SpreadsheetExporterInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
                 infos.names(),
-                (n) -> new IllegalArgumentException("Unknown exporter " + n)
+                SpreadsheetExporterPluginHelper.INSTANCE
         );
 
         this.provider = provider;

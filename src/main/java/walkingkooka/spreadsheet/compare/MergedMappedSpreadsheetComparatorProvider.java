@@ -43,7 +43,7 @@ final class MergedMappedSpreadsheetComparatorProvider implements SpreadsheetComp
         this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetComparatorInfos(),
-                (n) -> new IllegalArgumentException("Unknown comparator " + n)
+                SpreadsheetComparatorPluginHelper.INSTANCE
         );
         this.provider = provider;
     }

@@ -39,7 +39,7 @@ final class FilteredSpreadsheetComparatorProvider implements SpreadsheetComparat
                                                   final SpreadsheetComparatorInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
                 infos.names(),
-                (n) -> new IllegalArgumentException("Unknown comparator " + n)
+                SpreadsheetComparatorPluginHelper.INSTANCE
         );
 
         this.provider = provider;

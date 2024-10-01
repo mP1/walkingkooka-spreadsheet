@@ -40,7 +40,7 @@ final class FilteredSpreadsheetImporterProvider implements SpreadsheetImporterPr
                                                 final SpreadsheetImporterInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
                 infos.names(),
-                (n) -> new IllegalArgumentException("Unknown importer " + n)
+                SpreadsheetImporterPluginHelper.INSTANCE
         );
 
         this.provider = provider;
