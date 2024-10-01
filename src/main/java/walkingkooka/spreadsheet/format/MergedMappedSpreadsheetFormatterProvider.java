@@ -48,7 +48,7 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
         this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetFormatterInfos(),
-                (n) -> new IllegalArgumentException("Unknown formatter " + n)
+                SpreadsheetFormatterPluginHelper.INSTANCE
         );
     }
 

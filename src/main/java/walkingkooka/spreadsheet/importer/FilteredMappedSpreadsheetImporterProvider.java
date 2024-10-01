@@ -45,7 +45,7 @@ final class FilteredMappedSpreadsheetImporterProvider implements SpreadsheetImpo
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetImporterInfos(),
-                (n) -> new IllegalArgumentException("Unknown importer " + n)
+                SpreadsheetImporterPluginHelper.INSTANCE
         );
     }
 

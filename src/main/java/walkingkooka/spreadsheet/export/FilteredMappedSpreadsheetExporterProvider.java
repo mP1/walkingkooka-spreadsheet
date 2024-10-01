@@ -44,7 +44,7 @@ final class FilteredMappedSpreadsheetExporterProvider implements SpreadsheetExpo
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetExporterInfos(),
-                (n) -> new IllegalArgumentException("Unknown exporter " + n)
+                SpreadsheetExporterPluginHelper.INSTANCE
         );
         this.provider = provider;
     }

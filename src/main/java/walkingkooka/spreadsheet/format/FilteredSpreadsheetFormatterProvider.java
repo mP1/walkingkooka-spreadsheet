@@ -41,7 +41,7 @@ final class FilteredSpreadsheetFormatterProvider implements SpreadsheetFormatter
                                                  final SpreadsheetFormatterInfoSet infos) {
         this.guard = FilteredProviderGuard.with(
                 infos.names(),
-                (n) -> new IllegalArgumentException("Unknown formatter " + n)
+                SpreadsheetFormatterPluginHelper.INSTANCE
         );
 
         this.provider = provider;

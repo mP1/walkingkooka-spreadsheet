@@ -64,7 +64,7 @@ final class MergedMappedSpreadsheetParserProvider implements SpreadsheetParserPr
         this.mapper = MergedProviderMapper.with(
                 infos,
                 provider.spreadsheetParserInfos(),
-                (n) -> new IllegalArgumentException("Unknown parser " + n)
+                SpreadsheetParserPluginHelper.INSTANCE
         );
     }
 

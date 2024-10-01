@@ -43,7 +43,7 @@ final class FilteredMappedSpreadsheetComparatorProvider implements SpreadsheetCo
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetComparatorInfos(),
-                (n) -> new IllegalArgumentException("Unknown comparator " + n)
+                SpreadsheetComparatorPluginHelper.INSTANCE
         );
         this.provider = provider;
     }

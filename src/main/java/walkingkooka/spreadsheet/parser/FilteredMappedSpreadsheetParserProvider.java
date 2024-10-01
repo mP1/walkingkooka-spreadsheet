@@ -64,7 +64,7 @@ final class FilteredMappedSpreadsheetParserProvider implements SpreadsheetParser
         this.mapper = FilteredProviderMapper.with(
                 infos,
                 provider.spreadsheetParserInfos(),
-                (n) -> new IllegalArgumentException("Unknown parser " + n)
+                SpreadsheetParserPluginHelper.INSTANCE
         );
     }
 
