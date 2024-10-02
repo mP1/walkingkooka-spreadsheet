@@ -107,7 +107,8 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
      */
     private SpreadsheetExporterName(final String name) {
         super();
-        this.name = PluginName.with(name);
+        this.name = PluginName.with(name)
+                .checkLength("Exporter");
     }
 
     @Override

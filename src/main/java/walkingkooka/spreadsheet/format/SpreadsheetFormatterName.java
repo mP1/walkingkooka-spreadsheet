@@ -193,7 +193,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
     private SpreadsheetFormatterName(final String name,
                                      final SpreadsheetPatternKind patternKind) {
         super();
-        this.name = PluginName.with(name);
+        this.name = PluginName.with(name)
+                .checkLength("Formatter");
         this.patternKind = patternKind;
     }
 

@@ -110,7 +110,8 @@ final public class SpreadsheetImporterName implements PluginNameLike<Spreadsheet
      */
     private SpreadsheetImporterName(final String name) {
         super();
-        this.name = PluginName.with(name);
+        this.name = PluginName.with(name)
+                .checkLength("Importer");
     }
 
     @Override
