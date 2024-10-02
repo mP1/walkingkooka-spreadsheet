@@ -130,7 +130,8 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     private SpreadsheetParserName(final String name,
                                   final SpreadsheetPatternKind patternKind) {
         super();
-        this.name = PluginName.with(name);
+        this.name = PluginName.with(name)
+                .checkLength("Parser");
         this.patternKind = patternKind;
     }
 
