@@ -385,6 +385,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkExpression(expression);
         checkContext(context);
 
+        // this will be used to filter individual cells matching the find range and type.
+        final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
+                valueType,
+                expression,
+                context
+        );
+
         final Set<SpreadsheetCell> found = SortedSets.tree(
                 SpreadsheetCellReference.cellComparator(
                         path.comparator()
@@ -393,12 +400,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final SpreadsheetCellStore store = context.storeRepository()
                 .cells();
-        final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
-                valueType,
-                expression,
-                context
-        );
-
         int loadOffset = 0;
         int skipOffset = 0;
 
