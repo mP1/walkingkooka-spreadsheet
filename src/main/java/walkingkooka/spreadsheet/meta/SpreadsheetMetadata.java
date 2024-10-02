@@ -1469,7 +1469,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // HasLocale.......................................................................................................
 
     @Override
-    public Locale locale() {
+    public final Locale locale() {
         return this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
     }
 }
