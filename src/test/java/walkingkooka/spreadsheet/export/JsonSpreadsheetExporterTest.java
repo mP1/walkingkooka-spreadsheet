@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.net.WebEntity;
+import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -67,6 +68,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_CELLS,
+                "A1-XFD1048576.cell.json.txt",
                 "{\n" +
                         "  \"A1\": {\n" +
                         "    \"formula\": {\n" +
@@ -109,6 +111,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_FORMULAS,
+                "A1-XFD1048576.formula.json.txt",
                 "{\n" +
                         "  \"A1\": \"=1+2\",\n" +
                         "  \"A2\": \"=333\"\n" +
@@ -134,6 +137,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_FORMATTERS,
+                "A1-XFD1048576.formatter.json.txt",
                 "{\n" +
                         "  \"A1\": \"text-format-pattern @\",\n" +
                         "  \"A2\": null\n" +
@@ -159,6 +163,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_PARSERS,
+                "A1-XFD1048576.parser.json.txt",
                 "{\n" +
                         "  \"A1\": \"test-parser-123 @@@\",\n" +
                         "  \"A2\": null\n" +
@@ -187,6 +192,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_STYLES,
+                "A1-XFD1048576.style.json.txt",
                 "{\n" +
                         "  \"A1\": {\n" +
                         "    \"color\": \"#000000\"\n" +
@@ -216,6 +222,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         )
                 ),
                 SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+                "A1-XFD1048576.value.json.txt",
                 "{\n" +
                         "  \"A1\": {\n" +
                         "    \"type\": \"text\",\n" +
@@ -228,6 +235,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
 
     private void exportAndCheck(final SpreadsheetCellRange cells,
                                 final MediaType contentType,
+                                final String filename,
                                 final String json) {
         this.exportAndCheck(
                 cells,
@@ -235,7 +243,11 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 WebEntity.empty()
                         .setContentType(
                                 Optional.of(contentType)
-                ).setText(json)
+                        ).setFilename(
+                                Optional.of(
+                                        WebEntityFileName.with(filename)
+                                )
+                        ).setText(json)
         );
     }
 
