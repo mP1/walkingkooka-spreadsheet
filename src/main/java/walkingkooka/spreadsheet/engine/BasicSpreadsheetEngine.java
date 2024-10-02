@@ -355,7 +355,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return cells.stream()
                 .filter(
-                        BasicSpreadsheetEngineFilterPredicate.with(
+                        BasicSpreadsheetEngineFindCellsPredicate.with(
                                 valueType,
                                 expression,
                                 context
@@ -393,7 +393,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final SpreadsheetCellStore store = context.storeRepository()
                 .cells();
-        final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
+        final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFindCellsPredicate.with(
                 valueType,
                 expression,
                 context

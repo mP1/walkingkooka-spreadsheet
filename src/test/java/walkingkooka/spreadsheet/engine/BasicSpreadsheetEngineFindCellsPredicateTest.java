@@ -38,7 +38,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class BasicSpreadsheetEngineFilterPredicateTest implements PredicateTesting2<BasicSpreadsheetEngineFilterPredicate, SpreadsheetCell>,
+public final class BasicSpreadsheetEngineFindCellsPredicateTest implements PredicateTesting2<BasicSpreadsheetEngineFindCellsPredicate, SpreadsheetCell>,
         SpreadsheetMetadataTesting {
 
     private final static String CONTEXT_TO_STRING = "FakeSpreadsheetEngineContext123";
@@ -111,19 +111,19 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     }
 
     @Override
-    public BasicSpreadsheetEngineFilterPredicate createPredicate() {
+    public BasicSpreadsheetEngineFindCellsPredicate createPredicate() {
         return this.createPredicate(
                 SpreadsheetValueType.ANY
         );
     }
 
-    private BasicSpreadsheetEngineFilterPredicate createPredicate(final String valueType) {
+    private BasicSpreadsheetEngineFindCellsPredicate createPredicate(final String valueType) {
         final Expression expression = Expression.call(
                 Expression.namedFunction(ExpressionFunctionName.with("Test123")),
                 Expression.NO_CHILDREN
         );
 
-        return BasicSpreadsheetEngineFilterPredicate.with(
+        return BasicSpreadsheetEngineFindCellsPredicate.with(
                 valueType,
                 expression,
                 new FakeSpreadsheetEngineContext() {
@@ -169,7 +169,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineFilterPredicate> type() {
-        return BasicSpreadsheetEngineFilterPredicate.class;
+    public Class<BasicSpreadsheetEngineFindCellsPredicate> type() {
+        return BasicSpreadsheetEngineFindCellsPredicate.class;
     }
 }
