@@ -18,10 +18,12 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.net.WebEntity;
+import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetMediaTypes;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 
@@ -69,11 +71,13 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
         Objects.requireNonNull(context, "context");
 
         final Function<SpreadsheetCell, JsonNode> value;
+        String suffix;
 
         if (SpreadsheetMediaTypes.JSON_CELLS.test(contentType)) {
             value = (c) -> context.marshall(c)
                     .children()
                     .get(0);
+            suffix = "cell";
         } else {
             if (SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType)) {
                 value = (c) -> context.marshall(
@@ -82,6 +86,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 ).setName(
                         name(c)
                 );
+                suffix = "formula";
             } else {
                 if (SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType)) {
                     value = (c) -> context.marshall(
@@ -89,6 +94,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                     ).setName(
                             name(c)
                     );
+                    suffix = "formatter";
                 } else {
                     if (SpreadsheetMediaTypes.JSON_PARSERS.test(contentType)) {
                         value = (c) -> context.marshall(
@@ -98,12 +104,14 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                                 .setName(
                                         name(c)
                                 );
+                        suffix = "parser";
                     } else {
                         if (SpreadsheetMediaTypes.JSON_STYLES.test(contentType)) {
                             value = (c) -> context.marshall(c.style())
                                     .setName(
                                             name(c)
                                     );
+                            suffix = "style";
                         } else {
                             if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType)) {
                                 value = (c) -> context.marshallWithType(
@@ -112,6 +120,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                                 ).setName(
                                         name(c)
                                 );
+                                suffix = "value";
                             } else {
                                 throw new IllegalArgumentException("Unknown contentType " + contentType);
                             }
@@ -132,6 +141,17 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                                                 .map(value)
                                                 .collect(Collectors.toList())
                                 ).toString()
+                ).setFilename(
+                        Optional.of(
+                                WebEntityFileName.with(
+                                        cells.range()
+                                                .toString()
+                                                .replace(SpreadsheetSelection.SEPARATOR.character(), '-') + // make a helper that gives safe WebEntityFileName
+                                                "." +
+                                                suffix +
+                                                ".json.txt"
+                                )
+                        )
                 );
     }
 
