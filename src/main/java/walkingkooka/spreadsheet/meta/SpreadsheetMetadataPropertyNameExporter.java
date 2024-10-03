@@ -17,59 +17,50 @@
 
 package walkingkooka.spreadsheet.meta;
 
-
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetMetadataPropertyNameClipboardExporter extends SpreadsheetMetadataPropertyName<SpreadsheetExporterSelector> {
+/**
+ * Base class for any property that holds a {@link SpreadsheetExporterSelector}.
+ */
+abstract class SpreadsheetMetadataPropertyNameExporter extends SpreadsheetMetadataPropertyName<SpreadsheetExporterSelector> {
 
     /**
-     * Singleton
+     * Package private to limit sub classing.
      */
-    static SpreadsheetMetadataPropertyNameClipboardExporter instance() {
-        return new SpreadsheetMetadataPropertyNameClipboardExporter();
-    }
-
-    /**
-     * Private constructor use singleton.
-     */
-    private SpreadsheetMetadataPropertyNameClipboardExporter() {
-        super("clipboard-exporter");
+    SpreadsheetMetadataPropertyNameExporter(final String name) {
+        super(name);
     }
 
     @Override
-    SpreadsheetExporterSelector checkValue0(final Object value) {
-        return this.checkValueType(value,
-                v -> v instanceof SpreadsheetExporterSelector);
+    final SpreadsheetExporterSelector checkValue0(final Object value) {
+        return this.checkValueType(
+                value,
+                v -> v instanceof SpreadsheetExporterSelector
+        );
     }
 
     @Override
-    String expected() {
+    final String expected() {
         return SpreadsheetExporterSelector.class.getSimpleName();
     }
 
     @Override
-    void accept(final SpreadsheetExporterSelector value,
-                final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitClipboardExporter(value);
-    }
-
-    @Override
-    Optional<SpreadsheetExporterSelector> extractLocaleAwareValue(final Locale locale) {
+    final Optional<SpreadsheetExporterSelector> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    Class<SpreadsheetExporterSelector> type() {
+    final Class<SpreadsheetExporterSelector> type() {
         return SpreadsheetExporterSelector.class;
     }
 
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetExporterSelector parseUrlFragmentSaveValue0(final String value) {
+    public final SpreadsheetExporterSelector parseUrlFragmentSaveValue0(final String value) {
         return SpreadsheetExporterSelector.parse(value);
     }
 }
