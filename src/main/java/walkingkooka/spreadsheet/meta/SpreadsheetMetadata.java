@@ -95,6 +95,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -730,7 +731,26 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link ExpressionFunctionProvider} that only contains the selected {@link walkingkooka.tree.expression.function.ExpressionFunction}
      * in {@link SpreadsheetMetadataPropertyName#FUNCTIONS}
      */
-    public final ExpressionFunctionProvider expressionFunctionProvider(final ExpressionFunctionProvider provider) {
+    public final ExpressionFunctionProvider formulaExpressionFunctionProvider(final ExpressionFunctionProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ExpressionFunctionAliases aliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
+
+        components.reportIfMissing();
+
+        return ExpressionFunctionProviders.aliases(
+                aliases,
+                this.expressionFunctionProvider(provider)
+        );
+    }
+
+    /**
+     * Returns a {@link ExpressionFunctionProvider} that only contains the selected {@link walkingkooka.tree.expression.function.ExpressionFunction}
+     * in {@link SpreadsheetMetadataPropertyName#FUNCTIONS}
+     */
+    final ExpressionFunctionProvider expressionFunctionProvider(final ExpressionFunctionProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
