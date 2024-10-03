@@ -81,6 +81,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -778,7 +779,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
     
-    // ExpressionFunctions..............................................................................................
+    // ExpressionFunctionsProviders.....................................................................................
 
     @Test
     public void testExpressionFunctions() {
@@ -799,7 +800,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
-                ExpressionFunctionInfoSet.parse("https://example/ExpressionFunctions/test-function-111 sin,https://example/ExpressionFunctions/test-function-22 sum")
+                ExpressionFunctionInfoSet.parse("https://example/ExpressionFunctions/test-function-111 sin,https://example/ExpressionFunctions/test-function-222 sum")
         );
 
         final ExpressionFunctionProvider provider = metadata.expressionFunctionProvider(
@@ -824,6 +825,62 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "Hello",
                 provider.expressionFunction(
                         ExpressionFunctionName.with("sin"),
+                        Lists.empty(),
+                        PROVIDER_CONTEXT
+                ).apply(
+                        ExpressionFunction.NO_PARAMETER_VALUES,
+                        ExpressionEvaluationContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testFormulaExpressionFunctionProviders() {
+        final ExpressionFunction<?, ExpressionEvaluationContext> testFunction111 = new FakeExpressionFunction<>() {
+            @Override
+            public Optional<ExpressionFunctionName> name() {
+                return Optional.of(
+                        ExpressionFunctionName.with("test-function-111")
+                );
+            }
+
+            @Override
+            public Object apply(final List<Object> parameters,
+                                final ExpressionEvaluationContext context) {
+                return "Hello";
+            }
+        };
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                ExpressionFunctionInfoSet.parse("https://example/ExpressionFunctions/test-function-111 sin,https://example/ExpressionFunctions/test-function-222 sum")
+        ).set(
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                ExpressionFunctionAliases.parse("sin-alias sin, sum")
+        );
+
+        final ExpressionFunctionProvider provider = metadata.formulaExpressionFunctionProvider(
+                ExpressionFunctionProviders.basic(
+                        Url.parseAbsolute("https://example/ExpressionFunctions"),
+                        CaseSensitivity.INSENSITIVE,
+                        Sets.of(
+                                testFunction111,
+                                new FakeExpressionFunction<>() {
+                                    @Override
+                                    public Optional<ExpressionFunctionName> name() {
+                                        return Optional.of(
+                                                ExpressionFunctionName.with("test-function-222")
+                                        );
+                                    }
+                                }
+                        )
+                )
+        );
+
+        this.checkEquals(
+                "Hello",
+                provider.expressionFunction(
+                        ExpressionFunctionName.with("sin-alias"),
                         Lists.empty(),
                         PROVIDER_CONTEXT
                 ).apply(
