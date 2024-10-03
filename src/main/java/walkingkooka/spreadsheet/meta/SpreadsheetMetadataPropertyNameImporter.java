@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either impress or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
@@ -23,53 +23,45 @@ import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetMetadataPropertyNameClipboardImporter extends SpreadsheetMetadataPropertyName<SpreadsheetImporterSelector> {
+/**
+ * Base class for any property that holds a {@link SpreadsheetImporterSelector}.
+ */
+abstract class SpreadsheetMetadataPropertyNameImporter extends SpreadsheetMetadataPropertyName<SpreadsheetImporterSelector> {
 
     /**
-     * Singleton
+     * Package private to limit sub classing.
      */
-    static SpreadsheetMetadataPropertyNameClipboardImporter instance() {
-        return new SpreadsheetMetadataPropertyNameClipboardImporter();
-    }
-
-    /**
-     * Private constructor use singleton.
-     */
-    private SpreadsheetMetadataPropertyNameClipboardImporter() {
-        super("clipboard-importer");
+    SpreadsheetMetadataPropertyNameImporter(final String name) {
+        super(name);
     }
 
     @Override
-    SpreadsheetImporterSelector checkValue0(final Object value) {
-        return this.checkValueType(value,
-                v -> v instanceof SpreadsheetImporterSelector);
+    final SpreadsheetImporterSelector checkValue0(final Object value) {
+        return this.checkValueType(
+                value,
+                v -> v instanceof SpreadsheetImporterSelector
+        );
     }
 
     @Override
-    String expected() {
+    final String expected() {
         return SpreadsheetImporterSelector.class.getSimpleName();
     }
 
     @Override
-    void accept(final SpreadsheetImporterSelector value,
-                final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitClipboardImporter(value);
-    }
-
-    @Override
-    Optional<SpreadsheetImporterSelector> extractLocaleAwareValue(final Locale locale) {
+    final Optional<SpreadsheetImporterSelector> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    Class<SpreadsheetImporterSelector> type() {
+    final Class<SpreadsheetImporterSelector> type() {
         return SpreadsheetImporterSelector.class;
     }
 
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetImporterSelector parseUrlFragmentSaveValue0(final String value) {
+    public final SpreadsheetImporterSelector parseUrlFragmentSaveValue0(final String value) {
         return SpreadsheetImporterSelector.parse(value);
     }
 }
