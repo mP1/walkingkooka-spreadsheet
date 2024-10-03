@@ -728,40 +728,24 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // ExpressionNumberProvider.........................................................................................
 
     /**
-     * Returns a {@link ExpressionFunctionProvider} that only contains the selected {@link walkingkooka.tree.expression.function.ExpressionFunction}
-     * in {@link SpreadsheetMetadataPropertyName#FUNCTIONS}
+     * Returns a {@link ExpressionFunctionProvider} that applies {@link SpreadsheetMetadataPropertyName#FORMULA_FUNCTIONS} and {@link SpreadsheetMetadataPropertyName#FUNCTIONS}.
      */
-    public final ExpressionFunctionProvider formulaExpressionFunctionProvider(final ExpressionFunctionProvider provider) {
+    public final ExpressionFunctionProvider expressionFunctionProvider(final ExpressionFunctionProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final ExpressionFunctionAliases aliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
+        final ExpressionFunctionInfoSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
 
         components.reportIfMissing();
 
         return ExpressionFunctionProviders.aliases(
                 aliases,
-                this.expressionFunctionProvider(provider)
-        );
-    }
-
-    /**
-     * Returns a {@link ExpressionFunctionProvider} that only contains the selected {@link walkingkooka.tree.expression.function.ExpressionFunction}
-     * in {@link SpreadsheetMetadataPropertyName#FUNCTIONS}
-     */
-    final ExpressionFunctionProvider expressionFunctionProvider(final ExpressionFunctionProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final ExpressionFunctionInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
-
-        components.reportIfMissing();
-
-        return ExpressionFunctionProviders.filteredMapped(
-                set,
-                provider
+                ExpressionFunctionProviders.filteredMapped(
+                        functions,
+                        provider
+                )
         );
     }
 

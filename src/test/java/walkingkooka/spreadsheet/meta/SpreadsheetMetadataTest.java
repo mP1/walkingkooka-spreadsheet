@@ -782,60 +782,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // ExpressionFunctionsProviders.....................................................................................
 
     @Test
-    public void testExpressionFunctions() {
-        final ExpressionFunction<?, ExpressionEvaluationContext> function1 = new FakeExpressionFunction<>() {
-            @Override
-            public Optional<ExpressionFunctionName> name() {
-                return Optional.of(
-                        ExpressionFunctionName.with("test-function-111")
-                );
-            }
-
-            @Override
-            public Object apply(final List<Object> parameters,
-                                final ExpressionEvaluationContext context) {
-                return "Hello";
-            }
-        };
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                ExpressionFunctionInfoSet.parse("https://example/ExpressionFunctions/test-function-111 sin,https://example/ExpressionFunctions/test-function-222 sum")
-        );
-
-        final ExpressionFunctionProvider provider = metadata.expressionFunctionProvider(
-                ExpressionFunctionProviders.basic(
-                        Url.parseAbsolute("https://example/ExpressionFunctions"),
-                        CaseSensitivity.INSENSITIVE,
-                        Sets.of(
-                                function1,
-                                new FakeExpressionFunction<>() {
-                                    @Override
-                                    public Optional<ExpressionFunctionName> name() {
-                                        return Optional.of(
-                                                ExpressionFunctionName.with("test-function-222")
-                                        );
-                                    }
-                                }
-                        )
-                )
-        );
-
-        this.checkEquals(
-                "Hello",
-                provider.expressionFunction(
-                        ExpressionFunctionName.with("sin"),
-                        Lists.empty(),
-                        PROVIDER_CONTEXT
-                ).apply(
-                        ExpressionFunction.NO_PARAMETER_VALUES,
-                        ExpressionEvaluationContexts.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testFormulaExpressionFunctionProviders() {
+    public void testExpressionFunctionProviders() {
         final ExpressionFunction<?, ExpressionEvaluationContext> testFunction111 = new FakeExpressionFunction<>() {
             @Override
             public Optional<ExpressionFunctionName> name() {
@@ -859,7 +806,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 ExpressionFunctionAliases.parse("sin-alias sin, sum")
         );
 
-        final ExpressionFunctionProvider provider = metadata.formulaExpressionFunctionProvider(
+        final ExpressionFunctionProvider provider = metadata.expressionFunctionProvider(
                 ExpressionFunctionProviders.basic(
                         Url.parseAbsolute("https://example/ExpressionFunctions"),
                         CaseSensitivity.INSENSITIVE,
