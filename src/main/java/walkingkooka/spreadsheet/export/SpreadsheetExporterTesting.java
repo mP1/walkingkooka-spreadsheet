@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.export;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
-import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -38,14 +38,14 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                 () -> this.createSpreadsheetExporter()
                         .canExport(
                                 null,
-                                MediaType.ALL,
+                                SpreadsheetCellValueKind.CELL,
                                 this.createContext()
                         )
         );
     }
 
     @Test
-    default void testCanExportWithNullContentTypeFails() {
+    default void testCanExportWithNullValueKindFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetExporter()
@@ -70,31 +70,31 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                         SpreadsheetSelection.ALL_CELLS,
                                         Sets.empty()
                                 ),
-                                MediaType.ALL,
+                                SpreadsheetCellValueKind.CELL,
                                 null
                         )
         );
     }
 
     default void canExportAndCheck(final SpreadsheetCellRange cells,
-                                   final MediaType contentType,
+                                   final SpreadsheetCellValueKind valueKind,
                                    final boolean expected) {
         this.canExportAndCheck(
                 cells,
-                contentType,
+                valueKind,
                 this.createContext(),
                 expected
         );
     }
 
     default void canExportAndCheck(final SpreadsheetCellRange cells,
-                                   final MediaType contentType,
+                                   final SpreadsheetCellValueKind valueKind,
                                    final SpreadsheetExporterContext context,
                                    final boolean expected) {
         this.canExportAndCheck(
                 this.createSpreadsheetExporter(),
                 cells,
-                contentType,
+                valueKind,
                 context,
                 expected
         );
@@ -102,14 +102,14 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
 
     default void canExportAndCheck(final E exporter,
                                    final SpreadsheetCellRange cells,
-                                   final MediaType contentType,
+                                   final SpreadsheetCellValueKind valueKind,
                                    final SpreadsheetExporterContext context,
                                    final boolean expected) {
         this.checkEquals(
                 expected,
                 exporter.canExport(
                         cells,
-                        contentType,
+                        valueKind,
                         context
                 )
         );
@@ -124,14 +124,14 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                 () -> this.createSpreadsheetExporter()
                         .export(
                                 null,
-                                MediaType.ALL,
+                                SpreadsheetCellValueKind.CELL,
                                 this.createContext()
                         )
         );
     }
 
     @Test
-    default void testExportCellsWithNullContentTypeFails() {
+    default void testExportCellsWithNullValueKindFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetExporter()
@@ -156,31 +156,31 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                                         SpreadsheetSelection.ALL_CELLS,
                                         Sets.empty()
                                 ),
-                                MediaType.ALL,
+                                SpreadsheetCellValueKind.CELL,
                                 null
                         )
         );
     }
 
     default void exportAndCheck(final SpreadsheetCellRange cells,
-                                final MediaType contentType,
+                                final SpreadsheetCellValueKind valueKind,
                                 final WebEntity expected) {
         this.exportAndCheck(
                 cells,
-                contentType,
+                valueKind,
                 this.createContext(),
                 expected
         );
     }
 
     default void exportAndCheck(final SpreadsheetCellRange cells,
-                                final MediaType contentType,
+                                final SpreadsheetCellValueKind valueKind,
                                 final SpreadsheetExporterContext context,
                                 final WebEntity expected) {
         this.exportAndCheck(
                 this.createSpreadsheetExporter(),
                 cells,
-                contentType,
+                valueKind,
                 context,
                 expected
         );
@@ -188,12 +188,12 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
 
     default void exportAndCheck(final E exporter,
                                 final SpreadsheetCellRange cells,
-                                final MediaType contentType,
+                                final SpreadsheetCellValueKind valueKind,
                                 final WebEntity expected) {
         this.exportAndCheck(
                 exporter,
                 cells,
-                contentType,
+                valueKind,
                 this.createContext(),
                 expected
         );
@@ -201,13 +201,13 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
 
     default void exportAndCheck(final E exporter,
                                 final SpreadsheetCellRange cells,
-                                final MediaType contentType,
+                                final SpreadsheetCellValueKind valueKind,
                                 final SpreadsheetExporterContext context,
                                 final WebEntity expected) {
         this.canExportAndCheck(
                 exporter,
                 cells,
-                contentType,
+                valueKind,
                 context,
                 true
         );
@@ -216,7 +216,7 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
                 expected,
                 exporter.export(
                         cells,
-                        contentType,
+                        valueKind,
                         context
                 )
         );
@@ -225,11 +225,11 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
     // exportFails......................................................................................................
 
     default void exportFails(final SpreadsheetCellRange cells,
-                             final MediaType contentType,
+                             final SpreadsheetCellValueKind valueKind,
                              final RuntimeException expected) {
         this.exportFails(
                 cells,
-                contentType,
+                valueKind,
                 this.createContext(),
                 expected
         );
@@ -237,25 +237,25 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
 
     default void exportFails(final E exporter,
                              final SpreadsheetCellRange cells,
-                             final MediaType contentType,
+                             final SpreadsheetCellValueKind valueKind,
                              final RuntimeException expected) {
         this.exportFails(
                 exporter,
                 cells,
-                contentType,
+                valueKind,
                 this.createContext(),
                 expected
         );
     }
 
     default void exportFails(final SpreadsheetCellRange cells,
-                             final MediaType contentType,
+                             final SpreadsheetCellValueKind valueKind,
                              final SpreadsheetExporterContext context,
                              final RuntimeException expected) {
         this.exportFails(
                 this.createSpreadsheetExporter(),
                 cells,
-                contentType,
+                valueKind,
                 context,
                 expected
         );
@@ -263,14 +263,14 @@ public interface SpreadsheetExporterTesting<E extends SpreadsheetExporter> exten
 
     default void exportFails(final E exporter,
                              final SpreadsheetCellRange cells,
-                             final MediaType contentType,
+                             final SpreadsheetCellValueKind valueKind,
                              final SpreadsheetExporterContext context,
                              final RuntimeException expected) {
         final RuntimeException thrown = assertThrows(
                 expected.getClass(),
                 () -> exporter.export(
                         cells,
-                        contentType,
+                        valueKind,
                         context
                 )
         );

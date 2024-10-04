@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.export;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
-import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.text.CharacterConstant;
 
 import java.util.List;
@@ -68,12 +68,12 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
 
     @Override
     public boolean canExport(final SpreadsheetCellRange cells,
-                             final MediaType contentType,
+                             final SpreadsheetCellValueKind kind,
                              final SpreadsheetExporterContext context) {
         return this.exporters.stream()
                 .anyMatch(e -> e.canExport(
                                 cells,
-                                contentType,
+                                kind,
                                 context
                         )
                 );
@@ -81,17 +81,17 @@ final class SpreadsheetExporterCollection implements SpreadsheetExporter {
 
     @Override
     public WebEntity export(final SpreadsheetCellRange cells,
-                            final MediaType contentType,
+                            final SpreadsheetCellValueKind kind,
                             final SpreadsheetExporterContext context) {
         return this.exporters.stream()
                 .filter(e -> e.canExport(
                                 cells,
-                                contentType,
+                                kind,
                                 context
                         )
                 ).map(e -> e.export(
                                 cells,
-                                contentType,
+                                kind,
                                 context
                         )
                 ).findFirst()

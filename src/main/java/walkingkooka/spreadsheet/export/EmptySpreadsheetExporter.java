@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.net.WebEntity;
-import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 
 import java.util.Objects;
 
@@ -36,10 +36,10 @@ final class EmptySpreadsheetExporter implements SpreadsheetExporter {
 
     @Override
     public boolean canExport(final SpreadsheetCellRange cells,
-                             final MediaType contentType,
+                             final SpreadsheetCellValueKind valueKind,
                              final SpreadsheetExporterContext context) {
         Objects.requireNonNull(cells, "cells");
-        Objects.requireNonNull(contentType, "contentType");
+        Objects.requireNonNull(valueKind, "valueKind");
         Objects.requireNonNull(context, "context");
 
         return false;
@@ -47,13 +47,13 @@ final class EmptySpreadsheetExporter implements SpreadsheetExporter {
 
     @Override
     public WebEntity export(final SpreadsheetCellRange cells,
-                            final MediaType contentType,
+                            final SpreadsheetCellValueKind valueKind,
                             final SpreadsheetExporterContext context) {
         Objects.requireNonNull(cells, "cells");
-        Objects.requireNonNull(contentType, "contentType");
+        Objects.requireNonNull(valueKind, "valueKind");
         Objects.requireNonNull(context, "context");
 
-        throw new IllegalArgumentException("Cannot export " + cells.range() + " as " + contentType);
+        throw new IllegalArgumentException("Cannot export " + cells.range());
     }
 
     @Override
