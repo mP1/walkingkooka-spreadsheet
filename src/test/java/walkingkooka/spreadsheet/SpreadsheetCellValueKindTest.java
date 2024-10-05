@@ -17,10 +17,22 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.io.FileExtension;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetCellValueKindTest implements ClassTesting<SpreadsheetCellValueKind> {
+
+    @Test
+    public void testFileExtension() {
+        this.checkEquals(
+                "txt",
+                FileExtension.with("txt").value()
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetCellValueKind> type() {
