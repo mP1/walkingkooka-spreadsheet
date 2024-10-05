@@ -24,6 +24,7 @@ import walkingkooka.net.WebEntity;
 import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -67,8 +68,9 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                         )
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_CELLS,
+                SpreadsheetCellValueKind.CELL,
                 "A1-XFD1048576.cell.json.txt",
+                SpreadsheetMediaTypes.JSON_CELLS,
                 "{\n" +
                         "  \"A1\": {\n" +
                         "    \"formula\": {\n" +
@@ -110,8 +112,9 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                         )
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_FORMULAS,
+                SpreadsheetCellValueKind.FORMULA,
                 "A1-XFD1048576.formula.json.txt",
+                SpreadsheetMediaTypes.JSON_FORMULAS,
                 "{\n" +
                         "  \"A1\": \"=1+2\",\n" +
                         "  \"A2\": \"=333\"\n" +
@@ -136,8 +139,9 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                         )
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_FORMATTERS,
+                SpreadsheetCellValueKind.FORMATTER,
                 "A1-XFD1048576.formatter.json.txt",
+                SpreadsheetMediaTypes.JSON_FORMATTERS,
                 "{\n" +
                         "  \"A1\": \"text-format-pattern @\",\n" +
                         "  \"A2\": null\n" +
@@ -162,8 +166,9 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                         )
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_PARSERS,
+                SpreadsheetCellValueKind.PARSER,
                 "A1-XFD1048576.parser.json.txt",
+                SpreadsheetMediaTypes.JSON_PARSERS,
                 "{\n" +
                         "  \"A1\": \"test-parser-123 @@@\",\n" +
                         "  \"A2\": null\n" +
@@ -191,8 +196,9 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                         )
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_STYLES,
+                SpreadsheetCellValueKind.STYLE,
                 "A1-XFD1048576.style.json.txt",
+                SpreadsheetMediaTypes.JSON_STYLES,
                 "{\n" +
                         "  \"A1\": {\n" +
                         "    \"color\": \"#000000\"\n" +
@@ -221,8 +227,9 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                         )
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+                SpreadsheetCellValueKind.VALUE,
                 "A1-XFD1048576.value.json.txt",
+                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
                 "{\n" +
                         "  \"A1\": {\n" +
                         "    \"type\": \"text\",\n" +
@@ -234,12 +241,13 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     }
 
     private void exportAndCheck(final SpreadsheetCellRange cells,
-                                final MediaType contentType,
+                                final SpreadsheetCellValueKind valueKind,
                                 final String filename,
+                                final MediaType contentType,
                                 final String json) {
         this.exportAndCheck(
                 cells,
-                contentType,
+                valueKind,
                 WebEntity.empty()
                         .setContentType(
                                 Optional.of(contentType)

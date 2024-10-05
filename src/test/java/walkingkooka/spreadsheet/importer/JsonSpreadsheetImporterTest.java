@@ -22,14 +22,13 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
-import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.OptionalTextNode;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterContexts;
 import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import walkingkooka.spreadsheet.format.OptionalSpreadsheetFormatterSelector;
@@ -83,7 +82,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                                 cellA2
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_CELLS,
+                SpreadsheetCellValueKind.CELL,
                 SpreadsheetImporterCellValue.cell(
                       cellA1
                 ),
@@ -114,7 +113,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                                 cellA2
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_FORMULAS,
+                SpreadsheetCellValueKind.FORMULA,
                 SpreadsheetImporterCellValue.formula(
                      cellA1.reference(),
                      cellA1.formula()
@@ -147,7 +146,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                                 cellA2
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_FORMATTERS,
+                SpreadsheetCellValueKind.FORMATTER,
                 SpreadsheetImporterCellValue.formatter(
                         cellA1.reference(),
                         OptionalSpreadsheetFormatterSelector.with(
@@ -184,7 +183,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                                 cellA2
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_PARSERS,
+                SpreadsheetCellValueKind.PARSER,
                 SpreadsheetImporterCellValue.parser(
                         cellA1.reference(),
                         OptionalSpreadsheetParserSelector.with(
@@ -221,7 +220,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                                 cellA2
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_STYLES,
+                SpreadsheetCellValueKind.STYLE,
                 SpreadsheetImporterCellValue.textStyle(
                         cellA1.reference(),
                         cellA1.style()
@@ -256,7 +255,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                                 cellA2
                         )
                 ),
-                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+                SpreadsheetCellValueKind.VALUE,
                 SpreadsheetImporterCellValue.formattedValue(
                         cellA1.reference(),
                         OptionalTextNode.with(
@@ -273,23 +272,23 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     }
     
     private void doImportAndCheck(final SpreadsheetCellRange cells,
-                                  final MediaType contentType,
+                                  final SpreadsheetCellValueKind valueKind,
                                   final SpreadsheetImporterCellValue... values) {
         this.doImportAndCheck(
                 cells,
-                contentType,
+                valueKind,
                 Lists.of(values)
         );
     }
 
     private void doImportAndCheck(final SpreadsheetCellRange cells,
-                                  final MediaType contentType,
+                                  final SpreadsheetCellValueKind valueKind,
                                   final List<SpreadsheetImporterCellValue> values) {
         this.doImportAndCheck(
                 SpreadsheetExporters.json()
                         .export(
                                 cells,
-                                contentType,
+                                valueKind,
                                 SpreadsheetExporterContexts.basic(
                                         SpreadsheetMetadata.EMPTY,
                                         JSON_NODE_MARSHALL_CONTEXT

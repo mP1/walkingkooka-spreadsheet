@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet.export;
 
+import walkingkooka.NeverError;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
@@ -48,86 +50,84 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
 
     @Override
     public boolean canExport(final SpreadsheetCellRange cells,
-                             final MediaType contentType,
+                             final SpreadsheetCellValueKind valueKind,
                              final SpreadsheetExporterContext context) {
         Objects.requireNonNull(cells, "cells");
-        Objects.requireNonNull(contentType, "contentType");
+        Objects.requireNonNull(valueKind, "valueKind");
         Objects.requireNonNull(context, "context");
 
-        return SpreadsheetMediaTypes.JSON_CELLS.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_PARSERS.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_STYLES.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType);
+        return true;
     }
 
     @Override
     public WebEntity export(final SpreadsheetCellRange cells,
-                            final MediaType contentType,
+                            final SpreadsheetCellValueKind valueKind,
                             final SpreadsheetExporterContext context) {
         Objects.requireNonNull(cells, "cells");
-        Objects.requireNonNull(contentType, "contentType");
+        Objects.requireNonNull(valueKind, "valueKind");
         Objects.requireNonNull(context, "context");
 
         final Function<SpreadsheetCell, JsonNode> value;
-        String suffix;
+        final MediaType contentType;
 
-        if (SpreadsheetMediaTypes.JSON_CELLS.test(contentType)) {
-            value = (c) -> context.marshall(c)
-                    .children()
-                    .get(0);
-            suffix = "cell";
-        } else {
-            if (SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType)) {
+        switch(valueKind) {
+            case CELL:
+                value = (c) -> context.marshall(c)
+                        .children()
+                        .get(0);
+                contentType = SpreadsheetMediaTypes.JSON_CELLS;
+                break;
+            case FORMULA:
                 value = (c) -> context.marshall(
                         c.formula()
                                 .text()
                 ).setName(
                         name(c)
                 );
-                suffix = "formula";
-            } else {
-                if (SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType)) {
-                    value = (c) -> context.marshall(
-                            c.formatter().orElse(null)
-                    ).setName(
-                            name(c)
-                    );
-                    suffix = "formatter";
-                } else {
-                    if (SpreadsheetMediaTypes.JSON_PARSERS.test(contentType)) {
-                        value = (c) -> context.marshall(
-                                        c.parser()
-                                                .orElse(null)
-                                )
-                                .setName(
-                                        name(c)
-                                );
-                        suffix = "parser";
-                    } else {
-                        if (SpreadsheetMediaTypes.JSON_STYLES.test(contentType)) {
-                            value = (c) -> context.marshall(c.style())
-                                    .setName(
-                                            name(c)
-                                    );
-                            suffix = "style";
-                        } else {
-                            if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType)) {
-                                value = (c) -> context.marshallWithType(
-                                        c.formattedValue()
-                                                .orElse(null)
-                                ).setName(
-                                        name(c)
-                                );
-                                suffix = "value";
-                            } else {
-                                throw new IllegalArgumentException("Unknown contentType " + contentType);
-                            }
-                        }
-                    }
-                }
-            }
+                contentType = SpreadsheetMediaTypes.JSON_FORMULAS;
+                break;
+            case FORMATTER:
+                value = (c) -> context.marshall(
+                        c.formatter().orElse(null)
+                ).setName(
+                        name(c)
+                );
+                contentType = SpreadsheetMediaTypes.JSON_FORMATTERS;
+                break;
+            case STYLE:
+                value = (c) -> context.marshall(
+                        c.style()
+                ).setName(
+                        name(c)
+                );
+                contentType = SpreadsheetMediaTypes.JSON_STYLES;
+                break;
+            case PARSER:
+                value = (c) -> context.marshall(
+                                c.parser()
+                                        .orElse(null)
+                        ).setName(
+                                name(c)
+                        );
+                contentType = SpreadsheetMediaTypes.JSON_PARSERS;
+                break;
+            case VALUE:
+                value = (c) -> context.marshallWithType(
+                        c.formattedValue()
+                                .orElse(null)
+                ).setName(
+                        name(c)
+                );
+                contentType = SpreadsheetMediaTypes.JSON_FORMATTED_VALUES;
+                break;
+            default:
+                value = null;
+                contentType = null;
+
+                NeverError.unhandledEnum(
+                        valueKind,
+                        SpreadsheetCellValueKind.values()
+                );
         }
 
         return WebEntity.empty()
@@ -148,7 +148,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                                                 .toString()
                                                 .replace(SpreadsheetSelection.SEPARATOR.character(), '-') + // make a helper that gives safe WebEntityFileName
                                                 "." +
-                                                suffix +
+                                                valueKind.fileExtension() +
                                                 ".json.txt"
                                 )
                         )

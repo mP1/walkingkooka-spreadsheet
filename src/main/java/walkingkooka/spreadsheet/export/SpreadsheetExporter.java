@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.net.WebEntity;
-import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 
 /**
  * Exports a range of cells returning a {@link WebEntity} which may hold JSON, HTML or more.
@@ -27,10 +27,10 @@ import walkingkooka.spreadsheet.SpreadsheetCellRange;
 public interface SpreadsheetExporter {
 
     boolean canExport(final SpreadsheetCellRange cells,
-                      final MediaType contentType,
+                      final SpreadsheetCellValueKind valueKind,
                       final SpreadsheetExporterContext context);
 
     WebEntity export(final SpreadsheetCellRange cells,
-                     final MediaType contentType,
+                     final SpreadsheetCellValueKind valueKind,
                      final SpreadsheetExporterContext context);
 }
