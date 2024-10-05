@@ -24,21 +24,53 @@ import walkingkooka.io.FileExtension;
  */
 public enum SpreadsheetCellValueKind {
 
-    CELL,
+    CELL {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell;
+        }
+    },
 
-    FORMULA,
+    FORMULA{
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.formula();
+        }
+    },
 
-    FORMATTER,
+    FORMATTER{
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.formula();
+        }
+    },
 
-    PARSER,
+    PARSER {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.parser();
+        }
+    },
 
-    STYLE,
+    STYLE {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.style();
+        }
+    },
 
-    VALUE;
+    VALUE {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.formattedValue();
+        }
+    };
 
     SpreadsheetCellValueKind() {
         this.fileExtension = FileExtension.with(this.name().toLowerCase());
     }
+
+    public abstract Object cellValue(final SpreadsheetCell cell);
 
     public final FileExtension fileExtension() {
         return this.fileExtension;
