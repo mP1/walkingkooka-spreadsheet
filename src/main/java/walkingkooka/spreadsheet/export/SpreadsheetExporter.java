@@ -23,6 +23,13 @@ import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 
 /**
  * Exports a range of cells returning a {@link WebEntity} which may hold JSON, HTML or more.
+ * <br>
+ * The clipboard PASTE menu item or command consists of an {@link SpreadsheetExporterName} and {@link SpreadsheetCellValueKind}.
+ * <br>
+ * A sample web URL might be:
+ * <pre>
+ * /cell/A1:B2/json/cell
+ * </pre>
  */
 public interface SpreadsheetExporter {
 
