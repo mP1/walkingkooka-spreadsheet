@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.io.FileExtension;
+
 /**
  * Directive that controls what part of a cell to export or when importing what part of a cell to replace.
  */
@@ -33,4 +35,14 @@ public enum SpreadsheetCellValueKind {
     STYLES,
 
     VALUES;
+
+    SpreadsheetCellValueKind() {
+        this.fileExtension = FileExtension.with(this.name().toLowerCase());
+    }
+
+    public final FileExtension fileExtension() {
+        return this.fileExtension;
+    }
+
+    private final FileExtension fileExtension;
 }
