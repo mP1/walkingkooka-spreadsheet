@@ -26,15 +26,15 @@ public enum SpreadsheetCellValueKind {
 
     CELL,
 
-    FORMULAS,
+    FORMULA,
 
-    FORMATTERS,
+    FORMATTER,
 
-    PARSERS,
+    PARSER,
 
-    STYLES,
+    STYLE,
 
-    VALUES;
+    VALUE;
 
     SpreadsheetCellValueKind() {
         this.fileExtension = FileExtension.with(this.name().toLowerCase());
