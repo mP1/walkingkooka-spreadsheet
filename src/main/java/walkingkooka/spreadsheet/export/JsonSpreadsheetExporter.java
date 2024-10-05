@@ -35,7 +35,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Uses the given {@link MediaType} to determine which parts of each {@link SpreadsheetCell} to convert to JSON.
+ * Uses the given {@link SpreadsheetCellValueKind} to determine which parts of each {@link SpreadsheetCell} to convert to JSON.
  */
 final class JsonSpreadsheetExporter implements SpreadsheetExporter {
 
