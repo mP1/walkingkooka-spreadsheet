@@ -105,6 +105,11 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
     }
 
     @Override
+    public String label() {
+        return "Importer";
+    }
+
+    @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }

@@ -105,6 +105,11 @@ final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetE
     }
 
     @Override
+    public String label() {
+        return "Exporter";
+    }
+
+    @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }

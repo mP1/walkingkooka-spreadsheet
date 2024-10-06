@@ -105,6 +105,11 @@ final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetPar
     }
 
     @Override
+    public String label() {
+        return "Parser";
+    }
+
+    @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
