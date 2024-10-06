@@ -105,6 +105,11 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<Spreadsheet
     }
 
     @Override
+    public String label() {
+        return "Formatter";
+    }
+
+    @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }

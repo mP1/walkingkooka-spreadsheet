@@ -105,6 +105,11 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
     }
 
     @Override
+    public String label() {
+        return "Comparator";
+    }
+
+    @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
