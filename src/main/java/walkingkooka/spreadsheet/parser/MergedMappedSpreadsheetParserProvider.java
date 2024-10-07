@@ -124,5 +124,5 @@ final class MergedMappedSpreadsheetParserProvider implements SpreadsheetParserPr
         return this.mapper.toString();
     }
 
-    private final MergedProviderMapper<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserInfo, SpreadsheetParserInfoSet> mapper;
+    private final MergedProviderMapper<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector> mapper;
 }
