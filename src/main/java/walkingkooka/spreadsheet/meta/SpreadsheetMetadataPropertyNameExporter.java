@@ -17,15 +17,15 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliases;
 
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Base class for any property that holds a {@link SpreadsheetExporterSelector}.
+ * Base class for any property that holds a {@link SpreadsheetExporterAliases}.
  */
-abstract class SpreadsheetMetadataPropertyNameExporter extends SpreadsheetMetadataPropertyName<SpreadsheetExporterSelector> {
+abstract class SpreadsheetMetadataPropertyNameExporter extends SpreadsheetMetadataPropertyName<SpreadsheetExporterAliases> {
 
     /**
      * Package private to limit sub classing.
@@ -35,32 +35,32 @@ abstract class SpreadsheetMetadataPropertyNameExporter extends SpreadsheetMetada
     }
 
     @Override
-    final SpreadsheetExporterSelector checkValue0(final Object value) {
+    final SpreadsheetExporterAliases checkValue0(final Object value) {
         return this.checkValueType(
                 value,
-                v -> v instanceof SpreadsheetExporterSelector
+                v -> v instanceof SpreadsheetExporterAliases
         );
     }
 
     @Override
     final String expected() {
-        return SpreadsheetExporterSelector.class.getSimpleName();
+        return SpreadsheetExporterAliases.class.getSimpleName();
     }
 
     @Override
-    final Optional<SpreadsheetExporterSelector> extractLocaleAwareValue(final Locale locale) {
+    final Optional<SpreadsheetExporterAliases> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<SpreadsheetExporterSelector> type() {
-        return SpreadsheetExporterSelector.class;
+    final Class<SpreadsheetExporterAliases> type() {
+        return SpreadsheetExporterAliases.class;
     }
 
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final SpreadsheetExporterSelector parseUrlFragmentSaveValue0(final String value) {
-        return SpreadsheetExporterSelector.parse(value);
+    public final SpreadsheetExporterAliases parseUrlFragmentSaveValue0(final String value) {
+        return SpreadsheetExporterAliases.parse(value);
     }
 }

@@ -18,7 +18,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliases;
 
 public final class SpreadsheetMetadataPropertyNameExporterClipboardTest extends SpreadsheetMetadataPropertyNameExporterTestCase<SpreadsheetMetadataPropertyNameExporterClipboard> {
 
@@ -28,8 +28,8 @@ public final class SpreadsheetMetadataPropertyNameExporterClipboardTest extends 
     }
 
     @Override
-    SpreadsheetExporterSelector propertyValue() {
-        return SpreadsheetExporterSelector.parse("json");
+    SpreadsheetExporterAliases propertyValue() {
+        return SpreadsheetExporterAliases.parse("json");
     }
 
     // class............................................................................................................

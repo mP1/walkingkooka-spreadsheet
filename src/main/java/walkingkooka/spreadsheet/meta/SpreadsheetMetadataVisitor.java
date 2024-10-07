@@ -26,8 +26,8 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliases;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -107,7 +107,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitClipboardExporter(final SpreadsheetExporterSelector selector) {
+    protected void visitClipboardExporter(final SpreadsheetExporterAliases aliases) {
         // nop
     }
 
