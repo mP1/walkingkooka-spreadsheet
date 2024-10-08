@@ -20,55 +20,91 @@ package walkingkooka.spreadsheet.export;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.plugin.PluginAliasesLikeTesting;
+import walkingkooka.collect.set.SortedSets;
+import walkingkooka.plugin.PluginAliasSetLikeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetExporterAliasesTest implements PluginAliasesLikeTesting<SpreadsheetExporterAliases, SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector>,
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class SpreadsheetExporterAliasesTest implements PluginAliasSetLikeTesting<SpreadsheetExporterName,
+        SpreadsheetExporterInfo,
+        SpreadsheetExporterInfoSet,
+        SpreadsheetExporterSelector,
+        SpreadsheetExporterAlias,
+        SpreadsheetExporterAliases>,
         HashCodeEqualsDefinedTesting2<SpreadsheetExporterAliases>,
         ToStringTesting<SpreadsheetExporterAliases>,
         JsonNodeMarshallingTesting<SpreadsheetExporterAliases> {
 
+    // with.............................................................................................................
+
+    @Test
+    public void testWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetExporterAliases.with(null)
+        );
+    }
+
+    @Test
+    public void testWithEmpty() {
+        assertSame(
+                SpreadsheetExporterAliases.EMPTY,
+                SpreadsheetExporterAliases.with(SortedSets.empty())
+        );
+    }
+
+    // name.............................................................................................................
+
     @Test
     public void testNameWithName() {
-        final SpreadsheetExporterName html = SpreadsheetExporterName.with("html");
+        final SpreadsheetExporterName abs = SpreadsheetExporterName.with("abs");
 
         this.nameAndCheck(
-                this.createPluginAliases(),
-                html,
-                html
+                this.createSet(),
+                abs,
+                abs
         );
     }
 
     @Test
     public void testNameWithAlias() {
         this.nameAndCheck(
-                this.createPluginAliases(),
-                SpreadsheetExporterName.with("json-alias")
+                this.createSet(),
+                SpreadsheetExporterName.with("sum-alias")
         );
     }
 
     @Test
     public void testAliasWithName() {
         this.aliasAndCheck(
-                this.createPluginAliases(),
-                SpreadsheetExporterName.with("html")
+                this.createSet(),
+                SpreadsheetExporterName.with("abs")
         );
     }
 
     @Test
     public void testAliasWithAlias() {
         this.aliasAndCheck(
-                this.createPluginAliases(),
+                this.createSet(),
                 SpreadsheetExporterName.with("custom-alias"),
                 SpreadsheetExporterSelector.parse("custom(1)")
         );
     }
 
     @Override
-    public SpreadsheetExporterAliases createPluginAliases() {
-        return SpreadsheetExporterAliases.parse("html, this, that, custom-alias custom(1) https://example.com/custom , json-alias json");
+    public SpreadsheetExporterAliases createSet() {
+        return SpreadsheetExporterAliases.parse("abs, min, max, custom-alias custom(1) https://example.com/custom , sum-alias sum");
+    }
+
+    // parse............................................................................................................
+
+    @Override
+    public SpreadsheetExporterAliases parseString(final String text) {
+        return SpreadsheetExporterAliases.parse(text);
     }
 
     // equals...........................................................................................................
@@ -82,24 +118,14 @@ public final class SpreadsheetExporterAliasesTest implements PluginAliasesLikeTe
 
     @Override
     public SpreadsheetExporterAliases createObject() {
-        return SpreadsheetExporterAliases.parse("html, custom-alias custom(1) https://example.com/custom");
-    }
-
-    // toString...........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                SpreadsheetExporterAliases.parse("json, custom-alias custom(1) https://example.com/custom , html, this"),
-                "custom-alias custom(1) https://example.com/custom , html, json, this"
-        );
+        return SpreadsheetExporterAliases.parse("abs, custom-alias custom(1) https://example.com/custom");
     }
 
     // json.............................................................................................................
 
     @Override
     public SpreadsheetExporterAliases unmarshall(final JsonNode json,
-                                                 final JsonNodeUnmarshallContext context) {
+                                                final JsonNodeUnmarshallContext context) {
         return SpreadsheetExporterAliases.unmarshall(
                 json,
                 context
