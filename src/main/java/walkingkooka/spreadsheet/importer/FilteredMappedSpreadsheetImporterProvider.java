@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.plugin.FilteredProviderMapper;
-import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
@@ -87,7 +86,7 @@ final class FilteredMappedSpreadsheetImporterProvider implements SpreadsheetImpo
         return this.mapper.infos();
     }
 
-    private final FilteredProviderMapper<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector, PluginAlias<SpreadsheetImporterName, SpreadsheetImporterSelector>> mapper;
+    private final FilteredProviderMapper<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector, SpreadsheetImporterAlias> mapper;
 
     @Override
     public String toString() {
