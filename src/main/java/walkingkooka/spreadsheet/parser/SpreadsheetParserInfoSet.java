@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.UrlFragment;
 import walkingkooka.plugin.PluginInfoSet;
 import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -78,11 +77,6 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     @Override
     public Set<AbsoluteUrl> url() {
         return this.pluginInfoSet.url();
-    }
-
-    @Override
-    public UrlFragment urlFragment() {
-        return this.pluginInfoSet.urlFragment();
     }
 
     @Override
