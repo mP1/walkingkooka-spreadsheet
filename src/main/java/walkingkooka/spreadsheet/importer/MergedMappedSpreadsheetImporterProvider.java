@@ -86,7 +86,7 @@ final class MergedMappedSpreadsheetImporterProvider implements SpreadsheetImport
         return this.mapper.infos();
     }
 
-    private final MergedProviderMapper<SpreadsheetImporterName, SpreadsheetImporterSelector, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet> mapper;
+    private final MergedProviderMapper<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector> mapper;
 
     @Override
     public String toString() {

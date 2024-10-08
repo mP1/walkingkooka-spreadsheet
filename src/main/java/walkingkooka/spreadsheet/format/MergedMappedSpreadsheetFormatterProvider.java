@@ -122,5 +122,5 @@ final class MergedMappedSpreadsheetFormatterProvider implements SpreadsheetForma
         return this.mapper.toString();
     }
 
-    private final MergedProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> mapper;
+    private final MergedProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector> mapper;
 }
