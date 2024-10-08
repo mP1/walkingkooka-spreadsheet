@@ -17,15 +17,15 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Base class for any property that holds a {@link ExpressionFunctionAliases}.
+ * Base class for any property that holds a {@link ExpressionFunctionAliasSet}.
  */
-abstract class SpreadsheetMetadataPropertyNameExpressionFunction extends SpreadsheetMetadataPropertyName<ExpressionFunctionAliases> {
+abstract class SpreadsheetMetadataPropertyNameExpressionFunction extends SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> {
 
     /**
      * Package private to limit sub classing.
@@ -35,32 +35,32 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunction extends Spreads
     }
 
     @Override
-    final ExpressionFunctionAliases checkValue0(final Object value) {
+    final ExpressionFunctionAliasSet checkValue0(final Object value) {
         return this.checkValueType(
                 value,
-                v -> v instanceof ExpressionFunctionAliases
+                v -> v instanceof ExpressionFunctionAliasSet
         );
     }
 
     @Override
     final String expected() {
-        return ExpressionFunctionAliases.class.getSimpleName();
+        return ExpressionFunctionAliasSet.class.getSimpleName();
     }
 
     @Override
-    final Optional<ExpressionFunctionAliases> extractLocaleAwareValue(final Locale locale) {
+    final Optional<ExpressionFunctionAliasSet> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<ExpressionFunctionAliases> type() {
-        return ExpressionFunctionAliases.class;
+    final Class<ExpressionFunctionAliasSet> type() {
+        return ExpressionFunctionAliasSet.class;
     }
 
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final ExpressionFunctionAliases parseUrlFragmentSaveValue0(final String value) {
-        return ExpressionFunctionAliases.parse(value);
+    public final ExpressionFunctionAliasSet parseUrlFragmentSaveValue0(final String value) {
+        return ExpressionFunctionAliasSet.parse(value);
     }
 }

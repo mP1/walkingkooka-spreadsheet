@@ -95,7 +95,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -735,7 +735,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final ExpressionFunctionAliases aliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
+        final ExpressionFunctionAliasSet aliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
         final ExpressionFunctionInfoSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
 
         components.reportIfMissing();

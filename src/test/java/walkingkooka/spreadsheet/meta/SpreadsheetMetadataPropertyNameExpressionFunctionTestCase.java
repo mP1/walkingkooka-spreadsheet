@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
-public abstract class SpreadsheetMetadataPropertyNameExpressionFunctionTestCase<N extends SpreadsheetMetadataPropertyNameExpressionFunction> extends SpreadsheetMetadataPropertyNameTestCase<N, ExpressionFunctionAliases> {
+public abstract class SpreadsheetMetadataPropertyNameExpressionFunctionTestCase<N extends SpreadsheetMetadataPropertyNameExpressionFunction> extends SpreadsheetMetadataPropertyNameTestCase<N, ExpressionFunctionAliasSet> {
 
     SpreadsheetMetadataPropertyNameExpressionFunctionTestCase() {
         super();
@@ -27,6 +27,6 @@ public abstract class SpreadsheetMetadataPropertyNameExpressionFunctionTestCase<
 
     @Override
     final String propertyValueType() {
-        return ExpressionFunctionAliases.class.getSimpleName();
+        return ExpressionFunctionAliasSet.class.getSimpleName();
     }
 }

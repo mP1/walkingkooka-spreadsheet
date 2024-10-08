@@ -58,7 +58,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -192,9 +192,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliases}</code> which will be used to pick available functions within find expressions.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within find expressions.
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliases> FIND_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFind.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FIND_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFind.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
@@ -212,9 +212,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormula.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliases}</code> which will be used to pick available functions within formulas.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within formulas.
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliases> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFormula.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnRangeReference}</code>
@@ -767,7 +767,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         ConverterSelector.parse("Dummy");
         EmailAddress.tryParse("user@example.com");
         ExpressionNumberKind.DEFAULT.name();
-        ExpressionFunctionAliases.parse("hello");
+        ExpressionFunctionAliasSet.parse("hello");
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
         SpreadsheetComparatorNameList.parse(
