@@ -121,5 +121,5 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
         return this.mapper.toString();
     }
 
-    private final FilteredProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> mapper;
+    private final FilteredProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector> mapper;
 }

@@ -124,5 +124,5 @@ final class FilteredMappedSpreadsheetParserProvider implements SpreadsheetParser
         return this.mapper.toString();
     }
 
-    private final FilteredProviderMapper<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserInfo, SpreadsheetParserInfoSet> mapper;
+    private final FilteredProviderMapper<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector> mapper;
 }

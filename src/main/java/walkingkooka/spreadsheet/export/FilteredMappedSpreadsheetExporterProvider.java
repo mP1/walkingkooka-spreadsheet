@@ -91,5 +91,5 @@ final class FilteredMappedSpreadsheetExporterProvider implements SpreadsheetExpo
         return this.mapper.toString();
     }
 
-    private final FilteredProviderMapper<SpreadsheetExporterName, SpreadsheetExporterSelector, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet> mapper;
+    private final FilteredProviderMapper<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector> mapper;
 }
