@@ -787,6 +787,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
                 "dd/mm/yyyy"
         );
+        SpreadsheetImporterAliasSet.parse("json");
         SpreadsheetImporterSelector.with(
                 SpreadsheetImporterName.EMPTY,
                 ""
