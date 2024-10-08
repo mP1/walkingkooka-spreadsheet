@@ -32,7 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterAliases;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
@@ -107,9 +107,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetExporterAliases}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetExporterAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliases> CLIPBOARD_EXPORTER = registerConstant(SpreadsheetMetadataPropertyNameExporterClipboard.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> CLIPBOARD_EXPORTER = registerConstant(SpreadsheetMetadataPropertyNameExporterClipboard.instance());
     
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetImporterSelector}</code>
@@ -777,7 +777,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 ConverterName.NEVER,
                 ""
         );
-        SpreadsheetExporterAliases.parse("json");
+        SpreadsheetExporterAliasSet.parse("json");
         SpreadsheetExporterSelector.with(
                 SpreadsheetExporterName.EMPTY,
                 ""
