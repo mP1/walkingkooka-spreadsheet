@@ -51,6 +51,16 @@ public final class SpreadsheetExporterAlias implements PluginAliasLike<Spreadshe
     }
 
     @Override
+    public Optional<SpreadsheetExporterSelector> selector() {
+        return this.pluginAlias.selector();
+    }
+
+    @Override
+    public Optional<AbsoluteUrl> url() {
+        return this.pluginAlias.url();
+    }
+
+    @Override
     public String text() {
         return this.pluginAlias.text();
     }
