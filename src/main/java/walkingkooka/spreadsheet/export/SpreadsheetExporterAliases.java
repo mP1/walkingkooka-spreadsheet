@@ -17,26 +17,55 @@
 
 package walkingkooka.spreadsheet.export;
 
-import walkingkooka.Cast;
+import walkingkooka.collect.set.ImmutableSortedSetDefaults;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginAliasSet;
-import walkingkooka.plugin.PluginAliasesLike;
+import walkingkooka.plugin.PluginAliasSetLike;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.AbstractSet;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Optional;
+import java.util.SortedSet;
 
 /**
  * A declaration of exporter names and mapping of aliases to exporter names with parameters.
  */
-public final class SpreadsheetExporterAliases implements PluginAliasesLike<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector> {
+public final class SpreadsheetExporterAliases extends AbstractSet<SpreadsheetExporterAlias>
+        implements PluginAliasSetLike<SpreadsheetExporterName,
+        SpreadsheetExporterInfo,
+        SpreadsheetExporterInfoSet,
+        SpreadsheetExporterSelector,
+        SpreadsheetExporterAlias>,
+        ImmutableSortedSetDefaults<SpreadsheetExporterAliases, SpreadsheetExporterAlias> {
+
+    /**
+     * An empty {@link SpreadsheetExporterAliases}.
+     */
+    public final static SpreadsheetExporterAliases EMPTY = new SpreadsheetExporterAliases(
+            PluginAliasSet.with(
+                    SortedSets.empty(),
+                    SpreadsheetExporterPluginHelper.INSTANCE
+            )
+    );
 
     /**
      * {@see PluginAliasSet#SEPARATOR}
      */
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
+
+    /**
+     * Factory that creates {@link SpreadsheetExporterAliases} with the given aliases.
+     */
+    public static SpreadsheetExporterAliases with(final SortedSet<SpreadsheetExporterAlias> aliases) {
+        return EMPTY.setElements(aliases);
+    }
 
     public static SpreadsheetExporterAliases parse(final String text) {
         return new SpreadsheetExporterAliases(
@@ -66,25 +95,81 @@ public final class SpreadsheetExporterAliases implements PluginAliasesLike<Sprea
         return this.pluginAliasSet.merge(infos);
     }
 
-    // Object...........................................................................................................
+    // ImmutableSortedSet...............................................................................................
 
     @Override
-    public int hashCode() {
-        return this.pluginAliasSet.hashCode();
+    public Comparator<? super SpreadsheetExporterAlias> comparator() {
+        return this.pluginAliasSet.comparator();
     }
 
     @Override
-    public boolean equals(Object other) {
-        return this == other || other instanceof SpreadsheetExporterAliases && this.equals0(Cast.to(other));
-    }
-
-    private boolean equals0(final SpreadsheetExporterAliases other) {
-        return this.pluginAliasSet.equals(other.pluginAliasSet);
+    public Iterator<SpreadsheetExporterAlias> iterator() {
+        return this.pluginAliasSet.stream().iterator();
     }
 
     @Override
-    public String toString() {
+    public int size() {
+        return this.pluginAliasSet.size();
+    }
+
+    @Override
+    public SpreadsheetExporterAliases setElements(final SortedSet<SpreadsheetExporterAlias> aliases) {
+        final SpreadsheetExporterAliases after = new SpreadsheetExporterAliases(
+                this.pluginAliasSet.setElements(aliases)
+        );
+        return this.pluginAliasSet.equals(aliases) ?
+                this :
+                after;
+    }
+
+    @Override
+    public SortedSet<SpreadsheetExporterAlias> toSet() {
+        return this.pluginAliasSet.toSet();
+    }
+
+    @Override
+    public SpreadsheetExporterAliases subSet(final SpreadsheetExporterAlias from,
+                                             final SpreadsheetExporterAlias to) {
+        return this.setElements(
+                this.pluginAliasSet.subSet(
+                        from,
+                        to
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterAliases headSet(final SpreadsheetExporterAlias alias) {
+        return this.setElements(
+                this.pluginAliasSet.headSet(alias)
+        );
+    }
+
+    @Override
+    public SortedSet<SpreadsheetExporterAlias> tailSet(final SpreadsheetExporterAlias alias) {
+        return this.setElements(
+                this.pluginAliasSet.tailSet(alias)
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterAlias first() {
+        return this.pluginAliasSet.first();
+    }
+
+    @Override
+    public SpreadsheetExporterAlias last() {
+        return this.pluginAliasSet.last();
+    }
+
+    @Override
+    public String text() {
         return this.pluginAliasSet.text();
+    }
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        this.pluginAliasSet.printTree(printer);
     }
 
     private final PluginAliasSet<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias> pluginAliasSet;
@@ -98,11 +183,11 @@ public final class SpreadsheetExporterAliases implements PluginAliasesLike<Sprea
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
                 this.pluginAliasSet.text()
-    );
+        );
     }
 
     static SpreadsheetExporterAliases unmarshall(final JsonNode node,
-                                                final JsonNodeUnmarshallContext context) {
+                                                 final JsonNodeUnmarshallContext context) {
         return parse(
                 node.stringOrFail()
         );
@@ -117,5 +202,4 @@ public final class SpreadsheetExporterAliases implements PluginAliasesLike<Sprea
         );
         SpreadsheetExporterInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
     }
-
 }
