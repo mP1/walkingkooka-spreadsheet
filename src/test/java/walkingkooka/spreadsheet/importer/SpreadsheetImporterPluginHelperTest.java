@@ -17,13 +17,25 @@
 
 package walkingkooka.spreadsheet.importer;
 
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetImporterPluginHelperTest implements PluginHelperTesting<SpreadsheetImporterPluginHelper, SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector> {
+public final class SpreadsheetImporterPluginHelperTest implements PluginHelperTesting<SpreadsheetImporterPluginHelper,
+        SpreadsheetImporterName,
+        SpreadsheetImporterInfo,
+        SpreadsheetImporterInfoSet,
+        SpreadsheetImporterSelector,
+        PluginAlias<SpreadsheetImporterName, SpreadsheetImporterSelector>> {
+
     @Override
     public SpreadsheetImporterPluginHelper createPluginHelper() {
         return SpreadsheetImporterPluginHelper.INSTANCE;
+    }
+
+    @Override
+    public SpreadsheetImporterName createName() {
+        return SpreadsheetImporterName.with("Hello");
     }
 
     // class............................................................................................................

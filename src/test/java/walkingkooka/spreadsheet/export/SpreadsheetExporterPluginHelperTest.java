@@ -20,10 +20,21 @@ package walkingkooka.spreadsheet.export;
 import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetExporterPluginHelperTest implements PluginHelperTesting<SpreadsheetExporterPluginHelper, SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector> {
+public final class SpreadsheetExporterPluginHelperTest implements PluginHelperTesting<SpreadsheetExporterPluginHelper,
+        SpreadsheetExporterName,
+        SpreadsheetExporterInfo,
+        SpreadsheetExporterInfoSet,
+        SpreadsheetExporterSelector,
+        SpreadsheetExporterAlias> {
+
     @Override
     public SpreadsheetExporterPluginHelper createPluginHelper() {
         return SpreadsheetExporterPluginHelper.INSTANCE;
+    }
+
+    @Override
+    public SpreadsheetExporterName createName() {
+        return SpreadsheetExporterName.EMPTY;
     }
 
     // class............................................................................................................

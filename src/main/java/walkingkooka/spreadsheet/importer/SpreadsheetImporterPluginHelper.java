@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -33,7 +34,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector> {
+final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetImporterName,
+        SpreadsheetImporterInfo,
+        SpreadsheetImporterInfoSet,
+        SpreadsheetImporterSelector,
+        PluginAlias<SpreadsheetImporterName, SpreadsheetImporterSelector>> {
 
     final static SpreadsheetImporterPluginHelper INSTANCE = new SpreadsheetImporterPluginHelper();
 
@@ -104,6 +109,18 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
         return SpreadsheetImporterSelector.parse(text);
     }
 
+    @Override
+    public PluginAlias<SpreadsheetImporterName, SpreadsheetImporterSelector> alias(final SpreadsheetImporterName name,
+                                                                                   final Optional<SpreadsheetImporterSelector> selector,
+                                                                                   final Optional<AbsoluteUrl> url) {
+        PluginAlias.with(
+                name,
+                selector,
+                url
+        );
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public String label() {
         return "Importer";

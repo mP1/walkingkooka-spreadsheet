@@ -47,7 +47,7 @@ public final class SpreadsheetExporterAliases implements PluginAliasesLike<Sprea
         );
     }
 
-    private SpreadsheetExporterAliases(final PluginAliasSet<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector> pluginAliasSet) {
+    private SpreadsheetExporterAliases(final PluginAliasSet<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }
 
@@ -87,7 +87,7 @@ public final class SpreadsheetExporterAliases implements PluginAliasesLike<Sprea
         return this.pluginAliasSet.text();
     }
 
-    private final PluginAliasSet<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector> pluginAliasSet;
+    private final PluginAliasSet<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias> pluginAliasSet;
 
     // Json.............................................................................................................
 

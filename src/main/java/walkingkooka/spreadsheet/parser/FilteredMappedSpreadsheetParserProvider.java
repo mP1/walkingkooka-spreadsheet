@@ -35,6 +35,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.plugin.FilteredProviderMapper;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
@@ -124,5 +125,5 @@ final class FilteredMappedSpreadsheetParserProvider implements SpreadsheetParser
         return this.mapper.toString();
     }
 
-    private final FilteredProviderMapper<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector> mapper;
+    private final FilteredProviderMapper<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, PluginAlias<SpreadsheetParserName, SpreadsheetParserSelector>> mapper;
 }

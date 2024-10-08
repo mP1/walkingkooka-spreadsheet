@@ -35,6 +35,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.plugin.MergedProviderMapper;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 
@@ -124,5 +125,5 @@ final class MergedMappedSpreadsheetParserProvider implements SpreadsheetParserPr
         return this.mapper.toString();
     }
 
-    private final MergedProviderMapper<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector> mapper;
+    private final MergedProviderMapper<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, PluginAlias<SpreadsheetParserName, SpreadsheetParserSelector>> mapper;
 }
