@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 
-public abstract class SpreadsheetMetadataPropertyNameImporterTestCase<N extends SpreadsheetMetadataPropertyNameImporter> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetImporterSelector> {
+public abstract class SpreadsheetMetadataPropertyNameImporterTestCase<N extends SpreadsheetMetadataPropertyNameImporter> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetImporterAliasSet> {
 
     SpreadsheetMetadataPropertyNameImporterTestCase() {
         super();
@@ -27,6 +27,6 @@ public abstract class SpreadsheetMetadataPropertyNameImporterTestCase<N extends 
 
     @Override
     final String propertyValueType() {
-        return SpreadsheetImporterSelector.class.getSimpleName();
+        return SpreadsheetImporterAliasSet.class.getSimpleName();
     }
 }

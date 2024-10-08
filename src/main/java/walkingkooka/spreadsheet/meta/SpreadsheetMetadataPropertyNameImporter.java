@@ -18,15 +18,15 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Base class for any property that holds a {@link SpreadsheetImporterSelector}.
+ * Base class for any property that holds a {@link SpreadsheetImporterAliasSet}.
  */
-abstract class SpreadsheetMetadataPropertyNameImporter extends SpreadsheetMetadataPropertyName<SpreadsheetImporterSelector> {
+abstract class SpreadsheetMetadataPropertyNameImporter extends SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> {
 
     /**
      * Package private to limit sub classing.
@@ -36,32 +36,32 @@ abstract class SpreadsheetMetadataPropertyNameImporter extends SpreadsheetMetada
     }
 
     @Override
-    final SpreadsheetImporterSelector checkValue0(final Object value) {
+    final SpreadsheetImporterAliasSet checkValue0(final Object value) {
         return this.checkValueType(
                 value,
-                v -> v instanceof SpreadsheetImporterSelector
+                v -> v instanceof SpreadsheetImporterAliasSet
         );
     }
 
     @Override
     final String expected() {
-        return SpreadsheetImporterSelector.class.getSimpleName();
+        return SpreadsheetImporterAliasSet.class.getSimpleName();
     }
 
     @Override
-    final Optional<SpreadsheetImporterSelector> extractLocaleAwareValue(final Locale locale) {
+    final Optional<SpreadsheetImporterAliasSet> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    final Class<SpreadsheetImporterSelector> type() {
-        return SpreadsheetImporterSelector.class;
+    final Class<SpreadsheetImporterAliasSet> type() {
+        return SpreadsheetImporterAliasSet.class;
     }
 
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final SpreadsheetImporterSelector parseUrlFragmentSaveValue0(final String value) {
-        return SpreadsheetImporterSelector.parse(value);
+    public final SpreadsheetImporterAliasSet parseUrlFragmentSaveValue0(final String value) {
+        return SpreadsheetImporterAliasSet.parse(value);
     }
 }

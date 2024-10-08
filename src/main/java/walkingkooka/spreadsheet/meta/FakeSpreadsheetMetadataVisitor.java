@@ -30,8 +30,8 @@ import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -84,7 +84,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitClipboardImporter(final SpreadsheetImporterSelector selector) {
+    protected void visitClipboardImporter(final SpreadsheetImporterAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 

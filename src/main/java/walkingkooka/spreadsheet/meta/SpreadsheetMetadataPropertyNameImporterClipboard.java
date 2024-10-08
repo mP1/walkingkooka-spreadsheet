@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 
 final class SpreadsheetMetadataPropertyNameImporterClipboard extends SpreadsheetMetadataPropertyNameImporter {
 
@@ -37,7 +37,7 @@ final class SpreadsheetMetadataPropertyNameImporterClipboard extends Spreadsheet
     }
 
     @Override
-    void accept(final SpreadsheetImporterSelector value,
+    void accept(final SpreadsheetImporterAliasSet value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitClipboardImporter(value);
     }
