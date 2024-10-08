@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterName;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
@@ -112,9 +113,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> CLIPBOARD_EXPORTER = registerConstant(SpreadsheetMetadataPropertyNameExporterClipboard.instance());
     
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetImporterSelector}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetImporterAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterSelector> CLIPBOARD_IMPORTER = registerConstant(SpreadsheetMetadataPropertyNameImporterClipboard.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> CLIPBOARD_IMPORTER = registerConstant(SpreadsheetMetadataPropertyNameImporterClipboard.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorInfoSet}</code>
