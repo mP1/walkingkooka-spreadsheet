@@ -33,7 +33,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector> {
+final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias> {
 
     final static SpreadsheetExporterPluginHelper INSTANCE = new SpreadsheetExporterPluginHelper();
 
@@ -102,6 +102,17 @@ final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetE
     @Override
     public SpreadsheetExporterSelector parseSelector(final String text) {
         return SpreadsheetExporterSelector.parse(text);
+    }
+
+    @Override
+    public SpreadsheetExporterAlias alias(final SpreadsheetExporterName name,
+                                          final Optional<SpreadsheetExporterSelector> selector,
+                                          final Optional<AbsoluteUrl> url) {
+        return SpreadsheetExporterAlias.with(
+                name,
+                selector,
+                url
+        );
     }
 
     @Override

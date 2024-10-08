@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -33,7 +34,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-final class SpreadsheetFormatterPluginHelper implements PluginHelper<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector> {
+final class SpreadsheetFormatterPluginHelper implements PluginHelper<
+        SpreadsheetFormatterName,
+        SpreadsheetFormatterInfo,
+        SpreadsheetFormatterInfoSet,
+        SpreadsheetFormatterSelector,
+        PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector>> {
 
     final static SpreadsheetFormatterPluginHelper INSTANCE = new SpreadsheetFormatterPluginHelper();
 
@@ -102,6 +108,18 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<Spreadsheet
     @Override
     public SpreadsheetFormatterSelector parseSelector(final String text) {
         return SpreadsheetFormatterSelector.parse(text);
+    }
+
+    @Override
+    public PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector> alias(final SpreadsheetFormatterName name,
+                                                                                     final Optional<SpreadsheetFormatterSelector> selector,
+                                                                                     final Optional<AbsoluteUrl> url) {
+        PluginAlias.with(
+                name,
+                selector,
+                url
+        );
+        throw new UnsupportedOperationException();
     }
 
     @Override

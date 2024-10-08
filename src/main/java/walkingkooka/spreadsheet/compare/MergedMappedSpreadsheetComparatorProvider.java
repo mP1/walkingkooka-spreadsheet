@@ -75,5 +75,5 @@ final class MergedMappedSpreadsheetComparatorProvider implements SpreadsheetComp
         return this.mapper.toString();
     }
 
-    private final MergedProviderMapper<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, ?> mapper;
+    private final MergedProviderMapper<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, ?, ?> mapper;
 }

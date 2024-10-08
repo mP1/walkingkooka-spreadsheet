@@ -17,10 +17,16 @@
 
 package walkingkooka.spreadsheet.compare;
 
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetComparatorPluginHelperTest implements PluginHelperTesting<SpreadsheetComparatorPluginHelper, SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector> {
+public final class SpreadsheetComparatorPluginHelperTest implements PluginHelperTesting<SpreadsheetComparatorPluginHelper,
+        SpreadsheetComparatorName,
+        SpreadsheetComparatorInfo,
+        SpreadsheetComparatorInfoSet,
+        SpreadsheetComparatorSelector,
+        PluginAlias<SpreadsheetComparatorName, SpreadsheetComparatorSelector>> {
 
     @Override
     public void testParseSelectorWithNullFails() {
@@ -30,6 +36,11 @@ public final class SpreadsheetComparatorPluginHelperTest implements PluginHelper
     @Override
     public SpreadsheetComparatorPluginHelper createPluginHelper() {
         return SpreadsheetComparatorPluginHelper.INSTANCE;
+    }
+
+    @Override
+    public SpreadsheetComparatorName createName() {
+        return SpreadsheetComparatorName.DATE;
     }
 
     // class............................................................................................................

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -33,7 +34,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-final class SpreadsheetComparatorPluginHelper implements PluginHelper<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector> {
+final class SpreadsheetComparatorPluginHelper implements PluginHelper<SpreadsheetComparatorName,
+        SpreadsheetComparatorInfo,
+        SpreadsheetComparatorInfoSet,
+        SpreadsheetComparatorSelector,
+        PluginAlias<SpreadsheetComparatorName, SpreadsheetComparatorSelector>> {
 
     final static SpreadsheetComparatorPluginHelper INSTANCE = new SpreadsheetComparatorPluginHelper();
 
@@ -101,6 +106,18 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
 
     @Override
     public SpreadsheetComparatorSelector parseSelector(final String text) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public PluginAlias<SpreadsheetComparatorName, SpreadsheetComparatorSelector> alias(final SpreadsheetComparatorName name,
+                                                                                       final Optional<SpreadsheetComparatorSelector> selector,
+                                                                                       final Optional<AbsoluteUrl> url) {
+        PluginAlias.with(
+                name,
+                selector,
+                url
+        );
         throw new UnsupportedOperationException();
     }
 

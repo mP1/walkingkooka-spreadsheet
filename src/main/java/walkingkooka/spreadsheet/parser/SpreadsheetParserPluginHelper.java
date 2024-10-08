@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -33,7 +34,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector> {
+final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetParserName,
+        SpreadsheetParserInfo,
+        SpreadsheetParserInfoSet,
+        SpreadsheetParserSelector,
+        PluginAlias<SpreadsheetParserName, SpreadsheetParserSelector>> {
 
     final static SpreadsheetParserPluginHelper INSTANCE = new SpreadsheetParserPluginHelper();
 
@@ -104,6 +109,18 @@ final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetPar
         return SpreadsheetParserSelector.parse(text);
     }
 
+    @Override
+    public PluginAlias<SpreadsheetParserName, SpreadsheetParserSelector> alias(final SpreadsheetParserName name,
+                                                                               final Optional<SpreadsheetParserSelector> selector,
+                                                                               final Optional<AbsoluteUrl> url) {
+        PluginAlias.with(
+                name,
+                selector,
+                url
+        );
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public String label() {
         return "Parser";
