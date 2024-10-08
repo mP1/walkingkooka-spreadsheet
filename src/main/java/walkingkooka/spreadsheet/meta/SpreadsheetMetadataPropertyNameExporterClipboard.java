@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.spreadsheet.export.SpreadsheetExporterAliases;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 
 final class SpreadsheetMetadataPropertyNameExporterClipboard extends SpreadsheetMetadataPropertyNameExporter {
 
@@ -37,7 +37,7 @@ final class SpreadsheetMetadataPropertyNameExporterClipboard extends Spreadsheet
     }
 
     @Override
-    void accept(final SpreadsheetExporterAliases aliases,
+    void accept(final SpreadsheetExporterAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitClipboardExporter(aliases);
     }

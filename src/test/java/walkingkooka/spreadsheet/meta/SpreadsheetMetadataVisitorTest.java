@@ -27,7 +27,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterAliases;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
@@ -129,12 +129,12 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitClipboardExporter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitClipboardExporter(final SpreadsheetExporterAliases a) {
+            protected void visitClipboardExporter(final SpreadsheetExporterAliasSet a) {
                 this.visited = a;
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.CLIPBOARD_EXPORTER,
-                SpreadsheetExporterAliases.parse("json")
+                SpreadsheetExporterAliasSet.parse("json")
         );
     }
 
