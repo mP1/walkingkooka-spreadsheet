@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -38,7 +37,7 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
         SpreadsheetImporterInfo,
         SpreadsheetImporterInfoSet,
         SpreadsheetImporterSelector,
-        PluginAlias<SpreadsheetImporterName, SpreadsheetImporterSelector>> {
+        SpreadsheetImporterAlias> {
 
     final static SpreadsheetImporterPluginHelper INSTANCE = new SpreadsheetImporterPluginHelper();
 
@@ -110,15 +109,14 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
     }
 
     @Override
-    public PluginAlias<SpreadsheetImporterName, SpreadsheetImporterSelector> alias(final SpreadsheetImporterName name,
-                                                                                   final Optional<SpreadsheetImporterSelector> selector,
-                                                                                   final Optional<AbsoluteUrl> url) {
-        PluginAlias.with(
+    public SpreadsheetImporterAlias alias(final SpreadsheetImporterName name,
+                                          final Optional<SpreadsheetImporterSelector> selector,
+                                          final Optional<AbsoluteUrl> url) {
+        return SpreadsheetImporterAlias.with(
                 name,
                 selector,
                 url
         );
-        throw new UnsupportedOperationException();
     }
     
     @Override
