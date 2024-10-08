@@ -38,7 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
@@ -281,12 +281,12 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitFindFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitFindFunctions(final ExpressionFunctionAliases a) {
+            protected void visitFindFunctions(final ExpressionFunctionAliasSet a) {
                 this.visited = a;
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                ExpressionFunctionAliases.parse("abs")
+                ExpressionFunctionAliasSet.parse("abs")
         );
     }
 
@@ -320,12 +320,12 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitFormulaFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitFormulaExpressionFunctions(final ExpressionFunctionAliases a) {
+            protected void visitFormulaExpressionFunctions(final ExpressionFunctionAliasSet a) {
                 this.visited = a;
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                ExpressionFunctionAliases.parse("abs")
+                ExpressionFunctionAliasSet.parse("abs")
         );
     }
 

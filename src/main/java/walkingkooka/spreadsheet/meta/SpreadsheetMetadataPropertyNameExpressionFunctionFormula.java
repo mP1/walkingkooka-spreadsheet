@@ -18,10 +18,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 /**
- * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliases} used during
+ * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliasSet} used during
  * expression evaluation.
  */
 final class SpreadsheetMetadataPropertyNameExpressionFunctionFormula extends SpreadsheetMetadataPropertyNameExpressionFunction {
@@ -43,7 +43,7 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionFormula extends Spr
     }
 
     @Override
-    void accept(final ExpressionFunctionAliases aliases,
+    void accept(final ExpressionFunctionAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitFormulaExpressionFunctions(aliases);
     }

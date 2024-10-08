@@ -81,7 +81,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliases;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -803,7 +803,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 ExpressionFunctionInfoSet.parse("https://example/ExpressionFunctions/test-function-111 sin,https://example/ExpressionFunctions/test-function-222 sum")
         ).set(
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                ExpressionFunctionAliases.parse("sin-alias sin, sum")
+                ExpressionFunctionAliasSet.parse("sin-alias sin, sum")
         );
 
         final ExpressionFunctionProvider provider = metadata.expressionFunctionProvider(
