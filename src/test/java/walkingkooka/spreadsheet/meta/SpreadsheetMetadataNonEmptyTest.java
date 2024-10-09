@@ -2724,6 +2724,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetExporterInfoSet.EMPTY
         );
         properties.put(
+                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                ConverterSelector.parse("general")
+        );
+        properties.put(
                 SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
                 ConverterSelector.parse("find-something-something")
         );
