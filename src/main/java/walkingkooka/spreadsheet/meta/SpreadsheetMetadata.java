@@ -43,19 +43,15 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.export.SpreadsheetExporter;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -68,9 +64,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -97,7 +91,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -679,27 +672,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 )
         );
     }
-
-    // ConverterProvider.........................................................................................
-
-    /**
-     * Returns a {@link ConverterProvider} that only contains the selected {@link Converter}
-     * in {@link SpreadsheetMetadataPropertyName#CONVERTERS}
-     */
-    public final ConverterProvider converterProvider(final ConverterProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
-
-        components.reportIfMissing();
-
-        return ConverterProviders.filteredMapped(
-                converterInfos,
-                provider
-        );
-    }
     
     // HasDateTimeContext...............................................................................................
 
@@ -758,30 +730,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return SpreadsheetMetadataDecimalNumberContextComponents.with(this).decimalNumberContext();
     }
 
-    // ExpressionNumberProvider.........................................................................................
-
-    /**
-     * Returns a {@link ExpressionFunctionProvider} that applies {@link SpreadsheetMetadataPropertyName#FORMULA_FUNCTIONS} and {@link SpreadsheetMetadataPropertyName#FUNCTIONS}.
-     */
-    public final ExpressionFunctionProvider expressionFunctionProvider(final ExpressionFunctionProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final ExpressionFunctionAliasSet aliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
-        final ExpressionFunctionInfoSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
-
-        components.reportIfMissing();
-
-        return ExpressionFunctionProviders.aliases(
-                aliases,
-                ExpressionFunctionProviders.filteredMapped(
-                        functions,
-                        provider
-                )
-        );
-    }
-
     // SpreadsheetComparatorContext.....................................................................................
 
     /**
@@ -793,111 +741,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // SpreadsheetComparatorProvider.........................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetComparatorProvider} that only contains the selected {@link SpreadsheetComparator}
-     * in {@link SpreadsheetMetadataPropertyName#COMPARATORS}
-     */
-    public final SpreadsheetComparatorProvider spreadsheetComparatorProvider(final SpreadsheetComparatorProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final SpreadsheetComparatorInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
-
-        components.reportIfMissing();
-
-        return SpreadsheetComparatorProviders.filteredMapped(
-                set,
-                provider
-        );
-    }
-
-    // SpreadsheetExporterProvider.........................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetExporterProvider} that only contains the selected {@link SpreadsheetExporter}
-     * in {@link SpreadsheetMetadataPropertyName#EXPORTERS}
-     */
-    public final SpreadsheetExporterProvider spreadsheetExporterProvider(final SpreadsheetExporterProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final SpreadsheetExporterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
-
-        components.reportIfMissing();
-
-        return SpreadsheetExporterProviders.filteredMapped(
-                set,
-                provider
-        );
-    }
-    
-    // SpreadsheetFormatterProvider.........................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetFormatterProvider} that only contains the selected {@link SpreadsheetFormatter}
-     * in {@link SpreadsheetMetadataPropertyName#FORMATTERS}
-     */
-    public final SpreadsheetFormatterProvider spreadsheetFormatterProvider(final SpreadsheetFormatterProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final SpreadsheetFormatterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
-
-        components.reportIfMissing();
-
-        return SpreadsheetFormatterProviders.filteredMapped(
-                set,
-                provider
-        );
-    }
-
-    // SpreadsheetImporterProvider......................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetImporterProvider} that only contains the selected {@link SpreadsheetImporter}
-     * in {@link SpreadsheetMetadataPropertyName#IMPORTERS}
-     */
-    public final SpreadsheetImporterProvider spreadsheetImporterProvider(final SpreadsheetImporterProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final SpreadsheetImporterInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
-
-        components.reportIfMissing();
-
-        return SpreadsheetImporterProviders.filteredMapped(
-                set,
-                provider
-        );
-    }
-
-    // SpreadsheetParserProvider.........................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetParserProvider} that only contains the selected {@link Parser}
-     * in {@link SpreadsheetMetadataPropertyName#PARSERS}
-     */
-    public final SpreadsheetParserProvider spreadsheetParserProvider(final SpreadsheetParserProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final SpreadsheetParserInfoSet set = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
-
-        components.reportIfMissing();
-
-        return SpreadsheetParserProviders.filteredMapped(
-                set,
-                provider
-        );
-    }
-
     // SpreadsheetParser................................................................................................
 
     /**
@@ -906,14 +749,53 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetProvider spreadsheetProvider(final SpreadsheetProvider provider) {
         Objects.requireNonNull(provider, "provider");
 
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
+
+        final ExpressionFunctionAliasSet functionsAliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
+        final ExpressionFunctionInfoSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
+
+        final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
+        final SpreadsheetExporterInfoSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
+        final SpreadsheetFormatterInfoSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
+        final SpreadsheetImporterInfoSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
+        final SpreadsheetParserInfoSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
+
+        components.reportIfMissing();
+
         return SpreadsheetProviders.basic(
-            this.converterProvider(provider),
-            this.expressionFunctionProvider(provider),
-            this.spreadsheetComparatorProvider(provider),
-            this.spreadsheetExporterProvider(provider),
-            this.spreadsheetFormatterProvider(provider),
-            this.spreadsheetImporterProvider(provider),
-            this.spreadsheetParserProvider(provider)
+                ConverterProviders.filteredMapped(
+                        converterInfos,
+                        provider
+                ),
+                ExpressionFunctionProviders.aliases(
+                        functionsAliases,
+                        ExpressionFunctionProviders.filteredMapped(
+                                functions,
+                                provider
+                        )
+                ),
+                SpreadsheetComparatorProviders.filteredMapped(
+                        comparators,
+                        provider
+                ),
+                SpreadsheetExporterProviders.filteredMapped(
+                        exporters,
+                        provider
+                ),
+                SpreadsheetFormatterProviders.filteredMapped(
+                        formatters,
+                        provider
+                ),
+                SpreadsheetImporterProviders.filteredMapped(
+                        importers,
+                        provider
+                ),
+                SpreadsheetParserProviders.filteredMapped(
+                        parsers,
+                        provider
+                )
         );
     }
 

@@ -20,14 +20,11 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterInfoSet;
-import walkingkooka.convert.provider.ConverterName;
-import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
@@ -39,51 +36,34 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.export.SpreadsheetExporter;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
-import walkingkooka.spreadsheet.export.SpreadsheetExporters;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporter;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporters;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -696,98 +676,71 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    // ConverterProvider................................................................................................
+    // SpreadsheetProvider..............................................................................................
 
     @Test
-    public void testConverterProviderWithNullFails() {
+    public void testSpreadsheetProviderWithNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.converterProvider(null)
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetProvider(null)
         );
     }
 
     @Test
-    public void testConverterProviderWithMissingPropertyFails() {
-        assertThrows(
+    public void testSpreadsheetProviderWithMissingRequiredPropertiesFails() {
+        final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.converterProvider(
-                        ConverterProviders.fake()
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetProvider(
+                        spreadsheetProvider()
                 )
+        );
+
+        this.checkEquals(
+                "Required properties \"comparators\", \"converters\", \"exporters\", \"formatters\", \"formula-functions\", \"functions\", \"importers\", \"parsers\" missing.",
+                thrown.getMessage()
         );
     }
 
     @Test
-    public void testConverterProvider() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterInfoSet.parse(
-                        SpreadsheetConvertersConverterProviders.BASE_URL + "/general different,https://example/Converters/test-converter-22 zzz"
-                )
-        ).set(
-                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
-                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
-                        .spreadsheetFormatterSelector()
-        ).set(
-                SpreadsheetMetadataPropertyName.DATE_PARSER,
-                SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
-                        .spreadsheetParserSelector()
-        ).set(
-                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy")
-                        .spreadsheetFormatterSelector()
-        ).set(
-                SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
-                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
-                        .spreadsheetParserSelector()
-        ).set(
-                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-                SpreadsheetPattern.parseNumberFormatPattern("$0.00")
-                        .spreadsheetFormatterSelector()
-        ).set(
-                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-                SpreadsheetPattern.parseNumberParsePattern("$0.00")
-                        .spreadsheetParserSelector()
-        ).set(
-                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                SpreadsheetPattern.parseTextFormatPattern("@")
-                        .spreadsheetFormatterSelector()
-        ).set(
-                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
-                SpreadsheetPattern.parseTimeFormatPattern("hh:mm")
-                        .spreadsheetFormatterSelector()
-        ).set(
-                SpreadsheetMetadataPropertyName.TIME_PARSER,
-                SpreadsheetPattern.parseTimeParsePattern("hh:mm")
-                        .spreadsheetParserSelector()
-        );
-
-        final ConverterProvider provider = metadata.converterProvider(
-                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                        metadata,
-                        spreadsheetFormatterProvider(),
-                        spreadsheetParserProvider()
-                )
-        );
-
+    public void testSpreadsheetProvider() {
         this.checkNotEquals(
                 null,
-                provider.converter(
-                        ConverterName.with("different"),
-                        Lists.empty(),
-                        PROVIDER_CONTEXT
+                SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.COMPARATORS,
+                        SpreadsheetComparatorInfoSet.parse("https://example.com/comparator1 comparator1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.CONVERTERS,
+                        ConverterInfoSet.parse("https://example.com/converter1 converter1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.EXPORTERS,
+                        SpreadsheetExporterInfoSet.parse("https://example.com/exporter1 exporter1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                        ExpressionFunctionAliasSet.parse("function1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.FUNCTIONS,
+                        ExpressionFunctionInfoSet.parse("https://example.com/function1 function1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMATTERS,
+                        SpreadsheetFormatterInfoSet.parse("https://example.com/formatter1 formatter1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.IMPORTERS,
+                        SpreadsheetImporterInfoSet.parse("https://example.com/importer1 importer1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.PARSERS,
+                        SpreadsheetParserInfoSet.parse("https://example.com/parser1 parser1")
+                ).spreadsheetProvider(
+                        this.spreadsheetProvider()
                 )
         );
     }
-    
-    // ExpressionFunctionsProviders.....................................................................................
 
-    @Test
-    public void testExpressionFunctionProviders() {
-        final ExpressionFunction<?, ExpressionEvaluationContext> testFunction111 = new FakeExpressionFunction<>() {
+    private SpreadsheetProvider spreadsheetProvider() {
+        final ExpressionFunction<?, ExpressionEvaluationContext> function1 = new FakeExpressionFunction<>() {
             @Override
             public Optional<ExpressionFunctionName> name() {
                 return Optional.of(
-                        ExpressionFunctionName.with("test-function-111")
+                        ExpressionFunctionName.with("function1")
                 );
             }
 
@@ -798,266 +751,22 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             }
         };
 
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                ExpressionFunctionInfoSet.parse("https://example/ExpressionFunctions/test-function-111 sin,https://example/ExpressionFunctions/test-function-222 sum")
-        ).set(
-                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("sin-alias sin, sum")
-        );
-
-        final ExpressionFunctionProvider provider = metadata.expressionFunctionProvider(
+        return SpreadsheetProviders.basic(
+                ConverterProviders.converters(),
                 ExpressionFunctionProviders.basic(
-                        Url.parseAbsolute("https://example/ExpressionFunctions"),
+                        Url.parseAbsolute("https://example.com/"),
                         CaseSensitivity.INSENSITIVE,
                         Sets.of(
-                                testFunction111,
-                                new FakeExpressionFunction<>() {
-                                    @Override
-                                    public Optional<ExpressionFunctionName> name() {
-                                        return Optional.of(
-                                                ExpressionFunctionName.with("test-function-222")
-                                        );
-                                    }
-                                }
+                                function1
                         )
-                )
-        );
-
-        this.checkEquals(
-                "Hello",
-                provider.expressionFunction(
-                        ExpressionFunctionName.with("sin-alias"),
-                        Lists.empty(),
-                        PROVIDER_CONTEXT
-                ).apply(
-                        ExpressionFunction.NO_PARAMETER_VALUES,
-                        ExpressionEvaluationContexts.fake()
-                )
-        );
-    }
-
-    // SpreadsheetComparators...........................................................................................
-
-    @Test
-    public void testSpreadsheetComparatorsWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetComparatorProvider(null)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetComparatorsWithMissingPropertyFails() {
-        assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetComparatorProvider(
-                        SpreadsheetComparatorProviders.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetComparators() {
-        final SpreadsheetComparator<?> comparator1 = SpreadsheetComparators.dayOfMonth();
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorInfoSet.parse(SpreadsheetComparatorProviders.BASE_URL + "/day-of-month xyz,https://example/SpreadsheetComparators/test-comparator-22 zzz")
-        );
-
-        final SpreadsheetComparatorProvider provider = metadata.spreadsheetComparatorProvider(
-                SpreadsheetComparatorProviders.spreadsheetComparators()
-        );
-
-        this.checkEquals(
-                comparator1,
-                provider.spreadsheetComparator(
-                        SpreadsheetComparatorName.with("xyz"),
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    // SpreadsheetExporters.............................................................................................
-
-    @Test
-    public void testSpreadsheetExportersWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetExporterProvider(null)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetExportersWithMissingPropertyFails() {
-        assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetExporterProvider(
-                        SpreadsheetExporterProviders.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetExporters() {
-        final SpreadsheetExporter exporter = SpreadsheetExporters.empty();
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.EXPORTERS,
-                SpreadsheetExporterInfoSet.parse(SpreadsheetExporterProviders.BASE_URL + "/empty empty")
-        );
-
-        final SpreadsheetExporterProvider provider = metadata.spreadsheetExporterProvider(
-                SpreadsheetExporterProviders.spreadsheetExport()
-        );
-
-        this.checkEquals(
-                exporter,
-                provider.spreadsheetExporter(
-                        SpreadsheetExporterSelector.parse("empty"),
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    // SpreadsheetFormatters............................................................................................
-
-    @Test
-    public void testSpreadsheetFormattersWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetFormatterProvider(null)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetFormattersWithMissingPropertyFails() {
-        assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetFormatterProvider(
-                        SpreadsheetFormatterProviders.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetFormatters() {
-        final SpreadsheetFormatter formatter = SpreadsheetPattern.parseTextFormatPattern("@@")
-                .formatter();
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.FORMATTERS,
-                SpreadsheetFormatterInfoSet.parse(SpreadsheetFormatterProviders.BASE_URL + "/text-format-pattern xyz,https://example/SpreadsheetFormatters/test-formatter-22 zzz")
-        );
-
-        final SpreadsheetFormatterProvider provider = metadata.spreadsheetFormatterProvider(
-                spreadsheetFormatterProvider()
-        );
-
-        this.checkEquals(
-                formatter,
-                provider.spreadsheetFormatter(
-                        SpreadsheetFormatterSelector.parse("xyz @@"),
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    // SpreadsheetImporters.............................................................................................
-
-    @Test
-    public void testSpreadsheetImportersWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetImporterProvider(null)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetImportersWithMissingPropertyFails() {
-        assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetImporterProvider(
-                        SpreadsheetImporterProviders.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetImporters() {
-        final SpreadsheetImporter importer = SpreadsheetImporters.empty();
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.IMPORTERS,
-                SpreadsheetImporterInfoSet.parse(SpreadsheetImporterProviders.BASE_URL + "/empty empty")
-        );
-
-        final SpreadsheetImporterProvider provider = metadata.spreadsheetImporterProvider(
-                SpreadsheetImporterProviders.spreadsheetImport()
-        );
-
-        this.checkEquals(
-                importer,
-                provider.spreadsheetImporter(
-                        SpreadsheetImporterSelector.parse("empty"),
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    // SpreadsheetParsers............................................................................................
-
-    @Test
-    public void testSpreadsheetParsersWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetParserProvider(null)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParsersWithMissingPropertyFails() {
-        assertThrows(
-                IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetParserProvider(
-                        SpreadsheetParserProviders.fake()
-                )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParsers() {
-        final Parser<SpreadsheetParserContext> parser = SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-                .parser();
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.PARSERS,
-                SpreadsheetParserInfoSet.parse(SpreadsheetParserProviders.BASE_URL + "/date-parse-pattern xyz,https://example/SpreadsheetParsers/test-parser-22 zzz")
-        );
-
-        final SpreadsheetParserProvider provider = metadata.spreadsheetParserProvider(
+                ),
+                SpreadsheetComparatorProviders.spreadsheetComparators(),
+                SpreadsheetExporterProviders.spreadsheetExport(),
+                SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                SpreadsheetImporterProviders.spreadsheetImport(),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                        spreadsheetFormatterProvider()
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                 )
-        );
-
-        this.checkEquals(
-                parser,
-                provider.spreadsheetParser(
-                        SpreadsheetParserSelector.parse("xyz yyyy/mm/dd"),
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    // SpreadsheetProvider..............................................................................................
-
-    @Test
-    public void testSpreadsheetProviderWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetProvider(null)
         );
     }
 
