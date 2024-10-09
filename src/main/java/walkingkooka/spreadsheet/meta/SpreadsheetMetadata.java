@@ -642,11 +642,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link ExpressionNumberConverterContext}
      */
-    public final SpreadsheetConverterContext converterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
-                                                              final Supplier<LocalDateTime> now,
-                                                              final SpreadsheetLabelNameResolver labelNameResolver,
-                                                              final ConverterProvider converterProvider,
-                                                              final ProviderContext providerContext) {
+    private SpreadsheetConverterContext converterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
+                                                         final Supplier<LocalDateTime> now,
+                                                         final SpreadsheetLabelNameResolver labelNameResolver,
+                                                         final ConverterProvider converterProvider,
+                                                         final ProviderContext providerContext) {
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(now, "now");
