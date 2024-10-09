@@ -590,7 +590,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // ConverterContext.................................................................................................
 
     /**
-     * Creates a {@link SpreadsheetConverterContext} to be used when executing expressions.
+     * Creates a {@link SpreadsheetConverterContext} to be used when executing formula expressions.
      */
     public final SpreadsheetConverterContext formulaSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
                                                                                 final SpreadsheetLabelNameResolver labelNameResolver,
