@@ -609,10 +609,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetConverterContext} to be used when formatting formula expression values.
      */
-    public final SpreadsheetConverterContext formatterConverterContext(final Supplier<LocalDateTime> now,
-                                                                       final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                       final ConverterProvider converterProvider,
-                                                                       final ProviderContext providerContext) {
+    private SpreadsheetConverterContext formatterSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
+                                                                             final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                             final ConverterProvider converterProvider,
+                                                                             final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                 now,
@@ -621,7 +621,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 providerContext
         );
     }
-
 
     /**
      * Creates a {@link SpreadsheetConverterContext} to be used when doing a sort.
@@ -1078,7 +1077,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         spreadsheetFormatterProvider,
                         providerContext
                 ),
-                this.formatterConverterContext(
+                this.formatterSpreadsheetConverterContext(
                         now,
                         labelNameResolver,
                         converterProvider,
