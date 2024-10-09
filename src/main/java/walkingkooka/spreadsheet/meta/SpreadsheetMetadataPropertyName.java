@@ -194,6 +194,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within a find expression.
+     */
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FIND_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFind.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within find expressions.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FIND_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFind.instance());

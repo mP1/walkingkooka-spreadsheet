@@ -443,6 +443,50 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
+    public final void testFindConverterWithNullConverterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .converter(
+                                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                                null,
+                                PROVIDER_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testFindConverterWithNullProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .converter(
+                                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                                ConverterProviders.fake(),
+                                null
+                        )
+        );
+    }
+
+
+    @Test
+    public final void testFindConverterRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> this.createObject()
+                        .converter(
+                                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                                ConverterProviders.fake(),
+                                PROVIDER_CONTEXT
+                        )
+        );
+        checkMessage(
+                thrown,
+                "Required properties \"find-converter\" missing."
+        );
+    }
+    
+    @Test
     public final void testFormulaConverterWithNullConverterProviderFails() {
         assertThrows(
                 NullPointerException.class,
