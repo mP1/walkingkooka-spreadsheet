@@ -77,6 +77,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
@@ -111,20 +112,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static char VALUE_SEPARATOR = ',';
     private final static int WIDTH = 1;
 
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-            .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-            .loadFromLocale()
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-            .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
-            .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
-            .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT)
-            .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
-            .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, MINUS)
-            .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PLUS)
-            .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
-            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-            .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
     private final static String TEST_CONTEXT_LOADCELL = "test-context-loadCell";
 
     private final static String TEST_CONTEXT_SERVER_URL = "test-context-serverUrl";
@@ -287,6 +274,22 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             );
         }
     };
+
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+            .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+            .loadFromLocale()
+            .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
+            .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
+            .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL)
+            .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT)
+            .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
+            .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, MINUS)
+            .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, PLUS)
+            .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
+            .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+            .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
+            .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, ExpressionFunctionAliasSet.parse("xyz, " + TEST_CONTEXT_LOADCELL + ", " + TEST_CONTEXT_SERVER_URL + ", " + TEST_CONTEXT_SPREADSHEET_METADATA));
 
     private final static SpreadsheetEngine ENGINE = SpreadsheetEngines.fake();
 
@@ -1053,7 +1056,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\"\n" +
                         "  ],\n" +
                         "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"formula-functions\": \"\",\n" +
+                        "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": [],\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
@@ -1267,7 +1270,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\"\n" +
                         "  ],\n" +
                         "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"formula-functions\": \"\",\n" +
+                        "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": [],\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +

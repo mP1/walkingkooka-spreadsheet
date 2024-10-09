@@ -696,7 +696,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-                "Required properties \"comparators\", \"converters\", \"exporters\", \"formatters\", \"formula-functions\", \"functions\", \"importers\", \"parsers\" missing.",
+                "Required properties \"comparators\", \"converters\", \"exporters\", \"formatters\", \"functions\", \"importers\", \"parsers\" missing.",
                 thrown.getMessage()
         );
     }
