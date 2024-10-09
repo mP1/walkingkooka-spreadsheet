@@ -597,7 +597,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                 final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                 final ConverterProvider converterProvider,
                                                                                 final ProviderContext providerContext) {
-        return this.converterContext(
+        return this.spreadsheetConverterContext(
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 now,
                 labelNameResolver,
@@ -613,7 +613,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                        final ConverterProvider converterProvider,
                                                                        final ProviderContext providerContext) {
-        return this.converterContext(
+        return this.spreadsheetConverterContext(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                 now,
                 labelNameResolver,
@@ -630,7 +630,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                       final SpreadsheetLabelNameResolver labelNameResolver,
                                                                       final ConverterProvider converterProvider,
                                                                       final ProviderContext providerContext) {
-        return this.converterContext(
+        return this.spreadsheetConverterContext(
                 SpreadsheetMetadataPropertyName.SORT_CONVERTER,
                 now,
                 labelNameResolver,
@@ -642,11 +642,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link ExpressionNumberConverterContext}
      */
-    private SpreadsheetConverterContext converterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
-                                                         final Supplier<LocalDateTime> now,
-                                                         final SpreadsheetLabelNameResolver labelNameResolver,
-                                                         final ConverterProvider converterProvider,
-                                                         final ProviderContext providerContext) {
+    private SpreadsheetConverterContext spreadsheetConverterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
+                                                                    final Supplier<LocalDateTime> now,
+                                                                    final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                    final ConverterProvider converterProvider,
+                                                                    final ProviderContext providerContext) {
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(now, "now");
