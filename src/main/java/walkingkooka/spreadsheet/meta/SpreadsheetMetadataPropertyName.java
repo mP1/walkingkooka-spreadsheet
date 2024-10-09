@@ -27,6 +27,7 @@ import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
@@ -208,12 +209,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterInfoSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an expression.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an {@link SpreadsheetCell#formula()} expression.
      */
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormula.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within formulas.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#formula()}.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFormula.instance());
 
