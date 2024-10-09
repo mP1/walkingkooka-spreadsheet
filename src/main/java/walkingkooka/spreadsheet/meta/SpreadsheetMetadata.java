@@ -91,6 +91,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -753,7 +754,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
 
-        final ExpressionFunctionAliasSet functionsAliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
         final ExpressionFunctionInfoSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
 
         final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
@@ -769,12 +769,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         converterInfos,
                         provider
                 ),
-                ExpressionFunctionProviders.aliases(
-                        functionsAliases,
-                        ExpressionFunctionProviders.filteredMapped(
-                                functions,
-                                provider
-                        )
+                ExpressionFunctionProviders.filteredMapped(
+                        functions,
+                        provider
                 ),
                 SpreadsheetComparatorProviders.filteredMapped(
                         comparators,
@@ -840,6 +837,25 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return ExpressionNumberContexts.basic(
                 this.expressionNumberKind(),
                 this.decimalNumberContext()
+        );
+    }
+
+    /**
+     * Assumes a {@link ExpressionFunctionProvider} that has already been filtered by {@link SpreadsheetMetadataPropertyName#FUNCTIONS},
+     * and then filters functions by {@link SpreadsheetMetadataPropertyName#FORMULA_FUNCTIONS}.
+     */
+    public final ExpressionFunctionProvider formulaExpressionFunctionProvider(final ExpressionFunctionProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ExpressionFunctionAliasSet functionsAliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
+
+        components.reportIfMissing();
+
+        return ExpressionFunctionProviders.aliases(
+                functionsAliases,
+                provider
         );
     }
 

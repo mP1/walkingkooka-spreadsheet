@@ -192,7 +192,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(token, "token");
 
         return token.toExpression(
-                this.expressionEvaluationContext(
+                this.formulaExpressionEvaluationContext(
                         Optional.empty()// cell
                 )
         );
@@ -222,7 +222,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         try {
             result = expression.toValue(
-                    this.expressionEvaluationContext(cell)
+                    this.formulaExpressionEvaluationContext(cell)
             );
         } catch (final RuntimeException exception) {
             result = SpreadsheetErrorKind.translate(exception);
@@ -231,7 +231,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return result;
     }
 
-    private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+    /**
+     * Creates a {@link SpreadsheetExpressionEvaluationContext} for both formulas and converting a token to an {@link Expression}.
+     */
+    private SpreadsheetExpressionEvaluationContext formulaExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         final SpreadsheetProvider provider = this.spreadsheetProvider;
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
@@ -247,7 +250,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         provider, // SpreadsheetConverterProvider
                         this.providerContext
                 ),
-                provider, // ExpressionFunctionProvider,
+                metadata.formulaExpressionFunctionProvider(provider), // ExpressionFunctionProvider,
                 this // ProviderContext
         );
     }
