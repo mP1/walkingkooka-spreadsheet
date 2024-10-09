@@ -119,68 +119,133 @@ public interface SpreadsheetMetadataTesting extends Testing {
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
      */
     SpreadsheetMetadata METADATA_EN_AU = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-            .loadFromLocale()
-            .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 1)
             .set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    LOCALE
+            ).loadFromLocale()
+            .set(
+                    SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH,
+                    1
+            ).set(
                     SpreadsheetMetadataPropertyName.COMPARATORS,
                     SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
             ).set(
                     SpreadsheetMetadataPropertyName.CONVERTERS,
                     CONVERTER_PROVIDER.converterInfos()
-            ).set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
-            .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, NOW.get())
-            .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector())
-            .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector())
-            .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET)
-            .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 2000)
-            .set(
+            ).set(
+                    SpreadsheetMetadataPropertyName.CREATOR,
+                    EmailAddress.parse("user@example.com")
+            ).set(
+                    SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                    NOW.get()
+            ).set(
+                    SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+                    SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.DATE_PARSER,
+                    SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                    SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.DATETIME_OFFSET,
+                    Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
+            ).set(
+                    SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+                    SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
+                    2000
+            ).set(
                     SpreadsheetMetadataPropertyName.EXPORTERS,
                     SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
-            ).set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-            .set(
+            ).set(
+                    SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
+                    EXPRESSION_NUMBER_KIND
+            ).set(
                     SpreadsheetMetadataPropertyName.FIND_CONVERTER,
                     ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)")
-            ).set(SpreadsheetMetadataPropertyName.FIND_FUNCTIONS, ExpressionFunctionAliasSet.parse(""))
-            .set(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)"))
-            .set(
+            ).set(
+                    SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+                    ExpressionFunctionAliasSet.parse("")
+            ).set(
+                    SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                    ConverterSelector.parse("collection (error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)")
+            ).set(
                     SpreadsheetMetadataPropertyName.FORMATTERS,
                     SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
-            ).set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)"))
-            .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, ExpressionFunctionAliasSet.parse(""))
-            .set(SpreadsheetMetadataPropertyName.FUNCTIONS, ExpressionFunctionInfoSet.parse(""))
-            .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
-            .set(
+            ).set(
+                    SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)")
+            ).set(
+                    SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                    ExpressionFunctionAliasSet.parse("")
+            ).set(
+                    SpreadsheetMetadataPropertyName.FUNCTIONS,
+                    ExpressionFunctionInfoSet.parse("")
+            ).set(
+                    SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                    8
+            ).set(
                     SpreadsheetMetadataPropertyName.IMPORTERS,
                     SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
-            ).set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("user@example.com"))
-            .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, NOW.get())
-            .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector())
-            .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector())
-            .set(
+            ).set(
+                    SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                    EmailAddress.parse("user@example.com")
+            ).set(
+                    SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                    NOW.get()
+            ).set(
+                    SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                    SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                    SpreadsheetPattern.parseNumberParsePattern("0.#").spreadsheetParserSelector()
+            ).set(
                     SpreadsheetMetadataPropertyName.PARSERS,
                     SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
-            ).set(SpreadsheetMetadataPropertyName.PRECISION, 7)
-            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
-            .set(
+            ).set(
+                    SpreadsheetMetadataPropertyName.PRECISION,
+                    7
+            ).set(
+                    SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+                    RoundingMode.HALF_UP
+            ).set(
                     SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
                     SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
             ).set(
                     SpreadsheetMetadataPropertyName.SORT_CONVERTER,
                     ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)")
-            ).set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
-                    .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
-                    .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
-            ).set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-            .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector())
-            .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector())
-            .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 50)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.BLACK)
-            .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.WHITE)
-            .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK), 1)
-            .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE), 2);
+            ).set(
+                    SpreadsheetMetadataPropertyName.STYLE,
+                    TextStyle.EMPTY
+                            .set(TextStylePropertyName.WIDTH, Length.parsePixels("100px"))
+                            .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
+            ).set(
+                    SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                    SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+                    SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.TIME_PARSER,
+                    SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss").spreadsheetParserSelector()
+            ).set(
+                    SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
+                    50
+            ).set(
+                    SpreadsheetMetadataPropertyName.numberedColor(1),
+                    Color.BLACK
+            ).set(
+                    SpreadsheetMetadataPropertyName.numberedColor(2),
+                    Color.WHITE
+            ).set(
+                    SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.BLACK),
+                    1
+            ).set(
+                    SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.WHITE),
+                    2
+            );
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.basic(
             METADATA_EN_AU.environmentContext()
