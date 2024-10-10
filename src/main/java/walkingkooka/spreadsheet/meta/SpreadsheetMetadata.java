@@ -181,6 +181,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
     }
 
+    // CanBeEmpty.......................................................................................................
+
     /**
      * Returns true if the {@link SpreadsheetMetadata} is empty.
      */
@@ -188,6 +190,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final boolean isEmpty() {
         return this instanceof SpreadsheetMetadataEmpty;
     }
+
+    // HateosResource...................................................................................................
 
     /**
      * Returns the {@link SpreadsheetId} or throws a {@link IllegalStateException} if missing.
@@ -201,13 +205,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return this.id()
                 .orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this))
                 .hateosLinkId();
-    }
-
-    /**
-     * Returns the {@link SpreadsheetName} if one is present.
-     */
-    public Optional<SpreadsheetName> name() {
-        return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME);
     }
 
     // get..............................................................................................................
@@ -437,10 +434,424 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 this.remove(propertyName);
     }
 
+    // Patchable.....................................................................................................
+
+    /**
+     * Accepts a JSON object that represents a PATCH to this {@link SpreadsheetMetadata}, where properties with null values
+     * will remove that property and other properties will set the new value.
+     */
+    @Override
+    public final SpreadsheetMetadata patch(final JsonNode patch,
+                                           final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(patch, "patch");
+        Objects.requireNonNull(context, "context");
+
+        SpreadsheetMetadata result = this;
+
+        int patchCount = 0;
+        for (final JsonNode nameAndValue : patch.objectOrFail().children()) {
+            patchCount++;
+
+            final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(nameAndValue);
+
+            if (nameAndValue.isNull()) {
+                result = result.remove(name);
+            } else {
+                final Object value;
+                if (name instanceof SpreadsheetMetadataPropertyNameStyle) {
+                    final TextStyle style = result.getIgnoringDefaults(SpreadsheetMetadataPropertyName.STYLE)
+                            .orElse(TextStyle.EMPTY);
+
+                    value = style.patch(
+                            nameAndValue,
+                            context
+                    );
+                } else {
+                    value = context.unmarshall(nameAndValue, name.type());
+                }
+
+                result = result.set(
+                        name,
+                        Cast.to(value)
+                );
+            }
+        }
+
+        if (0 == patchCount) {
+            throw new IllegalArgumentException("Empty patch");
+        }
+
+        return result;
+    }
+
+    // setDefaults......................................................................................................
+
+    /**
+     * Sets a {@link SpreadsheetMetadata} which will provide defaults when the value is not actually present in this instance.
+     */
+    public final SpreadsheetMetadata setDefaults(final SpreadsheetMetadata defaults) {
+        Objects.requireNonNull(defaults, "defaults");
+
+        return this.defaults().equals(defaults) ?
+                this :
+                this.replaceDefaults(defaults.checkDefault());
+    }
+
+    /**
+     * Factory that creates a new {@link SpreadsheetMetadata} with the given defaults. Defaults will be null
+     * if it was empty.
+     */
+    abstract SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults);
+
+    /**
+     * Checks that all property values are valid or general and not specific to a single spreadsheet, and then
+     * return the defaults {@link SpreadsheetMetadata} or null if its empty.
+     */
+    abstract SpreadsheetMetadata checkDefault();
+
+    /**
+     * Returns another {@link SpreadsheetMetadata} which will provide defaults.
+     */
+    public final SpreadsheetMetadata defaults() {
+        final SpreadsheetMetadata defaults = this.defaults;
+        return null != defaults ?
+                defaults :
+                EMPTY;
+    }
+
+    // @VisibleForTesting
+    final SpreadsheetMetadata defaults;
+
+    // Converter........................................................................................................
+
+    /**
+     * Creates a {@link Converter} using the {@link SpreadsheetMetadataPropertyName} along with requiring other metadata properties.
+     */
+    // @VisibleForTesting
+    final Converter<SpreadsheetConverterContext> converter(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector,
+                                                           final ConverterProvider converterProvider,
+                                                           final ProviderContext context) {
+        Objects.requireNonNull(converterSelector, "converterSelector");
+        Objects.requireNonNull(converterProvider, "converterProvider");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ConverterSelector converter = components.getOrNull(converterSelector);
+
+        components.reportIfMissing();
+
+        return converter.evaluateText(
+                converterProvider,
+                context
+        );
+    }
+    
+    // HasDateTimeContext...............................................................................................
+
+    /**
+     * Returns a {@link DateTimeContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#LOCALE}</li>
+     * </ul>
+     */
+    public final DateTimeContext dateTimeContext(final Supplier<LocalDateTime> now) {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+        final Integer defaultYear = components.getOrNull(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
+        final Integer twoYearDigit = components.getOrNull(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
+
+        components.reportIfMissing();
+
+        return DateTimeContexts.locale(
+                locale,
+                defaultYear,
+                twoYearDigit,
+                now
+        );
+    }
+
+    static final List<SpreadsheetMetadataPropertyName<?>> DATE_TIME_CONTEXT_REQUIRED = Lists.of(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR
+    );
+
+    // HasDecimalNumberContext..........................................................................................
+
+    /**
+     * Returns a {@link DecimalNumberContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#CURRENCY_SYMBOL}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_SEPARATOR}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#EXPONENT_SYMBOL}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#GROUP_SEPARATOR}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NEGATIVE_SIGN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#PERCENTAGE_SYMBOL}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#POSITIVE_SIGN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
+     * </ul>
+     * or
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#LOCALE} which may provide some defaults if some of the above properties are missing.</li>
+     * </ul>
+     */
+    @Override
+    public abstract DecimalNumberContext decimalNumberContext();
+
+    final DecimalNumberContext decimalNumberContext0() {
+        return SpreadsheetMetadataDecimalNumberContextComponents.with(this).decimalNumberContext();
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    /**
+     * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata}.
+     */
+    public final EnvironmentContext environmentContext() {
+        if (null == this.environmentContext) {
+            this.environmentContext = SpreadsheetMetadataEnvironmentContext.with(this);
+        }
+        return this.environmentContext;
+    }
+
+    /**
+     * Cached {@link SpreadsheetMetadataEnvironmentContext}.
+     */
+    private EnvironmentContext environmentContext;
+
+    // HasExpressionNumberContext.......................................................................................
+
+    /**
+     * Returns a {@link ExpressionNumberContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#EXPRESSION_NUMBER_KIND}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
+     * </ul>
+     */
+    public abstract ExpressionNumberContext expressionNumberContext();
+
+    final ExpressionNumberContext expressionNumberContext0() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+        components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+
+        components.reportIfMissing();
+
+        return ExpressionNumberContexts.basic(
+                this.expressionNumberKind(),
+                this.decimalNumberContext()
+        );
+    }
+
     // HasExpressionNumberKind...........................................................................................
 
     public final ExpressionNumberKind expressionNumberKind() {
         return this.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+    }
+
+    /**
+     * Creates a {@link SpreadsheetConverterContext} to be used when executing formula expressions.
+     */
+    public final SpreadsheetConverterContext formulaSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
+                                                                                final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                                final ConverterProvider converterProvider,
+                                                                                final ProviderContext providerContext) {
+        return this.spreadsheetConverterContext(
+                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                now,
+                labelNameResolver,
+                converterProvider,
+                providerContext
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetConverterContext} to be used to convert {@link SpreadsheetCell cell} {@link SpreadsheetFormula#value()}
+     * during a format.
+     */
+    private SpreadsheetConverterContext formatSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
+                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                          final ConverterProvider converterProvider,
+                                                                          final ProviderContext providerContext) {
+        return this.spreadsheetConverterContext(
+                SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
+                now,
+                labelNameResolver,
+                converterProvider,
+                providerContext
+        );
+    }
+
+    /**
+     * Assumes a {@link ExpressionFunctionProvider} that has already been filtered by {@link SpreadsheetMetadataPropertyName#FUNCTIONS},
+     * and then filters functions by {@link SpreadsheetMetadataPropertyName#FORMULA_FUNCTIONS}.
+     */
+    public final ExpressionFunctionProvider formulaExpressionFunctionProvider(final ExpressionFunctionProvider provider) {
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ExpressionFunctionAliasSet functionsAliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
+
+        components.reportIfMissing();
+
+        return ExpressionFunctionProviders.aliases(
+                functionsAliases,
+                provider
+        );
+    }
+
+    /**
+     * Returns a general {@link Converter} using the required properties.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSER}</li>
+     * </ul>
+     */
+    public final Converter<SpreadsheetConverterContext> generalConverter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                         final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                                         final ProviderContext context) {
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final SpreadsheetFormatterSelector dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
+        final SpreadsheetParserSelector dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
+
+        final SpreadsheetFormatterSelector dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
+        final SpreadsheetParserSelector dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
+
+        final SpreadsheetFormatterSelector numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
+        final SpreadsheetParserSelector numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
+
+        final SpreadsheetFormatterSelector textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
+
+        final SpreadsheetFormatterSelector timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
+        final SpreadsheetParserSelector timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
+
+        components.reportIfMissing();
+
+        return SpreadsheetConverters.general(
+                spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat, context),
+                spreadsheetParserProvider.spreadsheetParser(dateParser, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat, context),
+                spreadsheetParserProvider.spreadsheetParser(dateTimeParser, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(numberFormat, context),
+                spreadsheetParserProvider.spreadsheetParser(numberParser, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(textFormat, context),
+                spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat, context),
+                spreadsheetParserProvider.spreadsheetParser(timeParser, context)
+        );
+    }
+
+    // HasJsonNodeMarshallContext.......................................................................................
+
+    /**
+     * Returns a {@link JsonNodeMarshallContext}
+     */
+    public final JsonNodeMarshallContext jsonNodeMarshallContext() {
+        return JsonNodeMarshallContexts.basic();
+    }
+
+    // HasJsonNodeUnmarshallContext......................................................................................
+
+    public abstract JsonNodeUnmarshallContext jsonNodeUnmarshallContext();
+
+    final JsonNodeUnmarshallContext jsonNodeUnmarshallContext0() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ExpressionNumberKind expressionNumberKind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+
+        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+
+        components.reportIfMissing();
+
+        return JsonNodeUnmarshallContexts.basic(
+                expressionNumberKind,
+                new MathContext(
+                        precision,
+                        roundingMode
+                )
+        );
+    }
+
+    // loadFromLocale...................................................................................................
+
+    /**
+     * Assumes a {@link Locale} has been set, failing if one is absent, and proceeds to set numerous properties with defaults,
+     * note that existing values will be overwritten.
+     * Date, DateTime and Time defaults are loaded parse {@link java.text.DateFormat} using the provided locale, formats pick the FULL style,
+     * while parse pattern will include all patterns with all styles.
+     */
+    public final SpreadsheetMetadata loadFromLocale() {
+        final Locale locale = this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
+
+        SpreadsheetMetadata updated = this;
+
+        for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
+            final Optional<?> localeAwareValue = propertyName.extractLocaleAwareValue(locale);
+            if (localeAwareValue.isPresent()) {
+                updated = updated.set(
+                        propertyName,
+                        Cast.to(localeAwareValue.get())
+                );
+            }
+        }
+
+        return updated;
+    }
+
+    // HasLocale........................................................................................................
+
+    @Override
+    public final Locale locale() {
+        return this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
+    }
+
+    // HasMathContext...................................................................................................
+
+    /**
+     * Returns a {@link MathContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
+     * </ul>
+     */
+    @Override
+    public abstract MathContext mathContext();
+
+    final MathContext mathContext0() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+
+        components.reportIfMissing();
+
+        return new MathContext(precision, roundingMode);
+    }
+
+    /**
+     * Returns the {@link SpreadsheetName} if one is present.
+     */
+    public Optional<SpreadsheetName> name() {
+        return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME);
     }
 
     // Function<SpreadsheetColorName, Optional<Color>>..................................................................
@@ -506,119 +917,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // Converter........................................................................................................
-
-    /**
-     * Creates a {@link Converter} using the {@link SpreadsheetMetadataPropertyName} along with requiring other metadata properties.
-     */
-    // @VisibleForTesting
-    final Converter<SpreadsheetConverterContext> converter(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector,
-                                                           final ConverterProvider converterProvider,
-                                                           final ProviderContext context) {
-        Objects.requireNonNull(converterSelector, "converterSelector");
-        Objects.requireNonNull(converterProvider, "converterProvider");
-        Objects.requireNonNull(context, "context");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final ConverterSelector converter = components.getOrNull(converterSelector);
-
-        components.reportIfMissing();
-
-        return converter.evaluateText(
-                converterProvider,
-                context
-        );
-    }
-
-    /**
-     * Returns a general {@link Converter} using the required properties.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSER}</li>
-     * </ul>
-     */
-    public final Converter<SpreadsheetConverterContext> generalConverter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                                         final SpreadsheetParserProvider spreadsheetParserProvider,
-                                                                         final ProviderContext context) {
-        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
-        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
-        Objects.requireNonNull(context, "context");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final SpreadsheetFormatterSelector dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
-        final SpreadsheetParserSelector dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
-
-        final SpreadsheetFormatterSelector dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
-        final SpreadsheetParserSelector dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
-
-        final SpreadsheetFormatterSelector numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
-        final SpreadsheetParserSelector numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
-
-        final SpreadsheetFormatterSelector textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
-
-        final SpreadsheetFormatterSelector timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
-        final SpreadsheetParserSelector timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
-
-        components.reportIfMissing();
-
-        return SpreadsheetConverters.general(
-                spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat, context),
-                spreadsheetParserProvider.spreadsheetParser(dateParser, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat, context),
-                spreadsheetParserProvider.spreadsheetParser(dateTimeParser, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(numberFormat, context),
-                spreadsheetParserProvider.spreadsheetParser(numberParser, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(textFormat, context),
-                spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat, context),
-                spreadsheetParserProvider.spreadsheetParser(timeParser, context)
-        );
-    }
-
-    // ConverterContext.................................................................................................
-
-    /**
-     * Creates a {@link SpreadsheetConverterContext} to be used when executing formula expressions.
-     */
-    public final SpreadsheetConverterContext formulaSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
-                                                                                final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                                final ConverterProvider converterProvider,
-                                                                                final ProviderContext providerContext) {
-        return this.spreadsheetConverterContext(
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                now,
-                labelNameResolver,
-                converterProvider,
-                providerContext
-        );
-    }
-
-    /**
-     * Creates a {@link SpreadsheetConverterContext} to be used to convert {@link SpreadsheetCell cell} {@link SpreadsheetFormula#value()}
-     * during a format.
-     */
-    private SpreadsheetConverterContext formatSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
-                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                          final ConverterProvider converterProvider,
-                                                                          final ProviderContext providerContext) {
-        return this.spreadsheetConverterContext(
-                SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
-                now,
-                labelNameResolver,
-                converterProvider,
-                providerContext
-        );
-    }
-
     /**
      * Creates a {@link SpreadsheetConverterContext} to be used when doing a sort.
      */
@@ -632,6 +930,17 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 labelNameResolver,
                 converterProvider,
                 providerContext
+        );
+    }
+
+    // SpreadsheetComparatorContext.....................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetComparatorContext}
+     */
+    private SpreadsheetComparatorContext spreadsheetComparatorContext(final SpreadsheetConverterContext converterContext) {
+        return SpreadsheetComparatorContexts.basic(
+                converterContext
         );
     }
 
@@ -676,246 +985,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 )
         );
     }
-    
-    // HasDateTimeContext...............................................................................................
 
-    /**
-     * Returns a {@link DateTimeContext} if the required properties are present.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#LOCALE}</li>
-     * </ul>
-     */
-    public final DateTimeContext dateTimeContext(final Supplier<LocalDateTime> now) {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
-        final Integer defaultYear = components.getOrNull(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
-        final Integer twoYearDigit = components.getOrNull(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
-
-        components.reportIfMissing();
-
-        return DateTimeContexts.locale(
-                locale,
-                defaultYear,
-                twoYearDigit,
-                now
-        );
-    }
-
-    static final List<SpreadsheetMetadataPropertyName<?>> DATE_TIME_CONTEXT_REQUIRED = Lists.of(
-            SpreadsheetMetadataPropertyName.LOCALE,
-            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR
-    );
-
-    // HasDecimalNumberContext..........................................................................................
-
-    /**
-     * Returns a {@link DecimalNumberContext} if the required properties are present.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#CURRENCY_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_SEPARATOR}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#EXPONENT_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#GROUP_SEPARATOR}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NEGATIVE_SIGN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#PERCENTAGE_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#POSITIVE_SIGN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
-     * </ul>
-     * or
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#LOCALE} which may provide some defaults if some of the above properties are missing.</li>
-     * </ul>
-     */
-    @Override
-    public abstract DecimalNumberContext decimalNumberContext();
-
-    final DecimalNumberContext decimalNumberContext0() {
-        return SpreadsheetMetadataDecimalNumberContextComponents.with(this).decimalNumberContext();
-    }
-
-    // SpreadsheetComparatorContext.....................................................................................
-
-    /**
-     * Returns a {@link SpreadsheetComparatorContext}
-     */
-    private SpreadsheetComparatorContext spreadsheetComparatorContext(final SpreadsheetConverterContext converterContext) {
-        return SpreadsheetComparatorContexts.basic(
-                converterContext
-        );
-    }
-
-    // SpreadsheetParser................................................................................................
-
-    /**
-     * Creates a {@link SpreadsheetProvider} honouring any provider properties wrapping the given {@link SpreadsheetProvider}.
-     */
-    public final SpreadsheetProvider spreadsheetProvider(final SpreadsheetProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
-        final ExpressionFunctionInfoSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
-        final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
-        final SpreadsheetExporterInfoSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
-        final SpreadsheetFormatterInfoSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
-        final SpreadsheetImporterInfoSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
-        final SpreadsheetParserInfoSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
-
-        components.reportIfMissing();
-
-        return SpreadsheetProviders.basic(
-                ConverterProviders.filteredMapped(
-                        converterInfos,
-                        provider
-                ),
-                ExpressionFunctionProviders.filteredMapped(
-                        functions,
-                        provider
-                ),
-                SpreadsheetComparatorProviders.filteredMapped(
-                        comparators,
-                        provider
-                ),
-                SpreadsheetExporterProviders.filteredMapped(
-                        exporters,
-                        provider
-                ),
-                SpreadsheetFormatterProviders.filteredMapped(
-                        formatters,
-                        provider
-                ),
-                SpreadsheetImporterProviders.filteredMapped(
-                        importers,
-                        provider
-                ),
-                SpreadsheetParserProviders.filteredMapped(
-                        parsers,
-                        provider
-                )
-        );
-    }
-
-    // EnvironmentContext...............................................................................................
-
-    /**
-     * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata}.
-     */
-    public final EnvironmentContext environmentContext() {
-        if (null == this.environmentContext) {
-            this.environmentContext = SpreadsheetMetadataEnvironmentContext.with(this);
-        }
-        return this.environmentContext;
-    }
-
-    /**
-     * Cached {@link SpreadsheetMetadataEnvironmentContext}.
-     */
-    private EnvironmentContext environmentContext;
-
-    // HasExpressionNumberContext.......................................................................................
-
-    /**
-     * Returns a {@link ExpressionNumberContext} if the required properties are present.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#EXPRESSION_NUMBER_KIND}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
-     * </ul>
-     */
-    public abstract ExpressionNumberContext expressionNumberContext();
-
-    final ExpressionNumberContext expressionNumberContext0() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
-        components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
-
-        components.reportIfMissing();
-
-        return ExpressionNumberContexts.basic(
-                this.expressionNumberKind(),
-                this.decimalNumberContext()
-        );
-    }
-
-    /**
-     * Assumes a {@link ExpressionFunctionProvider} that has already been filtered by {@link SpreadsheetMetadataPropertyName#FUNCTIONS},
-     * and then filters functions by {@link SpreadsheetMetadataPropertyName#FORMULA_FUNCTIONS}.
-     */
-    public final ExpressionFunctionProvider formulaExpressionFunctionProvider(final ExpressionFunctionProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final ExpressionFunctionAliasSet functionsAliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
-
-        components.reportIfMissing();
-
-        return ExpressionFunctionProviders.aliases(
-                functionsAliases,
-                provider
-        );
-    }
-
-    // HasJsonNodeMarshallContext.......................................................................................
-
-    /**
-     * Returns a {@link JsonNodeMarshallContext}
-     */
-    public final JsonNodeMarshallContext jsonNodeMarshallContext() {
-        return JsonNodeMarshallContexts.basic();
-    }
-
-    // HasJsonNodeUnmarshallContext......................................................................................
-
-    public abstract JsonNodeUnmarshallContext jsonNodeUnmarshallContext();
-
-    final JsonNodeUnmarshallContext jsonNodeUnmarshallContext0() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final ExpressionNumberKind expressionNumberKind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
-
-        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
-
-        components.reportIfMissing();
-
-        return JsonNodeUnmarshallContexts.basic(
-                expressionNumberKind,
-                new MathContext(
-                        precision,
-                        roundingMode
-                )
-        );
-    }
-
-    // HasMathContext....................................................................................................
-
-    /**
-     * Returns a {@link MathContext} if the required properties are present.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
-     * </ul>
-     */
-    @Override
-    public abstract MathContext mathContext();
-
-    final MathContext mathContext0() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
-        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
-
-        components.reportIfMissing();
-
-        return new MathContext(precision, roundingMode);
-    }
-
-    // formatter........................................................................................................
+    // SpreadsheetFormatter.............................................................................................
 
     /**
      * Creates a {@link SpreadsheetFormatter} that creates a single formatter that formats values using {@link SpreadsheetFormatters#automatic(SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter)}
@@ -1006,7 +1077,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // HasParsers.......................................................................................................
+    // SpreadsheetParser................................................................................................
 
     /**
      * Returns a {@link Parser} that can be used to parse formulas.
@@ -1037,7 +1108,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // HasSpreadsheetParserContext......................................................................................
+    // SpreadsheetParserContext.........................................................................................
 
     /**
      * Returns a {@link SpreadsheetParserContext}.
@@ -1066,69 +1137,57 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // loadFromLocale...................................................................................................
+    // SpreadsheetParser................................................................................................
 
     /**
-     * Assumes a {@link Locale} has been set, failing if one is absent, and proceeds to set numerous properties with defaults,
-     * note that existing values will be overwritten.
-     * Date, DateTime and Time defaults are loaded parse {@link java.text.DateFormat} using the provided locale, formats pick the FULL style,
-     * while parse pattern will include all patterns with all styles.
+     * Creates a {@link SpreadsheetProvider} honouring any provider properties wrapping the given {@link SpreadsheetProvider}.
      */
-    public final SpreadsheetMetadata loadFromLocale() {
-        final Locale locale = this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
+    public final SpreadsheetProvider spreadsheetProvider(final SpreadsheetProvider provider) {
+        Objects.requireNonNull(provider, "provider");
 
-        SpreadsheetMetadata updated = this;
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
-            final Optional<?> localeAwareValue = propertyName.extractLocaleAwareValue(locale);
-            if (localeAwareValue.isPresent()) {
-                updated = updated.set(
-                        propertyName,
-                        Cast.to(localeAwareValue.get())
-                );
-            }
-        }
+        final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
+        final ExpressionFunctionInfoSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
+        final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
+        final SpreadsheetExporterInfoSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
+        final SpreadsheetFormatterInfoSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
+        final SpreadsheetImporterInfoSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
+        final SpreadsheetParserInfoSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
 
-        return updated;
+        components.reportIfMissing();
+
+        return SpreadsheetProviders.basic(
+                ConverterProviders.filteredMapped(
+                        converterInfos,
+                        provider
+                ),
+                ExpressionFunctionProviders.filteredMapped(
+                        functions,
+                        provider
+                ),
+                SpreadsheetComparatorProviders.filteredMapped(
+                        comparators,
+                        provider
+                ),
+                SpreadsheetExporterProviders.filteredMapped(
+                        exporters,
+                        provider
+                ),
+                SpreadsheetFormatterProviders.filteredMapped(
+                        formatters,
+                        provider
+                ),
+                SpreadsheetImporterProviders.filteredMapped(
+                        importers,
+                        provider
+                ),
+                SpreadsheetParserProviders.filteredMapped(
+                        parsers,
+                        provider
+                )
+        );
     }
-
-    // setDefaults......................................................................................................
-
-    /**
-     * Sets a {@link SpreadsheetMetadata} which will provide defaults when the value is not actually present in this instance.
-     */
-    public final SpreadsheetMetadata setDefaults(final SpreadsheetMetadata defaults) {
-        Objects.requireNonNull(defaults, "defaults");
-
-        return this.defaults().equals(defaults) ?
-                this :
-                this.replaceDefaults(defaults.checkDefault());
-    }
-
-    /**
-     * Factory that creates a new {@link SpreadsheetMetadata} with the given defaults. Defaults will be null
-     * if it was empty.
-     */
-    abstract SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults);
-
-    /**
-     * Checks that all property values are valid or general and not specific to a single spreadsheet, and then
-     * return the defaults {@link SpreadsheetMetadata} or null if its empty.
-     */
-    abstract SpreadsheetMetadata checkDefault();
-
-    /**
-     * Returns another {@link SpreadsheetMetadata} which will provide defaults.
-     */
-    public final SpreadsheetMetadata defaults() {
-        final SpreadsheetMetadata defaults = this.defaults;
-        return null != defaults ?
-                defaults :
-                EMPTY;
-    }
-
-    // @VisibleForTesting
-    final SpreadsheetMetadata defaults;
 
     // SpreadsheetMetadataStyleVisitor..................................................................................
 
@@ -1324,56 +1383,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // Patchable.....................................................................................................
-
-    /**
-     * Accepts a JSON object that represents a PATCH to this {@link SpreadsheetMetadata}, where properties with null values
-     * will remove that property and other properties will set the new value.
-     */
-    @Override
-    public final SpreadsheetMetadata patch(final JsonNode patch,
-                                           final JsonNodeUnmarshallContext context) {
-        Objects.requireNonNull(patch, "patch");
-        Objects.requireNonNull(context, "context");
-
-        SpreadsheetMetadata result = this;
-
-        int patchCount = 0;
-        for (final JsonNode nameAndValue : patch.objectOrFail().children()) {
-            patchCount++;
-
-            final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(nameAndValue);
-
-            if (nameAndValue.isNull()) {
-                result = result.remove(name);
-            } else {
-                final Object value;
-                if (name instanceof SpreadsheetMetadataPropertyNameStyle) {
-                    final TextStyle style = result.getIgnoringDefaults(SpreadsheetMetadataPropertyName.STYLE)
-                            .orElse(TextStyle.EMPTY);
-
-                    value = style.patch(
-                            nameAndValue,
-                            context
-                    );
-                } else {
-                    value = context.unmarshall(nameAndValue, name.type());
-                }
-
-                result = result.set(
-                        name,
-                        Cast.to(value)
-                );
-            }
-        }
-
-        if (0 == patchCount) {
-            throw new IllegalArgumentException("Empty patch");
-        }
-
-        return result;
-    }
-
     // TreePrintable...................................................................................................
 
     @Override
@@ -1389,12 +1398,5 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
             printer.lineStart();
         }
-    }
-
-    // HasLocale.......................................................................................................
-
-    @Override
-    public final Locale locale() {
-        return this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
     }
 }
