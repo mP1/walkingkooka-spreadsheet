@@ -74,20 +74,6 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testParser() {
-        METADATA_EN_AU.parser(
-                SPREADSHEET_PARSER_PROVIDER,
-                PROVIDER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testParserContext() {
-        METADATA_EN_AU
-                .parserContext(LocalDateTime::now);
-    }
-
-    @Test
     public void testParseFormula() {
         this.checkEquals(
                 SpreadsheetFormula.EMPTY.setToken(
@@ -129,5 +115,19 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
         );
+    }
+
+    @Test
+    public void testSpreadsheetParser() {
+        METADATA_EN_AU.spreadsheetParser(
+                SPREADSHEET_PARSER_PROVIDER,
+                PROVIDER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserContext() {
+        METADATA_EN_AU
+                .spreadsheetParserContext(LocalDateTime::now);
     }
 }

@@ -13357,7 +13357,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public SpreadsheetParserToken parseFormula(final TextCursor formula) {
                 return SpreadsheetParsers.valueOrExpression(
                                 BasicSpreadsheetEngineTest.this.metadata()
-                                        .parser(
+                                        .spreadsheetParser(
                                                 SPREADSHEET_PARSER_PROVIDER,
                                                 PROVIDER_CONTEXT
                                         )
@@ -13814,7 +13814,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         null :
                         SpreadsheetParsers.valueOrExpression(
                                 BasicSpreadsheetEngineTest.this.metadata()
-                                        .parser(
+                                        .spreadsheetParser(
                                                 SPREADSHEET_PARSER_PROVIDER,
                                                 PROVIDER_CONTEXT
                                         )

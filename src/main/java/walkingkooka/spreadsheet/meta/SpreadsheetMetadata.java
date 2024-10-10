@@ -1008,8 +1008,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link Parser} that can be used to parse formulas.
      */
-    public final SpreadsheetParser parser(final SpreadsheetParserProvider provider,
-                                          final ProviderContext context) {
+    public final SpreadsheetParser spreadsheetParser(final SpreadsheetParserProvider provider,
+                                                     final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
@@ -1039,7 +1039,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetParserContext}.
      */
-    public final SpreadsheetParserContext parserContext(final Supplier<LocalDateTime> now) {
+    public final SpreadsheetParserContext spreadsheetParserContext(final Supplier<LocalDateTime> now) {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         // DateTimeContext

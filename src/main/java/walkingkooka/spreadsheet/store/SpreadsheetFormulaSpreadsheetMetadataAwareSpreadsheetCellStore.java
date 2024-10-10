@@ -176,13 +176,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     private SpreadsheetParserToken parseFormulaTextExpression(final String text) {
         final SpreadsheetMetadata metadata = this.metadata;
 
-        return this.metadata.parser(
+        return this.metadata.spreadsheetParser(
                         this.spreadsheetParserProvider,
                         this.providerContext
                 ).orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(
                         TextCursors.charSequence(text),
-                        metadata.parserContext(this.now)
+                        metadata.spreadsheetParserContext(this.now)
                 ).orElse(null)
                 .cast(SpreadsheetParserToken.class);
     }
