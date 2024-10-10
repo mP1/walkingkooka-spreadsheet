@@ -917,8 +917,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatter} that creates a single formatter that formats values using {@link SpreadsheetFormatters#automatic(SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter)}
      */
-    public final SpreadsheetFormatter formatter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                final ProviderContext context) {
+    public final SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                           final ProviderContext context) {
         Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(context, "context");
 
@@ -969,7 +969,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 this.nameToColor(),
                 characterWidth,
                 generalNumberFormatDigitCount,
-                this.formatter(
+                this.spreadsheetFormatter(
                         spreadsheetFormatterProvider,
                         providerContext
                 ),

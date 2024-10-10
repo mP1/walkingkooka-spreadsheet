@@ -57,7 +57,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testFormatter() {
-        METADATA_EN_AU.formatter(
+        METADATA_EN_AU.spreadsheetFormatter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 PROVIDER_CONTEXT
         );

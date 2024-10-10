@@ -296,7 +296,7 @@ public final class Sample {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter(
+                                                        .spreadsheetFormatter(
                                                                 spreadsheetFormatterProvider,
                                                                 PROVIDER_CONTEXT
                                                         )

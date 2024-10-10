@@ -13630,7 +13630,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                         value.get(),
                                                         formatter.orElse(
                                                                 this.spreadsheetMetadata()
-                                                                        .formatter(
+                                                                        .spreadsheetFormatter(
                                                                                 SPREADSHEET_FORMATTER_PROVIDER,
                                                                                 PROVIDER_CONTEXT
                                                                         )
@@ -13781,7 +13781,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         if (value.isPresent()) {
             final TextNode formattedText = this.metadata()
-                    .formatter(
+                    .spreadsheetFormatter(
                             SPREADSHEET_FORMATTER_PROVIDER,
                             PROVIDER_CONTEXT
                     ).format(
