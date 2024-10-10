@@ -77,7 +77,7 @@ public interface SpreadsheetEngineContext extends Context,
      * The cell parameter is optional because not all {@link Expression expressions} that may need evaluation belong to a cell.
      * If a {@link RuntimeException} is thrown while evaluating the {@link Expression} it will be translated into a {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
-    Object evaluate(final Expression node,
+    Object evaluate(final Expression expression,
                     final Optional<SpreadsheetCell> cell);
 
     /**
@@ -85,7 +85,7 @@ public interface SpreadsheetEngineContext extends Context,
      * If executing the expression results in an error a false will be returned. This is intended for filter type operations,
      * where only true/false results are desired, and errors should be considered as a non match.
      */
-    boolean evaluateAsBoolean(final Expression node,
+    boolean evaluateAsBoolean(final Expression expression,
                               final Optional<SpreadsheetCell> cell);
 
     // Formatting & SpreadsheetFormatterProvider........................................................................
