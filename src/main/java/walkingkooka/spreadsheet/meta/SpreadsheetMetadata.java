@@ -650,6 +650,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     // HasExpressionNumberKind...........................................................................................
 
+    @Override
     public final ExpressionNumberKind expressionNumberKind() {
         return this.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
     }
