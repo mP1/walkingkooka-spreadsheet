@@ -946,11 +946,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetFormatterContext}.
      */
-    public final SpreadsheetFormatterContext formatterContext(final Supplier<LocalDateTime> now,
-                                                              final SpreadsheetLabelNameResolver labelNameResolver,
-                                                              final ConverterProvider converterProvider,
-                                                              final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                              final ProviderContext providerContext) {
+    public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Supplier<LocalDateTime> now,
+                                                                         final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                         final ConverterProvider converterProvider,
+                                                                         final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                         final ProviderContext providerContext) {
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(converterProvider, "converterProvider");
@@ -993,7 +993,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
-                this.formatterContext(
+                this.spreadsheetFormatterContext(
                         now,
                         labelNameResolver,
                         converterProvider,

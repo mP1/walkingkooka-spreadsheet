@@ -64,19 +64,6 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testFormatterContext() {
-        METADATA_EN_AU.formatterContext(
-                LocalDateTime::now,
-                (label) -> {
-                    throw new UnsupportedOperationException();
-                },
-                CONVERTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                PROVIDER_CONTEXT
-        );
-    }
-
-    @Test
     public void testJsonNodeMarshallContext() {
         METADATA_EN_AU.jsonNodeMarshallContext();
     }
@@ -128,6 +115,19 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 SpreadsheetMetadataTesting.parseFormula(
                         "=1"
                 )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterContext() {
+        METADATA_EN_AU.spreadsheetFormatterContext(
+                LocalDateTime::now,
+                (label) -> {
+                    throw new UnsupportedOperationException();
+                },
+                CONVERTER_PROVIDER,
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
         );
     }
 }

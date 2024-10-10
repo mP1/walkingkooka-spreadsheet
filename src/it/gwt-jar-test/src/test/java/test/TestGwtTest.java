@@ -319,7 +319,7 @@ public class TestGwtTest extends GWTTestCase {
 
                 return formatter.format(
                         value,
-                        metadata.formatterContext(
+                        metadata.spreadsheetFormatterContext(
                                 NOW,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,

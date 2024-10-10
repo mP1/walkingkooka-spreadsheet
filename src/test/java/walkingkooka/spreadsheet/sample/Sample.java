@@ -316,7 +316,7 @@ public final class Sample {
 
                 return formatter.format(
                         value,
-                        metadata.formatterContext(
+                        metadata.spreadsheetFormatterContext(
                                 NOW,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
