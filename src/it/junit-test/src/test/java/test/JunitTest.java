@@ -245,9 +245,9 @@ public class JunitTest {
             }
 
             @Override
-            public Object evaluate(final Expression node,
+            public Object evaluate(final Expression expression,
                                    final Optional<SpreadsheetCell> cell) {
-                return node.toValue(
+                return expression.toValue(
                         ExpressionEvaluationContexts.basic(
                                 EXPRESSION_NUMBER_KIND,
                                 n -> ExpressionFunctionProviders.fake()
