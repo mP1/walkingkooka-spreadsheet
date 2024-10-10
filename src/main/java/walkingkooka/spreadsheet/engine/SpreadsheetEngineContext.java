@@ -81,24 +81,12 @@ public interface SpreadsheetEngineContext extends Context,
                     final Optional<SpreadsheetCell> cell);
 
     /**
-     * Helper that converts the result of the {@link Expression} evaluation into a {@link Boolean} value.
+     * Helper that executes {@link #evaluate(Expression, Optional)} and converts the result into a {@link Boolean}.
+     * If executing the expression results in an error a false will be returned. This is intended for filter type operations,
+     * where only true/false results are desired, and errors should be considered as a non match.
      */
-    default boolean evaluateAsBoolean(final Expression node,
-                                      final Optional<SpreadsheetCell> cell) {
-        return this.spreadsheetMetadata()
-                .formulaSpreadsheetConverterContext(
-                        this::now,
-                        this, // SpreadsheetLabelNameResolver
-                        this, // ConverterProvider
-                        this // ProviderContext
-                ).convertOrFail(
-                        this.evaluate(
-                                node,
-                                cell
-                        ),
-                        Boolean.class
-                );
-    }
+    boolean evaluateAsBoolean(final Expression node,
+                              final Optional<SpreadsheetCell> cell);
 
     // Formatting & SpreadsheetFormatterProvider........................................................................
 

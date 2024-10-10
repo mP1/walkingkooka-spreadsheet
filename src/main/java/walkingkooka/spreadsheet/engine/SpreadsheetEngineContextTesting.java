@@ -175,6 +175,30 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     // evaluateAsBoolean................................................................................................
 
+    @Test
+    default void testEvaluateAsBooleanWithNullExpressionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .evaluateAsBoolean(
+                                null,
+                                Optional.empty()
+                        )
+        );
+    }
+
+    @Test
+    default void testEvaluateAsBooleanWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .evaluateAsBoolean(
+                                Expression.value("required expression"),
+                                null
+                        )
+        );
+    }
+
     default void evaluateAsBooleanAndCheck(final SpreadsheetEngineContext context,
                                            final Expression expression,
                                            final boolean expected) {

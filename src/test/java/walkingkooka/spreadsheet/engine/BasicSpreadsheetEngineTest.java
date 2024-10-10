@@ -13422,6 +13422,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
+            public boolean evaluateAsBoolean(final Expression node,
+                                             final Optional<SpreadsheetCell> cell) {
+                return (Boolean)this.evaluate(node, cell);
+            }
+
+            @Override
             public boolean isPure(final ExpressionFunctionName function) {
                 return this.expressionFunctionProvider()
                         .expressionFunction(

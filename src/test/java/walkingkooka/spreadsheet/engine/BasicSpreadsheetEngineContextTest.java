@@ -22,7 +22,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConversionException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -811,18 +810,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     // evaluateAsBoolean................................................................................................
-
-    @Test
-    public void testEvaluateAsBooleanConvertFails() {
-        assertThrows(
-                ConversionException.class,
-                () -> this.createContext()
-                        .evaluateAsBoolean(
-                                Expression.value(this),
-                                Optional.empty()
-                        )
-        );
-    }
 
     @Test
     public void testEvaluateAsBooleanTrue() {

@@ -231,6 +231,25 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return result;
     }
 
+    @Override
+    public boolean evaluateAsBoolean(final Expression expression,
+                                     final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(cell, "cell");
+
+        boolean result;
+
+        try {
+            result = expression.toBoolean(
+                    this.formulaExpressionEvaluationContext(cell)
+            );
+        } catch (final RuntimeException exception) {
+            result = false; // return false for any errors.
+        }
+
+        return result;
+    }
+
     /**
      * Creates a {@link SpreadsheetExpressionEvaluationContext} for both formulas and converting a token to an {@link Expression}.
      */
