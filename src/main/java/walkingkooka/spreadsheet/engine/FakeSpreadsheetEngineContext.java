@@ -187,6 +187,14 @@ public class FakeSpreadsheetEngineContext extends FakeConverterContext implement
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean evaluateAsBoolean(final Expression node,
+                                     final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(node, "node");
+        Objects.requireNonNull(cell, "cell");
+        throw new UnsupportedOperationException();
+    }
+
     // formatting.......................................................................................................
 
     @Override

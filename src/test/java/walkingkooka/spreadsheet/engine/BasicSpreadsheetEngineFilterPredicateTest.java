@@ -145,6 +145,12 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                     }
 
                     @Override
+                    public boolean evaluateAsBoolean(final Expression e,
+                                                     final Optional<SpreadsheetCell> cell) {
+                        return (Boolean)this.evaluate(e, cell);
+                    }
+
+                    @Override
                     public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
                                                                                final List<?> values,
                                                                                final ProviderContext context) {
