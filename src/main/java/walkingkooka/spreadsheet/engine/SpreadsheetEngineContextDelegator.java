@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
@@ -30,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
@@ -93,6 +95,19 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
                         cell,
                         formatter
                 );
+    }
+
+    @Override
+    default boolean isPure(final ExpressionFunctionName name) {
+        return this.spreadsheetEngineContext()
+                .isPure(name);
+    }
+
+
+    @Override
+    default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        return this.spreadsheetEngineContext()
+                .environmentValue(name);
     }
 
     @Override
