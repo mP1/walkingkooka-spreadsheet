@@ -283,7 +283,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return formatter.format(
                 value,
                 this.spreadsheetMetadata()
-                        .formatterContext(
+                        .spreadsheetFormatterContext(
                                 this::now,
                                 this, // SpreadsheetLabelNameResolver,
                                 this.spreadsheetProvider, // ConverterProvider,

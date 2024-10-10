@@ -2151,10 +2151,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" hhmmss").spreadsheetFormatterSelector());
     }
 
-    // formatterContext.................................................................................................
+    // spreadsheetFormatterContext......................................................................................
 
     @Test
-    public void testFormatterContext() {
+    public void testSpreadsheetFormatterContext() {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMAT_CONVERTER)
                 .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
@@ -2171,7 +2171,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.checkNotEquals(
                 null,
-                metadata.formatterContext(
+                metadata.spreadsheetFormatterContext(
                         NOW,
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(

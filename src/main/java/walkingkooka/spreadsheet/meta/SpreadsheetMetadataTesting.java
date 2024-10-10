@@ -264,7 +264,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_FORMULA_CONVERTER_CONTEXT
     );
 
-    SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.formatterContext(
+    SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
             NOW,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
