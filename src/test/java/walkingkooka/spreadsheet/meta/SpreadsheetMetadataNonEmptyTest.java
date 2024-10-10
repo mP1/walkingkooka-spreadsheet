@@ -2045,30 +2045,30 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(null, context.mathContext(), "mathContext");
     }
 
-    // HasFormatter.....................................................................................................
+    // SpreadsheetFormatter.............................................................................................
 
     @Test
-    public void testFormatterFormatDate() {
+    public void testSpreadsheetFormatterFormatDate() {
         this.formatAndCheck2(LocalDate.of(2000, 12, 31), "Date 31122000");
     }
 
     @Test
-    public void testFormatterFormatDateTime() {
+    public void testSpreadsheetFormatterFormatDateTime() {
         this.formatAndCheck2(LocalDateTime.of(2000, 12, 31, 12, 58, 59), "DateTime 31122000 125859");
     }
 
     @Test
-    public void testFormatterFormatNumber() {
+    public void testSpreadsheetFormatterFormatNumber() {
         this.formatAndCheck2(125.5, "Number 125.500");
     }
 
     @Test
-    public void testFormatterFormatText() {
+    public void testSpreadsheetFormatterFormatText() {
         this.formatAndCheck2("abc123", "Text abc123");
     }
 
     @Test
-    public void testFormatterFormatTime() {
+    public void testSpreadsheetFormatterFormatTime() {
         this.formatAndCheck2(LocalTime.of(12, 58, 59), "Time 125859");
     }
 
@@ -2076,7 +2076,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                  final String text) {
         this.formatAndCheck(
                 this.createSpreadsheetMetadataWithFormatter()
-                        .formatter(
+                        .spreadsheetFormatter(
                                 SPREADSHEET_FORMATTER_PROVIDER,
                                 PROVIDER_CONTEXT
                         ),

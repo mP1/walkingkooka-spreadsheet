@@ -558,7 +558,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> this.createObject()
-                        .formatter(
+                        .spreadsheetFormatter(
                                 SpreadsheetFormatterProviders.fake(),
                                 PROVIDER_CONTEXT
                         )

@@ -304,7 +304,7 @@ public class JunitTest {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter(
+                                                        .spreadsheetFormatter(
                                                                 spreadsheetFormatterProvider,
                                                                 PROVIDER_CONTEXT
                                                         )

@@ -316,7 +316,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                                         value.get(),
                                                         formatter.orElse(
                                                                 this.spreadsheetMetadata()
-                                                                        .formatter(
+                                                                        .spreadsheetFormatter(
                                                                                 this.spreadsheetProvider, // SpreadsheetFormatterProvider,
                                                                                 this // ProviderContext
                                                                         )

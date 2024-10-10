@@ -299,7 +299,7 @@ public class TestGwtTest extends GWTTestCase {
                                                 .get(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
-                                                        .formatter(
+                                                        .spreadsheetFormatter(
                                                                 spreadsheetFormatterProvider,
                                                                 PROVIDER_CONTEXT
                                                         )
