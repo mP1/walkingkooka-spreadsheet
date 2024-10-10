@@ -157,10 +157,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     // HasParser........................................................................................................
 
     @Test
-    public void testParserAllRequiredPropertiesAbsentFails() {
+    public void testSpreadsheetParserAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.parser(
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetParser(
                         SpreadsheetParserProviders.fake(),
                         PROVIDER_CONTEXT
                 )
@@ -175,27 +175,31 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     // HasParserContext.....................................................................................
 
     @Test
-    public void testParserContextAllRequiredPropertiesAbsentFails() {
+    public void testSpreadsheetParserContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetMetadata.EMPTY.parserContext(LocalDateTime::now)
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(LocalDateTime::now)
         );
-        this.checkEquals("Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
+        this.checkEquals(
+                "Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     @Test
-    public void testParserContextAllRequiredPropertiesAbsentFails2() {
+    public void testSpreadsheetParserContextAllRequiredPropertiesAbsentFails2() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
-                        .parserContext(LocalDateTime::now)
+                        .spreadsheetParserContext(LocalDateTime::now)
         );
-        this.checkEquals("Required properties \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
+        this.checkEquals(
+                "Required properties \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     // toString.........................................................................................................

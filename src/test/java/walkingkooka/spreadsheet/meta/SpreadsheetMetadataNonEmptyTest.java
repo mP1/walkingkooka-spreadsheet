@@ -2320,7 +2320,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // HasParser........................................................................................................
 
     @Test
-    public void testParserMissingProperties() {
+    public void testSpreadsheetParserMissingProperties() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(
                         SpreadsheetMetadataPropertyName.DATE_PARSER,
@@ -2328,7 +2328,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 );
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> metadata.parser(
+                () -> metadata.spreadsheetParser(
                         SPREADSHEET_PARSER_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -2341,8 +2341,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testParserAndParseDate() {
-        this.metadataParserParseAndCheck(
+    public void testSpreadsheetParserAndParseDate() {
+        this.metadataSpreadsheetParserParseAndCheck(
                 "2000/12/31",
                 (t, c) -> t.cast(SpreadsheetDateParserToken.class).toLocalDate(c),
                 LocalDate.of(2000, 12, 31)
@@ -2350,8 +2350,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testParserAndParseDateTime() {
-        this.metadataParserParseAndCheck(
+    public void testSpreadsheetParserAndParseDateTime() {
+        this.metadataSpreadsheetParserParseAndCheck(
                 "2000/12/31 15:58",
                 (t, c) -> t.cast(SpreadsheetDateTimeParserToken.class).toLocalDateTime(c),
                 LocalDateTime.of(
@@ -2362,8 +2362,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testParserAndParseNumber() {
-        this.metadataParserParseAndCheck(
+    public void testSpreadsheetParserAndParseNumber() {
+        this.metadataSpreadsheetParserParseAndCheck(
                 "1" + DECIMAL_SEPARATOR + "5",
                 (t, c) -> t.cast(SpreadsheetNumberParserToken.class).toNumber(c),
                 EXPRESSION_NUMBER_KIND.create(1.5)
@@ -2371,15 +2371,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testParserAndParseTime() {
-        this.metadataParserParseAndCheck(
+    public void testSpreadsheetParserAndParseTime() {
+        this.metadataSpreadsheetParserParseAndCheck(
                 "15:58",
                 (t, c) -> t.cast(SpreadsheetTimeParserToken.class).toLocalTime(),
                 LocalTime.of(15, 58)
         );
     }
 
-    private SpreadsheetMetadata metadataWithParser() {
+    private SpreadsheetMetadata metadataWithSpreadsheetParser() {
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").spreadsheetParserSelector())
@@ -2387,19 +2387,19 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm").spreadsheetParserSelector());
     }
 
-    private <T> void metadataParserParseAndCheck(final String text,
-                                                 final BiFunction<ParserToken, ExpressionEvaluationContext, T> valueExtractor,
-                                                 final T expected) {
+    private <T> void metadataSpreadsheetParserParseAndCheck(final String text,
+                                                            final BiFunction<ParserToken, ExpressionEvaluationContext, T> valueExtractor,
+                                                            final T expected) {
         final TextCursor cursor = TextCursors.charSequence(text);
 
-        final ParserToken token = this.metadataWithParser()
-                .parser(
+        final ParserToken token = this.metadataWithSpreadsheetParser()
+                .spreadsheetParser(
                         SPREADSHEET_PARSER_PROVIDER,
                         PROVIDER_CONTEXT
                 ).parse(
                         cursor,
-                        this.metadataWithParserContext()
-                                .parserContext(NOW)
+                        this.metadataWithSpreadsheetParserContext()
+                                .spreadsheetParserContext(NOW)
                 ).orElseThrow(() -> new AssertionError("parser failed"));
         this.checkEquals(true, cursor.isEmpty(), () -> cursor + " is not empty");
 
@@ -2421,16 +2421,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // HasParserContext.................................................................................................
 
     @Test
-    public void testParserContext() {
-        final SpreadsheetMetadata metadata = this.metadataWithParserContext();
+    public void testSpreadsheetParserContext() {
+        final SpreadsheetMetadata metadata = this.metadataWithSpreadsheetParserContext();
 
         this.checkNotEquals(
                 null,
-                metadata.parserContext(NOW)
+                metadata.spreadsheetParserContext(NOW)
         );
     }
 
-    private SpreadsheetMetadata metadataWithParserContext() {
+    private SpreadsheetMetadata metadataWithSpreadsheetParserContext() {
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)

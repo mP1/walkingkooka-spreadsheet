@@ -284,7 +284,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     JsonNodeUnmarshallContext JSON_NODE_UNMARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeUnmarshallContext();
 
-    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.parserContext(NOW);
+    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(NOW);
 
     SpreadsheetProvider SPREADSHEET_PROVIDER = METADATA_EN_AU.spreadsheetProvider(
             SpreadsheetProviders.basic(
@@ -301,7 +301,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     static SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(
                 TextCursors.charSequence(text),
-                METADATA_EN_AU.parser(
+                METADATA_EN_AU.spreadsheetParser(
                         SPREADSHEET_PARSER_PROVIDER,
                         PROVIDER_CONTEXT
                 ),

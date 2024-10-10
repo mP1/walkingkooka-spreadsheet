@@ -1140,13 +1140,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         )
                                 ).orElseGet(
                                         () -> SpreadsheetParsers.valueOrExpression(
-                                                metadata.parser(
+                                                metadata.spreadsheetParser(
                                                         context, // SpreadsheetParserProvider
                                                         context // ProviderContext
                                                 ) // SpreadsheetEngineContext implements SpreadsheetParserProvider
                                         )
                                 ),
-                        metadata.parserContext(context::now)
+                        metadata.spreadsheetParserContext(context::now)
                 );
 
                 token = formula.token()

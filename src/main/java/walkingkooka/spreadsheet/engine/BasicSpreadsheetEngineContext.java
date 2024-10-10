@@ -142,7 +142,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
 
-        this.parserContext = metadata.parserContext(now);
+        this.parserContext = metadata.spreadsheetParserContext(now);
     }
 
     // metadata........................................................................................................
@@ -176,7 +176,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         return SpreadsheetParsers.valueOrExpression(
-                        this.metadata.parser(
+                        this.metadata.spreadsheetParser(
                                 this, // SpreadsheetParserProvider
                                 this // ProviderContext
                         )

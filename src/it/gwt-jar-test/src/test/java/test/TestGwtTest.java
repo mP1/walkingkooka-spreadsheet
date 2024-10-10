@@ -224,7 +224,7 @@ public class TestGwtTest extends GWTTestCase {
                                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                                 .parse(
                                         formula,
-                                        metadata.parserContext(NOW)
+                                        metadata.spreadsheetParserContext(NOW)
                                 ) // TODO should fetch parse metadata prop
                                 .get()
                 );
