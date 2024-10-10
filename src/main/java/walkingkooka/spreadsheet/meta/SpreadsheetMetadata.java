@@ -636,14 +636,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     final ExpressionNumberContext expressionNumberContext0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+        final ExpressionNumberKind kind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
         components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
 
         components.reportIfMissing();
 
         return ExpressionNumberContexts.basic(
-                this.expressionNumberKind(),
+                kind,
                 this.decimalNumberContext()
         );
     }
