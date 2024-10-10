@@ -13403,11 +13403,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Object evaluate(final Expression node,
+            public Object evaluate(final Expression expression,
                                    final Optional<SpreadsheetCell> cell) {
                 final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-                return node.toValue(
+                return expression.toValue(
                         SpreadsheetExpressionEvaluationContexts.basic(
                                 cell,
                                 storeRepository.cells(),
@@ -13422,9 +13422,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public boolean evaluateAsBoolean(final Expression node,
+            public boolean evaluateAsBoolean(final Expression expression,
                                              final Optional<SpreadsheetCell> cell) {
-                return (Boolean)this.evaluate(node, cell);
+                return (Boolean)this.evaluate(expression, cell);
             }
 
             @Override
