@@ -41,6 +41,8 @@ import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
@@ -601,12 +603,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     /**
-     * Creates a {@link SpreadsheetConverterContext} to be used when formatting formula expression values.
+     * Creates a {@link SpreadsheetConverterContext} to be used to convert {@link SpreadsheetCell cell} {@link SpreadsheetFormula#value()}
+     * during a format.
      */
-    private SpreadsheetConverterContext formatterSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
-                                                                             final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                             final ConverterProvider converterProvider,
-                                                                             final ProviderContext providerContext) {
+    private SpreadsheetConverterContext formatSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
+                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                          final ConverterProvider converterProvider,
+                                                                          final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                 now,
@@ -973,7 +976,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         spreadsheetFormatterProvider,
                         providerContext
                 ),
-                this.formatterSpreadsheetConverterContext(
+                this.formatSpreadsheetConverterContext(
                         now,
                         labelNameResolver,
                         converterProvider,
