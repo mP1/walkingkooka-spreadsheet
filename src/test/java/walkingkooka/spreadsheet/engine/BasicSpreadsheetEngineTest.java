@@ -13348,12 +13348,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public int defaultYear() {
-                return this.spreadsheetMetadata()
-                        .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
-            }
-
-            @Override
             public SpreadsheetParserToken parseFormula(final TextCursor formula) {
                 return SpreadsheetParsers.valueOrExpression(
                                 BasicSpreadsheetEngineTest.this.metadata()
@@ -13604,11 +13598,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ),
                         PROVIDER_CONTEXT
                 );
-            }
-
-            @Override
-            public MathContext mathContext() {
-                return METADATA_EN_AU.mathContext();
             }
 
             @Override
