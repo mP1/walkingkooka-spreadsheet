@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -144,46 +143,6 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 expected,
                 context.spreadsheetEngineContext(aliases),
                 () -> "expressionEvaluationContext " + aliases
-        );
-    }
-
-    // expressionEvaluationContext......................................................................................
-
-    @Test
-    default void testExpressionEvaluateContextNullFunctionAliasesFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .expressionEvaluationContext(
-                                null,
-                                Optional.empty()
-                        )
-        );
-    }
-
-    @Test
-    default void testExpressionEvaluateContextNullCellFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .expressionEvaluationContext(
-                                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                                null
-                        )
-        );
-    }
-
-    default void expressionEvaluateContextAndCheck(final SpreadsheetEngineContext context,
-                                                   final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> aliases,
-                                                   final Optional<SpreadsheetCell> cell,
-                                                   final SpreadsheetExpressionEvaluationContext expected) {
-        this.checkEquals(
-                expected,
-                context.expressionEvaluationContext(
-                        aliases,
-                        cell
-                ),
-                () -> "expressionEvaluationContext " + aliases + " " + cell.orElse(null)
         );
     }
 

@@ -21,7 +21,6 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -78,12 +77,6 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     @Override
     public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
         return new FakeSpreadsheetEngineContext();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
-                                                                              final Optional<SpreadsheetCell> cell) {
-        throw new UnsupportedOperationException();
     }
 
     @Override
