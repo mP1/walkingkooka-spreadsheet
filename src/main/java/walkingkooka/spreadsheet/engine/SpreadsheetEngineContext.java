@@ -73,6 +73,11 @@ public interface SpreadsheetEngineContext extends Context,
      */
     Optional<Expression> toExpression(final SpreadsheetParserToken token);
 
+    /**
+     * Returns a {@link SpreadsheetEngineContext} which will use the {@link ExpressionFunctionAliasSet} when fetching functions.
+     */
+    SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases);
+
     // evaluate.........................................................................................................
 
     /**

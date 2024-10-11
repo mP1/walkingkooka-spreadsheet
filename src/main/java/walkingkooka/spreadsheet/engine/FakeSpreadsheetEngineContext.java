@@ -76,6 +76,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                                               final Optional<SpreadsheetCell> cell) {
         throw new UnsupportedOperationException();
