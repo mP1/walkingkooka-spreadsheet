@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -713,6 +714,98 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.checkNotEquals(
                 null,
                 converter
+        );
+    }
+
+    // spreadsheetConverterContext......................................................................................
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullPropertyNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        null,
+                        LocalDateTime::now,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullNowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        null,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullSpreadsheetLabelNameResolverFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        LocalDateTime::now,
+                        null,
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullConverterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        LocalDateTime::now,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        null,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        LocalDateTime::now,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ConverterProviders.fake(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithMissingRequiredPropertiesFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                        LocalDateTime::now,
+                        SpreadsheetLabelNameResolvers.fake(),
+                        ConverterProviders.fake(),
+                        PROVIDER_CONTEXT
+                )
+        );
+
+        this.checkEquals(
+                "Required properties \"date-time-offset\", \"expression-number-kind\", \"find-converter\" missing.",
+                thrown.getMessage(),
+                "message"
         );
     }
 

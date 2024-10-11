@@ -87,7 +87,6 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
@@ -969,13 +968,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     /**
-     * Returns a {@link ExpressionNumberConverterContext}
+     * Returns a {@link SpreadsheetConverterContext}
      */
-    private SpreadsheetConverterContext spreadsheetConverterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
-                                                                    final Supplier<LocalDateTime> now,
-                                                                    final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                    final ConverterProvider converterProvider,
-                                                                    final ProviderContext providerContext) {
+    public SpreadsheetConverterContext spreadsheetConverterContext(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
+                                                                   final Supplier<LocalDateTime> now,
+                                                                   final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                   final ConverterProvider converterProvider,
+                                                                   final ProviderContext providerContext) {
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(now, "now");
