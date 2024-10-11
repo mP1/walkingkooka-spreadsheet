@@ -61,6 +61,12 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
+    default SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
+        return this.spreadsheetEngineContext()
+                .spreadsheetEngineContext(functionAliases);
+    }
+
+    @Override
     default SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                                                final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetEngineContext()

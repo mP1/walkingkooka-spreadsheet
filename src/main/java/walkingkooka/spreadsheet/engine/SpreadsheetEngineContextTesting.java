@@ -126,6 +126,27 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         );
     }
 
+    // SpreadsheetEngineContext.........................................................................................
+
+    @Test
+    default void testSpreadsheetEngineContextWithNullFunctionAliasesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .spreadsheetEngineContext(null)
+        );
+    }
+
+    default void spreadsheetEngineContextAndCheck(final SpreadsheetEngineContext context,
+                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> aliases,
+                                                  final SpreadsheetEngineContext expected) {
+        this.checkEquals(
+                expected,
+                context.spreadsheetEngineContext(aliases),
+                () -> "expressionEvaluationContext " + aliases
+        );
+    }
+
     // expressionEvaluationContext......................................................................................
 
     @Test

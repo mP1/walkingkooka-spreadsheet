@@ -145,6 +145,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 storeRepository.labels()
         );
 
+        this.engine = engine;
+
         this.functionAliases = functionAliases;
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
@@ -219,6 +221,27 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         this
                 ).isPure(this);
     }
+
+    @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
+        Objects.requireNonNull(functionAliases, "functionAliases");
+
+        return this.functionAliases.equals(functionAliases) ?
+                this :
+                new BasicSpreadsheetEngineContext(
+                        this.serverUrl,
+                        this.now,
+                        this.metadata,
+                        this.engine,
+                        this.fractioner,
+                        this.storeRepository,
+                        functionAliases,
+                        this.spreadsheetProvider,
+                        this.providerContext
+                );
+    }
+
+    private final SpreadsheetEngine engine;
 
     @Override
     public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
