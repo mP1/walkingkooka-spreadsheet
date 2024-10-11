@@ -1108,6 +1108,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetParser spreadsheetParser(final SpreadsheetParserProvider provider,
                                                      final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
