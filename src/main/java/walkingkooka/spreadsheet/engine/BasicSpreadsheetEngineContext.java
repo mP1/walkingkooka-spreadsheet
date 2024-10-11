@@ -200,6 +200,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return token.toExpression(
                 this.expressionEvaluationContext(
+                        this.functionAliases,
                         Optional.empty()// cell
                 )
         );
@@ -220,51 +221,14 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
-    public Object evaluate(final Expression expression,
-                           final Optional<SpreadsheetCell> cell) {
-        Objects.requireNonNull(expression, "expression");
+    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                                                              final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(functionAliases, "functionAliases");
         Objects.requireNonNull(cell, "cell");
 
-        Object result;
-
-        try {
-            result = expression.toValue(
-                    this.expressionEvaluationContext(cell)
-            );
-        } catch (final RuntimeException exception) {
-            result = SpreadsheetErrorKind.translate(exception);
-        }
-
-        return result;
-    }
-
-    @Override
-    public boolean evaluateAsBoolean(final Expression expression,
-                                     final Optional<SpreadsheetCell> cell) {
-        Objects.requireNonNull(expression, "expression");
-        Objects.requireNonNull(cell, "cell");
-
-        boolean result;
-
-        try {
-            result = expression.toBoolean(
-                    this.expressionEvaluationContext(cell)
-            );
-        } catch (final RuntimeException exception) {
-            result = false; // return false for any errors.
-        }
-
-        return result;
-    }
-
-    /**
-     * Creates a {@link SpreadsheetExpressionEvaluationContext} for both formulas and converting a token to an {@link Expression}.
-     */
-    private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         final SpreadsheetProvider provider = this.spreadsheetProvider;
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-        final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
         final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
 
         if (SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS.equals(functionAliases)) {
@@ -303,6 +267,50 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     private final AbsoluteUrl serverUrl;
 
     private final SpreadsheetEnginesExpressionReferenceFunction referenceFunction;
+
+    @Override
+    public Object evaluate(final Expression expression,
+                           final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(cell, "cell");
+
+        Object result;
+
+        try {
+            result = expression.toValue(
+                    this.expressionEvaluationContext(
+                            this.functionAliases,
+                            cell
+                    )
+            );
+        } catch (final RuntimeException exception) {
+            result = SpreadsheetErrorKind.translate(exception);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean evaluateAsBoolean(final Expression expression,
+                                     final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(cell, "cell");
+
+        boolean result;
+
+        try {
+            result = expression.toBoolean(
+                    this.expressionEvaluationContext(
+                            this.functionAliases,
+                            cell
+                    )
+            );
+        } catch (final RuntimeException exception) {
+            result = false; // return false for any errors.
+        }
+
+        return result;
+    }
 
     // HasNow...........................................................................................................
 

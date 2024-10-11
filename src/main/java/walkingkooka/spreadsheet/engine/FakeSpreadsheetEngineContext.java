@@ -21,8 +21,10 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -32,6 +34,7 @@ import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
@@ -69,6 +72,12 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     @Override
     public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
         Objects.requireNonNull(token, "token");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                                                              final Optional<SpreadsheetCell> cell) {
         throw new UnsupportedOperationException();
     }
 
