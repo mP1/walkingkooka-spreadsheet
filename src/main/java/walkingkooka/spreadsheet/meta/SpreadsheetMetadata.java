@@ -621,6 +621,29 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     private EnvironmentContext environmentContext;
 
+    // ExpressionFunctionProvider.......................................................................................
+
+    /**
+     * Returns a {@link ExpressionFunctionProvider} that applies the {@link ExpressionFunctionAliasSet} for the given
+     * {@link SpreadsheetMetadataPropertyName}.
+     */
+    public final ExpressionFunctionProvider expressionFunctionProvider(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> propertyName,
+                                                                       final ExpressionFunctionProvider provider) {
+        Objects.requireNonNull(propertyName, "propertyName");
+        Objects.requireNonNull(provider, "provider");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final ExpressionFunctionAliasSet functionsAliases = components.getOrNull(propertyName);
+
+        components.reportIfMissing();
+
+        return ExpressionFunctionProviders.aliases(
+                functionsAliases,
+                provider
+        );
+    }
+
     // HasExpressionNumberContext.......................................................................................
 
     /**
