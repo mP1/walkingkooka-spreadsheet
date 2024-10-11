@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -79,13 +78,6 @@ public interface SpreadsheetEngineContext extends Context,
     SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases);
 
     // evaluate.........................................................................................................
-
-    /**
-     * Factory that creates another {@link SpreadsheetExpressionEvaluationContext} with the given
-     * {@link ExpressionFunctionAliasSet} and {@link SpreadsheetCell}.
-     */
-    SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
-                                                                       final Optional<SpreadsheetCell> cell);
 
     /**
      * Evaluates the expression into a value.

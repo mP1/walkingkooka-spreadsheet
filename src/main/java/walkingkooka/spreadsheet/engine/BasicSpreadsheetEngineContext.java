@@ -202,7 +202,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return token.toExpression(
                 this.expressionEvaluationContext(
-                        this.functionAliases,
                         Optional.empty()// cell
                 )
         );
@@ -244,9 +243,44 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     private final SpreadsheetEngine engine;
 
     @Override
-    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
-                                                                              final Optional<SpreadsheetCell> cell) {
-        Objects.requireNonNull(functionAliases, "functionAliases");
+    public Object evaluate(final Expression expression,
+                           final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(cell, "cell");
+
+        Object result;
+
+        try {
+            result = expression.toValue(
+                    this.expressionEvaluationContext(cell)
+            );
+        } catch (final RuntimeException exception) {
+            result = SpreadsheetErrorKind.translate(exception);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean evaluateAsBoolean(final Expression expression,
+                                     final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(cell, "cell");
+
+        boolean result;
+
+        try {
+            result = expression.toBoolean(
+                    this.expressionEvaluationContext(cell)
+            );
+        } catch (final RuntimeException exception) {
+            result = false; // return false for any errors.
+        }
+
+        return result;
+    }
+
+    private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(cell, "cell");
 
         final SpreadsheetProvider provider = this.spreadsheetProvider;
@@ -290,50 +324,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     private final AbsoluteUrl serverUrl;
 
     private final SpreadsheetEnginesExpressionReferenceFunction referenceFunction;
-
-    @Override
-    public Object evaluate(final Expression expression,
-                           final Optional<SpreadsheetCell> cell) {
-        Objects.requireNonNull(expression, "expression");
-        Objects.requireNonNull(cell, "cell");
-
-        Object result;
-
-        try {
-            result = expression.toValue(
-                    this.expressionEvaluationContext(
-                            this.functionAliases,
-                            cell
-                    )
-            );
-        } catch (final RuntimeException exception) {
-            result = SpreadsheetErrorKind.translate(exception);
-        }
-
-        return result;
-    }
-
-    @Override
-    public boolean evaluateAsBoolean(final Expression expression,
-                                     final Optional<SpreadsheetCell> cell) {
-        Objects.requireNonNull(expression, "expression");
-        Objects.requireNonNull(cell, "cell");
-
-        boolean result;
-
-        try {
-            result = expression.toBoolean(
-                    this.expressionEvaluationContext(
-                            this.functionAliases,
-                            cell
-                    )
-            );
-        } catch (final RuntimeException exception) {
-            result = false; // return false for any errors.
-        }
-
-        return result;
-    }
 
     // HasNow...........................................................................................................
 

@@ -21,7 +21,6 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -64,16 +63,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     default SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
         return this.spreadsheetEngineContext()
                 .spreadsheetEngineContext(functionAliases);
-    }
-
-    @Override
-    default SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
-                                                                               final Optional<SpreadsheetCell> cell) {
-        return this.spreadsheetEngineContext()
-                .expressionEvaluationContext(
-                        functionAliases,
-                        cell
-                );
     }
 
     @Override
