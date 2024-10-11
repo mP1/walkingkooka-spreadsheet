@@ -306,6 +306,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static SpreadsheetStoreRepository STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
+    private final static SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTION_ALIASES = SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS;
+
     @Test
     public void testWithNullServerUrlFails() {
         assertThrows(
@@ -317,6 +319,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
+                        FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -334,6 +337,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
+                        FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -351,6 +355,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
+                        FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -368,6 +373,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         null,
                         FRACTIONER,
                         STORE_REPOSITORY,
+                        FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -385,6 +391,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         ENGINE,
                         null,
                         STORE_REPOSITORY,
+                        FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
                 )
@@ -401,6 +408,25 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         METADATA,
                         ENGINE,
                         FRACTIONER,
+                        null,
+                        FUNCTION_ALIASES,
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullFunctionAliasesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetEngineContext.with(
+                        SERVER_URL,
+                        NOW,
+                        METADATA,
+                        ENGINE,
+                        FRACTIONER,
+                        STORE_REPOSITORY,
                         null,
                         SPREADSHEET_PROVIDER,
                         PROVIDER_CONTEXT
@@ -419,6 +445,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
+                        FUNCTION_ALIASES,
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -436,6 +463,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         ENGINE,
                         FRACTIONER,
                         STORE_REPOSITORY,
+                        FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
                         null
                 )
@@ -1398,6 +1426,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         return labelStore;
                     }
                 },
+                FUNCTION_ALIASES,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,

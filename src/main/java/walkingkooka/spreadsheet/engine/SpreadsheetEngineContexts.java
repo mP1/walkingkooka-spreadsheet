@@ -22,8 +22,10 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -41,6 +43,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetEngine engine,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetStoreRepository storeRepository,
+                                                 final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
@@ -50,6 +53,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 engine,
                 fractioner,
                 storeRepository,
+                functionAliases,
                 spreadsheetProvider,
                 providerContext
         );

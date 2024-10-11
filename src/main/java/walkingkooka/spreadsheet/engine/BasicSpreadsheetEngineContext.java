@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
@@ -55,6 +56,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
@@ -85,6 +87,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetEngine engine,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetStoreRepository storeRepository,
+                                              final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                               final SpreadsheetProvider spreadsheetProvider,
                                               final ProviderContext providerContext) {
         Objects.requireNonNull(serverUrl, "serverUrl");
@@ -93,6 +96,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(storeRepository, "storeRepository");
+        Objects.requireNonNull(functionAliases, "functionAliases");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -104,6 +108,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 engine,
                 fractioner,
                 storeRepository,
+                functionAliases,
                 spreadsheetProvider,
                 providerContext
         );
@@ -118,6 +123,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                           final SpreadsheetEngine engine,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetStoreRepository storeRepository,
+                                          final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                           final SpreadsheetProvider spreadsheetProvider,
                                           final ProviderContext providerContext) {
         super();
@@ -139,6 +145,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 storeRepository.labels()
         );
 
+        this.functionAliases = functionAliases;
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
 
@@ -192,7 +199,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(token, "token");
 
         return token.toExpression(
-                this.formulaExpressionEvaluationContext(
+                this.expressionEvaluationContext(
                         Optional.empty()// cell
                 )
         );
@@ -222,7 +229,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         try {
             result = expression.toValue(
-                    this.formulaExpressionEvaluationContext(cell)
+                    this.expressionEvaluationContext(cell)
             );
         } catch (final RuntimeException exception) {
             result = SpreadsheetErrorKind.translate(exception);
@@ -241,7 +248,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         try {
             result = expression.toBoolean(
-                    this.formulaExpressionEvaluationContext(cell)
+                    this.expressionEvaluationContext(cell)
             );
         } catch (final RuntimeException exception) {
             result = false; // return false for any errors.
@@ -253,9 +260,22 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Creates a {@link SpreadsheetExpressionEvaluationContext} for both formulas and converting a token to an {@link Expression}.
      */
-    private SpreadsheetExpressionEvaluationContext formulaExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+    private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         final SpreadsheetProvider provider = this.spreadsheetProvider;
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+
+        final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
+        final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
+
+        if (SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS.equals(functionAliases)) {
+            converterSelector = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
+        } else {
+            if (SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.equals(functionAliases)) {
+                converterSelector = SpreadsheetMetadataPropertyName.FIND_CONVERTER;
+            } else {
+                throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
+            }
+        }
 
         return SpreadsheetExpressionEvaluationContexts.basic(
                 cell,
@@ -264,19 +284,21 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.referenceFunction,
                 metadata,
                 metadata.spreadsheetConverterContext(
-                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                        converterSelector,
                         this.now,
                         this, // SpreadsheetLabelNameResolver,
                         provider, // SpreadsheetConverterProvider
                         this.providerContext
                 ),
                 metadata.expressionFunctionProvider(
-                        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                        functionAliases,
                         provider
                 ), // ExpressionFunctionProvider,
                 this // ProviderContext
         );
     }
+
+    private final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases;
 
     private final AbsoluteUrl serverUrl;
 
