@@ -678,22 +678,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     /**
-     * Creates a {@link SpreadsheetConverterContext} to be used when executing formula expressions.
-     */
-    public final SpreadsheetConverterContext formulaSpreadsheetConverterContext(final Supplier<LocalDateTime> now,
-                                                                                final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                                final ConverterProvider converterProvider,
-                                                                                final ProviderContext providerContext) {
-        return this.spreadsheetConverterContext(
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                now,
-                labelNameResolver,
-                converterProvider,
-                providerContext
-        );
-    }
-
-    /**
      * Creates a {@link SpreadsheetConverterContext} to be used to convert {@link SpreadsheetCell cell} {@link SpreadsheetFormula#value()}
      * during a format.
      */
