@@ -695,25 +695,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     /**
-     * Assumes a {@link ExpressionFunctionProvider} that has already been filtered by {@link SpreadsheetMetadataPropertyName#FUNCTIONS},
-     * and then filters functions by {@link SpreadsheetMetadataPropertyName#FORMULA_FUNCTIONS}.
-     */
-    public final ExpressionFunctionProvider formulaExpressionFunctionProvider(final ExpressionFunctionProvider provider) {
-        Objects.requireNonNull(provider, "provider");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final ExpressionFunctionAliasSet functionsAliases = components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
-
-        components.reportIfMissing();
-
-        return ExpressionFunctionProviders.aliases(
-                functionsAliases,
-                provider
-        );
-    }
-
-    /**
      * Returns a general {@link Converter} using the required properties.
      * <ul>
      * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
