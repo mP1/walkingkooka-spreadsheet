@@ -270,7 +270,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         provider, // SpreadsheetConverterProvider
                         this.providerContext
                 ),
-                metadata.formulaExpressionFunctionProvider(provider), // ExpressionFunctionProvider,
+                metadata.expressionFunctionProvider(
+                        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                        provider
+                ), // ExpressionFunctionProvider,
                 this // ProviderContext
         );
     }
