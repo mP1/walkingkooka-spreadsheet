@@ -577,7 +577,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testFormulaConverterWithMissingPropertyFails() {
+    public void testConverterWithMissingPropertyFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.converter(
@@ -593,7 +593,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testFormulaConverter() {
+    public void testConverter() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(
                         SpreadsheetMetadataPropertyName.LOCALE,
