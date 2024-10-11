@@ -358,7 +358,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         BasicSpreadsheetEngineFilterPredicate.with(
                                 valueType,
                                 expression,
-                                context
+                                context.spreadsheetEngineContext(
+                                        SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
+                                )
                         )
                 ).collect(Collectors.toCollection(Sets::ordered));
     }
@@ -389,7 +391,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
                 valueType,
                 expression,
-                context
+                context.spreadsheetEngineContext(
+                        SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
+                )
         );
 
         final Set<SpreadsheetCell> found = SortedSets.tree(

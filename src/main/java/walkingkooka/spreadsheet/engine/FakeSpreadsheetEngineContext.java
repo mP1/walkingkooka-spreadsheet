@@ -77,7 +77,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
 
     @Override
     public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
-        throw new UnsupportedOperationException();
+        return new FakeSpreadsheetEngineContext();
     }
 
     @Override

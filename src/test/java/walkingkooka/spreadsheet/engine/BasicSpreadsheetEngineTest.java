@@ -119,6 +119,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 import walkingkooka.tree.text.FontWeight;
@@ -152,7 +153,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngine>
         implements SpreadsheetEngineTesting<BasicSpreadsheetEngine>,
         SpreadsheetMetadataTesting {
-
     private final static String FORMATTED_PATTERN_SUFFIX = "FORMATTED_PATTERN_SUFFIX";
 
     private final static String DATE_PATTERN = "yyyy/mm/dd";
@@ -160,9 +160,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
     private final static String NUMBER_PATTERN = "#";
     private final static String TEXT_PATTERN = "@";
-
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://server.example.com");
-
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
         public boolean canConvert(final Object value,
@@ -236,6 +233,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static double COLUMN_WIDTH = 50;
 
     private final static Map<SpreadsheetColumnReference, Double> COLUMN_A_WIDTH = columnWidths("A");
+    private static final AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://server123");
 
     private static Map<SpreadsheetColumnReference, Double> columnWidths(final String columns) {
         final Map<SpreadsheetColumnReference, Double> map = Maps.sorted();
@@ -13398,6 +13396,76 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
+            public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
+                return new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public boolean evaluateAsBoolean(final Expression expression,
+                                                     final Optional<SpreadsheetCell> cell) {
+                        return expression.toBoolean(
+                                SpreadsheetExpressionEvaluationContexts.basic(
+                                        cell,
+                                        storeRepository.cells(),
+                                        SERVER_URL, // serverUrl
+                                        (r) -> {
+                                            throw new UnsupportedOperationException();
+                                        }, // references
+                                        metadata, // metadata
+                                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                                        this.expressionFunctionProvider(),
+                                        PROVIDER_CONTEXT
+                                )
+                        );
+                    }
+
+                    private ExpressionFunctionProvider expressionFunctionProvider() {
+                        return new FakeExpressionFunctionProvider() {
+                            @Override
+                            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                         final List<?> values,
+                                                                                                         final ProviderContext context) {
+                                switch (name.value()) {
+                                    case "BasicSpreadsheetEngineTestFilterCellsPredicate":
+                                        return new FakeExpressionFunction<>() {
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final ExpressionEvaluationContext context) {
+                                                checkEquals(
+                                                        Lists.empty(),
+                                                        parameters,
+                                                        "parameters"
+                                                );
+
+                                                return Boolean.valueOf(
+                                                        SpreadsheetExpressionEvaluationContext.class.cast(context)
+                                                                .cellOrFail()
+                                                                .formula()
+                                                                .text()
+                                                );
+                                            }
+
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                                return Lists.of(
+                                                        ExpressionFunctionParameterName.with("parameters")
+                                                                .variable(Object.class)
+                                                );
+                                            }
+
+                                            @Override
+                                            public boolean isPure(final ExpressionPurityContext context) {
+                                                return false;
+                                            }
+                                        };
+                                    default:
+                                        throw new UnknownExpressionFunctionException(name);
+                                }
+                            }
+                        };
+                    }
+                };
+            }
+
+            @Override
             public Object evaluate(final Expression expression,
                                    final Optional<SpreadsheetCell> cell) {
                 final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
@@ -13406,7 +13474,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetExpressionEvaluationContexts.basic(
                                 cell,
                                 storeRepository.cells(),
-                                Url.parseAbsolute("http://server123"), // serverUrl
+                                SERVER_URL, // serverUrl
                                 this.references(), // references
                                 metadata, // metadata
                                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
@@ -13414,12 +13482,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 PROVIDER_CONTEXT
                         )
                 );
-            }
-
-            @Override
-            public boolean evaluateAsBoolean(final Expression expression,
-                                             final Optional<SpreadsheetCell> cell) {
-                return (Boolean)this.evaluate(expression, cell);
             }
 
             @Override
@@ -13514,38 +13576,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     public Object apply(final List<Object> parameters,
                                                         final ExpressionEvaluationContext context) {
                                         return BasicSpreadsheetEngineTest.this.value;
-                                    }
-
-                                    @Override
-                                    public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                        return Lists.of(
-                                                ExpressionFunctionParameterName.with("parameters")
-                                                        .variable(Object.class)
-                                        );
-                                    }
-
-                                    @Override
-                                    public boolean isPure(final ExpressionPurityContext context) {
-                                        return false;
-                                    }
-                                };
-                            case "BasicSpreadsheetEngineTestFilterCellsPredicate":
-                                return new FakeExpressionFunction<>() {
-                                    @Override
-                                    public Object apply(final List<Object> parameters,
-                                                        final ExpressionEvaluationContext context) {
-                                        checkEquals(
-                                                Lists.empty(),
-                                                parameters,
-                                                "parameters"
-                                        );
-
-                                        return Boolean.valueOf(
-                                                SpreadsheetExpressionEvaluationContext.class.cast(context)
-                                                        .cellOrFail()
-                                                        .formula()
-                                                        .text()
-                                        );
                                     }
 
                                     @Override
