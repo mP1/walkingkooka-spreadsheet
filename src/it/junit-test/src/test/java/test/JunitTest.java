@@ -263,6 +263,7 @@ public class JunitTest {
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.formulaSpreadsheetConverterContext(
+                                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                         NOW,
                                         LABEL_NAME_RESOLVER,
                                         converterProvider,

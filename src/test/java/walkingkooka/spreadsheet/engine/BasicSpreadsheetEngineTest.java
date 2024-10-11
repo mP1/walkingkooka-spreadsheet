@@ -13384,7 +13384,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     throw new UnsupportedOperationException(r.toString());
                                 }, // references
                                 metadata,
-                                metadata.formulaSpreadsheetConverterContext(
+                                metadata.spreadsheetConverterContext(
+                                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                         NOW,
                                         SPREADSHEET_LABEL_NAME_RESOLVER,
                                         CONVERTER_PROVIDER,
@@ -13588,7 +13589,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             private ConverterContext converterContext() {
                 final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-                return metadata.formulaSpreadsheetConverterContext(
+                return metadata.spreadsheetConverterContext(
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         NOW,
                         SPREADSHEET_LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(

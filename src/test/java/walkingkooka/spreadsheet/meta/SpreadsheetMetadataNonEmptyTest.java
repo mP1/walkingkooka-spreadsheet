@@ -1817,7 +1817,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         SPREADSHEET_PARSER_PROVIDER,
                         PROVIDER_CONTEXT
                 ),
-                metadata.formulaSpreadsheetConverterContext(
+                metadata.spreadsheetConverterContext(
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         NOW,
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(

@@ -263,7 +263,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.serverUrl,
                 this.referenceFunction,
                 metadata,
-                metadata.formulaSpreadsheetConverterContext(
+                metadata.spreadsheetConverterContext(
+                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                         this.now,
                         this, // SpreadsheetLabelNameResolver,
                         provider, // SpreadsheetConverterProvider

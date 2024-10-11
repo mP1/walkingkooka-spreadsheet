@@ -521,7 +521,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         SERVER_URL,
                         REFERENCES,
                         METADATA,
-                        METADATA.formulaSpreadsheetConverterContext(
+                        METADATA.spreadsheetConverterContext(
+                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 LocalDateTime::now,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
