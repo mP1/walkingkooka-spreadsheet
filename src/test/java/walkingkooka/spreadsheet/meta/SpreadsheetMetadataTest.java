@@ -616,6 +616,46 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
+    // ExpressionFunctionProvider.......................................................................................
+
+    @Test
+    public void testExpressionFunctionProviderWithNullPropertyNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.expressionFunctionProvider(
+                        null,
+                        ExpressionFunctionProviders.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testExpressionFunctionProviderWithNullExpressionFunctionProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadata.EMPTY.expressionFunctionProvider(
+                        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testExpressionFunctionProviderMissingRequiredPropertiesFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.expressionFunctionProvider(
+                        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                        ExpressionFunctionProviders.fake()
+                )
+        );
+        this.checkEquals(
+                "Required properties \"formula-functions\" missing.",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
     // GeneralConverter.................................................................................................
 
     @Test
