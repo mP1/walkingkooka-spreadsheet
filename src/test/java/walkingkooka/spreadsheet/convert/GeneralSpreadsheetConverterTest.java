@@ -778,6 +778,17 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     @Test
+    public void testConvertColorToString() {
+        final Color color = Color.BLACK;
+
+        this.convertAndCheck(
+                color,
+                String.class,
+                color.text()
+        );
+    }
+
+    @Test
     public void testConvertTextStyleToString() {
         final TextStyle style = TextStyle.EMPTY.set(
                 TextStylePropertyName.COLOR,
