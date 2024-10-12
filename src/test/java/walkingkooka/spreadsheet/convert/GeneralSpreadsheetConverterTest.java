@@ -49,7 +49,10 @@ import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -772,6 +775,23 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         return SpreadsheetText.with(text)
                 .setColor(Optional.of(Color.BLACK))
                 .toTextNode();
+    }
+
+    @Test
+    public void testConvertTextStyleToString() {
+        final TextStyle style = TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+        ).set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.LEFT
+        );
+
+        this.convertAndCheck(
+                style,
+                String.class,
+                style.text()
+        );
     }
 
     // Number...........................................................................................................
