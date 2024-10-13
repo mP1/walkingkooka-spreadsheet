@@ -1037,6 +1037,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-number error-to-number\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-string error-to-string\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/general general\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/plugin-selector-like-to-string plugin-selector-like-to-string\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-selection selection-to-selection\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-string selection-to-string\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-cell-to spreadsheet-cell-to\",\n" +
@@ -1057,7 +1058,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\"\n" +
                         "  ],\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"find-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"find-functions\": \"\",\n" +
                         "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": [\n" +
@@ -1252,6 +1253,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-number error-to-number\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/error-to-string error-to-string\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/general general\",\n" +
+                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/plugin-selector-like-to-string plugin-selector-like-to-string\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-selection selection-to-selection\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/selection-to-string selection-to-string\",\n" +
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/Converter/spreadsheet-cell-to spreadsheet-cell-to\",\n" +
@@ -1272,7 +1274,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetExporter/json json\"\n" +
                         "  ],\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"find-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"find-functions\": \"\",\n" +
                         "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": [\n" +
