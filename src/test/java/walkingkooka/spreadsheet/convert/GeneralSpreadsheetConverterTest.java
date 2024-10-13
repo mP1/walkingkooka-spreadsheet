@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
@@ -775,6 +776,17 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         return SpreadsheetText.with(text)
                 .setColor(Optional.of(Color.BLACK))
                 .toTextNode();
+    }
+
+    @Test
+    public void testConvertAbsoluteUrlToString() {
+        final String url = "https://example.com";
+
+        this.convertAndCheck(
+                Url.parseAbsolute(url),
+                String.class,
+                url
+        );
     }
 
     @Test
