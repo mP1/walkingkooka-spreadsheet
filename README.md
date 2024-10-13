@@ -165,7 +165,7 @@ When sorting a cell-range/column/rows it is possible to sort each column/row wit
 Functions within a formula expressions are defined by individual `ExpressionFunction`.
 
 Currently there are about 100+ functions available and these are
-listed [HERE](https://github.com/mP1/walkingkooka-spreadsheet-server-expression-function).
+listed [HERE](https://github.com/mP1/walkingkooka-spreadsheet-expression-function).
 
 - Additional `ExpressionFunction(s)` may be provided via a
   custom [ExpressionFunctionProvider](https://github.com/mP1/walkingkooka-tree-expression-function-provider/blob/master/src/main/java/walkingkooka/tree/expression/function/provider/ExpressionFunctionProvider.java)
