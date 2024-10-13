@@ -19,6 +19,9 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
+/**
+ * A list of possible(supported) spreadsheet value types.
+ */
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static String ANY = "*";
