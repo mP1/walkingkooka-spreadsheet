@@ -140,6 +140,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see PluginSelectorLikeToStringConverter}
+     */
+    public static Converter<SpreadsheetConverterContext> pluginSelectorLike() {
+        return PluginSelectorLikeToStringConverter.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetSelectionToSpreadsheetSelectionConverter}
      */
     public static Converter<SpreadsheetConverterContext> selectionToSelection() {
