@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -27,9 +26,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
@@ -41,7 +38,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Supplier<LocalDateTime> now,
                                                  final SpreadsheetMetadata metadata,
                                                  final SpreadsheetEngine engine,
-                                                 final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetStoreRepository storeRepository,
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                  final SpreadsheetProvider spreadsheetProvider,
@@ -51,7 +47,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 now,
                 metadata,
                 engine,
-                fractioner,
                 storeRepository,
                 functionAliases,
                 spreadsheetProvider,

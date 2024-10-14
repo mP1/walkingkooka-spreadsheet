@@ -21,7 +21,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
@@ -59,14 +58,12 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -85,7 +82,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final Supplier<LocalDateTime> now,
                                               final SpreadsheetMetadata metadata,
                                               final SpreadsheetEngine engine,
-                                              final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetStoreRepository storeRepository,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                               final SpreadsheetProvider spreadsheetProvider,
@@ -94,7 +90,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(now, "now");
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(engine, "engine");
-        Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(functionAliases, "functionAliases");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
@@ -106,7 +101,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 now,
                 metadata,
                 engine,
-                fractioner,
                 storeRepository,
                 functionAliases,
                 spreadsheetProvider,
@@ -121,7 +115,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                           final Supplier<LocalDateTime> now,
                                           final SpreadsheetMetadata metadata,
                                           final SpreadsheetEngine engine,
-                                          final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetStoreRepository storeRepository,
                                           final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                           final SpreadsheetProvider spreadsheetProvider,
@@ -138,7 +131,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this
         );
 
-        this.fractioner = fractioner;
         this.storeRepository = storeRepository;
 
         this.labelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
@@ -232,7 +224,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         this.now,
                         this.metadata,
                         this.engine,
-                        this.fractioner,
                         this.storeRepository,
                         functionAliases,
                         this.spreadsheetProvider,
@@ -333,11 +324,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     private final Supplier<LocalDateTime> now;
-
-    /**
-     * Used to convert a number into a fraction within expressions.
-     */
-    private final Function<BigDecimal, Fraction> fractioner;
 
     // formatValue......................................................................................................
 

@@ -26,7 +26,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
@@ -91,7 +90,6 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -292,18 +290,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static SpreadsheetEngine ENGINE = SpreadsheetEngines.fake();
 
-    private final Function<BigDecimal, Fraction> FRACTIONER = new Function<>() {
-        @Override
-        public Fraction apply(final BigDecimal bigDecimal) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public String toString() {
-            return "Fractioner123";
-        }
-    };
-
     private final static SpreadsheetStoreRepository STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
     private final static SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTION_ALIASES = SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS;
@@ -317,7 +303,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         NOW,
                         METADATA,
                         ENGINE,
-                        FRACTIONER,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
@@ -335,7 +320,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         null,
                         METADATA,
                         ENGINE,
-                        FRACTIONER,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
@@ -353,7 +337,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         NOW,
                         null,
                         ENGINE,
-                        FRACTIONER,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
@@ -370,25 +353,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         SERVER_URL,
                         NOW,
                         METADATA,
-                        null,
-                        FRACTIONER,
-                        STORE_REPOSITORY,
-                        FUNCTION_ALIASES,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullFractionerFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        NOW,
-                        METADATA,
-                        ENGINE,
                         null,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
@@ -407,7 +371,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         NOW,
                         METADATA,
                         ENGINE,
-                        FRACTIONER,
                         null,
                         FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
@@ -425,7 +388,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         NOW,
                         METADATA,
                         ENGINE,
-                        FRACTIONER,
                         STORE_REPOSITORY,
                         null,
                         SPREADSHEET_PROVIDER,
@@ -443,7 +405,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         NOW,
                         METADATA,
                         ENGINE,
-                        FRACTIONER,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
                         null,
@@ -461,7 +422,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         NOW,
                         METADATA,
                         ENGINE,
-                        FRACTIONER,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
@@ -1410,7 +1370,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NOW,
                 metadata,
                 ENGINE,
-                FRACTIONER,
                 new FakeSpreadsheetStoreRepository() {
 
                     @Override
