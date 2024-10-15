@@ -1,4 +1,21 @@
 /*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+/*
  * Copyright 2024 Miroslav Pokorny (github.com/mP1)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,6 +46,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
@@ -42,7 +60,8 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
         SpreadsheetExporterInfo,
         SpreadsheetExporterInfoSet,
         SpreadsheetExporterSelector,
-        SpreadsheetExporterAlias>,
+        SpreadsheetExporterAlias,
+        SpreadsheetExporterAliasSet>,
         ImmutableSortedSetDefaults<SpreadsheetExporterAliasSet, SpreadsheetExporterAlias> {
 
     /**
@@ -95,6 +114,11 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
         return this.pluginAliasSet.merge(infos);
     }
 
+    @Override
+    public boolean containsName(final SpreadsheetExporterName name) {
+        return this.pluginAliasSet.containsName(name);
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override
@@ -113,6 +137,45 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
+    public SpreadsheetExporterAliasSet concat(final SpreadsheetExporterAlias alias) {
+        return this.setElements(
+                this.pluginAliasSet.concat(alias)
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterAliasSet concatAll(final Collection<SpreadsheetExporterAlias> aliases) {
+        return this.setElements(
+                this.pluginAliasSet.concatAll(aliases)
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterAliasSet replace(final SpreadsheetExporterAlias oldAlias,
+                                               final SpreadsheetExporterAlias newAlias) {
+        return this.setElements(
+                this.pluginAliasSet.replace(
+                        oldAlias,
+                        newAlias
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterAliasSet delete(final SpreadsheetExporterAlias alias) {
+        return this.setElements(
+                this.pluginAliasSet.delete(alias)
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterAliasSet deleteAll(final Collection<SpreadsheetExporterAlias> aliases) {
+        return this.setElements(
+                this.pluginAliasSet.deleteAll(aliases)
+        );
+    }
+
+    @Override
     public SpreadsheetExporterAliasSet setElements(final SortedSet<SpreadsheetExporterAlias> aliases) {
         final SpreadsheetExporterAliasSet after = new SpreadsheetExporterAliasSet(
                 this.pluginAliasSet.setElements(aliases)
@@ -120,6 +183,11 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
         return this.pluginAliasSet.equals(aliases) ?
                 this :
                 after;
+    }
+
+    @Override
+    public SpreadsheetExporterAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetExporterAlias> elements) {
+        return ImmutableSortedSetDefaults.super.setElementsFailIfDifferent(elements);
     }
 
     @Override
@@ -146,7 +214,7 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
-    public SortedSet<SpreadsheetExporterAlias> tailSet(final SpreadsheetExporterAlias alias) {
+    public SpreadsheetExporterAliasSet tailSet(final SpreadsheetExporterAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.tailSet(alias)
         );
