@@ -29,6 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
@@ -42,7 +43,8 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
         SpreadsheetImporterInfo,
         SpreadsheetImporterInfoSet,
         SpreadsheetImporterSelector,
-        SpreadsheetImporterAlias>,
+        SpreadsheetImporterAlias,
+        SpreadsheetImporterAliasSet>,
         ImmutableSortedSetDefaults<SpreadsheetImporterAliasSet, SpreadsheetImporterAlias> {
 
     /**
@@ -95,6 +97,11 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
         return this.pluginAliasSet.merge(infos);
     }
 
+    @Override
+    public boolean containsName(final SpreadsheetImporterName name) {
+        return this.pluginAliasSet.containsName(name);
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override
@@ -110,6 +117,55 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     @Override
     public int size() {
         return this.pluginAliasSet.size();
+    }
+
+    @Override
+    public SpreadsheetImporterAliasSet concat(final SpreadsheetImporterAlias alias) {
+        return this.setElements(
+                this.pluginAliasSet.concat(alias)
+        );
+    }
+
+    @Override
+    public SpreadsheetImporterAliasSet concatAll(final Collection<SpreadsheetImporterAlias> aliases) {
+        return this.setElements(
+                this.pluginAliasSet.concatAll(aliases)
+        );
+    }
+
+    @Override
+    public SpreadsheetImporterAliasSet replace(final SpreadsheetImporterAlias oldAlias,
+                                               final SpreadsheetImporterAlias newAlias) {
+        return this.setElements(
+                this.pluginAliasSet.replace(
+                        oldAlias,
+                        newAlias
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetImporterAliasSet delete(final SpreadsheetImporterAlias alias) {
+        return this.setElements(
+                this.pluginAliasSet.delete(alias)
+        );
+    }
+
+    @Override
+    public SpreadsheetImporterAliasSet deleteAll(final Collection<SpreadsheetImporterAlias> aliases) {
+        return this.setElements(
+                this.pluginAliasSet.deleteAll(aliases)
+        );
+    }
+
+    @Override
+    public SpreadsheetImporterAliasSet setElementsFailIfDifferent(final SortedSet<SpreadsheetImporterAlias> aliases) {
+        final SpreadsheetImporterAliasSet after = new SpreadsheetImporterAliasSet(
+                this.pluginAliasSet.setElementsFailIfDifferent(aliases)
+        );
+        return this.pluginAliasSet.equals(aliases) ?
+                this :
+                after;
     }
 
     @Override
@@ -146,7 +202,7 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
-    public SortedSet<SpreadsheetImporterAlias> tailSet(final SpreadsheetImporterAlias alias) {
+    public SpreadsheetImporterAliasSet tailSet(final SpreadsheetImporterAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.tailSet(alias)
         );
