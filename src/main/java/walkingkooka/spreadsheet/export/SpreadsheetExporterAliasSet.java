@@ -119,6 +119,13 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
         return this.pluginAliasSet.containsNameOrAlias(name);
     }
 
+    @Override
+    public SpreadsheetExporterAliasSet concatOrReplace(final SpreadsheetExporterAlias alias) {
+        return new SpreadsheetExporterAliasSet(
+                this.pluginAliasSet.concatOrReplace(alias)
+        );
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override
