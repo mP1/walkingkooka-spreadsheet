@@ -98,8 +98,8 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
-    public boolean containsName(final SpreadsheetImporterName name) {
-        return this.pluginAliasSet.containsName(name);
+    public boolean containsNameOrAlias(final SpreadsheetImporterName name) {
+        return this.pluginAliasSet.containsNameOrAlias(name);
     }
 
     // ImmutableSortedSet...............................................................................................
