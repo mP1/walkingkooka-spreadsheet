@@ -810,7 +810,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         // add labels within the range of the given window.
-        if (!window.isEmpty()) {
+        if (window.isNotEmpty()) {
             // if not adding columns/rows/labels theres no point looping over ranges for their cells
             if (addCells && (addColumns || addRows || addLabels)) {
                 final Set<SpreadsheetCellReference> cellReferences = Sets.hash();

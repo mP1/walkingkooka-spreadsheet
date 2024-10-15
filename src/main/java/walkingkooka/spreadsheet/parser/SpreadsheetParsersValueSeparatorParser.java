@@ -42,7 +42,7 @@ final class SpreadsheetParsersValueSeparatorParser implements Parser<Spreadsheet
                                        final SpreadsheetParserContext context) {
 
         SpreadsheetValueSeparatorSymbolParserToken token = null;
-        if (false == cursor.isEmpty()) {
+        if (cursor.isNotEmpty()) {
             final char valueSeparator = context.valueSeparator();
             final char c = cursor.at();
             if (c == valueSeparator) {

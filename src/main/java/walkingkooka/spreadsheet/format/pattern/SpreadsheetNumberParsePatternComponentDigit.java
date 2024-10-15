@@ -44,7 +44,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
     @Override
     final boolean parse(final TextCursor cursor,
                         final SpreadsheetNumberParsePatternRequest request) {
-        if (false == cursor.isEmpty()) {
+        if (cursor.isNotEmpty()) {
             final SpreadsheetNumberParsePatternComponentDigitMode digitMode = request.digitMode;
             digitMode.tryParseSign(cursor, request);
 

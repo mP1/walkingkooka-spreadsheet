@@ -44,7 +44,7 @@ final class SpreadsheetNumberParsePatternComponentDecimalSeparator extends Sprea
                   final SpreadsheetNumberParsePatternRequest request) {
         boolean completed = false;
 
-        if (false == cursor.isEmpty()) {
+        if (cursor.isNotEmpty()) {
             final char decimal = request.context.decimalSeparator();
             if (decimal == cursor.at()) {
                 final String decimalString = Character.toString(decimal);

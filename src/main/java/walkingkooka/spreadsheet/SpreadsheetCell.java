@@ -705,7 +705,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
         }
 
-        if (false == this.style.isEmpty()) {
+        if (this.style.isNotEmpty()) {
             object = object.set(STYLE_PROPERTY, context.marshall(this.style));
         }
 

@@ -46,7 +46,7 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                                              final SpreadsheetParserContext context) {
         Optional<ParserToken> result = Optional.empty();
 
-        if (!cursor.isEmpty()) {
+        if (cursor.isNotEmpty()) {
             final TextCursorSavePoint save = cursor.save();
             SpreadsheetReferenceKind absoluteOrRelativer = SpreadsheetReferenceKind.RELATIVE;
 

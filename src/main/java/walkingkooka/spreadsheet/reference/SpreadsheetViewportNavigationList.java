@@ -140,7 +140,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                         .textOffset()
         );
 
-        while (false == cursor.isEmpty()) {
+        while (cursor.isNotEmpty()) {
             final SpreadsheetViewportNavigation navigation;
 
             if (isMatch(LEFT, cursor)) {
