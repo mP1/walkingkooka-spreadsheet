@@ -31,13 +31,15 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.function.Function;
 
 final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetImporterName,
         SpreadsheetImporterInfo,
         SpreadsheetImporterInfoSet,
         SpreadsheetImporterSelector,
-        SpreadsheetImporterAlias> {
+        SpreadsheetImporterAlias,
+        SpreadsheetImporterAliasSet> {
 
     final static SpreadsheetImporterPluginHelper INSTANCE = new SpreadsheetImporterPluginHelper();
 
@@ -117,6 +119,10 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
                 selector,
                 url
         );
+    }
+
+    public SpreadsheetImporterAliasSet aliasSet(final SortedSet<SpreadsheetImporterAlias> aliases) {
+        return SpreadsheetImporterAliasSet.with(aliases);
     }
     
     @Override

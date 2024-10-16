@@ -31,6 +31,6 @@ public final class SpreadsheetComparatorSelectorTest implements ClassTesting<Spr
 
     @Override
     public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+        return JavaVisibility.PUBLIC;
     }
 }

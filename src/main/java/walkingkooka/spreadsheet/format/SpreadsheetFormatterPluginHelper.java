@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -32,6 +31,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.function.Function;
 
 final class SpreadsheetFormatterPluginHelper implements PluginHelper<
@@ -39,7 +39,8 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
         SpreadsheetFormatterInfo,
         SpreadsheetFormatterInfoSet,
         SpreadsheetFormatterSelector,
-        PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector>> {
+        SpreadsheetFormatterAlias,
+        SpreadsheetFormatterAliasSet> {
 
     final static SpreadsheetFormatterPluginHelper INSTANCE = new SpreadsheetFormatterPluginHelper();
 
@@ -53,7 +54,7 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
 
     @Override
     public Optional<SpreadsheetFormatterName> parseName(final TextCursor cursor,
-                                             final ParserContext context) {
+                                                        final ParserContext context) {
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
 
@@ -91,7 +92,7 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
 
     @Override
     public SpreadsheetFormatterInfo info(final AbsoluteUrl url,
-                              final SpreadsheetFormatterName name) {
+                                         final SpreadsheetFormatterName name) {
         return SpreadsheetFormatterInfo.with(url, name);
     }
 
@@ -111,15 +112,19 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
     }
 
     @Override
-    public PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector> alias(final SpreadsheetFormatterName name,
-                                                                                     final Optional<SpreadsheetFormatterSelector> selector,
-                                                                                     final Optional<AbsoluteUrl> url) {
-        PluginAlias.with(
+    public SpreadsheetFormatterAlias alias(final SpreadsheetFormatterName name,
+                                           final Optional<SpreadsheetFormatterSelector> selector,
+                                           final Optional<AbsoluteUrl> url) {
+        return SpreadsheetFormatterAlias.with(
                 name,
                 selector,
                 url
         );
-        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetFormatterAliasSet aliasSet(final SortedSet<SpreadsheetFormatterAlias> aliases) {
+        return SpreadsheetFormatterAliasSet.with(aliases);
     }
 
     @Override

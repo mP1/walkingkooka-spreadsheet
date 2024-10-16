@@ -91,5 +91,5 @@ final class MergedMappedSpreadsheetExporterProvider implements SpreadsheetExport
         return this.mapper.toString();
     }
 
-    private final MergedProviderMapper<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias> mapper;
+    private final MergedProviderMapper<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias, SpreadsheetExporterAliasSet> mapper;
 }

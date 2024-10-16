@@ -25,7 +25,8 @@ public final class SpreadsheetExporterPluginHelperTest implements PluginHelperTe
         SpreadsheetExporterInfo,
         SpreadsheetExporterInfoSet,
         SpreadsheetExporterSelector,
-        SpreadsheetExporterAlias> {
+        SpreadsheetExporterAlias,
+        SpreadsheetExporterAliasSet> {
 
     @Override
     public SpreadsheetExporterPluginHelper createPluginHelper() {

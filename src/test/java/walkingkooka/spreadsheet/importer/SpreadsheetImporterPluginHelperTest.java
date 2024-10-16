@@ -25,7 +25,8 @@ public final class SpreadsheetImporterPluginHelperTest implements PluginHelperTe
         SpreadsheetImporterInfo,
         SpreadsheetImporterInfoSet,
         SpreadsheetImporterSelector,
-        SpreadsheetImporterAlias> {
+        SpreadsheetImporterAlias,
+        SpreadsheetImporterAliasSet> {
 
     @Override
     public SpreadsheetImporterPluginHelper createPluginHelper() {

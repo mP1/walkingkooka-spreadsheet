@@ -75,5 +75,5 @@ final class FilteredMappedSpreadsheetComparatorProvider implements SpreadsheetCo
         return this.mapper.toString();
     }
 
-    private final FilteredProviderMapper<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, ?, ?> mapper;
+    private final FilteredProviderMapper<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet> mapper;
 }

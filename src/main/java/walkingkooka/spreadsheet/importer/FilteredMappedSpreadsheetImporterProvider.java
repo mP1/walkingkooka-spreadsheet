@@ -86,7 +86,7 @@ final class FilteredMappedSpreadsheetImporterProvider implements SpreadsheetImpo
         return this.mapper.infos();
     }
 
-    private final FilteredProviderMapper<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector, SpreadsheetImporterAlias> mapper;
+    private final FilteredProviderMapper<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector, SpreadsheetImporterAlias, SpreadsheetImporterAliasSet> mapper;
 
     @Override
     public String toString() {

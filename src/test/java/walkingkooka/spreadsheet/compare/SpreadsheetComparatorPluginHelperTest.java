@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 
@@ -26,7 +25,8 @@ public final class SpreadsheetComparatorPluginHelperTest implements PluginHelper
         SpreadsheetComparatorInfo,
         SpreadsheetComparatorInfoSet,
         SpreadsheetComparatorSelector,
-        PluginAlias<SpreadsheetComparatorName, SpreadsheetComparatorSelector>> {
+        SpreadsheetComparatorAlias,
+        SpreadsheetComparatorAliasSet> {
 
     @Override
     public void testParseSelectorWithNullFails() {
