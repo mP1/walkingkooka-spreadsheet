@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link SpreadsheetFormatterInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
+final class SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> {
 
     static {
         SpreadsheetFormatterInfoSet.with(Sets.empty()); // force registry of json marshaller

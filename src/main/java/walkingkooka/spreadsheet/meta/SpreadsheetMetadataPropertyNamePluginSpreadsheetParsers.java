@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link SpreadsheetParserInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetParserInfoSet, SpreadsheetParserInfo, SpreadsheetParserName> {
+final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet> {
 
     static {
         SpreadsheetParserInfoSet.with(Sets.empty()); // force registry of json marshaller

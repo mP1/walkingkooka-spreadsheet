@@ -25,7 +25,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginExpressionFunctions extends SpreadsheetMetadataPropertyNamePlugin<ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName> {
+final class SpreadsheetMetadataPropertyNamePluginExpressionFunctions extends SpreadsheetMetadataPropertyNamePlugin<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet> {
 
     static {
         ExpressionFunctionInfoSet.with(Sets.empty()); // force registry of json marshaller

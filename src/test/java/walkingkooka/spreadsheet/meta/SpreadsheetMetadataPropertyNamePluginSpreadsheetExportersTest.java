@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.export.SpreadsheetExporterInfo;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 
-public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetExportersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters, SpreadsheetExporterInfoSet, SpreadsheetExporterInfo, SpreadsheetExporterName> {
+public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetExportersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters, SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet> {
 
     @Override
     SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters createName() {

@@ -28,7 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetImporterInfoSet, SpreadsheetImporterInfo, SpreadsheetImporterName>,
+public final class SpreadsheetImporterInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet>,
         ClassTesting<SpreadsheetImporterInfoSet> {
 
     // immutable set....................................................................................................

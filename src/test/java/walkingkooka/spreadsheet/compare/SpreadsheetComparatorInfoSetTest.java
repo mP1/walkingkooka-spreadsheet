@@ -28,7 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo, SpreadsheetComparatorName>,
+public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLikeTesting<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet>,
         ClassTesting<SpreadsheetComparatorInfoSet> {
 
     @Test

@@ -25,7 +25,7 @@ import walkingkooka.convert.provider.ConverterName;
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ConverterInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginConverters extends SpreadsheetMetadataPropertyNamePlugin<ConverterInfoSet, ConverterInfo, ConverterName> {
+final class SpreadsheetMetadataPropertyNamePluginConverters extends SpreadsheetMetadataPropertyNamePlugin<ConverterName, ConverterInfo, ConverterInfoSet> {
 
     static {
         ConverterInfoSet.with(Sets.empty()); // force registry of json marshaller

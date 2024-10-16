@@ -37,7 +37,7 @@ import java.util.Set;
 /**
  * A read only {@link Set} of {@link SpreadsheetImporterInfo} sorted by {@link SpreadsheetImporterName}.
  */
-public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImporterInfo> implements PluginInfoSetLike<SpreadsheetImporterInfoSet, SpreadsheetImporterInfo, SpreadsheetImporterName> {
+public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImporterInfo> implements PluginInfoSetLike<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet> {
 
     public final static SpreadsheetImporterInfoSet EMPTY = new SpreadsheetImporterInfoSet(
             PluginInfoSet.with(

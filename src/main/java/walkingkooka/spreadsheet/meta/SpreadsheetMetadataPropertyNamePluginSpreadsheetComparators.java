@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link SpreadsheetComparatorInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
+final class SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> {
 
     static {
         SpreadsheetComparatorInfoSet.with(Sets.empty()); // force registry of json marshaller
