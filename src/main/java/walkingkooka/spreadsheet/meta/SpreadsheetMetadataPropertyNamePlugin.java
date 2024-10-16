@@ -18,8 +18,11 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.naming.Name;
+import walkingkooka.plugin.PluginAliasLike;
+import walkingkooka.plugin.PluginAliasSetLike;
 import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.plugin.PluginInfoSetLike;
+import walkingkooka.plugin.PluginSelectorLike;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -27,7 +30,12 @@ import java.util.Optional;
 /**
  * Base class for a few {@link SpreadsheetMetadataPropertyName} that have a {@link PluginInfoSetLike} as the value.
  */
-abstract class SpreadsheetMetadataPropertyNamePlugin<N extends Name & Comparable<N>, I extends PluginInfoLike<I, N>, IS extends PluginInfoSetLike<N, I, IS>> extends SpreadsheetMetadataPropertyName<IS> {
+abstract class SpreadsheetMetadataPropertyNamePlugin<N extends Name & Comparable<N>,
+        I extends PluginInfoLike<I, N>,
+        IS extends PluginInfoSetLike<N, I, IS, S, A, AS>,
+        S extends PluginSelectorLike<N>,
+        A extends PluginAliasLike<N, S, A>,
+        AS extends PluginAliasSetLike<N, I, IS, S, A, AS>> extends SpreadsheetMetadataPropertyName<IS> {
 
     SpreadsheetMetadataPropertyNamePlugin(final String name) {
         super(name);

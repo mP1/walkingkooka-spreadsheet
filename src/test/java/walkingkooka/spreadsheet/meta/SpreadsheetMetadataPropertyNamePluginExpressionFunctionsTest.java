@@ -20,10 +20,19 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAlias;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
-public final class SpreadsheetMetadataPropertyNamePluginExpressionFunctionsTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginExpressionFunctions, ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet> {
+public final class SpreadsheetMetadataPropertyNamePluginExpressionFunctionsTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginExpressionFunctions,
+        ExpressionFunctionName,
+        ExpressionFunctionInfo,
+        ExpressionFunctionInfoSet,
+        ExpressionFunctionSelector,
+        ExpressionFunctionAlias,
+        ExpressionFunctionAliasSet> {
 
     @Override
     SpreadsheetMetadataPropertyNamePluginExpressionFunctions createName() {

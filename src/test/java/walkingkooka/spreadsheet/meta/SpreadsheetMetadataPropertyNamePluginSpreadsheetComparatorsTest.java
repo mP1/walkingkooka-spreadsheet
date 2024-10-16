@@ -17,12 +17,22 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAlias;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorSelector;
 
-public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetComparatorsTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators, SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> {
+public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetComparatorsTest extends SpreadsheetMetadataPropertyNamePluginTestCase<
+        SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators,
+        SpreadsheetComparatorName,
+        SpreadsheetComparatorInfo,
+        SpreadsheetComparatorInfoSet,
+        SpreadsheetComparatorSelector,
+        SpreadsheetComparatorAlias,
+        SpreadsheetComparatorAliasSet> {
 
     @Override
     SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators createName() {

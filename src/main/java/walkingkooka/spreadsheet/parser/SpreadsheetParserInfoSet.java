@@ -37,7 +37,7 @@ import java.util.Set;
 /**
  * A read only {@link Set} of {@link SpreadsheetParserInfo} sorted by {@link SpreadsheetParserName}.
  */
-public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParserInfo> implements PluginInfoSetLike<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet> {
+public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParserInfo> implements PluginInfoSetLike<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, SpreadsheetParserAlias, SpreadsheetParserAliasSet> {
 
     public final static SpreadsheetParserInfoSet EMPTY = new SpreadsheetParserInfoSet(
             PluginInfoSet.with(
