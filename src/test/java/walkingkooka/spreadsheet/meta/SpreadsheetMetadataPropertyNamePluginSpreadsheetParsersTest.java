@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 
-public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers, SpreadsheetParserInfoSet, SpreadsheetParserInfo, SpreadsheetParserName> {
+public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers, SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet> {
 
     @Override
     SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers createName() {

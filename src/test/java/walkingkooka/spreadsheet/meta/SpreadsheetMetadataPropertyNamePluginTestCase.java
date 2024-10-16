@@ -21,8 +21,11 @@ import walkingkooka.naming.Name;
 import walkingkooka.plugin.PluginInfoLike;
 import walkingkooka.plugin.PluginInfoSetLike;
 
-public abstract class SpreadsheetMetadataPropertyNamePluginTestCase<P extends SpreadsheetMetadataPropertyNamePlugin<S, I, N>, S extends PluginInfoSetLike<S, I, N>, I extends PluginInfoLike<I, N>, N extends Name & Comparable<N>>
-        extends SpreadsheetMetadataPropertyNameTestCase<P, S> {
+public abstract class SpreadsheetMetadataPropertyNamePluginTestCase<P extends SpreadsheetMetadataPropertyNamePlugin<N, I, IS>,
+        N extends Name & Comparable<N>,
+        I extends PluginInfoLike<I, N>,
+        IS extends PluginInfoSetLike<N, I, IS>>
+        extends SpreadsheetMetadataPropertyNameTestCase<P, IS> {
 
     SpreadsheetMetadataPropertyNamePluginTestCase() {
         super();

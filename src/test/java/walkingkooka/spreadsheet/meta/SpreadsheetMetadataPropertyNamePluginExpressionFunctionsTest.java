@@ -23,7 +23,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 
-public final class SpreadsheetMetadataPropertyNamePluginExpressionFunctionsTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginExpressionFunctions, ExpressionFunctionInfoSet, ExpressionFunctionInfo, ExpressionFunctionName> {
+public final class SpreadsheetMetadataPropertyNamePluginExpressionFunctionsTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginExpressionFunctions, ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet> {
 
     @Override
     SpreadsheetMetadataPropertyNamePluginExpressionFunctions createName() {

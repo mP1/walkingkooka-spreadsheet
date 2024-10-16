@@ -27,14 +27,14 @@ import java.util.Optional;
 /**
  * Base class for a few {@link SpreadsheetMetadataPropertyName} that have a {@link PluginInfoSetLike} as the value.
  */
-abstract class SpreadsheetMetadataPropertyNamePlugin<S extends PluginInfoSetLike<S, I, N>, I extends PluginInfoLike<I, N>, N extends Name & Comparable<N>> extends SpreadsheetMetadataPropertyName<S> {
+abstract class SpreadsheetMetadataPropertyNamePlugin<N extends Name & Comparable<N>, I extends PluginInfoLike<I, N>, IS extends PluginInfoSetLike<N, I, IS>> extends SpreadsheetMetadataPropertyName<IS> {
 
     SpreadsheetMetadataPropertyNamePlugin(final String name) {
         super(name);
     }
 
     @Override
-    final S checkValue0(final Object value) {
+    final IS checkValue0(final Object value) {
         return this.checkValueType(
                 value,
                 i -> i.getClass().equals(this.type())
@@ -47,7 +47,7 @@ abstract class SpreadsheetMetadataPropertyNamePlugin<S extends PluginInfoSetLike
     }
 
     @Override
-    final Optional<S> extractLocaleAwareValue(final Locale locale) {
+    final Optional<IS> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 }

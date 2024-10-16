@@ -37,7 +37,7 @@ import java.util.Set;
 /**
  * A read only {@link Set} of {@link SpreadsheetFormatterInfo} sorted by {@link SpreadsheetFormatterName}.
  */
-public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo> implements PluginInfoSetLike<SpreadsheetFormatterInfoSet, SpreadsheetFormatterInfo, SpreadsheetFormatterName> {
+public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFormatterInfo> implements PluginInfoSetLike<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet> {
 
     public final static SpreadsheetFormatterInfoSet EMPTY = new SpreadsheetFormatterInfoSet(
             PluginInfoSet.with(

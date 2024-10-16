@@ -37,7 +37,7 @@ import java.util.Set;
 /**
  * A read only {@link Set} of {@link SpreadsheetComparatorInfo} sorted by {@link SpreadsheetComparatorName}.
  */
-public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorInfoSet, SpreadsheetComparatorInfo, SpreadsheetComparatorName> {
+public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetComparatorInfo> implements PluginInfoSetLike<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> {
 
     public final static SpreadsheetComparatorInfoSet EMPTY = new SpreadsheetComparatorInfoSet(
             PluginInfoSet.with(
