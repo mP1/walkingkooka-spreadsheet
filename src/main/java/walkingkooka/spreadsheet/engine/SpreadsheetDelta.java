@@ -819,7 +819,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
 
-        if (null != window && !window.isEmpty()) {
+        if (null != window && window.isNotEmpty()) {
             final Predicate<SpreadsheetCell> windowPredicate = c -> window.test(c.reference());
 
             predicate = null != predicate ?
