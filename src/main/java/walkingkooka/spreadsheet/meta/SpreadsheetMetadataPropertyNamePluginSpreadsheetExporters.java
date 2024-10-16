@@ -18,14 +18,17 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAlias;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfo;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link SpreadsheetExporterInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet> {
+final class SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias, SpreadsheetExporterAliasSet> {
 
     static {
         SpreadsheetExporterInfoSet.with(Sets.empty()); // force registry of json marshaller

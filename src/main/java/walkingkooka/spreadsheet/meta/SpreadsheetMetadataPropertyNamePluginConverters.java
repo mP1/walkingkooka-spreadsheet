@@ -18,14 +18,22 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.provider.ConverterAlias;
+import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterInfo;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.convert.provider.ConverterSelector;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ConverterInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginConverters extends SpreadsheetMetadataPropertyNamePlugin<ConverterName, ConverterInfo, ConverterInfoSet> {
+final class SpreadsheetMetadataPropertyNamePluginConverters extends SpreadsheetMetadataPropertyNamePlugin<ConverterName,
+        ConverterInfo,
+        ConverterInfoSet,
+        ConverterSelector,
+        ConverterAlias,
+        ConverterAliasSet> {
 
     static {
         ConverterInfoSet.with(Sets.empty()); // force registry of json marshaller

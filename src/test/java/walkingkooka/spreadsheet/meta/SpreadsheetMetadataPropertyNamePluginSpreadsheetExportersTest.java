@@ -18,11 +18,21 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.Url;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAlias;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfo;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 
-public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetExportersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters, SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet> {
+public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetExportersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<
+        SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters,
+        SpreadsheetExporterName,
+        SpreadsheetExporterInfo,
+        SpreadsheetExporterInfoSet,
+        SpreadsheetExporterSelector,
+        SpreadsheetExporterAlias,
+        SpreadsheetExporterAliasSet> {
 
     @Override
     SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters createName() {

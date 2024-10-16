@@ -20,12 +20,22 @@ package walkingkooka.spreadsheet.meta;
 
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserAlias;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfo;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 
-public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers, SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet> {
+public final class SpreadsheetMetadataPropertyNamePluginSpreadsheetParsersTest extends SpreadsheetMetadataPropertyNamePluginTestCase<
+        SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers,
+        SpreadsheetParserName,
+        SpreadsheetParserInfo,
+        SpreadsheetParserInfoSet,
+        SpreadsheetParserSelector,
+        SpreadsheetParserAlias,
+        SpreadsheetParserAliasSet> {
 
     @Override
     SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers createName() {

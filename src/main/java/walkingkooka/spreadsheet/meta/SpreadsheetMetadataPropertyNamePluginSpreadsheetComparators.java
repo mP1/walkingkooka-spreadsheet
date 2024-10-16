@@ -18,14 +18,17 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAlias;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorSelector;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link SpreadsheetComparatorInfoSet}.
  */
-final class SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet> {
+final class SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators extends SpreadsheetMetadataPropertyNamePlugin<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet> {
 
     static {
         SpreadsheetComparatorInfoSet.with(Sets.empty()); // force registry of json marshaller
