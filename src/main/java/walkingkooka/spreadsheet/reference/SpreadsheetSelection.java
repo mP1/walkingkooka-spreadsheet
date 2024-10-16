@@ -572,7 +572,7 @@ public abstract class SpreadsheetSelection implements HasText,
             ParserToken upper = null;
             S upperSelection = null;
 
-            if (!cursor.isEmpty()) {
+            if (cursor.isNotEmpty()) {
                 final char separator = cursor.at();
                 if (SEPARATOR.character() != separator) {
                     throw new InvalidCharacterException(
@@ -596,7 +596,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 }
                 upperSelection = parserTokenToSelection.apply(upper);
 
-                if (false == cursor.isEmpty()) {
+                if (cursor.isNotEmpty()) {
                     throw new InvalidCharacterException(
                             text,
                             cursor.max()

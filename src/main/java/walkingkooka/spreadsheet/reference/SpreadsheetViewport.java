@@ -166,7 +166,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
         }
 
         final SpreadsheetViewportNavigationList navigations = this.navigations();
-        if (false == navigations.isEmpty()) {
+        if (navigations.isNotEmpty()) {
             printer.println("navigations:");
             printer.indent();
 
@@ -304,7 +304,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
         }
 
         final SpreadsheetViewportNavigationList navigations = this.navigations();
-        if (false == navigations.isEmpty()) {
+        if (navigations.isNotEmpty()) {
             object = object.set(
                     NAVIGATION_PROPERTY,
                     context.marshall(navigations)

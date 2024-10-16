@@ -56,7 +56,7 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
 
         ParserToken token = null;
 
-        if (!cursor.isEmpty()) {
+        if (cursor.isNotEmpty()) {
             // expect double quote
             final char first = cursor.at();
             if (DOUBLE_QUOTE == first) {
@@ -64,7 +64,7 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
                 cursor.next();
                 final StringBuilder content = new StringBuilder();
 
-                while (!cursor.isEmpty()) {
+                while (cursor.isNotEmpty()) {
                     final char c = cursor.at();
                     cursor.next();
 

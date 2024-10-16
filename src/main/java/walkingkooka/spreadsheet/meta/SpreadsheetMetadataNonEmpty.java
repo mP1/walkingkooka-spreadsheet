@@ -89,7 +89,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     @Override
     SpreadsheetMetadata checkDefault() {
         final SpreadsheetMetadata defaults = this.defaults();
-        if (!defaults.isEmpty()) {
+        if (defaults.isNotEmpty()) {
             throw new IllegalArgumentException("Default cannot have defaults: " + defaults);
         }
 
