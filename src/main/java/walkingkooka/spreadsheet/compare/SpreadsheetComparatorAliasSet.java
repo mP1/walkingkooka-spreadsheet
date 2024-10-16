@@ -32,7 +32,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.export;
+package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
@@ -53,24 +53,24 @@ import java.util.Optional;
 import java.util.SortedSet;
 
 /**
- * A declaration of exporter names and mapping of aliases to exporter names with parameters.
+ * A declaration of comparator names and mapping of aliases to comparator names with parameters.
  */
-public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetExporterAlias>
-        implements PluginAliasSetLike<SpreadsheetExporterName,
-        SpreadsheetExporterInfo,
-        SpreadsheetExporterInfoSet,
-        SpreadsheetExporterSelector,
-        SpreadsheetExporterAlias,
-        SpreadsheetExporterAliasSet>,
-        ImmutableSortedSetDefaults<SpreadsheetExporterAliasSet, SpreadsheetExporterAlias> {
+public final class SpreadsheetComparatorAliasSet extends AbstractSet<SpreadsheetComparatorAlias>
+        implements PluginAliasSetLike<SpreadsheetComparatorName,
+        SpreadsheetComparatorInfo,
+        SpreadsheetComparatorInfoSet,
+        SpreadsheetComparatorSelector,
+        SpreadsheetComparatorAlias,
+        SpreadsheetComparatorAliasSet>,
+        ImmutableSortedSetDefaults<SpreadsheetComparatorAliasSet, SpreadsheetComparatorAlias> {
 
     /**
-     * An empty {@link SpreadsheetExporterAliasSet}.
+     * An empty {@link SpreadsheetComparatorAliasSet}.
      */
-    public final static SpreadsheetExporterAliasSet EMPTY = new SpreadsheetExporterAliasSet(
+    public final static SpreadsheetComparatorAliasSet EMPTY = new SpreadsheetComparatorAliasSet(
             PluginAliasSet.with(
                     SortedSets.empty(),
-                    SpreadsheetExporterPluginHelper.INSTANCE
+                    SpreadsheetComparatorPluginHelper.INSTANCE
             )
     );
 
@@ -80,48 +80,48 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
     /**
-     * Factory that creates {@link SpreadsheetExporterAliasSet} with the given aliases.
+     * Factory that creates {@link SpreadsheetComparatorAliasSet} with the given aliases.
      */
-    public static SpreadsheetExporterAliasSet with(final SortedSet<SpreadsheetExporterAlias> aliases) {
+    public static SpreadsheetComparatorAliasSet with(final SortedSet<SpreadsheetComparatorAlias> aliases) {
         return EMPTY.setElements(aliases);
     }
 
-    public static SpreadsheetExporterAliasSet parse(final String text) {
-        return new SpreadsheetExporterAliasSet(
+    public static SpreadsheetComparatorAliasSet parse(final String text) {
+        return new SpreadsheetComparatorAliasSet(
                 PluginAliasSet.parse(
                         text,
-                        SpreadsheetExporterPluginHelper.INSTANCE
+                        SpreadsheetComparatorPluginHelper.INSTANCE
                 )
         );
     }
 
-    private SpreadsheetExporterAliasSet(final PluginAliasSet<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias, SpreadsheetExporterAliasSet> pluginAliasSet) {
+    private SpreadsheetComparatorAliasSet(final PluginAliasSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }
 
     @Override
-    public Optional<SpreadsheetExporterSelector> alias(final SpreadsheetExporterName name) {
+    public Optional<SpreadsheetComparatorSelector> alias(final SpreadsheetComparatorName name) {
         return this.pluginAliasSet.alias(name);
     }
 
     @Override
-    public Optional<SpreadsheetExporterName> name(final SpreadsheetExporterName name) {
+    public Optional<SpreadsheetComparatorName> name(final SpreadsheetComparatorName name) {
         return this.pluginAliasSet.name(name);
     }
 
     @Override
-    public SpreadsheetExporterInfoSet merge(final SpreadsheetExporterInfoSet infos) {
+    public SpreadsheetComparatorInfoSet merge(final SpreadsheetComparatorInfoSet infos) {
         return this.pluginAliasSet.merge(infos);
     }
 
     @Override
-    public boolean containsNameOrAlias(final SpreadsheetExporterName name) {
+    public boolean containsNameOrAlias(final SpreadsheetComparatorName name) {
         return this.pluginAliasSet.containsNameOrAlias(name);
     }
 
     @Override
-    public SpreadsheetExporterAliasSet concatOrReplace(final SpreadsheetExporterAlias alias) {
-        return new SpreadsheetExporterAliasSet(
+    public SpreadsheetComparatorAliasSet concatOrReplace(final SpreadsheetComparatorAlias alias) {
+        return new SpreadsheetComparatorAliasSet(
                 this.pluginAliasSet.concatOrReplace(alias)
         );
     }
@@ -129,12 +129,12 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     // ImmutableSortedSet...............................................................................................
 
     @Override
-    public Comparator<? super SpreadsheetExporterAlias> comparator() {
+    public Comparator<? super SpreadsheetComparatorAlias> comparator() {
         return this.pluginAliasSet.comparator();
     }
 
     @Override
-    public Iterator<SpreadsheetExporterAlias> iterator() {
+    public Iterator<SpreadsheetComparatorAlias> iterator() {
         return this.pluginAliasSet.stream().iterator();
     }
 
@@ -144,22 +144,22 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
-    public SpreadsheetExporterAliasSet concat(final SpreadsheetExporterAlias alias) {
+    public SpreadsheetComparatorAliasSet concat(final SpreadsheetComparatorAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.concat(alias)
         );
     }
 
     @Override
-    public SpreadsheetExporterAliasSet concatAll(final Collection<SpreadsheetExporterAlias> aliases) {
+    public SpreadsheetComparatorAliasSet concatAll(final Collection<SpreadsheetComparatorAlias> aliases) {
         return this.setElements(
                 this.pluginAliasSet.concatAll(aliases)
         );
     }
 
     @Override
-    public SpreadsheetExporterAliasSet replace(final SpreadsheetExporterAlias oldAlias,
-                                               final SpreadsheetExporterAlias newAlias) {
+    public SpreadsheetComparatorAliasSet replace(final SpreadsheetComparatorAlias oldAlias,
+                                                 final SpreadsheetComparatorAlias newAlias) {
         return this.setElements(
                 this.pluginAliasSet.replace(
                         oldAlias,
@@ -169,22 +169,22 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
-    public SpreadsheetExporterAliasSet delete(final SpreadsheetExporterAlias alias) {
+    public SpreadsheetComparatorAliasSet delete(final SpreadsheetComparatorAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.delete(alias)
         );
     }
 
     @Override
-    public SpreadsheetExporterAliasSet deleteAll(final Collection<SpreadsheetExporterAlias> aliases) {
+    public SpreadsheetComparatorAliasSet deleteAll(final Collection<SpreadsheetComparatorAlias> aliases) {
         return this.setElements(
                 this.pluginAliasSet.deleteAll(aliases)
         );
     }
 
     @Override
-    public SpreadsheetExporterAliasSet setElements(final SortedSet<SpreadsheetExporterAlias> aliases) {
-        final SpreadsheetExporterAliasSet after = new SpreadsheetExporterAliasSet(
+    public SpreadsheetComparatorAliasSet setElements(final SortedSet<SpreadsheetComparatorAlias> aliases) {
+        final SpreadsheetComparatorAliasSet after = new SpreadsheetComparatorAliasSet(
                 this.pluginAliasSet.setElements(aliases)
         );
         return this.pluginAliasSet.equals(aliases) ?
@@ -193,18 +193,18 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
-    public SpreadsheetExporterAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetExporterAlias> elements) {
+    public SpreadsheetComparatorAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetComparatorAlias> elements) {
         return ImmutableSortedSetDefaults.super.setElementsFailIfDifferent(elements);
     }
 
     @Override
-    public SortedSet<SpreadsheetExporterAlias> toSet() {
+    public SortedSet<SpreadsheetComparatorAlias> toSet() {
         return this.pluginAliasSet.toSet();
     }
 
     @Override
-    public SpreadsheetExporterAliasSet subSet(final SpreadsheetExporterAlias from,
-                                              final SpreadsheetExporterAlias to) {
+    public SpreadsheetComparatorAliasSet subSet(final SpreadsheetComparatorAlias from,
+                                                final SpreadsheetComparatorAlias to) {
         return this.setElements(
                 this.pluginAliasSet.subSet(
                         from,
@@ -214,26 +214,26 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
-    public SpreadsheetExporterAliasSet headSet(final SpreadsheetExporterAlias alias) {
+    public SpreadsheetComparatorAliasSet headSet(final SpreadsheetComparatorAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.headSet(alias)
         );
     }
 
     @Override
-    public SpreadsheetExporterAliasSet tailSet(final SpreadsheetExporterAlias alias) {
+    public SpreadsheetComparatorAliasSet tailSet(final SpreadsheetComparatorAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.tailSet(alias)
         );
     }
 
     @Override
-    public SpreadsheetExporterAlias first() {
+    public SpreadsheetComparatorAlias first() {
         return this.pluginAliasSet.first();
     }
 
     @Override
-    public SpreadsheetExporterAlias last() {
+    public SpreadsheetComparatorAlias last() {
         return this.pluginAliasSet.last();
     }
 
@@ -247,7 +247,7 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
         this.pluginAliasSet.printTree(printer);
     }
 
-    private final PluginAliasSet<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias, SpreadsheetExporterAliasSet> pluginAliasSet;
+    private final PluginAliasSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet> pluginAliasSet;
 
     // Json.............................................................................................................
 
@@ -261,8 +261,8 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
         );
     }
 
-    static SpreadsheetExporterAliasSet unmarshall(final JsonNode node,
-                                                  final JsonNodeUnmarshallContext context) {
+    static SpreadsheetComparatorAliasSet unmarshall(final JsonNode node,
+                                                    final JsonNodeUnmarshallContext context) {
         return parse(
                 node.stringOrFail()
         );
@@ -270,11 +270,11 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetExporterAliasSet.class),
-                SpreadsheetExporterAliasSet::unmarshall,
-                SpreadsheetExporterAliasSet::marshall,
-                SpreadsheetExporterAliasSet.class
+                JsonNodeContext.computeTypeName(SpreadsheetComparatorAliasSet.class),
+                SpreadsheetComparatorAliasSet::unmarshall,
+                SpreadsheetComparatorAliasSet::marshall,
+                SpreadsheetComparatorAliasSet.class
         );
-        SpreadsheetExporterInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
+        SpreadsheetComparatorInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
     }
 }

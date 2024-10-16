@@ -31,9 +31,15 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.function.Function;
 
-final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetExporterName, SpreadsheetExporterInfo, SpreadsheetExporterInfoSet, SpreadsheetExporterSelector, SpreadsheetExporterAlias> {
+final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetExporterName,
+        SpreadsheetExporterInfo,
+        SpreadsheetExporterInfoSet,
+        SpreadsheetExporterSelector,
+        SpreadsheetExporterAlias,
+        SpreadsheetExporterAliasSet> {
 
     final static SpreadsheetExporterPluginHelper INSTANCE = new SpreadsheetExporterPluginHelper();
 
@@ -113,6 +119,11 @@ final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetE
                 selector,
                 url
         );
+    }
+
+    @Override
+    public SpreadsheetExporterAliasSet aliasSet(final SortedSet<SpreadsheetExporterAlias> aliases) {
+        return SpreadsheetExporterAliasSet.with(aliases);
     }
 
     @Override

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -32,13 +31,15 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.function.Function;
 
 final class SpreadsheetComparatorPluginHelper implements PluginHelper<SpreadsheetComparatorName,
         SpreadsheetComparatorInfo,
         SpreadsheetComparatorInfoSet,
         SpreadsheetComparatorSelector,
-        PluginAlias<SpreadsheetComparatorName, SpreadsheetComparatorSelector>> {
+        SpreadsheetComparatorAlias,
+        SpreadsheetComparatorAliasSet> {
 
     final static SpreadsheetComparatorPluginHelper INSTANCE = new SpreadsheetComparatorPluginHelper();
 
@@ -106,19 +107,23 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
 
     @Override
     public SpreadsheetComparatorSelector parseSelector(final String text) {
-        throw new UnsupportedOperationException();
+        return SpreadsheetComparatorSelector.parse(text);
     }
 
     @Override
-    public PluginAlias<SpreadsheetComparatorName, SpreadsheetComparatorSelector> alias(final SpreadsheetComparatorName name,
-                                                                                       final Optional<SpreadsheetComparatorSelector> selector,
-                                                                                       final Optional<AbsoluteUrl> url) {
-        PluginAlias.with(
+    public SpreadsheetComparatorAlias alias(final SpreadsheetComparatorName name,
+                                            final Optional<SpreadsheetComparatorSelector> selector,
+                                            final Optional<AbsoluteUrl> url) {
+        return SpreadsheetComparatorAlias.with(
                 name,
                 selector,
                 url
         );
-        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetComparatorAliasSet aliasSet(final SortedSet<SpreadsheetComparatorAlias> aliases) {
+        return SpreadsheetComparatorAliasSet.with(aliases);
     }
 
     @Override

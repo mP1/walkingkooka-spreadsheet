@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelperTesting;
 import walkingkooka.reflect.JavaVisibility;
 
@@ -26,7 +25,8 @@ public final class SpreadsheetFormatterPluginHelperTest implements PluginHelperT
         SpreadsheetFormatterInfo,
         SpreadsheetFormatterInfoSet,
         SpreadsheetFormatterSelector,
-        PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector>> {
+        SpreadsheetFormatterAlias,
+        SpreadsheetFormatterAliasSet> {
 
     @Override
     public SpreadsheetFormatterPluginHelper createPluginHelper() {

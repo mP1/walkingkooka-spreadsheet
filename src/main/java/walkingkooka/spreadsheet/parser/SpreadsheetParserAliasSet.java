@@ -1,4 +1,21 @@
 /*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+/*
  * Copyright 2024 Miroslav Pokorny (github.com/mP1)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +32,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.importer;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
@@ -36,24 +53,24 @@ import java.util.Optional;
 import java.util.SortedSet;
 
 /**
- * A declaration of importer names and mapping of aliases to importer names with parameters.
+ * A declaration of parser names and mapping of aliases to parser names with parameters.
  */
-public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetImporterAlias>
-        implements PluginAliasSetLike<SpreadsheetImporterName,
-        SpreadsheetImporterInfo,
-        SpreadsheetImporterInfoSet,
-        SpreadsheetImporterSelector,
-        SpreadsheetImporterAlias,
-        SpreadsheetImporterAliasSet>,
-        ImmutableSortedSetDefaults<SpreadsheetImporterAliasSet, SpreadsheetImporterAlias> {
+public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetParserAlias>
+        implements PluginAliasSetLike<SpreadsheetParserName,
+        SpreadsheetParserInfo,
+        SpreadsheetParserInfoSet,
+        SpreadsheetParserSelector,
+        SpreadsheetParserAlias,
+        SpreadsheetParserAliasSet>,
+        ImmutableSortedSetDefaults<SpreadsheetParserAliasSet, SpreadsheetParserAlias> {
 
     /**
-     * An empty {@link SpreadsheetImporterAliasSet}.
+     * An empty {@link SpreadsheetParserAliasSet}.
      */
-    public final static SpreadsheetImporterAliasSet EMPTY = new SpreadsheetImporterAliasSet(
+    public final static SpreadsheetParserAliasSet EMPTY = new SpreadsheetParserAliasSet(
             PluginAliasSet.with(
                     SortedSets.empty(),
-                    SpreadsheetImporterPluginHelper.INSTANCE
+                    SpreadsheetParserPluginHelper.INSTANCE
             )
     );
 
@@ -63,48 +80,48 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
     /**
-     * Factory that creates {@link SpreadsheetImporterAliasSet} with the given aliases.
+     * Factory that creates {@link SpreadsheetParserAliasSet} with the given aliases.
      */
-    public static SpreadsheetImporterAliasSet with(final SortedSet<SpreadsheetImporterAlias> aliases) {
+    public static SpreadsheetParserAliasSet with(final SortedSet<SpreadsheetParserAlias> aliases) {
         return EMPTY.setElements(aliases);
     }
 
-    public static SpreadsheetImporterAliasSet parse(final String text) {
-        return new SpreadsheetImporterAliasSet(
+    public static SpreadsheetParserAliasSet parse(final String text) {
+        return new SpreadsheetParserAliasSet(
                 PluginAliasSet.parse(
                         text,
-                        SpreadsheetImporterPluginHelper.INSTANCE
+                        SpreadsheetParserPluginHelper.INSTANCE
                 )
         );
     }
 
-    private SpreadsheetImporterAliasSet(final PluginAliasSet<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector, SpreadsheetImporterAlias, SpreadsheetImporterAliasSet> pluginAliasSet) {
+    private SpreadsheetParserAliasSet(final PluginAliasSet<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, SpreadsheetParserAlias, SpreadsheetParserAliasSet> pluginAliasSet) {
         this.pluginAliasSet = pluginAliasSet;
     }
 
     @Override
-    public Optional<SpreadsheetImporterSelector> alias(final SpreadsheetImporterName name) {
+    public Optional<SpreadsheetParserSelector> alias(final SpreadsheetParserName name) {
         return this.pluginAliasSet.alias(name);
     }
 
     @Override
-    public Optional<SpreadsheetImporterName> name(final SpreadsheetImporterName name) {
+    public Optional<SpreadsheetParserName> name(final SpreadsheetParserName name) {
         return this.pluginAliasSet.name(name);
     }
 
     @Override
-    public SpreadsheetImporterInfoSet merge(final SpreadsheetImporterInfoSet infos) {
+    public SpreadsheetParserInfoSet merge(final SpreadsheetParserInfoSet infos) {
         return this.pluginAliasSet.merge(infos);
     }
 
     @Override
-    public boolean containsNameOrAlias(final SpreadsheetImporterName name) {
+    public boolean containsNameOrAlias(final SpreadsheetParserName name) {
         return this.pluginAliasSet.containsNameOrAlias(name);
     }
 
     @Override
-    public SpreadsheetImporterAliasSet concatOrReplace(final SpreadsheetImporterAlias alias) {
-        return new SpreadsheetImporterAliasSet(
+    public SpreadsheetParserAliasSet concatOrReplace(final SpreadsheetParserAlias alias) {
+        return new SpreadsheetParserAliasSet(
                 this.pluginAliasSet.concatOrReplace(alias)
         );
     }
@@ -112,12 +129,12 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     // ImmutableSortedSet...............................................................................................
 
     @Override
-    public Comparator<? super SpreadsheetImporterAlias> comparator() {
+    public Comparator<? super SpreadsheetParserAlias> comparator() {
         return this.pluginAliasSet.comparator();
     }
 
     @Override
-    public Iterator<SpreadsheetImporterAlias> iterator() {
+    public Iterator<SpreadsheetParserAlias> iterator() {
         return this.pluginAliasSet.stream().iterator();
     }
 
@@ -127,22 +144,22 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
-    public SpreadsheetImporterAliasSet concat(final SpreadsheetImporterAlias alias) {
+    public SpreadsheetParserAliasSet concat(final SpreadsheetParserAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.concat(alias)
         );
     }
 
     @Override
-    public SpreadsheetImporterAliasSet concatAll(final Collection<SpreadsheetImporterAlias> aliases) {
+    public SpreadsheetParserAliasSet concatAll(final Collection<SpreadsheetParserAlias> aliases) {
         return this.setElements(
                 this.pluginAliasSet.concatAll(aliases)
         );
     }
 
     @Override
-    public SpreadsheetImporterAliasSet replace(final SpreadsheetImporterAlias oldAlias,
-                                               final SpreadsheetImporterAlias newAlias) {
+    public SpreadsheetParserAliasSet replace(final SpreadsheetParserAlias oldAlias,
+                                             final SpreadsheetParserAlias newAlias) {
         return this.setElements(
                 this.pluginAliasSet.replace(
                         oldAlias,
@@ -152,32 +169,22 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
-    public SpreadsheetImporterAliasSet delete(final SpreadsheetImporterAlias alias) {
+    public SpreadsheetParserAliasSet delete(final SpreadsheetParserAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.delete(alias)
         );
     }
 
     @Override
-    public SpreadsheetImporterAliasSet deleteAll(final Collection<SpreadsheetImporterAlias> aliases) {
+    public SpreadsheetParserAliasSet deleteAll(final Collection<SpreadsheetParserAlias> aliases) {
         return this.setElements(
                 this.pluginAliasSet.deleteAll(aliases)
         );
     }
 
     @Override
-    public SpreadsheetImporterAliasSet setElementsFailIfDifferent(final SortedSet<SpreadsheetImporterAlias> aliases) {
-        final SpreadsheetImporterAliasSet after = new SpreadsheetImporterAliasSet(
-                this.pluginAliasSet.setElementsFailIfDifferent(aliases)
-        );
-        return this.pluginAliasSet.equals(aliases) ?
-                this :
-                after;
-    }
-
-    @Override
-    public SpreadsheetImporterAliasSet setElements(final SortedSet<SpreadsheetImporterAlias> aliases) {
-        final SpreadsheetImporterAliasSet after = new SpreadsheetImporterAliasSet(
+    public SpreadsheetParserAliasSet setElements(final SortedSet<SpreadsheetParserAlias> aliases) {
+        final SpreadsheetParserAliasSet after = new SpreadsheetParserAliasSet(
                 this.pluginAliasSet.setElements(aliases)
         );
         return this.pluginAliasSet.equals(aliases) ?
@@ -186,13 +193,18 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
-    public SortedSet<SpreadsheetImporterAlias> toSet() {
+    public SpreadsheetParserAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetParserAlias> elements) {
+        return ImmutableSortedSetDefaults.super.setElementsFailIfDifferent(elements);
+    }
+
+    @Override
+    public SortedSet<SpreadsheetParserAlias> toSet() {
         return this.pluginAliasSet.toSet();
     }
 
     @Override
-    public SpreadsheetImporterAliasSet subSet(final SpreadsheetImporterAlias from,
-                                              final SpreadsheetImporterAlias to) {
+    public SpreadsheetParserAliasSet subSet(final SpreadsheetParserAlias from,
+                                            final SpreadsheetParserAlias to) {
         return this.setElements(
                 this.pluginAliasSet.subSet(
                         from,
@@ -202,26 +214,26 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
-    public SpreadsheetImporterAliasSet headSet(final SpreadsheetImporterAlias alias) {
+    public SpreadsheetParserAliasSet headSet(final SpreadsheetParserAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.headSet(alias)
         );
     }
 
     @Override
-    public SpreadsheetImporterAliasSet tailSet(final SpreadsheetImporterAlias alias) {
+    public SpreadsheetParserAliasSet tailSet(final SpreadsheetParserAlias alias) {
         return this.setElements(
                 this.pluginAliasSet.tailSet(alias)
         );
     }
 
     @Override
-    public SpreadsheetImporterAlias first() {
+    public SpreadsheetParserAlias first() {
         return this.pluginAliasSet.first();
     }
 
     @Override
-    public SpreadsheetImporterAlias last() {
+    public SpreadsheetParserAlias last() {
         return this.pluginAliasSet.last();
     }
 
@@ -235,7 +247,7 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
         this.pluginAliasSet.printTree(printer);
     }
 
-    private final PluginAliasSet<SpreadsheetImporterName, SpreadsheetImporterInfo, SpreadsheetImporterInfoSet, SpreadsheetImporterSelector, SpreadsheetImporterAlias, SpreadsheetImporterAliasSet> pluginAliasSet;
+    private final PluginAliasSet<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, SpreadsheetParserAlias, SpreadsheetParserAliasSet> pluginAliasSet;
 
     // Json.............................................................................................................
 
@@ -249,8 +261,8 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
         );
     }
 
-    static SpreadsheetImporterAliasSet unmarshall(final JsonNode node,
-                                                  final JsonNodeUnmarshallContext context) {
+    static SpreadsheetParserAliasSet unmarshall(final JsonNode node,
+                                                final JsonNodeUnmarshallContext context) {
         return parse(
                 node.stringOrFail()
         );
@@ -258,11 +270,11 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetImporterAliasSet.class),
-                SpreadsheetImporterAliasSet::unmarshall,
-                SpreadsheetImporterAliasSet::marshall,
-                SpreadsheetImporterAliasSet.class
+                JsonNodeContext.computeTypeName(SpreadsheetParserAliasSet.class),
+                SpreadsheetParserAliasSet::unmarshall,
+                SpreadsheetParserAliasSet::marshall,
+                SpreadsheetParserAliasSet.class
         );
-        SpreadsheetImporterInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
+        SpreadsheetParserInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
     }
 }

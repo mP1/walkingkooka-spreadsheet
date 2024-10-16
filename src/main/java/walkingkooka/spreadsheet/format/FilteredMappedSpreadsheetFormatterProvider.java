@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.plugin.FilteredProviderMapper;
-import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
@@ -122,5 +121,5 @@ final class FilteredMappedSpreadsheetFormatterProvider implements SpreadsheetFor
         return this.mapper.toString();
     }
 
-    private final FilteredProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector, PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector>> mapper;
+    private final FilteredProviderMapper<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias, SpreadsheetFormatterAliasSet> mapper;
 }
