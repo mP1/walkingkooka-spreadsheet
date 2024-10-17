@@ -80,6 +80,11 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     }
 
     @Override
+    public SpreadsheetExporterAliasSet aliasSet() {
+        return SpreadsheetExporterPluginHelper.INSTANCE.toAliasSet(this);
+    }
+
+    @Override
     public SpreadsheetExporterInfoSet filter(final SpreadsheetExporterInfoSet infos) {
         return this.setElements(
                 this.pluginInfoSet.filter(
