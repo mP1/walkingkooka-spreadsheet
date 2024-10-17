@@ -80,6 +80,11 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     }
 
     @Override
+    public SpreadsheetParserAliasSet aliasSet() {
+        return SpreadsheetParserPluginHelper.INSTANCE.toAliasSet(this);
+    }
+
+    @Override
     public SpreadsheetParserInfoSet filter(final SpreadsheetParserInfoSet infos) {
         return this.setElements(
                 this.pluginInfoSet.filter(

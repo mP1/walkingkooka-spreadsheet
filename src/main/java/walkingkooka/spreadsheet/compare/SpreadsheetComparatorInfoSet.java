@@ -80,6 +80,11 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     }
 
     @Override
+    public SpreadsheetComparatorAliasSet aliasSet() {
+        return SpreadsheetComparatorPluginHelper.INSTANCE.toAliasSet(this);
+    }
+
+    @Override
     public SpreadsheetComparatorInfoSet filter(final SpreadsheetComparatorInfoSet infos) {
         return this.setElements(
                 this.pluginInfoSet.filter(

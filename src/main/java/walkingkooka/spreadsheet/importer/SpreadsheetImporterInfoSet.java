@@ -80,6 +80,11 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
     }
 
     @Override
+    public SpreadsheetImporterAliasSet aliasSet() {
+        return SpreadsheetImporterPluginHelper.INSTANCE.toAliasSet(this);
+    }
+
+    @Override
     public SpreadsheetImporterInfoSet filter(final SpreadsheetImporterInfoSet infos) {
         return this.setElements(
                 this.pluginInfoSet.filter(

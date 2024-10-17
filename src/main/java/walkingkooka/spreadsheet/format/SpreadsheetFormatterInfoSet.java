@@ -80,6 +80,11 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     @Override
+    public SpreadsheetFormatterAliasSet aliasSet() {
+        return SpreadsheetFormatterPluginHelper.INSTANCE.toAliasSet(this);
+    }
+
+    @Override
     public SpreadsheetFormatterInfoSet filter(final SpreadsheetFormatterInfoSet infos) {
         return this.setElements(
                 this.pluginInfoSet.filter(
