@@ -23,9 +23,19 @@ import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginAliasLike;
 import walkingkooka.text.printer.IndentingPrinter;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetImporterAlias implements PluginAliasLike<SpreadsheetImporterName, SpreadsheetImporterSelector, SpreadsheetImporterAlias> {
+
+    public static SpreadsheetImporterAlias parse(final String text) {
+        return with(
+                PluginAlias.parse(
+                        text,
+                        SpreadsheetImporterPluginHelper.INSTANCE
+                )
+        );
+    }
 
     public static SpreadsheetImporterAlias with(final SpreadsheetImporterName name,
                                                 final Optional<SpreadsheetImporterSelector> selector,
@@ -36,6 +46,12 @@ public final class SpreadsheetImporterAlias implements PluginAliasLike<Spreadshe
                         selector,
                         url
                 )
+        );
+    }
+
+    static SpreadsheetImporterAlias with(final PluginAlias<SpreadsheetImporterName, SpreadsheetImporterSelector> pluginAlias) {
+        return new SpreadsheetImporterAlias(
+                Objects.requireNonNull(pluginAlias, "pluginAlias")
         );
     }
 

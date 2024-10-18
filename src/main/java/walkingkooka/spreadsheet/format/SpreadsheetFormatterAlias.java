@@ -23,19 +23,35 @@ import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginAliasLike;
 import walkingkooka.text.printer.IndentingPrinter;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetFormatterAlias implements PluginAliasLike<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias> {
 
+    public static SpreadsheetFormatterAlias parse(final String text) {
+        return with(
+                PluginAlias.parse(
+                        text,
+                        SpreadsheetFormatterPluginHelper.INSTANCE
+                )
+        );
+    }
+
     public static SpreadsheetFormatterAlias with(final SpreadsheetFormatterName name,
                                                  final Optional<SpreadsheetFormatterSelector> selector,
                                                  final Optional<AbsoluteUrl> url) {
-        return new SpreadsheetFormatterAlias(
+        return with(
                 PluginAlias.with(
                         name,
                         selector,
                         url
                 )
+        );
+    }
+
+    static SpreadsheetFormatterAlias with(final PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector> pluginAlias) {
+        return new SpreadsheetFormatterAlias(
+                Objects.requireNonNull(pluginAlias, "pluginAlias")
         );
     }
 

@@ -88,6 +88,29 @@ public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTest
         );
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParse() {
+        this.parseStringAndCheck(
+                "alias1 name1 https://example.com",
+                SpreadsheetComparatorAlias.with(
+                        SpreadsheetComparatorName.with("alias1"),
+                        Optional.of(
+                                SpreadsheetComparatorSelector.parse("name1")
+                        ),
+                        Optional.of(
+                                Url.parseAbsolute("https://example.com")
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorAlias parseString(final String text) {
+        return SpreadsheetComparatorAlias.parse(text);
+    }
+    
     // class............................................................................................................
 
     @Override

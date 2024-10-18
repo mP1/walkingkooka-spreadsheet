@@ -88,6 +88,29 @@ public final class SpreadsheetExporterAliasTest implements PluginAliasLikeTestin
         );
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParse() {
+        this.parseStringAndCheck(
+                "alias1 name1 https://example.com",
+                SpreadsheetExporterAlias.with(
+                        SpreadsheetExporterName.with("alias1"),
+                        Optional.of(
+                                SpreadsheetExporterSelector.parse("name1")
+                        ),
+                        Optional.of(
+                                Url.parseAbsolute("https://example.com")
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterAlias parseString(final String text) {
+        return SpreadsheetExporterAlias.parse(text);
+    }
+    
     // class............................................................................................................
 
     @Override

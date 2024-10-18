@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -120,6 +121,11 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
                 selector,
                 url
         );
+    }
+
+    @Override
+    public SpreadsheetFormatterAlias alias(final PluginAlias<SpreadsheetFormatterName, SpreadsheetFormatterSelector> pluginAlias) {
+        return SpreadsheetFormatterAlias.with(pluginAlias);
     }
 
     @Override
