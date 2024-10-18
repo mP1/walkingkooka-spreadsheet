@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -119,6 +120,11 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
                 selector,
                 url
         );
+    }
+
+    @Override
+    public SpreadsheetImporterAlias alias(final PluginAlias<SpreadsheetImporterName, SpreadsheetImporterSelector> pluginAlias) {
+        return SpreadsheetImporterAlias.with(pluginAlias);
     }
 
     public SpreadsheetImporterAliasSet aliasSet(final SortedSet<SpreadsheetImporterAlias> aliases) {

@@ -88,6 +88,29 @@ public final class SpreadsheetParserAliasTest implements PluginAliasLikeTesting<
         );
     }
 
+    // parse............................................................................................................
+
+    @Test
+    public void testParse() {
+        this.parseStringAndCheck(
+                "alias1 name1 https://example.com",
+                SpreadsheetParserAlias.with(
+                        SpreadsheetParserName.with("alias1"),
+                        Optional.of(
+                                SpreadsheetParserSelector.parse("name1")
+                        ),
+                        Optional.of(
+                                Url.parseAbsolute("https://example.com")
+                        )
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetParserAlias parseString(final String text) {
+        return SpreadsheetParserAlias.parse(text);
+    }
+
     // class............................................................................................................
 
     @Override

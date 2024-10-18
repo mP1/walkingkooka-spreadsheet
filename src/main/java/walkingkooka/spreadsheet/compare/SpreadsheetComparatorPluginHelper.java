@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.plugin.PluginAlias;
 import walkingkooka.plugin.PluginHelper;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -119,6 +120,11 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
                 selector,
                 url
         );
+    }
+
+    @Override
+    public SpreadsheetComparatorAlias alias(final PluginAlias<SpreadsheetComparatorName, SpreadsheetComparatorSelector> pluginAlias) {
+        return SpreadsheetComparatorAlias.with(pluginAlias);
     }
 
     @Override
