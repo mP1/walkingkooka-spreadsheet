@@ -80,8 +80,8 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
     }
 
     @Override
-    public Optional<SpreadsheetFormatterSelector> alias(final SpreadsheetFormatterName name) {
-        return this.pluginAliasSet.alias(name);
+    public Optional<SpreadsheetFormatterSelector> aliasSelector(final SpreadsheetFormatterName alias) {
+        return this.pluginAliasSet.aliasSelector(alias);
     }
 
     @Override
