@@ -79,16 +79,16 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
     }
 
     @Test
-    public void testAliasWithName() {
-        this.aliasAndCheck(
+    public void testAliasSelectorWithName() {
+        this.aliasSelectorAndCheck(
                 this.createSet(),
                 SpreadsheetParserName.with("abc")
         );
     }
 
     @Test
-    public void testAliasWithAlias() {
-        this.aliasAndCheck(
+    public void testAliasSelectorWithAlias() {
+        this.aliasSelectorAndCheck(
                 this.createSet(),
                 SpreadsheetParserName.with("custom-alias"),
                 SpreadsheetParserSelector.parse("custom(1)")

@@ -79,16 +79,16 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
     }
 
     @Test
-    public void testAliasWithName() {
-        this.aliasAndCheck(
+    public void testAliasSelectorWithName() {
+        this.aliasSelectorAndCheck(
                 this.createSet(),
                 SpreadsheetComparatorName.with("abs")
         );
     }
 
     @Test
-    public void testAliasWithAlias() {
-        this.aliasAndCheck(
+    public void testAliasSelectorWithAlias() {
+        this.aliasSelectorAndCheck(
                 this.createSet(),
                 SpreadsheetComparatorName.with("custom-alias"),
                 SpreadsheetComparatorSelector.parse("custom(1)")
