@@ -100,8 +100,8 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
-    public Optional<SpreadsheetExporterSelector> alias(final SpreadsheetExporterName name) {
-        return this.pluginAliasSet.alias(name);
+    public Optional<SpreadsheetExporterSelector> aliasSelector(final SpreadsheetExporterName alias) {
+        return this.pluginAliasSet.aliasSelector(alias);
     }
 
     @Override
