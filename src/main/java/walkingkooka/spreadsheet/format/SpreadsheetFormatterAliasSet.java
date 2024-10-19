@@ -95,8 +95,8 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
     }
 
     @Override
-    public boolean containsNameOrAlias(final SpreadsheetFormatterName name) {
-        return this.pluginAliasSet.containsNameOrAlias(name);
+    public boolean containsAliasOrName(final SpreadsheetFormatterName aliasOrName) {
+        return this.pluginAliasSet.containsAliasOrName(aliasOrName);
     }
 
     @Override

@@ -115,8 +115,8 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
     }
 
     @Override
-    public boolean containsNameOrAlias(final SpreadsheetComparatorName name) {
-        return this.pluginAliasSet.containsNameOrAlias(name);
+    public boolean containsAliasOrName(final SpreadsheetComparatorName aliasOrName) {
+        return this.pluginAliasSet.containsAliasOrName(aliasOrName);
     }
 
     @Override
