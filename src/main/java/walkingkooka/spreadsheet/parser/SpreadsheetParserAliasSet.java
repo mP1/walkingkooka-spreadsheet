@@ -115,8 +115,8 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
     }
 
     @Override
-    public boolean containsNameOrAlias(final SpreadsheetParserName name) {
-        return this.pluginAliasSet.containsNameOrAlias(name);
+    public boolean containsAliasOrName(final SpreadsheetParserName aliasOrName) {
+        return this.pluginAliasSet.containsAliasOrName(aliasOrName);
     }
 
     @Override
