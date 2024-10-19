@@ -79,16 +79,16 @@ public final class SpreadsheetFormatterAliasSetTest implements PluginAliasSetLik
     }
 
     @Test
-    public void testAliasWithName() {
-        this.aliasAndCheck(
+    public void testAliasSelectorWithName() {
+        this.aliasSelectorAndCheck(
                 this.createSet(),
                 SpreadsheetFormatterName.with("abc")
         );
     }
 
     @Test
-    public void testAliasWithAlias() {
-        this.aliasAndCheck(
+    public void testAliasSelectorWithAlias() {
+        this.aliasSelectorAndCheck(
                 this.createSet(),
                 SpreadsheetFormatterName.with("custom-alias"),
                 SpreadsheetFormatterSelector.parse("custom(1)")
