@@ -60,10 +60,10 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
     // name.............................................................................................................
 
     @Test
-    public void testNameWithName() {
+    public void testAliasOrNameWithName() {
         final SpreadsheetImporterName abc = SpreadsheetImporterName.with("abc");
 
-        this.nameAndCheck(
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 abc,
                 abc
@@ -71,8 +71,8 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
     }
 
     @Test
-    public void testNameWithAlias() {
-        this.nameAndCheck(
+    public void testAliasOrNameWithAlias() {
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 SpreadsheetImporterName.with("hello-alias")
         );

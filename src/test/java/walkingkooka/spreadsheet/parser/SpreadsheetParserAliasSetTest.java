@@ -60,10 +60,10 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
     // name.............................................................................................................
 
     @Test
-    public void testNameWithName() {
+    public void testAliasOrNameWithName() {
         final SpreadsheetParserName abc = SpreadsheetParserName.with("abc");
 
-        this.nameAndCheck(
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 abc,
                 abc
@@ -71,8 +71,8 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
     }
 
     @Test
-    public void testNameWithAlias() {
-        this.nameAndCheck(
+    public void testAliasOrNameWithAlias() {
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 SpreadsheetParserName.with("sunshine-alias")
         );

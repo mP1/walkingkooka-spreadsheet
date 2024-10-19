@@ -60,10 +60,10 @@ public final class SpreadsheetFormatterAliasSetTest implements PluginAliasSetLik
     // name.............................................................................................................
 
     @Test
-    public void testNameWithName() {
+    public void testAliasOrNameWithName() {
         final SpreadsheetFormatterName abc = SpreadsheetFormatterName.with("abc");
 
-        this.nameAndCheck(
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 abc,
                 abc
@@ -71,8 +71,8 @@ public final class SpreadsheetFormatterAliasSetTest implements PluginAliasSetLik
     }
 
     @Test
-    public void testNameWithAlias() {
-        this.nameAndCheck(
+    public void testAliasOrNameWithAlias() {
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 SpreadsheetFormatterName.with("sunshine-alias")
         );

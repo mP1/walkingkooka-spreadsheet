@@ -60,10 +60,10 @@ public final class SpreadsheetExporterAliasSetTest implements PluginAliasSetLike
     // name.............................................................................................................
 
     @Test
-    public void testNameWithName() {
+    public void testAliasOrNameWithName() {
         final SpreadsheetExporterName abs = SpreadsheetExporterName.with("abs");
 
-        this.nameAndCheck(
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 abs,
                 abs
@@ -71,8 +71,8 @@ public final class SpreadsheetExporterAliasSetTest implements PluginAliasSetLike
     }
 
     @Test
-    public void testNameWithAlias() {
-        this.nameAndCheck(
+    public void testAliasOrNameWithAlias() {
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 SpreadsheetExporterName.with("sum-alias")
         );

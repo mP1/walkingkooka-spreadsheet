@@ -60,10 +60,10 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
     // name.............................................................................................................
 
     @Test
-    public void testNameWithName() {
+    public void testAliasOrNameWithName() {
         final SpreadsheetComparatorName abs = SpreadsheetComparatorName.with("abs");
 
-        this.nameAndCheck(
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 abs,
                 abs
@@ -71,8 +71,8 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
     }
 
     @Test
-    public void testNameWithAlias() {
-        this.nameAndCheck(
+    public void testAliasOrNameWithAlias() {
+        this.aliasOrNameAndCheck(
                 this.createSet(),
                 SpreadsheetComparatorName.with("sum-alias")
         );
