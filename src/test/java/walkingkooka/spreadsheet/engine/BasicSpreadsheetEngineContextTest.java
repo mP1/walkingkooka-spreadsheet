@@ -1034,7 +1034,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  ],\n" +
                         "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"functions\": [],\n" +
+                        "  \"functions\": \"\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +
@@ -1250,7 +1250,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  ],\n" +
                         "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"functions\": [],\n" +
+                        "  \"functions\": \"\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +

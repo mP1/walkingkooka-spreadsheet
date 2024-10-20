@@ -54,7 +54,6 @@ import walkingkooka.test.Testing;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -182,7 +181,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     ExpressionFunctionAliasSet.parse("")
             ).set(
                     SpreadsheetMetadataPropertyName.FUNCTIONS,
-                    ExpressionFunctionInfoSet.parse("")
+                    ExpressionFunctionAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                     8

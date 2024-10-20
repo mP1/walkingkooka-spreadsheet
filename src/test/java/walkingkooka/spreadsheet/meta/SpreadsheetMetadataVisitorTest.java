@@ -278,6 +278,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitExpressionFunctions() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFunctions(final ExpressionFunctionAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                ExpressionFunctionAliasSet.parse("abs")
+        );
+    }
+
+    @Test
     public void testVisitFindConverter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
