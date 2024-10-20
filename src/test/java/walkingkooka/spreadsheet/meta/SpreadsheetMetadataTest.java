@@ -64,7 +64,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -852,7 +851,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         ExpressionFunctionAliasSet.parse("function1")
                 ).set(
                         SpreadsheetMetadataPropertyName.FUNCTIONS,
-                        ExpressionFunctionInfoSet.parse("https://example.com/function1 function1")
+                        ExpressionFunctionAliasSet.parse("function1")
                 ).set(
                         SpreadsheetMetadataPropertyName.FORMATTERS,
                         SpreadsheetFormatterInfoSet.parse("https://example.com/formatter1 formatter1")

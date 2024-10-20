@@ -91,7 +91,6 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
@@ -1137,7 +1136,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
-        final ExpressionFunctionInfoSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
+        final ExpressionFunctionAliasSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
         final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
         final SpreadsheetExporterInfoSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
         final SpreadsheetFormatterInfoSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
@@ -1151,7 +1150,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         converterInfos,
                         provider
                 ),
-                ExpressionFunctionProviders.filteredMapped(
+                ExpressionFunctionProviders.aliases(
                         functions,
                         provider
                 ),
@@ -1344,9 +1343,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         SpreadsheetParserProviders.fake()
                 ).converterInfos()
         ).set(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                ExpressionFunctionInfoSet.EMPTY
-        ).set(
                 SpreadsheetMetadataPropertyName.COMPARATORS,
                 SpreadsheetComparatorProviders.spreadsheetComparators()
                                 .spreadsheetComparatorInfos()
@@ -1354,6 +1350,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetMetadataPropertyName.EXPORTERS,
                 SpreadsheetExporterProviders.spreadsheetExport()
                         .spreadsheetExporterInfos()
+        ).set(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                ExpressionFunctionAliasSet.EMPTY
         ).set(
                 SpreadsheetMetadataPropertyName.FORMATTERS,
                 spreadsheetFormatterProvider.spreadsheetFormatterInfos()

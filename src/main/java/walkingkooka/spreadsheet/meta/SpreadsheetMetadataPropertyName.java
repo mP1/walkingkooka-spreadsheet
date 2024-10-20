@@ -236,7 +236,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionInfoSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionInfoSet> FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNamePluginExpressionFunctions.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameFunctions.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>general-number-format-digit-count {@link Integer}</code>

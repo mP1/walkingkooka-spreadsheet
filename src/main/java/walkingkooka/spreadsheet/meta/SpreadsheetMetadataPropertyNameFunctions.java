@@ -18,17 +18,14 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAlias;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
 /**
- * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionInfoSet}.
+ * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliasSet}. These aliases will
+ * map and filter which functions are available to a single spreadsheet.
  */
-final class SpreadsheetMetadataPropertyNamePluginExpressionFunctions extends SpreadsheetMetadataPropertyNamePlugin<ExpressionFunctionName, ExpressionFunctionInfo, ExpressionFunctionInfoSet, ExpressionFunctionSelector, ExpressionFunctionAlias, ExpressionFunctionAliasSet> {
+final class SpreadsheetMetadataPropertyNameFunctions extends SpreadsheetMetadataPropertyNameExpressionFunction {
 
     static {
         ExpressionFunctionInfoSet.with(Sets.empty()); // force registry of json marshaller
@@ -37,30 +34,20 @@ final class SpreadsheetMetadataPropertyNamePluginExpressionFunctions extends Spr
     /**
      * Factory, the constant on {@link SpreadsheetMetadataPropertyName} will hold the singleton.
      */
-    static SpreadsheetMetadataPropertyNamePluginExpressionFunctions instance() {
-        return new SpreadsheetMetadataPropertyNamePluginExpressionFunctions();
+    static SpreadsheetMetadataPropertyNameFunctions instance() {
+        return new SpreadsheetMetadataPropertyNameFunctions();
     }
 
     /**
      * Private ctor use getter.
      */
-    private SpreadsheetMetadataPropertyNamePluginExpressionFunctions() {
+    private SpreadsheetMetadataPropertyNameFunctions() {
         super("functions");
     }
 
     @Override
-    void accept(final ExpressionFunctionInfoSet value,
+    void accept(final ExpressionFunctionAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFunctions(value);
-    }
-
-    @Override
-    ExpressionFunctionInfoSet parseUrlFragmentSaveValue0(final String value) {
-        return ExpressionFunctionInfoSet.parse(value);
-    }
-
-    @Override
-    Class<ExpressionFunctionInfoSet> type() {
-        return ExpressionFunctionInfoSet.class;
+        visitor.visitFunctions(aliases);
     }
 }
