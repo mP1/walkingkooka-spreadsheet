@@ -277,6 +277,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final SpreadsheetProvider provider = this.spreadsheetProvider;
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
+        final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
+
         final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
 
         if (SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS.equals(functionAliases)) {
