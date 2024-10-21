@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetMetadataPropertyNameParserTest implements ClassTesting<SpreadsheetMetadataPropertyNameParser> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetParserTest implements ClassTesting<SpreadsheetMetadataPropertyNameSpreadsheetParser> {
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameParser> type() {
-        return SpreadsheetMetadataPropertyNameParser.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParser> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParser.class;
     }
 
     @Override

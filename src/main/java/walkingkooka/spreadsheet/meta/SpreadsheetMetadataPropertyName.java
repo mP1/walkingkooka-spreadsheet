@@ -151,7 +151,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parser {@link String}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserDate.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserDate.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
@@ -166,7 +166,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parser</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserDateTime.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-separator {@link Character}</code>
@@ -286,7 +286,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parser</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> NUMBER_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserNumber.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> NUMBER_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetParserInfoSet}</code>
@@ -351,7 +351,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parser</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameParserTime.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> TIME_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year {@link SpreadsheetFormatPattern}</code>
@@ -648,8 +648,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             kind = formatter.spreadsheetPatternKind;
 
         } else {
-            if (this instanceof SpreadsheetMetadataPropertyNameParser) {
-                final SpreadsheetMetadataPropertyNameParser parser = (SpreadsheetMetadataPropertyNameParser) this;
+            if (this instanceof SpreadsheetMetadataPropertyNameSpreadsheetParser) {
+                final SpreadsheetMetadataPropertyNameSpreadsheetParser parser = (SpreadsheetMetadataPropertyNameSpreadsheetParser) this;
                 kind = parser.spreadsheetPatternKind;
             } else {
                 kind = null;
@@ -672,7 +672,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * Returns true if this property contains a {@link SpreadsheetParserSelector}.
      */
     public final boolean isSpreadsheetParserSelector() {
-        return this instanceof SpreadsheetMetadataPropertyNameParser;
+        return this instanceof SpreadsheetMetadataPropertyNameSpreadsheetParser;
     }
 
     /**
