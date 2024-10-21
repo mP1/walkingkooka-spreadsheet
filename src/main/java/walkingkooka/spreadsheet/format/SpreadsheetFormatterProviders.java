@@ -37,6 +37,17 @@ public final class SpreadsheetFormatterProviders implements PublicStaticHelper {
     );
 
     /**
+     * {@see AliasesSpreadsheetFormatterProvider}
+     */
+    public static SpreadsheetFormatterProvider alias(final SpreadsheetFormatterAliasSet aliases,
+                                                     final SpreadsheetFormatterProvider provider) {
+        return AliasesSpreadsheetFormatterProvider.with(
+                aliases,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetFormatterProviderCollection}
      */
     public static SpreadsheetFormatterProvider collection(final Set<SpreadsheetFormatterProvider> providers) {
