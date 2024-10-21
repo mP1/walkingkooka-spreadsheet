@@ -25,12 +25,12 @@ import java.util.Optional;
 /**
  * Base class for any property that holds a {@link ConverterSelector}.
  */
-abstract class SpreadsheetMetadataPropertyNameConverter extends SpreadsheetMetadataPropertyName<ConverterSelector> {
+abstract class SpreadsheetMetadataPropertyNameConverterSelector extends SpreadsheetMetadataPropertyName<ConverterSelector> {
 
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameConverter(final String name) {
+    SpreadsheetMetadataPropertyNameConverterSelector(final String name) {
         super(name);
     }
 

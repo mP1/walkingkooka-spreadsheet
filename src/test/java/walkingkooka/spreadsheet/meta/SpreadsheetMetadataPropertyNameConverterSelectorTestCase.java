@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.convert.provider.ConverterSelector;
 
-public abstract class SpreadsheetMetadataPropertyNameConverterTestCase<N extends SpreadsheetMetadataPropertyNameConverter> extends SpreadsheetMetadataPropertyNameTestCase<N, ConverterSelector> {
+public abstract class SpreadsheetMetadataPropertyNameConverterSelectorTestCase<N extends SpreadsheetMetadataPropertyNameConverterSelector> extends SpreadsheetMetadataPropertyNameTestCase<N, ConverterSelector> {
 
-    SpreadsheetMetadataPropertyNameConverterTestCase() {
+    SpreadsheetMetadataPropertyNameConverterSelectorTestCase() {
         super();
     }
 

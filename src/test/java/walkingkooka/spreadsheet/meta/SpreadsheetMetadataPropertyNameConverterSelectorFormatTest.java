@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.convert.provider.ConverterSelector;
 
-public final class SpreadsheetMetadataPropertyNameConverterFormatTest extends SpreadsheetMetadataPropertyNameConverterTestCase<SpreadsheetMetadataPropertyNameConverterFormat> {
+public final class SpreadsheetMetadataPropertyNameConverterSelectorFormatTest extends SpreadsheetMetadataPropertyNameConverterSelectorTestCase<SpreadsheetMetadataPropertyNameConverterSelectorFormat> {
 
     @Override
-    SpreadsheetMetadataPropertyNameConverterFormat createName() {
-        return SpreadsheetMetadataPropertyNameConverterFormat.instance();
+    SpreadsheetMetadataPropertyNameConverterSelectorFormat createName() {
+        return SpreadsheetMetadataPropertyNameConverterSelectorFormat.instance();
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class SpreadsheetMetadataPropertyNameConverterFormatTest extends Sp
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameConverterFormat> type() {
-        return SpreadsheetMetadataPropertyNameConverterFormat.class;
+    public Class<SpreadsheetMetadataPropertyNameConverterSelectorFormat> type() {
+        return SpreadsheetMetadataPropertyNameConverterSelectorFormat.class;
     }
 }

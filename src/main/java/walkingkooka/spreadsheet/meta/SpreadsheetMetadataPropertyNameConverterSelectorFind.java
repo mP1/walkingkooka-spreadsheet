@@ -22,29 +22,29 @@ import walkingkooka.convert.provider.ConverterSelector;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ConverterSelector} used during
- * sorting
+ * find expression evaluation.
  */
-final class SpreadsheetMetadataPropertyNameConverterSort extends SpreadsheetMetadataPropertyNameConverter {
+final class SpreadsheetMetadataPropertyNameConverterSelectorFind extends SpreadsheetMetadataPropertyNameConverterSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameConverterSort instance() {
-        return new SpreadsheetMetadataPropertyNameConverterSort();
+    static SpreadsheetMetadataPropertyNameConverterSelectorFind instance() {
+        return new SpreadsheetMetadataPropertyNameConverterSelectorFind();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameConverterSort() {
+    private SpreadsheetMetadataPropertyNameConverterSelectorFind() {
         super(
-                "sort-converter"
+                "find-converter"
         );
     }
 
     @Override
     void accept(final ConverterSelector selector,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitSortConverter(selector);
+        visitor.visitFindConverter(selector);
     }
 }
