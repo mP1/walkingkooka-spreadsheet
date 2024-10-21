@@ -26,12 +26,12 @@ import java.util.Optional;
 /**
  * Base class for any property that holds a {@link SpreadsheetImporterAliasSet}.
  */
-abstract class SpreadsheetMetadataPropertyNameImporter extends SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> {
+abstract class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet extends SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> {
 
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameImporter(final String name) {
+    SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet(final String name) {
         super(name);
     }
 
