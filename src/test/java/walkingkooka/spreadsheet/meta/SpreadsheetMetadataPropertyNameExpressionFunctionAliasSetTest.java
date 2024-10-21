@@ -17,16 +17,18 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
-public abstract class SpreadsheetMetadataPropertyNameExpressionFunctionTestCase<N extends SpreadsheetMetadataPropertyNameExpressionFunction> extends SpreadsheetMetadataPropertyNameTestCase<N, ExpressionFunctionAliasSet> {
+public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetTest implements ClassTesting<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet> {
 
-    SpreadsheetMetadataPropertyNameExpressionFunctionTestCase() {
-        super();
+    @Override
+    public Class<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet> type() {
+        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet.class;
     }
 
     @Override
-    final String propertyValueType() {
-        return ExpressionFunctionAliasSet.class.getSimpleName();
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

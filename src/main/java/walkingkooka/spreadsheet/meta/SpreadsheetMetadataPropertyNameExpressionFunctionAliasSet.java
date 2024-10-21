@@ -25,12 +25,12 @@ import java.util.Optional;
 /**
  * Base class for any property that holds a {@link ExpressionFunctionAliasSet}.
  */
-abstract class SpreadsheetMetadataPropertyNameExpressionFunction extends SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> {
+abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> {
 
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameExpressionFunction(final String name) {
+    SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet(final String name) {
         super(name);
     }
 

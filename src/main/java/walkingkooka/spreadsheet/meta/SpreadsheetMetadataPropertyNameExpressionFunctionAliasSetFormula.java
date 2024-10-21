@@ -24,19 +24,19 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliasSet} used during
  * expression evaluation.
  */
-final class SpreadsheetMetadataPropertyNameExpressionFunctionFormula extends SpreadsheetMetadataPropertyNameExpressionFunction {
+final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameExpressionFunctionFormula instance() {
-        return new SpreadsheetMetadataPropertyNameExpressionFunctionFormula();
+    static SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula instance() {
+        return new SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameExpressionFunctionFormula() {
+    private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula() {
         super(
                 "formula-functions"
         );
