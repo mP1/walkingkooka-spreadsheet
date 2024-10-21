@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameParserDateTest extends SpreadsheetMetadataPropertyNameParserTestCase<SpreadsheetMetadataPropertyNameParserDate> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetParserDateTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserDate> {
 
     @Test
     public void testExtractLocaleAwareValueUS() {
@@ -46,14 +46,14 @@ public final class SpreadsheetMetadataPropertyNameParserDateTest extends Spreads
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameParserDate.instance(),
+                SpreadsheetMetadataPropertyNameSpreadsheetParserDate.instance(),
                 "date-parser"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameParserDate createName() {
-        return SpreadsheetMetadataPropertyNameParserDate.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetParserDate createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParserDate.instance();
     }
 
     @Override
@@ -63,7 +63,7 @@ public final class SpreadsheetMetadataPropertyNameParserDateTest extends Spreads
     }
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameParserDate> type() {
-        return SpreadsheetMetadataPropertyNameParserDate.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParserDate> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParserDate.class;
     }
 }
