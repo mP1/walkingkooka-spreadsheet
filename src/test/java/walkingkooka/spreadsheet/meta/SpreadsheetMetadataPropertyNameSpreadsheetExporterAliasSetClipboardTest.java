@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 
-public final class SpreadsheetMetadataPropertyNameExporterClipboardTest extends SpreadsheetMetadataPropertyNameExporterTestCase<SpreadsheetMetadataPropertyNameExporterClipboard> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboardTest extends SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetTestCase<SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard> {
 
     @Override
-    SpreadsheetMetadataPropertyNameExporterClipboard createName() {
-        return SpreadsheetMetadataPropertyNameExporterClipboard.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard.instance();
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class SpreadsheetMetadataPropertyNameExporterClipboardTest extends 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameExporterClipboard> type() {
-        return SpreadsheetMetadataPropertyNameExporterClipboard.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard.class;
     }
 }

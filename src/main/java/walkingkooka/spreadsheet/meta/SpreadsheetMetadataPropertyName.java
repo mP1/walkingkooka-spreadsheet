@@ -111,7 +111,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetExporterAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> CLIPBOARD_EXPORTER = registerConstant(SpreadsheetMetadataPropertyNameExporterClipboard.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> CLIPBOARD_EXPORTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard.instance());
     
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetImporterAliasSet}</code>
