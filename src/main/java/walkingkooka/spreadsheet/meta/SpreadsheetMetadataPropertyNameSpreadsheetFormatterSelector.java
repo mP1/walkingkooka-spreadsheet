@@ -27,13 +27,13 @@ import java.util.Optional;
 /**
  * Base class for any property that holds a {@link SpreadsheetFormatterSelector}.
  */
-abstract class SpreadsheetMetadataPropertyNameFormatter extends SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> {
+abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector extends SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> {
 
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetMetadataPropertyNameFormatter(final String name,
-                                             final SpreadsheetPatternKind spreadsheetPatternKind) {
+    SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector(final String name,
+                                                                final SpreadsheetPatternKind spreadsheetPatternKind) {
         super(name);
         this.spreadsheetPatternKind = spreadsheetPatternKind;
     }

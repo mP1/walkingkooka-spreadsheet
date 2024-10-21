@@ -17,26 +17,18 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
-public abstract class SpreadsheetMetadataPropertyNameFormatterTestCase<N extends SpreadsheetMetadataPropertyNameFormatter> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetFormatterSelector> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTest implements ClassTesting<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector> {
 
-    SpreadsheetMetadataPropertyNameFormatterTestCase() {
-        super();
-    }
-
-    @Test
-    public final void testPatternKindNonNull() {
-        this.checkNotEquals(
-                null,
-                this.createName()
-                        .patternKind()
-        );
+    @Override
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector.class;
     }
 
     @Override
-    final String propertyValueType() {
-        return SpreadsheetFormatterSelector.class.getSimpleName();
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

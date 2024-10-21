@@ -22,41 +22,44 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * This {@link SpreadsheetMetadataPropertyName} holds the default formatter for {@link java.time.LocalDateTime} values.
+ * This {@link SpreadsheetMetadataPropertyName} holds the default formatter for {@link walkingkooka.tree.expression.ExpressionNumber} values.
  */
-final class SpreadsheetMetadataPropertyNameFormatterDateTime extends SpreadsheetMetadataPropertyNameFormatter {
+final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameFormatterDateTime instance() {
-        return new SpreadsheetMetadataPropertyNameFormatterDateTime();
+    static SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameFormatterDateTime() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber() {
         super(
-                "date-time-formatter",
-                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
+                "number-formatter",
+                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
         );
     }
 
     @Override
     void accept(final SpreadsheetFormatterSelector value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitDateTimeFormatter(value);
+        visitor.visitNumberFormatter(value);
     }
 
     @Override
     Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale) {
         return Optional.of(
-                SpreadsheetPattern.dateTimeFormatPatternLocale(locale)
+                SpreadsheetPattern.decimalFormat(
+                        (DecimalFormat) DecimalFormat.getInstance(locale)
+                ).toFormat()
         );
     }
 }

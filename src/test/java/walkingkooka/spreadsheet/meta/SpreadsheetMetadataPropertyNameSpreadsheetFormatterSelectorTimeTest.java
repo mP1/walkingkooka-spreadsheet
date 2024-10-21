@@ -19,65 +19,72 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
 
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
+import java.time.LocalTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameFormatterDateTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterDate>
+public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime>
         implements SpreadsheetMetadataTesting{
 
     @Test
     public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck(
+                Locale.ENGLISH,
+                SpreadsheetTimeParsePattern.parseTimeFormatPattern("h:mm:ss AM/PM")
+                        .spreadsheetFormatterSelector()
+        );
+    }
+
+    @Test
+    public void testExtractLocaleAwareValueAndFormat() {
         final Locale locale = Locale.ENGLISH;
-        final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameFormatterDate.instance()
+        final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance()
                 .extractLocaleAwareValue(locale)
                 .get()
                 .spreadsheetFormatPattern()
                 .get();
 
-        final LocalDate date = LocalDate.of(1999, 12, 31);
+        final LocalTime time = LocalTime.of(12, 58, 59);
         final String formatted = pattern.formatter()
                 .format(
-                        date,
+                        time,
                         SPREADSHEET_FORMATTER_CONTEXT
                 ).get()
                 .text();
 
-        final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) DateFormat.getDateInstance(DateFormat.FULL, locale);
-        final String expected = simpleDateFormat.format(Date.from(date.atStartOfDay().toInstant(ZoneOffset.UTC)));
-
-        this.checkEquals(expected, formatted, () -> pattern + "\nSimpleDateFormat: " + simpleDateFormat.toPattern());
+        this.checkEquals(
+                "12:58:59 PM",
+                formatted,
+                pattern::toString
+        );
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameFormatterDate.instance(),
-                "date-formatter"
+                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance(),
+                "time-formatter"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameFormatterDate createName() {
-        return SpreadsheetMetadataPropertyNameFormatterDate.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance();
     }
 
     @Override
     SpreadsheetFormatterSelector propertyValue() {
-        return SpreadsheetDateFormatPattern.parseDateFormatPattern("dd mm yyyy \"custom\"")
+        return SpreadsheetTimeFormatPattern.parseTimeFormatPattern("hh mm ss\"custom\"")
                 .spreadsheetFormatterSelector();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameFormatterDate> type() {
-        return SpreadsheetMetadataPropertyNameFormatterDate.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.class;
     }
 }
