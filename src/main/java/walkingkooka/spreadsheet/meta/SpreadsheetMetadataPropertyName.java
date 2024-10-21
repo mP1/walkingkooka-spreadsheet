@@ -181,7 +181,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameExponentSymbol.instance());
+    public static final SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameStringExponentSymbol.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetExporterInfoSet}</code>

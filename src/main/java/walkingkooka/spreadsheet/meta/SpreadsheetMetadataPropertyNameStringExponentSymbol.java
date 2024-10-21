@@ -19,19 +19,19 @@ package walkingkooka.spreadsheet.meta;
 
 import java.text.DecimalFormatSymbols;
 
-final class SpreadsheetMetadataPropertyNameExponentSymbol extends SpreadsheetMetadataPropertyNameString {
+final class SpreadsheetMetadataPropertyNameStringExponentSymbol extends SpreadsheetMetadataPropertyNameString {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameExponentSymbol instance() {
-        return new SpreadsheetMetadataPropertyNameExponentSymbol();
+    static SpreadsheetMetadataPropertyNameStringExponentSymbol instance() {
+        return new SpreadsheetMetadataPropertyNameStringExponentSymbol();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameExponentSymbol() {
+    private SpreadsheetMetadataPropertyNameStringExponentSymbol() {
         super("exponent-symbol");
     }
 

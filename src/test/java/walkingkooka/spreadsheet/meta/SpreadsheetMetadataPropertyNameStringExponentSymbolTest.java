@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameExponentSymbolTest extends SpreadsheetMetadataPropertyNameStringTestCase<SpreadsheetMetadataPropertyNameExponentSymbol> {
+public final class SpreadsheetMetadataPropertyNameStringExponentSymbolTest extends SpreadsheetMetadataPropertyNameStringTestCase<SpreadsheetMetadataPropertyNameStringExponentSymbol> {
 
     @Test
     public void testExtractLocaleAwareValue() {
@@ -30,18 +30,18 @@ public final class SpreadsheetMetadataPropertyNameExponentSymbolTest extends Spr
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameExponentSymbol.instance(), "exponent-symbol");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameStringExponentSymbol.instance(), "exponent-symbol");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameExponentSymbol createName() {
-        return SpreadsheetMetadataPropertyNameExponentSymbol.instance();
+    SpreadsheetMetadataPropertyNameStringExponentSymbol createName() {
+        return SpreadsheetMetadataPropertyNameStringExponentSymbol.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameExponentSymbol> type() {
-        return SpreadsheetMetadataPropertyNameExponentSymbol.class;
+    public Class<SpreadsheetMetadataPropertyNameStringExponentSymbol> type() {
+        return SpreadsheetMetadataPropertyNameStringExponentSymbol.class;
     }
 }
