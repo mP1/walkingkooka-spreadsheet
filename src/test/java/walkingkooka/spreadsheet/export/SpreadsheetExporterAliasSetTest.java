@@ -74,7 +74,8 @@ public final class SpreadsheetExporterAliasSetTest implements PluginAliasSetLike
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
                 this.createSet(),
-                SpreadsheetExporterName.with("sum-alias")
+                SpreadsheetExporterName.with("sum-alias"),
+                SpreadsheetExporterName.with("sum")
         );
     }
 

@@ -74,7 +74,8 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
                 this.createSet(),
-                SpreadsheetParserName.with("sunshine-alias")
+                SpreadsheetParserName.with("sunshine-alias"),
+                SpreadsheetParserName.with("sunshine")
         );
     }
 

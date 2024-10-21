@@ -74,7 +74,8 @@ public final class SpreadsheetFormatterAliasSetTest implements PluginAliasSetLik
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
                 this.createSet(),
-                SpreadsheetFormatterName.with("sunshine-alias")
+                SpreadsheetFormatterName.with("sunshine-alias"),
+                SpreadsheetFormatterName.with("sunshine")
         );
     }
 
