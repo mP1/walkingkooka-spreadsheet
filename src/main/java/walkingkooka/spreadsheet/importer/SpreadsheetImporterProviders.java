@@ -37,6 +37,17 @@ public final class SpreadsheetImporterProviders implements PublicStaticHelper {
     );
 
     /**
+     * {@see AliasesSpreadsheetImporterProvider}
+     */
+    public static SpreadsheetImporterProvider alias(final SpreadsheetImporterAliasSet aliases,
+                                                    final SpreadsheetImporterProvider provider) {
+        return AliasesSpreadsheetImporterProvider.with(
+                aliases,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetImporterProviderCollection}
      */
     public static SpreadsheetImporterProvider collection(final Set<SpreadsheetImporterProvider> providers) {
