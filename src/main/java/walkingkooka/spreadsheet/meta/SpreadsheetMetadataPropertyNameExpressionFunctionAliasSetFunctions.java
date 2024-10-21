@@ -25,7 +25,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliasSet}. These aliases will
  * map and filter which functions are available to a single spreadsheet.
  */
-final class SpreadsheetMetadataPropertyNameExpressionFunctionFunctions extends SpreadsheetMetadataPropertyNameExpressionFunction {
+final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
 
     static {
         ExpressionFunctionInfoSet.with(Sets.empty()); // force registry of json marshaller
@@ -34,14 +34,14 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionFunctions extends S
     /**
      * Factory, the constant on {@link SpreadsheetMetadataPropertyName} will hold the singleton.
      */
-    static SpreadsheetMetadataPropertyNameExpressionFunctionFunctions instance() {
-        return new SpreadsheetMetadataPropertyNameExpressionFunctionFunctions();
+    static SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions instance() {
+        return new SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions();
     }
 
     /**
      * Private ctor use getter.
      */
-    private SpreadsheetMetadataPropertyNameExpressionFunctionFunctions() {
+    private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions() {
         super("functions");
     }
 

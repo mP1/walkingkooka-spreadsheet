@@ -201,7 +201,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within find expressions.
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FIND_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFind.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FIND_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
@@ -221,7 +221,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#formula()}.
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFormula.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>frozen-columns {@link SpreadsheetColumnRangeReference}</code>
@@ -236,7 +236,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionInfoSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionFunctions.instance());
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>general-number-format-digit-count {@link Integer}</code>
