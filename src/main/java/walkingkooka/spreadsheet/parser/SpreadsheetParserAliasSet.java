@@ -126,6 +126,20 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
         );
     }
 
+    @Override
+    public SpreadsheetParserAliasSet deleteAliasOrNameAll(final Collection<SpreadsheetParserName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
+        );
+    }
+
+    @Override
+    public SpreadsheetParserAliasSet keepAliasOrNameAll(final Collection<SpreadsheetParserName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
+        );
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override
