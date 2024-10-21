@@ -17,16 +17,28 @@
 
 package walkingkooka.spreadsheet.meta;
 
+
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 
-public abstract class SpreadsheetMetadataPropertyNameExporterTestCase<N extends SpreadsheetMetadataPropertyNameExporter> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetExporterAliasSet> {
+final class SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard extends SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSet {
 
-    SpreadsheetMetadataPropertyNameExporterTestCase() {
-        super();
+    /**
+     * Singleton
+     */
+    static SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard();
+    }
+
+    /**
+     * Private constructor use singleton.
+     */
+    private SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard() {
+        super("clipboard-exporter");
     }
 
     @Override
-    final String propertyValueType() {
-        return SpreadsheetExporterAliasSet.class.getSimpleName();
+    void accept(final SpreadsheetExporterAliasSet aliases,
+                final SpreadsheetMetadataVisitor visitor) {
+        visitor.visitClipboardExporter(aliases);
     }
 }
