@@ -74,7 +74,8 @@ public final class SpreadsheetImporterAliasSetTest implements PluginAliasSetLike
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
                 this.createSet(),
-                SpreadsheetImporterName.with("hello-alias")
+                SpreadsheetImporterName.with("hello-alias"),
+                SpreadsheetImporterName.with("hello")
         );
     }
 

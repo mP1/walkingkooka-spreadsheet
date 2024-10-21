@@ -74,7 +74,8 @@ public final class SpreadsheetComparatorAliasSetTest implements PluginAliasSetLi
     public void testAliasOrNameWithAlias() {
         this.aliasOrNameAndCheck(
                 this.createSet(),
-                SpreadsheetComparatorName.with("sum-alias")
+                SpreadsheetComparatorName.with("sum-alias"),
+                SpreadsheetComparatorName.with("sum")
         );
     }
 
