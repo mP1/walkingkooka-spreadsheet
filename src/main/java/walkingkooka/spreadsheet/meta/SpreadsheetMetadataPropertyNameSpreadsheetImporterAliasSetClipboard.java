@@ -20,19 +20,19 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 
-final class SpreadsheetMetadataPropertyNameImporterClipboard extends SpreadsheetMetadataPropertyNameImporter {
+final class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard extends SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameImporterClipboard instance() {
-        return new SpreadsheetMetadataPropertyNameImporterClipboard();
+    static SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameImporterClipboard() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard() {
         super("clipboard-importer");
     }
 
