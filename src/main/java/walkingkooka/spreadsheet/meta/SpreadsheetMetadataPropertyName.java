@@ -146,7 +146,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the default {@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector} for {@link java.time.LocalDate} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterDate.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parser {@link String}</code>
@@ -161,7 +161,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the default {@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector} for {@link LocalDateTime} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterDateTime.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parser</code>
@@ -281,7 +281,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link ExpressionNumber} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> NUMBER_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterNumber.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> NUMBER_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parser</code>
@@ -341,12 +341,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link String} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TEXT_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterText.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TEXT_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link LocalTime} values.
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameFormatterTime.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parser</code>
@@ -430,7 +430,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                         this.getClass()
                                 .getSimpleName()
                                 .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
-                                .replace("Spreadsheet", ""), // handles sub-classes like SpreadsheetMetadataPropertyNameFormatterText
+                                .replace("Spreadsheet", ""), // handles sub-classes like SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText
                         CaseKind.KEBAB
                 ) :
                 name;
@@ -643,8 +643,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     @Override
     public final Optional<SpreadsheetPatternKind> patternKind() {
         SpreadsheetPatternKind kind;
-        if (this instanceof SpreadsheetMetadataPropertyNameFormatter) {
-            final SpreadsheetMetadataPropertyNameFormatter formatter = (SpreadsheetMetadataPropertyNameFormatter) this;
+        if (this instanceof SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector) {
+            final SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector formatter = (SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector) this;
             kind = formatter.spreadsheetPatternKind;
 
         } else {
@@ -665,7 +665,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * Returns true if this property contains a {@link SpreadsheetFormatterSelector}.
      */
     public final boolean isSpreadsheetFormatterSelector() {
-        return this instanceof SpreadsheetMetadataPropertyNameFormatter;
+        return this instanceof SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector;
     }
 
     /**

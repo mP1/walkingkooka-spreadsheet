@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameFormatterTextTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterText> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTextTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText> {
 
     @Test
     public void testExtractLocaleAwareValue() {
@@ -33,14 +33,14 @@ public final class SpreadsheetMetadataPropertyNameFormatterTextTest extends Spre
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameFormatterText.instance(),
+                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.instance(),
                 "text-formatter"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameFormatterText createName() {
-        return SpreadsheetMetadataPropertyNameFormatterText.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.instance();
     }
 
     @Override
@@ -52,7 +52,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterTextTest extends Spre
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameFormatterText> type() {
-        return SpreadsheetMetadataPropertyNameFormatterText.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.class;
     }
 }

@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameFormatterDateTimeTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterDateTime>
+public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime>
         implements SpreadsheetMetadataTesting{
 
     @Test
@@ -41,7 +41,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterDateTimeTest extends 
     @Test
     public void testExtractLocaleAwareValueAndFormat() {
         final Locale locale = Locale.ENGLISH;
-        final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameFormatterDateTime.instance()
+        final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance()
                 .extractLocaleAwareValue(locale)
                 .get()
                 .spreadsheetFormatPattern()
@@ -65,14 +65,14 @@ public final class SpreadsheetMetadataPropertyNameFormatterDateTimeTest extends 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameFormatterDateTime.instance(),
+                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance(),
                 "date-time-formatter"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameFormatterDateTime createName() {
-        return SpreadsheetMetadataPropertyNameFormatterDateTime.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance();
     }
 
     @Override
@@ -84,7 +84,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterDateTimeTest extends 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameFormatterDateTime> type() {
-        return SpreadsheetMetadataPropertyNameFormatterDateTime.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.class;
     }
 }

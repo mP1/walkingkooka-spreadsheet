@@ -19,41 +19,44 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * This {@link SpreadsheetMetadataPropertyName} holds the default formatter for {@link String} values.
+ * This {@link SpreadsheetMetadataPropertyName} holds the default formatter for {@link java.time.LocalTime} values.
  */
-final class SpreadsheetMetadataPropertyNameFormatterText extends SpreadsheetMetadataPropertyNameFormatter {
+final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameFormatterText instance() {
-        return new SpreadsheetMetadataPropertyNameFormatterText();
+    static SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameFormatterText() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime() {
         super(
-                "text-formatter",
-                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
+                "time-formatter",
+                SpreadsheetPatternKind.TIME_FORMAT_PATTERN
         );
     }
 
     @Override
     void accept(final SpreadsheetFormatterSelector value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitTextFormatter(value);
+        visitor.visitTimeFormatter(value);
     }
 
     @Override
     Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale) {
-        return Optional.empty();
+        return Optional.of(
+                SpreadsheetPattern.timeFormatPatternLocale(locale)
+        );
     }
 }

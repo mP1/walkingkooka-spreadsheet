@@ -40,7 +40,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameFormatterNumberTest extends SpreadsheetMetadataPropertyNameFormatterTestCase<SpreadsheetMetadataPropertyNameFormatterNumber> {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DOUBLE;
 
@@ -63,7 +63,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterNumberTest extends Sp
     private void extractLocaleValueAndCheck(final ExpressionNumber number,
                                             final String expected) {
         final Locale locale = Locale.ENGLISH;
-        final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameFormatterNumber.instance()
+        final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance()
                 .extractLocaleAwareValue(locale)
                 .get()
                 .spreadsheetFormatPattern()
@@ -137,14 +137,14 @@ public final class SpreadsheetMetadataPropertyNameFormatterNumberTest extends Sp
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                SpreadsheetMetadataPropertyNameFormatterNumber.instance(),
+                SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance(),
                 "number-formatter"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameFormatterNumber createName() {
-        return SpreadsheetMetadataPropertyNameFormatterNumber.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance();
     }
 
     @Override
@@ -156,7 +156,7 @@ public final class SpreadsheetMetadataPropertyNameFormatterNumberTest extends Sp
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameFormatterNumber> type() {
-        return SpreadsheetMetadataPropertyNameFormatterNumber.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.class;
     }
 }

@@ -26,37 +26,37 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
- * This {@link SpreadsheetMetadataPropertyName} holds the default formatter for {@link java.time.LocalDate} values.
+ * This {@link SpreadsheetMetadataPropertyName} holds the default formatter for {@link java.time.LocalDateTime} values.
  */
-final class SpreadsheetMetadataPropertyNameFormatterDate extends SpreadsheetMetadataPropertyNameFormatter {
+final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameFormatterDate instance() {
-        return new SpreadsheetMetadataPropertyNameFormatterDate();
+    static SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameFormatterDate() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime() {
         super(
-                "date-formatter",
-                SpreadsheetPatternKind.DATE_FORMAT_PATTERN
+                "date-time-formatter",
+                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
         );
     }
 
     @Override
     void accept(final SpreadsheetFormatterSelector value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitDateFormatter(value);
+        visitor.visitDateTimeFormatter(value);
     }
 
     @Override
     Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale) {
         return Optional.of(
-                SpreadsheetPattern.dateFormatPatternLocale(locale)
+                SpreadsheetPattern.dateTimeFormatPatternLocale(locale)
         );
     }
 }
