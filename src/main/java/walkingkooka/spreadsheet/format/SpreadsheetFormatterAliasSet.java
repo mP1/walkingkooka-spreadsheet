@@ -106,6 +106,20 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
         );
     }
 
+    @Override
+    public SpreadsheetFormatterAliasSet deleteAliasOrNameAll(final Collection<SpreadsheetFormatterName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterAliasSet keepAliasOrNameAll(final Collection<SpreadsheetFormatterName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
+        );
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override

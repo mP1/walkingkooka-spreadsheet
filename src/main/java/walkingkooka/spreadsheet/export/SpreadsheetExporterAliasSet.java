@@ -126,6 +126,20 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
         );
     }
 
+    @Override
+    public SpreadsheetExporterAliasSet deleteAliasOrNameAll(final Collection<SpreadsheetExporterName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
+        );
+    }
+
+    @Override
+    public SpreadsheetExporterAliasSet keepAliasOrNameAll(final Collection<SpreadsheetExporterName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
+        );
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override

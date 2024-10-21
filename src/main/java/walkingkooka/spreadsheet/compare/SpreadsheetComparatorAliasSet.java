@@ -126,6 +126,20 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
         );
     }
 
+    @Override
+    public SpreadsheetComparatorAliasSet deleteAliasOrNameAll(final Collection<SpreadsheetComparatorName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.deleteAliasOrNameAll(aliasOrNames)
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorAliasSet keepAliasOrNameAll(final Collection<SpreadsheetComparatorName> aliasOrNames) {
+        return this.setElements(
+                this.pluginAliasSet.keepAliasOrNameAll(aliasOrNames)
+        );
+    }
+
     // ImmutableSortedSet...............................................................................................
 
     @Override
