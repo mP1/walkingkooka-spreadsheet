@@ -39,6 +39,17 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     );
 
     /**
+     * {@see AliasesSpreadsheetParserProvider}
+     */
+    public static SpreadsheetParserProvider aliases(final SpreadsheetParserAliasSet aliases,
+                                                    final SpreadsheetParserProvider provider) {
+        return AliasesSpreadsheetParserProvider.with(
+                aliases,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetParserProviderCollection}
      */
     public static SpreadsheetParserProvider collection(final Set<SpreadsheetParserProvider> providers) {
