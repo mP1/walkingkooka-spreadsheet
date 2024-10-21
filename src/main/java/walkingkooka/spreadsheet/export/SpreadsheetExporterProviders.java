@@ -37,6 +37,17 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     );
 
     /**
+     * {@see AliasesSpreadsheetExporterProvider}
+     */
+    public static SpreadsheetExporterProvider alias(final SpreadsheetExporterAliasSet aliases,
+                                                    final SpreadsheetExporterProvider provider) {
+        return AliasesSpreadsheetExporterProvider.with(
+                aliases,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetExporterProviderCollection}
      */
     public static SpreadsheetExporterProvider collection(final Set<SpreadsheetExporterProvider> providers) {
