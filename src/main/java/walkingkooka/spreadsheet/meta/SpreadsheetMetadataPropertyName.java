@@ -196,7 +196,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within a find expression.
      */
-    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FIND_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFind.instance());
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FIND_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFind.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within find expressions.
@@ -206,7 +206,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
      */
-    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMAT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormat.instance());
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMAT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormat.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
@@ -216,7 +216,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an {@link SpreadsheetCell#formula()} expression.
      */
-    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterFormula.instance());
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#formula()}.
@@ -321,7 +321,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a sort.
      */
-    public static final SpreadsheetMetadataPropertyName<ConverterSelector> SORT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSort.instance());
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> SORT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorSort.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>

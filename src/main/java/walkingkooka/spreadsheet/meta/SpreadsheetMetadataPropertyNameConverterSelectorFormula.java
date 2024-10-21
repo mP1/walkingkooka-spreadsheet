@@ -19,32 +19,33 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ConverterSelector} used during
- * expression evaluation.
+ * {@link SpreadsheetCell#formula()} expression evaluation.
  */
-final class SpreadsheetMetadataPropertyNameConverterFormat extends SpreadsheetMetadataPropertyNameConverter {
+final class SpreadsheetMetadataPropertyNameConverterSelectorFormula extends SpreadsheetMetadataPropertyNameConverterSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameConverterFormat instance() {
-        return new SpreadsheetMetadataPropertyNameConverterFormat();
+    static SpreadsheetMetadataPropertyNameConverterSelectorFormula instance() {
+        return new SpreadsheetMetadataPropertyNameConverterSelectorFormula();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameConverterFormat() {
+    private SpreadsheetMetadataPropertyNameConverterSelectorFormula() {
         super(
-                "format-converter"
+                "formula-converter"
         );
     }
 
     @Override
     void accept(final ConverterSelector selector,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFormatConverter(selector);
+        visitor.visitFormulaConverter(selector);
     }
 }
