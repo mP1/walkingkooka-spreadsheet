@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
@@ -207,9 +207,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMAT_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormat.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterInfoSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterInfoSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetFormatters.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterAliasSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetFormatters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an {@link SpreadsheetCell#formula()} expression.

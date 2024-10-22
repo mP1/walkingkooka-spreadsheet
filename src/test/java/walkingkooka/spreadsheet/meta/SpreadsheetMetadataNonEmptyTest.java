@@ -2740,6 +2740,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.FORMATTERS,
                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         .spreadsheetFormatterInfos()
+                        .aliasSet()
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,

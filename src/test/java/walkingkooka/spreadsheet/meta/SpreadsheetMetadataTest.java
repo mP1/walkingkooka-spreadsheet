@@ -43,8 +43,8 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -854,7 +854,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         ExpressionFunctionAliasSet.parse("function1")
                 ).set(
                         SpreadsheetMetadataPropertyName.FORMATTERS,
-                        SpreadsheetFormatterInfoSet.parse("https://example.com/formatter1 formatter1")
+                        SpreadsheetFormatterAliasSet.parse("formatter1")
                 ).set(
                         SpreadsheetMetadataPropertyName.IMPORTERS,
                         SpreadsheetImporterAliasSet.parse("importer1")
