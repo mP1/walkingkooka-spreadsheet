@@ -1034,11 +1034,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +
-                        "  \"importers\": [\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\"\n" +
-                        "  ],\n" +
+                        "  \"importers\": \"collection, empty, json\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
@@ -1246,11 +1242,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
                         "  \"hide-zero-values\": false,\n" +
-                        "  \"importers\": [\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/collection collection\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/empty empty\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetImporter/json json\"\n" +
-                        "  ],\n" +
+                        "  \"importers\": \"collection, empty, json\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +

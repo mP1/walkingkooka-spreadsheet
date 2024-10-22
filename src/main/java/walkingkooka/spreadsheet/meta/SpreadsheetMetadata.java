@@ -66,7 +66,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -1140,7 +1140,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
         final SpreadsheetExporterAliasSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
         final SpreadsheetFormatterInfoSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
-        final SpreadsheetImporterInfoSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
+        final SpreadsheetImporterAliasSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
         final SpreadsheetParserInfoSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
 
         components.reportIfMissing();
@@ -1166,7 +1166,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         formatters,
                         provider
                 ),
-                SpreadsheetImporterProviders.filteredMapped(
+                SpreadsheetImporterProviders.aliases(
                         importers,
                         provider
                 ),
@@ -1361,6 +1361,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetMetadataPropertyName.IMPORTERS,
                 SpreadsheetImporterProviders.spreadsheetImport()
                         .spreadsheetImporterInfos()
+                        .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.PARSERS,
                 SpreadsheetParserProviders.spreadsheetParsePattern(
