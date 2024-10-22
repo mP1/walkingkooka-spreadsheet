@@ -33,8 +33,8 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
     @Override
     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
                                                      final ProviderContext context) {
-        return selector.evaluateText(
-                this,
+        return this.provider.spreadsheetFormatter(
+                this.aliases.selector(selector),
                 context
         );
     }

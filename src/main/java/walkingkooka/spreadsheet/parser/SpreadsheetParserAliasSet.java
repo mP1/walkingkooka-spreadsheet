@@ -100,6 +100,11 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
     }
 
     @Override
+    public SpreadsheetParserSelector selector(final SpreadsheetParserSelector selector) {
+        return this.pluginAliasSet.selector(selector);
+    }
+
+    @Override
     public Optional<SpreadsheetParserSelector> aliasSelector(final SpreadsheetParserName alias) {
         return this.pluginAliasSet.aliasSelector(alias);
     }

@@ -100,6 +100,11 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
     }
 
     @Override
+    public SpreadsheetComparatorSelector selector(final SpreadsheetComparatorSelector selector) {
+        return this.pluginAliasSet.selector(selector);
+    }
+
+    @Override
     public Optional<SpreadsheetComparatorSelector> aliasSelector(final SpreadsheetComparatorName alias) {
         return this.pluginAliasSet.aliasSelector(alias);
     }
