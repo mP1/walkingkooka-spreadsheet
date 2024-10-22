@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -184,9 +183,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameStringExponentSymbol.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetExporterInfoSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetExporterAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterInfoSet> EXPORTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetExporters.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> EXPORTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetExporters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>expression-number-kind {@link walkingkooka.tree.expression.ExpressionNumberKind}</code>
