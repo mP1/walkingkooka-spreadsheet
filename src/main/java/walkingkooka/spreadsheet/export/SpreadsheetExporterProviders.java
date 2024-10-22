@@ -39,8 +39,8 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     /**
      * {@see AliasesSpreadsheetExporterProvider}
      */
-    public static SpreadsheetExporterProvider alias(final SpreadsheetExporterAliasSet aliases,
-                                                    final SpreadsheetExporterProvider provider) {
+    public static SpreadsheetExporterProvider aliases(final SpreadsheetExporterAliasSet aliases,
+                                                      final SpreadsheetExporterProvider provider) {
         return AliasesSpreadsheetExporterProvider.with(
                 aliases,
                 provider
