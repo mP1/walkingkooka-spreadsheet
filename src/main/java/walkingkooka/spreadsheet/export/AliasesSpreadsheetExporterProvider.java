@@ -45,7 +45,7 @@ final class AliasesSpreadsheetExporterProvider implements SpreadsheetExporterPro
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetExporter function;
+        SpreadsheetExporter exporter;
 
         final SpreadsheetExporterAliasSet aliases = this.aliases;
         final SpreadsheetExporterProvider provider = this.provider;
@@ -55,13 +55,13 @@ final class AliasesSpreadsheetExporterProvider implements SpreadsheetExporterPro
             if (false == values.isEmpty()) {
                 throw new IllegalArgumentException("Alias " + name + " should have no values");
             }
-            // assumes that $provider caches selectors to function
-            function = provider.spreadsheetExporter(
+            // assumes that $provider caches selectors to exporter
+            exporter = provider.spreadsheetExporter(
                     selector.get(),
                     context
             );
         } else {
-            function = provider.spreadsheetExporter(
+            exporter = provider.spreadsheetExporter(
                     aliases.aliasOrName(name)
                             .orElseThrow(() -> new IllegalArgumentException("Unknown exporter " + name)),
                     values,
@@ -69,7 +69,7 @@ final class AliasesSpreadsheetExporterProvider implements SpreadsheetExporterPro
             );
         }
 
-        return function;
+        return exporter;
     }
 
     private final SpreadsheetExporterAliasSet aliases;
