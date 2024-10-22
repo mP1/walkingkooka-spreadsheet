@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
-import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
@@ -142,13 +142,14 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitConverters() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitConverters(final ConverterInfoSet c) {
+            protected void visitConverters(final ConverterAliasSet c) {
                 this.visited = c;
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.CONVERTERS,
                 ConverterProviders.converters()
-                                .converterInfos()
+                        .converterInfos()
+                        .aliasSet()
         );
     }
 

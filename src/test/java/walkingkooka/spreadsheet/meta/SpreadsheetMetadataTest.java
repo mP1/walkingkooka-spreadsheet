@@ -24,7 +24,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
@@ -842,7 +842,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetComparatorInfoSet.parse("https://example.com/comparator1 comparator1")
                 ).set(
                         SpreadsheetMetadataPropertyName.CONVERTERS,
-                        ConverterInfoSet.parse("https://example.com/converter1 converter1")
+                        ConverterAliasSet.parse("converter1")
                 ).set(
                         SpreadsheetMetadataPropertyName.EXPORTERS,
                         SpreadsheetExporterAliasSet.parse("exporter1")

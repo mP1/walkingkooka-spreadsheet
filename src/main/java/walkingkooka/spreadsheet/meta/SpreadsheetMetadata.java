@@ -28,7 +28,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -1135,7 +1135,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
+        final ConverterAliasSet converters = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
         final ExpressionFunctionAliasSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
         final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
         final SpreadsheetExporterAliasSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
@@ -1146,8 +1146,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetProviders.basic(
-                ConverterProviders.filteredMapped(
-                        converterInfos,
+                ConverterProviders.aliases(
+                        converters,
                         provider
                 ),
                 ExpressionFunctionProviders.aliases(
@@ -1342,6 +1342,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         SpreadsheetFormatterProviders.fake(),
                         SpreadsheetParserProviders.fake()
                 ).converterInfos()
+                        .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.COMPARATORS,
                 SpreadsheetComparatorProviders.spreadsheetComparators()

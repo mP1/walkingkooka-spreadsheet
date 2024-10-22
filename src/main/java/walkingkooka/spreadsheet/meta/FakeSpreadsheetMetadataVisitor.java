@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
-import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -91,7 +91,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitConverters(final ConverterInfoSet converters) {
+    protected void visitConverters(final ConverterAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 
