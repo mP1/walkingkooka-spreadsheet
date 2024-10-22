@@ -46,7 +46,7 @@ final class AliasesSpreadsheetParserProvider implements SpreadsheetParserProvide
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetParser function;
+        SpreadsheetParser parser;
 
         final SpreadsheetParserAliasSet aliases = this.aliases;
         final SpreadsheetParserProvider provider = this.provider;
@@ -57,12 +57,12 @@ final class AliasesSpreadsheetParserProvider implements SpreadsheetParserProvide
                 throw new IllegalArgumentException("Alias " + name + " should have no values");
             }
             // assumes that $provider caches selectors to function
-            function = provider.spreadsheetParser(
+            parser = provider.spreadsheetParser(
                     selector.get(),
                     context
             );
         } else {
-            function = provider.spreadsheetParser(
+            parser = provider.spreadsheetParser(
                     aliases.aliasOrName(name)
                             .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + name)),
                     values,
@@ -70,7 +70,7 @@ final class AliasesSpreadsheetParserProvider implements SpreadsheetParserProvide
             );
         }
 
-        return function;
+        return parser;
     }
 
     @Override
