@@ -40,7 +40,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -845,7 +845,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         ConverterInfoSet.parse("https://example.com/converter1 converter1")
                 ).set(
                         SpreadsheetMetadataPropertyName.EXPORTERS,
-                        SpreadsheetExporterInfoSet.parse("https://example.com/exporter1 exporter1")
+                        SpreadsheetExporterAliasSet.parse("exporter1")
                 ).set(
                         SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                         ExpressionFunctionAliasSet.parse("function1")

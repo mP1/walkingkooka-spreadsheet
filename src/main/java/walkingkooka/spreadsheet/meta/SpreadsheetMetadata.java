@@ -53,7 +53,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.export.SpreadsheetExporterInfoSet;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -1138,7 +1138,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final ConverterInfoSet converterInfos = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
         final ExpressionFunctionAliasSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
         final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
-        final SpreadsheetExporterInfoSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
+        final SpreadsheetExporterAliasSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
         final SpreadsheetFormatterInfoSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
         final SpreadsheetImporterInfoSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
         final SpreadsheetParserInfoSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
@@ -1158,7 +1158,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         comparators,
                         provider
                 ),
-                SpreadsheetExporterProviders.filteredMapped(
+                SpreadsheetExporterProviders.aliases(
                         exporters,
                         provider
                 ),
@@ -1350,6 +1350,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetMetadataPropertyName.EXPORTERS,
                 SpreadsheetExporterProviders.spreadsheetExport()
                         .spreadsheetExporterInfos()
+                        .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
                 ExpressionFunctionAliasSet.EMPTY

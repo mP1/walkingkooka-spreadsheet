@@ -158,6 +158,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.EXPORTERS,
                     SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
+                            .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
                     EXPRESSION_NUMBER_KIND
