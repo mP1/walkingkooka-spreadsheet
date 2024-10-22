@@ -45,7 +45,7 @@ final class AliasesSpreadsheetImporterProvider implements SpreadsheetImporterPro
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetImporter function;
+        SpreadsheetImporter importer;
 
         final SpreadsheetImporterAliasSet aliases = this.aliases;
         final SpreadsheetImporterProvider provider = this.provider;
@@ -56,12 +56,12 @@ final class AliasesSpreadsheetImporterProvider implements SpreadsheetImporterPro
                 throw new IllegalArgumentException("Alias " + name + " should have no values");
             }
             // assumes that $provider caches selectors to function
-            function = provider.spreadsheetImporter(
+            importer = provider.spreadsheetImporter(
                     selector.get(),
                     context
             );
         } else {
-            function = provider.spreadsheetImporter(
+            importer = provider.spreadsheetImporter(
                     aliases.aliasOrName(name)
                             .orElseThrow(() -> new IllegalArgumentException("Unknown importer " + name)),
                     values,
@@ -69,7 +69,7 @@ final class AliasesSpreadsheetImporterProvider implements SpreadsheetImporterPro
             );
         }
 
-        return function;
+        return importer;
     }
 
     private final SpreadsheetImporterAliasSet aliases;
