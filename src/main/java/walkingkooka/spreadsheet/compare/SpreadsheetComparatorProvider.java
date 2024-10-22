@@ -20,10 +20,6 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.plugin.Provider;
 import walkingkooka.plugin.ProviderContext;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * A provider supports listing available {@link SpreadsheetComparatorInfo} and fetching implementations by {@link SpreadsheetComparatorName}.
  */
@@ -39,27 +35,4 @@ public interface SpreadsheetComparatorProvider extends Provider {
      * Returns all available {@link SpreadsheetComparatorInfo}
      */
     SpreadsheetComparatorInfoSet spreadsheetComparatorInfos();
-
-    /**
-     * Helper that maps a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} into a {@link List} of
-     * {@link SpreadsheetColumnOrRowSpreadsheetComparators} including the name to comparator lookups.
-     */
-    default List<SpreadsheetColumnOrRowSpreadsheetComparators> toSpreadsheetColumnOrRowSpreadsheetComparators(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names,
-                                                                                                              final ProviderContext context) {
-        return names.stream()
-                .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                        n.columnOrRow(),
-                        n.comparatorNameAndDirections()
-                                .stream()
-                                .map(
-                                        nad -> nad.direction()
-                                                .apply(
-                                                        this.spreadsheetComparator(
-                                                                nad.name(),
-                                                                context
-                                                        )
-                                                )
-                                ).collect(Collectors.toList())
-                )).collect(Collectors.toList());
-    }
 }
