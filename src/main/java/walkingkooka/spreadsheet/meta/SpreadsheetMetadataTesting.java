@@ -131,6 +131,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.CONVERTERS,
                     CONVERTER_PROVIDER.converterInfos()
+                            .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.CREATOR,
                     EmailAddress.parse("user@example.com")

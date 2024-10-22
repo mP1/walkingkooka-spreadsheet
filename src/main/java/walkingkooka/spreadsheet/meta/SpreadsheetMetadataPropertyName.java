@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.convert.provider.ConverterInfoSet;
+import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.naming.Name;
@@ -122,9 +122,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorInfoSet> COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterInfoSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<ConverterInfoSet> CONVERTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginConverters.instance());
+    public static final SpreadsheetMetadataPropertyName<ConverterAliasSet> CONVERTERS = registerConstant(SpreadsheetMetadataPropertyNameConverterAliasSetConverters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creator {@link EmailAddress}</code>
