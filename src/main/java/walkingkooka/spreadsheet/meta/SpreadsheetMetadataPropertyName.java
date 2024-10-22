@@ -44,7 +44,6 @@ import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterName;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
@@ -253,9 +252,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Boolean> HIDE_ZERO_VALUES = registerConstant(SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetImporterInfoSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetImporterAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterInfoSet> IMPORTERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetImporters.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> IMPORTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetImporters.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>

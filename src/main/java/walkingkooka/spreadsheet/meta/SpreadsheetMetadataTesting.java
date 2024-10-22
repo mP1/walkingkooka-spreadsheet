@@ -189,6 +189,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.IMPORTERS,
                     SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
+                            .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.MODIFIED_BY,
                     EmailAddress.parse("user@example.com")
