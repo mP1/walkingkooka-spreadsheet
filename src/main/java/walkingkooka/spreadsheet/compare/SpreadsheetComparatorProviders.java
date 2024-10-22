@@ -37,6 +37,17 @@ public final class SpreadsheetComparatorProviders implements PublicStaticHelper 
     );
 
     /**
+     * {@see AliasesSpreadsheetComparatorProvider}
+     */
+    public static SpreadsheetComparatorProvider aliases(final SpreadsheetComparatorAliasSet aliases,
+                                                        final SpreadsheetComparatorProvider provider) {
+        return AliasesSpreadsheetComparatorProvider.with(
+                aliases,
+                provider
+        );
+    }
+
+    /**
      * {@see SpreadsheetComparatorProviderCollection}
      */
     public static SpreadsheetComparatorProvider collection(final Set<SpreadsheetComparatorProvider> providers) {
