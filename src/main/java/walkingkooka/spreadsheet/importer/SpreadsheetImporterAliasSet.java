@@ -83,6 +83,11 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
+    public SpreadsheetImporterSelector selector(final SpreadsheetImporterSelector selector) {
+        return this.pluginAliasSet.selector(selector);
+    }
+
+    @Override
     public Optional<SpreadsheetImporterSelector> aliasSelector(final SpreadsheetImporterName alias) {
         return this.pluginAliasSet.aliasSelector(alias);
     }

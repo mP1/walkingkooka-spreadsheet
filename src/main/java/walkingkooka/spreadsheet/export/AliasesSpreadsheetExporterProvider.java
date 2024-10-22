@@ -31,8 +31,8 @@ final class AliasesSpreadsheetExporterProvider implements SpreadsheetExporterPro
     @Override
     public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
                                                    final ProviderContext context) {
-        return selector.evaluateText(
-                this,
+        return this.provider.spreadsheetExporter(
+                this.aliases.selector(selector),
                 context
         );
     }

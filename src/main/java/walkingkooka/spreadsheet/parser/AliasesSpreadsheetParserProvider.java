@@ -32,8 +32,8 @@ final class AliasesSpreadsheetParserProvider implements SpreadsheetParserProvide
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
                                                final ProviderContext context) {
-        return selector.evaluateText(
-                this,
+        return this.provider.spreadsheetParser(
+                this.aliases.selector(selector),
                 context
         );
     }

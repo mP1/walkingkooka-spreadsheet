@@ -31,12 +31,12 @@ final class AliasesSpreadsheetImporterProvider implements SpreadsheetImporterPro
     @Override
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                    final ProviderContext context) {
-        return selector.evaluateText(
-                this,
+        return this.provider.spreadsheetImporter(
+                this.aliases.selector(selector),
                 context
         );
     }
-
+    
     @Override
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterName name,
                                                    final List<?> values,
