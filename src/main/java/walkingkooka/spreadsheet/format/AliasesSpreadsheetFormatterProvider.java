@@ -47,7 +47,7 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetFormatter function;
+        SpreadsheetFormatter formatter;
 
         final SpreadsheetFormatterAliasSet aliases = this.aliases;
         final SpreadsheetFormatterProvider provider = this.provider;
@@ -58,12 +58,12 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
                 throw new IllegalArgumentException("Alias " + name + " should have no values");
             }
             // assumes that $provider caches selectors to function
-            function = provider.spreadsheetFormatter(
+            formatter = provider.spreadsheetFormatter(
                     selector.get(),
                     context
             );
         } else {
-            function = provider.spreadsheetFormatter(
+            formatter = provider.spreadsheetFormatter(
                     aliases.aliasOrName(name)
                             .orElseThrow(() -> new IllegalArgumentException("Unknown formatter " + name)),
                     values,
@@ -71,7 +71,7 @@ final class AliasesSpreadsheetFormatterProvider implements SpreadsheetFormatterP
             );
         }
 
-        return function;
+        return formatter;
     }
 
     @Override
