@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testSpreadsheetParserWithNullSelectorFails() {
+    default void testSpreadsheetParserSelectorWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider()
@@ -46,7 +46,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     }
 
     @Test
-    default void testSpreadsheetParserWithNullContextFails() {
+    default void testSpreadsheetParserSelectorWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider()
@@ -56,10 +56,6 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                         )
         );
     }
-
-    T createSpreadsheetParserProvider();
-
-    // spreadsheetParser(SpreadsheetParserSelector).....................................................................
 
     default void spreadsheetParserFails(final String selector,
                                         final ProviderContext context) {
@@ -152,7 +148,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     // spreadsheetParser(SpreadsheetParserName, List)...................................................................
 
     @Test
-    default void testSpreadsheetParserWithNullNameFails() {
+    default void testSpreadsheetParserNameWithNullNameFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider()
@@ -165,7 +161,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     }
 
     @Test
-    default void testSpreadsheetParserWithNullListOfValuesFails() {
+    default void testSpreadsheetParserNameWithNullValuesFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider().spreadsheetParser(
@@ -177,7 +173,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     }
 
     @Test
-    default void testSpreadsheetParserNameValuesWithNullContextFails() {
+    default void testSpreadsheetParserNameWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider().spreadsheetParser(
@@ -440,4 +436,6 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                 provider::toString
         );
     }
+
+    T createSpreadsheetParserProvider();
 }
