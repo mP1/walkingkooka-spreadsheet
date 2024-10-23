@@ -258,7 +258,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     default void spreadsheetFormatterNextTokenFails(final SpreadsheetFormatterProvider provider,
-                                                            final SpreadsheetFormatterSelector selector) {
+                                                    final SpreadsheetFormatterSelector selector) {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> provider.spreadsheetFormatterNextToken(
@@ -275,7 +275,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterSelector selector,
-                                                               final SpreadsheetFormatterSelectorToken expected) {
+                                                       final SpreadsheetFormatterSelectorToken expected) {
         this.spreadsheetFormatterNextTokenAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 selector,
@@ -284,7 +284,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterSelector selector,
-                                                               final Optional<SpreadsheetFormatterSelectorToken> expected) {
+                                                       final Optional<SpreadsheetFormatterSelectorToken> expected) {
         this.spreadsheetFormatterNextTokenAndCheck(
                 this.createSpreadsheetFormatterProvider(),
                 selector,
@@ -293,7 +293,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterProvider provider,
-                                                               final SpreadsheetFormatterSelector selector) {
+                                                       final SpreadsheetFormatterSelector selector) {
         this.spreadsheetFormatterNextTokenAndCheck(
                 provider,
                 selector,
@@ -302,8 +302,8 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterProvider provider,
-                                                               final SpreadsheetFormatterSelector selector,
-                                                               final SpreadsheetFormatterSelectorToken expected) {
+                                                       final SpreadsheetFormatterSelector selector,
+                                                       final SpreadsheetFormatterSelectorToken expected) {
         this.spreadsheetFormatterNextTokenAndCheck(
                 provider,
                 selector,
@@ -312,8 +312,8 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     default void spreadsheetFormatterNextTokenAndCheck(final SpreadsheetFormatterProvider provider,
-                                                               final SpreadsheetFormatterSelector selector,
-                                                               final Optional<SpreadsheetFormatterSelectorToken> expected) {
+                                                       final SpreadsheetFormatterSelector selector,
+                                                       final Optional<SpreadsheetFormatterSelectorToken> expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetFormatterNextToken(selector),
@@ -407,7 +407,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 )
         );
     }
-    
+
     // SpreadsheetFormatterInfos........................................................................................
 
     default void spreadsheetFormatterInfosAndCheck(final SpreadsheetFormatterInfo... expected) {
