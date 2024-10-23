@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -42,9 +43,21 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testSpreadsheetParserAndCheck() {
+    public void testSpreadsheetParserSelectorAndCheck() {
         this.spreadsheetParserAndCheck(
                 SELECTOR,
+                PROVIDER_CONTEXT,
+                PARSER
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameAndCheck() {
+        final SpreadsheetParserSelector selector = SpreadsheetParserSelector.parse(SELECTOR);
+
+        this.spreadsheetParserAndCheck(
+                selector.name(),
+                Lists.of(selector.text()),
                 PROVIDER_CONTEXT,
                 PARSER
         );
