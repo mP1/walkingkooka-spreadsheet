@@ -19,11 +19,14 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -35,6 +38,8 @@ public final class FilteredMappedSpreadsheetComparatorProviderTest implements Sp
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("different-comparator-name-123");
 
     private final static SpreadsheetComparatorName ORIGINAL_NAME = SpreadsheetComparatorName.with("original-comparator-123");
+
+    private final static List<?> VALUES = Lists.of("abc");
 
     private final static SpreadsheetComparator<?> COMPARATOR = SpreadsheetComparators.fake();
 
@@ -63,18 +68,37 @@ public final class FilteredMappedSpreadsheetComparatorProviderTest implements Sp
     }
 
     @Test
-    public void testSpreadsheetComparator() {
+    public void testSpreadsheetComparatorSelector() {
         this.spreadsheetComparatorAndCheck(
-                NAME,
+                SpreadsheetComparatorSelector.parse(NAME + "(\"abc\")"),
                 PROVIDER_CONTEXT,
                 COMPARATOR
         );
     }
 
     @Test
-    public void testSpreadsheetComparatorUnknownFails() {
+    public void testSpreadsheetComparatorSelectorWithUnknownFails() {
+        this.spreadsheetComparatorFails(
+                SpreadsheetComparatorSelector.parse("unknown"),
+                PROVIDER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorName() {
+        this.spreadsheetComparatorAndCheck(
+                NAME,
+                VALUES,
+                PROVIDER_CONTEXT,
+                COMPARATOR
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorNameWithUnknownFails() {
         this.spreadsheetComparatorFails(
                 SpreadsheetComparatorName.with("unknown"),
+                VALUES,
                 PROVIDER_CONTEXT
         );
     }
@@ -109,11 +133,24 @@ public final class FilteredMappedSpreadsheetComparatorProviderTest implements Sp
                 new FakeSpreadsheetComparatorProvider() {
 
                     @Override
-                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                                           final ProviderContext context) {
-                        return name.equals(ORIGINAL_NAME) ?
-                                COMPARATOR :
-                                null;
+                        return selector.evaluateText(
+                                this,
+                                context
+                        );
+                    }
+
+                    @Override
+                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                                          final List<?> values,
+                                                                          final ProviderContext context) {
+                        if(name.equals(ORIGINAL_NAME)) {
+                            checkEquals(VALUES, values);
+                            return COMPARATOR;
+                        }
+
+                        throw new IllegalArgumentException("Unknown comparator " + name);
                     }
 
                     @Override

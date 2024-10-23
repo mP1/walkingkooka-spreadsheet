@@ -19,12 +19,15 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -46,6 +49,8 @@ public final class MergedMappedSpreadsheetComparatorProviderTest implements Spre
     private final static SpreadsheetComparator<?> PROVIDER_ONLY_COMPARATOR = SpreadsheetComparators.fake();
 
     private final static ProviderContext PROVIDER_ONLY_CONTEXT = ProviderContexts.fake();
+
+    private final static List<?> VALUES = Lists.of(111);
 
     @Test
     public void testWithNullInfosFails() {
@@ -70,27 +75,56 @@ public final class MergedMappedSpreadsheetComparatorProviderTest implements Spre
     }
 
     @Test
-    public void testSpreadsheetComparatorWithRenamedName() {
+    public void testSpreadsheetComparatorSelectorWithRenamedName() {
         this.spreadsheetComparatorAndCheck(
-                RENAMED_RENAME_NAME,
+                SpreadsheetComparatorSelector.parse(RENAMED_RENAME_NAME + "(111)"),
                 PROVIDER_ONLY_CONTEXT,
                 RENAME_COMPARATOR
         );
     }
 
     @Test
-    public void testSpreadsheetComparatorWithProviderOnlyName() {
+    public void testSpreadsheetComparatorSelectorWithProviderOnlyName() {
         this.spreadsheetComparatorAndCheck(
-                PROVIDER_ONLY_NAME,
+                SpreadsheetComparatorSelector.parse(PROVIDER_ONLY_NAME + "(111)"),
                 PROVIDER_ONLY_CONTEXT,
                 PROVIDER_ONLY_COMPARATOR
         );
     }
 
     @Test
-    public void testSpreadsheetComparatorUnknownFails() {
+    public void testSpreadsheetComparatorSelectorUnknownFails() {
+        this.spreadsheetComparatorFails(
+                SpreadsheetComparatorSelector.parse("unknown"),
+                PROVIDER_ONLY_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorNameWithRenamedName() {
+        this.spreadsheetComparatorAndCheck(
+                RENAMED_RENAME_NAME,
+                VALUES,
+                PROVIDER_ONLY_CONTEXT,
+                RENAME_COMPARATOR
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorNameWithProviderOnlyName() {
+        this.spreadsheetComparatorAndCheck(
+                PROVIDER_ONLY_NAME,
+                VALUES,
+                PROVIDER_ONLY_CONTEXT,
+                PROVIDER_ONLY_COMPARATOR
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorNameUnknownFails() {
         this.spreadsheetComparatorFails(
                 SpreadsheetComparatorName.with("unknown"),
+                VALUES,
                 PROVIDER_ONLY_CONTEXT
         );
     }
@@ -129,7 +163,17 @@ public final class MergedMappedSpreadsheetComparatorProviderTest implements Spre
                 new FakeSpreadsheetComparatorProvider() {
 
                     @Override
+                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                                                                          final ProviderContext context) {
+                        return selector.evaluateText(
+                                this,
+                                context
+                        );
+                    }
+
+                    @Override
                     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                                          final List<?> values,
                                                                           final ProviderContext context) {
                         if(name.equals(RENAME_PROVIDER_NAME)) {
                             return RENAME_COMPARATOR;
