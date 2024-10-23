@@ -37,16 +37,6 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
         ToStringTesting<BasicSpreadsheetProvider>,
         SpreadsheetMetadataTesting {
 
-    @Override
-    public void testExpressionFunctionWithNullNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testExpressionFunctionWithNullContextFails() {
-        throw new UnsupportedOperationException();
-    }
-
     // with.............................................................................................................
 
     @Test
