@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.plugin.FilteredProviderMapper;
 import walkingkooka.plugin.ProviderContext;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -49,13 +50,32 @@ final class FilteredMappedSpreadsheetComparatorProvider implements SpreadsheetCo
     }
 
     @Override
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                                                          final ProviderContext context) {
+        Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetComparatorName name = selector.name();
+
+        return this.provider.spreadsheetComparator(
+                selector.setName(
+                        this.mapper.name(name)
+                ),
+                context
+        );
+    }
+
+    @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                          final List<?> values,
                                                           final ProviderContext context) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
         return this.provider.spreadsheetComparator(
                 this.mapper.name(name),
+                values,
                 context
         );
     }

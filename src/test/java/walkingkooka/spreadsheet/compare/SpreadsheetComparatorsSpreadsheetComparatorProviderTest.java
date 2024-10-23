@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
@@ -31,7 +32,25 @@ import java.util.Arrays;
 public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<SpreadsheetComparatorsSpreadsheetComparatorProvider> {
 
     @Test
-    public void testSpreadsheetComparator() {
+    public void testSpreadsheetComparatorSelector() {
+        Arrays.stream(SpreadsheetComparators.class.getMethods())
+                .filter(MethodAttributes.STATIC::is)
+                .filter(m -> SpreadsheetComparator.class.equals(m.getReturnType()))
+                .filter(m -> m.getParameterTypes().length == 0)
+                .map(m -> CaseKind.CAMEL.change(
+                                m.getName(),
+                                CaseKind.KEBAB
+                        ).toString()
+                ).filter(n -> false == "fake".equals(n))
+                .forEach(n -> SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparator(
+                                SpreadsheetComparatorSelector.parse(n),
+                                ProviderContexts.fake()
+                        )
+                );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorName() {
         Arrays.stream(SpreadsheetComparators.class.getMethods())
                 .filter(MethodAttributes.STATIC::is)
                 .filter(m -> SpreadsheetComparator.class.equals(m.getReturnType()))
@@ -43,6 +62,7 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 ).filter(n -> false == "fake".equals(n))
                 .forEach(n -> SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparator(
                                 SpreadsheetComparatorName.with(n),
+                        Lists.empty(),
                         ProviderContexts.fake()
                         )
                 );

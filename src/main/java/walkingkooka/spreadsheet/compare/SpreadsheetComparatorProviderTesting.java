@@ -18,17 +18,22 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.ProviderTesting;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetComparatorProvider> extends ProviderTesting<T> {
 
+    // spreadsheetComparator(SpreadsheetComparatorSelector, ProviderContext)............................................
+
     @Test
-    default void testSpreadsheetComparatorWithNullNameFails() {
+    default void testSpreadsheetComparatorSelectorWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetComparatorProvider()
@@ -40,44 +45,181 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
     }
 
     @Test
-    default void testSpreadsheetComparatorWithNullContextFails() {
+    default void testSpreadsheetComparatorSelectorWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetComparatorProvider()
                         .spreadsheetComparator(
-                                SpreadsheetComparatorName.with("ignored"),
+                                SpreadsheetComparatorSelector.parse("comparator123"),
+                                null
+                        )
+        );
+    }
+
+    default void spreadsheetComparatorFails(final String selector,
+                                            final ProviderContext context) {
+        this.spreadsheetComparatorFails(
+                this.createSpreadsheetComparatorProvider(),
+                SpreadsheetComparatorSelector.parse(selector),
+                context
+        );
+    }
+
+    default void spreadsheetComparatorFails(final SpreadsheetComparatorProvider provider,
+                                            final String selector,
+                                            final ProviderContext context) {
+        this.spreadsheetComparatorFails(
+                provider,
+                SpreadsheetComparatorSelector.parse(selector),
+                context
+        );
+    }
+
+    default void spreadsheetComparatorFails(final SpreadsheetComparatorSelector selector,
+                                            final ProviderContext context) {
+        this.spreadsheetComparatorFails(
+                this.createSpreadsheetComparatorProvider(),
+                selector,
+                context
+        );
+    }
+
+    default void spreadsheetComparatorFails(final SpreadsheetComparatorProvider provider,
+                                            final SpreadsheetComparatorSelector selector,
+                                            final ProviderContext context) {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> provider.spreadsheetComparator(
+                        selector,
+                        context
+                )
+        );
+    }
+
+    default void spreadsheetComparatorAndCheck(final String selector,
+                                               final ProviderContext context,
+                                               final SpreadsheetComparator expected) {
+        this.spreadsheetComparatorAndCheck(
+                this.createSpreadsheetComparatorProvider(),
+                SpreadsheetComparatorSelector.parse(selector),
+                context,
+                expected
+        );
+    }
+
+    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
+                                               final String selector,
+                                               final ProviderContext context,
+                                               final SpreadsheetComparator expected) {
+        this.spreadsheetComparatorAndCheck(
+                provider,
+                SpreadsheetComparatorSelector.parse(selector),
+                context,
+                expected
+        );
+    }
+
+    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorSelector selector,
+                                               final ProviderContext context,
+                                               final SpreadsheetComparator expected) {
+        this.spreadsheetComparatorAndCheck(
+                this.createSpreadsheetComparatorProvider(),
+                selector,
+                context,
+                expected
+        );
+    }
+
+    default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
+                                               final SpreadsheetComparatorSelector selector,
+                                               final ProviderContext context,
+                                               final SpreadsheetComparator expected) {
+        this.checkEquals(
+                expected,
+                provider.spreadsheetComparator(
+                        selector,
+                        context
+                ),
+                selector::toString
+        );
+    }
+
+    // SpreadsheetComparator(SpreadsheetComparatorName, List, ProviderContext)..........................................
+
+    @Test
+    default void testSpreadsheetComparatorNameWithNullNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetComparatorProvider()
+                        .spreadsheetComparator(
+                                null,
+                                Lists.empty(),
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetComparatorNameWithNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetComparatorProvider()
+                        .spreadsheetComparator(
+                                SpreadsheetComparatorName.with("comparator-123"),
+                                null,
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetComparatorNameWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetComparatorProvider()
+                        .spreadsheetComparator(
+                                SpreadsheetComparatorSelector.with(
+                                        SpreadsheetComparatorName.with("comparator-123"),
+                                        ""
+                                ),
                                 null
                         )
         );
     }
 
     default void spreadsheetComparatorFails(final SpreadsheetComparatorName name,
+                                            final List<?> values,
                                             final ProviderContext context) {
         this.spreadsheetComparatorFails(
                 this.createSpreadsheetComparatorProvider(),
                 name,
+                values,
                 context
         );
     }
 
     default void spreadsheetComparatorFails(final SpreadsheetComparatorProvider provider,
                                             final SpreadsheetComparatorName name,
+                                            final List<?> values,
                                             final ProviderContext context) {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> provider.spreadsheetComparator(
                         name,
+                        values,
                         context
                 )
         );
     }
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name,
+                                               final List<?> values,
                                                final ProviderContext context,
-                                               final SpreadsheetComparator<?> expected) {
+                                               final SpreadsheetComparator expected) {
         this.spreadsheetComparatorAndCheck(
                 this.createSpreadsheetComparatorProvider(),
                 name,
+                values,
                 context,
                 expected
         );
@@ -85,17 +227,21 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorName name,
+                                               final List<?> values,
                                                final ProviderContext context,
-                                               final SpreadsheetComparator<?> expected) {
+                                               final SpreadsheetComparator expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetComparator(
                         name,
+                        values,
                         context
                 ),
-                name::toString
+                () -> name + " " + values
         );
     }
+    
+    // spreadsheetComparatorInfos.......................................................................................
 
     default void spreadsheetComparatorInfosAndCheck(final SpreadsheetComparatorInfo... expected) {
         this.spreadsheetComparatorInfosAndCheck(

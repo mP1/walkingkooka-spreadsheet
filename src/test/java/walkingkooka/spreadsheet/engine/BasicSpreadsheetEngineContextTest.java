@@ -473,6 +473,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.spreadsheetComparatorAndCheck(
                 this.createContext(),
                 comparator.name(),
+                Lists.empty(),
                 PROVIDER_CONTEXT,
                 comparator
         );

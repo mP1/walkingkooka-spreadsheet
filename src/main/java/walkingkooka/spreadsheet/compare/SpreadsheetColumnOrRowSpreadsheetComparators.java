@@ -59,9 +59,12 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                                         .stream()
                                         .map(nad -> nad.direction()
                                                 .apply(
-                                                        provider.spreadsheetComparator(
+                                                        Cast.to(
+                                                            provider.spreadsheetComparator(
                                                                 nad.name(),
+                                                                Lists.empty(),
                                                                 context
+                                                            )
                                                         )
                                                 )
                                         ).collect(Collectors.toList())

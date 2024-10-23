@@ -264,6 +264,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
                     direction.apply(
                             provider.spreadsheetComparator(
                                     spreadsheetComparatorName,
+                                    Lists.empty(),
                                     context
                             )
                     )

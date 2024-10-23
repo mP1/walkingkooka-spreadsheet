@@ -19,14 +19,30 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.plugin.ProviderContext;
 
+import java.util.List;
+
 public interface SpreadsheetComparatorProviderDelegator extends SpreadsheetComparatorProvider {
+
+    @Override
+    default SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                                                           final ProviderContext context) {
+        return this.spreadsheetComparatorProvider()
+                .spreadsheetComparator(
+                        selector,
+                        context
+                );
+    }
+
     @Override
     default SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                           final List<?> values,
                                                            final ProviderContext context) {
-        return this.spreadsheetComparatorProvider().spreadsheetComparator(
-                name,
-                context
-        );
+        return this.spreadsheetComparatorProvider()
+                .spreadsheetComparator(
+                        name,
+                        values,
+                        context
+                );
     }
 
     @Override

@@ -143,7 +143,13 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
 
         return this.selector.evaluateText(
                 SpreadsheetComparatorPluginHelper.INSTANCE::parseName,
-                (n, v, c) -> Cast.to(provider.spreadsheetComparator(n, c)),
+                (n, v, c) -> Cast.to(
+                        provider.spreadsheetComparator(
+                                n,
+                                v,
+                                c
+                        )
+                ),
                 context
         );
     }

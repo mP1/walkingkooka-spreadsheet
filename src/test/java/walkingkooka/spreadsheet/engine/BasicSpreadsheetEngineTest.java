@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
@@ -45,7 +46,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -13300,10 +13301,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+            public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                                   final ProviderContext context) {
                 return SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
-                        name,
+                        selector,
                         context
                 );
             }
@@ -13687,9 +13688,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                 .map(
                                                                         cnad -> cnad.direction()
                                                                                 .apply(
-                                                                                        SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
-                                                                                                cnad.name(),
-                                                                                                PROVIDER_CONTEXT
+                                                                                        Cast.to(
+                                                                                            SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
+                                                                                                    cnad.name(),
+                                                                                                    Lists.empty(),
+                                                                                                    PROVIDER_CONTEXT
+                                                                                            )
                                                                                         )
                                                                                 )
                                                                 ).collect(Collectors.toList())

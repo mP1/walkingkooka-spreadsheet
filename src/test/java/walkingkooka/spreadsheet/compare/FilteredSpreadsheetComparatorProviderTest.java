@@ -19,9 +19,12 @@ package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+
+import java.util.List;
 
 public final class FilteredSpreadsheetComparatorProviderTest implements SpreadsheetComparatorProviderTesting<FilteredSpreadsheetComparatorProvider>,
         ToStringTesting<FilteredSpreadsheetComparatorProvider> {
@@ -29,33 +32,38 @@ public final class FilteredSpreadsheetComparatorProviderTest implements Spreadsh
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testSpreadsheetComparator() {
+    public void testSpreadsheetComparatorName() {
         final SpreadsheetComparatorName name = SpreadsheetComparatorName.DAY_OF_MONTH;
+        final List<?> values = Lists.empty();
 
         this.spreadsheetComparatorAndCheck(
                 name,
+                values,
                 CONTEXT,
                 SpreadsheetComparatorProviders.spreadsheetComparators()
                         .spreadsheetComparator(
                                 name,
+                                values,
                                 CONTEXT
                         )
         );
     }
 
     @Test
-    public void testSpreadsheetComparatorWithFilteredFails() {
+    public void testSpreadsheetComparatorNameWithFilteredFails() {
         final SpreadsheetComparatorName name = SpreadsheetComparatorName.YEAR;
 
         this.spreadsheetComparatorAndCheck(
                 SpreadsheetComparatorProviders.spreadsheetComparators(),
                 name,
+                Lists.empty(),
                 CONTEXT,
                 SpreadsheetComparators.year()
         );
 
         this.spreadsheetComparatorFails(
                 name,
+                Lists.empty(),
                 CONTEXT
         );
     }

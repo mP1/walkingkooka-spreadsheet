@@ -471,6 +471,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                                 .apply(
                                                         this.spreadsheetComparator(
                                                                 nad.name(),
+                                                                Lists.empty(),
                                                                 this // ProviderContext
                                                         )
                                                 )

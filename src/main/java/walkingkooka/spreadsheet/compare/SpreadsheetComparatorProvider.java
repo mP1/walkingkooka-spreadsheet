@@ -20,16 +20,25 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.plugin.Provider;
 import walkingkooka.plugin.ProviderContext;
 
+import java.util.List;
+
 /**
  * A provider supports listing available {@link SpreadsheetComparatorInfo} and fetching implementations by {@link SpreadsheetComparatorName}.
  */
 public interface SpreadsheetComparatorProvider extends Provider {
 
     /**
+     * Resolves the given {@link SpreadsheetComparatorSelector} to a {@link SpreadsheetComparator}.
+     */
+    SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                                                final ProviderContext context);
+
+    /**
      * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparator}.
      */
-    SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
-                                                   final ProviderContext context);
+    SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                final List<?> values,
+                                                final ProviderContext context);
 
     /**
      * Returns all available {@link SpreadsheetComparatorInfo}
