@@ -35,7 +35,7 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testSpreadsheetParser() {
+    public void testSpreadsheetParserName() {
         final SpreadsheetParserName name = SpreadsheetParserName.DATE_PARSER_PATTERN;
         final List<?> values = Lists.of("dd/mmm/yyyy");
 
