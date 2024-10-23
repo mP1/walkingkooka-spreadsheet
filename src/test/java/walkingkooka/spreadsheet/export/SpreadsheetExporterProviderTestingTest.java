@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.export;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -42,9 +43,19 @@ public final class SpreadsheetExporterProviderTestingTest implements Spreadsheet
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testSpreadsheetExporterAndCheck() {
+    public void testSpreadsheetExporterSelectorAndCheck() {
         this.spreadsheetExporterAndCheck(
                 SELECTOR,
+                CONTEXT,
+                EXPORTER
+        );
+    }
+
+    @Test
+    public void testSpreadsheetExporterNameAndCheck() {
+        this.spreadsheetExporterAndCheck(
+                SpreadsheetExporterName.with("export-123"),
+                Lists.empty(),
                 CONTEXT,
                 EXPORTER
         );
