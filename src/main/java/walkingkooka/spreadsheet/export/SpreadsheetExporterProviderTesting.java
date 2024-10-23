@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.export;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -30,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporterProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testSpreadsheetExporterWithNullNameFails() {
+    default void testSpreadsheetExporterSelectorWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetExporterProvider()
@@ -42,7 +43,7 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
     }
 
     @Test
-    default void testSpreadsheetExporterWithNullContextFails() {
+    default void testSpreadsheetExporterSelectorWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetExporterProvider()
@@ -55,8 +56,6 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                         )
         );
     }
-
-    T createSpreadsheetExporterProvider();
 
     // SpreadsheetExporter(SpreadsheetExporterSelector).................................................................
 
@@ -148,7 +147,47 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
         );
     }
 
-    // SpreadsheetExporter(SpreadsheetExporterSelector).................................................................
+    // SpreadsheetExporter(SpreadsheetExporterName).....................................................................
+
+    @Test
+    default void testSpreadsheetExporterNameWithNullNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetExporterProvider()
+                        .spreadsheetExporter(
+                                null,
+                                Lists.empty(),
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetExporterNameWithNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetExporterProvider()
+                        .spreadsheetExporter(
+                                SpreadsheetExporterName.JSON,
+                                null,
+
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetExporterNameWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetExporterProvider()
+                        .spreadsheetExporter(
+                                SpreadsheetExporterName.JSON,
+                                Lists.empty(),
+                                null
+                        )
+        );
+    }
 
     default void spreadsheetExporterFails(final SpreadsheetExporterName name,
                                           final List<?> values,
@@ -240,4 +279,6 @@ public interface SpreadsheetExporterProviderTesting<T extends SpreadsheetExporte
                 provider::toString
         );
     }
+
+    T createSpreadsheetExporterProvider();
 }
