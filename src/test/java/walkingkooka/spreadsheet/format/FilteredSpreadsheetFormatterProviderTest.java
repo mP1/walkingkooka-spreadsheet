@@ -33,7 +33,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testSpreadsheetFormatter() {
+    public void testSpreadsheetFormatterName() {
         final SpreadsheetFormatterName name = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN;
         final List<?> values = Lists.of("@@");
 
