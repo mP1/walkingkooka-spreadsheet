@@ -51,13 +51,24 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testSpreadsheetFormatterAndCheck() {
+    public void testSpreadsheetFormatterSelectorAndCheck() {
         this.spreadsheetFormatterAndCheck(
                 SELECTOR,
                 CONTEXT,
                 FORMATTER
         );
     }
+
+    @Test
+    public void testSpreadsheetFormatterNameAndCheck() {
+        this.spreadsheetFormatterAndCheck(
+                SpreadsheetFormatterSelector.parse(SELECTOR).name(),
+                Lists.empty(),
+                CONTEXT,
+                FORMATTER
+        );
+    }
+
 
     @Test
     public void testSpreadsheetFormatterSamplesAndCheck() {
