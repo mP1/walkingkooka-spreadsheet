@@ -326,7 +326,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
     // spreadsheetFormatterSelector.....................................................................................
 
     @Test
-    default void testSpreadsheetFormatterSelectorWithNullSelectorFails() {
+    default void testSpreadsheetFormatterSelectorWithNullParserSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider().spreadsheetFormatterSelector(null)
