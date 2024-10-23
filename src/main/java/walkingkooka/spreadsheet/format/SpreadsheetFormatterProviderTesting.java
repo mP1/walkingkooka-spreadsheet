@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormatterProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testSpreadsheetFormatterWithNullNameFails() {
+    default void testSpreadsheetFormatterSelectorWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetFormatterProvider()
@@ -44,7 +44,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
     }
 
     @Test
-    default void testSpreadsheetFormatterWithNullContextFails() {
+    default void testSpreadsheetFormatterSelectorWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetFormatterProvider()
@@ -54,8 +54,6 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                         )
         );
     }
-
-    T createSpreadsheetFormatterProvider();
 
     // SpreadsheetFormatter(SpreadsheetFormatterSelector)...............................................................
 
@@ -147,7 +145,46 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         );
     }
 
-    // SpreadsheetFormatter(SpreadsheetFormatterSelector)...............................................................
+    // SpreadsheetFormatter(SpreadsheetFormatterName)...................................................................
+
+    @Test
+    default void testSpreadsheetFormatterNameWithNullNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetFormatterProvider()
+                        .spreadsheetFormatter(
+                                null,
+                                Lists.empty(),
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetFormatterNameWithNullValuesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetFormatterProvider()
+                        .spreadsheetFormatter(
+                                SpreadsheetFormatterName.GENERAL,
+                                null,
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetFormatterNameWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetFormatterProvider()
+                        .spreadsheetFormatter(
+                                SpreadsheetFormatterName.GENERAL,
+                                Lists.empty(),
+                                null
+                        )
+        );
+    }
 
     default void spreadsheetFormatterFails(final SpreadsheetFormatterName name,
                                            final List<?> values,
@@ -410,4 +447,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 provider::toString
         );
     }
+
+
+    T createSpreadsheetFormatterProvider();
 }
