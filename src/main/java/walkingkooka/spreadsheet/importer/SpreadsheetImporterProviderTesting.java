@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.importer;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -31,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporterProvider> extends ProviderTesting<T> {
 
     @Test
-    default void testSpreadsheetImporterWithNullNameFails() {
+    default void testSpreadsheetImporterSelectorWithNullSelectorFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetImporterProvider()
@@ -43,7 +44,7 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
     }
 
     @Test
-    default void testSpreadsheetImporterWithNullContextFails() {
+    default void testSpreadsheetImporterSelectorWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetImporterProvider()
@@ -56,8 +57,6 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                         )
         );
     }
-
-    T createSpreadsheetImporterProvider();
 
     // SpreadsheetImporter(SpreadsheetImporterSelector).................................................................
 
@@ -149,7 +148,46 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
         );
     }
 
-    // SpreadsheetImporter(SpreadsheetImporterSelector).................................................................
+    // spreadsheetImporter(name)........................................................................................
+
+    @Test
+    default void testSpreadsheetImporterNameWithNullNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetImporterProvider()
+                        .spreadsheetImporter(
+                                null,
+                                Lists.empty(),
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetImporterNameWithNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetImporterProvider()
+                        .spreadsheetImporter(
+                                SpreadsheetImporterName.JSON,
+                                null,
+                                ProviderContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetImporterNameWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetImporterProvider()
+                        .spreadsheetImporter(
+                                SpreadsheetImporterName.JSON,
+                                Lists.empty(),
+                                null
+                        )
+        );
+    }
 
     default void spreadsheetImporterFails(final SpreadsheetImporterName name,
                                           final List<?> values,
@@ -241,4 +279,6 @@ public interface SpreadsheetImporterProviderTesting<T extends SpreadsheetImporte
                 provider::toString
         );
     }
+
+    T createSpreadsheetImporterProvider();
 }
