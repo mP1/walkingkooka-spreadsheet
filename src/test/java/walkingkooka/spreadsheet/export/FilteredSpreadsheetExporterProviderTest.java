@@ -32,7 +32,7 @@ public final class FilteredSpreadsheetExporterProviderTest implements Spreadshee
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
-    public void testSpreadsheetExporter() {
+    public void testSpreadsheetExporterName() {
         final SpreadsheetExporterName name = SpreadsheetExporterName.JSON;
         final List<?> values = Lists.empty();
 
