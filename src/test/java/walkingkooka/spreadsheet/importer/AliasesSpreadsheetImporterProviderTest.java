@@ -36,13 +36,13 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
 
     private final static SpreadsheetImporterName ALIAS2 = SpreadsheetImporterName.with("alias2");
 
-    private final static SpreadsheetImporter FUNCTION1 = SpreadsheetImporters.fake();
+    private final static SpreadsheetImporter IMPORTER1 = SpreadsheetImporters.fake();
 
     private final static String NAME2_STRING = "importer2";
 
     private final static SpreadsheetImporterName NAME2 = SpreadsheetImporterName.with(NAME2_STRING);
 
-    private final static SpreadsheetImporter FUNCTION2 = SpreadsheetImporters.fake();
+    private final static SpreadsheetImporter IMPORTER2 = SpreadsheetImporters.fake();
 
     private final static SpreadsheetImporterInfo INFO2 = SpreadsheetImporterInfo.parse("https://example.com/importer2 " + NAME2);
 
@@ -50,7 +50,7 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
 
     private final static SpreadsheetImporterName NAME3 = SpreadsheetImporterName.with(NAME3_STRING);
 
-    private final static SpreadsheetImporter FUNCTION3 = SpreadsheetImporters.fake();
+    private final static SpreadsheetImporter IMPORTER3 = SpreadsheetImporters.fake();
 
     private final static SpreadsheetImporterInfo INFO3 = SpreadsheetImporterInfo.parse("https://example.com/importer3 " + NAME3);
 
@@ -83,7 +83,7 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
                 NAME1,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION1
+                IMPORTER1
         );
     }
 
@@ -92,7 +92,7 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
         this.spreadsheetImporterAndCheck(
                 SpreadsheetImporterSelector.parse(NAME1 + ""),
                 CONTEXT,
-                FUNCTION1
+                IMPORTER1
         );
     }
 
@@ -102,7 +102,7 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
                 ALIAS2,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION2
+                IMPORTER2
         );
     }
 
@@ -111,7 +111,7 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
         this.spreadsheetImporterAndCheck(
                 SpreadsheetImporterSelector.parse(ALIAS2 + ""),
                 CONTEXT,
-                FUNCTION2
+                IMPORTER2
         );
     }
 
@@ -121,7 +121,7 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
                 NAME4,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION3
+                IMPORTER3
         );
     }
 
@@ -130,7 +130,7 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
         this.spreadsheetImporterAndCheck(
                 SpreadsheetImporterSelector.parse(NAME4 + ""),
                 CONTEXT,
-                FUNCTION3
+                IMPORTER3
         );
     }
 
@@ -173,15 +173,15 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
                         switch (name.toString()) {
                             case NAME1_STRING:
                                 checkEquals(Lists.empty(), values, "values");
-                                importer = FUNCTION1;
+                                importer = IMPORTER1;
                                 break;
                             case NAME2_STRING:
                                 checkEquals(Lists.empty(), values, "values");
-                                importer = FUNCTION2;
+                                importer = IMPORTER2;
                                 break;
                             case NAME3_STRING:
                                 checkEquals(Lists.of(VALUE3), values, "values");
-                                importer = FUNCTION3;
+                                importer = IMPORTER3;
                                 break;
                             default:
                                 throw new IllegalArgumentException("Unknown importer " + name);
