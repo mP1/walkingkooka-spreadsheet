@@ -38,13 +38,13 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
     private final static SpreadsheetParserName ALIAS2 = SpreadsheetParserName.with("alias2");
 
-    private final static SpreadsheetParser FUNCTION1 = SpreadsheetParsers.fake();
+    private final static SpreadsheetParser PARSER1 = SpreadsheetParsers.fake();
 
     private final static String NAME2_STRING = "parser2";
 
     private final static SpreadsheetParserName NAME2 = SpreadsheetParserName.with(NAME2_STRING);
 
-    private final static SpreadsheetParser FUNCTION2 = SpreadsheetParsers.fake();
+    private final static SpreadsheetParser PARSER2 = SpreadsheetParsers.fake();
 
     private final static SpreadsheetParserInfo INFO2 = SpreadsheetParserInfo.parse("https://example.com/parser2 " + NAME2);
 
@@ -52,7 +52,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
     private final static SpreadsheetParserName NAME3 = SpreadsheetParserName.with(NAME3_STRING);
 
-    private final static SpreadsheetParser FUNCTION3 = SpreadsheetParsers.fake();
+    private final static SpreadsheetParser PARSER3 = SpreadsheetParsers.fake();
 
     private final static SpreadsheetParserInfo INFO3 = SpreadsheetParserInfo.parse("https://example.com/parser3 " + NAME3);
 
@@ -87,7 +87,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
                 NAME1,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION1
+                PARSER1
         );
     }
 
@@ -96,7 +96,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserSelector.parse(NAME1 + ""),
                 CONTEXT,
-                FUNCTION1
+                PARSER1
         );
     }
 
@@ -106,7 +106,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
                 ALIAS2,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION2
+                PARSER2
         );
     }
 
@@ -115,7 +115,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserSelector.parse(ALIAS2 + ""),
                 CONTEXT,
-                FUNCTION2
+                PARSER2
         );
     }
 
@@ -125,7 +125,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
                 NAME4,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION3
+                PARSER3
         );
     }
 
@@ -134,7 +134,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
         this.spreadsheetParserAndCheck(
                 SpreadsheetParserSelector.parse(NAME4 + ""),
                 CONTEXT,
-                FUNCTION3
+                PARSER3
         );
     }
 
@@ -363,15 +363,15 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
                         switch (name.toString()) {
                             case NAME1_STRING:
                                 checkEquals(Lists.empty(), values, "values");
-                                parser = FUNCTION1;
+                                parser = PARSER1;
                                 break;
                             case NAME2_STRING:
                                 checkEquals(Lists.empty(), values, "values");
-                                parser = FUNCTION2;
+                                parser = PARSER2;
                                 break;
                             case NAME3_STRING:
                                 checkEquals(Lists.of(VALUE3), values, "values");
-                                parser = FUNCTION3;
+                                parser = PARSER3;
                                 break;
                             default:
                                 throw new IllegalArgumentException("Unknown parser " + name);
