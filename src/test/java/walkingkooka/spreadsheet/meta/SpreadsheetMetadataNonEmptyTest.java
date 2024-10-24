@@ -2774,6 +2774,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.PARSERS,
                 SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
+                        .aliasSet()
         );
         properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT);
         properties.put(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN);

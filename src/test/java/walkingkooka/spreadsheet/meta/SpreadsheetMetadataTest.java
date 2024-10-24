@@ -50,7 +50,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -860,7 +860,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetImporterAliasSet.parse("importer1")
                 ).set(
                         SpreadsheetMetadataPropertyName.PARSERS,
-                        SpreadsheetParserInfoSet.parse("https://example.com/parser1 parser1")
+                        SpreadsheetParserAliasSet.parse("parser1")
                 ).spreadsheetProvider(
                         this.spreadsheetProvider()
                 )

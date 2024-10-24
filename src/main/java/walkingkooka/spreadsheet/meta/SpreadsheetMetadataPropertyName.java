@@ -46,7 +46,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterName;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -287,9 +287,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> NUMBER_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetParserInfoSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetParserAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserInfoSet> PARSERS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetParsers.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetParserAliasSet> PARSERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserAliasSetParsers.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
@@ -671,13 +671,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     public final boolean isSpreadsheetParserSelector() {
         return this instanceof SpreadsheetMetadataPropertyNameSpreadsheetParser;
-    }
-
-    /**
-     * Returns true if this property name is a plugin {@link walkingkooka.plugin.PluginInfoSetLike}.
-     */
-    public final boolean isPlugin() {
-        return this instanceof SpreadsheetMetadataPropertyNamePlugin;
     }
 
     // Object...........................................................................................................
