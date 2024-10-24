@@ -208,6 +208,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.PARSERS,
                     SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
+                            .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.PRECISION,
                     7

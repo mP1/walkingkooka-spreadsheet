@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
@@ -600,6 +601,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.IMPORTERS,
                 SpreadsheetImporterAliasSet.EMPTY
+        );
+    }
+
+    @Test
+    public void testVisitSpreadsheetParsers() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitParsers(final SpreadsheetParserAliasSet s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.PARSERS,
+                SpreadsheetParserAliasSet.EMPTY
         );
     }
 

@@ -1002,12 +1002,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
                         "  \"number-parser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                        "  \"parsers\": [\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time-parse-pattern date-time-parse-pattern\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number-parse-pattern number-parse-pattern\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time-parse-pattern time-parse-pattern\"\n" +
-                        "  ],\n" +
+                        "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
                         "  \"percentage-symbol\": \"%\",\n" +
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
@@ -1172,12 +1167,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"negative-sign\": \"!\",\n" +
                         "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
                         "  \"number-parser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                        "  \"parsers\": [\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time-parse-pattern date-time-parse-pattern\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number-parse-pattern number-parse-pattern\",\n" +
-                        "    \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time-parse-pattern time-parse-pattern\"\n" +
-                        "  ],\n" +
+                        "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
                         "  \"percentage-symbol\": \"%\",\n" +
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +

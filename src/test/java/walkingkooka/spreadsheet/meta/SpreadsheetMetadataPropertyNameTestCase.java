@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.plugin.PluginInfoSetLike;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -200,19 +199,6 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         this.checkEquals(
                 this.propertyValue() instanceof SpreadsheetParserSelector,
                 propertyName.isSpreadsheetParserSelector(),
-                propertyName::toString
-        );
-    }
-
-    // isPlugin.........................................................................................................
-
-    @Test
-    public final void testIsPlugin() {
-        final N propertyName = this.createName();
-
-        this.checkEquals(
-                this.propertyValue() instanceof PluginInfoSetLike,
-                propertyName.isPlugin(),
                 propertyName::toString
         );
     }

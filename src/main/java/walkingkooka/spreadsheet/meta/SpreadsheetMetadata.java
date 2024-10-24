@@ -69,9 +69,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -1141,7 +1141,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetExporterAliasSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
         final SpreadsheetFormatterAliasSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
         final SpreadsheetImporterAliasSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
-        final SpreadsheetParserInfoSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
+        final SpreadsheetParserAliasSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
 
         components.reportIfMissing();
 
@@ -1170,7 +1170,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         importers,
                         provider
                 ),
-                SpreadsheetParserProviders.filteredMapped(
+                SpreadsheetParserProviders.aliases(
                         parsers,
                         provider
                 )
@@ -1370,6 +1370,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         spreadsheetFormatterProvider
                 ).spreadsheetParserInfos()
+                        .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                 SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
