@@ -45,9 +45,9 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -1137,7 +1137,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final ConverterAliasSet converters = components.getOrNull(SpreadsheetMetadataPropertyName.CONVERTERS);
         final ExpressionFunctionAliasSet functions = components.getOrNull(SpreadsheetMetadataPropertyName.FUNCTIONS);
-        final SpreadsheetComparatorInfoSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
+        final SpreadsheetComparatorAliasSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
         final SpreadsheetExporterAliasSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
         final SpreadsheetFormatterAliasSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
         final SpreadsheetImporterAliasSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
@@ -1154,7 +1154,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         functions,
                         provider
                 ),
-                SpreadsheetComparatorProviders.filteredMapped(
+                SpreadsheetComparatorProviders.aliases(
                         comparators,
                         provider
                 ),
@@ -1347,6 +1347,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 SpreadsheetMetadataPropertyName.COMPARATORS,
                 SpreadsheetComparatorProviders.spreadsheetComparators()
                                 .spreadsheetComparatorInfos()
+                        .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.EXPORTERS,
                 SpreadsheetExporterProviders.spreadsheetExport()

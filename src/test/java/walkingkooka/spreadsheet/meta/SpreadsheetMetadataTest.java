@@ -36,7 +36,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
@@ -839,7 +839,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 null,
                 SpreadsheetMetadata.EMPTY.set(
                         SpreadsheetMetadataPropertyName.COMPARATORS,
-                        SpreadsheetComparatorInfoSet.parse("https://example.com/comparator1 comparator1")
+                        SpreadsheetComparatorAliasSet.parse("comparator1")
                 ).set(
                         SpreadsheetMetadataPropertyName.CONVERTERS,
                         ConverterAliasSet.parse("converter1")

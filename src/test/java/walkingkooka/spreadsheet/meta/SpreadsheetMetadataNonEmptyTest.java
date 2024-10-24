@@ -2702,7 +2702,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorProviders.spreadsheetComparators().spreadsheetComparatorInfos()
+                SpreadsheetComparatorProviders.spreadsheetComparators()
+                        .spreadsheetComparatorInfos()
+                        .aliasSet()
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.CONVERTERS,

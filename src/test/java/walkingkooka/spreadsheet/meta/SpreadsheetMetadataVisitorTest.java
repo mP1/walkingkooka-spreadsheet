@@ -26,6 +26,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -138,6 +139,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         );
     }
 
+    @Test
+    public void testVisitComparators() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitComparators(final SpreadsheetComparatorAliasSet c) {
+                this.visited = c;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.COMPARATORS,
+                SpreadsheetComparatorAliasSet.parse("day, month, year")
+        );
+    }
+    
     @Test
     public void testVisitConverters() {
         new TestSpreadsheetMetadataVisitor() {
