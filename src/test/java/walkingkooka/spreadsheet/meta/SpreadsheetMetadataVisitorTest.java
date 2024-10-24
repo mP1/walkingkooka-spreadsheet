@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -578,6 +579,45 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.SORT_CONVERTER,
                 ConverterSelector.parse("hello")
+        );
+    }
+
+    @Test
+    public void testVisitSpreadsheetComparators() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitComparators(final SpreadsheetComparatorAliasSet s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.COMPARATORS,
+                SpreadsheetComparatorAliasSet.EMPTY
+        );
+    }
+    
+    @Test
+    public void testVisitSpreadsheetExporters() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitExporters(final SpreadsheetExporterAliasSet s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.EXPORTERS,
+                SpreadsheetExporterAliasSet.EMPTY
+        );
+    }
+    
+    @Test
+    public void testVisitSpreadsheetFormatters() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormatters(final SpreadsheetFormatterAliasSet s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FORMATTERS,
+                SpreadsheetFormatterAliasSet.EMPTY
         );
     }
 
