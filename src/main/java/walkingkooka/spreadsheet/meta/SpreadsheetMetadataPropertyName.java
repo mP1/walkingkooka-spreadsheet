@@ -30,7 +30,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
@@ -117,9 +117,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> CLIPBOARD_IMPORTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorInfoSet}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetComparatorAliasSet}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorInfoSet> COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNamePluginSpreadsheetComparators.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetComparatorAliasSet> COMPARATORS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSetComparators.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterAliasSet}</code>

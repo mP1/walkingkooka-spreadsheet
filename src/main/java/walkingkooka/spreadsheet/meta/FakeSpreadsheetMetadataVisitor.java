@@ -23,7 +23,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorInfoSet;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -86,7 +86,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitComparators(final SpreadsheetComparatorInfoSet value) {
+    protected void visitComparators(final SpreadsheetComparatorAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 

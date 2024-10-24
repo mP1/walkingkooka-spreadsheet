@@ -128,6 +128,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.COMPARATORS,
                     SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparatorInfos()
+                            .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.CONVERTERS,
                     CONVERTER_PROVIDER.converterInfos()
