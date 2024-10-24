@@ -38,13 +38,13 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
     private final static SpreadsheetFormatterName ALIAS2 = SpreadsheetFormatterName.with("alias2");
 
-    private final static SpreadsheetFormatter FUNCTION1 = SpreadsheetFormatters.fake();
+    private final static SpreadsheetFormatter FORMATTER1 = SpreadsheetFormatters.fake();
 
     private final static String NAME2_STRING = "formatter2";
 
     private final static SpreadsheetFormatterName NAME2 = SpreadsheetFormatterName.with(NAME2_STRING);
 
-    private final static SpreadsheetFormatter FUNCTION2 = SpreadsheetFormatters.fake();
+    private final static SpreadsheetFormatter FORMATTER2 = SpreadsheetFormatters.fake();
 
     private final static SpreadsheetFormatterInfo INFO2 = SpreadsheetFormatterInfo.parse("https://example.com/formatter2 " + NAME2);
 
@@ -52,7 +52,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
 
     private final static SpreadsheetFormatterName NAME3 = SpreadsheetFormatterName.with(NAME3_STRING);
 
-    private final static SpreadsheetFormatter FUNCTION3 = SpreadsheetFormatters.fake();
+    private final static SpreadsheetFormatter FORMATTER3 = SpreadsheetFormatters.fake();
 
     private final static SpreadsheetFormatterInfo INFO3 = SpreadsheetFormatterInfo.parse("https://example.com/formatter3 " + NAME3);
 
@@ -87,7 +87,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                 NAME1,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION1
+                FORMATTER1
         );
     }
 
@@ -96,7 +96,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
         this.spreadsheetFormatterAndCheck(
                 SpreadsheetFormatterSelector.parse(NAME1 + ""),
                 CONTEXT,
-                FUNCTION1
+                FORMATTER1
         );
     }
 
@@ -106,7 +106,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                 ALIAS2,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION2
+                FORMATTER2
         );
     }
 
@@ -115,7 +115,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
         this.spreadsheetFormatterAndCheck(
                 SpreadsheetFormatterSelector.parse(ALIAS2 + ""),
                 CONTEXT,
-                FUNCTION2
+                FORMATTER2
         );
     }
 
@@ -125,7 +125,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                 NAME4,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION3
+                FORMATTER3
         );
     }
 
@@ -134,7 +134,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
         this.spreadsheetFormatterAndCheck(
                 SpreadsheetFormatterSelector.parse(NAME4 + ""),
                 CONTEXT,
-                FUNCTION3
+                FORMATTER3
         );
     }
 
@@ -394,15 +394,15 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                         switch (name.toString()) {
                             case NAME1_STRING:
                                 checkEquals(Lists.empty(), values, "values");
-                                formatter = FUNCTION1;
+                                formatter = FORMATTER1;
                                 break;
                             case NAME2_STRING:
                                 checkEquals(Lists.empty(), values, "values");
-                                formatter = FUNCTION2;
+                                formatter = FORMATTER2;
                                 break;
                             case NAME3_STRING:
                                 checkEquals(Lists.of(VALUE3), values, "values");
-                                formatter = FUNCTION3;
+                                formatter = FORMATTER3;
                                 break;
                             default:
                                 throw new IllegalArgumentException("Unknown formatter " + name);
