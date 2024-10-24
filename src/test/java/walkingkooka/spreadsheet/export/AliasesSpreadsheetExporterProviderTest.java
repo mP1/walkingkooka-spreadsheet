@@ -36,13 +36,13 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
 
     private final static SpreadsheetExporterName ALIAS2 = SpreadsheetExporterName.with("alias2");
 
-    private final static SpreadsheetExporter FUNCTION1 = SpreadsheetExporters.fake();
+    private final static SpreadsheetExporter EXPORTER1 = SpreadsheetExporters.fake();
 
     private final static String NAME2_STRING = "exporter2";
 
     private final static SpreadsheetExporterName NAME2 = SpreadsheetExporterName.with(NAME2_STRING);
 
-    private final static SpreadsheetExporter FUNCTION2 = SpreadsheetExporters.fake();
+    private final static SpreadsheetExporter EXPORTER2 = SpreadsheetExporters.fake();
 
     private final static SpreadsheetExporterInfo INFO2 = SpreadsheetExporterInfo.parse("https://example.com/exporter2 " + NAME2);
 
@@ -50,7 +50,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
 
     private final static SpreadsheetExporterName NAME3 = SpreadsheetExporterName.with(NAME3_STRING);
 
-    private final static SpreadsheetExporter FUNCTION3 = SpreadsheetExporters.fake();
+    private final static SpreadsheetExporter EXPORTER3 = SpreadsheetExporters.fake();
 
     private final static SpreadsheetExporterInfo INFO3 = SpreadsheetExporterInfo.parse("https://example.com/exporter3 " + NAME3);
 
@@ -83,7 +83,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
                 NAME1,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION1
+                EXPORTER1
         );
     }
 
@@ -92,7 +92,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
         this.spreadsheetExporterAndCheck(
                 SpreadsheetExporterSelector.parse(NAME1 + ""),
                 CONTEXT,
-                FUNCTION1
+                EXPORTER1
         );
     }
 
@@ -102,7 +102,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
                 ALIAS2,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION2
+                EXPORTER2
         );
     }
 
@@ -111,7 +111,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
         this.spreadsheetExporterAndCheck(
                 SpreadsheetExporterSelector.parse(ALIAS2 + ""),
                 CONTEXT,
-                FUNCTION2
+                EXPORTER2
         );
     }
 
@@ -121,7 +121,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
                 NAME4,
                 Lists.empty(),
                 CONTEXT,
-                FUNCTION3
+                EXPORTER3
         );
     }
 
@@ -130,7 +130,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
         this.spreadsheetExporterAndCheck(
                 SpreadsheetExporterSelector.parse(NAME4 + ""),
                 CONTEXT,
-                FUNCTION3
+                EXPORTER3
         );
     }
 
@@ -173,15 +173,15 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
                         switch (name.toString()) {
                             case NAME1_STRING:
                                 checkEquals(Lists.empty(), values, "values");
-                                exporter = FUNCTION1;
+                                exporter = EXPORTER1;
                                 break;
                             case NAME2_STRING:
                                 checkEquals(Lists.empty(), values, "values");
-                                exporter = FUNCTION2;
+                                exporter = EXPORTER2;
                                 break;
                             case NAME3_STRING:
                                 checkEquals(Lists.of(VALUE3), values, "values");
-                                exporter = FUNCTION3;
+                                exporter = EXPORTER3;
                                 break;
                             default:
                                 throw new IllegalArgumentException("Unknown exporter " + name);
