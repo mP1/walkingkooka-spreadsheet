@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -237,9 +238,22 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     // Comparable.......................................................................................................
 
+    /**
+     * Compares the label and then the target after converting the target to a string.
+     */
     @Override
     public int compareTo(final SpreadsheetLabelMapping other) {
-        return this.label.compareTo(other.label);
+        int compareTo = this.label.compareTo(other.label);
+        if(Comparators.EQUAL == compareTo) {
+            compareTo = this.target.toRelative()
+                    .toString()
+                    .compareToIgnoreCase(
+                            other.target.toRelative()
+                                    .toString()
+                    );
+        }
+
+        return compareTo;
     }
 
     // TreePrintable....................................................................................................

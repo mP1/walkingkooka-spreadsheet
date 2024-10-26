@@ -212,6 +212,121 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.checkNotEquals(SpreadsheetLabelMapping.with(LABEL, cell(99)));
     }
 
+    // compareTo........................................................................................................
+
+    @Test
+    public void testCompareToSameLabelsSameCase() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        this.compareToAndCheckEquals(
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.A1
+                ),
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.A1
+                )
+        );
+    }
+
+    @Test
+    public void testCompareToSameLabelsDifferentCase() {
+        this.compareToAndCheckEquals(
+                SpreadsheetLabelMapping.with(
+                        SpreadsheetSelection.labelName("Label123"),
+                        SpreadsheetSelection.A1
+                ),
+                SpreadsheetLabelMapping.with(
+                        SpreadsheetSelection.labelName("LABEL123"),
+                        SpreadsheetSelection.A1
+                )
+        );
+    }
+
+    @Test
+    public void testCompareToDifferentLabels() {
+        this.compareToAndCheckLess(
+                SpreadsheetLabelMapping.with(
+                        SpreadsheetSelection.labelName("Before"),
+                        SpreadsheetSelection.A1
+                ),
+                SpreadsheetLabelMapping.with(
+                        SpreadsheetSelection.labelName("ZZZ"),
+                        SpreadsheetSelection.A1
+                )
+        );
+    }
+
+    @Test
+    public void testCompareToSameLabelsDifferentTarget() {
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
+
+        this.compareToAndCheckLess(
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.parseCell("a1")
+                ),
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.parseCell("B2")
+                )
+        );
+    }
+
+    @Test
+    public void testCompareToSameLabelsCaseIgnored() {
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
+
+        this.compareToAndCheckLess(
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.parseCell("A1")
+                ),
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.parseCell("B2")
+                )
+        );
+    }
+
+    @Test
+    public void testCompareToSameLabelsKindIgnored() {
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
+
+        this.compareToAndCheckLess(
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.parseCell("$A$1")
+                ),
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.parseCell("$B$2")
+                )
+        );
+    }
+
+    @Test
+    public void testCompareToSameLabelsKindIgnored2() {
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
+
+        this.compareToAndCheckEquals(
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.parseCell("$A$1")
+                ),
+                SpreadsheetLabelMapping.with(
+                        label,
+                        SpreadsheetSelection.A1
+                )
+        );
+    }
+
+    @Override
+    public SpreadsheetLabelMapping createComparable() {
+        return SpreadsheetLabelMapping.with(LABEL, TARGET);
+    }
+
     // toString...............................................................................................
 
     @Test
@@ -220,11 +335,6 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     // helpers...............................................................................................
-
-    @Override
-    public SpreadsheetLabelMapping createComparable() {
-        return SpreadsheetLabelMapping.with(LABEL, TARGET);
-    }
 
     private void checkLabel(final SpreadsheetLabelMapping mapping, final SpreadsheetLabelName label) {
         this.checkEquals(label, mapping.label(), "label");
