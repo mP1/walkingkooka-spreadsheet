@@ -419,7 +419,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     private Set<SpreadsheetCell> updatedCells;
 
     /**
-     * Returns a {@link SpreadsheetCellRangeReference} that includes all the {@link #deletedCells()} and {@link #updatedCells()}
+     * Returns a {@link SpreadsheetCellRangeReference} that includes all deleted and updated cells.
      */
     Optional<SpreadsheetCellRangeReference> deletedAndUpdatedCellRange() {
         SpreadsheetColumnReference left = null;
@@ -428,27 +428,9 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         SpreadsheetRowReference top = null;
         SpreadsheetRowReference bottom = null;
 
-        for (final SpreadsheetCell cell : this.updatedCells()) {
-            final SpreadsheetCellReference cellReference = cell.reference();
-            final SpreadsheetColumnReference column = cellReference.column();
-            final SpreadsheetRowReference row = cellReference.row();
-
-            if (null == left) {
-                left = column;
-                right = column;
-                top = row;
-                bottom = row;
-            } else {
-                left = left.min(column);
-                right = right.max(column);
-                top = top.min(row);
-                bottom = bottom.max(row);
-            }
-        }
-
-        for (final SpreadsheetCellReference cellReference : this.deletedCells()) {
-            final SpreadsheetColumnReference column = cellReference.column();
-            final SpreadsheetRowReference row = cellReference.row();
+        for(final SpreadsheetCellReference cell : this.updatedAndDeletedCells.keySet()) {
+            final SpreadsheetColumnReference column = cell.column();
+            final SpreadsheetRowReference row = cell.row();
 
             if (null == left) {
                 left = column;
