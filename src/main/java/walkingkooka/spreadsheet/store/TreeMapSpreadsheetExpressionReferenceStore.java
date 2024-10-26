@@ -58,12 +58,6 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<Set<SpreadsheetCellReference>> saved) {
-        Objects.requireNonNull(saved, "saved");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void delete(final T id) {
         checkId(id);
         this.removeAllWithTargetAndFireDeleteWatchers(id);
