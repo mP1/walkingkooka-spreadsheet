@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -407,18 +406,6 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     // cells............................................................................................................
 
     /**
-     * Returns all the updated {@link SpreadsheetCell}.
-     */
-    Set<SpreadsheetCell> updatedCells() {
-        if (null == this.updatedCells) {
-            this.extractUpdatedCellsDeletedCells();
-        }
-        return Sets.readOnly(this.updatedCells);
-    }
-
-    private Set<SpreadsheetCell> updatedCells;
-
-    /**
      * Returns a {@link SpreadsheetCellRangeReference} that includes all deleted and updated cells.
      */
     Optional<SpreadsheetCellRangeReference> deletedAndUpdatedCellRange() {
@@ -455,163 +442,134 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
                 Optional.empty();
     }
 
-    /**
-     * Returns all cells that were deleted for any reason.
-     */
-    Set<SpreadsheetCellReference> deletedCells() {
-        if (null == this.deletedCells) {
-            this.extractUpdatedCellsDeletedCells();
-        }
-        return Sets.readOnly(this.deletedCells);
-    }
-
-    private Set<SpreadsheetCellReference> deletedCells;
-
-    private void extractUpdatedCellsDeletedCells() {
-        final Set<SpreadsheetCell> updatedCells = Sets.ordered();
-        final Set<SpreadsheetCellReference> deletedCells = Sets.ordered();
-
-        for (final Map.Entry<SpreadsheetCellReference, SpreadsheetCell> referenceToCell : this.updatedAndDeletedCells.entrySet()) {
-            final SpreadsheetCell cell = referenceToCell.getValue();
-            if (null != cell) {
-                updatedCells.add(cell);
-            } else {
-                deletedCells.add(referenceToCell.getKey());
-            }
-        }
-
-        this.updatedCells = updatedCells;
-        this.deletedCells = deletedCells;
-    }
-
-    // columns............................................................................................................
-
-    /**
-     * Returns all the updated {@link SpreadsheetColumn}.
-     */
-    Set<SpreadsheetColumn> updatedColumns() {
-        if(null == this.updatedColumns) {
-            this.extractUpdatedColumnsDeletedColumns();
-        }
-        return Sets.readOnly(this.updatedColumns);
-    }
-
-    private Set<SpreadsheetColumn> updatedColumns;
-
-    /**
-     * Returns all columns that were deleted for any reason.
-     */
-    Set<SpreadsheetColumnReference> deletedColumns() {
-        if(null == this.deletedColumns) {
-            this.extractUpdatedColumnsDeletedColumns();
-        }
-        return Sets.readOnly(this.deletedColumns);
-    }
-
-    private Set<SpreadsheetColumnReference> deletedColumns;
-
-    private void extractUpdatedColumnsDeletedColumns() {
-        final Set<SpreadsheetColumn> updatedColumns = Sets.ordered();
-        final Set<SpreadsheetColumnReference> deletedColumns = Sets.ordered();
-
-        for (final Map.Entry<SpreadsheetColumnReference, SpreadsheetColumn> referenceToColumn : this.updatedAndDeletedColumns.entrySet()) {
-            final SpreadsheetColumn column = referenceToColumn.getValue();
-            if (null != column) {
-                updatedColumns.add(column);
-            } else {
-                deletedColumns.add(referenceToColumn.getKey());
-            }
-        }
-
-        this.updatedColumns = updatedColumns;
-        this.deletedColumns = deletedColumns;
-    }
-
-    // rows............................................................................................................
-
-    /**
-     * Returns all the updated {@link SpreadsheetRow}.
-     */
-    Set<SpreadsheetRow> updatedRows() {
-        if(null == this.updatedRows) {
-            this.extractUpdatedRowsDeletedRows();
-        }
-        return Sets.readOnly(this.updatedRows);
-    }
-
-    private Set<SpreadsheetRow> updatedRows;
-
-    /**
-     * Returns all rows that were deleted for any reason.
-     */
-    Set<SpreadsheetRowReference> deletedRows() {
-        if(null == this.deletedRows) {
-            this.extractUpdatedRowsDeletedRows();
-        }
-        return Sets.readOnly(this.deletedRows);
-    }
-
-    private Set<SpreadsheetRowReference> deletedRows;
-
-    private void extractUpdatedRowsDeletedRows() {
-        final Set<SpreadsheetRow> updatedRows = Sets.ordered();
-        final Set<SpreadsheetRowReference> deletedRows = Sets.ordered();
-
-        for (final Map.Entry<SpreadsheetRowReference, SpreadsheetRow> referenceToRow : this.updatedAndDeletedRows.entrySet()) {
-            final SpreadsheetRow row = referenceToRow.getValue();
-            if (null != row) {
-                updatedRows.add(row);
-            } else {
-                deletedRows.add(referenceToRow.getKey());
-            }
-        }
-
-        this.updatedRows = updatedRows;
-        this.deletedRows = deletedRows;
-    }
-
-    // labels............................................................................................................
-
-    /**
-     * Returns all the updated {@link SpreadsheetLabelMapping}.
-     */
-    Set<SpreadsheetLabelMapping> updatedLabels() {
-        if (null == this.updatedLabels) {
-            this.extractUpdatedLabelsDeletedLabels();
-        }
-        return Sets.readOnly(this.updatedLabels);
-    }
-
-    private Set<SpreadsheetLabelMapping> updatedLabels;
-
-    /**
-     * Returns all labels that were deleted for any reason.
-     */
-    Set<SpreadsheetLabelName> deletedLabels() {
-        if (null == this.deletedLabels) {
-            this.extractUpdatedLabelsDeletedLabels();
-        }
-        return Sets.readOnly(this.deletedLabels);
-    }
-
-    private Set<SpreadsheetLabelName> deletedLabels;
-
-    private void extractUpdatedLabelsDeletedLabels() {
-        final Set<SpreadsheetLabelMapping> updatedLabels = Sets.ordered();
-        final Set<SpreadsheetLabelName> deletedLabels = Sets.ordered();
-
-        for (final Map.Entry<SpreadsheetLabelName, SpreadsheetLabelMapping> labelAndMapping : this.updatedAndDeletedLabels.entrySet()) {
-            final SpreadsheetLabelMapping mapping = labelAndMapping.getValue();
-            if (null != mapping) {
-                updatedLabels.add(mapping);
-            } else {
-                deletedLabels.add(labelAndMapping.getKey());
-            }
-        }
-
-        this.updatedLabels = updatedLabels;
-        this.deletedLabels = deletedLabels;
-    }
+//    // columns............................................................................................................
+//
+//    /**
+//     * Returns all the updated {@link SpreadsheetColumn}.
+//     */
+//    Set<SpreadsheetColumn> updatedColumns() {
+//        if(null == this.updatedColumns) {
+//            this.extractUpdatedColumnsDeletedColumns();
+//        }
+//        return Sets.readOnly(this.updatedColumns);
+//    }
+//
+//    private Set<SpreadsheetColumn> updatedColumns;
+//
+//    /**
+//     * Returns all columns that were deleted for any reason.
+//     */
+//    Set<SpreadsheetColumnReference> deletedColumns() {
+//        if(null == this.deletedColumns) {
+//            this.extractUpdatedColumnsDeletedColumns();
+//        }
+//        return Sets.readOnly(this.deletedColumns);
+//    }
+//
+//    private Set<SpreadsheetColumnReference> deletedColumns;
+//
+//    private void extractUpdatedColumnsDeletedColumns() {
+//        final Set<SpreadsheetColumn> updatedColumns = Sets.ordered();
+//        final Set<SpreadsheetColumnReference> deletedColumns = Sets.ordered();
+//
+//        for (final Map.Entry<SpreadsheetColumnReference, SpreadsheetColumn> referenceToColumn : this.updatedAndDeletedColumns.entrySet()) {
+//            final SpreadsheetColumn column = referenceToColumn.getValue();
+//            if (null != column) {
+//                updatedColumns.add(column);
+//            } else {
+//                deletedColumns.add(referenceToColumn.getKey());
+//            }
+//        }
+//
+//        this.updatedColumns = updatedColumns;
+//        this.deletedColumns = deletedColumns;
+//    }
+//
+//    // rows............................................................................................................
+//
+//    /**
+//     * Returns all the updated {@link SpreadsheetRow}.
+//     */
+//    Set<SpreadsheetRow> updatedRows() {
+//        if(null == this.updatedRows) {
+//            this.extractUpdatedRowsDeletedRows();
+//        }
+//        return Sets.readOnly(this.updatedRows);
+//    }
+//
+//    private Set<SpreadsheetRow> updatedRows;
+//
+//    /**
+//     * Returns all rows that were deleted for any reason.
+//     */
+//    Set<SpreadsheetRowReference> deletedRows() {
+//        if(null == this.deletedRows) {
+//            this.extractUpdatedRowsDeletedRows();
+//        }
+//        return Sets.readOnly(this.deletedRows);
+//    }
+//
+//    private Set<SpreadsheetRowReference> deletedRows;
+//
+//    private void extractUpdatedRowsDeletedRows() {
+//        final Set<SpreadsheetRow> updatedRows = Sets.ordered();
+//        final Set<SpreadsheetRowReference> deletedRows = Sets.ordered();
+//
+//        for (final Map.Entry<SpreadsheetRowReference, SpreadsheetRow> referenceToRow : this.updatedAndDeletedRows.entrySet()) {
+//            final SpreadsheetRow row = referenceToRow.getValue();
+//            if (null != row) {
+//                updatedRows.add(row);
+//            } else {
+//                deletedRows.add(referenceToRow.getKey());
+//            }
+//        }
+//
+//        this.updatedRows = updatedRows;
+//        this.deletedRows = deletedRows;
+//    }
+//
+//    // labels............................................................................................................
+//
+//    /**
+//     * Returns all the updated {@link SpreadsheetLabelMapping}.
+//     */
+//    Set<SpreadsheetLabelMapping> updatedLabels() {
+//        if (null == this.updatedLabels) {
+//            this.extractUpdatedLabelsDeletedLabels();
+//        }
+//        return Sets.readOnly(this.updatedLabels);
+//    }
+//
+//    private Set<SpreadsheetLabelMapping> updatedLabels;
+//
+//    /**
+//     * Returns all labels that were deleted for any reason.
+//     */
+//    Set<SpreadsheetLabelName> deletedLabels() {
+//        if (null == this.deletedLabels) {
+//            this.extractUpdatedLabelsDeletedLabels();
+//        }
+//        return Sets.readOnly(this.deletedLabels);
+//    }
+//
+//    private Set<SpreadsheetLabelName> deletedLabels;
+//
+//    private void extractUpdatedLabelsDeletedLabels() {
+//        final Set<SpreadsheetLabelMapping> updatedLabels = Sets.ordered();
+//        final Set<SpreadsheetLabelName> deletedLabels = Sets.ordered();
+//
+//        for (final Map.Entry<SpreadsheetLabelName, SpreadsheetLabelMapping> labelAndMapping : this.updatedAndDeletedLabels.entrySet()) {
+//            final SpreadsheetLabelMapping mapping = labelAndMapping.getValue();
+//            if (null != mapping) {
+//                updatedLabels.add(mapping);
+//            } else {
+//                deletedLabels.add(labelAndMapping.getKey());
+//            }
+//        }
+//
+//        this.updatedLabels = updatedLabels;
+//        this.deletedLabels = deletedLabels;
+//    }
 
     // batch...........................................................................................................
 
@@ -673,19 +631,19 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
      * Records all updated which includes deleted cells. This can then be returned by the {@link BasicSpreadsheetEngine} method.
      * A null value indicates the cell was deleted.
      */
-    private final Map<SpreadsheetCellReference, SpreadsheetCell> updatedAndDeletedCells = Maps.sorted();
+    final Map<SpreadsheetCellReference, SpreadsheetCell> updatedAndDeletedCells = Maps.sorted();
 
     /**
      * Records all updated which includes deleted columns. This can then be returned by the {@link BasicSpreadsheetEngine} method.
      * A null value indicates the column was deleted.
      */
-    private final Map<SpreadsheetColumnReference, SpreadsheetColumn> updatedAndDeletedColumns = Maps.sorted();
+    final Map<SpreadsheetColumnReference, SpreadsheetColumn> updatedAndDeletedColumns = Maps.sorted();
 
     /**
      * Records all updated which includes deleted rows. This can then be returned by the {@link BasicSpreadsheetEngine} method.
      * A null value indicates the row was deleted.
      */
-    private final Map<SpreadsheetRowReference, SpreadsheetRow> updatedAndDeletedRows = Maps.sorted();
+    final Map<SpreadsheetRowReference, SpreadsheetRow> updatedAndDeletedRows = Maps.sorted();
 
     /**
      * Holds a queue of labels that need to be updated.
@@ -696,7 +654,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
      * Records all updated and deleted labels. This can then be returned by the {@link BasicSpreadsheetEngine} method.
      * A null value indicates the label was deleted.
      */
-    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> updatedAndDeletedLabels = Maps.sorted();
+    final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> updatedAndDeletedLabels = Maps.sorted();
 
     // VisibleFor BasicSpreadsheetEngine
     final Set<SpreadsheetDeltaProperties> deltaProperties;
