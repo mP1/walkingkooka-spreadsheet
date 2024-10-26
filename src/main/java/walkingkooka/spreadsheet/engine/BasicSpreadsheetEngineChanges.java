@@ -255,9 +255,9 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
                     label,
                     mapping
             );
-        } else {
-            this.batchReferences(label);
         }
+
+        this.batchReferences(label);
     }
 
     void onLabelDeletedImmediate(final SpreadsheetLabelName label) {

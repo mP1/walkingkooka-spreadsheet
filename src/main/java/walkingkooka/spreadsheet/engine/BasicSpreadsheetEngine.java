@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -55,7 +56,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
@@ -894,8 +894,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> labels = Maps.ordered();
 
         if (shouldSaveUpdateLabels || shouldDeleteLabels || shouldSaveUpdateCells) {
-            final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = repo.labelReferences();
-
             for (final Map.Entry<SpreadsheetLabelName, SpreadsheetLabelMapping> labelNameAndMapping : changes.updatedAndDeletedLabels.entrySet()) {
                 final SpreadsheetLabelName labelName = labelNameAndMapping.getKey();
                 final SpreadsheetLabelMapping labelMapping = labelNameAndMapping.getValue();
@@ -907,22 +905,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 labelMapping
                         );
                     }
+                    if (shouldSaveUpdateCells) {
+                        addLabelMappingCells(
+                                labelMapping,
+                                labelStore,
+                                cells,
+                                cellStore
+                        );
+                    }
                 } else {
                     if (shouldDeleteLabels) {
                         labels.put(
                                 labelName,
                                 null
-                        );
-                    }
-                }
-                if (shouldSaveUpdateCells) {
-                    final Set<SpreadsheetCellReference> cellReferences = labelReferences.load(labelName)
-                            .orElse(Sets.empty());
-                    for (final SpreadsheetCellReference cell : cellReferences) {
-                        this.addIfNecessary(
-                                cell,
-                                cells,
-                                cellStore
                         );
                     }
                 }
@@ -938,7 +933,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                 if (null != cell) {
                     if (shouldSaveUpdateCells) {
-                        //updatedCells.add(cell);
                         cells.put(
                                 cellReference,
                                 cell
@@ -946,10 +940,22 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     }
                     if (shouldSaveUpdateLabels) {
                         for (final SpreadsheetLabelMapping labelMapping : labelStore.labels(cellReference)) {
-                            labels.put(
-                                    labelMapping.label(),
-                                    labelMapping
-                            );
+                            final SpreadsheetLabelName labelName = labelMapping.label();
+                            if(false == labels.containsKey(labelName)) {
+                                labels.put(
+                                        labelName,
+                                        labelMapping
+                                );
+
+                                if (shouldSaveUpdateCells) {
+                                    addLabelMappingCells(
+                                            labelMapping,
+                                            labelStore,
+                                            cells,
+                                            cellStore
+                                    );
+                                }
+                            }
                         }
                     }
                     if (shouldSaveUpdateColumns) {
@@ -981,6 +987,50 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         );
                     }
                     if (shouldDeleteRows) {
+                        this.addIfNecessary(
+                                cellReference.row(),
+                                rows,
+                                rowStore
+                        );
+                    }
+                }
+            }
+
+            // each cell might have additional labels...................................................................
+
+            for (final Map.Entry<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell : cells.entrySet()) {
+                final SpreadsheetCellReference cellReference = cellReferenceToCell.getKey();
+                final SpreadsheetCell cell = cellReferenceToCell.getValue();
+
+                if (null != cell) {
+                    if (shouldSaveUpdateLabels) {
+                        for (final SpreadsheetLabelMapping labelMapping : labelStore.labels(cellReference)) {
+                            final SpreadsheetLabelName labelName = labelMapping.label();
+                            if(false == labels.containsKey(labelName)) {
+                                labels.put(
+                                        labelName,
+                                        labelMapping
+                                );
+
+                                if (shouldSaveUpdateCells) {
+                                    addLabelMappingCells(
+                                            labelMapping,
+                                            labelStore,
+                                            cells,
+                                            cellStore
+                                    );
+                                }
+                            }
+                        }
+                    }
+                    if (shouldSaveUpdateColumns) {
+                        this.addIfNecessary(
+                                cellReference.column(),
+                                columns,
+                                columnStore
+                        );
+                    }
+                    if (shouldSaveUpdateRows) {
                         this.addIfNecessary(
                                 cellReference.row(),
                                 rows,
@@ -1127,6 +1177,30 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
 
         return delta;
+    }
+
+    private void addLabelMappingCells(final SpreadsheetLabelMapping labelMapping,
+                                      final SpreadsheetLabelStore labelStore,
+                                      final Map<SpreadsheetCellReference, SpreadsheetCell> cells,
+                                      final SpreadsheetCellStore cellStore) {
+        SpreadsheetExpressionReference target;
+        do {
+            target = labelMapping.target();
+            if (target instanceof SpreadsheetLabelName) {
+                target = labelStore.load(
+                                target.toLabelName()
+                        ).map(SpreadsheetLabelMapping::target)
+                        .orElse(null);
+            }
+        } while (target instanceof SpreadsheetLabelName);
+
+        if (target instanceof SpreadsheetCellReference) {
+            this.addIfNecessary(
+                    target.toCell(),
+                    cells,
+                    cellStore
+            );
+        }
     }
 
     private void addColumnWidthIfNecessary(final SpreadsheetColumnReference column,
