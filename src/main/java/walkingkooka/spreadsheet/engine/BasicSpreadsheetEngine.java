@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -42,7 +43,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
@@ -695,337 +696,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    /**
-     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
-     */
-    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
-                                             final SpreadsheetEngineContext context) {
-        changes.refreshUpdated();
-
-        return this.prepareResponse(
-                changes,
-                changes.deletedAndUpdatedCellRange().map(
-                        r -> SpreadsheetViewportWindows.with(
-                                Sets.of(r)
-                        )
-                ).orElse(SpreadsheetViewportWindows.EMPTY),
-                context
-        );
-    }
-
-    /**
-     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for the
-     * given {@link SpreadsheetViewportWindows}. Labels must be loaded for the entire {@link SpreadsheetViewportWindows},
-     * because {@link SpreadsheetLabelMapping} may exist for missing/empty cells which are not present in either
-     * {@link SpreadsheetDelta#cells} or {@link SpreadsheetDelta#deletedColumns}.
-     */
-    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
-                                             final SpreadsheetViewportWindows window,
-                                             final SpreadsheetEngineContext context) {
-        changes.refreshUpdated();
-
-        final Set<SpreadsheetDeltaProperties> deltaProperties = changes.deltaProperties;
-
-        final boolean addCells = deltaProperties.contains(SpreadsheetDeltaProperties.CELLS);
-
-        final boolean addColumns = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMNS);
-        final boolean addRows = deltaProperties.contains(SpreadsheetDeltaProperties.ROWS);
-        final boolean addLabels = deltaProperties.contains(SpreadsheetDeltaProperties.LABELS);
-
-        final boolean addDeletedCells = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS);
-        final boolean addDeletedColumns = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_COLUMNS);
-        final boolean addDeletedRows = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_ROWS);
-        final boolean addDeletedLabels = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_LABELS);
-
-        final Set<SpreadsheetCell> updatedCells = addCells ? changes.updatedCells() : SpreadsheetDelta.NO_CELLS;
-        final Set<SpreadsheetColumn> updatedColumns = addColumns ? changes.updatedColumns() : SpreadsheetDelta.NO_COLUMNS;
-        final Set<SpreadsheetRow> updatedRows = addRows ? changes.updatedRows() : SpreadsheetDelta.NO_ROWS;
-        final Set<SpreadsheetLabelMapping> updatedLabels = addLabels ? changes.updatedLabels() : SpreadsheetDelta.NO_LABELS;
-
-        final SpreadsheetStoreRepository repo = context.storeRepository();
-
-        final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted();
-        final SpreadsheetColumnStore columnStore = repo.columns();
-
-        // $updatedColumns will be empty if SpreadsheetDeltaProperties.COLUMNS is missing
-        for (final SpreadsheetColumn column : updatedColumns) {
-            final SpreadsheetColumnReference columnReference = column.reference();
-
-            addIfNecessary(
-                    columnReference,
-                    columns,
-                    columnStore
-            );
-        }
-
-        final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted();
-        final SpreadsheetRowStore rowStore = repo.rows();
-
-        // $updatedRows will be empty if SpreadsheetDeltaProperties.ROWS is missing
-        for (final SpreadsheetRow row : updatedRows) {
-            final SpreadsheetRowReference rowReference = row.reference();
-
-            addIfNecessary(
-                    rowReference,
-                    rows,
-                    rowStore
-            );
-        }
-
-        final Set<SpreadsheetLabelMapping> labels = SortedSets.tree();
-        final SpreadsheetLabelStore labelStore = repo.labels();
-
-        // record columns and rows for updated cells...
-
-        if (addColumns || addRows || addLabels) {
-            labels.addAll(updatedLabels);
-
-            for (final SpreadsheetCell cell : updatedCells) {
-                final SpreadsheetCellReference cellReference = cell.reference();
-
-                if (addColumns) {
-                    addIfNecessary(
-                            cellReference.column(),
-                            columns,
-                            columnStore
-                    );
-                }
-
-                if (addRows) {
-                    addIfNecessary(
-                            cellReference.row(),
-                            rows,
-                            rowStore
-                    );
-                }
-
-                if (addLabels) {
-                    addLabels(
-                            cell.reference(),
-                            labelStore,
-                            labels
-                    );
-                }
-            }
-        }
-
-        // add labels within the range of the given window.
-        if (window.isNotEmpty()) {
-            // if not adding columns/rows/labels theres no point looping over ranges for their cells
-            if (addCells && (addColumns || addRows || addLabels)) {
-                final Set<SpreadsheetCellReference> cellReferences = Sets.hash();
-
-
-                for (final SpreadsheetCellRangeReference range : window.cellRanges()) {
-
-                    // include all columns and rows within the window.
-                    range.cellStream()
-                            .forEach(c -> {
-                                if (cellReferences.add(c)) {
-                                    if (addColumns) {
-                                        addIfNecessary(
-                                                c.column(),
-                                                columns,
-                                                columnStore
-                                        );
-                                    }
-
-                                    if (addRows) {
-                                        addIfNecessary(
-                                                c.row(),
-                                                rows,
-                                                rowStore
-                                        );
-                                    }
-                                        }
-                                    }
-                            );
-
-                    if (addLabels) {
-                        addLabels(
-                                range,
-                                labelStore,
-                                labels
-                        );
-                    }
-                }
-            }
-        }
-
-        // load columns and rows for the deleted cells.
-        final Set<SpreadsheetCellReference> deletedCells = changes.deletedCells();
-
-        if (addDeletedCells && (addDeletedColumns || addDeletedRows)) {
-            for (final SpreadsheetCellReference deletedCell : deletedCells) {
-                if (addDeletedColumns) {
-                    addIfNecessary(
-                            deletedCell.column(),
-                            columns,
-                            columnStore
-                    );
-                }
-
-                if (addDeletedRows) {
-                    addIfNecessary(
-                            deletedCell.row(),
-                            rows,
-                            rowStore
-                    );
-                }
-            }
-        }
-
-        // order is important because labels and cells for hidden columns/rows are filtered.
-        SpreadsheetDelta delta = SpreadsheetDelta.EMPTY;
-        if (addColumns) {
-            delta = delta.setColumns(sortedSet(columns));
-        }
-        if (addRows) {
-            delta = delta.setRows(sortedSet(rows));
-        }
-        if (addCells) {
-            delta = delta.setCells(updatedCells);
-        }
-        if (addLabels) {
-            delta = delta.setLabels(labels);
-        }
-        if (addDeletedCells) {
-            delta = delta.setDeletedCells(deletedCells);
-        }
-        if (addDeletedColumns) {
-            delta = delta.setDeletedColumns(changes.deletedColumns());
-        }
-        if (addDeletedRows) {
-            delta = delta.setDeletedRows(changes.deletedRows());
-        }
-        if (addDeletedLabels) {
-            delta = delta.setDeletedLabels(changes.deletedLabels());
-        }
-        if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
-            final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
-
-            for (final SpreadsheetCell cell : updatedCells) {
-                this.addColumnWidthIfNecessary(
-                        cell.reference()
-                                .column()
-                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
-                        columnsWidths,
-                        context
-                );
-            }
-
-            for (final SpreadsheetCellReference cell : deletedCells) {
-                this.addColumnWidthIfNecessary(
-                        cell.column()
-                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
-                        columnsWidths,
-                        context
-                );
-            }
-
-            delta = delta.setColumnWidths(columnsWidths);
-        }
-        if (deltaProperties.contains(SpreadsheetDeltaProperties.ROW_HEIGHTS)) {
-            final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
-
-            for (final SpreadsheetCell cell : updatedCells) {
-                this.addRowHeightIfNecessary(
-                        cell.reference()
-                                .row()
-                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
-                        rowsHeights,
-                        context
-                );
-            }
-
-            for (final SpreadsheetCellReference cell : deletedCells) {
-                this.addRowHeightIfNecessary(
-                        cell.row()
-                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
-                        rowsHeights,
-                        context
-                );
-            }
-
-            delta = delta.setRowHeights(rowsHeights);
-        }
-
-        final boolean hasColumnCount = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_COUNT);
-        final boolean hasRowCount = deltaProperties.contains(SpreadsheetDeltaProperties.ROW_COUNT);
-
-        if (hasColumnCount || hasRowCount) {
-            if (hasColumnCount) {
-                delta = delta.setColumnCount(
-                        OptionalInt.of(
-                                this.columnCount(context)
-                        )
-                );
-            }
-            if (hasRowCount) {
-                delta = delta.setRowCount(
-                        OptionalInt.of(
-                                this.rowCount(context)
-                        )
-                );
-            }
-        }
-
-        return delta;
-    }
-
-    private void addColumnWidthIfNecessary(final SpreadsheetColumnReference column,
-                                           final Map<SpreadsheetColumnReference, Double> columnsWidths,
-                                           final SpreadsheetEngineContext context) {
-        if (false == columnsWidths.containsKey(column)) {
-            final double width = this.columnWidth(column, context);
-            if (width > 0) {
-                columnsWidths.put(column, width);
-            }
-        }
-    }
-
-    private void addRowHeightIfNecessary(final SpreadsheetRowReference row,
-                                         final Map<SpreadsheetRowReference, Double> rowsHeights,
-                                         final SpreadsheetEngineContext context) {
-        if (false == rowsHeights.containsKey(row)) {
-            final double height = this.rowHeight(row, context);
-            if (height > 0) {
-                rowsHeights.put(row, height);
-            }
-        }
-    }
-
-    private <R extends SpreadsheetColumnOrRowReference & Comparable<R>, H extends HasSpreadsheetReference<R>> void addIfNecessary(final R reference,
-                                                                                                                                  final Map<R, H> referenceToHas,
-                                                                                                                                  final SpreadsheetStore<R, H> store) {
-        if (!referenceToHas.containsKey(reference)) {
-            referenceToHas.put(
-                    reference,
-                    store.load(reference)
-                            .orElse(null)
-            );
-        }
-    }
-
-    private static void addLabels(final SpreadsheetExpressionReference reference,
-                                  final SpreadsheetLabelStore store,
-                                  final Set<SpreadsheetLabelMapping> all) {
-        all.addAll(store.labels(reference));
-    }
-
-    private static <T> Set<T> sortedSet(final Map<?, T> columnsOrRows) {
-        final Set<T> set = SortedSets.tree();
-
-        for (final T value : columnsOrRows.values()) {
-            // not all columns or rows have a SpreadsheetColumn or SpreadsheetRow with values.
-            if (null != value) {
-                set.add(value);
-            }
-        }
-
-        return set;
-    }
-
     // labels............................................................................................................
 
     @Override
@@ -1112,6 +782,402 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         evaluation,
                         context
                 );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
+     */
+    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
+                                             final SpreadsheetEngineContext context) {
+        changes.refreshUpdated();
+
+        return this.prepareResponse(
+                changes,
+                changes.deletedAndUpdatedCellRange().map(
+                        r -> SpreadsheetViewportWindows.with(
+                                Sets.of(r)
+                        )
+                ).orElse(SpreadsheetViewportWindows.EMPTY),
+                context
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for the
+     * given {@link SpreadsheetViewportWindows}. Labels must be loaded for the entire {@link SpreadsheetViewportWindows},
+     * because {@link SpreadsheetLabelMapping} may exist for missing/empty cells which are not present in either
+     * {@link SpreadsheetDelta#cells} or {@link SpreadsheetDelta#deletedColumns}.
+     */
+    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
+                                             final SpreadsheetViewportWindows window,
+                                             final SpreadsheetEngineContext context) {
+        changes.refreshUpdated();
+
+        final SpreadsheetStoreRepository repo = context.storeRepository();
+
+        final Set<SpreadsheetDeltaProperties> deltaProperties = changes.deltaProperties;
+
+        // columns......................................................................................................
+
+        final boolean shouldSaveUpdateColumns = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMNS);
+        final boolean shouldDeleteColumns = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_COLUMNS);
+
+        final SpreadsheetColumnStore columnStore = repo.columns();
+        final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted();
+
+        if (shouldSaveUpdateColumns || shouldDeleteColumns) {
+            for (final Map.Entry<SpreadsheetColumnReference, SpreadsheetColumn> referenceToColumn : changes.updatedAndDeletedColumns.entrySet()) {
+                final SpreadsheetColumnReference reference = referenceToColumn.getKey();
+                final SpreadsheetColumn column = referenceToColumn.getValue();
+
+                if (null != column) {
+                    if (shouldSaveUpdateColumns) {
+                        columns.put(
+                                reference,
+                                column
+                        );
+                    }
+                } else {
+                    if (shouldDeleteColumns) {
+                        columns.put(
+                                reference,
+                                null
+                        );
+                    }
+                }
+            }
+        }
+
+        // rows.........................................................................................................
+
+        final boolean shouldSaveUpdateRows = deltaProperties.contains(SpreadsheetDeltaProperties.ROWS);
+        final boolean shouldDeleteRows = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_ROWS);
+
+        final SpreadsheetRowStore rowStore = repo.rows();
+        final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted();
+
+        if (shouldSaveUpdateRows || shouldDeleteRows) {
+            for (final Map.Entry<SpreadsheetRowReference, SpreadsheetRow> referenceToRow : changes.updatedAndDeletedRows.entrySet()) {
+                final SpreadsheetRowReference reference = referenceToRow.getKey();
+                final SpreadsheetRow row = referenceToRow.getValue();
+
+                if (null != row) {
+                    if (shouldSaveUpdateRows) {
+                        rows.put(
+                                reference,
+                                row
+                        );
+                    }
+                } else {
+                    if (shouldDeleteRows) {
+                        rows.put(
+                                reference,
+                                null
+                        );
+                    }
+                }
+            }
+        }
+
+        // labels.......................................................................................................
+
+        final SpreadsheetLabelStore labelStore = repo.labels();
+        final SpreadsheetCellStore cellStore = repo.cells();
+
+        final boolean shouldSaveUpdateLabels = deltaProperties.contains(SpreadsheetDeltaProperties.LABELS);
+        final boolean shouldDeleteLabels = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_LABELS);
+
+        final boolean shouldSaveUpdateCells = deltaProperties.contains(SpreadsheetDeltaProperties.CELLS);
+        final boolean shouldDeleteCells = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS);
+
+        final Map<SpreadsheetCellReference, SpreadsheetCell> cells = Maps.sorted();
+
+        final Set<SpreadsheetLabelMapping> updatedLabels = Sets.ordered();
+        final Set<SpreadsheetLabelName> deletedLabels = Sets.ordered();
+
+        if (shouldSaveUpdateLabels || shouldDeleteLabels || shouldSaveUpdateCells) {
+            final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = repo.labelReferences();
+
+            for (final Map.Entry<SpreadsheetLabelName, SpreadsheetLabelMapping> labelNameAndMapping : changes.updatedAndDeletedLabels.entrySet()) {
+                final SpreadsheetLabelName labelName = labelNameAndMapping.getKey();
+                final SpreadsheetLabelMapping labelMapping = labelNameAndMapping.getValue();
+
+                if (null != labelMapping) {
+                    if (shouldSaveUpdateLabels) {
+                        updatedLabels.add(labelMapping);
+                    }
+                } else {
+                    if (shouldDeleteLabels) {
+                        deletedLabels.add(labelName);
+                    }
+                }
+                if (shouldSaveUpdateCells) {
+                    final Set<SpreadsheetCellReference> cellReferences = labelReferences.load(labelName)
+                            .orElse(Sets.empty());
+                    for (final SpreadsheetCellReference cell : cellReferences) {
+                        this.addIfNecessary(
+                                cell,
+                                cells,
+                                cellStore
+                        );
+                    }
+                }
+            }
+        }
+
+        // cells........................................................................................................
+
+        if (shouldSaveUpdateCells || shouldDeleteCells || shouldSaveUpdateLabels || shouldDeleteLabels || shouldSaveUpdateColumns || shouldDeleteColumns || shouldSaveUpdateRows || shouldDeleteRows) {
+            for (final Map.Entry<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell : changes.updatedAndDeletedCells.entrySet()) {
+                final SpreadsheetCellReference cellReference = cellReferenceToCell.getKey();
+                final SpreadsheetCell cell = cellReferenceToCell.getValue();
+
+                if (null != cell) {
+                    if (shouldSaveUpdateCells) {
+                        //updatedCells.add(cell);
+                        cells.put(
+                                cellReference,
+                                cell
+                        );
+                    }
+                    if (shouldSaveUpdateLabels) {
+                        updatedLabels.addAll(
+                                labelStore.labels(cellReference)
+                        );
+                    }
+                    if (shouldSaveUpdateColumns) {
+                        this.addIfNecessary(
+                                cellReference.column(),
+                                columns,
+                                columnStore
+                        );
+                    }
+                    if (shouldSaveUpdateRows) {
+                        this.addIfNecessary(
+                                cellReference.row(),
+                                rows,
+                                rowStore
+                        );
+                    }
+                } else {
+                    if (shouldDeleteCells) {
+                        cells.put(
+                                cellReference,
+                                null
+                        );
+                    }
+                    if (shouldDeleteColumns) {
+                        this.addIfNecessary(
+                                cellReference.column(),
+                                columns,
+                                columnStore
+                        );
+                    }
+                    if (shouldDeleteRows) {
+                        this.addIfNecessary(
+                                cellReference.row(),
+                                rows,
+                                rowStore
+                        );
+                    }
+                }
+            }
+        }
+
+        // add labels within the range of the given window.
+        if (window.isNotEmpty()) {
+            // if not adding columns/rows/labels theres no point looping over ranges for their cells
+            if (shouldSaveUpdateCells && (shouldSaveUpdateColumns || shouldSaveUpdateRows || shouldSaveUpdateLabels)) {
+                final Set<SpreadsheetCellReference> cellReferences = Sets.hash();
+
+
+                for (final SpreadsheetCellRangeReference range : window.cellRanges()) {
+
+                    // include all columns and rows within the window.
+                    range.cellStream()
+                            .forEach(c -> {
+                                        if (cellReferences.add(c)) {
+                                            if (shouldSaveUpdateColumns) {
+                                                addIfNecessary(
+                                                        c.column(),
+                                                        columns,
+                                                        columnStore
+                                                );
+                                            }
+
+                                            if (shouldSaveUpdateRows) {
+                                                addIfNecessary(
+                                                        c.row(),
+                                                        rows,
+                                                        rowStore
+                                                );
+                                            }
+                                        }
+                                    }
+                            );
+
+                    if (shouldSaveUpdateLabels) {
+                        updatedLabels.addAll(
+                                labelStore.labels(range)
+                        );
+                    }
+                }
+            }
+        }
+
+        // order is important because labels and cells for hidden columns/rows are filtered.
+        SpreadsheetDelta delta = SpreadsheetDelta.EMPTY;
+        if (shouldSaveUpdateColumns) {
+            delta = delta.setColumns(
+                    extractSavedOrUpdated(columns)
+            );
+        }
+        if (shouldSaveUpdateRows) {
+            delta = delta.setRows(
+                    extractSavedOrUpdated(rows)
+            );
+        }
+        if (shouldSaveUpdateCells) {
+            delta = delta.setCells(
+                    extractSavedOrUpdated(cells)
+            );
+        }
+        if (shouldSaveUpdateLabels) {
+            delta = delta.setLabels(updatedLabels);
+        }
+        if (shouldDeleteCells) {
+            delta = delta.setDeletedCells(
+                    extractDeleted(cells)
+            );
+        }
+        if (shouldDeleteColumns) {
+            delta = delta.setDeletedColumns(
+                    extractDeleted(columns)
+            );
+        }
+        if (shouldDeleteRows) {
+            delta = delta.setDeletedRows(
+                    extractDeleted(rows)
+            );
+        }
+        if (shouldDeleteLabels) {
+            delta = delta.setDeletedLabels(deletedLabels);
+        }
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
+            final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+
+            for (final SpreadsheetCellReference cell : cells.keySet()) {
+                this.addColumnWidthIfNecessary(
+                        cell.column()
+                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
+                        columnsWidths,
+                        context
+                );
+            }
+
+            delta = delta.setColumnWidths(columnsWidths);
+        }
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.ROW_HEIGHTS)) {
+            final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+
+            for (final SpreadsheetCellReference cell : cells.keySet()) {
+                this.addRowHeightIfNecessary(
+                        cell.row()
+                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
+                        rowsHeights,
+                        context
+                );
+            }
+
+            delta = delta.setRowHeights(rowsHeights);
+        }
+
+        final boolean hasColumnCount = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_COUNT);
+        final boolean hasRowCount = deltaProperties.contains(SpreadsheetDeltaProperties.ROW_COUNT);
+
+        if (hasColumnCount || hasRowCount) {
+            if (hasColumnCount) {
+                delta = delta.setColumnCount(
+                        OptionalInt.of(
+                                this.columnCount(context)
+                        )
+                );
+            }
+            if (hasRowCount) {
+                delta = delta.setRowCount(
+                        OptionalInt.of(
+                                this.rowCount(context)
+                        )
+                );
+            }
+        }
+
+        return delta;
+    }
+
+    private void addColumnWidthIfNecessary(final SpreadsheetColumnReference column,
+                                           final Map<SpreadsheetColumnReference, Double> columnsWidths,
+                                           final SpreadsheetEngineContext context) {
+        if (false == columnsWidths.containsKey(column)) {
+            final double width = this.columnWidth(column, context);
+            if (width > 0) {
+                columnsWidths.put(column, width);
+            }
+        }
+    }
+
+    private void addRowHeightIfNecessary(final SpreadsheetRowReference row,
+                                         final Map<SpreadsheetRowReference, Double> rowsHeights,
+                                         final SpreadsheetEngineContext context) {
+        if (false == rowsHeights.containsKey(row)) {
+            final double height = this.rowHeight(row, context);
+            if (height > 0) {
+                rowsHeights.put(row, height);
+            }
+        }
+    }
+
+    private <R extends SpreadsheetSelection & Comparable<R>,
+            H extends HasSpreadsheetReference<R>>
+    void addIfNecessary(final R reference,
+                        final Map<R, H> referenceToHas,
+                        final SpreadsheetStore<R, H> store) {
+        if (false == referenceToHas.containsKey(reference)) {
+            final H columnOrRow = store.load(reference)
+                    .orElse(null);
+            if (null != columnOrRow) {
+                referenceToHas.put(
+                        reference,
+                        columnOrRow
+                );
+            }
+        }
+    }
+
+    private static <T extends HateosResource<? extends SpreadsheetSelection>> Set<T> extractSavedOrUpdated(final Map<?, T> referenceToEntities) {
+        final Set<T> saveOrUpdated = SortedSets.tree();
+
+        for (final T value : referenceToEntities.values()) {
+            if (null != value) {
+                saveOrUpdated.add(value);
+            }
+        }
+
+        return saveOrUpdated;
+    }
+
+    private static <T extends SpreadsheetSelection> Set<T> extractDeleted(final Map<T, ?> referenceToEntities) {
+        final Set<T> deleted = SortedSets.tree();
+
+        for (final Map.Entry<T, ?> referenceToColumnOrRow : referenceToEntities.entrySet()) {
+            if (null == referenceToColumnOrRow.getValue()) {
+                deleted.add(
+                        referenceToColumnOrRow.getKey()
+                );
+            }
+        }
+
+        return deleted;
     }
 
     // PARSE .........................................................................................................
