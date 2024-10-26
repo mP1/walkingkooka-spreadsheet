@@ -891,9 +891,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final boolean shouldDeleteCells = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS);
 
         final Map<SpreadsheetCellReference, SpreadsheetCell> cells = Maps.sorted();
-
-        final Set<SpreadsheetLabelMapping> updatedLabels = Sets.ordered();
-        final Set<SpreadsheetLabelName> deletedLabels = Sets.ordered();
+        final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> labels = Maps.ordered();
 
         if (shouldSaveUpdateLabels || shouldDeleteLabels || shouldSaveUpdateCells) {
             final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = repo.labelReferences();
@@ -904,11 +902,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                 if (null != labelMapping) {
                     if (shouldSaveUpdateLabels) {
-                        updatedLabels.add(labelMapping);
+                        labels.put(
+                                labelName,
+                                labelMapping
+                        );
                     }
                 } else {
                     if (shouldDeleteLabels) {
-                        deletedLabels.add(labelName);
+                        labels.put(
+                                labelName,
+                                null
+                        );
                     }
                 }
                 if (shouldSaveUpdateCells) {
@@ -941,9 +945,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         );
                     }
                     if (shouldSaveUpdateLabels) {
-                        updatedLabels.addAll(
-                                labelStore.labels(cellReference)
-                        );
+                        for (final SpreadsheetLabelMapping labelMapping : labelStore.labels(cellReference)) {
+                            labels.put(
+                                    labelMapping.label(),
+                                    labelMapping
+                            );
+                        }
                     }
                     if (shouldSaveUpdateColumns) {
                         this.addIfNecessary(
@@ -1017,9 +1024,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             );
 
                     if (shouldSaveUpdateLabels) {
-                        updatedLabels.addAll(
-                                labelStore.labels(range)
-                        );
+                        for (final SpreadsheetLabelMapping labelMapping : labelStore.labels(range)) {
+                            labels.put(
+                                    labelMapping.label(),
+                                    labelMapping
+                            );
+                        }
                     }
                 }
             }
@@ -1043,7 +1053,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
         }
         if (shouldSaveUpdateLabels) {
-            delta = delta.setLabels(updatedLabels);
+            delta = delta.setLabels(
+                    extractSavedOrUpdated(labels)
+            );
         }
         if (shouldDeleteCells) {
             delta = delta.setDeletedCells(
@@ -1061,7 +1073,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
         }
         if (shouldDeleteLabels) {
-            delta = delta.setDeletedLabels(deletedLabels);
+            delta = delta.setDeletedLabels(
+                    extractDeleted(labels)
+            );
         }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
             final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
