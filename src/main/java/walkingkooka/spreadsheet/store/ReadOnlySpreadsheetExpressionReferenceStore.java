@@ -53,12 +53,6 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<Set<SpreadsheetCellReference>> saved) {
-        Objects.requireNonNull(saved, "saved");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void delete(final T id) {
         checkId(id);
         throw new UnsupportedOperationException();

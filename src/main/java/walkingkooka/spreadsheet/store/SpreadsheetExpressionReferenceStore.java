@@ -39,6 +39,12 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    default Runnable addSaveWatcher(final Consumer<Set<SpreadsheetCellReference>> saved) {
+        Objects.requireNonNull(saved, "saved");
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Saves many references to the given id. Note any {@link #addAddReferenceWatcher(Consumer)} and {@link #addRemoveReferenceWatcher(Consumer)}
      * will be fired for all targets.
