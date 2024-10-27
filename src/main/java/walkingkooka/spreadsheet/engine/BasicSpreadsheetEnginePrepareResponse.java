@@ -175,20 +175,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                                 cell
                         );
                     }
-                    if (this.shouldSaveUpdateLabels) {
-                        for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cellReference)) {
-
-                            final SpreadsheetLabelName labelName = labelMapping.label();
-                            if (false == this.labels.containsKey(labelName)) {
-                                this.labels.put(
-                                        labelName,
-                                        labelMapping
-                                );
-
-                                this.addLabelMappingCells(labelMapping);
-                            }
-                        }
-                    }
+                    this.addLabelMappingCells(cellReference);
 
                     this.addColumnIfNecessary(
                             cellReference.column()
@@ -219,19 +206,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                 final SpreadsheetCell cell = cellReferenceToCell.getValue();
 
                 if (null != cell) {
-                    if (this.shouldSaveUpdateLabels) {
-                        for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cellReference)) {
-                            final SpreadsheetLabelName labelName = labelMapping.label();
-                            if (false == this.labels.containsKey(labelName)) {
-                                this.labels.put(
-                                        labelName,
-                                        labelMapping
-                                );
-
-                                this.addLabelMappingCells(labelMapping);
-                            }
-                        }
-                    }
+                    this.addLabelMappingCells(cellReference);
                     this.addColumnIfNecessary(
                             cellReference.column()
                     );
@@ -396,6 +371,23 @@ final class BasicSpreadsheetEnginePrepareResponse {
             );
             if (width > 0) {
                 columnsWidths.put(column, width);
+            }
+        }
+    }
+
+    private void addLabelMappingCells(final SpreadsheetCellReference cellReference) {
+        if (this.shouldSaveUpdateLabels) {
+            for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cellReference)) {
+
+                final SpreadsheetLabelName labelName = labelMapping.label();
+                if (false == this.labels.containsKey(labelName)) {
+                    this.labels.put(
+                            labelName,
+                            labelMapping
+                    );
+
+                    this.addLabelMappingCells(labelMapping);
+                }
             }
         }
     }
