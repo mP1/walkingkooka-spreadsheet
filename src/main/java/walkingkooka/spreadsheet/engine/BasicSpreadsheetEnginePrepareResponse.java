@@ -177,10 +177,10 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     }
                     this.addLabelMappingCells(cellReference);
 
-                    this.addColumnIfNecessary(
+                    this.addColumn(
                             cellReference.column()
                     );
-                    this.addRowIfNecessary(
+                    this.addRow(
                             cellReference.row()
                     );
                 } else {
@@ -190,10 +190,10 @@ final class BasicSpreadsheetEnginePrepareResponse {
                                 null
                         );
                     }
-                    this.addColumnIfNecessary(
+                    this.addColumn(
                             cellReference.column()
                     );
-                    this.addRowIfNecessary(
+                    this.addRow(
                             cellReference.row()
                     );
                 }
@@ -207,10 +207,10 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
                 if (null != cell) {
                     this.addLabelMappingCells(cellReference);
-                    this.addColumnIfNecessary(
+                    this.addColumn(
                             cellReference.column()
                     );
-                    this.addRowIfNecessary(
+                    this.addRow(
                             cellReference.row()
                     );
                 }
@@ -230,10 +230,10 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     range.cellStream()
                             .forEach(c -> {
                                         if (cellReferences.add(c)) {
-                                            addColumnIfNecessary(
+                                            addColumn(
                                                     c.column()
                                             );
-                                            addRowIfNecessary(
+                                            addRow(
                                                     c.row()
                                             );
                                         }
@@ -298,7 +298,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
             final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
 
             for (final SpreadsheetCellReference cell : this.cells.keySet()) {
-                this.addColumnWidthIfNecessary(
+                this.addColumnWidth(
                         cell.column()
                                 .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
                         columnsWidths
@@ -311,7 +311,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
             final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
 
             for (final SpreadsheetCellReference cell : this.cells.keySet()) {
-                this.addRowHeightIfNecessary(
+                this.addRowHeight(
                         cell.row()
                                 .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
                         rowsHeights
@@ -344,17 +344,17 @@ final class BasicSpreadsheetEnginePrepareResponse {
         return delta;
     }
 
-    private void addCellIfNecessary(final SpreadsheetCellReference cell) {
-        this.addIfNecessary(
+    private void addCell(final SpreadsheetCellReference cell) {
+        this.add(
                 cell,
                 this.cells,
                 this.cellStore
         );
     }
 
-    private void addColumnIfNecessary(final SpreadsheetColumnReference column) {
+    private void addColumn(final SpreadsheetColumnReference column) {
         if (this.shouldSaveUpdateColumns) {
-            this.addIfNecessary(
+            this.add(
                     column,
                     this.columns,
                     this.columnStore
@@ -362,8 +362,8 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private void addColumnWidthIfNecessary(final SpreadsheetColumnReference column,
-                                           final Map<SpreadsheetColumnReference, Double> columnsWidths) {
+    private void addColumnWidth(final SpreadsheetColumnReference column,
+                                final Map<SpreadsheetColumnReference, Double> columnsWidths) {
         if (false == columnsWidths.containsKey(column)) {
             final double width = this.engine.columnWidth(
                     column,
@@ -406,7 +406,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
             } while (target instanceof SpreadsheetLabelName);
 
             if (target instanceof SpreadsheetCellReference) {
-                this.addCellIfNecessary(
+                this.addCell(
                         target.toCell()
                 );
             }
@@ -414,9 +414,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
 
-    private void addRowIfNecessary(final SpreadsheetRowReference row) {
+    private void addRow(final SpreadsheetRowReference row) {
         if (this.shouldSaveUpdateRows) {
-            this.addIfNecessary(
+            this.add(
                     row,
                     this.rows,
                     this.rowStore
@@ -424,8 +424,8 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private void addRowHeightIfNecessary(final SpreadsheetRowReference row,
-                                         final Map<SpreadsheetRowReference, Double> rowsHeights) {
+    private void addRowHeight(final SpreadsheetRowReference row,
+                              final Map<SpreadsheetRowReference, Double> rowsHeights) {
         if (false == rowsHeights.containsKey(row)) {
             final double height = this.engine.rowHeight(
                     row,
@@ -437,11 +437,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private <R extends SpreadsheetSelection & Comparable<R>,
-            H extends HasSpreadsheetReference<R>>
-    void addIfNecessary(final R reference,
-                        final Map<R, H> referenceToHas,
-                        final SpreadsheetStore<R, H> store) {
+    private <R extends SpreadsheetSelection & Comparable<R>, H extends HasSpreadsheetReference<R>> void add(final R reference,
+                                                                                                            final Map<R, H> referenceToHas,
+                                                                                                            final SpreadsheetStore<R, H> store) {
         if (false == referenceToHas.containsKey(reference)) {
             final H columnOrRow = store.load(reference)
                     .orElse(null);
