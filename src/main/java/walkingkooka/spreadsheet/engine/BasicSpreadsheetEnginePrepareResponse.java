@@ -176,13 +176,6 @@ final class BasicSpreadsheetEnginePrepareResponse {
                         );
                     }
                     this.addLabelMappingCells(cellReference);
-
-                    this.addColumn(
-                            cellReference.column()
-                    );
-                    this.addRow(
-                            cellReference.row()
-                    );
                 } else {
                     if (this.shouldDeleteCells) {
                         this.cells.put(
@@ -207,12 +200,6 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
                 if (null != cell) {
                     this.addLabelMappingCells(cellReference);
-                    this.addColumn(
-                            cellReference.column()
-                    );
-                    this.addRow(
-                            cellReference.row()
-                    );
                 }
             }
         }
@@ -345,11 +332,18 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private void addCell(final SpreadsheetCellReference cell) {
-        this.add(
+        if (this.add(
                 cell,
                 this.cells,
                 this.cellStore
-        );
+        )) {
+            this.addColumn(
+                    cell.column()
+            );
+            this.addRow(
+                    cell.row()
+            );
+        }
     }
 
     private void addColumn(final SpreadsheetColumnReference column) {
@@ -437,9 +431,11 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private <R extends SpreadsheetSelection & Comparable<R>, H extends HasSpreadsheetReference<R>> void add(final R reference,
-                                                                                                            final Map<R, H> referenceToHas,
-                                                                                                            final SpreadsheetStore<R, H> store) {
+    private <R extends SpreadsheetSelection & Comparable<R>, H extends HasSpreadsheetReference<R>> boolean add(final R reference,
+                                                                                                               final Map<R, H> referenceToHas,
+                                                                                                               final SpreadsheetStore<R, H> store) {
+        boolean added = false;
+
         if (false == referenceToHas.containsKey(reference)) {
             final H columnOrRow = store.load(reference)
                     .orElse(null);
@@ -448,8 +444,12 @@ final class BasicSpreadsheetEnginePrepareResponse {
                         reference,
                         columnOrRow
                 );
+
+                added = true;
             }
         }
+
+        return added;
     }
 
     private static <T extends HateosResource<? extends SpreadsheetSelection>> Set<T> extractSavedOrUpdated(final Map<?, T> referenceToEntities) {
