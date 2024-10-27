@@ -149,9 +149,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                                 labelMapping
                         );
                     }
-                    if (this.shouldSaveUpdateCells) {
-                        this.addLabelMappingCells(labelMapping);
-                    }
+                    this.addLabelMappingCells(labelMapping);
                 } else {
                     if (this.shouldDeleteLabels) {
                         this.labels.put(
@@ -187,9 +185,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                                         labelMapping
                                 );
 
-                                if (this.shouldSaveUpdateCells) {
-                                    this.addLabelMappingCells(labelMapping);
-                                }
+                                this.addLabelMappingCells(labelMapping);
                             }
                         }
                     }
@@ -232,11 +228,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                                         labelMapping
                                 );
 
-                                if (this.shouldSaveUpdateCells) {
-                                    this.addLabelMappingCells(
-                                            labelMapping
-                                    );
-                                }
+                                this.addLabelMappingCells(labelMapping);
                             }
                         }
                     }
@@ -409,21 +401,23 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private void addLabelMappingCells(final SpreadsheetLabelMapping labelMapping) {
-        SpreadsheetExpressionReference target;
-        do {
-            target = labelMapping.target();
-            if (target instanceof SpreadsheetLabelName) {
-                target = this.labelStore.load(
-                                target.toLabelName()
-                        ).map(SpreadsheetLabelMapping::target)
-                        .orElse(null);
-            }
-        } while (target instanceof SpreadsheetLabelName);
+        if (this.shouldSaveUpdateCells) {
+            SpreadsheetExpressionReference target;
+            do {
+                target = labelMapping.target();
+                if (target instanceof SpreadsheetLabelName) {
+                    target = this.labelStore.load(
+                                    target.toLabelName()
+                            ).map(SpreadsheetLabelMapping::target)
+                            .orElse(null);
+                }
+            } while (target instanceof SpreadsheetLabelName);
 
-        if (target instanceof SpreadsheetCellReference) {
-            this.addCellIfNecessary(
-                    target.toCell()
-            );
+            if (target instanceof SpreadsheetCellReference) {
+                this.addCellIfNecessary(
+                        target.toCell()
+                );
+            }
         }
     }
 
