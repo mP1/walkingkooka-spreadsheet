@@ -263,12 +263,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     range.cellStream()
                             .forEach(c -> {
                                         if (cellReferences.add(c)) {
-                                            if (this.shouldSaveUpdateColumns) {
-                                                addColumnIfNecessary(
-                                                        c.column()
-                                                );
-                                            }
-
+                                            addColumnIfNecessary(
+                                                    c.column()
+                                            );
                                             addRowIfNecessary(
                                                     c.row()
                                             );
