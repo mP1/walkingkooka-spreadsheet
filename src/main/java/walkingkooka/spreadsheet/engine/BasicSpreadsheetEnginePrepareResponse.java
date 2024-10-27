@@ -197,11 +197,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     this.addColumnIfNecessary(
                             cellReference.column()
                     );
-                    if (this.shouldSaveUpdateRows) {
-                        this.addRowIfNecessary(
-                                cellReference.row()
-                        );
-                    }
+                    this.addRowIfNecessary(
+                            cellReference.row()
+                    );
                 } else {
                     if (this.shouldDeleteCells) {
                         this.cells.put(
@@ -212,11 +210,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     this.addColumnIfNecessary(
                             cellReference.column()
                     );
-                    if (this.shouldDeleteRows) {
-                        this.addRowIfNecessary(
-                                cellReference.row()
-                        );
-                    }
+                    this.addRowIfNecessary(
+                            cellReference.row()
+                    );
                 }
             }
 
@@ -247,11 +243,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     this.addColumnIfNecessary(
                             cellReference.column()
                     );
-                    if (this.shouldSaveUpdateRows) {
-                        this.addRowIfNecessary(
-                                cellReference.row()
-                        );
-                    }
+                    this.addRowIfNecessary(
+                            cellReference.row()
+                    );
                 }
             }
         }
@@ -275,11 +269,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
                                                 );
                                             }
 
-                                            if (this.shouldSaveUpdateRows) {
-                                                addRowIfNecessary(
-                                                        c.row()
-                                                );
-                                            }
+                                            addRowIfNecessary(
+                                                    c.row()
+                                            );
                                         }
                                     }
                             );
@@ -440,11 +432,13 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
 
     private void addRowIfNecessary(final SpreadsheetRowReference row) {
-        this.addIfNecessary(
-                row,
-                this.rows,
-                this.rowStore
-        );
+        if (this.shouldSaveUpdateRows) {
+            this.addIfNecessary(
+                    row,
+                    this.rows,
+                    this.rowStore
+            );
+        }
     }
 
     private void addRowHeightIfNecessary(final SpreadsheetRowReference row,
