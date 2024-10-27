@@ -179,18 +179,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     }
                     if (this.shouldSaveUpdateLabels) {
                         for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cellReference)) {
-
-                            final SpreadsheetLabelName labelName = labelMapping.label();
-                            if (false == this.labels.containsKey(labelName)) {
-                                this.labels.put(
-                                        labelName,
-                                        labelMapping
-                                );
-
-                                if (this.shouldSaveUpdateCells) {
-                                    this.addLabelMappingCells(labelMapping);
-                                }
-                            }
+                            this.addLabelMappingIfNecessary(labelMapping);
                         }
                     }
                     if (this.shouldSaveUpdateColumns) {
@@ -232,19 +221,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                 if (null != cell) {
                     if (this.shouldSaveUpdateLabels) {
                         for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cellReference)) {
-                            final SpreadsheetLabelName labelName = labelMapping.label();
-                            if (false == this.labels.containsKey(labelName)) {
-                                this.labels.put(
-                                        labelName,
-                                        labelMapping
-                                );
-
-                                if (this.shouldSaveUpdateCells) {
-                                    this.addLabelMappingCells(
-                                            labelMapping
-                                    );
-                                }
-                            }
+                            this.addLabelMappingIfNecessary(labelMapping);
                         }
                     }
                     if (this.shouldSaveUpdateColumns) {
@@ -418,6 +395,20 @@ final class BasicSpreadsheetEnginePrepareResponse {
             );
             if (width > 0) {
                 columnsWidths.put(column, width);
+            }
+        }
+    }
+
+    private void addLabelMappingIfNecessary(final SpreadsheetLabelMapping labelMapping) {
+        final SpreadsheetLabelName labelName = labelMapping.label();
+        if (false == this.labels.containsKey(labelName)) {
+            this.labels.put(
+                    labelName,
+                    labelMapping
+            );
+
+            if (this.shouldSaveUpdateCells) {
+                this.addLabelMappingCells(labelMapping);
             }
         }
     }
