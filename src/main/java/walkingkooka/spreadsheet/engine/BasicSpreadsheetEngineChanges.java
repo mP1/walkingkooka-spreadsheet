@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -429,6 +430,39 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
                 right = right.max(column);
                 top = top.min(row);
                 bottom = bottom.max(row);
+            }
+        }
+
+        for(final SpreadsheetLabelMapping labelMapping : this.updatedAndDeletedLabels.values()) {
+            if(null != labelMapping) {
+                SpreadsheetExpressionReference target;
+                do {
+                    target = labelMapping.target();
+                    if (target instanceof SpreadsheetLabelName) {
+                        target = this.context.storeRepository().labels().load(
+                                        target.toLabelName()
+                                ).map(SpreadsheetLabelMapping::target)
+                                .orElse(null);
+                    }
+                } while (target instanceof SpreadsheetLabelName);
+
+                if (target instanceof SpreadsheetCellReference) {
+                    final SpreadsheetCellReference cell = target.toCell();
+                    final SpreadsheetColumnReference column = cell.column();
+                    final SpreadsheetRowReference row = cell.row();
+
+                    if (null == left) {
+                        left = column;
+                        right = column;
+                        top = row;
+                        bottom = row;
+                    } else {
+                        left = left.min(column);
+                        right = right.max(column);
+                        top = top.min(row);
+                        bottom = bottom.max(row);
+                    }
+                }
             }
         }
 

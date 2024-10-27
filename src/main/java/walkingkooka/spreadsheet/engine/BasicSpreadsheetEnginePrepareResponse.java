@@ -332,17 +332,19 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private void addCell(final SpreadsheetCellReference cell) {
-        if (this.add(
-                cell,
-                this.cells,
-                this.cellStore
-        )) {
-            this.addColumn(
-                    cell.column()
-            );
-            this.addRow(
-                    cell.row()
-            );
+        if(this.window.test(cell)) {
+            if (this.add(
+                    cell,
+                    this.cells,
+                    this.cellStore
+            )) {
+                this.addColumn(
+                        cell.column()
+                );
+                this.addRow(
+                        cell.row()
+                );
+            }
         }
     }
 
