@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
-import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -405,11 +404,9 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         return value.getClass() == targetType ?
                 this.successfulConversion(value, targetType) :
                 convertNonNull0(
-                        value instanceof PluginSelectorLike ?
-                                value.toString() :
-                                false == value instanceof SpreadsheetSelection && value instanceof HasText ?
-                                        ((HasText) value).text() :
-                                        value,
+                        value instanceof HasText && false == value instanceof SpreadsheetSelection ?
+                                ((HasText) value).text() :
+                                value,
                         targetType,
                         context
                 );
