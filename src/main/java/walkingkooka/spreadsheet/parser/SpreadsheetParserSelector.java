@@ -23,12 +23,6 @@ import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
-import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -142,30 +136,11 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-                (final TextCursor cursor, final ParserContext c) -> NAME_PARSER.parse(
-                        cursor,
-                        c
-                ).map(
-                        (final ParserToken token) ->
-                                SpreadsheetParserName.with(
-                                        token.cast(StringParserToken.class)
-                                                .value()
-                                )
-                ),
+                SpreadsheetParserPluginHelper.INSTANCE::parseName,
                 provider::spreadsheetParser,
                 context
         );
     }
-
-    /**
-     * A parser that returns a {@link SpreadsheetParserName}.
-     */
-    private final static Parser<ParserContext> NAME_PARSER = Parsers.stringInitialAndPartCharPredicate(
-            (c) -> SpreadsheetParserName.isChar(0, c),
-            (c) -> SpreadsheetParserName.isChar(1, c),
-            1,
-            SpreadsheetParserName.MAX_LENGTH
-    );
 
     // spreadsheetParsePattern.........................................................................................
 
