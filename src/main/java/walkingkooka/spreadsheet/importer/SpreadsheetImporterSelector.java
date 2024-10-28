@@ -20,12 +20,9 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
-import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -162,16 +159,7 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
         Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
-                (final TextCursor cursor, final ParserContext c) -> NAME_PARSER.parse(
-                        cursor,
-                        c
-                ).map(
-                        (final ParserToken token) ->
-                                SpreadsheetImporterName.with(
-                                        token.cast(StringParserToken.class)
-                                                .value()
-                                )
-                ),
+                SpreadsheetImporterPluginHelper.INSTANCE::parseName,
                 provider::spreadsheetImporter,
                 context
         );
