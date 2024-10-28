@@ -99,7 +99,7 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
                 new SpreadsheetParserSelector(
                         PluginSelector.with(
                                 name,
-                                this.text()
+                                this.valueText()
                         )
                 );
     }
@@ -111,21 +111,19 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
      * hold the pattern text itself.
      */
     @Override
-    public String text() {
-        return this.selector.text();
+    public String valueText() {
+        return this.selector.valueText();
     }
 
     @Override
-    public SpreadsheetParserSelector setText(final String text) {
-        final PluginSelector<SpreadsheetParserName> different = this.selector.setText(text);
+    public SpreadsheetParserSelector setValueText(final String text) {
+        final PluginSelector<SpreadsheetParserName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
                 this :
                 new SpreadsheetParserSelector(different);
     }
 
     private final PluginSelector<SpreadsheetParserName> selector;
-
-    // setValue.........................................................................................................
 
     @Override
     public SpreadsheetParserSelector setValues(final List<?> values) {
@@ -138,12 +136,12 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     /**
      * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetParserName}.
      */
-    public SpreadsheetParser evaluateText(final SpreadsheetParserProvider provider,
-                                          final ProviderContext context) {
+    public SpreadsheetParser evaluateValueText(final SpreadsheetParserProvider provider,
+                                               final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(context, "context");
 
-        return this.selector.evaluateText(
+        return this.selector.evaluateValueText(
                 (final TextCursor cursor, final ParserContext c) -> NAME_PARSER.parse(
                         cursor,
                         c
@@ -190,7 +188,7 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     }
 
     private SpreadsheetParsePattern tryParse(final SpreadsheetPatternKind kind) {
-        final String text = this.text();
+        final String text = this.valueText();
 
         try {
             return (SpreadsheetParsePattern)kind.parse(text);

@@ -49,7 +49,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
                 NullPointerException.class,
                 () -> this.createSpreadsheetFormatterProvider()
                         .spreadsheetFormatter(
-                                SpreadsheetFormatterName.GENERAL.setText(""),
+                                SpreadsheetFormatterName.GENERAL.setValueText(""),
                                 null
                         )
         );

@@ -379,7 +379,7 @@ public final class AliasesSpreadsheetFormatterProviderTest implements Spreadshee
                     @Override
                     public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
                                                                      final ProviderContext context) {
-                        return selector.evaluateText(
+                        return selector.evaluateValueText(
                                 this,
                                 context
                         );

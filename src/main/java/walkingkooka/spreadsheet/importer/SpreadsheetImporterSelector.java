@@ -102,12 +102,12 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
         return parse(node.stringOrFail());
     }
 
+    // HasName..........................................................................................................
+
     @Override
     public SpreadsheetImporterName name() {
         return this.selector.name();
     }
-
-    // setValue.........................................................................................................
 
     /**
      * Would be setter that returns a {@link SpreadsheetImporterSelector} with the given {@link SpreadsheetImporterName},
@@ -122,28 +122,28 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
                 new SpreadsheetImporterSelector(
                         PluginSelector.with(
                                 name,
-                                this.text()
+                                this.valueText()
                         )
                 );
     }
+
+    // value............................................................................................................
 
     /**
      * If the {@link SpreadsheetImporterName} identifies a {@link SpreadsheetImporter}
      */
     @Override
-    public String text() {
-        return this.selector.text();
+    public String valueText() {
+        return this.selector.valueText();
     }
 
     @Override
-    public SpreadsheetImporterSelector setText(final String text) {
-        final PluginSelector<SpreadsheetImporterName> different = this.selector.setText(text);
+    public SpreadsheetImporterSelector setValueText(final String text) {
+        final PluginSelector<SpreadsheetImporterName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
                 this :
                 new SpreadsheetImporterSelector(different);
     }
-
-    // Object...........................................................................................................
 
     @Override
     public SpreadsheetImporterSelector setValues(final List<?> values) {
@@ -154,14 +154,14 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
     }
 
     /**
-     * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetImporterName}.
+     * Parses the {@link #valueText()} as an expression that may contain String literals, numbers or {@link SpreadsheetImporterName}.
      */
-    public SpreadsheetImporter evaluateText(final SpreadsheetImporterProvider provider,
-                                            final ProviderContext context) {
+    public SpreadsheetImporter evaluateValueText(final SpreadsheetImporterProvider provider,
+                                                 final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(context, "context");
 
-        return this.selector.evaluateText(
+        return this.selector.evaluateValueText(
                 (final TextCursor cursor, final ParserContext c) -> NAME_PARSER.parse(
                         cursor,
                         c

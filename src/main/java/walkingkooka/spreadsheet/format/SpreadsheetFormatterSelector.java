@@ -101,33 +101,31 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
                 new SpreadsheetFormatterSelector(
                         PluginSelector.with(
                                 name,
-                                this.text()
+                                this.valueText()
                         )
                 );
     }
 
-    // HasText..........................................................................................................
+    // value............................................................................................................
 
     /**
      * If the {@link SpreadsheetFormatterName} identifies a {@link SpreadsheetPatternSpreadsheetFormatter}, this will
      * hold the pattern text itself.
      */
     @Override
-    public String text() {
-        return this.selector.text();
+    public String valueText() {
+        return this.selector.valueText();
     }
 
     @Override
-    public SpreadsheetFormatterSelector setText(final String text) {
-        final PluginSelector<SpreadsheetFormatterName> different = this.selector.setText(text);
+    public SpreadsheetFormatterSelector setValueText(final String text) {
+        final PluginSelector<SpreadsheetFormatterName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
                 this :
                 new SpreadsheetFormatterSelector(different);
     }
     
     private final PluginSelector<SpreadsheetFormatterName> selector;
-
-    // setValue.........................................................................................................
 
     @Override
     public SpreadsheetFormatterSelector setValues(final List<?> values) {
@@ -140,12 +138,12 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     /**
      * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetFormatterName}.
      */
-    public SpreadsheetFormatter evaluateText(final SpreadsheetFormatterProvider provider,
-                                             final ProviderContext context) {
+    public SpreadsheetFormatter evaluateValueText(final SpreadsheetFormatterProvider provider,
+                                                  final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(context, "context");
 
-        return this.selector.evaluateText(
+        return this.selector.evaluateValueText(
                 SpreadsheetFormatterPluginHelper.INSTANCE::parseName,
                 provider::spreadsheetFormatter,
                 context
@@ -174,7 +172,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     }
 
     private SpreadsheetFormatPattern tryParse(final SpreadsheetPatternKind kind) {
-        final String text = this.text();
+        final String text = this.valueText();
 
         try {
             return kind.parse(text)

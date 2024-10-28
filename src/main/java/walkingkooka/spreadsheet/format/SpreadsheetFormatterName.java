@@ -264,7 +264,7 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
     /**
      * Factory that creates a {@link SpreadsheetFormatterSelector} with this name and the given text.
      */
-    public SpreadsheetFormatterSelector setText(final String text) {
+    public SpreadsheetFormatterSelector setValueText(final String text) {
         return SpreadsheetFormatterSelector.with(
                 this,
                 text

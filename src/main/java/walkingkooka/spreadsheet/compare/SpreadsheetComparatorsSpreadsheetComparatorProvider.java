@@ -49,7 +49,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
         Objects.requireNonNull(selector, "name");
         Objects.requireNonNull(context, "context");
 
-        return selector.evaluateText(
+        return selector.evaluateValueText(
                 this,
                 context
         );

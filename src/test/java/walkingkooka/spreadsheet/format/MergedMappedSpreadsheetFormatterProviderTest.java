@@ -225,22 +225,22 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
                 SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
-                        name.setText("d/m/yy"),
+                        name.setValueText("d/m/yy"),
                         TextNode.text("31/12/99")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Medium",
-                        name.setText("d mmm yyyy"),
+                        name.setValueText("d mmm yyyy"),
                         TextNode.text("31 Dec. 1999")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Long",
-                        name.setText("d mmmm yyyy"),
+                        name.setValueText("d mmmm yyyy"),
                         TextNode.text("31 December 1999")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Full",
-                        name.setText("dddd, d mmmm yyyy"),
+                        name.setValueText("dddd, d mmmm yyyy"),
                         TextNode.text("Friday, 31 December 1999")
                 )
         );

@@ -84,33 +84,31 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
                 new SpreadsheetComparatorSelector(
                         PluginSelector.with(
                                 name,
-                                this.text()
+                                this.valueText()
                         )
                 );
     }
 
-    // HasText..........................................................................................................
+    // value............................................................................................................
 
     /**
      * If the {@link SpreadsheetComparatorName} identifies a {@link SpreadsheetComparator}, this will
      * hold the pattern text itself.
      */
     @Override
-    public String text() {
-        return this.selector.text();
+    public String valueText() {
+        return this.selector.valueText();
     }
 
     @Override
-    public SpreadsheetComparatorSelector setText(final String text) {
-        final PluginSelector<SpreadsheetComparatorName> different = this.selector.setText(text);
+    public SpreadsheetComparatorSelector setValueText(final String text) {
+        final PluginSelector<SpreadsheetComparatorName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
                 this :
                 new SpreadsheetComparatorSelector(different);
     }
 
     private final PluginSelector<SpreadsheetComparatorName> selector;
-
-    // setValues........................................................................................................
 
     @Override
     public SpreadsheetComparatorSelector setValues(final List<?> values) {
@@ -120,10 +118,10 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
                 new SpreadsheetComparatorSelector(different);
     }
 
-    // evaluateText.....................................................................................................
+    // evaluateValueText................................................................................................
 
     /**
-     * Parses the {@link #text()} as an expression that contains an optional parameter list which may include
+     * Parses the {@link #valueText()} as an expression that contains an optional parameter list which may include
      * <ul>
      * <li>{@link SpreadsheetComparatorName}</li>
      * <li>double literals including negative or leading minus signs.</li>
@@ -136,12 +134,12 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
      * </pre>
      * The {@link SpreadsheetComparatorProvider} will be used to fetch {@link SpreadsheetComparator} with any parameters.
      */
-    public <C extends SpreadsheetComparatorContext> SpreadsheetComparator<C> evaluateText(final SpreadsheetComparatorProvider provider,
-                                                                                          final ProviderContext context) {
+    public <C extends SpreadsheetComparatorContext> SpreadsheetComparator<C> evaluateValueText(final SpreadsheetComparatorProvider provider,
+                                                                                               final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(provider, "context");
 
-        return this.selector.evaluateText(
+        return this.selector.evaluateValueText(
                 SpreadsheetComparatorPluginHelper.INSTANCE::parseName,
                 (n, v, c) -> Cast.to(
                         provider.spreadsheetComparator(

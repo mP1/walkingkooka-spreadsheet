@@ -158,7 +158,7 @@ public final class AliasesSpreadsheetImporterProviderTest implements Spreadsheet
                     @Override
                     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                                    final ProviderContext context) {
-                        return selector.evaluateText(
+                        return selector.evaluateValueText(
                                 this,
                                 context
                         );

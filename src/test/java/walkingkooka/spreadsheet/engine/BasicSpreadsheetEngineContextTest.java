@@ -123,7 +123,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             Objects.requireNonNull(selector, "selector");
             Objects.requireNonNull(context, "context");
 
-            return selector.evaluateText(
+            return selector.evaluateValueText(
                     this,
                     context
             );
@@ -880,7 +880,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SpreadsheetFormatterProviderSamplesContexts.fake(),
                 SpreadsheetFormatterSample.with(
                         "Default",
-                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setText("@"),
+                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
                         TextNode.text("Hello 123")
                 )
         );

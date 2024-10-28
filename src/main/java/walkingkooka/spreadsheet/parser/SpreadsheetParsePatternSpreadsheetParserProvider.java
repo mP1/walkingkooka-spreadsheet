@@ -135,7 +135,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                                                                       final Predicate<SpreadsheetFormatParserTokenKind> filter) {
         SpreadsheetParserSelectorToken next;
 
-        final String text = selector.text()
+        final String text = selector.valueText()
                 .trim();
         final SpreadsheetPatternKind kind = selector.name()
                 .patternKind;
@@ -190,25 +190,25 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
             case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                         SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
-                        selector.text()
+                        selector.valueText()
                 );
                 break;
             case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                         SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
-                        selector.text()
+                        selector.valueText()
                 );
                 break;
             case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                         SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
-                        selector.text()
+                        selector.valueText()
                 );
                 break;
             case SpreadsheetParserName.TIME_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                         SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
-                        selector.text()
+                        selector.valueText()
                 );
                 break;
             default:
@@ -236,7 +236,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         return this.spreadsheetFormatterProvider.spreadsheetFormatterInfos()
                 .stream()
                 .filter(sfi -> sfi.url().equals(url))
-                .map(sfi -> sfi.name().setText(text))
+                .map(sfi -> sfi.name().setValueText(text))
                 .findFirst()
                 .orElse(null);
     }

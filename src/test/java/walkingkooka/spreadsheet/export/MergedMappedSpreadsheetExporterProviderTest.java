@@ -141,7 +141,7 @@ public final class MergedMappedSpreadsheetExporterProviderTest implements Spread
             @Override
             public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
                                                            final ProviderContext context) {
-                return selector.evaluateText(
+                return selector.evaluateValueText(
                         this,
                         context
                 );

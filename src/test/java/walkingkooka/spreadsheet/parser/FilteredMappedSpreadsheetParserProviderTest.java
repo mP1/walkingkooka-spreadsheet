@@ -92,7 +92,7 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         ).spreadsheetParserNextToken(
-                                SpreadsheetParserName.TIME_PARSER_PATTERN.setText("")
+                                SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
                         )
         );
     }
@@ -104,7 +104,7 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                 ).spreadsheetFormatterSelector(
-                        SpreadsheetParserName.TIME_PARSER_PATTERN.setText("")
+                        SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
                 )
         );
     }

@@ -51,7 +51,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
                 NullPointerException.class,
                 () -> this.createSpreadsheetParserProvider()
                         .spreadsheetParser(
-                                SpreadsheetParserName.DATE_PARSER_PATTERN.setText(""),
+                                SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText(""),
                                 null
                         )
         );

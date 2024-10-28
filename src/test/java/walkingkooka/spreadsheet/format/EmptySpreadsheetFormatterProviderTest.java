@@ -32,7 +32,7 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     @Test
     public void testSpreadsheetFormatterSelectorFails() {
         this.spreadsheetFormatterFails(
-                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText(""),
+                SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
                 CONTEXT
         );
     }

@@ -40,7 +40,7 @@ final class SpreadsheetImportSpreadsheetImporterProvider implements SpreadsheetI
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
-        return selector.evaluateText(
+        return selector.evaluateValueText(
                 this,
                 context
         );
