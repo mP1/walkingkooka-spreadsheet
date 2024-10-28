@@ -158,7 +158,7 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
                     @Override
                     public SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                                                                  final ProviderContext context) {
-                        return selector.evaluateText(
+                        return selector.evaluateValueText(
                                 this,
                                 context
                         );

@@ -107,7 +107,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         ).spreadsheetParserNextToken(
-                                SpreadsheetParserName.TIME_PARSER_PATTERN.setText("")
+                                SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
                         )
         );
     }
@@ -119,7 +119,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                 ).spreadsheetFormatterSelector(
-                        SpreadsheetParserName.TIME_PARSER_PATTERN.setText("")
+                        SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
                 )
         );
     }
@@ -131,7 +131,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                 ).spreadsheetFormatterSelector(
-                        SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("hh:mm:ss")
+                        SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("hh:mm:ss")
                 )
         );
     }

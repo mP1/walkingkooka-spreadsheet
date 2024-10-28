@@ -110,7 +110,7 @@ public final class FilteredMappedSpreadsheetExporterProviderTest implements Spre
             @Override
             public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
                                                            final ProviderContext context) {
-                return selector.evaluateText(
+                return selector.evaluateValueText(
                         this,
                         context
                 );

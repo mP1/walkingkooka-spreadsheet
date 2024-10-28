@@ -40,7 +40,7 @@ final class SpreadsheetExportSpreadsheetExporterProvider implements SpreadsheetE
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
-        return selector.evaluateText(
+        return selector.evaluateValueText(
                 this,
                 context
         );

@@ -73,7 +73,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
             case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
-                formatter = selector.evaluateText(
+                formatter = selector.evaluateValueText(
                         this,
                         context
                 );
@@ -262,7 +262,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                                                                              final Predicate<SpreadsheetFormatParserTokenKind> filter) {
         SpreadsheetFormatterSelectorToken next;
 
-        final String text = selector.text()
+        final String text = selector.valueText()
                 .trim();
         final SpreadsheetPatternKind kind = selector.name()
                 .patternKind;
@@ -531,7 +531,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                                                      final SpreadsheetFormatterContext context) {
         return SpreadsheetFormatterSample.with(
                 "General",
-                SpreadsheetFormatterName.GENERAL.setText(""),
+                SpreadsheetFormatterName.GENERAL.setValueText(""),
                 context.formatOrEmptyText(value)
         );
     }

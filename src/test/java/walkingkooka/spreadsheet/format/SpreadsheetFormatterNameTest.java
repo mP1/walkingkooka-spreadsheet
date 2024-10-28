@@ -165,7 +165,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
 
         this.checkEquals(
                 SpreadsheetFormatterSelector.with(name, text),
-                name.setText(text)
+                name.setValueText(text)
         );
     }
 }

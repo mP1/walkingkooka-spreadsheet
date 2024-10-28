@@ -86,7 +86,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     @Test
     public void testSpreadsheetFormatterSelector() {
         this.spreadsheetFormatterSelectorAndCheck(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
         );
     }
 

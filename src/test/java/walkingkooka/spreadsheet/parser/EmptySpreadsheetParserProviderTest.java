@@ -30,7 +30,7 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
     @Test
     public void testSpreadsheetParserSelectorFails() {
         this.spreadsheetParserFails(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText(""),
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText(""),
                 PROVIDER_CONTEXT
         );
     }
@@ -47,14 +47,14 @@ public final class EmptySpreadsheetParserProviderTest implements SpreadsheetPars
     @Test
     public void testSpreadsheetParserNextTokenFails() {
         this.spreadsheetParserNextTokenFails(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSelector() {
         this.spreadsheetFormatterSelectorFails(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setText("")
+                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
         );
     }
 

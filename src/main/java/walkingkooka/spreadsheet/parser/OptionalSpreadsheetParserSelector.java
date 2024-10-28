@@ -98,7 +98,7 @@ public final class OptionalSpreadsheetParserSelector implements Value<Optional<S
     }
 
     static {
-        SpreadsheetParserName.DATE_PARSER_PATTERN.setText("yyyy/mm/ddd");
+        SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText("yyyy/mm/ddd");
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(OptionalSpreadsheetParserSelector.class),

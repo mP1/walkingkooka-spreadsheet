@@ -122,7 +122,7 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
                 new SpreadsheetExporterSelector(
                         PluginSelector.with(
                                 name,
-                                this.text()
+                                this.valueText()
                         )
                 );
     }
@@ -131,19 +131,17 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
      * If the {@link SpreadsheetExporterName} identifies a {@link SpreadsheetExporter}
      */
     @Override
-    public String text() {
-        return this.selector.text();
+    public String valueText() {
+        return this.selector.valueText();
     }
 
     @Override
-    public SpreadsheetExporterSelector setText(final String text) {
-        final PluginSelector<SpreadsheetExporterName> different = this.selector.setText(text);
+    public SpreadsheetExporterSelector setValueText(final String text) {
+        final PluginSelector<SpreadsheetExporterName> different = this.selector.setValueText(text);
         return this.selector.equals(different) ?
                 this :
                 new SpreadsheetExporterSelector(different);
     }
-
-    // Object...........................................................................................................
 
     @Override
     public SpreadsheetExporterSelector setValues(final List<?> values) {
@@ -156,12 +154,12 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
     /**
      * Parses the text as an expression that may contain String literals, numbers or {@link SpreadsheetExporterName}.
      */
-    public SpreadsheetExporter evaluateText(final SpreadsheetExporterProvider provider,
-                                            final ProviderContext context) {
+    public SpreadsheetExporter evaluateValueText(final SpreadsheetExporterProvider provider,
+                                                 final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(context, "context");
 
-        return this.selector.evaluateText(
+        return this.selector.evaluateValueText(
                 (final TextCursor cursor, final ParserContext c) -> NAME_PARSER.parse(
                         cursor,
                         c

@@ -845,22 +845,22 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
-                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("d/m/yy"),
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d/m/yy"),
                         TextNode.text("31/12/99")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Medium",
-                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("d mmm yyyy"),
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmm yyyy"),
                         TextNode.text("31 Dec. 1999")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Long",
-                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("d mmmm yyyy"),
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("d mmmm yyyy"),
                         TextNode.text("31 December 1999")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Full",
-                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setText("dddd, d mmmm yyyy"),
+                        SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy"),
                         TextNode.text("Friday, 31 December 1999")
                 )
         );
@@ -892,22 +892,22 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
-                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("d/m/yy, h:mm AM/PM"),
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d/m/yy, h:mm AM/PM"),
                         TextNode.text("31/12/99, 12:58 PM")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Medium",
-                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("d mmm yyyy, h:mm:ss AM/PM"),
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
                         TextNode.text("31 Dec. 1999, 12:58:00 PM")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Long",
-                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                         TextNode.text("31 December 1999 at 12:58:00 PM")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Full",
-                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                        SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                         TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
                 )
         );
@@ -931,17 +931,17 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "General",
-                        SpreadsheetFormatterName.GENERAL.setText(""),
+                        SpreadsheetFormatterName.GENERAL.setValueText(""),
                         TextNode.text("123.5")
                 ),
                 SpreadsheetFormatterSample.with(
                         "General",
-                        SpreadsheetFormatterName.GENERAL.setText(""),
+                        SpreadsheetFormatterName.GENERAL.setValueText(""),
                         TextNode.text("-123.5")
                 ),
                 SpreadsheetFormatterSample.with(
                         "General",
-                        SpreadsheetFormatterName.GENERAL.setText(""),
+                        SpreadsheetFormatterName.GENERAL.setValueText(""),
                         TextNode.text("0.")
                 )
         );
@@ -1013,62 +1013,62 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Number",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0.###"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
                         TextNode.text("123.5")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Number",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0.###"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
                         TextNode.text("-123.5")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Number",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0.###"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
                         TextNode.text("0.")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Integer",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
                         TextNode.text("124")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Integer",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
                         TextNode.text("-124")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Integer",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
                         TextNode.text("0")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Percent",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0%"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
                         TextNode.text("12,350%")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Percent",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0%"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
                         TextNode.text("-12,350%")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Percent",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("#,##0%"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
                         TextNode.text("0%")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Currency",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("$#,##0.00"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
                         TextNode.text("$123.50")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Currency",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("$#,##0.00"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
                         TextNode.text("$-123.50")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Currency",
-                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setText("$#,##0.00"),
+                        SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
                         TextNode.text("$0.00")
                 )
         );
@@ -1081,7 +1081,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Default",
-                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setText("@"),
+                        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
                         TextNode.text("Hello 123")
                 )
         );
@@ -1103,12 +1103,12 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                 SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
                 SpreadsheetFormatterSample.with(
                         "Short",
-                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setText("h:mm AM/PM"),
+                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm AM/PM"),
                         TextNode.text("12:58 PM")
                 ),
                 SpreadsheetFormatterSample.with(
                         "Long",
-                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setText("h:mm:ss AM/PM"),
+                        SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm:ss AM/PM"),
                         TextNode.text("12:58:00 PM")
                 )
         );

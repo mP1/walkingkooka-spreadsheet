@@ -152,7 +152,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
 
         this.checkEquals(
                 SpreadsheetParserSelector.with(name, text),
-                name.setText(text)
+                name.setValueText(text)
         );
     }
 }

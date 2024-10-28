@@ -348,7 +348,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
                     @Override
                     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
                                                                final ProviderContext context) {
-                        return selector.evaluateText(
+                        return selector.evaluateValueText(
                                 this,
                                 context
                         );

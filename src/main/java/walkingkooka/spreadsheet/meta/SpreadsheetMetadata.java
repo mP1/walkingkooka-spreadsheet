@@ -539,7 +539,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         components.reportIfMissing();
 
-        return converter.evaluateText(
+        return converter.evaluateValueText(
                 converterProvider,
                 context
         );

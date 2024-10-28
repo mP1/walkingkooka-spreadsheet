@@ -200,7 +200,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     /**
      * Factory that creates a {@link SpreadsheetParserSelector} with this name and the given text.
      */
-    public SpreadsheetParserSelector setText(final String text) {
+    public SpreadsheetParserSelector setValueText(final String text) {
         return SpreadsheetParserSelector.with(
                 this,
                 text
