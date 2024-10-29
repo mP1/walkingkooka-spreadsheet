@@ -1010,20 +1010,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"sort-comparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
                         "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
-                        "    \"background-color\": \"#ffffff\",\n" +
-                        "    \"border-bottom-color\": \"#000000\",\n" +
+                        "    \"background-color\": \"white\",\n" +
+                        "    \"border-bottom-color\": \"black\",\n" +
                         "    \"border-bottom-style\": \"SOLID\",\n" +
                         "    \"border-bottom-width\": \"1px\",\n" +
-                        "    \"border-left-color\": \"#000000\",\n" +
+                        "    \"border-left-color\": \"black\",\n" +
                         "    \"border-left-style\": \"SOLID\",\n" +
                         "    \"border-left-width\": \"1px\",\n" +
-                        "    \"border-right-color\": \"#000000\",\n" +
+                        "    \"border-right-color\": \"black\",\n" +
                         "    \"border-right-style\": \"SOLID\",\n" +
                         "    \"border-right-width\": \"1px\",\n" +
-                        "    \"border-top-color\": \"#000000\",\n" +
+                        "    \"border-top-color\": \"black\",\n" +
                         "    \"border-top-style\": \"SOLID\",\n" +
                         "    \"border-top-width\": \"1px\",\n" +
-                        "    \"color\": \"#000000\",\n" +
+                        "    \"color\": \"black\",\n" +
                         "    \"font-family\": \"MS Sans Serif\",\n" +
                         "    \"font-size\": 11,\n" +
                         "    \"font-style\": \"NORMAL\",\n" +
@@ -1175,20 +1175,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"sort-comparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
                         "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
-                        "    \"background-color\": \"#ffffff\",\n" +
-                        "    \"border-bottom-color\": \"#000000\",\n" +
+                        "    \"background-color\": \"white\",\n" +
+                        "    \"border-bottom-color\": \"black\",\n" +
                         "    \"border-bottom-style\": \"SOLID\",\n" +
                         "    \"border-bottom-width\": \"1px\",\n" +
-                        "    \"border-left-color\": \"#000000\",\n" +
+                        "    \"border-left-color\": \"black\",\n" +
                         "    \"border-left-style\": \"SOLID\",\n" +
                         "    \"border-left-width\": \"1px\",\n" +
-                        "    \"border-right-color\": \"#000000\",\n" +
+                        "    \"border-right-color\": \"black\",\n" +
                         "    \"border-right-style\": \"SOLID\",\n" +
                         "    \"border-right-width\": \"1px\",\n" +
-                        "    \"border-top-color\": \"#000000\",\n" +
+                        "    \"border-top-color\": \"black\",\n" +
                         "    \"border-top-style\": \"SOLID\",\n" +
                         "    \"border-top-width\": \"1px\",\n" +
-                        "    \"color\": \"#000000\",\n" +
+                        "    \"color\": \"black\",\n" +
                         "    \"font-family\": \"MS Sans Serif\",\n" +
                         "    \"font-size\": 11,\n" +
                         "    \"font-style\": \"NORMAL\",\n" +
