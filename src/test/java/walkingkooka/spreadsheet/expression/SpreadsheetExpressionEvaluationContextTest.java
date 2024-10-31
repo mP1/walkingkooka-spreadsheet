@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -28,8 +29,27 @@ import walkingkooka.tree.expression.ExpressionReference;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextTest implements ClassTesting<SpreadsheetExpressionEvaluationContext> {
+
+    @Test
+    public void testCellOrFail() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> new FakeSpreadsheetExpressionEvaluationContext() {
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.empty();
+                    }
+                }.cellOrFail()
+        );
+
+        this.checkEquals(
+                "Missing cell",
+                thrown.getMessage()
+        );
+    }
 
     @Test
     public void testReferenceOrFailPresentNotNull() {
