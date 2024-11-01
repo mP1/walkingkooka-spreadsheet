@@ -105,6 +105,256 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         null;
     }
 
+    // condition .......................................................................................................
+
+    @Test
+    public void testConditionParserParseEmpty() {
+        this.conditionParserParseFails(
+                ""
+        );
+    }
+
+    @Test
+    public void testConditionParserParseNonConditionSymbol() {
+        this.conditionParserParseFails(
+                "123"
+        );
+    }
+
+    private void conditionParserParseFails(final String text) {
+        this.parseFailAndCheck(
+                SpreadsheetParsers.condition(
+                        valueOrExpressionParser()
+                ),
+                text
+        );
+    }
+
+    @Test
+    public void testConditionParserParseEqualsSignMissingValueOrExpression() {
+        this.conditionParserParseThrows(
+                "<"
+        );
+    }
+
+    private void conditionParserParseThrows(final String text) {
+        this.parseThrows(
+                SpreadsheetParsers.condition(
+                        valueOrExpressionParser()
+                ),
+                text
+        );
+    }
+
+    @Test
+    public void testConditionParserParseEqualsSignNumber() {
+        this.conditionParserParseAndCheck(
+                "=123",
+                condition(
+                        equals(),
+                        number(123)
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseNotEqualsSignNumber() {
+        this.conditionParserParseAndCheck(
+                "<>123",
+                condition(
+                        notEquals(),
+                        number(123)
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseLessThanNumber() {
+        this.conditionParserParseAndCheck(
+                "<123",
+                condition(
+                        lessThan(),
+                        number(123)
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseLessThanEqualsNumber() {
+        this.conditionParserParseAndCheck(
+                "<=123",
+                condition(
+                        lessThanEquals(),
+                        number(123)
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseGreaterThanNumber() {
+        this.conditionParserParseAndCheck(
+                ">123",
+                condition(
+                        greaterThan(),
+                        number(123)
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseGreaterThanEquals() {
+        this.conditionParserParseAndCheck(
+                ">=123",
+                condition(
+                        greaterThanEquals(),
+                        number(123)
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseGreaterThanEqualsNumber() {
+        this.conditionParserParseAndCheck(
+                ">=123",
+                condition(
+                        greaterThanEquals(),
+                        number(123)
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseGreaterThanEqualsNumberWithExtraSpaces() {
+        this.conditionParserParseAndCheck(
+                ">= 123",
+                condition(
+                        greaterThanEquals(),
+                        whitespace1(),
+                        number(123)
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseEqualsString() {
+        this.conditionParserParseAndCheck(
+                "=\"Hello\"",
+                condition(
+                        equals(),
+                        SpreadsheetParserToken.text(
+                                Lists.of(
+                                        doubleQuotes(),
+                                        textLiteral("Hello"),
+                                        doubleQuotes()
+                                ),
+                                "\"Hello\""
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseEqualsFunction() {
+        this.conditionParserParseAndCheck(
+                "=xyz()",
+                condition(
+                        equals(),
+                        namedFunction(
+                                functionName("xyz"),
+                                functionParameters(
+                                        parenthesisOpen(),
+                                        parenthesisClose()
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseEqualsFunctionWithArguments() {
+        this.conditionParserParseAndCheck(
+                "=def(123)",
+                condition(
+                        equals(),
+                        namedFunction(
+                                functionName("def"),
+                                functionParameters(
+                                        parenthesisOpen(),
+                                        number(123),
+                                        parenthesisClose()
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testConditionParserParseEqualsFunctionTrailingSpace() {
+        this.conditionParserParseAndCheck(
+                "=abc() ",
+                condition(
+                        equals(),
+                        SpreadsheetParserToken.group(
+                                Lists.of(
+                                        namedFunction(
+                                                functionName("abc"),
+                                                functionParameters(
+                                                        parenthesisOpen(),
+                                                        parenthesisClose()
+                                                )
+                                        ),
+                                        whitespace1()
+                                ),
+                                "abc() "
+                        )
+                )
+        );
+    }
+
+    private SpreadsheetConditionParserToken condition(final SpreadsheetParserToken... tokens) {
+        return SpreadsheetParserToken.condition(
+                Lists.of(tokens),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
+        );
+    }
+
+    private void conditionParserParseAndCheck(final String text,
+                                              final SpreadsheetParserToken expected) {
+        this.conditionParserParseAndCheck(
+                text,
+                expected,
+                text
+        );
+    }
+
+    private void conditionParserParseAndCheck(final String text,
+                                              final SpreadsheetParserToken expected,
+                                              final String consumed) {
+        this.conditionParserParseAndCheck(
+                text,
+                expected,
+                consumed,
+                ""
+        );
+    }
+
+    private void conditionParserParseAndCheck(final String text,
+                                              final SpreadsheetParserToken expected,
+                                              final String textConsumed,
+                                              final String textAfter) {
+        this.parseAndCheck(
+                SpreadsheetParsers.condition(
+                        valueOrExpressionParser()
+                ),
+                text,
+                expected,
+                textConsumed,
+                textAfter
+        );
+    }
+
     // apostrophe string values.........................................................................................
 
     @Test

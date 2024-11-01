@@ -97,6 +97,14 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetConditionParserToken}
+     */
+    public static SpreadsheetConditionParserToken condition(final List<ParserToken> value,
+                                                            final String text) {
+        return SpreadsheetConditionParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetCurrencySymbolParserToken}
      */
     public static SpreadsheetCurrencySymbolParserToken currencySymbol(final String value, final String text) {

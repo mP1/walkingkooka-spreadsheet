@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetConditionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
@@ -153,6 +154,16 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
         this.exit(token, SpreadsheetParserToken::cellReference);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionParserToken token) {
+        throw new UnsupportedOperationException(token.toString());
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionParserToken token) {
+        throw new UnsupportedOperationException(token.toString());
     }
 
     @Override
