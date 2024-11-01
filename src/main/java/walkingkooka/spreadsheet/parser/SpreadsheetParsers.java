@@ -457,7 +457,14 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.* TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
+     * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.
+     * <pre>
+     * 'String or text
+     * 1.234 // number matched by the number parser
+     * 31/12/1999 // matched using the date parser
+     * 31/12/1999 12:58:59 // matched using the date-time parser
+     * 12:58:59 // matched using the time parser
+     * </pre>
      */
     public static SpreadsheetParser valueOrExpression(final Parser<SpreadsheetParserContext> value) {
         Objects.requireNonNull(value, "value");
