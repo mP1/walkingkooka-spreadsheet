@@ -124,6 +124,36 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
+     * Returns a {@link SpreadsheetParser} that matches any of the condition operators including the RHS value or expression.
+     * <pre>
+     * &lt; 10
+     * &gt; function( 1, 2, 3 )
+     * </pre>
+     * This is not intended to be used to parse formulas, but rather as component or placeholder within a larger expression template.
+     */
+    public static SpreadsheetParser condition(final Parser<SpreadsheetParserContext> value) {
+        Objects.requireNonNull(value, "value");
+
+        return parser(
+                resolveParsers(value)
+                        .get(CONDITION_PARSER_IDENTIFIER)
+                        .transform(SpreadsheetParsers::transformCondition)
+        );
+    }
+
+    private static final EbnfIdentifierName CONDITION_PARSER_IDENTIFIER = EbnfIdentifierName.with("CONDITION");
+
+    /**
+     * If the token is a {@link SequenceParserToken} then it needs to be wrapped inside an {@link SpreadsheetConditionParserToken}.
+     */
+    private static ParserToken transformCondition(final ParserToken token, final SpreadsheetParserContext context) {
+        final String text = token.text();
+        return SpreadsheetParserToken.condition(
+                token.cast(SequenceParserToken.class).value(),
+                text);
+    }
+
+    /**
      * Returns a {@link Parser} that parsers errors such as <code>#REF!</code>.
      */
     public static SpreadsheetParser error() {
