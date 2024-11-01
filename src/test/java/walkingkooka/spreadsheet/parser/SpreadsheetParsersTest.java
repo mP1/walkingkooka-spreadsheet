@@ -294,18 +294,15 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 "=abc() ",
                 condition(
                         equals(),
-                        SpreadsheetParserToken.group(
-                                Lists.of(
-                                        namedFunction(
-                                                functionName("abc"),
-                                                functionParameters(
-                                                        parenthesisOpen(),
-                                                        parenthesisClose()
-                                                )
-                                        ),
-                                        whitespace1()
+                        group(
+                                namedFunction(
+                                        functionName("abc"),
+                                        functionParameters(
+                                                parenthesisOpen(),
+                                                parenthesisClose()
+                                        )
                                 ),
-                                "abc() "
+                                whitespace1()
                         )
                 )
         );
@@ -1479,9 +1476,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String labelText = "Hello";
 
         final String groupText = "(" + labelText + ")";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(parenthesisOpen(), label(labelText), parenthesisClose()), groupText);
+        final SpreadsheetGroupParserToken group = group(
+                parenthesisOpen(),
+                label(labelText),
+                parenthesisClose()
+        );
 
-        this.valueOrExpressionParserParseAndCheck(groupText, group, groupText, labelText);
+        this.valueOrExpressionParserParseAndCheck(
+                groupText,
+                group,
+                groupText,
+                labelText
+        );
     }
 
     @Test
@@ -1489,15 +1495,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String labelText = "Hello";
         final String groupText = "(  " + labelText + "  )";
 
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(
-                Lists.of(
-                        parenthesisOpen(),
-                        whitespace2(),
-                        label(labelText),
-                        whitespace2(),
-                        parenthesisClose()
-                ),
-                groupText
+        final SpreadsheetGroupParserToken group = group(
+                parenthesisOpen(),
+                whitespace2(),
+                label(labelText),
+                whitespace2(),
+                parenthesisClose()
         );
 
         this.valueOrExpressionParserParseAndCheck(
@@ -1522,7 +1525,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken negative = negative(number(123));
 
         final String groupText = "(-123)";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(parenthesisOpen(), negative, parenthesisClose()), groupText);
+        final SpreadsheetGroupParserToken group = group(
+                parenthesisOpen(),
+                negative,
+                parenthesisClose()
+        );
 
         this.valueOrExpressionParserParseAndCheck(
                 groupText,
@@ -1543,10 +1550,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void valueOrExpressionParserParseNegativeGroupNumber() {
-        final String groupText = "(123)";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(parenthesisOpen(), number(123), parenthesisClose()), groupText);
+        final SpreadsheetGroupParserToken group = group(
+                parenthesisOpen(),
+                number(123),
+                parenthesisClose()
+        );
 
-        final String text = "-" + groupText;
+        final String text = "-" + group.text();
         this.valueOrExpressionParserParseAndCheck(
                 text,
                 negative(group),
@@ -2192,10 +2202,15 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String addText = "111+222";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(number(111), plus(), number(222)), addText);
 
-        final String groupText = "(-333)";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(parenthesisOpen(), negative(number(333)), parenthesisClose()), groupText);
+        final SpreadsheetGroupParserToken group = group(
+                parenthesisOpen(),
+                negative(
+                        number(333)
+                ),
+                parenthesisClose()
+        );
 
-        final String addText2 = add + "+" + groupText;
+        final String addText2 = add + "+" + group.text();
         final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(add, plus(), group), addText2);
 
         final String multiplyText = "444*555";
@@ -2877,7 +2892,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken left = number(1);
         final SpreadsheetParserToken right = number(2);
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(left, plus(), right), "1+2");
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(this.parenthesisOpen(), add, this.parenthesisClose()), "(" + add.text() + ")");
+        final SpreadsheetGroupParserToken group = group(
+                this.parenthesisOpen(),
+                add,
+                this.parenthesisClose()
+        );
 
         final SpreadsheetParserToken last = number(3);
         final SpreadsheetMultiplicationParserToken mul = SpreadsheetParserToken.multiplication(Lists.of(group, multiply(), last), group.text() + "*3");
@@ -2904,12 +2923,20 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken left1 = number(1);
         final SpreadsheetParserToken right1 = number(2);
         final SpreadsheetAdditionParserToken add1 = SpreadsheetParserToken.addition(Lists.of(left1, plus(), right1), "1+2");
-        final SpreadsheetGroupParserToken group1 = SpreadsheetParserToken.group(Lists.of(this.parenthesisOpen(), add1, this.parenthesisClose()), "(" + add1.text() + ")");
+        final SpreadsheetGroupParserToken group1 = group(
+                this.parenthesisOpen(),
+                add1,
+                this.parenthesisClose()
+        );
 
         final SpreadsheetParserToken left2 = number(3);
         final SpreadsheetParserToken right2 = number(4);
         final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(left2, plus(), right2), "3+4");
-        final SpreadsheetGroupParserToken group2 = SpreadsheetParserToken.group(Lists.of(this.parenthesisOpen(), add2, this.parenthesisClose()), "(" + add2.text() + ")");
+        final SpreadsheetGroupParserToken group2 = group(
+                this.parenthesisOpen(),
+                add2,
+                this.parenthesisClose()
+        );
 
         final SpreadsheetMultiplicationParserToken mul = SpreadsheetParserToken.multiplication(Lists.of(group1, multiply(), group2), group1.text() + "*" + group2.text());
 
@@ -3917,6 +3944,15 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetParserToken greaterThanEquals() {
         return SpreadsheetParserToken.greaterThanEqualsSymbol(">=", ">=");
+    }
+
+    private SpreadsheetGroupParserToken group(final SpreadsheetParserToken... tokens) {
+        return SpreadsheetParserToken.group(
+                Lists.of(tokens),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
+        );
     }
 
     private SpreadsheetLabelNameParserToken label(final String label) {
