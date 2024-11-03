@@ -176,6 +176,8 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
                 ) : EMPTY;
     }
 
+    // CanBeEmpty.......................................................................................................
+
     /**
      * Returns true if all properties are empty.
      */
@@ -183,6 +185,8 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
     public boolean isEmpty() {
         return this == EMPTY;
     }
+
+    // HasUrlFragment...................................................................................................
 
     @Override
     public UrlFragment urlFragment() {
@@ -257,6 +261,8 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
     private final static UrlFragment VALUE_TYPE = UrlFragment.parse("value-type");
 
     private final static UrlFragment QUERY = UrlFragment.parse("query");
+
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {
