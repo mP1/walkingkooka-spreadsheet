@@ -254,9 +254,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
     private final static UrlFragment OFFSET = UrlFragment.parse("offset");
 
-
     private final static UrlFragment MAX = UrlFragment.parse("max");
-
 
     private final static UrlFragment VALUE_TYPE = UrlFragment.parse("value-type");
 
