@@ -989,6 +989,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
                         "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"find-functions\": \"\",\n" +
+                        "  \"find-highlighting\": false,\n" +
                         "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
@@ -1154,6 +1155,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
                         "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"find-functions\": \"\",\n" +
+                        "  \"find-highlighting\": false,\n" +
                         "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +

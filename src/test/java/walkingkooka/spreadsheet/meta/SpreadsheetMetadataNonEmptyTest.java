@@ -2735,6 +2735,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterSelector.parse("find-something-something")
         );
         properties.put(
+                SpreadsheetMetadataPropertyName.FIND_HIGHLIGHTING,
+                false
+        );
+        properties.put(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                 ConverterSelector.parse("general")
         );
