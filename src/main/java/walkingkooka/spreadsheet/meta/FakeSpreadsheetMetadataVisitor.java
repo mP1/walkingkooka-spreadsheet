@@ -221,6 +221,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitFindHighlighting(final boolean value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitImporters(final SpreadsheetImporterAliasSet aliases) {
         throw new UnsupportedOperationException();
     }

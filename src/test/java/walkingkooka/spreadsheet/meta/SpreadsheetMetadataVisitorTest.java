@@ -334,6 +334,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitFindHighlighting() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFindHighlighting(final boolean b) {
+                this.visited = b;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.FIND_HIGHLIGHTING, true);
+    }
+
+    @Test
     public void testVisitFormulaConverter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

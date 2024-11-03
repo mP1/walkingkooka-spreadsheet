@@ -220,6 +220,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitFindHighlighting(final boolean value) {
+        // nop
+    }
+
     protected void visitImporters(final SpreadsheetImporterAliasSet aliases) {
         // nop
     }
