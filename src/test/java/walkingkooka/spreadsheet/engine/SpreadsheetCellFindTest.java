@@ -35,6 +35,9 @@ import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Map;
 import java.util.Optional;
@@ -48,7 +51,8 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
         HasTextTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellFind>,
         ToStringTesting<SpreadsheetCellFind>,
-        ParseStringTesting<SpreadsheetCellFind> {
+        ParseStringTesting<SpreadsheetCellFind>,
+        JsonNodeMarshallingTesting<SpreadsheetCellFind> {
 
     private final static Optional<SpreadsheetCellRangeReferencePath> PATH = Optional.of(
             SpreadsheetCellRangeReferencePath.LRTD
@@ -734,6 +738,22 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
                 ),
                 "path/BULR/offset/123/max/456/value-type/number/query/query789"
         );
+    }
+
+    // json.............................................................................................................
+
+    @Override
+    public SpreadsheetCellFind unmarshall(final JsonNode json,
+                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellFind.unmarshall(
+                json,
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetCellFind createJsonNodeMarshallingValue() {
+        return this.createObject();
     }
 
     // ClassTesting.....................................................................................................

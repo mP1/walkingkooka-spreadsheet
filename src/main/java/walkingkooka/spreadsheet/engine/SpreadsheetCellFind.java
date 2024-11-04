@@ -28,6 +28,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Map;
 import java.util.Objects;
@@ -448,5 +452,25 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
     public String toString() {
         return this.urlFragment()
                 .toString();
+    }
+    
+    // json.............................................................................................................
+
+    static {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetCellFind.class),
+                SpreadsheetCellFind::unmarshall,
+                SpreadsheetCellFind::marshall,
+                SpreadsheetCellFind.class
+        );
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return context.marshall(this.text());
+    }
+
+    static SpreadsheetCellFind unmarshall(final JsonNode node,
+                                          final JsonNodeUnmarshallContext context) {
+        return parse(node.stringOrFail());
     }
 }
