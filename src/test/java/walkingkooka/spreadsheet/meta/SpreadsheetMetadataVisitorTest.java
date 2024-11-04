@@ -28,6 +28,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellFind;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
@@ -37,6 +38,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -48,6 +50,7 @@ import walkingkooka.visit.Visiting;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -341,6 +344,22 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = b;
             }
         }.accept(SpreadsheetMetadataPropertyName.FIND_HIGHLIGHTING, true);
+    }
+
+    @Test
+    public void testVisitFindQuery() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFindQuery(final SpreadsheetCellFind f) {
+                this.visited = f;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FIND_QUERY,
+                SpreadsheetCellFind.empty()
+                        .setPath(
+                                Optional.of(SpreadsheetCellRangeReferencePath.BULR)
+                        )
+        );
     }
 
     @Test
