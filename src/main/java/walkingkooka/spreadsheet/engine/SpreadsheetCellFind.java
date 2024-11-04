@@ -37,6 +37,37 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         CanBeEmpty,
         HasText {
 
+    /**
+     * Parses the given text into a {@link SpreadsheetCellFind}.
+     * <br>
+     * Note the query is not verified to be a valid expression syntically in any form.
+     */
+    public static SpreadsheetCellFind parse(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        final UrlQueryString queryString = UrlQueryString.parse(text);
+
+        return empty()
+                .setPath(
+                        queryString.parameter(CELL_RANGE_PATH)
+                                .map(SpreadsheetCellRangeReferencePath::fromKebabCase)
+                ).setMax(
+                        queryString.parameter(MAX)
+                                .map(Integer::parseInt)
+                                .map(OptionalInt::of)
+                                .orElse(OptionalInt.empty())
+                ).setOffset(
+                        queryString.parameter(OFFSET)
+                                .map(Integer::parseInt)
+                                .map(OptionalInt::of)
+                                .orElse(OptionalInt.empty())
+                ).setValueType(
+                        queryString.parameter(VALUE_TYPE)
+                ).setQuery(
+                        queryString.parameter(QUERY)
+                );
+    }
+
     public static SpreadsheetCellFind empty() {
         return EMPTY;
     }

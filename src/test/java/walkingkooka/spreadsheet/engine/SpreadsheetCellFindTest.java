@@ -26,6 +26,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlQueryString;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 
 import java.util.Optional;
@@ -38,7 +39,8 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
         CanBeEmptyTesting,
         HasTextTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellFind>,
-        ToStringTesting<SpreadsheetCellFind> {
+        ToStringTesting<SpreadsheetCellFind>,
+        ParseStringTesting<SpreadsheetCellFind> {
 
     private final static Optional<SpreadsheetCellRangeReferencePath> PATH = Optional.of(
             SpreadsheetCellRangeReferencePath.LRTD
@@ -384,6 +386,65 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
                 this.createObject(),
                 "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*"
         );
+    }
+
+    // parseString......................................................................................................
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Test
+    public void testParseEmpty() {
+        this.parseStringAndCheck(
+                "",
+                SpreadsheetCellFind.empty()
+        );
+    }
+
+    @Test
+    public void testParse() {
+        this.parseStringAndCheck(
+                "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*",
+                this.createObject()
+        );
+    }
+
+    @Test
+    public void testParseCellRangePath() {
+        this.parseStringAndCheck(
+                "cell-range-path=lrtd",
+                SpreadsheetCellFind.empty()
+                        .setPath(PATH)
+        );
+    }
+
+    @Test
+    public void testParseIncludesInvalidQuery() {
+        this.parseStringAndCheck(
+                "cell-range-path=lrtd&query=XYZ",
+                SpreadsheetCellFind.empty()
+                        .setPath(PATH)
+                        .setQuery(
+                                Optional.of("XYZ")
+                        )
+        );
+    }
+
+    @Override
+    public SpreadsheetCellFind parseString(final String text) {
+        return SpreadsheetCellFind.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 
     // Object...........................................................................................................
