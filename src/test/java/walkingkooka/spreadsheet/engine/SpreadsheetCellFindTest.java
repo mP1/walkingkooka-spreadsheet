@@ -19,16 +19,24 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.CanBeEmptyTesting;
+import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
+import walkingkooka.net.Url;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlQueryString;
+import walkingkooka.net.http.HttpEntity;
+import walkingkooka.net.http.HttpProtocolVersion;
+import walkingkooka.net.http.HttpTransport;
+import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.HttpRequests;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -445,6 +453,81 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // extract..........................................................................................................
+
+    @Test
+    public void testExtractWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetCellFind.extract(null)
+        );
+    }
+
+    @Test
+    public void testExtractCellRangePath() {
+        this.extractAndCheck(
+                "cell-range-path=lrtd",
+                SpreadsheetCellFind.empty()
+                        .setPath(PATH)
+        );
+    }
+
+    @Test
+    public void testExtractIncludesInvalidQuery() {
+        this.extractAndCheck(
+                "cell-range-path=lrtd&query=XYZ",
+                SpreadsheetCellFind.empty()
+                        .setPath(PATH)
+                        .setQuery(
+                                Optional.of("XYZ")
+                        )
+        );
+    }
+
+    @Test
+    public void testExtract() {
+        this.extractAndCheck(
+                "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*",
+                this.createObject()
+        );
+    }
+
+    private void extractAndCheck(final String text,
+                                 final SpreadsheetCellFind expected) {
+        this.extractAndCheck0(
+                Cast.to(
+                        UrlQueryString.parse(text)
+                                .parameters()
+                ),
+                expected
+        );
+    }
+
+    @Test
+    public void testExtractFromRequest() {
+        final String queryString = "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*";
+
+        this.extractAndCheck0(
+                HttpRequests.get(
+                        HttpTransport.SECURED,
+                        Url.parseRelative("/path123?" + queryString),
+                        HttpProtocolVersion.VERSION_1_0,
+                        HttpEntity.EMPTY
+                ).routerParameters(),
+                this.createObject()
+        );
+    }
+
+    private void extractAndCheck0(final Map<HttpRequestAttribute<?>, ?> parameters,
+                                  final SpreadsheetCellFind expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetCellFind.extract(
+                        parameters
+                )
+        );
     }
 
     // Object...........................................................................................................

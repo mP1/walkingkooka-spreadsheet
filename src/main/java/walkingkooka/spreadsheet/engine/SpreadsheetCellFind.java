@@ -18,14 +18,17 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.CanBeEmpty;
+import walkingkooka.Cast;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.UrlQueryString;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.HasText;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -45,26 +48,35 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
     public static SpreadsheetCellFind parse(final String text) {
         Objects.requireNonNull(text, "text");
 
-        final UrlQueryString queryString = UrlQueryString.parse(text);
+        return extract(
+                Cast.to(
+                        UrlQueryString.parse(text)
+                                .parameters()
+                )
+        );
+    }
+
+    public static SpreadsheetCellFind extract(final Map<HttpRequestAttribute<?>, ?> parameters) {
+        Objects.requireNonNull(parameters, "parameters");
 
         return empty()
                 .setPath(
-                        queryString.parameter(CELL_RANGE_PATH)
+                        CELL_RANGE_PATH.firstParameterValue(parameters)
                                 .map(SpreadsheetCellRangeReferencePath::fromKebabCase)
                 ).setMax(
-                        queryString.parameter(MAX)
+                        MAX.firstParameterValue(parameters)
                                 .map(Integer::parseInt)
                                 .map(OptionalInt::of)
                                 .orElse(OptionalInt.empty())
                 ).setOffset(
-                        queryString.parameter(OFFSET)
+                        OFFSET.firstParameterValue(parameters)
                                 .map(Integer::parseInt)
                                 .map(OptionalInt::of)
                                 .orElse(OptionalInt.empty())
                 ).setValueType(
-                        queryString.parameter(VALUE_TYPE)
+                        VALUE_TYPE.firstParameterValue(parameters)
                 ).setQuery(
-                        queryString.parameter(QUERY)
+                        QUERY.firstParameterValue(parameters)
                 );
     }
 
