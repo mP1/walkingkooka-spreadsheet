@@ -23,6 +23,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.net.UrlQueryString;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 
@@ -290,6 +291,86 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
                 false,
                 this.createObject()
                         .isEmpty()
+        );
+    }
+
+    // toUrlQueryString.................................................................................................
+
+    @Test
+    public void testToUrlQueryStringPath() {
+        this.toUrlQueryStringAndCheck(
+                SpreadsheetCellFind.empty()
+                        .setPath(PATH),
+                "cell-range-path=lrtd"
+        );
+    }
+
+    @Test
+    public void testToUrlQueryStringOffset() {
+        this.toUrlQueryStringAndCheck(
+                SpreadsheetCellFind.empty()
+                        .setOffset(OFFSET),
+                "offset=123"
+        );
+    }
+
+    @Test
+    public void testToUrlQueryStringMax() {
+        this.toUrlQueryStringAndCheck(
+                SpreadsheetCellFind.empty()
+                        .setMax(MAX),
+                "max=456"
+        );
+    }
+
+    @Test
+    public void testToUrlQueryStringValueType() {
+        this.toUrlQueryStringAndCheck(
+                SpreadsheetCellFind.empty()
+                        .setValueType(
+                                Optional.of(
+                                        SpreadsheetValueType.NUMBER)
+                        ),
+                "value-type=number"
+        );
+    }
+
+    @Test
+    public void testToUrlQueryStringQuery() {
+        this.toUrlQueryStringAndCheck(
+                SpreadsheetCellFind.empty()
+                        .setQuery(QUERY),
+                "query=%3D789%2Bblah%28%29"
+        );
+    }
+
+    @Test
+    public void testToUrlQueryStringAllParameters() {
+        this.toUrlQueryStringAndCheck(
+                SpreadsheetCellFind.empty()
+                        .setPath(PATH)
+                        .setOffset(OFFSET)
+                        .setMax(MAX)
+                        .setValueType(VALUE_TYPE)
+                        .setQuery(QUERY),
+                "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*"
+        );
+    }
+
+    private void toUrlQueryStringAndCheck(final SpreadsheetCellFind find,
+                                          final String expected) {
+        this.toUrlQueryStringAndCheck(
+                find,
+                UrlQueryString.parse(expected)
+        );
+    }
+
+    private void toUrlQueryStringAndCheck(final SpreadsheetCellFind find,
+                                          final UrlQueryString expected) {
+        this.checkEquals(
+                expected,
+                find.toUrlQueryString(),
+                find::toString
         );
     }
 

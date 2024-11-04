@@ -20,7 +20,10 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.CanBeEmpty;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.net.UrlParameterName;
+import walkingkooka.net.UrlQueryString;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
+import walkingkooka.text.CaseKind;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -194,7 +197,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
         final Optional<SpreadsheetCellRangeReferencePath> path = this.path;
         if (path.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(PATH)
+            urlFragment = urlFragment.appendSlashThen(PATH_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     path.get()
@@ -205,7 +208,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
         final OptionalInt offset = this.offset;
         if (offset.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(OFFSET)
+            urlFragment = urlFragment.appendSlashThen(OFFSET_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     String.valueOf(
@@ -217,7 +220,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
         final OptionalInt max = this.max;
         if (max.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(MAX)
+            urlFragment = urlFragment.appendSlashThen(MAX_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     String.valueOf(
@@ -229,7 +232,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
         final Optional<String> valueType = this.valueType;
         if (valueType.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(VALUE_TYPE)
+            urlFragment = urlFragment.appendSlashThen(VALUE_TYPE_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     valueType.get()
@@ -239,7 +242,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
         final Optional<String> query = this.query;
         if (query.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(QUERY)
+            urlFragment = urlFragment.appendSlashThen(QUERY_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     query.get()
@@ -250,15 +253,76 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         return urlFragment;
     }
 
-    private final static UrlFragment PATH = UrlFragment.parse("path");
+    private final static UrlFragment PATH_URL_FRAGMENT = UrlFragment.parse("path");
 
-    private final static UrlFragment OFFSET = UrlFragment.parse("offset");
+    private final static UrlFragment OFFSET_URL_FRAGMENT = UrlFragment.parse("offset");
 
-    private final static UrlFragment MAX = UrlFragment.parse("max");
+    private final static UrlFragment MAX_URL_FRAGMENT = UrlFragment.parse("max");
 
-    private final static UrlFragment VALUE_TYPE = UrlFragment.parse("value-type");
+    private final static UrlFragment VALUE_TYPE_URL_FRAGMENT = UrlFragment.parse("value-type");
 
-    private final static UrlFragment QUERY = UrlFragment.parse("query");
+    private final static UrlFragment QUERY_URL_FRAGMENT = UrlFragment.parse("query");
+    
+    // UrlQueryString...................................................................................................
+
+    public static final UrlParameterName CELL_RANGE_PATH = UrlParameterName.with("cell-range-path");
+
+    public static final UrlParameterName MAX = UrlParameterName.with("max");
+
+    public static final UrlParameterName OFFSET = UrlParameterName.with("offset");
+
+    public static final UrlParameterName QUERY = UrlParameterName.with("query");
+
+    public static final UrlParameterName VALUE_TYPE = UrlParameterName.with("value-type");
+    
+    public UrlQueryString toUrlQueryString() {
+        UrlQueryString result = UrlQueryString.EMPTY;
+
+        final Optional<SpreadsheetCellRangeReferencePath> path = this.path();
+        final OptionalInt offset = this.offset();
+        final OptionalInt max = this.max();
+        final Optional<String> valueType = this.valueType();
+        final Optional<String> query = this.query();
+
+        if (path.isPresent()) {
+            result = result.addParameter(
+                    CELL_RANGE_PATH,
+                    CaseKind.kebabEnumName(
+                            path.get()
+                    )
+            );
+        }
+        if (max.isPresent()) {
+            result = result.addParameter(
+                    MAX,
+                    String.valueOf(
+                            max.getAsInt()
+                    )
+            );
+        }
+        if (offset.isPresent()) {
+            result = result.addParameter(
+                    OFFSET,
+                    String.valueOf(
+                            offset.getAsInt()
+                    )
+            );
+        }
+        if (query.isPresent()) {
+            result = result.addParameter(
+                    QUERY,
+                    query.get()
+            );
+        }
+        if (valueType.isPresent()) {
+            result = result.addParameter(
+                    VALUE_TYPE,
+                    valueType.get()
+            );
+        }
+
+        return result;
+    }
 
     // Object...........................................................................................................
 
