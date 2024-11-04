@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellFind;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -2737,6 +2738,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.FIND_HIGHLIGHTING,
                 false
+        );
+        properties.put(
+                SpreadsheetMetadataPropertyName.FIND_QUERY,
+                SpreadsheetCellFind.empty()
+                        .setQuery(Optional.of("help()"))
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,

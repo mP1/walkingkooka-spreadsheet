@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellFind;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
@@ -205,6 +206,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-highlighting {@link boolean}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> FIND_HIGHLIGHTING = registerConstant(SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link walkingkooka.spreadsheet.engine.SpreadsheetCellFind}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetCellFind> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
