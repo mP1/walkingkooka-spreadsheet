@@ -24,6 +24,7 @@ import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.UrlQueryString;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.text.CaseKind;
+import walkingkooka.text.HasText;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -33,7 +34,8 @@ import java.util.OptionalInt;
  * Captures the parameter values of a cell find.
  */
 public final class SpreadsheetCellFind implements HasUrlFragment,
-        CanBeEmpty {
+        CanBeEmpty,
+        HasText {
 
     public static SpreadsheetCellFind empty() {
         return EMPTY;
@@ -322,6 +324,13 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         }
 
         return result;
+    }
+
+    // HasText..........................................................................................................
+
+    @Override
+    public String text() {
+        return this.toUrlQueryString().toString();
     }
 
     // Object...........................................................................................................

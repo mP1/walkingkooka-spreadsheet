@@ -26,6 +26,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlQueryString;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
+import walkingkooka.text.HasTextTesting;
 
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -35,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
         CanBeEmptyTesting,
+        HasTextTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellFind>,
         ToStringTesting<SpreadsheetCellFind> {
 
@@ -371,6 +373,16 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
                 expected,
                 find.toUrlQueryString(),
                 find::toString
+        );
+    }
+
+    // text.............................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck(
+                this.createObject(),
+                "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*"
         );
     }
 
