@@ -404,6 +404,54 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
     }
 
     @Test
+    public void testParseInvalidCellRangePathFails() {
+        this.parseStringFails(
+                "cell-range-path=XYZ",
+                new IllegalArgumentException("Got \"XYZ\" expected one of lrtd, rltd, lrbu, rlbu, tdlr, tdrl, bulr, burl")
+        );
+    }
+
+    @Test
+    public void testParseInvalidMaxFails() {
+        this.parseStringFails(
+                "max=XYZ",
+                new IllegalArgumentException("Invalid max=\"XYZ\"")
+        );
+    }
+
+    @Test
+    public void testParseInvalidMaxFails2() {
+        this.parseStringFails(
+                "max=-123",
+                new IllegalArgumentException("Invalid max -123 < 0")
+        );
+    }
+
+    @Test
+    public void testParseInvalidOffsetFails() {
+        this.parseStringFails(
+                "offset=XYZ",
+                new IllegalArgumentException("Invalid offset=\"XYZ\"")
+        );
+    }
+
+    @Test
+    public void testParseInvalidOffsetFails2() {
+        this.parseStringFails(
+                "offset=-456",
+                new IllegalArgumentException("Invalid offset -456 < 0")
+        );
+    }
+
+    @Test
+    public void testParseInvalidOffsetFails3() {
+        this.parseStringFails(
+                "offset=-00456",
+                new IllegalArgumentException("Invalid offset -456 < 0")
+        );
+    }
+
+    @Test
     public void testParseEmpty() {
         this.parseStringAndCheck(
                 "",

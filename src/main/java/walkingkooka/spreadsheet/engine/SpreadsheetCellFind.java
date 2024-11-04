@@ -26,6 +26,7 @@ import walkingkooka.net.UrlQueryString;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.text.CaseKind;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 
 import java.util.Map;
@@ -64,20 +65,61 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
                         CELL_RANGE_PATH.firstParameterValue(parameters)
                                 .map(SpreadsheetCellRangeReferencePath::fromKebabCase)
                 ).setMax(
-                        MAX.firstParameterValue(parameters)
-                                .map(Integer::parseInt)
-                                .map(OptionalInt::of)
-                                .orElse(OptionalInt.empty())
+                        parseIntegerQueryParameter(
+                                parameters,
+                                MAX
+                        )
                 ).setOffset(
-                        OFFSET.firstParameterValue(parameters)
-                                .map(Integer::parseInt)
-                                .map(OptionalInt::of)
-                                .orElse(OptionalInt.empty())
+                        parseIntegerQueryParameter(
+                                parameters,
+                                OFFSET
+                        )
                 ).setValueType(
                         VALUE_TYPE.firstParameterValue(parameters)
                 ).setQuery(
                         QUERY.firstParameterValue(parameters)
                 );
+    }
+
+    private static OptionalInt parseIntegerQueryParameter(final Map<HttpRequestAttribute<?>, ?> parameters,
+                                                          final UrlParameterName parameterName) {
+        return parameterName.firstParameterValue(parameters)
+                .map(t -> parseInt(t, parameterName))
+                .orElse(OptionalInt.empty());
+    }
+
+    private static OptionalInt parseInt(final String text,
+                                        final UrlParameterName parameterName) {
+        try {
+            final int value = Integer.parseInt(text);
+            if (value < 0) {
+                throw new IllegalArgumentException("Invalid " + parameterName + " " + value + " < 0");
+            }
+            return OptionalInt.of(value);
+        } catch (final NumberFormatException cause) {
+            throw invalidQueryParameter(
+                    text,
+                    parameterName,
+                    cause
+            );
+        }
+    }
+
+    private static IllegalArgumentException invalidQueryParameter(final String text,
+                                                                  final UrlParameterName parameter,
+                                                                  final Throwable cause) {
+        return new IllegalArgumentException(
+                invalidQueryParameterMessage(
+                        text,
+                        parameter
+                ),
+                cause
+        );
+    }
+
+    private static String invalidQueryParameterMessage(final String text,
+                                                       final UrlParameterName parameter) {
+        return "Invalid " + parameter + "=" + CharSequences.quoteAndEscape(text);
     }
 
     public static SpreadsheetCellFind empty() {
