@@ -18,12 +18,19 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 
 import java.util.EnumSet;
+import java.util.Map;
 import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<Set<SpreadsheetDeltaProperties>>,
         ClassTesting<SpreadsheetDeltaProperties> {
@@ -133,6 +140,75 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
     }
+
+    // extract..........................................................................................................
+    
+    @Test
+    public void testExtractNullParametersFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetDeltaProperties.extract(
+                        null
+                )
+        );
+    }
+
+    @Test
+    public void testExtractMissing() {
+        this.extractAndCheck(
+                Maps.empty(),
+                SpreadsheetDeltaProperties.ALL
+        );
+    }
+
+    @Test
+    public void testExtractEmpty() {
+        this.extractAndCheck(
+                Maps.of(
+                        SpreadsheetDeltaProperties.PROPERTIES,
+                        Lists.empty()
+                ),
+                SpreadsheetDeltaProperties.ALL
+        );
+    }
+
+    @Test
+    public void testExtractAll() {
+        this.extractAndCheck(
+                Maps.of(
+                        SpreadsheetDeltaProperties.PROPERTIES,
+                        Lists.of("*")
+                ),
+                SpreadsheetDeltaProperties.ALL
+        );
+    }
+
+    @Test
+    public void testExtractPresent() {
+        this.extractAndCheck(
+                Maps.of(
+                        SpreadsheetDeltaProperties.PROPERTIES,
+                        Lists.of("cells,labels,column-count")
+                ),
+                Sets.of(
+                        SpreadsheetDeltaProperties.CELLS,
+                        SpreadsheetDeltaProperties.COLUMN_COUNT,
+                        SpreadsheetDeltaProperties.LABELS
+                )
+        );
+    }
+
+    private void extractAndCheck(final Map<HttpRequestAttribute<?>, Object> parameters,
+                                 final Set<SpreadsheetDeltaProperties> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetDeltaProperties.extract(
+                        parameters
+                ),
+                () -> parameters.toString()
+        );
+    }
+    
     // class............................................................................................................
 
     @Override
