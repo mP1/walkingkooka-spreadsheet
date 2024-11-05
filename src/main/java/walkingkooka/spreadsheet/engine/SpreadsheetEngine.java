@@ -101,6 +101,8 @@ public interface SpreadsheetEngine {
     /**
      * Executes the {@link Expression} for each and every {@link SpreadsheetCell} as the current cell. Cells are only
      * kept if the {@link Expression} returns true.
+     * <br>
+     * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
      */
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
                                      final String valueType,
@@ -110,6 +112,8 @@ public interface SpreadsheetEngine {
     /**
      * Returns the first count of {@link SpreadsheetCell} that match the given {@link String valueType} filtered by
      * the given {@link Expression}.
+     * <br>
+     * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
      */
     Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
                                    final SpreadsheetCellRangeReferencePath path,
