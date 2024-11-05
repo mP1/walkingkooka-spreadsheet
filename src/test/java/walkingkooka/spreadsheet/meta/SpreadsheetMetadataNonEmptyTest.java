@@ -376,10 +376,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
+                        "  \"decimal-separator\": \",\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"decimal-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"decimal-separator\": \",\"\n" +
+                        "  }\n" +
                         "}"
         );
     }
@@ -404,10 +404,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
+                        "  \"decimal-separator\": \",\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"decimal-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"decimal-separator\": \",\"\n" +
+                        "  }\n" +
                         "}"
         );
     }
@@ -754,11 +754,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"group-separator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"group-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\"\n" +
+                        "  }\n" +
                         "}"
         );
     }
@@ -781,12 +781,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"group-separator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"decimal-separator\": \".\",\n" +
                         "    \"group-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\"\n" +
+                        "  }\n" +
                         "}"
         );
     }
@@ -809,13 +809,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
+                        "  \"creator\": \"creator@example.com\",\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"group-separator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"decimal-separator\": \".\",\n" +
                         "    \"group-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"creator\": \"creator@example.com\",\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\"\n" +
+                        "  }\n" +
                         "}"
         );
     }
@@ -838,13 +838,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 groupSeparator,
                 dot,
                 "{\n" +
+                        "  \"creator\": \"creator@example.com\",\n" +
+                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"group-separator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"decimal-separator\": \".\",\n" +
                         "    \"group-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"creator\": \"creator@example.com\",\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\"\n" +
+                        "  }\n" +
                         "}"
         );
     }
@@ -857,17 +857,19 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(groupSeparator, ',').set(percent, '%').set(value, ',');
 
-        this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+        this.setAndCheck(
+                SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 percent,
                 '%',
                 "{\n" +
+                        "  \"percentage-symbol\": \"%\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"group-separator\": \",\",\n" +
                         "    \"percentage-symbol\": \"%\",\n" +
                         "    \"value-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"percentage-symbol\": \"%\"\n" +
-                        "}");
+                        "  }\n" +
+                        "}"
+        );
     }
 
     @Test
@@ -878,17 +880,19 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(groupSeparator, ',').set(percent, '%').set(value, ',');
 
-        this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+        this.setAndCheck(
+                SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 groupSeparator,
                 ',',
                 "{\n" +
+                        "  \"group-separator\": \",\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"group-separator\": \",\",\n" +
                         "    \"percentage-symbol\": \"%\",\n" +
                         "    \"value-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"group-separator\": \",\"\n" +
-                        "}");
+                        "  }\n" +
+                        "}"
+        );
     }
 
     @Test
@@ -899,17 +903,19 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(groupSeparator, ',').set(percent, '%').set(value, ',');
 
-        this.setAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+        this.setAndCheck(
+                SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 value,
                 ',',
                 "{\n" +
+                        "  \"value-separator\": \",\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"group-separator\": \",\",\n" +
                         "    \"percentage-symbol\": \"%\",\n" +
                         "    \"value-separator\": \",\"\n" +
-                        "  },\n" +
-                        "  \"value-separator\": \",\"\n" +
-                        "}");
+                        "  }\n" +
+                        "}"
+        );
     }
 
     private <T> void setAndCheck(final SpreadsheetMetadata metadata,
@@ -2570,11 +2576,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         )
                 ),
                 "{\n" +
+                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
+                        "  \"creator\": \"user@example.com\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"locale\": \"en\"\n" +
-                        "  },\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\"\n" +
+                        "  }\n" +
                         "}"
         );
     }
