@@ -258,7 +258,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Character> GROUP_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameCharacterGroupSeparator.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>group-separator {@link Character}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>hide-zero-values {@link boolean}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Boolean> HIDE_ZERO_VALUES = registerConstant(SpreadsheetMetadataPropertyNameBooleanHideZeroValues.instance());
 
