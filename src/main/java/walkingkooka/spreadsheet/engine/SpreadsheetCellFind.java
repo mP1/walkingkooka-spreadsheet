@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -37,6 +39,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.function.Function;
 
 /**
  * Captures the parameter values of a cell find.
@@ -268,6 +271,36 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
                         valueType,
                         query
                 ) : EMPTY;
+    }
+
+    // expression.......................................................................................................
+
+    public Optional<Expression> queryToExpression(final SpreadsheetEngineContext context) {
+        return this.query()
+                .flatMap(q -> parseQueryParameter(
+                                q,
+                                (t) -> context.toExpression(
+                                        context.parseFormula(
+                                                TextCursors.charSequence(q)
+                                        )
+                                ),
+                                QUERY
+                        )
+                );
+    }
+
+    private static <T> T parseQueryParameter(final String text,
+                                             final Function<String, T> parser,
+                                             final UrlParameterName queryParameter) {
+        try {
+            return parser.apply(text);
+        } catch (final IllegalArgumentException cause) {
+            throw invalidQueryParameter(
+                    text,
+                    queryParameter,
+                    cause
+            );
+        }
     }
 
     // CanBeEmpty.......................................................................................................

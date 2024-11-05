@@ -32,9 +32,14 @@ import walkingkooka.net.http.HttpTransport;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequests;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
+import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -582,6 +587,76 @@ public final class SpreadsheetCellFindTest implements HasUrlFragmentTesting,
         );
     }
 
+    // queryToExpression................................................................................................
+
+    @Test
+    public void testQueryToExpressionNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject().queryToExpression(null)
+        );
+    }
+
+    @Test
+    public void testQueryToExpressionWhenEmpty() {
+        this.queryToExpressionAndCheck(
+                SpreadsheetCellFind.empty(),
+                SpreadsheetEngineContexts.fake(),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testQueryToExpressionWhenPresent() {
+        final String query = "true()";
+        final SpreadsheetParserToken token = SpreadsheetParserToken.functionName(
+                SpreadsheetFunctionName.with("true"),
+                "true"
+        );
+        final Optional<Expression> expression = Optional.of(
+                Expression.value(true)
+        );
+
+        this.queryToExpressionAndCheck(
+                SpreadsheetCellFind.parse("query=" + query),
+                new FakeSpreadsheetEngineContext() {
+                    @Override
+                    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+                        final TextCursorSavePoint begin = formula.save();
+                        formula.end();
+
+                        checkEquals(
+                                query,
+                                begin.textBetween()
+                                        .toString()
+                        );
+
+                        return token;
+                    }
+
+                    @Override
+                    public Optional<Expression> toExpression(final SpreadsheetParserToken t) {
+                        checkEquals(
+                                token,
+                                t
+                        );
+                        return expression;
+                    }
+                },
+                expression
+        );
+    }
+
+    private void queryToExpressionAndCheck(final SpreadsheetCellFind find,
+                                           final SpreadsheetEngineContext context,
+                                           final Optional<Expression> expected) {
+        this.checkEquals(
+                expected,
+                find.queryToExpression(context),
+                find::toString
+        );
+    }
+    
     // Object...........................................................................................................
 
     @Test
