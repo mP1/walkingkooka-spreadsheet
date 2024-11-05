@@ -18,11 +18,15 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.UrlParameterName;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -110,4 +114,22 @@ public enum SpreadsheetDeltaProperties {
                 .map(SpreadsheetDeltaProperties::with)
                 .collect(Collectors.toCollection(() -> EnumSet.noneOf(SpreadsheetDeltaProperties.class)));
     }
+
+
+    /**
+     * Attempts to read the {@link SpreadsheetDeltaProperties} from the {@link #PROPERTIES}.
+     */
+    public static Set<SpreadsheetDeltaProperties> extract(final Map<HttpRequestAttribute<?>, Object> parameters) {
+        Objects.requireNonNull(parameters, "parameters");
+
+        return parse(
+                PROPERTIES.firstParameterValue(parameters)
+                        .orElse(null)
+        );
+    }
+
+    /**
+     * Optional query parameter, where the value is a CSV of camel-case {@link SpreadsheetDeltaProperties}.
+     */
+    public final static UrlParameterName PROPERTIES = UrlParameterName.with("properties");
 }
