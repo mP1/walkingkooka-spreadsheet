@@ -49,6 +49,11 @@ public enum SpreadsheetDeltaProperties {
 
     DELETED_LABELS,
 
+    /**
+     * When present cells in the response will be matched using the find parameters or query.
+     */
+    MATCHED_CELLS,
+
     COLUMN_WIDTHS,
 
     ROW_HEIGHTS,
