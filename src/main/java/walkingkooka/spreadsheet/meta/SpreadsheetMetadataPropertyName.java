@@ -143,7 +143,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameStringCurrencySymbol.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the default {@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector} for {@link java.time.LocalDate} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the default {@link SpreadsheetFormatterSelector} for {@link java.time.LocalDate} values.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance());
 
@@ -158,7 +158,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerConstant(SpreadsheetMetadataPropertyNameDateTimeOffset.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the default {@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector} for {@link LocalDateTime} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the default {@link SpreadsheetFormatterSelector} for {@link LocalDateTime} values.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance());
 
@@ -188,7 +188,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> EXPORTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetExporters.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>expression-number-kind {@link walkingkooka.tree.expression.ExpressionNumberKind}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>expression-number-kind {@link ExpressionNumberKind}</code>
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
@@ -208,7 +208,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Boolean> FIND_HIGHLIGHTING = registerConstant(SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link walkingkooka.spreadsheet.engine.SpreadsheetCellFind}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link SpreadsheetCellFind}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetCellFind> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
 
@@ -288,7 +288,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Character> NEGATIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNameCharacterNegativeSign.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link ExpressionNumber} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterSelector}</code> for {@link ExpressionNumber} values.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> NUMBER_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance());
 
@@ -343,17 +343,17 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetName> SPREADSHEET_NAME = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetName.instance());
     
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>style {@link walkingkooka.tree.text.TextStyle}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>style {@link TextStyle}</code>
      */
     public static final SpreadsheetMetadataPropertyName<TextStyle> STYLE = registerConstant(SpreadsheetMetadataPropertyNameStyle.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link String} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterSelector}</code> for {@link String} values.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TEXT_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector}</code> for {@link LocalTime} values.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterSelector}</code> for {@link LocalTime} values.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance());
 
