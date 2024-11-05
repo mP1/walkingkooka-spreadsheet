@@ -1253,13 +1253,17 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     final JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
+        this.marshallProperties(children, context);
+
+        // marshall defaults AFTER non defaults,
+        // this saves time when browsing json in chrome dev tools, where non default are often more interesting.
         final SpreadsheetMetadata defaults = this.defaults;
         if (null != defaults) {
             children.add(defaults.marshall(context).setName(DEFAULTS));
         }
 
-        this.marshallProperties(children, context);
-        return JsonNode.object().setChildren(children);
+        return JsonNode.object()
+                .setChildren(children);
     }
 
     /**
