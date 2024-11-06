@@ -779,6 +779,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         ExpressionFunctionAliasSet.parse("hello");
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
+        SpreadsheetCellFind.empty();
         SpreadsheetComparatorNameList.parse(
                 SpreadsheetComparatorName.TEXT.toString()
         );
