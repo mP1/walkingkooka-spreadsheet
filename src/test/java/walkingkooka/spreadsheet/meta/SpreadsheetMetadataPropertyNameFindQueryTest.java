@@ -18,21 +18,19 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
 
 import java.util.Locale;
-import java.util.Optional;
 
 
 public final class SpreadsheetMetadataPropertyNameFindQueryTest extends SpreadsheetMetadataPropertyNameTestCase<
         SpreadsheetMetadataPropertyNameFindQuery,
-        SpreadsheetCellFindQuery> {
+        SpreadsheetCellQuery> {
 
     @Test
     public void testCheckValueWithInvalidFails3() {
         this.checkValueFails(
                 "invalid",
-                "Expected SpreadsheetCellFindQuery, but got \"invalid\" for \"find-query\""
+                "Expected SpreadsheetCellQuery, but got \"invalid\" for \"find-query\""
         );
     }
 
@@ -55,14 +53,13 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
     }
 
     @Override
-    SpreadsheetCellFindQuery propertyValue() {
-        return SpreadsheetCellFindQuery.empty()
-                .setQuery(Optional.of("xyz"));
+    SpreadsheetCellQuery propertyValue() {
+        return SpreadsheetCellQuery.parse("1+2+3");
     }
 
     @Override
     String propertyValueType() {
-        return SpreadsheetCellFindQuery.class.getSimpleName();
+        return SpreadsheetCellQuery.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................
