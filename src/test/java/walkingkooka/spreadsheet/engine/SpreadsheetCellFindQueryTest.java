@@ -32,14 +32,10 @@ import walkingkooka.net.http.HttpTransport;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequests;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
-import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.meta.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.TextCursorSavePoint;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -68,7 +64,9 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
 
     private final static Optional<String> VALUE_TYPE = Optional.of(SpreadsheetValueType.ANY);
 
-    private final static Optional<String> QUERY = Optional.of("=789+blah()");
+    private final static Optional<SpreadsheetCellQuery> QUERY = Optional.of(
+            SpreadsheetCellQuery.parse("789+blah()")
+    );
 
     // tests............................................................................................................
 
@@ -265,8 +263,8 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetQueryDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
-        final Optional<String> query = Optional.of(
-                "different123"
+        final Optional<SpreadsheetCellQuery> query = Optional.of(
+                SpreadsheetCellQuery.parse("different123()")
         );
 
         this.checkNotEquals(
@@ -361,7 +359,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
         this.toUrlQueryStringAndCheck(
                 SpreadsheetCellFindQuery.empty()
                         .setQuery(QUERY),
-                "query=%3D789%2Bblah%28%29"
+                "query=789%2Bblah%28%29"
         );
     }
 
@@ -374,7 +372,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                         .setMax(MAX)
                         .setValueType(VALUE_TYPE)
                         .setQuery(QUERY),
-                "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*"
+                "cell-range-path=lrtd&max=456&offset=123&query=789%2Bblah%28%29&value-type=*"
         );
     }
 
@@ -401,7 +399,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testText() {
         this.textAndCheck(
                 this.createObject(),
-                "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*"
+                "cell-range-path=lrtd&max=456&offset=123&query=789%2Bblah%28%29&value-type=*"
         );
     }
 
@@ -471,7 +469,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*",
+                "cell-range-path=lrtd&max=456&offset=123&query=789%2Bblah%28%29&value-type=*",
                 this.createObject()
         );
     }
@@ -486,13 +484,15 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     }
 
     @Test
-    public void testParseIncludesInvalidQuery() {
+    public void testParseIncludesQuery() {
         this.parseStringAndCheck(
-                "cell-range-path=lrtd&query=XYZ",
+                "cell-range-path=lrtd&query=XYZ()",
                 SpreadsheetCellFindQuery.empty()
                         .setPath(PATH)
                         .setQuery(
-                                Optional.of("XYZ")
+                                Optional.of(
+                                        SpreadsheetCellQuery.parse("XYZ()")
+                                )
                         )
         );
     }
@@ -532,13 +532,15 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     }
 
     @Test
-    public void testExtractIncludesInvalidQuery() {
+    public void testExtractIncludesQuery() {
         this.extractAndCheck(
-                "cell-range-path=lrtd&query=XYZ",
+                "cell-range-path=lrtd&query=XYZ()",
                 SpreadsheetCellFindQuery.empty()
                         .setPath(PATH)
                         .setQuery(
-                                Optional.of("XYZ")
+                                Optional.of(
+                                        SpreadsheetCellQuery.parse("XYZ()")
+                                )
                         )
         );
     }
@@ -546,7 +548,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testExtract() {
         this.extractAndCheck(
-                "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*",
+                "cell-range-path=lrtd&max=456&offset=123&query=789%2Bblah%28%29&value-type=*",
                 this.createObject()
         );
     }
@@ -564,7 +566,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
 
     @Test
     public void testExtractFromRequest() {
-        final String queryString = "cell-range-path=lrtd&max=456&offset=123&query=%3D789%2Bblah%28%29&value-type=*";
+        final String queryString = "cell-range-path=lrtd&max=456&offset=123&query=789%2Bblah%28%29&value-type=*";
 
         this.extractAndCheck0(
                 HttpRequests.get(
@@ -584,76 +586,6 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                 SpreadsheetCellFindQuery.extract(
                         parameters
                 )
-        );
-    }
-
-    // queryToExpression................................................................................................
-
-    @Test
-    public void testQueryToExpressionNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createObject().queryToExpression(null)
-        );
-    }
-
-    @Test
-    public void testQueryToExpressionWhenEmpty() {
-        this.queryToExpressionAndCheck(
-                SpreadsheetCellFindQuery.empty(),
-                SpreadsheetEngineContexts.fake(),
-                Optional.empty()
-        );
-    }
-
-    @Test
-    public void testQueryToExpressionWhenPresent() {
-        final String query = "true()";
-        final SpreadsheetParserToken token = SpreadsheetParserToken.functionName(
-                SpreadsheetFunctionName.with("true"),
-                "true"
-        );
-        final Optional<Expression> expression = Optional.of(
-                Expression.value(true)
-        );
-
-        this.queryToExpressionAndCheck(
-                SpreadsheetCellFindQuery.parse("query=" + query),
-                new FakeSpreadsheetEngineContext() {
-                    @Override
-                    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
-                        final TextCursorSavePoint begin = formula.save();
-                        formula.end();
-
-                        checkEquals(
-                                query,
-                                begin.textBetween()
-                                        .toString()
-                        );
-
-                        return token;
-                    }
-
-                    @Override
-                    public Optional<Expression> toExpression(final SpreadsheetParserToken t) {
-                        checkEquals(
-                                token,
-                                t
-                        );
-                        return expression;
-                    }
-                },
-                expression
-        );
-    }
-
-    private void queryToExpressionAndCheck(final SpreadsheetCellFindQuery find,
-                                           final SpreadsheetEngineContext context,
-                                           final Optional<Expression> expected) {
-        this.checkEquals(
-                expected,
-                find.queryToExpression(context),
-                find::toString
         );
     }
     
@@ -721,7 +653,9 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                         OFFSET,
                         MAX,
                         VALUE_TYPE,
-                        Optional.of("different")
+                        Optional.of(
+                                SpreadsheetCellQuery.parse("different()")
+                        )
                 )
         );
     }
@@ -777,9 +711,11 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
         this.urlFragmentAndCheck(
                 SpreadsheetCellFindQuery.empty()
                         .setQuery(
-                                Optional.of("query123")
+                                Optional.of(
+                                        SpreadsheetCellQuery.parse("query123()")
+                                )
                         ),
-                UrlFragment.parse("query/query123")
+                UrlFragment.parse("query/query123()")
         );
     }
 
@@ -787,7 +723,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testUrlFragmentAll() {
         this.urlFragmentAndCheck(
                 this.createObject(),
-                UrlFragment.parse("path/LRTD/offset/123/max/456/value-type/*/query/%3D789%2Bblah%28%29")
+                UrlFragment.parse("path/LRTD/offset/123/max/456/value-type/*/query/789%2Bblah%28%29")
         );
     }
 
@@ -809,9 +745,11 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                         OptionalInt.of(123), // offset
                         OptionalInt.of(456), // max
                         Optional.of(SpreadsheetValueType.NUMBER),
-                        Optional.of("query789")
+                        Optional.of(
+                                SpreadsheetCellQuery.parse("query789()")
+                        )
                 ),
-                "path/BULR/offset/123/max/456/value-type/number/query/query789"
+                "path/BULR/offset/123/max/456/value-type/number/query/query789()"
         );
     }
 
