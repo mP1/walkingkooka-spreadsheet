@@ -20,12 +20,14 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -141,6 +143,25 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
                                 ),
                                 Expression.value(
                                         SpreadsheetCellQuery.EXPRESSION_NUMBER_KIND.create(22)
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testParseFunctionExpression() {
+        this.parseStringAndCheck(
+                "abc(111)",
+                new SpreadsheetCellQuery(
+                        Expression.call(
+                                Expression.namedFunction(
+                                        ExpressionFunctionName.with("abc")
+                                ),
+                                Lists.of(
+                                        Expression.value(
+                                                SpreadsheetCellQuery.EXPRESSION_NUMBER_KIND.create(111)
+                                        )
                                 )
                         )
                 )
