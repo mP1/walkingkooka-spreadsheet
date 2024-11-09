@@ -210,7 +210,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link SpreadsheetCellFindQuery}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetCellFindQuery> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.

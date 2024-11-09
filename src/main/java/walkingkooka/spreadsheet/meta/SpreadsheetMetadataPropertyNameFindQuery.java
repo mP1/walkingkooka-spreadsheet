@@ -18,15 +18,13 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
-
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Holds the {@link SpreadsheetCellFindQuery}
+ * Holds the {@link SpreadsheetCellQuery}
  */
-final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadataPropertyName<SpreadsheetCellFindQuery> {
+final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> {
 
     /**
      * Singleton
@@ -43,31 +41,31 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
     }
 
     /**
-     * After checking the type force the {@link SpreadsheetCellFindQuery}
+     * After checking the type force the {@link SpreadsheetCellQuery}
      */
     @Override
-    SpreadsheetCellFindQuery checkValue0(final Object value) {
+    SpreadsheetCellQuery checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetCellFindQuery);
+                v -> v instanceof SpreadsheetCellQuery);
     }
 
     @Override
     String expected() {
-        return SpreadsheetCellFindQuery.class.getSimpleName();
+        return SpreadsheetCellQuery.class.getSimpleName();
     }
 
     @Override
-    Optional<SpreadsheetCellFindQuery> extractLocaleAwareValue(final Locale locale) {
+    Optional<SpreadsheetCellQuery> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    Class<SpreadsheetCellFindQuery> type() {
-        return SpreadsheetCellFindQuery.class;
+    Class<SpreadsheetCellQuery> type() {
+        return SpreadsheetCellQuery.class;
     }
 
     @Override
-    void accept(final SpreadsheetCellFindQuery value,
+    void accept(final SpreadsheetCellQuery value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitFindQuery(value);
     }
@@ -75,7 +73,7 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetCellFindQuery parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetCellQuery parseUrlFragmentSaveValue0(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }
