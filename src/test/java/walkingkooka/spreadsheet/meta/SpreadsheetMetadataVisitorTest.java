@@ -28,7 +28,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
-import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
@@ -350,12 +350,12 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitFindQuery() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitFindQuery(final SpreadsheetCellQuery q) {
+            protected void visitFindQuery(final SpreadsheetCellFindQuery q) {
                 this.visited = q;
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.FIND_QUERY,
-                SpreadsheetCellQuery.empty()
+                SpreadsheetCellFindQuery.empty()
                         .setPath(
                                 Optional.of(SpreadsheetCellRangeReferencePath.BULR)
                         )

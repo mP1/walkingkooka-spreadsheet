@@ -18,15 +18,15 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
 
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Holds the {@link SpreadsheetCellQuery}
+ * Holds the {@link SpreadsheetCellFindQuery}
  */
-final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> {
+final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadataPropertyName<SpreadsheetCellFindQuery> {
 
     /**
      * Singleton
@@ -43,31 +43,31 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
     }
 
     /**
-     * After checking the type force the {@link SpreadsheetCellQuery}
+     * After checking the type force the {@link SpreadsheetCellFindQuery}
      */
     @Override
-    SpreadsheetCellQuery checkValue0(final Object value) {
+    SpreadsheetCellFindQuery checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetCellQuery);
+                v -> v instanceof SpreadsheetCellFindQuery);
     }
 
     @Override
     String expected() {
-        return SpreadsheetCellQuery.class.getSimpleName();
+        return SpreadsheetCellFindQuery.class.getSimpleName();
     }
 
     @Override
-    Optional<SpreadsheetCellQuery> extractLocaleAwareValue(final Locale locale) {
+    Optional<SpreadsheetCellFindQuery> extractLocaleAwareValue(final Locale locale) {
         return Optional.empty();
     }
 
     @Override
-    Class<SpreadsheetCellQuery> type() {
-        return SpreadsheetCellQuery.class;
+    Class<SpreadsheetCellFindQuery> type() {
+        return SpreadsheetCellFindQuery.class;
     }
 
     @Override
-    void accept(final SpreadsheetCellQuery value,
+    void accept(final SpreadsheetCellFindQuery value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitFindQuery(value);
     }
@@ -75,7 +75,7 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetCellQuery parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetCellFindQuery parseUrlFragmentSaveValue0(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }
