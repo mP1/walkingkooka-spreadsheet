@@ -44,16 +44,16 @@ import java.util.function.Function;
 /**
  * Captures the parameter values of a cell find.
  */
-public final class SpreadsheetCellFind implements HasUrlFragment,
+public final class SpreadsheetCellQuery implements HasUrlFragment,
         CanBeEmpty,
         HasText {
 
     /**
-     * Parses the given text into a {@link SpreadsheetCellFind}.
+     * Parses the given text into a {@link SpreadsheetCellQuery}.
      * <br>
      * Note the query is not verified to be a valid expression syntically in any form.
      */
-    public static SpreadsheetCellFind parse(final String text) {
+    public static SpreadsheetCellQuery parse(final String text) {
         Objects.requireNonNull(text, "text");
 
         return extract(
@@ -64,7 +64,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         );
     }
 
-    public static SpreadsheetCellFind extract(final Map<HttpRequestAttribute<?>, ?> parameters) {
+    public static SpreadsheetCellQuery extract(final Map<HttpRequestAttribute<?>, ?> parameters) {
         Objects.requireNonNull(parameters, "parameters");
 
         return empty()
@@ -129,11 +129,11 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         return "Invalid " + parameter + "=" + CharSequences.quoteAndEscape(text);
     }
 
-    public static SpreadsheetCellFind empty() {
+    public static SpreadsheetCellQuery empty() {
         return EMPTY;
     }
 
-    private final static SpreadsheetCellFind EMPTY = new SpreadsheetCellFind(
+    private final static SpreadsheetCellQuery EMPTY = new SpreadsheetCellQuery(
             Optional.empty(), // path
             OptionalInt.empty(), // offset
             OptionalInt.empty(), // max
@@ -142,11 +142,11 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
     );
 
     // VisibleForTesting
-    SpreadsheetCellFind(final Optional<SpreadsheetCellRangeReferencePath> path,
-                        final OptionalInt offset,
-                        final OptionalInt max,
-                        final Optional<String> valueType,
-                        final Optional<String> query) {
+    SpreadsheetCellQuery(final Optional<SpreadsheetCellRangeReferencePath> path,
+                         final OptionalInt offset,
+                         final OptionalInt max,
+                         final Optional<String> valueType,
+                         final Optional<String> query) {
         this.path = path;
         this.offset = offset;
         this.max = max;
@@ -158,7 +158,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         return this.path;
     }
 
-    public SpreadsheetCellFind setPath(final Optional<SpreadsheetCellRangeReferencePath> path) {
+    public SpreadsheetCellQuery setPath(final Optional<SpreadsheetCellRangeReferencePath> path) {
         Objects.requireNonNull(path, "path");
 
         return this.path.equals(path) ?
@@ -178,7 +178,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         return this.offset;
     }
 
-    public SpreadsheetCellFind setOffset(final OptionalInt offset) {
+    public SpreadsheetCellQuery setOffset(final OptionalInt offset) {
         Objects.requireNonNull(offset, "offset");
 
         return this.offset.equals(offset) ?
@@ -198,7 +198,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         return this.max;
     }
 
-    public SpreadsheetCellFind setMax(final OptionalInt max) {
+    public SpreadsheetCellQuery setMax(final OptionalInt max) {
         Objects.requireNonNull(max, "max");
 
         return this.max.equals(max) ?
@@ -218,7 +218,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         return this.valueType;
     }
 
-    public SpreadsheetCellFind setValueType(final Optional<String> valueType) {
+    public SpreadsheetCellQuery setValueType(final Optional<String> valueType) {
         Objects.requireNonNull(valueType, "valueType");
 
         return this.valueType.equals(valueType) ?
@@ -238,7 +238,7 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         return this.query;
     }
 
-    public SpreadsheetCellFind setQuery(final Optional<String> query) {
+    public SpreadsheetCellQuery setQuery(final Optional<String> query) {
         Objects.requireNonNull(query, "query");
 
         return this.query.equals(query) ?
@@ -254,17 +254,17 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
     private final Optional<String> query;
 
-    private SpreadsheetCellFind replace(final Optional<SpreadsheetCellRangeReferencePath> path,
-                                        final OptionalInt offset,
-                                        final OptionalInt max,
-                                        final Optional<String> valueType,
-                                        final Optional<String> query) {
+    private SpreadsheetCellQuery replace(final Optional<SpreadsheetCellRangeReferencePath> path,
+                                         final OptionalInt offset,
+                                         final OptionalInt max,
+                                         final Optional<String> valueType,
+                                         final Optional<String> query) {
         return path.isPresent() ||
                 offset.isPresent() ||
                 max.isPresent() ||
                 valueType.isPresent() ||
                 query.isPresent() ?
-                new SpreadsheetCellFind(
+                new SpreadsheetCellQuery(
                         path,
                         offset,
                         max,
@@ -470,10 +470,10 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetCellFind && this.equals0((SpreadsheetCellFind) other);
+                other instanceof SpreadsheetCellQuery && this.equals0((SpreadsheetCellQuery) other);
     }
 
-    private boolean equals0(final SpreadsheetCellFind other) {
+    private boolean equals0(final SpreadsheetCellQuery other) {
         return this.path.equals(other.path) &&
                 this.offset.equals(other.offset) &&
                 this.max.equals(other.max) &&
@@ -491,10 +491,10 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
 
     static {
         JsonNodeContext.register(
-                JsonNodeContext.computeTypeName(SpreadsheetCellFind.class),
-                SpreadsheetCellFind::unmarshall,
-                SpreadsheetCellFind::marshall,
-                SpreadsheetCellFind.class
+                JsonNodeContext.computeTypeName(SpreadsheetCellQuery.class),
+                SpreadsheetCellQuery::unmarshall,
+                SpreadsheetCellQuery::marshall,
+                SpreadsheetCellQuery.class
         );
     }
 
@@ -502,8 +502,8 @@ public final class SpreadsheetCellFind implements HasUrlFragment,
         return context.marshall(this.text());
     }
 
-    static SpreadsheetCellFind unmarshall(final JsonNode node,
-                                          final JsonNodeUnmarshallContext context) {
+    static SpreadsheetCellQuery unmarshall(final JsonNode node,
+                                           final JsonNodeUnmarshallContext context) {
         return parse(node.stringOrFail());
     }
 }
