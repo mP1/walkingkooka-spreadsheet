@@ -21,6 +21,10 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.net.UrlParameterName;
+import walkingkooka.net.UrlQueryString;
+import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -39,13 +43,27 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A query {@link Expression}
  */
 public final class SpreadsheetCellQuery implements HasUrlFragment,
         HasText {
+
+    /**
+     * Reads or extracts a {@link SpreadsheetCellFindQuery} from the parameters probably a {@link UrlQueryString}.
+     */
+    public static Optional<SpreadsheetCellQuery> extract(final Map<HttpRequestAttribute<?>, ?> parameters) {
+        Objects.requireNonNull(parameters, "parameters");
+
+        return QUERY.firstParameterValue(parameters)
+                .map(SpreadsheetCellQuery::parse);
+    }
+
+    public static final UrlParameterName QUERY = UrlParameterName.with("query");
 
     /**
      * Parses the given text into a {@link SpreadsheetCellQuery}.

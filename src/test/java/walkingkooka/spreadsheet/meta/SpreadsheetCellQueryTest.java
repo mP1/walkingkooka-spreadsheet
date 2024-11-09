@@ -18,11 +18,19 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
+import walkingkooka.net.Url;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.net.UrlQueryString;
+import walkingkooka.net.http.HttpEntity;
+import walkingkooka.net.http.HttpProtocolVersion;
+import walkingkooka.net.http.HttpTransport;
+import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.HttpRequests;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
@@ -31,6 +39,9 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+
+import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -181,6 +192,78 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
         return thrown;
+    }
+
+    // extract..........................................................................................................
+
+    @Test
+    public void testExtractWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetCellQuery.extract(null)
+        );
+    }
+
+    @Test
+    public void testExtractParameterMissing() {
+        this.extractAndCheck(
+                "different=1",
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testExtract() {
+        this.extractAndCheck(
+                "query=1*2",
+                Optional.of(
+                        SpreadsheetCellQuery.parse("1*2")
+                )
+        );
+    }
+
+    private void extractAndCheck(final String text,
+                                 final Optional<SpreadsheetCellQuery> expected) {
+        this.extractAndCheck0(
+                Cast.to(
+                        UrlQueryString.parse(text)
+                                .parameters()
+                ),
+                expected
+        );
+    }
+
+    @Test
+    public void testExtractFromRequest() {
+        final String queryString = "1*2";
+
+        this.extractAndCheck0(
+                HttpRequests.get(
+                        HttpTransport.SECURED,
+                        Url.parseRelative("/path123?query=" + queryString),
+                        HttpProtocolVersion.VERSION_1_0,
+                        HttpEntity.EMPTY
+                ).routerParameters(),
+                SpreadsheetCellQuery.parse(queryString)
+        );
+    }
+
+    private void extractAndCheck0(final Map<HttpRequestAttribute<?>, ?> parameters,
+                                  final SpreadsheetCellQuery expected) {
+        this.extractAndCheck0(
+                parameters,
+                Optional.of(expected)
+        );
+    }
+
+    private void extractAndCheck0(final Map<HttpRequestAttribute<?>, ?> parameters,
+                                  final Optional<SpreadsheetCellQuery> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetCellQuery.extract(
+                        parameters
+                )
+        );
     }
 
     // Object...........................................................................................................
