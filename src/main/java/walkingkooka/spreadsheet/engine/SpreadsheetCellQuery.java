@@ -64,6 +64,9 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
         );
     }
 
+    /**
+     * Reads or extracts a {@link SpreadsheetCellQuery} from the parameters probably a {@link UrlQueryString}.
+     */
     public static SpreadsheetCellQuery extract(final Map<HttpRequestAttribute<?>, ?> parameters) {
         Objects.requireNonNull(parameters, "parameters");
 
