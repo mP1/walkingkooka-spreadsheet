@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
-import walkingkooka.spreadsheet.engine.SpreadsheetCellFind;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
@@ -208,9 +208,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Boolean> FIND_HIGHLIGHTING = registerConstant(SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link SpreadsheetCellFind}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link SpreadsheetCellQuery}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetCellFind> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values during a formatting of values.
@@ -779,7 +779,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         ExpressionFunctionAliasSet.parse("hello");
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
-        SpreadsheetCellFind.empty();
+        SpreadsheetCellQuery.empty();
         SpreadsheetComparatorNameList.parse(
                 SpreadsheetComparatorName.TEXT.toString()
         );
