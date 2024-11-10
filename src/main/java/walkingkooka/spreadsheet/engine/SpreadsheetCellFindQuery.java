@@ -18,17 +18,25 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.CanBeEmpty;
-import walkingkooka.Cast;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.UrlQueryString;
 import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.meta.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserContexts;
+import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -48,19 +56,121 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     /**
      * Parses the given text into a {@link SpreadsheetCellFindQuery}.
-     * <br>
-     * Note the query is not verified to be a valid expression syntically in any form.
      */
     public static SpreadsheetCellFindQuery parse(final String text) {
-        Objects.requireNonNull(text, "text");
+        final TextCursor cursor = TextCursors.charSequence(text);
 
-        return extract(
-                Cast.to(
-                        UrlQueryString.parse(text)
-                                .parameters()
-                )
-        );
+        SpreadsheetCellFindQuery query = SpreadsheetCellFindQuery.empty();
+
+        String component = parseComponentOrNull(cursor);
+        if (null != component) {
+            if ("path".equals(component)) {
+                query = query.setPath(
+                        parseComponent(cursor)
+                                .map(SpreadsheetCellRangeReferencePath::fromKebabCase)
+                );
+
+                component = parseComponentOrNull(cursor);
+            }
+            if ("offset".equals(component)) {
+                query = query.setOffset(
+                        parseInt(
+                                cursor,
+                                "offset"
+                        )
+                );
+                component = parseComponentOrNull(cursor);
+            }
+            if ("max".equals(component)) {
+                query = query.setMax(
+                        parseInt(
+                                cursor,
+                                "max"
+                        )
+                );
+                component = parseComponentOrNull(cursor);
+            }
+            if ("value-type".equals(component)) {
+                query = query.setValueType(
+                        parseComponent(cursor)
+                );
+                component = parseComponentOrNull(cursor);
+            }
+            if ("query".equals(component)) {
+                cursor.next();
+
+                final TextCursorSavePoint save = cursor.save();
+                cursor.end();
+
+                final String queryText = save.textBetween()
+                        .toString();
+
+                query = query.setQuery(
+                        queryText.isEmpty() ?
+                                Optional.empty() :
+                                Optional.of(
+                                        SpreadsheetCellQuery.parse(queryText)
+                                )
+                );
+            }
+        }
+
+        if(false == cursor.isEmpty()) {
+            throw new IllegalArgumentException("Invalid query got " + CharSequences.quoteAndEscape(text));
+        }
+
+        return query;
     }
+
+    private static OptionalInt parseInt(final TextCursor cursor,
+                                        final String label) {
+        return parseComponent(cursor)
+                .map(
+                        (final String t) -> {
+                            try {
+                                return OptionalInt.of(
+                                        Integer.parseInt(t)
+                                );
+                            } catch (final NumberFormatException cause) {
+                                throw new IllegalArgumentException("Invalid " + label + " got " + CharSequences.quoteAndEscape(t));
+                            }
+                        }
+                ).orElseGet(
+                        OptionalInt::empty
+                );
+    }
+
+    private static String parseComponentOrNull(final TextCursor cursor) {
+        return parseComponent(cursor)
+                .orElse(null);
+    }
+
+    /**
+     * Consumes a path component within a {@link TextCursor}.
+     */
+    static Optional<String> parseComponent(final TextCursor cursor) {
+        return COMPONENT.parse(cursor, CONTEXT)
+                .map(p -> p.cast(StringParserToken.class)
+                        .value()
+                        .substring(1)
+                );
+    }
+
+    private final static int MAX_LENGTH = 8192;
+
+    /**
+     * A {@link Parser} that consumes a path component within an {@link UrlFragment}.
+     */
+    private final static Parser<ParserContext> COMPONENT = Parsers.stringInitialAndPartCharPredicate(
+            CharPredicates.is('/'),
+            CharPredicates.not(
+                    CharPredicates.is('/')
+            ),
+            1,
+            MAX_LENGTH
+    );
+
+    private final static ParserContext CONTEXT = ParserContexts.fake();
 
     /**
      * Reads or extracts a {@link SpreadsheetCellFindQuery} from the parameters probably a {@link UrlQueryString}.
@@ -311,6 +421,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                             UrlFragment.with(
                                     path.get()
                                             .toString()
+                                            .toLowerCase()
                             )
                     );
         }
@@ -437,7 +548,8 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     @Override
     public String text() {
-        return this.toUrlQueryString().toString();
+        return this.urlFragment()
+                .toString();
     }
 
     // Object...........................................................................................................
