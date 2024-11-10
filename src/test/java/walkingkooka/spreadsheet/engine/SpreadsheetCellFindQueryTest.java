@@ -135,6 +135,21 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     }
 
     @Test
+    public void testSetOffsetInvalidFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetCellFindQuery.empty()
+                        .setOffset(
+                                OptionalInt.of(-456)
+                        )
+        );
+        this.checkEquals(
+                "Invalid offset -456 < 0",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
     public void testSetOffsetSame() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
         assertSame(
@@ -170,6 +185,21 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                 NullPointerException.class,
                 () -> SpreadsheetCellFindQuery.empty()
                         .setMax(null)
+        );
+    }
+
+    @Test
+    public void testSetMaxInvalidFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetCellFindQuery.empty()
+                        .setMax(
+                                OptionalInt.of(-123)
+                        )
+        );
+        this.checkEquals(
+                "Invalid max -123 < 0",
+                thrown.getMessage()
         );
     }
 
