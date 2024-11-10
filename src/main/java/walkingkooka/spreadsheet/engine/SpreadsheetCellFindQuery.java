@@ -182,6 +182,13 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     public SpreadsheetCellFindQuery setOffset(final OptionalInt offset) {
         Objects.requireNonNull(offset, "offset");
 
+        if(offset.isPresent()) {
+            final int value = offset.getAsInt();
+            if(value < 0) {
+                throw new IllegalArgumentException("Invalid offset " + value + " < 0");
+            }
+        }
+
         return this.offset.equals(offset) ?
                 this :
                 this.replace(
@@ -201,6 +208,13 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     public SpreadsheetCellFindQuery setMax(final OptionalInt max) {
         Objects.requireNonNull(max, "max");
+
+        if (max.isPresent()) {
+            final int value = max.getAsInt();
+            if (value < 0) {
+                throw new IllegalArgumentException("Invalid max " + value + " < 0");
+            }
+        }
 
         return this.max.equals(max) ?
                 this :
