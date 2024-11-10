@@ -350,7 +350,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
         this.toUrlQueryStringAndCheck(
                 SpreadsheetCellFindQuery.empty()
                         .setPath(PATH),
-                "cell-range-path=lrtd"
+                "cell-range-path=LRTD"
         );
     }
 
@@ -402,7 +402,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                         .setMax(MAX)
                         .setValueType(VALUE_TYPE)
                         .setQuery(QUERY),
-                "cell-range-path=lrtd&max=456&offset=123&query=789%2Bblah%28%29&value-type=*"
+                "cell-range-path=LRTD&max=456&offset=123&query=789%2Bblah%28%29&value-type=*"
         );
     }
 
@@ -429,7 +429,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testText() {
         this.textAndCheck(
                 this.createObject(),
-                "/path/lrtd/offset/123/max/456/value-type/*/query/789+blah()"
+                "/path/LRTD/offset/123/max/456/value-type/*/query/789+blah()"
         );
     }
 
@@ -444,7 +444,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testParseInvalidCellRangePathFails() {
         this.parseStringFails(
                 "/path/XYZ",
-                new IllegalArgumentException("Got \"XYZ\" expected one of lrtd, rltd, lrbu, rlbu, tdlr, tdrl, bulr, burl")
+                new IllegalArgumentException("Got \"XYZ\" expected one of LRTD, RLTD, LRBU, RLBU, TDLR, TDRL, BULR, BURL")
         );
     }
 
@@ -499,7 +499,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testParse() {
         this.parseStringAndCheck(
-                "/path/lrtd/offset/123/max/456/value-type/*/query/789+blah()",
+                "/path/LRTD/offset/123/max/456/value-type/*/query/789+blah()",
                 this.createObject()
         );
     }
@@ -507,7 +507,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testParseCellRangePath() {
         this.parseStringAndCheck(
-                "/path/lrtd",
+                "/path/LRTD",
                 SpreadsheetCellFindQuery.empty()
                         .setPath(PATH)
         );
@@ -516,7 +516,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testParseIncludesQuery() {
         this.parseStringAndCheck(
-                "/path/lrtd/query/XYZ()",
+                "/path/LRTD/query/XYZ()",
                 SpreadsheetCellFindQuery.empty()
                         .setPath(PATH)
                         .setQuery(
@@ -555,7 +555,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testExtractCellRangePath() {
         this.extractAndCheck(
-                "cell-range-path=lrtd",
+                "cell-range-path=LRTD",
                 SpreadsheetCellFindQuery.empty()
                         .setPath(PATH)
         );
@@ -564,7 +564,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testExtractIncludesQuery() {
         this.extractAndCheck(
-                "cell-range-path=lrtd&query=XYZ()",
+                "cell-range-path=LRTD&query=XYZ()",
                 SpreadsheetCellFindQuery.empty()
                         .setPath(PATH)
                         .setQuery(
@@ -578,7 +578,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testExtract() {
         this.extractAndCheck(
-                "cell-range-path=lrtd&max=456&offset=123&query=789%2Bblah%28%29&value-type=*",
+                "cell-range-path=LRTD&max=456&offset=123&query=789%2Bblah%28%29&value-type=*",
                 this.createObject()
         );
     }
@@ -596,7 +596,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
 
     @Test
     public void testExtractFromRequest() {
-        final String queryString = "cell-range-path=lrtd&max=456&offset=123&query=789%2Bblah%28%29&value-type=*";
+        final String queryString = "cell-range-path=LRTD&max=456&offset=123&query=789%2Bblah%28%29&value-type=*";
 
         this.extractAndCheck0(
                 HttpRequests.get(
@@ -707,7 +707,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                         .setPath(
                                 Optional.of(SpreadsheetCellRangeReferencePath.BULR)
                         ),
-                UrlFragment.parse("/path/bulr")
+                UrlFragment.parse("/path/BULR")
         );
     }
 
@@ -761,7 +761,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     public void testUrlFragmentAll() {
         this.urlFragmentAndCheck(
                 this.createObject(),
-                UrlFragment.parse("/path/lrtd/offset/123/max/456/value-type/*/query/789%2Bblah%28%29")
+                UrlFragment.parse("/path/LRTD/offset/123/max/456/value-type/*/query/789%2Bblah%28%29")
         );
     }
 
@@ -787,7 +787,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
                                 SpreadsheetCellQuery.parse("query789()")
                         )
                 ),
-                "/path/bulr/offset/123/max/456/value-type/number/query/query789()"
+                "/path/BULR/offset/123/max/456/value-type/number/query/query789()"
         );
     }
 

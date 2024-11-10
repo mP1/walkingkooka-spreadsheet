@@ -21,62 +21,62 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.text.CharSequences;
+import walkingkooka.test.ParseStringTesting;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellRangeReferencePathTest implements ClassTesting<SpreadsheetCellRangeReferencePath> {
+public final class SpreadsheetCellRangeReferencePathTest implements ParseStringTesting<SpreadsheetCellRangeReferencePath>,
+        ClassTesting<SpreadsheetCellRangeReferencePath> {
 
     @Test
-    public void testFromKebabCaseWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetCellRangeReferencePath.fromKebabCase(null)
-        );
-    }
-
-    @Test
-    public void testFromKebabCaseWithUnknownFails() {
+    public void testParseWithUnknownFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> SpreadsheetCellRangeReferencePath.fromKebabCase("123?")
+                () -> SpreadsheetCellRangeReferencePath.parse("123?")
         );
         this.checkEquals(
-                "Got \"123?\" expected one of lrtd, rltd, lrbu, rlbu, tdlr, tdrl, bulr, burl",
+                "Got \"123?\" expected one of LRTD, RLTD, LRBU, RLBU, TDLR, TDRL, BULR, BURL",
                 thrown.getMessage()
         );
     }
 
     @Test
-    public void testFromKebabCaseLRTD() {
-        this.fromKebabCaseAndCheck(
-                "lrtd",
+    public void testParseLRTD() {
+        this.parseStringAndCheck(
+                "LRTD",
                 SpreadsheetCellRangeReferencePath.LRTD
         );
     }
 
     @Test
-    public void testFromKebabCaseAllValues() {
+    public void testParseAllValues() {
         for (final SpreadsheetCellRangeReferencePath path : SpreadsheetCellRangeReferencePath.values()) {
-            this.fromKebabCaseAndCheck(
-                    path.name()
-                            .toLowerCase(),
+            this.parseStringAndCheck(
+                    path.name(),
                     path
             );
         }
     }
 
-    private void fromKebabCaseAndCheck(final String text,
-                                       final SpreadsheetCellRangeReferencePath expected) {
-        this.checkEquals(
-                expected,
-                SpreadsheetCellRangeReferencePath.fromKebabCase(text),
-                () -> "from " + CharSequences.quoteAndEscape(text)
-        );
+    @Override
+    public SpreadsheetCellRangeReferencePath parseString(final String text) {
+        return SpreadsheetCellRangeReferencePath.parse(text);
     }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
+    }
+
+    // sort.............................................................................................................
 
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 

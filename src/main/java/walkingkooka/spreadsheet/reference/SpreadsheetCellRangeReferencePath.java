@@ -323,7 +323,6 @@ public enum SpreadsheetCellRangeReferencePath {
         );
 
         final String nameLower = name.toLowerCase();
-        this.kebabCase = nameLower;
 
         this.labelText = (nameLower.substring(0, 2) + " " + nameLower.substring(2))
                 .replace("lr", "left-right")
@@ -340,8 +339,6 @@ public enum SpreadsheetCellRangeReferencePath {
     }
 
     private final String labelText;
-
-    private final String kebabCase;
 
     /**
      * A {@link Comparator} that may be used to sort {@link SpreadsheetCellReference} honouring this {@link SpreadsheetCellRangeReferencePath}.
@@ -399,14 +396,14 @@ public enum SpreadsheetCellRangeReferencePath {
     }
 
     /**
-     * Finds the matching {@link SpreadsheetCellRangeReferencePath} given its name in camel-case form.
+     * Finds the matching {@link SpreadsheetCellRangeReferencePath} given its name in UPPER-CASED camel-case form.
      */
-    public static SpreadsheetCellRangeReferencePath fromKebabCase(final String text) {
+    public static SpreadsheetCellRangeReferencePath parse(final String text) {
         Objects.requireNonNull(text, "text");
 
         final SpreadsheetCellRangeReferencePath[] values = SpreadsheetCellRangeReferencePath.values();
         for (final SpreadsheetCellRangeReferencePath possible : values) {
-            if (text.equals(possible.kebabCase)) {
+            if (text.equals(possible.name())) {
                 return possible;
             }
         }
@@ -416,7 +413,7 @@ public enum SpreadsheetCellRangeReferencePath {
                         CharSequences.quoteAndEscape(text) +
                         " expected one of " +
                         Arrays.stream(values)
-                                .map(v -> v.kebabCase)
+                                .map(v -> v.name())
                                 .collect(Collectors.joining(", ")
                                 )
         );

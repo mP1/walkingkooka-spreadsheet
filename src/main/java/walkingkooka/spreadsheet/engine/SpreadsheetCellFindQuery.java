@@ -26,7 +26,6 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.meta.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
-import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
@@ -67,7 +66,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
             if ("path".equals(component)) {
                 query = query.setPath(
                         parseComponent(cursor)
-                                .map(SpreadsheetCellRangeReferencePath::fromKebabCase)
+                                .map(SpreadsheetCellRangeReferencePath::parse)
                 );
 
                 component = parseComponentOrNull(cursor);
@@ -181,7 +180,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return empty()
                 .setPath(
                         CELL_RANGE_PATH.firstParameterValue(parameters)
-                                .map(SpreadsheetCellRangeReferencePath::fromKebabCase)
+                                .map(SpreadsheetCellRangeReferencePath::parse)
                 ).setMax(
                         parseIntegerQueryParameter(
                                 parameters,
@@ -421,7 +420,6 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                             UrlFragment.with(
                                     path.get()
                                             .toString()
-                                            .toLowerCase()
                             )
                     );
         }
@@ -506,9 +504,8 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         if (path.isPresent()) {
             result = result.addParameter(
                     CELL_RANGE_PATH,
-                    CaseKind.kebabEnumName(
-                            path.get()
-                    )
+                    path.get()
+                            .toString()
             );
         }
         if (max.isPresent()) {
