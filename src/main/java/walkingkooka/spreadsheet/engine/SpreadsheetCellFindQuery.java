@@ -306,7 +306,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
         final Optional<SpreadsheetCellRangeReferencePath> path = this.path;
         if (path.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(PATH_URL_FRAGMENT)
+            urlFragment = urlFragment.append(PATH_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     path.get()
@@ -317,7 +317,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
         final OptionalInt offset = this.offset;
         if (offset.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(OFFSET_URL_FRAGMENT)
+            urlFragment = urlFragment.append(OFFSET_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     String.valueOf(
@@ -329,7 +329,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
         final OptionalInt max = this.max;
         if (max.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(MAX_URL_FRAGMENT)
+            urlFragment = urlFragment.append(MAX_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     String.valueOf(
@@ -341,7 +341,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
         final Optional<String> valueType = this.valueType;
         if (valueType.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(VALUE_TYPE_URL_FRAGMENT)
+            urlFragment = urlFragment.append(VALUE_TYPE_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     valueType.get()
@@ -351,7 +351,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
         final Optional<SpreadsheetCellQuery> query = this.query;
         if (query.isPresent()) {
-            urlFragment = urlFragment.appendSlashThen(QUERY_URL_FRAGMENT)
+            urlFragment = urlFragment.append(QUERY_URL_FRAGMENT)
                     .appendSlashThen(
                             query.get()
                                     .urlFragment()
@@ -361,15 +361,15 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return urlFragment;
     }
 
-    private final static UrlFragment PATH_URL_FRAGMENT = UrlFragment.parse("path");
+    private final static UrlFragment PATH_URL_FRAGMENT = UrlFragment.parse("/path");
 
-    private final static UrlFragment OFFSET_URL_FRAGMENT = UrlFragment.parse("offset");
+    private final static UrlFragment OFFSET_URL_FRAGMENT = UrlFragment.parse("/offset");
 
-    private final static UrlFragment MAX_URL_FRAGMENT = UrlFragment.parse("max");
+    private final static UrlFragment MAX_URL_FRAGMENT = UrlFragment.parse("/max");
 
-    private final static UrlFragment VALUE_TYPE_URL_FRAGMENT = UrlFragment.parse("value-type");
+    private final static UrlFragment VALUE_TYPE_URL_FRAGMENT = UrlFragment.parse("/value-type");
 
-    private final static UrlFragment QUERY_URL_FRAGMENT = UrlFragment.parse("query");
+    private final static UrlFragment QUERY_URL_FRAGMENT = UrlFragment.parse("/query");
     
     // UrlQueryString...................................................................................................
 
