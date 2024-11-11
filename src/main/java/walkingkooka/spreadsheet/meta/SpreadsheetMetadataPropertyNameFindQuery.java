@@ -74,6 +74,6 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
 
     @Override
     public SpreadsheetCellQuery parseUrlFragmentSaveValue0(final String value) {
-        return this.failParseUrlFragmentSaveValueUnsupported();
+        return SpreadsheetCellQuery.parse(value);
     }
 }

@@ -39,6 +39,21 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
         this.extractLocaleValueAwareAndCheck(Locale.ENGLISH, null);
     }
 
+    // parseUrlFragmentSaveValue........................................................................................
+
+    @Test
+    public void testParseUrlFragmentSaveValueQuery() {
+        final SpreadsheetCellQuery query = SpreadsheetCellQuery.parse("1+2");
+
+        this.checkEquals(
+                query,
+                SpreadsheetMetadataPropertyName.FIND_QUERY
+                        .parseUrlFragmentSaveValue(query.text())
+        );
+    }
+
+    // Object...........................................................................................................
+
     @Test
     public void testToString() {
         this.toStringAndCheck(
