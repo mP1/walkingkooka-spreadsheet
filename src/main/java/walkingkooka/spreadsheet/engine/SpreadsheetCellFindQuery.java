@@ -24,7 +24,6 @@ import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.UrlQueryString;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.meta.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;

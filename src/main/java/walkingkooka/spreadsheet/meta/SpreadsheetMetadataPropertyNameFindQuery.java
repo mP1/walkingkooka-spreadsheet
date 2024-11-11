@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 
+import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
+
 import java.util.Locale;
 import java.util.Optional;
 

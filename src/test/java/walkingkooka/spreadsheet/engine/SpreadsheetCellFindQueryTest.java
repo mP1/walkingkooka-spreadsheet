@@ -32,7 +32,6 @@ import walkingkooka.net.http.HttpTransport;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequests;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
-import walkingkooka.spreadsheet.meta.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;

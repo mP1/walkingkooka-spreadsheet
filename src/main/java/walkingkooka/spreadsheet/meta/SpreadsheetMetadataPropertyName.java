@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
