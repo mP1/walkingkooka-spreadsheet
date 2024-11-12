@@ -62,7 +62,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
         String component = parseComponentOrNull(cursor);
         if (null != component) {
-            if ("path".equals(component)) {
+            if (PATH_STRING.equals(component)) {
                 query = query.setPath(
                         parseComponent(cursor)
                                 .map(SpreadsheetCellRangeReferencePath::parse)
@@ -70,7 +70,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
                 component = parseComponentOrNull(cursor);
             }
-            if ("offset".equals(component)) {
+            if (OFFSET_STRING.equals(component)) {
                 query = query.setOffset(
                         parseInt(
                                 cursor,
@@ -79,7 +79,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 );
                 component = parseComponentOrNull(cursor);
             }
-            if ("max".equals(component)) {
+            if (MAX_STRING.equals(component)) {
                 query = query.setMax(
                         parseInt(
                                 cursor,
@@ -88,13 +88,13 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 );
                 component = parseComponentOrNull(cursor);
             }
-            if ("value-type".equals(component)) {
+            if (VALUE_TYPE_STRING.equals(component)) {
                 query = query.setValueType(
                         parseComponent(cursor)
                 );
                 component = parseComponentOrNull(cursor);
             }
-            if ("query".equals(component)) {
+            if (QUERY_STRING.equals(component)) {
                 cursor.next();
 
                 final TextCursorSavePoint save = cursor.save();
@@ -469,27 +469,39 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return urlFragment;
     }
 
-    private final static UrlFragment PATH_URL_FRAGMENT = UrlFragment.parse("/path");
+    private final static String PATH_STRING = "path";
 
-    private final static UrlFragment OFFSET_URL_FRAGMENT = UrlFragment.parse("/offset");
+    private final static UrlFragment PATH_URL_FRAGMENT = UrlFragment.parse("/" + PATH_STRING);
 
-    private final static UrlFragment MAX_URL_FRAGMENT = UrlFragment.parse("/max");
+    private final static String OFFSET_STRING = "offset";
 
-    private final static UrlFragment VALUE_TYPE_URL_FRAGMENT = UrlFragment.parse("/value-type");
+    private final static UrlFragment OFFSET_URL_FRAGMENT = UrlFragment.parse("/" + OFFSET_STRING);
 
-    private final static UrlFragment QUERY_URL_FRAGMENT = UrlFragment.parse("/query");
-    
+    private final static String MAX_STRING = "max";
+
+    private final static UrlFragment MAX_URL_FRAGMENT = UrlFragment.parse("/" + MAX_STRING);
+
+    private final static String VALUE_TYPE_STRING = "value-type";
+
+    private final static UrlFragment VALUE_TYPE_URL_FRAGMENT = UrlFragment.parse("/" + VALUE_TYPE_STRING);
+
+    private final static String QUERY_STRING = "query";
+
+    private final static UrlFragment QUERY_URL_FRAGMENT = UrlFragment.parse("/" + QUERY_STRING);
+
+
     // UrlQueryString...................................................................................................
 
     public static final UrlParameterName CELL_RANGE_PATH = UrlParameterName.with("cell-range-path");
 
-    public static final UrlParameterName MAX = UrlParameterName.with("max");
 
-    public static final UrlParameterName OFFSET = UrlParameterName.with("offset");
+    public static final UrlParameterName MAX = UrlParameterName.with(MAX_STRING);
+
+    public static final UrlParameterName OFFSET = UrlParameterName.with(OFFSET_STRING);
 
     public static final UrlParameterName QUERY = SpreadsheetCellQuery.QUERY;
 
-    public static final UrlParameterName VALUE_TYPE = UrlParameterName.with("value-type");
+    public static final UrlParameterName VALUE_TYPE = UrlParameterName.with(VALUE_TYPE_STRING);
     
     public UrlQueryString toUrlQueryString() {
         UrlQueryString result = UrlQueryString.EMPTY;
