@@ -87,7 +87,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     public static SpreadsheetCellQuery parse(final String text) {
         Objects.requireNonNull(text, "text");
 
-        return new SpreadsheetCellQuery(
+        return with(
                 PARSER.parseText(
                                 text,
                                 PARSER_CONTEXT
@@ -118,6 +118,15 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
         }
     };
 
+    /**
+     * Factory that creates a new {@link SpreadsheetCellQuery} with the given {@link Expression}.
+     */
+    public static SpreadsheetCellQuery with(final Expression expression) {
+        return new SpreadsheetCellQuery(
+                Objects.requireNonNull(expression, "expression")
+        );
+    }
+
     // VisibleForTesting
     SpreadsheetCellQuery(final Expression expression) {
         this.expression = expression;
@@ -128,11 +137,9 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     }
 
     public SpreadsheetCellQuery setExpression(final Expression expression) {
-        Objects.requireNonNull(expression, "expression");
-
         return this.expression.equals(expression) ?
                 this :
-                new SpreadsheetCellQuery(expression);
+                with(expression);
     }
 
     private final Expression expression;
