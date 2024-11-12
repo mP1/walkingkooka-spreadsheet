@@ -70,6 +70,27 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         ParseStringTesting<SpreadsheetCellQuery>,
         JsonNodeMarshallingTesting<SpreadsheetCellQuery> {
 
+    // with.............................................................................................................
+
+    @Test
+    public void testWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetCellQuery.with(null)
+        );
+    }
+
+    @Test
+    public void testWith() {
+        final Expression expression = Expression.value(123);
+
+        final SpreadsheetCellQuery query = SpreadsheetCellQuery.with(expression);
+        this.checkEquals(
+                expression,
+                query.expression()
+        );
+    }
+
     // setPath..........................................................................................................
 
     @Test
