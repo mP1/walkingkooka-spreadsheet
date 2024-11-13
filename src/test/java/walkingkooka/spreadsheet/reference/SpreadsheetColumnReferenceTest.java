@@ -454,6 +454,14 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
+    public void testParseColumnInvalidCharacterFails() {
+        this.parseStringInvalidCharacterFails(
+                "AB789",
+                '7'
+        );
+    }
+
+    @Test
     public void testParseColumnMoreThanMaxFails() {
         this.parseStringFails(
                 "ABCDEFGHIJKL",
