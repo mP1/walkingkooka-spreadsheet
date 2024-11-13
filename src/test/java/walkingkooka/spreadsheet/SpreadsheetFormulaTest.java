@@ -661,6 +661,56 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    // CanBeEmpty.......................................................................................................
+
+    @Test
+    public void testIsEmpty() {
+        this.parseAndIsEmptyCheck(
+                "",
+                true
+        );
+    }
+
+    @Test
+    public void testIsEmptyWithOnlyWhitespace() {
+        this.parseAndIsEmptyCheck(
+                "  ",
+                true
+        );
+    }
+
+    @Test
+    public void testIsEmptyWithIncompleteExpression() {
+        this.parseAndIsEmptyCheck(
+                "1+",
+                false
+        );
+    }
+
+    @Test
+    public void testIsEmptyWithExpression() {
+        this.parseAndIsEmptyCheck(
+                "1+2",
+                false
+        );
+    }
+
+    @Test
+    public void testIsEmptyWithExpression2() {
+        this.parseAndIsEmptyCheck(
+                " 1 + 2 + hello()",
+                false
+        );
+    }
+
+    private void parseAndIsEmptyCheck(final String text,
+                                      final boolean expected) {
+        this.isEmptyAndCheck(
+                this.parseFormula(text),
+                expected
+        );
+    }
+
     // consumeSpreadsheetExpressionReferences...........................................................................
 
     @Test

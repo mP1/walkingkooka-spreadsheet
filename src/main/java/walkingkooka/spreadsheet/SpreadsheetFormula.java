@@ -641,7 +641,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
     @Override
     public boolean isEmpty() {
-        return this.text.isEmpty();
+        return this.text()
+                .trim()
+                .isEmpty();
     }
 }
 
