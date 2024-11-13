@@ -41,7 +41,13 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     final static int MAX_VALUE = 16384 - 1; // inclusive
     final static int RADIX = 26;
 
-    final static String MAX_TOSTRING = toString0(MAX_VALUE + 1, SpreadsheetReferenceKind.RELATIVE);
+    /**
+     * The highest legal column.
+     */
+    public final static String MAX_VALUE_STRING = toString0(
+            MAX_VALUE + 1,
+            SpreadsheetReferenceKind.RELATIVE
+    );
 
     static SpreadsheetColumnReference[] absoluteCache() {
         if (null == ABSOLUTE_CACHE) {

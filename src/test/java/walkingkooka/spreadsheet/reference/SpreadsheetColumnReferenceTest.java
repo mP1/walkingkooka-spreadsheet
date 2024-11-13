@@ -36,6 +36,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRowReferenceTestCase<SpreadsheetColumnReference> {
 
     @Test
+    public void testMAX_VALUE_STRING() {
+        this.checkEquals(
+                "XFE",
+                SpreadsheetColumnReference.MAX_VALUE_STRING
+        );
+    }
+
+    @Test
     public void testSetRowNullFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(null));
     }
