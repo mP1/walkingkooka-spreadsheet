@@ -1194,7 +1194,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
 
         this.checkEquals(
-                "Invalid column value 3752126 expected between 0 and 16384 in \"hello\"",
+                "Invalid column \"hello\" not between \"A\" and \"XFE\" in \"hello\"",
                 thrown.getMessage(),
                 "message"
         );

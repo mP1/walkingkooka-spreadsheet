@@ -273,7 +273,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 "Label123",
-                "Invalid column value 5502781 expected between 0 and 16384 in \"Label123\""
+                "Invalid column \"Label\" not between \"A\" and \"XFE\" in \"Label123\""
         );
     }
 
