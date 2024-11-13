@@ -113,12 +113,18 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
 
     @Test
     public void testParseRelativeReferenceInvalid() {
-        this.parseThrows("" + INVALID, "Invalid column value 16384 expected between 0 and 16384");
+        this.parseThrows(
+                "" + INVALID,
+                "Invalid column \"XFE\" not between \"A\" and \"XFE\""
+        );
     }
 
     @Test
     public void testParseAbsoluteReferenceInvalid() {
-        this.parseThrows("$" + INVALID, "Invalid column value 16384 expected between 0 and 16384");
+        this.parseThrows(
+                "$" + INVALID,
+                "Invalid column \"$XFE\" not between \"A\" and \"XFE\""
+        );
     }
 
     private void parseAndCheck2(final String text, final SpreadsheetReferenceKind referenceKind, final int column) {

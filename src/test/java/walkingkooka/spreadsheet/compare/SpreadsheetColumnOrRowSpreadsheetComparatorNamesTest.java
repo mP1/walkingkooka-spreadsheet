@@ -529,7 +529,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.parseStringFails(
                 text,
-                new IllegalArgumentException("Invalid column value 1252505392 expected between 0 and 16384 in \"ABCDEFGHIJKLM text\"")
+                new IllegalArgumentException("Invalid column \"ABCDEFGHIJKLM\" not between \"A\" and \"XFE\" in \"ABCDEFGHIJKLM text\"")
         );
     }
 

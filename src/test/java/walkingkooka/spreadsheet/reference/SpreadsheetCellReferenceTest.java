@@ -1327,16 +1327,16 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testParseInvalidColumnFails() {
         this.parseStringFails(
-                "XFE2",
-                new IllegalColumnArgumentException("Invalid column value 16384 expected between 0 and 16384 in \"XFE2\"")
+                "XFEA",
+                new IllegalColumnArgumentException("Invalid column \"XFEA\" not between \"A\" and \"XFE\" in \"XFEA\"")
         );
     }
 
     @Test
     public void testParseInvalidColumnFails2() {
         this.parseStringFails(
-                "ABCDEF1",
-                new IllegalColumnArgumentException("Invalid column value 12850895 expected between 0 and 16384 in \"ABCDEF1\"")
+                "ABCDEFG",
+                new IllegalColumnArgumentException("Invalid column \"ABCDEFG\" not between \"A\" and \"XFE\" in \"ABCDEFG\"")
         );
     }
 

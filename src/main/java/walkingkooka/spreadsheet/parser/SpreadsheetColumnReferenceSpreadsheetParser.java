@@ -17,8 +17,10 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.reference.IllegalColumnArgumentException;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -52,8 +54,20 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
     final static int RADIX = 26;
 
     @Override
-    ParserToken token1(final SpreadsheetReferenceKind absoluteOrRelative, final int value, final String text) {
-        return SpreadsheetColumnReferenceParserToken.columnReference(absoluteOrRelative.column(value), text);
+    ParserToken token1(final SpreadsheetReferenceKind absoluteOrRelative,
+                       final int value,
+                       final String text) {
+        try {
+            return SpreadsheetColumnReferenceParserToken.columnReference(
+                    absoluteOrRelative.column(value),
+                    text
+            );
+        } catch (final IllegalColumnArgumentException cause) {
+            // Invalid column ABCDE not between \"A\" and \"$MAX\"
+            throw new IllegalColumnArgumentException(
+                    "Invalid column " + CharSequences.quoteAndEscape(text) + " not between \"A\" and \"" + SpreadsheetColumnReference.MAX_VALUE_STRING + "\""
+            );
+        }
     }
 
     @Override
