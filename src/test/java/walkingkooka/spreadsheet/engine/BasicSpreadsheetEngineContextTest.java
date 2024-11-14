@@ -65,6 +65,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -274,6 +275,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                             )
                     )
             );
+        }
+
+        @Override
+        public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+            return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
         }
     };
 
