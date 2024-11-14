@@ -284,7 +284,8 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
 
     @Test
     public void testTranslateUnknownExpressionFunctionException() {
-        final ExpressionFunctionName badFunction = ExpressionFunctionName.with("badFunction");
+        final ExpressionFunctionName badFunction = ExpressionFunctionName.with("badFunction")
+                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY);
 
         this.translateAndCheck(
                 new UnknownExpressionFunctionException(badFunction),

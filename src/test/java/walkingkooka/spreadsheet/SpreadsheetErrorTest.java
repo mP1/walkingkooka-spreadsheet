@@ -116,7 +116,8 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
     @Test
     public void testFunctionNotFound() {
-        final ExpressionFunctionName function = ExpressionFunctionName.with("function123");
+        final ExpressionFunctionName function = ExpressionFunctionName.with("function123")
+                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY);
 
         final SpreadsheetError error = SpreadsheetError.functionNotFound(function);
         this.checkKind(error, SpreadsheetErrorKind.NAME);

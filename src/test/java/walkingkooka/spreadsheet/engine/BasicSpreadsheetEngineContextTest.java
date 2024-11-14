@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
@@ -254,18 +255,22 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/xyz"),
                                     ExpressionFunctionName.with("xyz")
+                                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                             ),
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
                                     ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
+                                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                             ),
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
                                     ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
+                                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                             ),
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
                                     ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
+                                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                             )
                     )
             );
@@ -651,6 +656,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with("xyz")
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                         ),
                         Lists.of(
                                 this.expression(1),
@@ -671,6 +677,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                         ),
                         Lists.of(
                                 Expression.reference(
@@ -688,6 +695,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                         ),
                         Lists.empty()
                 ),
@@ -701,6 +709,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                         ),
                         Lists.empty()
                 ),
