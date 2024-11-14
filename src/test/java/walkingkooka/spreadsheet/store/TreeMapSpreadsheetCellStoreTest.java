@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
@@ -507,7 +508,10 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         withoutParsedFormula.formula()
                                 .setExpression(
                                         Optional.of(
-                                                Expression.namedFunction(ExpressionFunctionName.with("hello"))
+                                                Expression.namedFunction(
+                                                        ExpressionFunctionName.with("hello")
+                                                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                                )
                                         )
                                 )
                 )
@@ -536,7 +540,10 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         withoutParsedFormula.formula()
                                 .setExpression(
                                         Optional.of(
-                                                Expression.namedFunction(ExpressionFunctionName.with("hello"))
+                                                Expression.namedFunction(
+                                                        ExpressionFunctionName.with("hello")
+                                                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                                )
                                         )
                                 )
                 )
@@ -579,7 +586,10 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         SpreadsheetFormula.EMPTY.setText("hello()")
                                 .setExpression(
                                         Optional.of(
-                                                Expression.namedFunction(ExpressionFunctionName.with("hello"))
+                                                Expression.namedFunction(
+                                                        ExpressionFunctionName.with("hello")
+                                                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                                )
                                         )
                                 )
                 );
@@ -610,7 +620,10 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         SpreadsheetFormula.EMPTY.setText("hello()")
                                 .setExpression(
                                         Optional.of(
-                                                Expression.namedFunction(ExpressionFunctionName.with("hello"))
+                                                Expression.namedFunction(
+                                                        ExpressionFunctionName.with("hello")
+                                                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                                )
                                         )
                                 )
                 );

@@ -48,6 +48,7 @@ import walkingkooka.net.http.HttpProtocolVersion;
 import walkingkooka.net.http.HttpTransport;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequests;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
@@ -206,6 +207,7 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
                         Expression.call(
                                 Expression.namedFunction(
                                         ExpressionFunctionName.with("abc")
+                                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                                 ),
                                 Lists.of(
                                         Expression.value(

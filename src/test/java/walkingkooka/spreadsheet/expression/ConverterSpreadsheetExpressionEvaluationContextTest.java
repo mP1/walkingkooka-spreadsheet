@@ -33,6 +33,7 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
@@ -122,6 +123,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(
                     ExpressionFunctionName.with("test-concat-1")
+                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
             );
         }
 
@@ -154,6 +156,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(
                     ExpressionFunctionName.with("test-echo-2")
+                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
             );
         }
 

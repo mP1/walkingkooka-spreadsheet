@@ -23,6 +23,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
@@ -181,6 +182,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                 () -> this.createContext()
                         .expressionFunction(
                                 ExpressionFunctionName.with(NAME)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                         )
         );
         this.checkEquals(
@@ -193,7 +195,10 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     public void testIsPureWithNamedValueFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> this.createContext().isPure(ExpressionFunctionName.with(NAME))
+                () -> this.createContext().isPure(
+                        ExpressionFunctionName.with(NAME)
+                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                )
         );
         this.checkEquals(
                 "Function name Name1234 is a parameter and not an actual function",

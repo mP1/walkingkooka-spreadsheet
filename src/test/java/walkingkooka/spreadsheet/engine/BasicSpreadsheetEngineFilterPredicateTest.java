@@ -24,6 +24,7 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -119,7 +120,10 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
 
     private BasicSpreadsheetEngineFilterPredicate createPredicate(final String valueType) {
         final Expression expression = Expression.call(
-                Expression.namedFunction(ExpressionFunctionName.with("Test123")),
+                Expression.namedFunction(
+                        ExpressionFunctionName.with("Test123")
+                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                ),
                 Expression.NO_CHILDREN
         );
 

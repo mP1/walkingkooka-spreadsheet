@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -53,6 +54,7 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
 
     private final static Optional<ExpressionFunctionName> NAME = Optional.of(
             ExpressionFunctionName.with("error")
+                    .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
     );
 
     @Override

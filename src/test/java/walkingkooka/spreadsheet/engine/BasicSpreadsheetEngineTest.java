@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
@@ -322,6 +323,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "=unknownFunction()",
                 SpreadsheetError.functionNotFound(
                         ExpressionFunctionName.with("unknownFunction")
+                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                 )
         );
     }
@@ -12639,6 +12641,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Expression.call(
                         Expression.namedFunction(
                                 ExpressionFunctionName.with("BasicSpreadsheetEngineTestFilterCellsPredicate")
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                         ),
                         Expression.NO_CHILDREN
                 ),
