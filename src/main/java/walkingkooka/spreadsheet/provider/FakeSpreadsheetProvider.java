@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -90,6 +91,11 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
 
     @Override
     public SpreadsheetComparatorInfoSet spreadsheetComparatorInfos() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
         throw new UnsupportedOperationException();
     }
 

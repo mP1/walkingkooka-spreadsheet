@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -220,6 +221,11 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                             )
                     )
             );
+        }
+
+        @Override
+        public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+            return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
         }
     };
 
