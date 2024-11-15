@@ -151,7 +151,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.conditionParserParseAndCheck(
                 "=123",
                 condition(
-                        equals(),
+                        equalsSymbol(),
                         number(123)
                 )
         );
@@ -240,7 +240,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.conditionParserParseAndCheck(
                 "=\"Hello\"",
                 condition(
-                        equals(),
+                        equalsSymbol(),
                         SpreadsheetParserToken.text(
                                 Lists.of(
                                         doubleQuotesSymbol(),
@@ -258,7 +258,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.conditionParserParseAndCheck(
                 "=xyz()",
                 condition(
-                        equals(),
+                        equalsSymbol(),
                         namedFunction(
                                 functionName("xyz"),
                                 functionParameters(
@@ -275,7 +275,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.conditionParserParseAndCheck(
                 "=def(123)",
                 condition(
-                        equals(),
+                        equalsSymbol(),
                         namedFunction(
                                 functionName("def"),
                                 functionParameters(
@@ -293,7 +293,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.conditionParserParseAndCheck(
                 "=abc() ",
                 condition(
-                        equals(),
+                        equalsSymbol(),
                         group(
                                 namedFunction(
                                         functionName("abc"),
@@ -1939,7 +1939,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetParserToken left = number(123);
         final SpreadsheetParserToken right = number(456);
         final String text = "123=456";
-        final SpreadsheetEqualsParserToken equals = SpreadsheetParserToken.equalsParserToken(Lists.of(left, equals(), right), text);
+        final SpreadsheetEqualsParserToken equals = SpreadsheetParserToken.equalsParserToken(
+                Lists.of(
+                        left,
+                        equalsSymbol(),
+                        right
+                ),
+                text
+        );
 
         this.valueOrExpressionParserParseAndCheck(text, equals, text);
     }
@@ -1962,7 +1969,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         final SpreadsheetParserToken left = number(123);
         final String text = "123=" + addText;
-        final SpreadsheetEqualsParserToken equals = SpreadsheetParserToken.equalsParserToken(Lists.of(left, equals(), add), text);
+        final SpreadsheetEqualsParserToken equals = SpreadsheetParserToken.equalsParserToken(Lists.of(left, equalsSymbol(), add), text);
 
         this.valueOrExpressionParserParseAndCheck(text, equals, text);
     }
@@ -3443,7 +3450,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 equalsFormula,
                 SpreadsheetParserToken.expression(
                         Lists.of(
-                                SpreadsheetParserToken.equalsSymbol("=", "="),
+                                equalsSymbol(),
                                 token
                         ),
                         equalsFormula
@@ -3922,7 +3929,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private SpreadsheetParserToken equals() {
+    private SpreadsheetParserToken equalsSymbol() {
         return SpreadsheetParserToken.equalsSymbol("=", "=");
     }
 
