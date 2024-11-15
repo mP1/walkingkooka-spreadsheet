@@ -868,7 +868,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetCellRangeParserToken range = SpreadsheetParserToken.cellRange(
                 Lists.of(
                         this.cell(0, "A", 0),
-                        between(),
+                        betweenSymbol(),
                         this.cell(1, "B", 1)
                 ),
                 text
@@ -965,12 +965,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final SpreadsheetCellReferenceParserToken from = this.cell(0, "A", 0);
         final SpreadsheetCellReferenceParserToken to = this.cell(1, "B", 1);
 
-        final String text = from.text() + "  " + between() + "  " + to.text();
+        final String text = from.text() + "  " + betweenSymbol() + "  " + to.text();
         final SpreadsheetCellRangeParserToken range = SpreadsheetParserToken.cellRange(
                 Lists.of(
                         from,
                         whitespace2(),
-                        between(),
+                        betweenSymbol(),
                         whitespace2(),
                         to
                 ),
@@ -3874,7 +3874,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private SpreadsheetParserToken between() {
+    private SpreadsheetParserToken betweenSymbol() {
         return SpreadsheetParserToken.betweenSymbol(":", ":");
     }
 
@@ -4091,11 +4091,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetCellRangeParserToken range(final SpreadsheetParserToken from,
                                                   final SpreadsheetParserToken to) {
-        final String text = from.text() + between() + to.text();
+        final String text = from.text() + betweenSymbol() + to.text();
         return SpreadsheetParserToken.cellRange(
                 Lists.of(
                         from,
-                        between(),
+                        betweenSymbol(),
                         to
                 ),
                 text
