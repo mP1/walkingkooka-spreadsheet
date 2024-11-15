@@ -632,7 +632,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * Only {@link SpreadsheetConditionRightParserToken} return true
      */
-    public final boolean isCondition() {
+    public final boolean isConditionRight() {
         return this instanceof SpreadsheetConditionRightParserToken;
     }
 
