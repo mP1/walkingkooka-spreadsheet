@@ -200,7 +200,8 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 m.equals("isParent") ||
                 m.equals("isSymbol") ||
                 m.equals("isEmpty") ||
-                m.equals("isNotEmpty");
+                m.equals("isNotEmpty") ||
+                m.equals("isValue");
     }
 
     // JsonNodeMarshallTesting..........................................................................................

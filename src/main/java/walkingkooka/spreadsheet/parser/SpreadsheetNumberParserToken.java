@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Holds a {@link walkingkooka.tree.expression.ExpressionNumber} value along with the tokens and original text.
  */
-public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserToken {
+public final class SpreadsheetNumberParserToken extends SpreadsheetValueParserToken {
 
     static SpreadsheetNumberParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetNumberParserToken(copyAndCheckTokens(value), checkText(text));

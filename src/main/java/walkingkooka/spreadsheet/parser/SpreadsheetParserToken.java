@@ -1059,6 +1059,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetValueParserToken} return true
+     */
+    public final boolean isValue() {
+        return this instanceof SpreadsheetValueParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetValueSeparatorSymbolParserToken} returns true
      */
     public final boolean isValueSeparatorSymbol() {
