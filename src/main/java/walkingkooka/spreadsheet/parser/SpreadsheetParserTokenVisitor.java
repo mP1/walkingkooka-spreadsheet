@@ -53,13 +53,13 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
-    // SpreadsheetConditionParserToken....................................................................................
+    // SpreadsheetConditionRightParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetConditionParserToken token) {
+    protected Visiting startVisit(final SpreadsheetConditionRightParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetConditionParserToken token) {
+    protected void endVisit(final SpreadsheetConditionRightParserToken token) {
         // nop
     }
 

@@ -48,12 +48,12 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionParserToken token) {
+    protected Visiting startVisit(final SpreadsheetConditionRightParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionParserToken token) {
+    protected void endVisit(final SpreadsheetConditionRightParserToken token) {
         throw new UnsupportedOperationException();
     }
     
