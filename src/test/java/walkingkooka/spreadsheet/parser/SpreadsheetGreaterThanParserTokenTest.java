@@ -29,7 +29,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetGreaterThanParserTokenTest extends SpreadsheetBinaryParserTokenTestCase2<SpreadsheetGreaterThanParserToken> {
+public final class SpreadsheetGreaterThanParserTokenTest extends SpreadsheetConditionParserTokenTestCase<SpreadsheetGreaterThanParserToken> {
 
     @Test
     public void testAccept() {
