@@ -742,6 +742,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetFunctionParserToken} returns true
+     */
+    public final boolean isFunction() {
+        return this instanceof SpreadsheetFunctionParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetFunctionNameParserToken} returns true
      */
     public final boolean isFunctionName() {
