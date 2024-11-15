@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Holds a time value along with the tokens and original text.
  */
-public final class SpreadsheetTimeParserToken extends SpreadsheetParentParserToken {
+public final class SpreadsheetTimeParserToken extends SpreadsheetValueParserToken {
 
     static SpreadsheetTimeParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetTimeParserToken(copyAndCheckTokens(value), checkText(text));

@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * Holds a text expression in both forms an apostrophe prefixed string literal and a double quoted string.
  */
-public final class SpreadsheetTextParserToken extends SpreadsheetParentParserToken {
+public final class SpreadsheetTextParserToken extends SpreadsheetValueParserToken {
 
     static SpreadsheetTextParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetTextParserToken(
