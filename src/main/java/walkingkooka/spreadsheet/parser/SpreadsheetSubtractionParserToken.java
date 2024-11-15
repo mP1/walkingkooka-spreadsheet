@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Represents a subtraction operation with its parameters.
  */
-public final class SpreadsheetSubtractionParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetSubtractionParserToken extends SpreadsheetArithmeticParserToken {
 
     static SpreadsheetSubtractionParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetSubtractionParserToken(copyAndCheckTokens(value), checkText(text));

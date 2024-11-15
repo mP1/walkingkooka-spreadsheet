@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Represents a power operation with its parameters.
  */
-public final class SpreadsheetPowerParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetPowerParserToken extends SpreadsheetArithmeticParserToken {
 
     static SpreadsheetPowerParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetPowerParserToken(copyAndCheckTokens(value), checkText(text));

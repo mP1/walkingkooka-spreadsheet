@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Represents a multiplication operation with its parameters.
  */
-public final class SpreadsheetMultiplicationParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetMultiplicationParserToken extends SpreadsheetArithmeticParserToken {
 
     static SpreadsheetMultiplicationParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetMultiplicationParserToken(copyAndCheckTokens(value), checkText(text));

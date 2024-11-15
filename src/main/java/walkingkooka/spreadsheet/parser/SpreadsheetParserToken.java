@@ -595,6 +595,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetArithmeticParserToken} return true
+     */
+    public final boolean isArithmetic() {
+        return this instanceof SpreadsheetArithmeticParserToken;
+    }
+    
+    /**
      * Only {@link SpreadsheetBetweenSymbolParserToken} returns true
      */
     public final boolean isBetweenSymbol() {

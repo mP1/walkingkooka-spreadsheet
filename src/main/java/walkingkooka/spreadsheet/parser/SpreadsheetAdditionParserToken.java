@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Represents a addition operation with its parameters.
  */
-public final class SpreadsheetAdditionParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetAdditionParserToken extends SpreadsheetArithmeticParserToken {
 
     static SpreadsheetAdditionParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetAdditionParserToken(Lists.immutable(value), checkText(text));
