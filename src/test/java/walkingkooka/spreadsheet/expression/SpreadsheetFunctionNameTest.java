@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -39,8 +40,10 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
         final SpreadsheetFunctionName c3 = SpreadsheetFunctionName.with("C3");
         final SpreadsheetFunctionName d4 = SpreadsheetFunctionName.with("d4");
 
-        this.compareToArraySortAndCheck(d4, c3, a1, b2,
-                b2, c3, a1, d4);
+        this.compareToArraySortAndCheck(
+                d4, c3, a1, b2,
+                a1, b2, c3, d4
+        );
     }
 
     @Override
@@ -50,7 +53,7 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
 
     @Override
     public CaseSensitivity caseSensitivity() {
-        return CaseSensitivity.SENSITIVE;
+        return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
     }
 
     @Override
