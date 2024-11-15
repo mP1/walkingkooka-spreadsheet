@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Represents a division operation with its parameters.
  */
-public final class SpreadsheetDivisionParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetDivisionParserToken extends SpreadsheetArithmeticParserToken {
 
     static SpreadsheetDivisionParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetDivisionParserToken(Lists.immutable(value), checkText(text));
