@@ -26,62 +26,12 @@ import java.util.List;
  */
 public abstract class SpreadsheetFunctionParserToken extends SpreadsheetParentParserToken {
 
-//    static SpreadsheetFunctionParserToken with(final List<ParserToken> value, final String text) {
-//        return new SpreadsheetFunctionParserToken(copyAndCheckTokens(value),
-//                checkText(text));
-//    }
-
     SpreadsheetFunctionParserToken(final List<ParserToken> value,
                                    final String text) {
         super(value, text);
     }
 
-
     public abstract SpreadsheetFunctionName functionName();
 
     public abstract SpreadsheetFunctionParametersParserToken parameters();
-    //
-//    /**
-//     * The name of the expression
-//     */
-//    public SpreadsheetFunctionName functionName() {
-//        return this.name;
-//    }
-//
-//    private final SpreadsheetFunctionName name;
-//
-//    public List<ParserToken> parameters() {
-//        return this.parameters;
-//    }
-//
-//    private final List<ParserToken> parameters;
-
-//    // children.........................................................................................................
-//
-//    @Override
-//    public SpreadsheetFunctionParserToken setChildren(final List<ParserToken> children) {
-////        return ParserToken.parentSetChildren(
-////                this,
-////                children,
-////                SpreadsheetFunctionParserToken::with
-////        );
-//        throw new UnsupportedOperationException();
-//    }
-//
-//    // SpreadsheetParserTokenVisitor....................................................................................
-//
-//    @Override
-//    void accept(final SpreadsheetParserTokenVisitor visitor) {
-//        if (Visiting.CONTINUE == visitor.startVisit(this)) {
-//            this.acceptValues(visitor);
-//        }
-//        visitor.endVisit(this);
-//    }
-//
-//    // Object...........................................................................................................
-//
-//    @Override
-//    boolean canBeEqual(final Object other) {
-//        return other instanceof SpreadsheetFunctionParserToken;
-//    }
 }
