@@ -97,11 +97,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetConditionParserToken}
+     * {@see SpreadsheetConditionRightParserToken}
      */
-    public static SpreadsheetConditionParserToken condition(final List<ParserToken> value,
-                                                            final String text) {
-        return SpreadsheetConditionParserToken.with(value, text);
+    public static SpreadsheetConditionRightParserToken conditionRight(final List<ParserToken> value,
+                                                                      final String text) {
+        return SpreadsheetConditionRightParserToken.with(value, text);
     }
 
     /**
@@ -630,10 +630,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetConditionParserToken} return true
+     * Only {@link SpreadsheetConditionRightParserToken} return true
      */
     public final boolean isCondition() {
-        return this instanceof SpreadsheetConditionParserToken;
+        return this instanceof SpreadsheetConditionRightParserToken;
     }
 
     /**

@@ -28,29 +28,29 @@ import java.util.List;
  * > now()
  * </pre>
  */
-public final class SpreadsheetConditionParserToken extends SpreadsheetParentParserToken {
+public final class SpreadsheetConditionRightParserToken extends SpreadsheetParentParserToken {
 
-    static SpreadsheetConditionParserToken with(final List<ParserToken> value,
-                                                final String text) {
-        return new SpreadsheetConditionParserToken(
+    static SpreadsheetConditionRightParserToken with(final List<ParserToken> value,
+                                                     final String text) {
+        return new SpreadsheetConditionRightParserToken(
                 copyAndCheckTokens(value),
                 checkText(text)
         );
     }
 
-    private SpreadsheetConditionParserToken(final List<ParserToken> value,
-                                            final String text) {
+    private SpreadsheetConditionRightParserToken(final List<ParserToken> value,
+                                                 final String text) {
         super(value, text);
     }
 
     // children.........................................................................................................
 
     @Override
-    public SpreadsheetConditionParserToken setChildren(final List<ParserToken> children) {
+    public SpreadsheetConditionRightParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
                 this,
                 children,
-                SpreadsheetConditionParserToken::with
+                SpreadsheetConditionRightParserToken::with
         );
     }
 
@@ -68,6 +68,6 @@ public final class SpreadsheetConditionParserToken extends SpreadsheetParentPars
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetConditionParserToken;
+        return other instanceof SpreadsheetConditionRightParserToken;
     }
 }

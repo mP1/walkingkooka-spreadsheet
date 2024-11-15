@@ -131,24 +131,24 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * </pre>
      * This is not intended to be used to parse formulas, but rather as component or placeholder within a larger expression template.
      */
-    public static SpreadsheetParser condition(final Parser<SpreadsheetParserContext> value) {
+    public static SpreadsheetParser conditionRight(final Parser<SpreadsheetParserContext> value) {
         Objects.requireNonNull(value, "value");
 
         return parser(
                 resolveParsers(value)
-                        .get(CONDITION_PARSER_IDENTIFIER)
-                        .transform(SpreadsheetParsers::transformCondition)
+                        .get(CONDITION_RIGHT_PARSER_IDENTIFIER)
+                        .transform(SpreadsheetParsers::transformConditionRight)
         );
     }
 
-    private static final EbnfIdentifierName CONDITION_PARSER_IDENTIFIER = EbnfIdentifierName.with("CONDITION");
+    private static final EbnfIdentifierName CONDITION_RIGHT_PARSER_IDENTIFIER = EbnfIdentifierName.with("CONDITION_RIGHT");
 
     /**
-     * If the token is a {@link SequenceParserToken} then it needs to be wrapped inside an {@link SpreadsheetConditionParserToken}.
+     * If the token is a {@link SequenceParserToken} then it needs to be wrapped inside an {@link SpreadsheetConditionRightParserToken}.
      */
-    private static ParserToken transformCondition(final ParserToken token, final SpreadsheetParserContext context) {
+    private static ParserToken transformConditionRight(final ParserToken token, final SpreadsheetParserContext context) {
         final String text = token.text();
-        return SpreadsheetParserToken.condition(
+        return SpreadsheetParserToken.conditionRight(
                 token.cast(SequenceParserToken.class).value(),
                 text);
     }
