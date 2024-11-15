@@ -2373,7 +2373,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         parenthesisOpen(),
                         x,
                         valueSeparator(),
-                        add(
+                        addition(
                                 x,
                                 plus(),
                                 x
@@ -2405,7 +2405,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         parenthesisOpen(),
                         x,
                         valueSeparator(),
-                        add(
+                        addition(
                                 x,
                                 plus(),
                                 x
@@ -3856,7 +3856,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         };
     }
 
-    private SpreadsheetParserToken add(final SpreadsheetParserToken... tokens) {
+    private SpreadsheetParserToken addition(final SpreadsheetParserToken... tokens) {
         return SpreadsheetParserToken.addition(
                 Lists.of(
                         tokens
