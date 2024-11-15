@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Represents a greater than test with its parameters.
  */
-public final class SpreadsheetGreaterThanParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetGreaterThanParserToken extends SpreadsheetConditionParserToken {
 
     static SpreadsheetGreaterThanParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetGreaterThanParserToken(copyAndCheckTokens(value), checkText(text));

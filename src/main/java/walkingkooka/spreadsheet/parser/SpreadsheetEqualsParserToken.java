@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Represents a equals test with its parameters.
  */
-public final class SpreadsheetEqualsParserToken extends SpreadsheetBinaryParserToken {
+public final class SpreadsheetEqualsParserToken extends SpreadsheetConditionParserToken {
 
     static SpreadsheetEqualsParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetEqualsParserToken(Lists.immutable(value), checkText(text));
