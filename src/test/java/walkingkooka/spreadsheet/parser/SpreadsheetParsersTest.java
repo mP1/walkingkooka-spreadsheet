@@ -3928,13 +3928,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetAdditionParserToken addition(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.addition(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::addition,
+                tokens
         );
     }
 
@@ -3943,13 +3939,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetCellReferenceParserToken cellReference(final ParserToken... tokens) {
-        return SpreadsheetParserToken.cellReference(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::cellReference,
+                tokens
         );
     }
 
@@ -4005,13 +3997,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetDivisionParserToken division(final ParserToken... tokens) {
-        return SpreadsheetParserToken.division(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::division,
+                tokens
         );
     }
 
@@ -4030,13 +4018,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetEqualsParserToken equals(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.equalsParserToken(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::equalsParserToken,
+                tokens
         );
     }
 
@@ -4045,13 +4029,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetExpressionParserToken expression(final ParserToken... tokens) {
-        return SpreadsheetParserToken.expression(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::expression,
+                tokens
         );
     }
 
@@ -4063,35 +4043,23 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetFunctionParametersParserToken functionParameters(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.functionParameters(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::functionParameters,
+                tokens
         );
     }
 
     private SpreadsheetGreaterThanParserToken greaterThan(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.greaterThan(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::greaterThan,
+                tokens
         );
     }
 
     private SpreadsheetGreaterThanEqualsParserToken greaterThanEquals(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.greaterThanEquals(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::greaterThanEquals,
+                tokens
         );
     }
 
@@ -4110,11 +4078,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetGroupParserToken group(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.group(
-                Lists.of(tokens),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::group,
+                tokens
         );
     }
 
@@ -4135,35 +4101,23 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetLambdaFunctionParserToken lambdaFunction(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.lambdaFunction(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::lambdaFunction,
+                tokens
         );
     }
 
     private SpreadsheetLessThanParserToken lessThan(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.lessThan(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::lessThan,
+                tokens
         );
     }
 
     private SpreadsheetLessThanEqualsParserToken lessThanEquals(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.lessThanEquals(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::lessThanEquals,
+                tokens
         );
     }
 
@@ -4190,13 +4144,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetMultiplicationParserToken multiplication(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.multiplication(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::multiplication,
+                tokens
         );
     }
 
@@ -4212,35 +4162,23 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetNamedFunctionParserToken namedFunction(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.namedFunction(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::namedFunction,
+                tokens
         );
     }
 
     private SpreadsheetParserToken negative(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.negative(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::negative,
+                tokens
         );
     }
 
     private SpreadsheetNotEqualsParserToken notEquals(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.notEquals(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::notEquals,
+                tokens
         );
     }
 
@@ -4258,11 +4196,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetNumberParserToken number(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.number(
-                Lists.of(tokens),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::number,
+                tokens
         );
     }
 
@@ -4293,13 +4229,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetPowerParserToken power(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.power(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::power,
+                tokens
         );
     }
 
@@ -4312,14 +4244,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetCellRangeParserToken range(final SpreadsheetParserToken from,
                                                   final SpreadsheetParserToken to) {
-        final String text = from.text() + betweenSymbol() + to.text();
-        return SpreadsheetParserToken.cellRange(
-                Lists.of(
-                        from,
-                        betweenSymbol(),
-                        to
-                ),
-                text
+        return parentToken(
+                SpreadsheetParserToken::cellRange,
+                from,
+                betweenSymbol(),
+                to
         );
     }
 
@@ -4339,24 +4268,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetSubtractionParserToken subtraction(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.subtraction(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::subtraction,
+                tokens
         );
     }
 
     private SpreadsheetParserToken text(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.text(
-                Lists.of(
-                        tokens
-                ),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+        return parentToken(
+                SpreadsheetParserToken::text,
+                tokens
         );
     }
 
@@ -4392,6 +4313,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetYearParserToken year2000() {
         return SpreadsheetParserToken.year(2000, "2000");
+    }
+
+    private <T extends SpreadsheetParserToken> T parentToken(final BiFunction<List<ParserToken>, String, T> factory,
+                                                             final ParserToken... tokens) {
+        return factory.apply(
+                Lists.of(tokens),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
+        );
     }
 
     // PublicStaticHelperTesting........................................................................................
