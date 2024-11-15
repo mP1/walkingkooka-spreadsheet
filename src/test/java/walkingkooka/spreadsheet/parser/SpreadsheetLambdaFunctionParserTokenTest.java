@@ -30,7 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
-public final class SpreadsheetLambdaFunctionParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetLambdaFunctionParserToken> {
+public final class SpreadsheetLambdaFunctionParserTokenTest extends SpreadsheetFunctionParserTokenTestCase<SpreadsheetLambdaFunctionParserToken> {
 
     private final static String FUNCTION = "lambda";
 

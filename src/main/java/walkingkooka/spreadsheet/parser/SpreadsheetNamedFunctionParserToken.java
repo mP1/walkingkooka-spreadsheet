@@ -27,7 +27,7 @@ import java.util.List;
  * <br>
  * SUM(A10:A20)
  */
-public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetParentParserToken {
+public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetFunctionParserToken {
 
     static SpreadsheetNamedFunctionParserToken with(final List<ParserToken> value,
                                                     final String text) {
@@ -64,14 +64,16 @@ public final class SpreadsheetNamedFunctionParserToken extends SpreadsheetParent
     }
 
     /**
-     * The name of the expression
+     * The name of the function
      */
+    @Override
     public SpreadsheetFunctionName functionName() {
         return this.name;
     }
 
     private final SpreadsheetFunctionName name;
 
+    @Override
     public SpreadsheetFunctionParametersParserToken parameters() {
         return this.parameters;
     }

@@ -27,7 +27,7 @@ import java.util.List;
  * <br>
  * Lambda(x, y, x * y)(10, 20);
  */
-public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetParentParserToken {
+public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetFunctionParserToken {
 
     static SpreadsheetLambdaFunctionParserToken with(final List<ParserToken> value,
                                                      final String text) {
@@ -71,14 +71,16 @@ public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetParen
     }
 
     /**
-     * The name of the expression
+     * The name of the function
      */
+    @Override
     public SpreadsheetFunctionName functionName() {
         return this.name;
     }
 
     private final SpreadsheetFunctionName name;
 
+    @Override
     public SpreadsheetFunctionParametersParserToken parameters() {
         return this.parameters;
     }

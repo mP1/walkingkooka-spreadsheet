@@ -32,7 +32,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetNamedFunctionParserToken> {
+public final class SpreadsheetNamedFunctionParserTokenTest extends SpreadsheetFunctionParserTokenTestCase<SpreadsheetNamedFunctionParserToken> {
 
     private final static String FUNCTION = "sum";
 
