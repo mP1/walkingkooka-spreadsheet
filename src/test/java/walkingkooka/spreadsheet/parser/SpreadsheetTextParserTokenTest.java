@@ -26,7 +26,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
-public final class SpreadsheetTextParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetTextParserToken> {
+public final class SpreadsheetTextParserTokenTest extends SpreadsheetValueParserTokenTestCase<SpreadsheetTextParserToken> {
 
     @Test
     public void testWithZeroTokensFails() {

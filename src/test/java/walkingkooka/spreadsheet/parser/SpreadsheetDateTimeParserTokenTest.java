@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetDateTimeParserToken> {
+public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetValueParserTokenTestCase<SpreadsheetDateTimeParserToken> {
 
     @Test
     public void testWithZeroTokensFails() {
