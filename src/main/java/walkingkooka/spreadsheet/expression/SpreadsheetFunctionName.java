@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -107,7 +108,7 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
         return CASE_SENSITIVITY;
     }
 
-    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+    private final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
 
     // Json.............................................................................................................
 
