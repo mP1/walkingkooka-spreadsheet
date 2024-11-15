@@ -1395,12 +1395,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n"
+                        "            SpreadsheetDigits \"2\" \"2\"\n"
         );
     }
 
@@ -1418,12 +1418,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1446,12 +1446,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1479,12 +1479,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1508,12 +1508,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1542,12 +1542,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1580,12 +1580,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1618,12 +1618,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1654,12 +1654,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "  Formula\n" +
                         "    token:\n" +
                         "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\" (java.lang.String)\n" +
+                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
                         "        SpreadsheetAddition \"1+2\"\n" +
                         "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"1\" \"1\"\n" +
                         "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\" (java.lang.String)\n" +
+                        "            SpreadsheetDigits \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
