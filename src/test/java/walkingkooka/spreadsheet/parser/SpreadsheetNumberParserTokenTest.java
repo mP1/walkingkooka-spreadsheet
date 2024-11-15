@@ -33,7 +33,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetNumberParserToken> {
+public final class SpreadsheetNumberParserTokenTest extends SpreadsheetValueParserTokenTestCase<SpreadsheetNumberParserToken> {
 
     @Test
     public void testWithZeroTokensFails() {

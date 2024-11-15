@@ -28,7 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.time.LocalDate;
 import java.util.List;
 
-public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetDateParserToken> {
+public final class SpreadsheetDateParserTokenTest extends SpreadsheetValueParserTokenTestCase<SpreadsheetDateParserToken> {
 
     @Test
     public void testWithZeroTokensFails() {
