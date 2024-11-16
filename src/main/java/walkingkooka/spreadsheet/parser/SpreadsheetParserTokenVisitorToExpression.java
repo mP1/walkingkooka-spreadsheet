@@ -20,10 +20,8 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.visit.Visiting;
 
@@ -201,9 +199,8 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
         final Expression call = Expression.call(
                 Expression.call(
                         Expression.namedFunction(
-                                ExpressionFunctionName.with(
-                                        token.functionName().value()
-                                ).setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                token.functionName()
+                                        .toExpressionFunctionName()
                         ),
                         children.subList(0, parameterCount)
                 ),
@@ -253,9 +250,8 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetNamedFunctionParserToken token) {
         final Expression callNamedFunction = Expression.call(
                 Expression.namedFunction(
-                        ExpressionFunctionName.with(
-                                token.functionName().value()
-                        ).setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                        token.functionName()
+                                .toExpressionFunctionName()
                 ),
                 this.children
         );
