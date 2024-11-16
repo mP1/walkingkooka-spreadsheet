@@ -122,7 +122,7 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     private final Optional<Object> value;
 
     @Override
-    public CaseSensitivity caseSensitivity() {
+    public CaseSensitivity stringEqualsCaseSensitivity() {
         return CaseSensitivity.INSENSITIVE;
     }
 
