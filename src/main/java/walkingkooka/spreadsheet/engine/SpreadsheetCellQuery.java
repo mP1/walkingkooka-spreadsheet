@@ -48,11 +48,10 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -64,10 +63,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A query {@link Expression}
+ * Holds a query as a {@link SpreadsheetParserToken}.
  */
 public final class SpreadsheetCellQuery implements HasUrlFragment,
-        HasText {
+        HasText,
+        TreePrintable {
 
     /**
      * Reads or extracts a {@link SpreadsheetCellFindQuery} from the parameters probably a {@link UrlQueryString}.
@@ -92,8 +92,6 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
                                 text,
                                 PARSER_CONTEXT
                         ).cast(SpreadsheetParserToken.class)
-                        .toExpression(EXPRESSION_EVALUATION_CONTEXT)
-                        .orElseThrow(() -> new IllegalArgumentException("Missing expression"))
         );
     }
 
@@ -111,38 +109,31 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
             ','
     );
 
-    private final static ExpressionEvaluationContext EXPRESSION_EVALUATION_CONTEXT = new FakeExpressionEvaluationContext() {
-
-        public ExpressionNumberKind expressionNumberKind() {
-            return EXPRESSION_NUMBER_KIND;
-        }
-    };
-
     /**
-     * Factory that creates a new {@link SpreadsheetCellQuery} with the given {@link Expression}.
+     * Factory that creates a new {@link SpreadsheetCellQuery} with the given {@link SpreadsheetParserToken}.
      */
-    public static SpreadsheetCellQuery with(final Expression expression) {
+    public static SpreadsheetCellQuery with(final SpreadsheetParserToken parserToken) {
         return new SpreadsheetCellQuery(
-                Objects.requireNonNull(expression, "expression")
+                Objects.requireNonNull(parserToken, "parserToken")
         );
     }
 
     // VisibleForTesting
-    SpreadsheetCellQuery(final Expression expression) {
-        this.expression = expression;
+    SpreadsheetCellQuery(final SpreadsheetParserToken parserToken) {
+        this.parserToken = parserToken;
     }
 
-    public Expression expression() {
-        return this.expression;
+    public SpreadsheetParserToken parserToken() {
+        return this.parserToken;
     }
 
-    public SpreadsheetCellQuery setExpression(final Expression expression) {
-        return this.expression.equals(expression) ?
+    public SpreadsheetCellQuery setParserToken(final SpreadsheetParserToken parserToken) {
+        return this.parserToken.equals(parserToken) ?
                 this :
-                with(expression);
+                with(parserToken);
     }
 
-    private final Expression expression;
+    private final SpreadsheetParserToken parserToken;
 
     // HasUrlFragment...................................................................................................
 
@@ -155,14 +146,14 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
 
     @Override
     public String text() {
-        return this.expression().toString();
+        return this.parserToken().toString();
     }
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return this.expression.hashCode();
+        return this.parserToken.hashCode();
     }
 
     public boolean equals(final Object other) {
@@ -171,7 +162,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     }
 
     private boolean equals0(final SpreadsheetCellQuery other) {
-        return this.expression.equals(other.expression);
+        return this.parserToken.equals(other.parserToken);
     }
 
     @Override
@@ -198,5 +189,17 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     static SpreadsheetCellQuery unmarshall(final JsonNode node,
                                            final JsonNodeUnmarshallContext context) {
         return parse(node.stringOrFail());
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            this.parserToken.printTree(printer);
+        }
+        printer.outdent();
     }
 }

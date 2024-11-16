@@ -48,12 +48,11 @@ import walkingkooka.net.http.HttpProtocolVersion;
 import walkingkooka.net.http.HttpTransport;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequests;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
-import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -69,6 +68,7 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellQuery>,
         ToStringTesting<SpreadsheetCellQuery>,
         ParseStringTesting<SpreadsheetCellQuery>,
+        TreePrintableTesting,
         JsonNodeMarshallingTesting<SpreadsheetCellQuery> {
 
     // with.............................................................................................................
@@ -83,43 +83,48 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
 
     @Test
     public void testWith() {
-        final Expression expression = Expression.value(123);
+        final SpreadsheetParserToken parserToken = SpreadsheetParserToken.text(
+                Lists.of(
+                        SpreadsheetParserToken.textLiteral("Hello", "\"Hello\"")
+                ),
+                "\"Hello\""
+        );
 
-        final SpreadsheetCellQuery query = SpreadsheetCellQuery.with(expression);
+        final SpreadsheetCellQuery query = SpreadsheetCellQuery.with(parserToken);
         this.checkEquals(
-                expression,
-                query.expression()
+                parserToken,
+                query.parserToken()
         );
     }
 
-    // setPath..........................................................................................................
+    // setParserToken...................................................................................................
 
     @Test
-    public void testSetExpressionNullFails() {
+    public void testSetParserTokenNullFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> new SpreadsheetCellQuery(Expression.value(123))
-                        .setExpression(null)
+                () -> new SpreadsheetCellQuery(textLiteral("Hello"))
+                        .setParserToken(null)
         );
     }
 
     @Test
-    public void testSetExpressionSame() {
-        final SpreadsheetCellQuery query = new SpreadsheetCellQuery(Expression.value(true));
+    public void testSetParserTokenSame() {
+        final SpreadsheetCellQuery query = new SpreadsheetCellQuery(textLiteral("Hello"));
         assertSame(
                 query,
-                query.setExpression(query.expression())
+                query.setParserToken(query.parserToken())
         );
     }
 
     @Test
-    public void testSetExpressionDifferent() {
-        final SpreadsheetCellQuery query = new SpreadsheetCellQuery(Expression.value(true));
-        final Expression different = Expression.value("different");
+    public void testSetParserTokenDifferent() {
+        final SpreadsheetCellQuery query = new SpreadsheetCellQuery(textLiteral("Hello"));
+        final SpreadsheetParserToken different = textLiteral("Different");
 
         this.checkEquals(
                 new SpreadsheetCellQuery(different),
-                query.setExpression(different)
+                query.setParserToken(different)
         );
     }
 
@@ -151,25 +156,13 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     }
 
     @Test
-    public void testParseBooleanLiteral() {
-        this.parseStringAndCheck(
-                "true",
-                new SpreadsheetCellQuery(
-                        Expression.reference(
-                                SpreadsheetSelection.labelName("true")
-                        )
-                )
-        );
-    }
-
-    @Test
     public void testParseNumberLiteral() {
+        final String text = "111";
+
         this.parseStringAndCheck(
-                "111",
+                text,
                 new SpreadsheetCellQuery(
-                        Expression.value(
-                                SpreadsheetCellQuery.EXPRESSION_NUMBER_KIND.create(111)
-                        )
+                        numberLiteral(text)
                 )
         );
     }
@@ -184,16 +177,18 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
 
     @Test
     public void testParseAddition() {
+        final String text = "11+22";
+
         this.parseStringAndCheck(
-                "11+22",
+                text,
                 new SpreadsheetCellQuery(
-                        Expression.add(
-                                Expression.value(
-                                        SpreadsheetCellQuery.EXPRESSION_NUMBER_KIND.create(11)
+                        SpreadsheetParserToken.addition(
+                                Lists.of(
+                                        numberLiteral("11"),
+                                        SpreadsheetParserToken.plusSymbol("+", "+"),
+                                        numberLiteral("22")
                                 ),
-                                Expression.value(
-                                        SpreadsheetCellQuery.EXPRESSION_NUMBER_KIND.create(22)
-                                )
+                                text
                         )
                 )
         );
@@ -201,19 +196,27 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
 
     @Test
     public void testParseFunctionExpression() {
+        final String text = "abc(111)";
+
         this.parseStringAndCheck(
-                "abc(111)",
+                text,
                 new SpreadsheetCellQuery(
-                        Expression.call(
-                                Expression.namedFunction(
-                                        ExpressionFunctionName.with("abc")
-                                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
-                                ),
+                        SpreadsheetParserToken.namedFunction(
                                 Lists.of(
-                                        Expression.value(
-                                                SpreadsheetCellQuery.EXPRESSION_NUMBER_KIND.create(111)
+                                        SpreadsheetParserToken.functionName(
+                                                SpreadsheetFunctionName.with("abc"),
+                                                "abc"
+                                        ),
+                                        SpreadsheetParserToken.functionParameters(
+                                                Lists.of(
+                                                        SpreadsheetParserToken.parenthesisOpenSymbol("(", "("),
+                                                        numberLiteral("111"),
+                                                        SpreadsheetParserToken.parenthesisCloseSymbol(")", ")")
+                                                ),
+                                                "(111)"
                                         )
-                                )
+                                ),
+                                text
                         )
                 )
         );
@@ -309,10 +312,10 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     // Object...........................................................................................................
 
     @Test
-    public void testEqualsDifferentExpression() {
+    public void testEqualsDifferentParserTOken() {
         this.checkNotEquals(
                 new SpreadsheetCellQuery(
-                        Expression.value("different")
+                        textLiteral("different")
                 )
         );
     }
@@ -320,7 +323,7 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     @Override
     public SpreadsheetCellQuery createObject() {
         return new SpreadsheetCellQuery(
-                Expression.value("value123")
+                textLiteral("value123")
         );
     }
 
@@ -369,5 +372,35 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     @Override
     public Class<SpreadsheetCellQuery> type() {
         return SpreadsheetCellQuery.class;
+    }
+
+    // helpers..........................................................................................................
+
+    private static SpreadsheetParserToken numberLiteral(final String number) {
+        return SpreadsheetParserToken.number(
+                Lists.of(
+                        SpreadsheetParserToken.digits(
+                                number,
+                                number
+                        )
+                ),
+                number
+        );
+    }
+
+    private static SpreadsheetParserToken textLiteral(final String text) {
+        final String quoted = '"' + text + '"'; // not perfect but good enuff for here
+
+        return SpreadsheetParserToken.text(
+                Lists.of(
+                        SpreadsheetParserToken.doubleQuoteSymbol("\"", "\""),
+                        SpreadsheetParserToken.textLiteral(
+                                text,
+                                text
+                        ),
+                        SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"")
+                ),
+                quoted
+        );
     }
 }
