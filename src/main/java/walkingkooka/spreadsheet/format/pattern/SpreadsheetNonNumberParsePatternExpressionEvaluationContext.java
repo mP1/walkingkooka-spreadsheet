@@ -51,7 +51,7 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
     }
 
     @Override
-    public CaseSensitivity caseSensitivity() {
+    public CaseSensitivity stringEqualsCaseSensitivity() {
         return CaseSensitivity.INSENSITIVE;
     }
 
