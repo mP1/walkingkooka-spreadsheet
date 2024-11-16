@@ -23,6 +23,7 @@ import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -71,7 +72,17 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
 
     private final String name;
 
-    // Object..................................................................................................
+    // toExpressionFunctionName.........................................................................................
+
+    /**
+     * Returns a {@link ExpressionFunctionName}.
+     */
+    public ExpressionFunctionName toExpressionFunctionName() {
+        return ExpressionFunctionName.with(this.name)
+                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY);
+    }
+
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {
