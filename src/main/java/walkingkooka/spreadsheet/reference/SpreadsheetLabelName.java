@@ -23,6 +23,7 @@ import walkingkooka.naming.Name;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.parser.SpreadsheetLabelNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CaseSensitivity;
@@ -469,5 +470,5 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         return CASE_SENSITIVITY;
     }
 
-    public final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+    public final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
 }

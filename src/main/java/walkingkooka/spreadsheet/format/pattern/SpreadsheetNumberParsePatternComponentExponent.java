@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
@@ -49,7 +49,7 @@ final class SpreadsheetNumberParsePatternComponentExponent extends SpreadsheetNu
         return this.parseToken(
                 cursor,
                 request.context.exponentSymbol(),
-                CaseSensitivity.INSENSITIVE,
+                SpreadsheetStrings.CASE_SENSITIVITY,
                 SpreadsheetParserToken::exponentSymbol,
                 SpreadsheetNumberParsePatternComponentDigitMode.EXPONENT_START,
                 request
