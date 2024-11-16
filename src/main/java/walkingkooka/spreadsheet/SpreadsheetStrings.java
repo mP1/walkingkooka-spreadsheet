@@ -21,19 +21,19 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CaseSensitivity;
 
 /**
- * A collection of constants for spreadsheet functions.
+ * A collection of constants related to Spreadsheet string values.
  */
-public final class SpreadsheetExpressionFunctionNames implements PublicStaticHelper {
+public final class SpreadsheetStrings implements PublicStaticHelper {
 
     /**
      * Function names are {@link CaseSensitivity#INSENSITIVE}
      */
-    public static final CaseSensitivity CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
+    public static final CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
 
     /**
      * Stop creation
      */
-    private SpreadsheetExpressionFunctionNames() {
+    private SpreadsheetStrings() {
         throw new UnsupportedOperationException();
     }
 }

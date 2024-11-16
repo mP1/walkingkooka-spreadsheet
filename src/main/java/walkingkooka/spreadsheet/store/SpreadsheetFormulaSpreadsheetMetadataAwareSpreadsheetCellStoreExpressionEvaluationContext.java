@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.Either;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseSensitivity;
@@ -62,7 +63,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     @Override
     public CaseSensitivity stringEqualsCaseSensitivity() {
-        return CaseSensitivity.INSENSITIVE;
+        return SpreadsheetStrings.CASE_SENSITIVITY;
     }
 
     @Override

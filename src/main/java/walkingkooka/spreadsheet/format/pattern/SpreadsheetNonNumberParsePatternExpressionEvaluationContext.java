@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Either;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -52,7 +53,7 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
 
     @Override
     public CaseSensitivity stringEqualsCaseSensitivity() {
-        return CaseSensitivity.INSENSITIVE;
+        return SpreadsheetStrings.CASE_SENSITIVITY;
     }
 
     @Override

@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseSensitivity;
 
@@ -35,7 +36,7 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
     /**
      * Early declaration prevents NPE within DEFAULTS Sets#of.
      */
-    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
+    private final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
 
     /**
      * Used to validate the characters within a name.

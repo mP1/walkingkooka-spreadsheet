@@ -23,6 +23,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -167,7 +168,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public CaseSensitivity stringEqualsCaseSensitivity() {
-        return CaseSensitivity.INSENSITIVE;
+        return SpreadsheetStrings.CASE_SENSITIVITY;
     }
 
     @Override
