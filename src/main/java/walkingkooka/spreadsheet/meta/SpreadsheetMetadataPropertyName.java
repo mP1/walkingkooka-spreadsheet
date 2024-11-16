@@ -209,7 +209,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Boolean> FIND_HIGHLIGHTING = registerConstant(SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link SpreadsheetCellFindQuery}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>find-query {@link SpreadsheetCellQuery}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
 
