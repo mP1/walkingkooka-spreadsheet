@@ -79,7 +79,7 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
     private ParserToken concatenation(final ParserToken token,
                                       final SpreadsheetParserContext context) {
         return token.cast(SequenceParserToken.class)
-                .transform(SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
+                .binaryOperator(SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
     }
 
     @Override
