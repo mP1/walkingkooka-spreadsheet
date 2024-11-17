@@ -97,11 +97,51 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetConditionRightParserToken}
+     * {@see SpreadsheetConditionRightEqualsParserToken}
      */
-    public static SpreadsheetConditionRightParserToken conditionRight(final List<ParserToken> value,
-                                                                      final String text) {
-        return SpreadsheetConditionRightParserToken.with(value, text);
+    public static SpreadsheetConditionRightEqualsParserToken conditionRightEquals(final List<ParserToken> value,
+                                                                                  final String text) {
+        return SpreadsheetConditionRightEqualsParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetConditionRightGreaterThanParserToken}
+     */
+    public static SpreadsheetConditionRightGreaterThanParserToken conditionRightGreaterThan(final List<ParserToken> value,
+                                                                                            final String text) {
+        return SpreadsheetConditionRightGreaterThanParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetConditionRightGreaterThanEqualsParserToken}
+     */
+    public static SpreadsheetConditionRightGreaterThanEqualsParserToken conditionRightGreaterThanEquals(final List<ParserToken> value,
+                                                                                                        final String text) {
+        return SpreadsheetConditionRightGreaterThanEqualsParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetConditionRightLessThanParserToken}
+     */
+    public static SpreadsheetConditionRightLessThanParserToken conditionRightLessThan(final List<ParserToken> value,
+                                                                                      final String text) {
+        return SpreadsheetConditionRightLessThanParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetConditionRightLessThanEqualsParserToken}
+     */
+    public static SpreadsheetConditionRightLessThanEqualsParserToken conditionRightLessThanEquals(final List<ParserToken> value,
+                                                                                                  final String text) {
+        return SpreadsheetConditionRightLessThanEqualsParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetConditionRightNotEqualsParserToken}
+     */
+    public static SpreadsheetConditionRightNotEqualsParserToken conditionRightNotEquals(final List<ParserToken> value,
+                                                                                        final String text) {
+        return SpreadsheetConditionRightNotEqualsParserToken.with(value, text);
     }
 
     /**

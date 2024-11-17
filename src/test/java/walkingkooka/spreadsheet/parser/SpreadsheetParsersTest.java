@@ -147,10 +147,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testConditionRightParserParseEqualsSignNumber() {
+    public void testConditionRightParserParseEqualsNumber() {
         this.conditionRightParserParseAndCheck(
                 "=123",
-                conditionRight(
+                conditionRightEquals(
                         equalsSymbol(),
                         number(123)
                 )
@@ -158,10 +158,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testConditionRightParserParseNotEqualsSignNumber() {
+    public void testConditionRightParserParseNotEqualsNumber() {
         this.conditionRightParserParseAndCheck(
                 "<>123",
-                conditionRight(
+                conditionRightNotEquals(
                         notEqualsSymbol(),
                         number(123)
                 )
@@ -172,7 +172,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseLessThanNumber() {
         this.conditionRightParserParseAndCheck(
                 "<123",
-                conditionRight(
+                conditionRightLessThan(
                         lessThanSymbol(),
                         number(123)
                 )
@@ -183,7 +183,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseLessThanEqualsNumber() {
         this.conditionRightParserParseAndCheck(
                 "<=123",
-                conditionRight(
+                conditionRightLessThanEquals(
                         lessThanEqualsSymbol(),
                         number(123)
                 )
@@ -194,7 +194,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseGreaterThanNumber() {
         this.conditionRightParserParseAndCheck(
                 ">123",
-                conditionRight(
+                conditionRightGreaterThan(
                         greaterThanSymbol(),
                         number(123)
                 )
@@ -205,7 +205,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseGreaterThanEquals() {
         this.conditionRightParserParseAndCheck(
                 ">=123",
-                conditionRight(
+                conditionRightGreaterThanEquals(
                         greaterThanEqualsSymbol(),
                         number(123)
                 )
@@ -216,7 +216,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseGreaterThanEqualsNumber() {
         this.conditionRightParserParseAndCheck(
                 ">=123",
-                conditionRight(
+                conditionRightGreaterThanEquals(
                         greaterThanEqualsSymbol(),
                         number(123)
                 )
@@ -227,7 +227,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseGreaterThanEqualsNumberWithExtraSpaces() {
         this.conditionRightParserParseAndCheck(
                 ">= 123",
-                conditionRight(
+                conditionRightGreaterThanEquals(
                         greaterThanEqualsSymbol(),
                         whitespace1(),
                         number(123)
@@ -239,7 +239,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseEqualsString() {
         this.conditionRightParserParseAndCheck(
                 "=\"Hello\"",
-                conditionRight(
+                conditionRightEquals(
                         equalsSymbol(),
                         SpreadsheetParserToken.text(
                                 Lists.of(
@@ -257,7 +257,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseEqualsFunction() {
         this.conditionRightParserParseAndCheck(
                 "=xyz()",
-                conditionRight(
+                conditionRightEquals(
                         equalsSymbol(),
                         namedFunction(
                                 functionName("xyz"),
@@ -274,7 +274,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseEqualsFunctionWithArguments() {
         this.conditionRightParserParseAndCheck(
                 "=def(123)",
-                conditionRight(
+                conditionRightEquals(
                         equalsSymbol(),
                         namedFunction(
                                 functionName("def"),
@@ -292,7 +292,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseEqualsFunctionTrailingSpace() {
         this.conditionRightParserParseAndCheck(
                 "=abc() ",
-                conditionRight(
+                conditionRightEquals(
                         equalsSymbol(),
                         group(
                                 namedFunction(
@@ -308,17 +308,50 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private SpreadsheetConditionRightParserToken conditionRight(final SpreadsheetParserToken... tokens) {
-        return SpreadsheetParserToken.conditionRight(
-                Lists.of(tokens),
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
+    private SpreadsheetConditionRightParserToken conditionRightEquals(final SpreadsheetParserToken... tokens) {
+        return parentToken(
+                SpreadsheetParserToken::conditionRightEquals,
+                tokens
+        );
+    }
+
+    private SpreadsheetConditionRightParserToken conditionRightGreaterThan(final SpreadsheetParserToken... tokens) {
+        return parentToken(
+                SpreadsheetParserToken::conditionRightGreaterThan,
+                tokens
+        );
+    }
+
+    private SpreadsheetConditionRightParserToken conditionRightGreaterThanEquals(final SpreadsheetParserToken... tokens) {
+        return parentToken(
+                SpreadsheetParserToken::conditionRightGreaterThanEquals,
+                tokens
+        );
+    }
+
+    private SpreadsheetConditionRightParserToken conditionRightLessThan(final SpreadsheetParserToken... tokens) {
+        return parentToken(
+                SpreadsheetParserToken::conditionRightLessThan,
+                tokens
+        );
+    }
+
+    private SpreadsheetConditionRightParserToken conditionRightLessThanEquals(final SpreadsheetParserToken... tokens) {
+        return parentToken(
+                SpreadsheetParserToken::conditionRightLessThanEquals,
+                tokens
+        );
+    }
+
+    private SpreadsheetConditionRightParserToken conditionRightNotEquals(final SpreadsheetParserToken... tokens) {
+        return parentToken(
+                SpreadsheetParserToken::conditionRightNotEquals,
+                tokens
         );
     }
 
     private void conditionRightParserParseAndCheck(final String text,
-                                              final SpreadsheetParserToken expected) {
+                                                   final SpreadsheetParserToken expected) {
         this.conditionRightParserParseAndCheck(
                 text,
                 expected,
@@ -327,8 +360,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void conditionRightParserParseAndCheck(final String text,
-                                              final SpreadsheetParserToken expected,
-                                              final String consumed) {
+                                                   final SpreadsheetParserToken expected,
+                                                   final String consumed) {
         this.conditionRightParserParseAndCheck(
                 text,
                 expected,
@@ -338,9 +371,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void conditionRightParserParseAndCheck(final String text,
-                                              final SpreadsheetParserToken expected,
-                                              final String textConsumed,
-                                              final String textAfter) {
+                                                   final SpreadsheetParserToken expected,
+                                                   final String textConsumed,
+                                                   final String textAfter) {
         this.parseAndCheck(
                 SpreadsheetParsers.conditionRight(
                         valueOrExpressionParser()

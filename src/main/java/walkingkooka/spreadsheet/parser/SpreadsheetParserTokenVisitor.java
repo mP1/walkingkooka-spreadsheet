@@ -53,17 +53,67 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
-    // SpreadsheetConditionRightParserToken....................................................................................
+    // SpreadsheetConditionRightEqualsParserToken.......................................................................
 
-    protected Visiting startVisit(final SpreadsheetConditionRightParserToken token) {
+    protected Visiting startVisit(final SpreadsheetConditionRightEqualsParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetConditionRightParserToken token) {
+    protected void endVisit(final SpreadsheetConditionRightEqualsParserToken token) {
         // nop
     }
 
-    // SpreadsheetDateParserToken....................................................................................
+    // SpreadsheetConditionRightGreaterThanParserToken..................................................................
+
+    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+        // nop
+    }
+
+    // SpreadsheetConditionRightGreaterThanEqualsParserToken............................................................
+
+    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+        // nop
+    }
+
+    // SpreadsheetConditionRightLessThanParserToken.....................................................................
+
+    protected Visiting startVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+        // nop
+    }
+
+    // SpreadsheetConditionRightLessThanEqualsParserToken................................................................
+
+    protected Visiting startVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+        // nop
+    }
+
+    // SpreadsheetConditionRightNotEqualsParserToken.....................................................................
+
+    protected Visiting startVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+        // nop
+    }
+
+    // SpreadsheetDateParserToken.......................................................................................
 
     protected Visiting startVisit(final SpreadsheetDateParserToken token) {
         return Visiting.CONTINUE;

@@ -93,6 +93,66 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected Visiting startVisit(final SpreadsheetDateParserToken token) {
         this.enter();
         return Visiting.SKIP;
