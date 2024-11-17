@@ -62,9 +62,6 @@ public abstract class SpreadsheetConditionRightParserTokenTestCase<T extends Spr
 
     abstract SpreadsheetSymbolParserToken symbolParserToken();
 
-    abstract T createToken(final String text,
-                           final List<ParserToken> token);
-
     private final static String ARGUMENT_TEXT = "123";
 
     @Override
