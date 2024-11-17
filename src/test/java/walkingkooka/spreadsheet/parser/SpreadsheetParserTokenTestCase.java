@@ -203,6 +203,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 m.equals("isNotEmpty") ||
                 m.equals("isArithmetic") ||
                 m.equals("isCondition") ||
+                m.equals("isConditionRight") ||
                 m.equals("isFunction") ||
                 m.equals("isValue");
     }
