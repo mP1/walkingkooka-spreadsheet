@@ -16,14 +16,48 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public abstract class SpreadsheetConditionRightParserTokenTestCase<T extends SpreadsheetConditionRightParserToken> extends SpreadsheetParentParserTokenTestCase<T> {
     SpreadsheetConditionRightParserTokenTestCase() {
         super();
+    }
+
+    @Test
+    public final void testSetConditionLeftWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createToken()
+                        .setConditionLeft(null)
+        );
+    }
+
+    final void setConditionLeftAndCheck(final T token,
+                                        final SpreadsheetParserToken left,
+                                        final SpreadsheetConditionParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.setConditionLeft(left),
+                () -> token + " setConditionLeft " + left
+        );
+
+        this.checkEquals(
+                left,
+                expected.left(),
+                "left"
+        );
+
+        this.checkEquals(
+                token,
+                expected.right(),
+                "right"
+        );
     }
 
     abstract SpreadsheetSymbolParserToken symbolParserToken();
@@ -76,7 +110,7 @@ public abstract class SpreadsheetConditionRightParserTokenTestCase<T extends Spr
         );
     }
 
-    private SpreadsheetParserToken number(final String text) {
+    final SpreadsheetParserToken number(final String text) {
         return SpreadsheetParserToken.number(
                 Lists.of(
                         SpreadsheetParserToken.digits(

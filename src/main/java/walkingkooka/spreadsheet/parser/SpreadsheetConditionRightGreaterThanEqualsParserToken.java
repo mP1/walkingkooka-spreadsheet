@@ -39,6 +39,15 @@ public final class SpreadsheetConditionRightGreaterThanEqualsParserToken extends
         super(value, text);
     }
 
+    @Override
+    SpreadsheetGreaterThanEqualsParserToken setConditionLeft0(final List<ParserToken> tokens,
+                                                              final String text) {
+        return greaterThanEquals(
+                tokens,
+                text
+        );
+    }
+
     // children.........................................................................................................
 
     @Override

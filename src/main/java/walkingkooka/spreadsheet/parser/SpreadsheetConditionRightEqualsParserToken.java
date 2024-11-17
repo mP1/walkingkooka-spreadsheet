@@ -39,6 +39,15 @@ public final class SpreadsheetConditionRightEqualsParserToken extends Spreadshee
         super(value, text);
     }
 
+    @Override
+    SpreadsheetEqualsParserToken setConditionLeft0(final List<ParserToken> tokens,
+                                                   final String text) {
+        return equalsParserToken(
+                tokens,
+                text
+        );
+    }
+
     // children.........................................................................................................
 
     @Override
