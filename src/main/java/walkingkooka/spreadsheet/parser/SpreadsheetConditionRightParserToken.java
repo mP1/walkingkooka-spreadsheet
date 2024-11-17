@@ -16,9 +16,12 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Base class for any condition and right hand expression
@@ -46,4 +49,23 @@ public abstract class SpreadsheetConditionRightParserToken extends SpreadsheetPa
     }
 
     private final SpreadsheetParserToken right;
+
+    /**
+     * Creates a {@link SpreadsheetConditionParserToken} by combining the given left and this right.
+     * This is useful when attempting to combine two parts of a condition and eventually create an {@link Expression}.
+     */
+    public final SpreadsheetConditionParserToken setConditionLeft(final SpreadsheetParserToken left) {
+        Objects.requireNonNull(left, "left");
+
+        return this.setConditionLeft0(
+                Lists.of(
+                        left,
+                        this
+                ),
+                left.text() + this.text()
+        );
+    }
+
+    abstract SpreadsheetConditionParserToken setConditionLeft0(final List<ParserToken> tokens,
+                                                               final String text);
 }

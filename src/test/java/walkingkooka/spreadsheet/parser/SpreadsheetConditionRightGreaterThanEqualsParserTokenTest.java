@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -24,6 +26,25 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.List;
 
 public final class SpreadsheetConditionRightGreaterThanEqualsParserTokenTest extends SpreadsheetConditionRightParserTokenTestCase<SpreadsheetConditionRightGreaterThanEqualsParserToken> {
+
+    @Test
+    public void testSetConditionLeft() {
+        final SpreadsheetConditionRightGreaterThanEqualsParserToken token = this.createToken();
+        final SpreadsheetParserToken left = number("999");
+
+        this.setConditionLeftAndCheck(
+                token,
+                left,
+                SpreadsheetParserToken.greaterThanEquals(
+                        Lists.of(
+                                left,
+                                token
+                        ),
+                        left.text() + token.text()
+                )
+        );
+    }
+    
     @Override
     SpreadsheetSymbolParserToken symbolParserToken() {
         return SpreadsheetParserToken.greaterThanEqualsSymbol(
