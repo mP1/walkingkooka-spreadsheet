@@ -640,7 +640,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     public final boolean isArithmetic() {
         return this instanceof SpreadsheetArithmeticParserToken;
     }
-    
+
     /**
      * Only {@link SpreadsheetBetweenSymbolParserToken} returns true
      */
@@ -675,7 +675,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     public final boolean isCondition() {
         return this instanceof SpreadsheetConditionParserToken;
     }
-    
+
     /**
      * Only {@link SpreadsheetConditionRightParserToken} return true
      */
