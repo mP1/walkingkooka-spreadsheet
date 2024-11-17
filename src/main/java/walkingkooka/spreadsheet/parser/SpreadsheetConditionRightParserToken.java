@@ -17,57 +17,33 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
 /**
- * Holds a condition and the RHS value or expression.
- * <pre>
- * > 123
- * > now()
- * </pre>
+ * Base class for any condition and right hand expression
  */
-public final class SpreadsheetConditionRightParserToken extends SpreadsheetParentParserToken {
+public abstract class SpreadsheetConditionRightParserToken extends SpreadsheetParentParserToken {
 
-    static SpreadsheetConditionRightParserToken with(final List<ParserToken> value,
-                                                     final String text) {
-        return new SpreadsheetConditionRightParserToken(
-                copyAndCheckTokens(value),
-                checkText(text)
-        );
-    }
-
-    private SpreadsheetConditionRightParserToken(final List<ParserToken> value,
-                                                 final String text) {
+    SpreadsheetConditionRightParserToken(final List<ParserToken> value,
+                                         final String text) {
         super(value, text);
-    }
 
-    // children.........................................................................................................
-
-    @Override
-    public SpreadsheetConditionRightParserToken setChildren(final List<ParserToken> children) {
-        return ParserToken.parentSetChildren(
-                this,
-                children,
-                SpreadsheetConditionRightParserToken::with
-        );
-    }
-
-    // SpreadsheetParserTokenVisitor....................................................................................
-
-    @Override
-    void accept(final SpreadsheetParserTokenVisitor visitor) {
-        if (Visiting.CONTINUE == visitor.startVisit(this)) {
-            this.acceptValues(visitor);
+        final List<ParserToken> without = ParserToken.filterWithoutNoise(value);
+        final int count = without.size();
+        if (1 != count) {
+            throw new IllegalArgumentException("Expected 1 tokens but got " + count + "=" + without);
         }
-        visitor.endVisit(this);
+        this.right = without.get(0)
+                .cast(SpreadsheetParserToken.class);
     }
 
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetConditionRightParserToken;
+    /**
+     * Returns the right parameter.
+     */
+    public final SpreadsheetParserToken right() {
+        return this.right;
     }
+
+    private final SpreadsheetParserToken right;
 }

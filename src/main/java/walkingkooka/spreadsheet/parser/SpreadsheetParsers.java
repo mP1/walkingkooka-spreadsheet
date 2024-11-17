@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
@@ -42,6 +43,7 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -144,13 +146,69 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName CONDITION_RIGHT_PARSER_IDENTIFIER = EbnfIdentifierName.with("CONDITION_RIGHT");
 
     /**
-     * If the token is a {@link SequenceParserToken} then it needs to be wrapped inside an {@link SpreadsheetConditionRightParserToken}.
+     * Expects a {@link SequenceParserToken} then tests the symbol and creates the matching sub-classes of {@link SpreadsheetConditionRightParserToken}.
      */
-    private static ParserToken transformConditionRight(final ParserToken token, final SpreadsheetParserContext context) {
-        final String text = token.text();
-        return SpreadsheetParserToken.conditionRight(
-                token.cast(SequenceParserToken.class).value(),
-                text);
+    private static ParserToken transformConditionRight(final ParserToken conditionRight, final SpreadsheetParserContext context) {
+        final SequenceParserToken sequenceParserToken = conditionRight.cast(SequenceParserToken.class)
+                .flat();
+        final List<ParserToken> tokens = sequenceParserToken.children();
+
+        ParserToken symbol = null;
+        ParserToken parameter = null;
+
+        for (final ParserToken token : tokens) {
+            if (token.isWhitespace()) {
+                continue;
+            }
+
+            if (null == symbol) {
+                if (token.isSymbol()) {
+                    symbol = token;
+                    continue;
+                }
+            }
+
+            if (null == parameter) {
+                if (false == token.isSymbol()) {
+                    parameter = token;
+                }
+                continue;
+            }
+
+            parameter = null;
+            break;
+        }
+
+        final BiFunction<List<ParserToken>, String, ParserToken> factory;
+
+        final String operatorText = symbol.text();
+        switch (operatorText) {
+            case "=":
+                factory = SpreadsheetParserToken::conditionRightEquals;
+                break;
+            case "<":
+                factory = SpreadsheetParserToken::conditionRightLessThan;
+                break;
+            case "<=":
+                factory = SpreadsheetParserToken::conditionRightLessThanEquals;
+                break;
+            case ">":
+                factory = SpreadsheetParserToken::conditionRightGreaterThan;
+                break;
+            case ">=":
+                factory = SpreadsheetParserToken::conditionRightGreaterThanEquals;
+                break;
+            case "<>":
+                factory = SpreadsheetParserToken::conditionRightNotEquals;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown operator " + CharSequences.quoteIfChars(operatorText));
+        }
+
+        return factory.apply(
+                tokens,
+                sequenceParserToken.text()
+        );
     }
 
     /**

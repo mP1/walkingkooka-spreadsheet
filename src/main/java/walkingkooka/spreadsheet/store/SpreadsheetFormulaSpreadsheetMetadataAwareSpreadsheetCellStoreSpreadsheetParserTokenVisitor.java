@@ -30,7 +30,12 @@ import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightEqualsParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightGreaterThanEqualsParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightGreaterThanParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightLessThanEqualsParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightLessThanParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightNotEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
@@ -157,13 +162,63 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightParserToken token) {
-        throw new UnsupportedOperationException(token.toString());
+    protected Visiting startVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightParserToken token) {
-        throw new UnsupportedOperationException(token.toString());
+    protected void endVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
