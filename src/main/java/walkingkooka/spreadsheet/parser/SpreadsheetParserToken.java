@@ -684,6 +684,48 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetConditionRightEqualsParserToken} return true
+     */
+    public final boolean isConditionRightEquals() {
+        return this instanceof SpreadsheetConditionRightEqualsParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetConditionRightGreaterThanParserToken} return true
+     */
+    public final boolean isConditionRightGreaterThan() {
+        return this instanceof SpreadsheetConditionRightGreaterThanParserToken;
+    }
+    
+    /**
+     * Only {@link SpreadsheetConditionRightGreaterThanEqualsParserToken} return true
+     */
+    public final boolean isConditionRightGreaterThanEquals() {
+        return this instanceof SpreadsheetConditionRightGreaterThanEqualsParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetConditionRightLessThanParserToken} return true
+     */
+    public final boolean isConditionRightLessThan() {
+        return this instanceof SpreadsheetConditionRightLessThanParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetConditionRightLessThanEqualsParserToken} return true
+     */
+    public final boolean isConditionRightLessThanEquals() {
+        return this instanceof SpreadsheetConditionRightLessThanEqualsParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetConditionRightNotEqualsParserToken} return true
+     */
+    public final boolean isConditionRightNotEquals() {
+        return this instanceof SpreadsheetConditionRightNotEqualsParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetCurrencySymbolParserToken} returns true
      */
     public final boolean isCurrencySymbol() {
