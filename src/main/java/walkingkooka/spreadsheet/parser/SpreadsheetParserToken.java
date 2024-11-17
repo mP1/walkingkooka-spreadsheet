@@ -1934,6 +1934,36 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetConditionRightEqualsParserToken.class,
+                SpreadsheetParserToken::unmarshallConditionRightEquals
+        );
+
+        registerParentParserToken(
+                SpreadsheetConditionRightGreaterThanParserToken.class,
+                SpreadsheetParserToken::unmarshallConditionRightGreaterThan
+        );
+
+        registerParentParserToken(
+                SpreadsheetConditionRightGreaterThanEqualsParserToken.class,
+                SpreadsheetParserToken::unmarshallConditionRightGreaterThanEquals
+        );
+
+        registerParentParserToken(
+                SpreadsheetConditionRightLessThanParserToken.class,
+                SpreadsheetParserToken::unmarshallConditionRightLessThan
+        );
+
+        registerParentParserToken(
+                SpreadsheetConditionRightLessThanEqualsParserToken.class,
+                SpreadsheetParserToken::unmarshallConditionRightLessThanEquals
+        );
+
+        registerParentParserToken(
+                SpreadsheetConditionRightNotEqualsParserToken.class,
+                SpreadsheetParserToken::unmarshallConditionRightNotEquals
+        );
+
+        registerParentParserToken(
                 SpreadsheetDateParserToken.class,
                 SpreadsheetParserToken::unmarshallDate
         );
@@ -2068,6 +2098,60 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::cellRange
+        );
+    }
+
+    static SpreadsheetConditionRightEqualsParserToken unmarshallConditionRightEquals(final JsonNode node,
+                                                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::conditionRightEquals
+        );
+    }
+
+    static SpreadsheetConditionRightGreaterThanParserToken unmarshallConditionRightGreaterThan(final JsonNode node,
+                                                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::conditionRightGreaterThan
+        );
+    }
+
+    static SpreadsheetConditionRightGreaterThanEqualsParserToken unmarshallConditionRightGreaterThanEquals(final JsonNode node,
+                                                                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::conditionRightGreaterThanEquals
+        );
+    }
+
+    static SpreadsheetConditionRightLessThanParserToken unmarshallConditionRightLessThan(final JsonNode node,
+                                                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::conditionRightLessThan
+        );
+    }
+
+    static SpreadsheetConditionRightLessThanEqualsParserToken unmarshallConditionRightLessThanEquals(final JsonNode node,
+                                                                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::conditionRightLessThanEquals
+        );
+    }
+
+    static SpreadsheetConditionRightNotEqualsParserToken unmarshallConditionRightNotEquals(final JsonNode node,
+                                                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::conditionRightNotEquals
         );
     }
 
