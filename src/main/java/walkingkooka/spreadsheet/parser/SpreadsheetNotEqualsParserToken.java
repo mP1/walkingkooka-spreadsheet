@@ -34,6 +34,16 @@ public final class SpreadsheetNotEqualsParserToken extends SpreadsheetConditionP
         super(value, text);
     }
 
+    @Override
+    SpreadsheetConditionRightNotEqualsParserToken toSpreadsheetConditionRightParserToken0(final List<ParserToken> tokens,
+                                                                                          final String text) {
+
+        return SpreadsheetParserToken.conditionRightNotEquals(
+                tokens,
+                text
+        );
+    }
+
     // children.........................................................................................................
 
     @Override
