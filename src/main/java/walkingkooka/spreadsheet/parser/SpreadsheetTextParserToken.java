@@ -16,6 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -34,9 +35,37 @@ public final class SpreadsheetTextParserToken extends SpreadsheetValueParserToke
         );
     }
 
-    private SpreadsheetTextParserToken(final List<ParserToken> value, final String text) {
+    private SpreadsheetTextParserToken(final List<ParserToken> value,
+                                       final String text) {
         super(value, text);
+
+        String textValue = null;
+
+        for (final ParserToken token : this.children()) {
+            final SpreadsheetParserToken spreadsheetParserToken = token.cast(SpreadsheetParserToken.class);
+            if (spreadsheetParserToken.isTextLiteral()) {
+                if (null != textValue) {
+                    throw new IllegalArgumentException("Extra text literal in " + CharSequences.quoteAndEscape(this.text()));
+                }
+
+                textValue = spreadsheetParserToken.cast(SpreadsheetTextLiteralParserToken.class)
+                        .value();
+            }
+        }
+
+        this.textValue = null == textValue ?
+                "" :
+                textValue;
     }
+
+    /**
+     * Getter that returns the text literal value without any surrounding quotation or leading apostrophe.
+     */
+    public String textValue() {
+        return this.textValue;
+    }
+
+    private final String textValue;
 
     // children.........................................................................................................
 

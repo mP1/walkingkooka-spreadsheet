@@ -26,11 +26,45 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetTextParserTokenTest extends SpreadsheetValueParserTokenTestCase<SpreadsheetTextParserToken> {
 
     @Test
     public void testWithZeroTokensFails() {
         this.createToken(DOUBLE_QUOTE + TEXT + DOUBLE_QUOTE);
+    }
+
+    @Test
+    public void testWithExtraTextLiteralFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetTextParserToken.with(
+                        Lists.of(
+                                textLiteral(),
+                                textLiteral()
+                        ),
+                        textLiteral().text() + textLiteral().text()
+                )
+        );
+
+        this.checkEquals(
+                "Extra text literal in \"abc123abc123\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testWithApostropheMissingTextLiteral() {
+        final String textValue = "";
+
+        this.textValueAndCheck(
+                this.createToken(
+                        APOSTROPHE + textValue,
+                        this.apostropheSymbol()
+                ),
+                textValue
+        );
     }
 
     @Test
@@ -43,6 +77,11 @@ public final class SpreadsheetTextParserTokenTest extends SpreadsheetValueParser
         final SpreadsheetTextParserToken token = this.createToken(text, apostrophe, textLiteral);
         this.textAndCheck(token, text);
         this.checkValue(token, apostrophe, textLiteral);
+
+        this.textValueAndCheck(
+                token,
+                TEXT
+        );
     }
 
     @Test
@@ -56,6 +95,44 @@ public final class SpreadsheetTextParserTokenTest extends SpreadsheetValueParser
         final SpreadsheetTextParserToken token = this.createToken(text, open, textLiteral, close);
         this.textAndCheck(token, text);
         this.checkValue(token, open, textLiteral, close);
+
+        this.textValueAndCheck(
+                token,
+                TEXT
+        );
+    }
+
+    @Test
+    public void testWithEmptyDoubleQuote() {
+        final String text = DOUBLE_QUOTE + DOUBLE_QUOTE;
+
+        final SpreadsheetDoubleQuoteSymbolParserToken open = doubleQuoteSymbol();
+        final SpreadsheetDoubleQuoteSymbolParserToken close = doubleQuoteSymbol();
+
+        final SpreadsheetTextParserToken token = this.createToken(
+                text,
+                open,
+                close
+        );
+        this.textAndCheck(token, text);
+        this.checkValue(
+                token,
+                open,
+                close
+        );
+
+        this.textValueAndCheck(
+                token,
+                ""
+        );
+    }
+
+    private void textValueAndCheck(final SpreadsheetTextParserToken token,
+                                   final String textValue) {
+        this.checkEquals(
+                textValue,
+                token.textValue()
+        );
     }
 
     @Test
