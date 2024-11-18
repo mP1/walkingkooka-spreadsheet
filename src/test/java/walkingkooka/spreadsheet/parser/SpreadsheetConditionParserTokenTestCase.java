@@ -23,4 +23,13 @@ public abstract class SpreadsheetConditionParserTokenTestCase<T extends Spreadsh
     SpreadsheetConditionParserTokenTestCase() {
         super();
     }
+
+    final void toSpreadsheetConditionRightParserTokenAndCheck(final T token,
+                                                              final SpreadsheetConditionRightParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.toSpreadsheetConditionRightParserToken(),
+                token::toString
+        );
+    }
 }

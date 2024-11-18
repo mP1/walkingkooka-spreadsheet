@@ -28,4 +28,40 @@ abstract public class SpreadsheetConditionParserToken extends SpreadsheetBinaryP
     SpreadsheetConditionParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
     }
+
+    /**
+     * Returns a sub-class of {@link SpreadsheetConditionRightParserToken} from the RHS argument of this condition.
+     */
+    public final SpreadsheetConditionRightParserToken toSpreadsheetConditionRightParserToken() {
+        // find symbol, return  the symbol and tokens following it to the factory method.
+        final List<ParserToken> tokens = this.value();
+
+        int symbolIndex = -1;
+        int i = 0;
+        for (final ParserToken token : tokens) {
+            if (false == token.isWhitespace() && token.isSymbol()) {
+                symbolIndex = i;
+                break;
+            }
+
+            i++;
+        }
+
+        if (-1 == symbolIndex) {
+            throw new IllegalArgumentException("Missing symbol");
+        }
+
+        final List<ParserToken> conditionRightTokens = tokens.subList(
+                symbolIndex,
+                tokens.size()
+        );
+
+        return this.toSpreadsheetConditionRightParserToken0(
+                conditionRightTokens,
+                ParserToken.text(conditionRightTokens)
+        );
+    }
+
+    abstract SpreadsheetConditionRightParserToken toSpreadsheetConditionRightParserToken0(final List<ParserToken> tokens,
+                                                                                          final String text);
 }

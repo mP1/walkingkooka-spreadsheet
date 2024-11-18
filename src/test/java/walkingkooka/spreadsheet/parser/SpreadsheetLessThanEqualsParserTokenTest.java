@@ -31,6 +31,65 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetLessThanEqualsParserTokenTest extends SpreadsheetConditionParserTokenTestCase<SpreadsheetLessThanEqualsParserToken> {
 
+    // toSpreadsheetConditionRightParserToken...........................................................................
+
+    @Test
+    public void testToSpreadsheetConditionRightParserToken() {
+        final SpreadsheetParserToken left = this.number1();
+        final SpreadsheetParserToken symbol = this.operatorSymbol();
+        final SpreadsheetParserToken right = this.number2();
+
+        this.toSpreadsheetConditionRightParserTokenAndCheck(
+                SpreadsheetParserToken.lessThanEquals(
+                        Lists.of(
+                                left,
+                                symbol,
+                                right
+                        ),
+                        "1<=22"
+                ),
+                SpreadsheetParserToken.conditionRightLessThanEquals(
+                        Lists.of(
+                                symbol,
+                                right
+                        ),
+                        "<=22"
+                )
+        );
+    }
+
+    @Test
+    public void testToSpreadsheetConditionRightParserTokenIncludesWhitespace() {
+        final SpreadsheetParserToken left = this.number1();
+        final SpreadsheetParserToken whitespace1 = this.whitespace();
+        final SpreadsheetParserToken symbol = this.operatorSymbol();
+        final SpreadsheetParserToken whitespace2 = this.whitespace();
+        final SpreadsheetParserToken right = this.number2();
+
+        this.toSpreadsheetConditionRightParserTokenAndCheck(
+                SpreadsheetParserToken.lessThanEquals(
+                        Lists.of(
+                                left,
+                                whitespace1,
+                                symbol,
+                                whitespace2,
+                                right
+                        ),
+                        "1  <=   22"
+                ),
+                SpreadsheetParserToken.conditionRightLessThanEquals(
+                        Lists.of(
+                                symbol,
+                                whitespace2,
+                                right
+                        ),
+                        "<=   22"
+                )
+        );
+    }
+
+    // SpreadsheetParserTokenVisitor....................................................................................
+
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();

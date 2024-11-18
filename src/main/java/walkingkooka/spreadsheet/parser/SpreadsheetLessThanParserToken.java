@@ -34,6 +34,16 @@ public final class SpreadsheetLessThanParserToken extends SpreadsheetConditionPa
         super(value, text);
     }
 
+    @Override
+    SpreadsheetConditionRightLessThanParserToken toSpreadsheetConditionRightParserToken0(final List<ParserToken> tokens,
+                                                                                         final String text) {
+
+        return SpreadsheetParserToken.conditionRightLessThan(
+                tokens,
+                text
+        );
+    }
+
     // children.........................................................................................................
 
     @Override
