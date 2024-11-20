@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStoreTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
@@ -38,6 +39,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -49,7 +52,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
     private final static SpreadsheetStoreRepository REPOSITORY = new FakeSpreadsheetStoreRepository() {
         @Override
         public SpreadsheetMetadataStore metadatas() {
-            return SpreadsheetMetadataStores.treeMap();
+            return createTreeMap();
         }
     };
 
@@ -231,7 +234,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
 
     @Override
     public SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository createStoreRepository() {
-        final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap();
+        final SpreadsheetMetadataStore metadatas = createTreeMap();
         metadatas.save(METADATA);
 
         return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
@@ -252,6 +255,13 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 SPREADSHEET_PARSER_PROVIDER,
                 NOW,
                 PROVIDER_CONTEXT
+        );
+    }
+
+    private static SpreadsheetMetadataStore createTreeMap() {
+        return SpreadsheetMetadataStores.treeMap(
+                SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
+                LocalDateTime::now
         );
     }
 

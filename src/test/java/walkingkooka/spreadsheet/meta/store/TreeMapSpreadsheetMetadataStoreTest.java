@@ -18,11 +18,112 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
+import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.TreeMap;
+import java.util.function.Supplier;
 
 public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetadataStoreTestCase<TreeMapSpreadsheetMetadataStore> {
 
+    private final static Locale DEFAULT_LOCALE = Locale.forLanguageTag("FR");
+
+    private final static SpreadsheetMetadata CREATE_TEMPLATE = SpreadsheetMetadata.EMPTY.setDefaults(
+            SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    DEFAULT_LOCALE
+            )
+    );
+
+    private final static LocalDateTime NOW = LocalDateTime.of(
+            1999,
+            12,
+            31,
+            12,
+            58
+    );
+
+    private final static Supplier<LocalDateTime> NOW_SUPPLIER = () -> NOW;
+
+    @Test
+    public void testCreate() {
+        final EmailAddress creator = EmailAddress.parse("creator1@example.com");
+        final Optional<Locale> locale = Optional.of(
+                Locale.forLanguageTag("EN-AU")
+        );
+
+        this.checkEquals(
+                CREATE_TEMPLATE.set(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                        SpreadsheetId.with(1)
+                ).set(
+                        SpreadsheetMetadataPropertyName.CREATOR,
+                        creator
+                ).set(
+                        SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                        NOW
+                ).set(
+                        SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                        creator
+                ).set(
+                        SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                        NOW
+                ).set(
+                        SpreadsheetMetadataPropertyName.LOCALE,
+                        locale.get()
+                ),
+                this.createStore()
+                        .create(
+                                creator,
+                                locale
+                        )
+        );
+    }
+
+    @Test
+    public void testCreateWithoutLocale() {
+        final EmailAddress creator = EmailAddress.parse("creator1@example.com");
+        final Optional<Locale> locale = Optional.empty();
+
+        this.checkEquals(
+                CREATE_TEMPLATE.set(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                        SpreadsheetId.with(1)
+                ).set(
+                        SpreadsheetMetadataPropertyName.CREATOR,
+                        creator
+                ).set(
+                        SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                        NOW
+                ).set(
+                        SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                        creator
+                ).set(
+                        SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                        NOW
+                ),
+                this.createStore()
+                        .create(
+                                creator,
+                                locale
+                        )
+        );
+    }
+
+    @Override
+    public TreeMapSpreadsheetMetadataStore createStore() {
+        return TreeMapSpreadsheetMetadataStore.with(
+                CREATE_TEMPLATE,
+                NOW_SUPPLIER
+        );
+    }
+
+    // toString.........................................................................................................
     @Test
     public void testToString() {
         final TreeMapSpreadsheetMetadataStore store = this.createStore();
@@ -46,10 +147,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                 "}]");
     }
 
-    @Override
-    public TreeMapSpreadsheetMetadataStore createStore() {
-        return TreeMapSpreadsheetMetadataStore.create();
-    }
+    // class.........................................................................................................
 
     @Override
     public Class<TreeMapSpreadsheetMetadataStore> type() {
