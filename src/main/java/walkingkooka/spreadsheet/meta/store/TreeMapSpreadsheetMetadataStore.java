@@ -85,25 +85,28 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
 
         final LocalDateTime timestamp = this.now.get();
 
-        // assumes that the template has a default Locale in "defaults"
-        return this.save(
-                this.createTemplate.set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
-                        creator
-                ).setOrRemove(
-                        SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
-                        timestamp
-                ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                        creator
-                ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
-                        timestamp
-                ).setOrRemove(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        locale.orElse(null)
-                )
+        SpreadsheetMetadata unsaved = this.createTemplate.set(
+                SpreadsheetMetadataPropertyName.CREATOR,
+                creator
+        ).setOrRemove(
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                timestamp
+        ).set(
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                creator
+        ).set(
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                timestamp
         );
+        if (locale.isPresent()) {
+            unsaved = unsaved.set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    locale.orElse(null)
+            );
+        }
+
+        // assumes that the template has a default Locale in "defaults"
+        return this.save(unsaved);
     }
 
     private final SpreadsheetMetadata createTemplate;

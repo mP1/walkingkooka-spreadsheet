@@ -36,7 +36,7 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         TypeNameTesting<S> {
 
     SpreadsheetMetadata CREATE_TEMPLATE = SpreadsheetMetadata.EMPTY.setDefaults(
-            SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
                     SpreadsheetMetadataPropertyName.LOCALE,
                     Locale.forLanguageTag("EN-AU")
             )
