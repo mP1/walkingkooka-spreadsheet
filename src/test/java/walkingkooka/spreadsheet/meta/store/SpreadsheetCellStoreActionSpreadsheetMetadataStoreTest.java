@@ -89,7 +89,10 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(),
+                SpreadsheetMetadataStores.treeMap(
+                        CREATE_TEMPLATE,
+                        LocalDateTime::now
+                ),
                 (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
@@ -125,7 +128,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(),
+                createTreeMap(),
                 (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
@@ -175,7 +178,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(),
+                createTreeMap(),
                 (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
@@ -228,7 +231,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(),
+                createTreeMap(),
                 (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
@@ -279,7 +282,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger clearFormatted = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(),
+                createTreeMap(),
                 (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
@@ -347,7 +350,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger clearFormatted = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(),
+                createTreeMap(),
                 (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
@@ -432,7 +435,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger clearFormatted = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(),
+                createTreeMap(),
                 (id) -> new FakeSpreadsheetCellStore() {
                     @Override
                     public void clearParsedFormulaExpressions() {
@@ -539,10 +542,19 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
     private SpreadsheetCellStoreActionSpreadsheetMetadataStore createStore(final SpreadsheetCellStore cellStore) {
         return SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-                SpreadsheetMetadataStores.treeMap(),
+                createTreeMap(),
                 (id) -> cellStore
         );
     }
+
+    private SpreadsheetMetadataStore createTreeMap() {
+        return SpreadsheetMetadataStores.treeMap(
+                CREATE_TEMPLATE,
+                LocalDateTime::now
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetCellStoreActionSpreadsheetMetadataStore> type() {

@@ -22,6 +22,8 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.ReadOnlyStoreTesting;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -41,7 +43,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
 
     @Test
     public void testSaveAndLoad() {
-        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+        final SpreadsheetMetadataStore store = createTreeMap();
 
         final SpreadsheetMetadata metadata = this.metadata(this.id(), "user@example.com");
         store.save(metadata);
@@ -82,7 +84,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testIds() {
-        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+        final SpreadsheetMetadataStore store = createTreeMap();
 
         final SpreadsheetMetadata a = this.metadata(1, "user1@example.com");
         final SpreadsheetMetadata b = this.metadata(2, "user22@example.com");
@@ -106,7 +108,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testValues() {
-        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+        final SpreadsheetMetadataStore store = createTreeMap();
 
         final SpreadsheetMetadata a = this.metadata(1, "user1@example.com");
         final SpreadsheetMetadata b = this.metadata(2, "user22@example.com");
@@ -139,13 +141,20 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
 
     @Override
     public ReadOnlySpreadsheetMetadataStore createStore() {
-        return ReadOnlySpreadsheetMetadataStore.with(SpreadsheetMetadataStores.treeMap());
+        return ReadOnlySpreadsheetMetadataStore.with(createTreeMap());
     }
 
     private ReadOnlySpreadsheetMetadataStore createStore2() {
-        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+        final SpreadsheetMetadataStore store = createTreeMap();
         store.save(this.metadata(1, "user1@example.com"));
         return ReadOnlySpreadsheetMetadataStore.with(store);
+    }
+
+    private SpreadsheetMetadataStore createTreeMap() {
+        return SpreadsheetMetadataStores.treeMap(
+                CREATE_TEMPLATE,
+                LocalDateTime::now
+        );
     }
 
     @Override

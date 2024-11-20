@@ -27,12 +27,48 @@ import walkingkooka.store.StoreTesting;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataStore> extends StoreTesting<S, SpreadsheetId, SpreadsheetMetadata>,
         TypeNameTesting<S> {
+
+    SpreadsheetMetadata CREATE_TEMPLATE = SpreadsheetMetadata.EMPTY.setDefaults(
+            SpreadsheetMetadata.EMPTY.set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    Locale.forLanguageTag("EN-AU")
+            )
+    );
+
+    // create.............................................................................................................
+
+    @Test
+    default void testCreateWithNullCreatorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .create(
+                                null,
+                                Optional.empty()
+                        )
+        );
+    }
+
+    @Test
+    default void testCreateWithNullLocaleFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .create(
+                                EmailAddress.parse("creator@example.com"),
+                                null
+                        )
+        );
+    }
+
+    // save.............................................................................................................
 
     int ID = 1;
 

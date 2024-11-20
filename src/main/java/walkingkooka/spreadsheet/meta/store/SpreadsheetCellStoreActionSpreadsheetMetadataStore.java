@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -24,6 +25,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -54,6 +56,15 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
         super();
         this.metadataStore = metadataStore;
         this.cellStore = cellStore;
+    }
+
+    @Override
+    public SpreadsheetMetadata create(final EmailAddress creator,
+                                      final Optional<Locale> locale) {
+        return this.metadataStore.create(
+                creator,
+                locale
+        );
     }
 
     @Override

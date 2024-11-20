@@ -17,12 +17,23 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
+
+import java.util.Locale;
+import java.util.Optional;
 
 /**
  * A {@link Store} that holds all spreadsheet to metadata.
  */
 public interface SpreadsheetMetadataStore extends Store<SpreadsheetId, SpreadsheetMetadata> {
+
+    /**
+     * The preferred way to create and save a new {@link SpreadsheetMetadata}, populating required fields,
+     * including setting of numerous defaults.
+     */
+    SpreadsheetMetadata create(final EmailAddress user,
+                               final Optional<Locale> locale);
 }
