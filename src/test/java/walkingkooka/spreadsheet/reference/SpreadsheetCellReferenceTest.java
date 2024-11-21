@@ -1328,7 +1328,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testParseInvalidColumnFails() {
         this.parseStringFails(
                 "XFEA",
-                new IllegalColumnArgumentException("Invalid column \"XFEA\" not between \"A\" and \"XFE\" in \"XFEA\"")
+                new IllegalColumnArgumentException("Invalid column \"XFEA\" not between \"A\" and \"XFE\"")
         );
     }
 
@@ -1336,7 +1336,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testParseInvalidColumnFails2() {
         this.parseStringFails(
                 "ABCDEFG",
-                new IllegalColumnArgumentException("Invalid column \"ABCDEFG\" not between \"A\" and \"XFE\" in \"ABCDEFG\"")
+                new IllegalColumnArgumentException("Invalid column \"ABCDEFG\" not between \"A\" and \"XFE\"")
         );
     }
 
@@ -1344,7 +1344,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testParseInvalidRowFails() {
         this.parseStringFails(
                 "B1048577",
-                new IllegalRowArgumentException("Invalid row value 1048576 expected between 0 and 1048576 in \"B1048577\"")
+                new IllegalRowArgumentException("Invalid row value 1048576 expected between 0 and 1048576")
         );
     }
 
@@ -1352,7 +1352,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testParseInvalidRowFails2() {
         this.parseStringFails(
                 "B12345678",
-                new IllegalRowArgumentException("Invalid row value 12345677 expected between 0 and 1048576 in \"B12345678\"")
+                new IllegalRowArgumentException("Invalid row value 12345677 expected between 0 and 1048576")
         );
     }
 

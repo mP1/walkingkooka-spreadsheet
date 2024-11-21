@@ -473,7 +473,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testParseColumnMoreThanMaxFails() {
         this.parseStringFails(
                 "ABCDEFGHIJKL",
-                new IllegalColumnArgumentException("Invalid column \"ABCDEFGHIJKL\" not between \"A\" and \"XFE\" in \"ABCDEFGHIJKL\"")
+                new IllegalColumnArgumentException("Invalid column \"ABCDEFGHIJKL\" not between \"A\" and \"XFE\"")
         );
     }
 
