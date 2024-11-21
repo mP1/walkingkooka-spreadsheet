@@ -330,7 +330,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testParseValueMoreThanMaxFails() {
         this.parseStringFails(
                 "12345678",
-                new IllegalRowArgumentException("Invalid row value 12345677 expected between 0 and 1048576 in \"12345678\"")
+                new IllegalRowArgumentException("Invalid row value 12345677 expected between 0 and 1048576")
         );
     }
 

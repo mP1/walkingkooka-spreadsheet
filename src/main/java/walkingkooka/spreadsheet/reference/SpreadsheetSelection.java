@@ -508,8 +508,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 throw (NullPointerException) wrapped;
             }
             if (wrapped instanceof IllegalColumnOrRowArgumentException) {
-                final IllegalColumnOrRowArgumentException columnOrRow = (IllegalColumnOrRowArgumentException) wrapped;
-                throw columnOrRow.setMessage(columnOrRow.getMessage() + " in " + CharSequences.quoteAndEscape(text));
+                throw (IllegalColumnOrRowArgumentException) wrapped;
             }
             if (wrapped instanceof IllegalArgumentException) {
                 throw (IllegalArgumentException) wrapped;

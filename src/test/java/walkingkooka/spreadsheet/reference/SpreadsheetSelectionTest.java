@@ -1194,7 +1194,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
 
         this.checkEquals(
-                "Invalid column \"hello\" not between \"A\" and \"XFE\" in \"hello\"",
+                "Invalid column \"hello\" not between \"A\" and \"XFE\"",
                 thrown.getMessage(),
                 "message"
         );
