@@ -30,7 +30,6 @@ import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataStore> extends StoreTesting<S, SpreadsheetId, SpreadsheetMetadata>,
         TypeNameTesting<S> {
@@ -74,12 +73,16 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
 
     @Test
     default void testSaveWithoutRequiredFails() {
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createStore().save(SpreadsheetMetadata.EMPTY));
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .save(SpreadsheetMetadata.EMPTY)
+        );
 
-        final String message = thrown.getMessage();
-        final String required = "Missing required properties: create-date-time, creator, locale, modified-by, modified-date-time";
-
-        assertTrue(message.startsWith(required), () -> "Message doesnt start with \"" + required + "\"" + "\n" + message);
+        this.checkEquals(
+                "Missing required metadata properties: create-date-time, creator, locale, modified-by, modified-date-time",
+                thrown.getMessage()
+        );
     }
 
     @Override

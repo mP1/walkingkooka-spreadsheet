@@ -121,8 +121,13 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
 
         final Set<SpreadsheetMetadataPropertyName<?>> missing = spreadsheetMetadata.missingRequiredProperties();
-        if (!missing.isEmpty()) {
-            throw new IllegalArgumentException("Missing required properties: " + missing.stream().map(SpreadsheetMetadataPropertyName::toString).collect(Collectors.joining(", ")) + " has " + spreadsheetMetadata);
+        if (false == missing.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Missing required metadata properties: " +
+                            missing.stream()
+                                    .map(SpreadsheetMetadataPropertyName::toString)
+                                    .collect(Collectors.joining(", "))
+            );
         }
 
         return this.store.save(spreadsheetMetadata);
