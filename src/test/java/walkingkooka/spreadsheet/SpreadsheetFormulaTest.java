@@ -487,7 +487,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText(text)
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'=\' at 0 expected \"#\"")
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'=\' at 0")
                                 )
                         )
         );
@@ -502,7 +502,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText("@")
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 0 expected \"dd/mmm/yyyy\"")
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 0")
                                 )
                         )
         );
@@ -523,7 +523,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText(text)
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 2 expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 2")
                                 )
                         )
         );
