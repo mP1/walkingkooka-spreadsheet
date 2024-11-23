@@ -287,7 +287,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadCellsWithFormulaWithInvalidValueFails() {
         this.loadCellFails(
                 "1.X",
-                SpreadsheetErrorKind.ERROR.setMessage("Invalid character '1' at 0")
+                SpreadsheetErrorKind.ERROR.setMessage("Invalid character '1' at 0 expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE")
         );
     }
 
