@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
@@ -116,6 +117,12 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
         return this.spreadsheetEngineContext()
                 .environmentValue(name);
+    }
+
+    @Override
+    default PluginStore pluginStore() {
+        return this.spreadsheetEngineContext()
+                .pluginStore();
     }
 
     @Override
