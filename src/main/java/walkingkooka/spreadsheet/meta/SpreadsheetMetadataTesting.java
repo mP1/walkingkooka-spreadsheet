@@ -25,6 +25,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
@@ -270,7 +271,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
             );
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.basic(
-            METADATA_EN_AU.environmentContext()
+            METADATA_EN_AU.environmentContext(),
+            PluginStores.fake()
     );
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
