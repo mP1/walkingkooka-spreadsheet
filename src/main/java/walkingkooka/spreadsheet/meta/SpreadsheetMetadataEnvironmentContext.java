@@ -26,7 +26,7 @@ import java.util.Optional;
 
 /**
  * An {@link EnvironmentContext} that returns properties belonging to a {@link SpreadsheetMetadata}.
- * Any {@link EnvironmentValueName} with a prefix of {@link #PREFIX} will have that removed and then used as a key into
+ * Any {@link EnvironmentValueName} with a prefix of {@link SpreadsheetMetadata#ENVIRONMENT_VALUE_NAME_PREFIX} will have that removed and then used as a key into
  * {@link SpreadsheetMetadata#get(SpreadsheetMetadataPropertyName)}.
  */
 final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext {
