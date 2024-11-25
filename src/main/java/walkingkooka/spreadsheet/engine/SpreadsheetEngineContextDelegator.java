@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.plugin.store.PluginStore;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
@@ -46,6 +46,7 @@ import java.util.function.BiConsumer;
  * A delegator for {@link SpreadsheetEngineContext}.
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
+        ProviderContextDelegator,
         SpreadsheetProviderDelegator {
 
     @Override
@@ -112,19 +113,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
                 .isPure(name);
     }
 
-
-    @Override
-    default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-        return this.spreadsheetEngineContext()
-                .environmentValue(name);
-    }
-
-    @Override
-    default PluginStore pluginStore() {
-        return this.spreadsheetEngineContext()
-                .pluginStore();
-    }
-
     @Override
     default LocalDateTime now() {
         return this.spreadsheetEngineContext()
@@ -166,6 +154,11 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
 
     @Override
     default SpreadsheetProvider spreadsheetProvider() {
+        return this.spreadsheetEngineContext();
+    }
+
+    @Override
+    default ProviderContext providerContext() {
         return this.spreadsheetEngineContext();
     }
 }
