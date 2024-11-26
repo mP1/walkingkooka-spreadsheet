@@ -20,12 +20,12 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextTesting;
+import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.environment.EnvironmentValueName;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataEnvironmentContextTest implements EnvironmentContextTesting<SpreadsheetMetadataEnvironmentContext>,
+public final class SpreadsheetMetadataEnvironmentContextTest implements EnvironmentContextTesting2<SpreadsheetMetadataEnvironmentContext>,
         ToStringTesting<SpreadsheetMetadataEnvironmentContext> {
 
     @Test
@@ -39,7 +39,6 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     @Test
     public void testEnvironmentValueWithoutPrefix() {
         this.environmentValueAndCheck(
-                this.createContext(),
                 EnvironmentValueName.with("missing.prefix")
         );
     }
@@ -47,7 +46,6 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     @Test
     public void testEnvironmentValueWithPrefixButUnknown() {
         this.environmentValueAndCheck(
-                this.createContext(),
                 EnvironmentValueName.with("metadata.missing")
         );
     }
@@ -55,7 +53,6 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     @Test
     public void testEnvironmentValue() {
         this.environmentValueAndCheck(
-                this.createContext(),
                 EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR),
                 '.'
         );
