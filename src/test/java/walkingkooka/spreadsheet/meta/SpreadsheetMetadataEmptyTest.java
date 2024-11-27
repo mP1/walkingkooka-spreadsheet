@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
@@ -30,7 +30,6 @@ import walkingkooka.tree.text.TextStyle;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -119,12 +118,11 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testEnvironmentContext() {
-        final EnvironmentContext context = SpreadsheetMetadata.EMPTY.environmentContext();
-        this.checkEquals(
-                Optional.empty(),
-                context.environmentValue(
-                        EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CREATOR)
-                )
+        this.environmentValueAndCheck(
+                SpreadsheetMetadata.EMPTY.environmentContext(
+                        EnvironmentContexts.empty()
+                ),
+                EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CREATOR)
         );
     }
 

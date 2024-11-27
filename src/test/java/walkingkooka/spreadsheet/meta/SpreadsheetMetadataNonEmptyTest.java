@@ -33,7 +33,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
@@ -1997,14 +1997,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testEnvironmentContext() {
-        final EnvironmentContext context = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
-                .environmentContext();
-        this.checkEquals(
-                Optional.of(CURRENCY),
-                context.environmentValue(
-                        EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL)
-                )
+        this.environmentValueAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
+                        .environmentContext(EnvironmentContexts.empty()),
+                EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL),
+                CURRENCY
         );
     }
 

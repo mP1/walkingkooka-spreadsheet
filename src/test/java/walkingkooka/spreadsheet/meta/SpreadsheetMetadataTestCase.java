@@ -26,6 +26,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.plugin.ProviderContext;
@@ -64,7 +65,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         HateosResourceTesting<SpreadsheetMetadata, SpreadsheetId>,
         ThrowableTesting,
         ToStringTesting<SpreadsheetMetadata>,
-        TreePrintableTesting {
+        TreePrintableTesting,
+        EnvironmentContextTesting {
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -417,13 +419,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     // EnvironmentContext...............................................................................................
 
     @Test
-    public void testEnvironmentContextCached() {
-        final SpreadsheetMetadata metadata = this.createObject();
-
-        assertSame(
-                metadata.environmentContext(),
-                metadata.environmentContext(),
-                () -> "EnvironmentContext not cached, new instance created each time."
+    public void testEnvironmentContextWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .environmentContext(null)
         );
     }
 

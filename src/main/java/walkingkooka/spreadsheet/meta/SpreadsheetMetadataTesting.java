@@ -22,10 +22,14 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.EnvironmentContexts;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
+import walkingkooka.props.Properties;
+import walkingkooka.props.PropertiesPath;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
@@ -270,8 +274,20 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     2
             );
 
+    EnvironmentValueName<String> DUMMY_ENVIRONMENTAL_VALUE_NAME = EnvironmentValueName.with("Dummy123");
+
+    String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
+
+
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.basic(
-            METADATA_EN_AU.environmentContext(),
+            METADATA_EN_AU.environmentContext(
+                    EnvironmentContexts.with(
+                            Properties.EMPTY.set(
+                                    PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
+                                    DUMMY_ENVIRONMENTAL_VALUE
+                            )
+                    )
+            ),
             PluginStores.fake()
     );
 
