@@ -120,7 +120,9 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testEnvironmentContext() {
         this.environmentValueAndCheck(
                 SpreadsheetMetadata.EMPTY.environmentContext(
-                        EnvironmentContexts.empty()
+                        EnvironmentContexts.empty(
+                                LocalDateTime::now
+                        )
                 ),
                 EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CREATOR)
         );

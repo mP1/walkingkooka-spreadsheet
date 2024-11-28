@@ -26,16 +26,12 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
-import java.time.LocalDateTime;
-import java.util.function.Supplier;
-
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
 
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
     public static SpreadsheetEngineContext basic(final AbsoluteUrl serverUrl,
-                                                 final Supplier<LocalDateTime> now,
                                                  final SpreadsheetMetadata metadata,
                                                  final SpreadsheetEngine engine,
                                                  final SpreadsheetStoreRepository storeRepository,
@@ -44,7 +40,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
                 serverUrl,
-                now,
                 metadata,
                 engine,
                 storeRepository,

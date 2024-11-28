@@ -725,21 +725,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                         null,
-                        LocalDateTime::now,
-                        SpreadsheetLabelNameResolvers.fake(),
-                        ConverterProviders.fake(),
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetConverterContextWithNullNowFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                        SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                        null,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
                         PROVIDER_CONTEXT
@@ -753,7 +738,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                        LocalDateTime::now,
                         null,
                         ConverterProviders.fake(),
                         PROVIDER_CONTEXT
@@ -767,7 +751,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                        LocalDateTime::now,
                         SpreadsheetLabelNameResolvers.fake(),
                         null,
                         PROVIDER_CONTEXT
@@ -781,7 +764,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 NullPointerException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                        LocalDateTime::now,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
                         null
@@ -795,7 +777,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                         SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                        LocalDateTime::now,
                         SpreadsheetLabelNameResolvers.fake(),
                         ConverterProviders.fake(),
                         PROVIDER_CONTEXT

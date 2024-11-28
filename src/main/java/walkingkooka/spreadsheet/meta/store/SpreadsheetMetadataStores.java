@@ -17,14 +17,13 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
+import walkingkooka.datetime.HasNow;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 
-import java.time.LocalDateTime;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetMetadataStore} implementations.
@@ -60,7 +59,7 @@ public final class SpreadsheetMetadataStores implements PublicStaticHelper {
      * {@see TreeMapSpreadsheetMetadataStore}
      */
     public static SpreadsheetMetadataStore treeMap(final SpreadsheetMetadata createTemplate,
-                                                   final Supplier<LocalDateTime> now) {
+                                                   final HasNow now) {
         return TreeMapSpreadsheetMetadataStore.with(
                 createTemplate,
                 now

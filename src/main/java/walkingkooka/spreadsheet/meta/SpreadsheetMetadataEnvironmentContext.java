@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -71,6 +72,11 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
     }
 
     private final SpreadsheetMetadata metadata;
+
+    @Override
+    public LocalDateTime now() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public String toString() {

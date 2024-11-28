@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetAdditionParserToken;
@@ -101,12 +102,10 @@ import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.function.Supplier;
 
 /**
  * A {@link SpreadsheetParserTokenVisitor} that replaces tokens that are {@link Locale} sensitive, such as decimal-separator.
@@ -115,7 +114,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     static SpreadsheetParserToken update(final SpreadsheetParserToken token,
                                          final SpreadsheetMetadata metadata,
-                                         final Supplier<LocalDateTime> now) {
+                                         final HasNow now) {
         final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor visitor = new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor(
                 metadata,
                 now
@@ -125,7 +124,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor(final SpreadsheetMetadata metadata,
-                                                                                                final Supplier<LocalDateTime> now) {
+                                                                                                final HasNow now) {
         super();
         this.metadata = metadata;
         this.now = now;
@@ -768,7 +767,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         return this.dateTimeContext;
     }
 
-    private final Supplier<LocalDateTime> now;
+    private final HasNow now;
 
     private DateTimeContext dateTimeContext;
 

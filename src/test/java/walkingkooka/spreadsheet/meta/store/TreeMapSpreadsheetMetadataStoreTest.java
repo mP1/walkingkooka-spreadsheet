@@ -27,7 +27,6 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.TreeMap;
-import java.util.function.Supplier;
 
 public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetadataStoreTestCase<TreeMapSpreadsheetMetadataStore> {
 
@@ -47,8 +46,6 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
             12,
             58
     );
-
-    private final static Supplier<LocalDateTime> NOW_SUPPLIER = () -> NOW;
 
     @Test
     public void testCreate() {
@@ -119,7 +116,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     public TreeMapSpreadsheetMetadataStore createStore() {
         return TreeMapSpreadsheetMetadataStore.with(
                 CREATE_TEMPLATE,
-                NOW_SUPPLIER
+                () -> NOW
         );
     }
 

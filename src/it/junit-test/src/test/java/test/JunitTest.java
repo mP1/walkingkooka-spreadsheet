@@ -28,6 +28,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -98,7 +99,7 @@ public class JunitTest {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
-    private static final Supplier<LocalDateTime> NOW = LocalDateTime::now;
+    private final static HasNow NOW = LocalDateTime::now;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -264,7 +265,6 @@ public class JunitTest {
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.spreadsheetConverterContext(
                                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                        NOW,
                                         LABEL_NAME_RESOLVER,
                                         converterProvider,
                                         PROVIDER_CONTEXT
@@ -326,7 +326,6 @@ public class JunitTest {
                 return formatter.format(
                         value,
                         metadata.spreadsheetFormatterContext(
-                                NOW,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
                                 spreadsheetFormatterProvider,

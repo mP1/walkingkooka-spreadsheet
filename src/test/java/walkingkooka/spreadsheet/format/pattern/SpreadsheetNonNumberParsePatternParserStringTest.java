@@ -191,7 +191,8 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
                         Locale.forLanguageTag("EN-AU"),
                         1900,
                         20,
-                        LocalDateTime::now)
+                        LocalDateTime::now
+                )
                 .monthNames();
     }
 
