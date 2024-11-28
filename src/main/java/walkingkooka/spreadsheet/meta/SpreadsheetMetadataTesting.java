@@ -95,6 +95,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
+    /**
+     * Hard-coded active user.
+     */
+    EmailAddress USER = EmailAddress.parse("user@example.com");
+
     Supplier<LocalDateTime> NOW = () -> LocalDateTime.of(
             1999,
             12,
@@ -157,7 +162,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                             .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.CREATOR,
-                    EmailAddress.parse("user@example.com")
+                    USER
             ).set(
                     SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
                     NOW.get()
@@ -217,7 +222,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                             .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                    EmailAddress.parse("user@example.com")
+                    USER
             ).set(
                     SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
                     NOW.get()
