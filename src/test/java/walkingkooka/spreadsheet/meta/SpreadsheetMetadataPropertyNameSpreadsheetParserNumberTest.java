@@ -84,7 +84,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                                 ConverterContexts.basic(
                                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                         Converters.fake(),
-                                        DateTimeContexts.locale(locale, 1900, 20, LocalDateTime::now),
+                                        DateTimeContexts.locale(
+                                                locale,
+                                                1900,
+                                                20,
+                                                LocalDateTime::now
+                                        ),
                                         DecimalNumberContexts.american(MathContext.DECIMAL32)
                                 ),
                                 kind

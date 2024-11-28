@@ -13568,7 +13568,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 metadata,
                                 metadata.spreadsheetConverterContext(
                                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                        NOW,
                                         SPREADSHEET_LABEL_NAME_RESOLVER,
                                         CONVERTER_PROVIDER,
                                         PROVIDER_CONTEXT
@@ -13805,7 +13804,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                 return metadata.spreadsheetConverterContext(
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                        NOW,
                         SPREADSHEET_LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
@@ -13885,7 +13883,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         movedFromTo, // moved cells
                         this.spreadsheetMetadata()
                                 .sortSpreadsheetComparatorContext(
-                                        this::now, // now supplier
                                         this, // ConverterProvider
                                         this, // SpreadsheetLabelNameResolver
                                         this // ProviderContext

@@ -36,13 +36,11 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -55,12 +53,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore with(final SpreadsheetCellStore store,
                                                                                final SpreadsheetMetadata metadata,
                                                                                final SpreadsheetParserProvider spreadsheetParserProvider,
-                                                                               final Supplier<LocalDateTime> now,
                                                                                final ProviderContext providerContext) {
         Objects.requireNonNull(store, "store");
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
-        Objects.requireNonNull(now, "now");
         Objects.requireNonNull(providerContext, "providerContext");
 
         return store instanceof SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore ?
@@ -68,14 +64,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                         (SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore) store,
                         metadata,
                         spreadsheetParserProvider,
-                        now,
                         providerContext
                 ) :
                 new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(
                         store,
                         metadata,
                         spreadsheetParserProvider,
-                        now,
                         providerContext
                 );
     }
@@ -88,7 +82,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
             final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
             final SpreadsheetMetadata metadata,
             final SpreadsheetParserProvider spreadsheetParserProvider,
-            final Supplier<LocalDateTime> now,
             final ProviderContext providerContext) {
 
         return metadata.equals(store.metadata) ?
@@ -97,7 +90,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                         store.store,
                         metadata,
                         spreadsheetParserProvider,
-                        now,
                         providerContext
                 );
     }
@@ -105,12 +97,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetCellStore store,
                                                                            final SpreadsheetMetadata metadata,
                                                                            final SpreadsheetParserProvider spreadsheetParserProvider,
-                                                                           final Supplier<LocalDateTime> now,
                                                                            final ProviderContext providerContext) {
         this.store = store;
         this.metadata = metadata;
         this.spreadsheetParserProvider = spreadsheetParserProvider;
-        this.now = now;
         this.providerContext = providerContext;
     }
 
@@ -175,14 +165,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
      */
     private SpreadsheetParserToken parseFormulaTextExpression(final String text) {
         final SpreadsheetMetadata metadata = this.metadata;
+        final ProviderContext providerContext = this.providerContext;
 
         return this.metadata.spreadsheetParser(
                         this.spreadsheetParserProvider,
-                        this.providerContext
+                        providerContext
                 ).orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(
                         TextCursors.charSequence(text),
-                        metadata.spreadsheetParserContext(this.now)
+                        metadata.spreadsheetParserContext(providerContext)
                 ).orElse(null)
                 .cast(SpreadsheetParserToken.class);
     }
@@ -334,7 +325,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
             token = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor.update(
                     token,
                     this.metadata,
-                    this.now
+                    this.providerContext // HasNow
             );
             final String text = token.text();
             if (!formula.text().equals(text)) {
@@ -353,7 +344,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     private ExpressionEvaluationContext expressionEvaluationContext() {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.with(
                 this.metadata,
-                this.now
+                this.providerContext // HasNow
         );
     }
 
@@ -365,12 +356,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     final SpreadsheetParserProvider spreadsheetParserProvider;
 
-    final Supplier<LocalDateTime> now;
-
     final ProviderContext providerContext;
 
     @Override
     public String toString() {
-        return this.metadata + " " + this.store + " " + this.spreadsheetParserProvider + " " + this.now + " " + this.providerContext;
+        return this.metadata + " " + this.store + " " + this.spreadsheetParserProvider + " " + this.providerContext;
     }
 }

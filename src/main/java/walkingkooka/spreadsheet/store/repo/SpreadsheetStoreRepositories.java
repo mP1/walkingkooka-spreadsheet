@@ -34,9 +34,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 
-import java.time.LocalDateTime;
-import java.util.function.Supplier;
-
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.
  */
@@ -84,13 +81,11 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
     public static SpreadsheetStoreRepository spreadsheetMetadataAwareSpreadsheetCellStore(final SpreadsheetId id,
                                                                                           final SpreadsheetStoreRepository repository,
                                                                                           final SpreadsheetParserProvider spreadsheetParserProvider,
-                                                                                          final Supplier<LocalDateTime> now,
                                                                                           final ProviderContext providerContext) {
         return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                 id,
                 repository,
                 spreadsheetParserProvider,
-                now,
                 providerContext
         );
     }

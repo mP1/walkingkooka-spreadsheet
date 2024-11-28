@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
+import walkingkooka.datetime.HasNow;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -33,7 +34,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -45,7 +45,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
      * Factory that creates a new {@link TreeMapSpreadsheetMetadataStore}
      */
     static TreeMapSpreadsheetMetadataStore with(final SpreadsheetMetadata createTemplate,
-                                                final Supplier<LocalDateTime> now) {
+                                                final HasNow now) {
         Objects.requireNonNull(createTemplate, "createTemplate");
 
         if (false == createTemplate.get(SpreadsheetMetadataPropertyName.LOCALE).isPresent()) {
@@ -62,7 +62,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
      * Private ctor.
      */
     private TreeMapSpreadsheetMetadataStore(final SpreadsheetMetadata createTemplate,
-                                            final Supplier<LocalDateTime> now) {
+                                            final HasNow now) {
         super();
 
         this.store = Stores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetMetadataStore::idSetter);
@@ -83,7 +83,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         Objects.requireNonNull(creator, "creator");
         Objects.requireNonNull(locale, "locale");
 
-        final LocalDateTime timestamp = this.now.get();
+        final LocalDateTime timestamp = this.now.now();
 
         SpreadsheetMetadata unsaved = this.createTemplate.set(
                 SpreadsheetMetadataPropertyName.CREATOR,
@@ -179,7 +179,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     /**
      * Used to provide the current time to timestamp operations.
      */
-    private final Supplier<LocalDateTime> now;
+    private final HasNow now;
 
     @Override
     public String toString() {

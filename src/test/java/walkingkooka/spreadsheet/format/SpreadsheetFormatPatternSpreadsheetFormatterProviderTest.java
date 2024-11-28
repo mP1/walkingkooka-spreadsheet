@@ -30,10 +30,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextNode;
 
-import java.time.LocalDateTime;
-import java.util.Locale;
-import java.util.function.Supplier;
-
 public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider>,
         ToStringTesting<SpreadsheetFormatPatternSpreadsheetFormatterProvider>,
         SpreadsheetMetadataTesting {
@@ -1118,17 +1114,6 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
     public SpreadsheetFormatPatternSpreadsheetFormatterProvider createSpreadsheetFormatterProvider() {
         return SpreadsheetFormatPatternSpreadsheetFormatterProvider.INSTANCE;
     }
-
-    private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
-
-    private final static Supplier<LocalDateTime> NOW = () -> LocalDateTime.of(
-            1999,
-            12,
-            31,
-            12,
-            58,
-            59
-    );
 
     // ToString.........................................................................................................
 

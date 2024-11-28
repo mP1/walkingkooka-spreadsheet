@@ -33,6 +33,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
@@ -101,7 +102,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -116,7 +116,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static int DEFAULT_YEAR = 1900;
 
-    private final static Supplier<LocalDateTime> NOW = LocalDateTime::now;
+    private final static HasNow NOW = LocalDateTime::now;
 
     private final static SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
 
@@ -1826,7 +1826,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ),
                 metadata.spreadsheetConverterContext(
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                        NOW,
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
@@ -2000,7 +1999,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.environmentValueAndCheck(
                 SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
-                        .environmentContext(EnvironmentContexts.empty()),
+                        .environmentContext(EnvironmentContexts.empty(NOW)),
                 EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL),
                 CURRENCY
         );
@@ -2178,7 +2177,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.spreadsheetFormatterContext(
-                        NOW,
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
@@ -2212,7 +2210,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.checkNotEquals(
                 null,
                 metadata.spreadsheetFormatterProviderSamplesContext(
-                        NOW,
                         LABEL_NAME_RESOLVER,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,

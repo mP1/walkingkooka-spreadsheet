@@ -68,7 +68,6 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         null,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 )
         );
@@ -82,7 +81,6 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         null,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 )
         );
@@ -95,21 +93,6 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
                         ID,
                         REPOSITORY,
-                        null,
-                        NOW,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullNowFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
-                        ID,
-                        REPOSITORY,
-                        SPREADSHEET_PARSER_PROVIDER,
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -124,7 +107,6 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         null
                 )
         );
@@ -225,10 +207,9 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         ID,
                         REPOSITORY,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 ),
-                ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER + " " + NOW + " " + PROVIDER_CONTEXT
+                ID + " " + REPOSITORY + " " + SPREADSHEET_PARSER_PROVIDER + " " + PROVIDER_CONTEXT
         );
     }
 
@@ -253,7 +234,6 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         SpreadsheetUserStores.treeMap()
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
     }

@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -74,7 +75,6 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.function.Supplier;
 
 /**
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
@@ -100,7 +100,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
      */
     EmailAddress USER = EmailAddress.parse("user@example.com");
 
-    Supplier<LocalDateTime> NOW = () -> LocalDateTime.of(
+    HasNow NOW = () -> LocalDateTime.of(
             1999,
             12,
             31,
@@ -165,7 +165,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     USER
             ).set(
                     SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
-                    NOW.get()
+                    NOW.now()
             ).set(
                     SpreadsheetMetadataPropertyName.DATE_FORMATTER,
                     SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector()
@@ -225,7 +225,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     USER
             ).set(
                     SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
-                    NOW.get()
+                    NOW.now()
             ).set(
                     SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
                     SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector()
@@ -290,7 +290,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
                             Properties.EMPTY.set(
                                     PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
                                     DUMMY_ENVIRONMENTAL_VALUE
-                            )
+                            ),
+                            NOW
                     )
             ),
             PluginStores.fake()
@@ -300,7 +301,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            NOW,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
             PROVIDER_CONTEXT
@@ -311,7 +311,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
-            NOW,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,
@@ -319,7 +318,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
-            NOW,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             CONVERTER_PROVIDER,
             SPREADSHEET_FORMATTER_PROVIDER,

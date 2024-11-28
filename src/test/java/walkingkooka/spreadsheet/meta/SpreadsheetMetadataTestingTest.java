@@ -95,7 +95,6 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testSpreadsheetFormatterContext() {
         METADATA_EN_AU.spreadsheetFormatterContext(
-                LocalDateTime::now,
                 (label) -> {
                     throw new UnsupportedOperationException();
                 },

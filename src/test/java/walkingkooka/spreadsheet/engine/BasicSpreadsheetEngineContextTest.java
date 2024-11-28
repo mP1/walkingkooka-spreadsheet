@@ -311,24 +311,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         null,
-                        NOW,
-                        METADATA,
-                        ENGINE,
-                        STORE_REPOSITORY,
-                        FUNCTION_ALIASES,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullNowFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        null,
                         METADATA,
                         ENGINE,
                         STORE_REPOSITORY,
@@ -345,7 +327,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
-                        NOW,
                         null,
                         ENGINE,
                         STORE_REPOSITORY,
@@ -362,7 +343,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
-                        NOW,
                         METADATA,
                         null,
                         STORE_REPOSITORY,
@@ -379,7 +359,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
-                        NOW,
                         METADATA,
                         ENGINE,
                         null,
@@ -396,7 +375,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
-                        NOW,
                         METADATA,
                         ENGINE,
                         STORE_REPOSITORY,
@@ -413,7 +391,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
-                        NOW,
                         METADATA,
                         ENGINE,
                         STORE_REPOSITORY,
@@ -430,7 +407,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
-                        NOW,
                         METADATA,
                         ENGINE,
                         STORE_REPOSITORY,
@@ -1283,7 +1259,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         return BasicSpreadsheetEngineContext.with(
                 SERVER_URL,
-                NOW,
                 metadata,
                 ENGINE,
                 new FakeSpreadsheetStoreRepository() {

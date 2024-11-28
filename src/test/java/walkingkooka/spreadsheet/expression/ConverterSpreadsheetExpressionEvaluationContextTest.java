@@ -67,7 +67,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
 import java.math.MathContext;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -532,7 +531,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         METADATA,
                         METADATA.spreadsheetConverterContext(
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                LocalDateTime::now,
                                 LABEL_NAME_RESOLVER,
                                 converterProvider,
                                 PROVIDER_CONTEXT

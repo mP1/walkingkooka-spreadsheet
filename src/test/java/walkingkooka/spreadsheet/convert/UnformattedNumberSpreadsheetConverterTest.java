@@ -189,7 +189,6 @@ public final class UnformattedNumberSpreadsheetConverterTest implements Converte
 
         return metadata.spreadsheetConverterContext(
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                NOW,
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         metadata,

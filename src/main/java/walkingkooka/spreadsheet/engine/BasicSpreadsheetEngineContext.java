@@ -64,7 +64,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -79,7 +78,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final AbsoluteUrl serverUrl,
-                                              final Supplier<LocalDateTime> now,
                                               final SpreadsheetMetadata metadata,
                                               final SpreadsheetEngine engine,
                                               final SpreadsheetStoreRepository storeRepository,
@@ -87,7 +85,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetProvider spreadsheetProvider,
                                               final ProviderContext providerContext) {
         Objects.requireNonNull(serverUrl, "serverUrl");
-        Objects.requireNonNull(now, "now");
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -98,7 +95,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return new BasicSpreadsheetEngineContext(
                 serverUrl,
-                now,
                 metadata,
                 engine,
                 storeRepository,
@@ -112,7 +108,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final AbsoluteUrl serverUrl,
-                                          final Supplier<LocalDateTime> now,
                                           final SpreadsheetMetadata metadata,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetStoreRepository storeRepository,
@@ -122,7 +117,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         super();
 
         this.serverUrl = serverUrl;
-        this.now = now;
 
         this.metadata = metadata;
 
@@ -143,7 +137,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
 
-        this.parserContext = metadata.spreadsheetParserContext(now);
+        this.parserContext = metadata.spreadsheetParserContext(providerContext);
     }
 
     // metadata........................................................................................................
@@ -221,7 +215,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this :
                 new BasicSpreadsheetEngineContext(
                         this.serverUrl,
-                        this.now,
                         this.metadata,
                         this.engine,
                         this.storeRepository,
@@ -299,7 +292,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 metadata,
                 metadata.spreadsheetConverterContext(
                         converterSelector,
-                        this.now,
                         this, // SpreadsheetLabelNameResolver,
                         provider, // SpreadsheetConverterProvider
                         this.providerContext
@@ -322,10 +314,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public LocalDateTime now() {
-        return this.now.get();
+        return this.providerContext.now();
     }
-
-    private final Supplier<LocalDateTime> now;
 
     // formatValue......................................................................................................
 
@@ -338,7 +328,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 value,
                 this.spreadsheetMetadata()
                         .spreadsheetFormatterContext(
-                                this::now,
                                 this, // SpreadsheetLabelNameResolver,
                                 this.spreadsheetProvider, // ConverterProvider,
                                 this.spreadsheetProvider, // SpreadsheetFormatterProvider,
@@ -482,7 +471,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 comparators,
                 movedFromTo, // moved cells
                 metadata.sortSpreadsheetComparatorContext(
-                        this::now, // now supplier
                         this, // ConverterProvider
                         this, // SpreadsheetLabelNameResolver
                         this // ProviderContext

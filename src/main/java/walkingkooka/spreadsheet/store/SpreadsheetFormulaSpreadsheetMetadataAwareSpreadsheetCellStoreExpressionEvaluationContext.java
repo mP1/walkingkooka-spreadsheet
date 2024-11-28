@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.Either;
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -38,7 +39,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * A minimalist {@link ExpressionEvaluationContext} that is used by {@link SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore} to
@@ -47,7 +47,7 @@ import java.util.function.Supplier;
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext implements ExpressionEvaluationContext {
 
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetMetadata metadata,
-                                                                                                          final Supplier<LocalDateTime> now) {
+                                                                                                          final HasNow now) {
         return new SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(
                 metadata,
                 now
@@ -55,7 +55,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     private SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext(final SpreadsheetMetadata metadata,
-                                                                                                      final Supplier<LocalDateTime> now) {
+                                                                                                      final HasNow now) {
         super();
         this.metadata = metadata;
         this.now = now;
@@ -190,7 +190,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         return this.metadata.dateTimeContext(this.now);
     }
 
-    private final Supplier<LocalDateTime> now;
+    private final HasNow now;
 
     // DecimalNumberContext.............................................................................................
 

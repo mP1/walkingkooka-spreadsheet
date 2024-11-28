@@ -31,11 +31,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -55,7 +53,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         null,
                         METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 )
         );
@@ -69,7 +66,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         this.cellStore(),
                         null,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 )
         );
@@ -82,21 +78,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
                         this.cellStore(),
                         METADATA,
-                        null,
-                        NOW,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullNowFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        this.cellStore(),
-                        METADATA,
-                        SPREADSHEET_PARSER_PROVIDER,
                         null,
                         PROVIDER_CONTEXT
                 )
@@ -111,7 +92,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         this.cellStore(),
                         METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         null
                 )
         );
@@ -126,13 +106,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         cellStore,
                         METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 ),
                 cellStore,
                 METADATA,
-                SPREADSHEET_PARSER_PROVIDER,
-                NOW
+                SPREADSHEET_PARSER_PROVIDER
         );
     }
 
@@ -144,7 +122,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 cellStore,
                 METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -154,7 +131,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         wrapped,
                         METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 ));
     }
@@ -167,7 +143,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 cellStore,
                 METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -180,25 +155,21 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         wrapped,
                         differentMetadata,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 ),
                 cellStore,
                 differentMetadata,
-                SPREADSHEET_PARSER_PROVIDER,
-                NOW
+                SPREADSHEET_PARSER_PROVIDER
         );
     }
 
     private void check(final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore store,
                        final SpreadsheetCellStore cellStore,
                        final SpreadsheetMetadata metadata,
-                       final SpreadsheetParserProvider spreadsheetParserProvider,
-                       final Supplier<LocalDateTime> now) {
+                       final SpreadsheetParserProvider spreadsheetParserProvider) {
         assertSame(cellStore, store.store, "cellStore");
         assertSame(metadata, store.metadata, "metadata");
         assertSame(spreadsheetParserProvider, store.spreadsheetParserProvider, "spreadsheetParserProvider");
-        assertSame(now, store.now, "now");
     }
 
     // save.............................................................................................................
@@ -349,7 +320,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         cellStore,
                         METADATA,
                         SPREADSHEET_PARSER_PROVIDER,
-                        NOW,
                         PROVIDER_CONTEXT
                 ).save(cell);
         this.checkEquals(saved,
@@ -399,7 +369,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         Locale.forLanguageTag("ES")
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -475,7 +444,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         Locale.forLanguageTag("ES")
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -544,7 +512,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         Locale.forLanguageTag("ES")
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -611,7 +578,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         Locale.forLanguageTag("ES")
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -669,7 +635,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         decimalSeparator2
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -715,7 +680,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         percent2
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -782,7 +746,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         decimalSeparator2
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -838,7 +801,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         decimalSeparator2
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -917,7 +879,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         Locale.forLanguageTag("ES")
                 ),
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
@@ -960,13 +921,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 cellStore,
                 METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
 
         this.toStringAndCheck(
                 store,
-                METADATA + " " + cellStore + " " + SPREADSHEET_PARSER_PROVIDER + " " + NOW + " " + PROVIDER_CONTEXT
+                METADATA + " " + cellStore + " " + SPREADSHEET_PARSER_PROVIDER + " " + PROVIDER_CONTEXT
         );
     }
 
@@ -976,7 +936,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 this.cellStore(),
                 METADATA,
                 SPREADSHEET_PARSER_PROVIDER,
-                NOW,
                 PROVIDER_CONTEXT
         );
     }
