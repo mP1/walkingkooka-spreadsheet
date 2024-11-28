@@ -286,7 +286,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.basic(
             METADATA_EN_AU.environmentContext(
-                    EnvironmentContexts.with(
+                    EnvironmentContexts.properties(
                             Properties.EMPTY.set(
                                     PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
                                     DUMMY_ENVIRONMENTAL_VALUE
