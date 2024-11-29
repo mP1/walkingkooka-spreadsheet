@@ -123,7 +123,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         final Set<SpreadsheetMetadataPropertyName<?>> missing = spreadsheetMetadata.missingRequiredProperties();
         if (false == missing.isEmpty()) {
             throw new IllegalArgumentException(
-                    "Missing required metadata properties: " +
+                    "Metadata missing required properties: " +
                             missing.stream()
                                     .map(SpreadsheetMetadataPropertyName::toString)
                                     .collect(Collectors.joining(", "))
