@@ -80,7 +80,7 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         );
 
         this.checkEquals(
-                "Missing required metadata properties: create-date-time, creator, locale, modified-by, modified-date-time",
+                "Metadata missing required properties: create-date-time, creator, locale, modified-by, modified-date-time",
                 thrown.getMessage()
         );
     }
