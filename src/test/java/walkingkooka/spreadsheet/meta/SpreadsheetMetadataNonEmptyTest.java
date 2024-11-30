@@ -34,6 +34,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
@@ -1999,7 +2000,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.environmentValueAndCheck(
                 SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
-                        .environmentContext(EnvironmentContexts.empty(NOW)),
+                        .environmentContext(
+                                EnvironmentContexts.empty(
+                                NOW,
+                                        EnvironmentContext.ANONYMOUS
+                                )
+                        ),
                 EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL),
                 CURRENCY
         );

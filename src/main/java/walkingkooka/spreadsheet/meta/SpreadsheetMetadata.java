@@ -618,7 +618,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         this.environmentContext,
                         context
                 ),
-                context::now // HasNow
+                context::now, // HasNow
+                context.user()
         );
     }
 
