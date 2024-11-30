@@ -59,6 +59,11 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     }
 
     @Override
+    public void testUser() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetMetadataEnvironmentContext createContext() {
         return SpreadsheetMetadataEnvironmentContext.with(
                 SpreadsheetMetadataTesting.METADATA_EN_AU

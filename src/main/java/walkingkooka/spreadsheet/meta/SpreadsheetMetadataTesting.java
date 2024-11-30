@@ -75,6 +75,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
@@ -291,7 +292,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
                                     PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
                                     DUMMY_ENVIRONMENTAL_VALUE
                             ),
-                            NOW
+                            NOW,
+                            Optional.of(USER)
                     )
             ),
             PluginStores.fake()

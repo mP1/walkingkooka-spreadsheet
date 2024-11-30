@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -121,7 +122,8 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.environmentValueAndCheck(
                 SpreadsheetMetadata.EMPTY.environmentContext(
                         EnvironmentContexts.empty(
-                                LocalDateTime::now
+                                LocalDateTime::now,
+                                EnvironmentContext.ANONYMOUS
                         )
                 ),
                 EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CREATOR)
