@@ -306,7 +306,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
         final SpreadsheetExpressionReference reference;
 
-        switch (text.split(":").length) {
+        switch (text.split(SEPARATOR.string()).length) {
             case 1:
                 reference = ALL.string().equals(text) ?
                         ALL_CELLS :
