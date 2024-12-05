@@ -41,7 +41,7 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
         HasUrlFragment {
 
     /**
-     * Creates a new {@link SpreadsheetName} after vaildating only supported characters are entered.
+     * Creates a new {@link SpreadsheetName} after vaildating only printable characters are used.
      */
     public static SpreadsheetName with(final String value) {
         CharPredicates.printable()
