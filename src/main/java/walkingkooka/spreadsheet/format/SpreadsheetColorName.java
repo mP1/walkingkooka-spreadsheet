@@ -86,10 +86,9 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
      * Factory that creates a {@link SpreadsheetColorName}
      */
     public static SpreadsheetColorName with(final String name) {
-        CharPredicates.failIfNullOrEmptyOrFalse(
-                name,
+        LETTER.failIfNullOrEmptyOrFalse(
                 SpreadsheetColorName.class.getSimpleName(),
-                LETTER
+                name
         );
 
         final SpreadsheetColorName spreadsheetColorName;

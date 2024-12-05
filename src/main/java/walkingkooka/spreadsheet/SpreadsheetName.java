@@ -44,7 +44,11 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
      * Creates a new {@link SpreadsheetName} after vaildating only supported characters are entered.
      */
     public static SpreadsheetName with(final String value) {
-        CharPredicates.failIfNullOrEmptyOrFalse(value, "name", CharPredicates.printable());
+        CharPredicates.printable()
+                .failIfNullOrEmptyOrFalse(
+                        "name",
+                        value
+                );
 
         final int length = value.length();
         if (length >= MAX_LENGTH) {
