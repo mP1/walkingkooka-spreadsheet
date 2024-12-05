@@ -26,6 +26,7 @@ import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
@@ -237,6 +238,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.PARSERS,
                     SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
                             .aliasSet()
+            ).set(
+                    SpreadsheetMetadataPropertyName.PLUGINS,
+                    PluginNameSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.PRECISION,
                     7

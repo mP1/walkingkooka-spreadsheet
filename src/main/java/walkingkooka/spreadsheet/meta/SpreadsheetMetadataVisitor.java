@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
@@ -271,6 +272,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitPercentageSymbol(final char percentageSymbol) {
+        // nop
+    }
+
+    protected void visitPlugins(final PluginNameSet names) {
         // nop
     }
 

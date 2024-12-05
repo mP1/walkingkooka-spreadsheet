@@ -41,6 +41,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -2791,6 +2792,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.PARSERS,
                 SPREADSHEET_PARSER_PROVIDER.spreadsheetParserInfos()
                         .aliasSet()
+        );
+        properties.put(
+                SpreadsheetMetadataPropertyName.PLUGINS,
+                PluginNameSet.parse("TestPlugin111,TestPlugin222")
         );
         properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENT);
         properties.put(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN);

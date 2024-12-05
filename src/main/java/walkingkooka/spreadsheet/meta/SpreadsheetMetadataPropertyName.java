@@ -27,6 +27,7 @@ import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -307,6 +308,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Character> PERCENTAGE_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameCharacterPercentageSymbol.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link PluginNameSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<PluginNameSet> PLUGINS = registerConstant(SpreadsheetMetadataPropertyNamePluginNameSet.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>positive-sign {@link Character}</code>
@@ -781,6 +787,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
         SpreadsheetCellFindQuery.empty();
+
+        PluginNameSet.parse("");
+
         SpreadsheetComparatorNameList.parse(
                 SpreadsheetComparatorName.TEXT.toString()
         );

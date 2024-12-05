@@ -24,6 +24,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
@@ -548,6 +549,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '.');
+    }
+
+    @Test
+    public void testVisitPlugins() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitPlugins(final PluginNameSet n) {
+                this.visited = n;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.PLUGINS,
+                PluginNameSet.parse("TestPlugin111, TestPlugin222")
+        );
     }
 
     @Test
