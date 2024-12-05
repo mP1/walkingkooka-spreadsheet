@@ -996,6 +996,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"number-parser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                         "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
                         "  \"percentage-symbol\": \"%\",\n" +
+                        "  \"plugins\": \"\",\n" +
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
@@ -1162,6 +1163,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"number-parser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                         "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
                         "  \"percentage-symbol\": \"%\",\n" +
+                        "  \"plugins\": \"\",\n" +
                         "  \"positive-sign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
