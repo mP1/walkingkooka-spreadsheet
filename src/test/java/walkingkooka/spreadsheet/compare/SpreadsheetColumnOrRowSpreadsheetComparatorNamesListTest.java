@@ -267,6 +267,54 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     // parse............................................................................................................
 
     @Test
+    public void testParseInvalidColumnFails() {
+        this.parseStringInvalidCharacterFails(
+                "A!=text;B=text-case-insensitive",
+                '!'
+        );
+    }
+
+    @Test
+    public void testParseInvalidSpreadsheetComparatorNameFails() {
+        this.parseStringInvalidCharacterFails(
+                "A=!text;B=text-case-insensitive",
+                '!'
+        );
+    }
+
+    @Test
+    public void testParseInvalidSpreadsheetComparatorNameFails2() {
+        this.parseStringInvalidCharacterFails(
+                "A=text,!invalid;B=text-case-insensitive",
+                '!'
+        );
+    }
+
+    @Test
+    public void testParseInvalidSecondColumnFails() {
+        this.parseStringInvalidCharacterFails(
+                "A=text;!B=text-case-insensitive",
+                '!'
+        );
+    }
+
+    @Test
+    public void testParseInvalidSecondSpreadsheetComparatorNameFails() {
+        this.parseStringInvalidCharacterFails(
+                "A=GOOD;B=!BAD",
+                '!'
+        );
+    }
+
+    @Test
+    public void testParseInvalidSecondSpreadsheetComparatorNameFails2() {
+        this.parseStringInvalidCharacterFails(
+                "A=text;B=good2,!bad2",
+                '!'
+        );
+    }
+
+    @Test
     public void testParseColumns() {
         this.parseStringAndCheck(
                 "A=text;B=text-case-insensitive",
