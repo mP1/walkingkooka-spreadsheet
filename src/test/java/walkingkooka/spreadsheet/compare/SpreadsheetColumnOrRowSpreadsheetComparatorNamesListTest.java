@@ -264,16 +264,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         );
     }
 
-    @Override
-    public Class<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> type() {
-        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // parse............................................................................................................
 
     @Test
@@ -528,5 +518,17 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
         return Cast.to(
                 SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("A=day-of-month;B=month-of-year;C=year")
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> type() {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
