@@ -55,7 +55,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
                                    final SpreadsheetCellRangeReferencePath path,
                                    final int offset,
-                                   final int max);
+                                   final int count);
 
     /**
      * Default implementation that deletes all the cells in the given {@link SpreadsheetCellRangeReference}.
