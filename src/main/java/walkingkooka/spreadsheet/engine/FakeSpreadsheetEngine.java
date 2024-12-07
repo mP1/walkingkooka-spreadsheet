@@ -95,7 +95,9 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     @Override
     public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
                                           final SpreadsheetCellRangeReferencePath path,
-                                          final int offset, final int max, final String valueType,
+                                          final int offset,
+                                          final int count,
+                                          final String valueType,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

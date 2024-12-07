@@ -156,7 +156,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
                                           final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
-                                          final int max,
+                                          final int count,
                                           final String valueType,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
@@ -164,7 +164,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                 cellRange,
                 path,
                 offset,
-                max,
+                count,
                 valueType,
                 expression,
                 context

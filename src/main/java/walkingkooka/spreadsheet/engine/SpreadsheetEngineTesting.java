@@ -1413,7 +1413,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 null, // range
                                 SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
-                                100, // max
+                                100, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1430,7 +1430,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 null, // path
                                 0, // offset
-                                100, // max
+                                100, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1447,7 +1447,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD, // path
                                 -1, // offset
-                                0,  // max
+                                0,  // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1456,7 +1456,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testFindCellsWithInvalidMaxFails() {
+    default void testFindCellsWithInvalidCountFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
@@ -1464,7 +1464,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
-                                -1, // max
+                                -1, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1481,7 +1481,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
-                                100, // max
+                                100, // count
                                 null, // valueType
                                 Expression.value(true), // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1498,7 +1498,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
-                                100, // max
+                                100, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 null, // expression
                                 SpreadsheetEngineContexts.fake() // context
@@ -1515,7 +1515,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD, // path
                                 0, // offset
-                                100, // max
+                                100, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
                                 null // context
@@ -1528,7 +1528,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final SpreadsheetCellRangeReference range,
             final SpreadsheetCellRangeReferencePath path,
             final int offset,
-            final int max,
+            final int count,
             final String valueType,
             final Expression expression,
             final SpreadsheetEngineContext context,
@@ -1538,7 +1538,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 range,
                 path,
                 offset,
-                max,
+                count,
                 valueType,
                 expression,
                 context,
@@ -1553,7 +1553,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final SpreadsheetCellRangeReference range,
             final SpreadsheetCellRangeReferencePath path,
             final int offset,
-            final int max,
+            final int count,
             final String valueType,
             final Expression expression,
             final SpreadsheetEngineContext context,
@@ -1564,12 +1564,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         range,
                         path,
                         offset,
-                        max,
+                        count,
                         valueType,
                         expression,
                         context
                 ),
-                () -> "findCells " + range + " " + path + " " + offset + " " + max + " " + valueType + " " + expression
+                () -> "findCells " + range + " " + path + " " + offset + " " + count + " " + valueType + " " + expression
         );
     }
 

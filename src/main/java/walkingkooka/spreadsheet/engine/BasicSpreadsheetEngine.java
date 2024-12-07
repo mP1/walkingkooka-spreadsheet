@@ -365,7 +365,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
                                           final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
-                                          final int max,
+                                          final int count,
                                           final String valueType,
                                           final Expression expression,
                                           final SpreadsheetEngineContext context) {
@@ -374,8 +374,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (offset < 0) {
             throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
         }
-        if (max < 0) {
-            throw new IllegalArgumentException("Invalid max " + max + " < 0");
+        if (count < 0) {
+            throw new IllegalArgumentException("Invalid count " + count + " < 0");
         }
         checkValueType(valueType);
         checkExpression(expression);
@@ -402,7 +402,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         int skipOffset = 0;
 
         for (; ; ) {
-            final int maxLeft = max - found.size();
+            final int maxLeft = count - found.size();
             if (maxLeft <= 0) {
                 break;
             }
