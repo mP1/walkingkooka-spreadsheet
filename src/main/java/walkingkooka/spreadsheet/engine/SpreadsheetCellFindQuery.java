@@ -74,7 +74,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 query = query.setOffset(
                         parseInt(
                                 cursor,
-                                "offset"
+                                OFFSET_STRING
                         )
                 );
                 component = parseComponentOrNull(cursor);
@@ -83,7 +83,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 query = query.setMax(
                         parseInt(
                                 cursor,
-                                "max"
+                                MAX_STRING
                         )
                 );
                 component = parseComponentOrNull(cursor);
@@ -268,7 +268,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     }
 
     public SpreadsheetCellFindQuery setPath(final Optional<SpreadsheetCellRangeReferencePath> path) {
-        Objects.requireNonNull(path, "path");
+        Objects.requireNonNull(path, PATH_STRING);
 
         return this.path.equals(path) ?
                 this :
@@ -288,12 +288,12 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     }
 
     public SpreadsheetCellFindQuery setOffset(final OptionalInt offset) {
-        Objects.requireNonNull(offset, "offset");
+        Objects.requireNonNull(offset, OFFSET_STRING);
 
-        if(offset.isPresent()) {
+        if (offset.isPresent()) {
             final int value = offset.getAsInt();
-            if(value < 0) {
-                throw new IllegalArgumentException("Invalid offset " + value + " < 0");
+            if (value < 0) {
+                throw new IllegalArgumentException("Invalid " + OFFSET_STRING + " " + value + " < 0");
             }
         }
 
@@ -315,12 +315,12 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     }
 
     public SpreadsheetCellFindQuery setMax(final OptionalInt max) {
-        Objects.requireNonNull(max, "max");
+        Objects.requireNonNull(max, MAX_STRING);
 
         if (max.isPresent()) {
             final int value = max.getAsInt();
             if (value < 0) {
-                throw new IllegalArgumentException("Invalid max " + value + " < 0");
+                throw new IllegalArgumentException("Invalid " + MAX_STRING + " " + value + " < 0");
             }
         }
 
@@ -342,7 +342,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     }
 
     public SpreadsheetCellFindQuery setValueType(final Optional<String> valueType) {
-        Objects.requireNonNull(valueType, "valueType");
+        Objects.requireNonNull(valueType, VALUE_TYPE_STRING);
 
         return this.valueType.equals(valueType) ?
                 this :
@@ -362,7 +362,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     }
 
     public SpreadsheetCellFindQuery setQuery(final Optional<SpreadsheetCellQuery> query) {
-        Objects.requireNonNull(query, "query");
+        Objects.requireNonNull(query, QUERY_STRING);
 
         return this.query.equals(query) ?
                 this :
