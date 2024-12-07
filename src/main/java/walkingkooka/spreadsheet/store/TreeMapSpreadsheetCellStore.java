@@ -124,30 +124,28 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
                                           final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
-                                          final int max) {
+                                          final int count) {
         checkCellRange(range);
         Objects.requireNonNull(path, "path");
         if (offset < 0) {
             throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
         }
-        if (max < 0) {
-            throw new IllegalArgumentException("Invalid max " + max + " < 0");
-        }
+        Store.checkCount(count);
 
-        return 0 == max || offset >= range.count() ?
+        return 0 == count || offset >= range.count() ?
                 Sets.empty() :
                 this.loadCellsNonZeroMax(
                         range,
                         path,
                         offset,
-                        max
+                        count
                 );
     }
 
     private Set<SpreadsheetCell> loadCellsNonZeroMax(final SpreadsheetCellRangeReference range,
                                                      final SpreadsheetCellRangeReferencePath path,
                                                      final int offset,
-                                                     final int max) {
+                                                     final int count) {
         final Set<SpreadsheetCell> loaded = SortedSets.tree(
                 SpreadsheetCellReference.cellComparator(
                         path.comparator()
@@ -222,7 +220,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                     break;
                 }
                 if (i >= offset) {
-                    if (loaded.size() >= max) {
+                    if (loaded.size() >= count) {
                         break Exit;
                     }
                     loaded.add(cell);

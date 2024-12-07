@@ -112,7 +112,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                4, // max
+                4, // count
                 a1,
                 b2,
                 c3,
@@ -121,7 +121,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsMaxZero() {
+    public void testLoadCellsCountZero() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -149,12 +149,12 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                0 // max
+                0 // count
         );
     }
 
     @Test
-    public void testLoadCellsMaxLess() {
+    public void testLoadCellsCountLess() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -182,7 +182,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                3, // max
+                3, // count
                 a1,
                 b2,
                 c3
@@ -218,7 +218,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.RLTD,
                 0, // offset
-                4, // max
+                4, // count
                 d1,
                 c1,
                 b1,
@@ -255,7 +255,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.RLTD,
                 1, // offset
-                3, // max
+                3, // count
                 c1,
                 b1,
                 a1
@@ -291,14 +291,14 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.RLTD,
                 2, // offset
-                2, // max
+                2, // count
                 b1,
                 a1
         );
     }
 
     @Test
-    public void testLoadCellsRLTDMax() {
+    public void testLoadCellsRLTDCount() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -326,7 +326,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.RLTD,
                 0, // offset
-                3, // max
+                3, // count
                 d1,
                 c1,
                 b1
@@ -334,7 +334,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsBULRMax() {
+    public void testLoadCellsBULRCount() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -367,7 +367,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.BULR,
                 0, // offset
-                5, // max
+                5, // count
                 a3,
                 a2,
                 a1,
@@ -406,7 +406,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                4, // max
+                4, // count
                 a1,
                 b1,
                 c1,
@@ -444,7 +444,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
                 SpreadsheetCellRangeReferencePath.BULR,
                 0, // offset
-                4, // max
+                4, // count
                 last,
                 c1,
                 b1,

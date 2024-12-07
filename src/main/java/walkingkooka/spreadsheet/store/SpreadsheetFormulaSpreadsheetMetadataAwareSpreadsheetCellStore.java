@@ -184,12 +184,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
                                           final SpreadsheetCellRangeReferencePath path,
                                           final int offset,
-                                          final int max) {
+                                          final int count) {
         return this.store.loadCells(
                 range,
                 path,
                 offset,
-                max
+                count
         );
     }
 

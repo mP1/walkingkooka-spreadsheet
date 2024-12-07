@@ -45,7 +45,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                 null, // range
                                 SpreadsheetCellRangeReferencePath.LRTD,
                                 0, // offset
-                                1 // max
+                                1 // count
                         )
         );
     }
@@ -59,7 +59,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 null, // path
                                 0, // offset
-                                1 // max
+                                1 // count
                         )
         );
     }
@@ -73,13 +73,13 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD,
                                 -1, // offset
-                                1 // max
+                                1 // count
                         )
         );
     }
 
     @Test
-    default void testLoadCellsNegativeMaxFails() {
+    default void testLoadCellsNegativeCountFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createStore()
@@ -87,7 +87,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD,
                                 0, // offset
-                                -1 // max
+                                -1 // count
                         )
         );
     }
@@ -96,14 +96,14 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                    final SpreadsheetCellRangeReference range,
                                    final SpreadsheetCellRangeReferencePath path,
                                    final int offset,
-                                   final int max,
+                                   final int count,
                                    final SpreadsheetCell... cells) {
         this.loadCellsAndCheck(
                 store,
                 range,
                 path,
                 offset,
-                max,
+                count,
                 Sets.of(
                         cells
                 )
@@ -114,7 +114,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                                    final SpreadsheetCellRangeReference range,
                                    final SpreadsheetCellRangeReferencePath path,
                                    final int offset,
-                                   final int max,
+                                   final int count,
                                    final Set<SpreadsheetCell> cells) {
         this.checkEquals(
                 cells,
@@ -122,9 +122,9 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
                         range,
                         path,
                         offset,
-                        max
+                        count
                 ),
-                () -> "loadCells " + range + " " + path + " " + offset + " " + max
+                () -> "loadCells " + range + " " + path + " " + offset + " " + count
         );
     }
 
