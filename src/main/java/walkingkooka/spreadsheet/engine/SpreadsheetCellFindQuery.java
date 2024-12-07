@@ -79,11 +79,11 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 );
                 component = parseComponentOrNull(cursor);
             }
-            if (MAX_STRING.equals(component)) {
-                query = query.setMax(
+            if (COUNT_STRING.equals(component)) {
+                query = query.setCount(
                         parseInt(
                                 cursor,
-                                MAX_STRING
+                                COUNT_STRING
                         )
                 );
                 component = parseComponentOrNull(cursor);
@@ -154,7 +154,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 );
     }
 
-    private final static int MAX_LENGTH = 8192;
+    private final static int COUNT_LENGTH = 8192;
 
     /**
      * A {@link Parser} that consumes a path component within an {@link UrlFragment}.
@@ -165,7 +165,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                     CharPredicates.is('/')
             ),
             1,
-            MAX_LENGTH
+            COUNT_LENGTH
     );
 
     private final static ParserContext CONTEXT = ParserContexts.fake();
@@ -180,10 +180,10 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 .setPath(
                         CELL_RANGE_PATH.firstParameterValue(parameters)
                                 .map(SpreadsheetCellRangeReferencePath::parse)
-                ).setMax(
+                ).setCount(
                         parseIntegerQueryParameter(
                                 parameters,
-                                MAX
+                                COUNT
                         )
                 ).setOffset(
                         parseIntegerQueryParameter(
@@ -245,7 +245,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     private final static SpreadsheetCellFindQuery EMPTY = new SpreadsheetCellFindQuery(
             Optional.empty(), // path
             OptionalInt.empty(), // offset
-            OptionalInt.empty(), // max
+            OptionalInt.empty(), // count
             Optional.empty(), // valueType
             Optional.empty() // query
     );
@@ -253,12 +253,12 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     // VisibleForTesting
     SpreadsheetCellFindQuery(final Optional<SpreadsheetCellRangeReferencePath> path,
                              final OptionalInt offset,
-                             final OptionalInt max,
+                             final OptionalInt count,
                              final Optional<String> valueType,
                              final Optional<SpreadsheetCellQuery> query) {
         this.path = path;
         this.offset = offset;
-        this.max = max;
+        this.count = count;
         this.valueType = valueType;
         this.query = query;
     }
@@ -275,7 +275,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 this.replace(
                         path,
                         this.offset,
-                        this.max,
+                        this.count,
                         this.valueType,
                         this.query
                 );
@@ -302,7 +302,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 this.replace(
                         this.path,
                         offset,
-                        this.max,
+                        this.count,
                         this.valueType,
                         this.query
                 );
@@ -310,32 +310,32 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     private final OptionalInt offset;
 
-    public OptionalInt max() {
-        return this.max;
+    public OptionalInt count() {
+        return this.count;
     }
 
-    public SpreadsheetCellFindQuery setMax(final OptionalInt max) {
-        Objects.requireNonNull(max, MAX_STRING);
+    public SpreadsheetCellFindQuery setCount(final OptionalInt count) {
+        Objects.requireNonNull(count, COUNT_STRING);
 
-        if (max.isPresent()) {
-            final int value = max.getAsInt();
+        if (count.isPresent()) {
+            final int value = count.getAsInt();
             if (value < 0) {
-                throw new IllegalArgumentException("Invalid " + MAX_STRING + " " + value + " < 0");
+                throw new IllegalArgumentException("Invalid " + COUNT_STRING + " " + value + " < 0");
             }
         }
 
-        return this.max.equals(max) ?
+        return this.count.equals(count) ?
                 this :
                 this.replace(
                         this.path,
                         this.offset,
-                        max,
+                        count,
                         this.valueType,
                         this.query
                 );
     }
 
-    private final OptionalInt max;
+    private final OptionalInt count;
 
     public Optional<String> valueType() {
         return this.valueType;
@@ -349,7 +349,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 this.replace(
                         this.path,
                         this.offset,
-                        this.max,
+                        this.count,
                         valueType,
                         this.query
                 );
@@ -369,7 +369,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 this.replace(
                         this.path,
                         this.offset,
-                        this.max,
+                        this.count,
                         this.valueType,
                         query
                 );
@@ -379,18 +379,18 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     private SpreadsheetCellFindQuery replace(final Optional<SpreadsheetCellRangeReferencePath> path,
                                              final OptionalInt offset,
-                                             final OptionalInt max,
+                                             final OptionalInt count,
                                              final Optional<String> valueType,
                                              final Optional<SpreadsheetCellQuery> query) {
         return path.isPresent() ||
                 offset.isPresent() ||
-                max.isPresent() ||
+                count.isPresent() ||
                 valueType.isPresent() ||
                 query.isPresent() ?
                 new SpreadsheetCellFindQuery(
                         path,
                         offset,
-                        max,
+                        count,
                         valueType,
                         query
                 ) : EMPTY;
@@ -435,13 +435,13 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                     );
         }
 
-        final OptionalInt max = this.max;
-        if (max.isPresent()) {
-            urlFragment = urlFragment.append(MAX_URL_FRAGMENT)
+        final OptionalInt count = this.count;
+        if (count.isPresent()) {
+            urlFragment = urlFragment.append(COUNT_URL_FRAGMENT)
                     .appendSlashThen(
                             UrlFragment.with(
                                     String.valueOf(
-                                            max.getAsInt()
+                                            count.getAsInt()
                                     )
                             )
                     );
@@ -477,9 +477,9 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     private final static UrlFragment OFFSET_URL_FRAGMENT = UrlFragment.parse("/" + OFFSET_STRING);
 
-    private final static String MAX_STRING = "max";
+    private final static String COUNT_STRING = "count";
 
-    private final static UrlFragment MAX_URL_FRAGMENT = UrlFragment.parse("/" + MAX_STRING);
+    private final static UrlFragment COUNT_URL_FRAGMENT = UrlFragment.parse("/" + COUNT_STRING);
 
     private final static String VALUE_TYPE_STRING = "value-type";
 
@@ -494,8 +494,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     public static final UrlParameterName CELL_RANGE_PATH = UrlParameterName.with("cell-range-path");
 
-
-    public static final UrlParameterName MAX = UrlParameterName.with(MAX_STRING);
+    public static final UrlParameterName COUNT = UrlParameterName.with(COUNT_STRING);
 
     public static final UrlParameterName OFFSET = UrlParameterName.with(OFFSET_STRING);
 
@@ -508,7 +507,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
         final Optional<SpreadsheetCellRangeReferencePath> path = this.path();
         final OptionalInt offset = this.offset();
-        final OptionalInt max = this.max();
+        final OptionalInt count = this.count();
         final Optional<String> valueType = this.valueType();
         final Optional<SpreadsheetCellQuery> query = this.query();
 
@@ -519,11 +518,11 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                             .toString()
             );
         }
-        if (max.isPresent()) {
+        if (count.isPresent()) {
             result = result.addParameter(
-                    MAX,
+                    COUNT,
                     String.valueOf(
-                            max.getAsInt()
+                            count.getAsInt()
                     )
             );
         }
@@ -567,7 +566,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return Objects.hash(
                 this.path,
                 this.offset,
-                this.max,
+                this.count,
                 this.valueType,
                 this.query
         );
@@ -581,7 +580,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     private boolean equals0(final SpreadsheetCellFindQuery other) {
         return this.path.equals(other.path) &&
                 this.offset.equals(other.offset) &&
-                this.max.equals(other.max) &&
+                this.count.equals(other.count) &&
                 this.valueType.equals(other.valueType) &&
                 this.query.equals(other.query);
     }
