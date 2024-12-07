@@ -12711,7 +12711,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                10, // max
+                10, // count
                 SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
                 context,
@@ -12756,7 +12756,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A1:C2"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                20, // max
+                20, // count
                 SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
                 context,
@@ -12795,7 +12795,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A1:C2"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                20, // max
+                20, // count
                 SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
                 context,
@@ -12805,7 +12805,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithMax() {
+    public void testFindCellsWithCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -12863,7 +12863,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                3, // max
+                3, // count
                 SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
                 context,
@@ -12962,7 +12962,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                10, // max
+                10, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
@@ -12977,7 +12977,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithValueTypeFilteringAndMax() {
+    public void testFindCellsWithValueTypeFilteringAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -13065,7 +13065,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
-                3, //max
+                3, //count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
@@ -13076,7 +13076,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithValueTypeFilteringAndMax2() {
+    public void testFindCellsWithValueTypeFilteringAndCount2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -13175,7 +13175,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithPathRlbuValueTypeFilteringAndMax2() {
+    public void testFindCellsWithPathRlbuValueTypeFilteringAndCount2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -13244,7 +13244,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.RLBU,
                 0, // offset
-                3, // max
+                3, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
@@ -13255,7 +13255,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindCellsWithPathRlbuValueTypeFilteringOffsetAndMax() {
+    public void testFindCellsWithPathRlbuValueTypeFilteringOffsetAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -13324,7 +13324,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.RLBU,
                 0, // offset
-                3, // max
+                3, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
@@ -13338,7 +13338,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.RLBU,
                 1, // offset
-                2, // max
+                2, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
@@ -13351,7 +13351,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.RLBU,
                 2, // offset
-                1, // max
+                1, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context,
@@ -13363,7 +13363,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetSelection.parseCellRange("A2:C4"),
                 SpreadsheetCellRangeReferencePath.RLBU,
                 3, // offset
-                0, // max
+                0, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
                 context
