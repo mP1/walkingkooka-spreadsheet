@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
+import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.tree.json.JsonNode;
@@ -32,6 +33,8 @@ import java.util.Objects;
  * The {@link Name} of a {@link SpreadsheetComparator}. Note comparator names are case-sensitive.
  */
 final public class SpreadsheetComparatorName implements PluginNameLike<SpreadsheetComparatorName> {
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with("comparator");
 
     public static boolean isChar(final int pos,
                                  final char c) {
