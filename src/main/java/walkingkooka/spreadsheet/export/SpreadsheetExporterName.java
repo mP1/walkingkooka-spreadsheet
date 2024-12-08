@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.export;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
+import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.tree.json.JsonNode;
@@ -32,6 +33,8 @@ import java.util.Objects;
  * The {@link Name} of a {@link SpreadsheetExporter}. Note names are case-sensitive.
  */
 final public class SpreadsheetExporterName implements PluginNameLike<SpreadsheetExporterName> {
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with("exporter");
 
     public static boolean isChar(final int pos,
                                  final char c) {
