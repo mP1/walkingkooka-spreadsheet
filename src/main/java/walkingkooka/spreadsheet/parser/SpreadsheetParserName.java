@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
+import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
@@ -34,6 +35,8 @@ import java.util.Objects;
  * The {@link Name} of a {@link Parser}. Note parser names are case-sensitive.
  */
 final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetParserName> {
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with("parser");
 
     public static boolean isChar(final int pos,
                                  final char c) {
