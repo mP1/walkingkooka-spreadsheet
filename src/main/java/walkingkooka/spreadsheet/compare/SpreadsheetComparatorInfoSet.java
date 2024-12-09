@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetComparatorInfo} sorted by {@link SpreadsheetComparatorName}.
@@ -127,6 +128,13 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     public SpreadsheetComparatorInfoSet deleteAll(final Collection<SpreadsheetComparatorInfo> infos) {
         return this.setElements(
                 this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorInfoSet deleteIf(final Predicate<? super SpreadsheetComparatorInfo> predicate) {
+        return this.setElements(
+                this.pluginInfoSet.deleteIf(predicate)
         );
     }
 
