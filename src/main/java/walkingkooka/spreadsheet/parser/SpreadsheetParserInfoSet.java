@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetParserInfo} sorted by {@link SpreadsheetParserName}.
@@ -127,6 +128,13 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     public SpreadsheetParserInfoSet deleteAll(final Collection<SpreadsheetParserInfo> infos) {
         return this.setElements(
                 this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
+    public SpreadsheetParserInfoSet deleteIf(final Predicate<? super SpreadsheetParserInfo> predicate) {
+        return this.setElements(
+                this.pluginInfoSet.deleteIf(predicate)
         );
     }
 

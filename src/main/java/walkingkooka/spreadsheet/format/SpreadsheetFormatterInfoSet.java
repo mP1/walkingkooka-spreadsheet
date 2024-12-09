@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * A read only {@link Set} of {@link SpreadsheetFormatterInfo} sorted by {@link SpreadsheetFormatterName}.
@@ -127,6 +128,13 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     public SpreadsheetFormatterInfoSet deleteAll(final Collection<SpreadsheetFormatterInfo> infos) {
         return this.setElements(
                 this.pluginInfoSet.deleteAll(infos)
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterInfoSet deleteIf(final Predicate<? super SpreadsheetFormatterInfo> predicate) {
+        return this.setElements(
+                this.pluginInfoSet.deleteIf(predicate)
         );
     }
 
