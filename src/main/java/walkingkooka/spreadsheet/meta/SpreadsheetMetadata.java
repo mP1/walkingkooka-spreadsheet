@@ -42,6 +42,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -136,6 +137,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Patchable<SpreadsheetMetadata>,
         TreePrintable,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with("spreadsheet");
 
     /**
      * A {@link SpreadsheetMetadata} with no textStyle.
