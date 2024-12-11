@@ -138,7 +138,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         TreePrintable,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
-    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with("spreadsheet");
+    public static final String HATEOS_RESOURCE_NAME_STRING = "spreadsheet";
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with(HATEOS_RESOURCE_NAME_STRING);
 
     /**
      * A {@link SpreadsheetMetadata} with no textStyle.
