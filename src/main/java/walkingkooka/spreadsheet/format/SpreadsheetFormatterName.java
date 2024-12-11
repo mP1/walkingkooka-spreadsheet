@@ -35,7 +35,9 @@ import java.util.Objects;
  */
 final public class SpreadsheetFormatterName implements PluginNameLike<SpreadsheetFormatterName> {
 
-    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with("formatter");
+    public static final String HATEOS_RESOURCE_NAME_STRING = "formatter";
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with(HATEOS_RESOURCE_NAME_STRING);
 
     public static boolean isChar(final int pos,
                                  final char c) {

@@ -34,7 +34,9 @@ import java.util.Objects;
  */
 final public class SpreadsheetComparatorName implements PluginNameLike<SpreadsheetComparatorName> {
 
-    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with("comparator");
+    public static final String HATEOS_RESOURCE_NAME_STRING = "comparator";
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with(HATEOS_RESOURCE_NAME_STRING);
 
     public static boolean isChar(final int pos,
                                  final char c) {
