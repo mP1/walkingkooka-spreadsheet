@@ -23,7 +23,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -61,10 +60,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Patchable<SpreadsheetCell>,
         TreePrintable,
         UsesToStringBuilder {
-
-    public static final String HATEOS_RESOURCE_NAME_STRING = "cell";
-
-    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with(HATEOS_RESOURCE_NAME_STRING);
 
     /**
      * Holds an absent {@link SpreadsheetFormatterSelector}.
