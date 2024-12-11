@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -36,6 +37,10 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
         implements Comparable<SpreadsheetRow>,
         HasSpreadsheetReference<SpreadsheetRowReference>,
         Patchable<SpreadsheetRow> {
+
+    public static final String HATEOS_RESOURCE_NAME_STRING = "row";
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with(HATEOS_RESOURCE_NAME_STRING);
 
     /**
      * Factory that creates a new {@link SpreadsheetRow}
