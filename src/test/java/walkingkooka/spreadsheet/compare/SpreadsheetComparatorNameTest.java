@@ -34,7 +34,7 @@ final public class SpreadsheetComparatorNameTest implements PluginNameTesting<Sp
     public void testConstants() {
         final Set<String> constants = Arrays.stream(
                         SpreadsheetComparatorName.class.getDeclaredFields()
-                ).filter(field -> String.class == field.getType() && field.getName().endsWith("_STRING"))
+                ).filter(field -> String.class == field.getType() && false == field.getName().startsWith("HATEOS_") && field.getName().endsWith("_STRING"))
                 .map(f -> {
                     try {
                         f.setAccessible(true);
