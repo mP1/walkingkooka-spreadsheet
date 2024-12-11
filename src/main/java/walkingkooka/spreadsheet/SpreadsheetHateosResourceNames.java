@@ -25,7 +25,7 @@ import walkingkooka.reflect.PublicStaticHelper;
  */
 public final class SpreadsheetHateosResourceNames implements PublicStaticHelper {
 
-    public static final String CELL_STRING = "column";
+    public static final String CELL_STRING = "cell";
 
     public static final HateosResourceName CELL = HateosResourceName.with(CELL_STRING);
 
