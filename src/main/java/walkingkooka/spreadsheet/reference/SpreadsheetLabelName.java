@@ -21,7 +21,6 @@ import walkingkooka.InvalidTextLengthException;
 import walkingkooka.compare.Comparators;
 import walkingkooka.naming.Name;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
@@ -50,11 +49,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         implements Comparable<SpreadsheetLabelName>,
         Name,
         HateosResource<String> {
-
-    public static final String HATEOS_RESOURCE_NAME_STRING = "label";
-
-    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with(HATEOS_RESOURCE_NAME_STRING);
-
     private final static CharPredicate LETTER = CharPredicates.letter();
 
     // https://contexturesblog.com/archives/2017/12/07/what-are-the-rules-for-excel-names/
