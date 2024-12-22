@@ -61,8 +61,15 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
 
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
-        this.checkEquals("Required properties \"creator\" missing.", thrown.getMessage(), "message");
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                components::reportIfMissing
+        );
+        this.checkEquals(
+                "Metadata missing: creator",
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     @Test
@@ -71,8 +78,15 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
         components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
-        this.checkEquals("Required properties \"creator\", \"decimal-separator\" missing.", thrown.getMessage(), "message");
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                components::reportIfMissing
+        );
+        this.checkEquals(
+                "Metadata missing: creator, decimal-separator",
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     @Test
@@ -83,8 +97,15 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
         components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
-        this.checkEquals("Required properties \"creator\", \"decimal-separator\", \"locale\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                components::reportIfMissing
+        );
+        this.checkEquals(
+                "Metadata missing: creator, decimal-separator, locale, rounding-mode",
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     @Test
@@ -94,8 +115,15 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
         components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
 
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
-        this.checkEquals("Required properties \"creator\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                components::reportIfMissing
+        );
+        this.checkEquals(
+                "Metadata missing: creator, rounding-mode",
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     @Test
