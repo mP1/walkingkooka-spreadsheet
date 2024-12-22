@@ -138,7 +138,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 IllegalStateException.class,
                 SpreadsheetMetadata.EMPTY::expressionNumberContext
         );
-        this.checkEquals("Required properties \"expression-number-kind\", \"precision\", \"rounding-mode\" missing.",
+        this.checkEquals("Metadata missing: expression-number-kind, precision, rounding-mode",
                 thrown.getMessage(),
                 "message");
     }
@@ -151,7 +151,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 IllegalStateException.class,
                 SpreadsheetMetadata.EMPTY::jsonNodeUnmarshallContext
         );
-        this.checkEquals("Required properties \"expression-number-kind\", \"precision\", \"rounding-mode\" missing.",
+        this.checkEquals("Metadata missing: expression-number-kind, precision, rounding-mode",
                 thrown.getMessage(),
                 "message");
     }
@@ -168,7 +168,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 )
         );
         this.checkEquals(
-                "Required properties \"date-parser\", \"date-time-parser\", \"number-parser\", \"time-parser\" missing.",
+                "Metadata missing: date-parser, date-time-parser, number-parser, time-parser",
                 thrown.getMessage(),
                 "message"
         );
@@ -183,7 +183,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
+                "Metadata missing: currency-symbol, decimal-separator, exponent-symbol, expression-number-kind, group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode, two-digit-year, value-separator",
                 thrown.getMessage(),
                 "message"
         );
@@ -198,7 +198,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                         .spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Required properties \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\", \"value-separator\" missing.",
+                "Metadata missing: decimal-separator, exponent-symbol, expression-number-kind, group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode, two-digit-year, value-separator",
                 thrown.getMessage(),
                 "message"
         );

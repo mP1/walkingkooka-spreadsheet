@@ -588,7 +588,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 )
         );
         this.checkEquals(
-                "Required properties \"formula-converter\" missing.",
+                "Metadata missing: formula-converter",
                 thrown.getMessage()
         );
     }
@@ -651,7 +651,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 )
         );
         this.checkEquals(
-                "Required properties \"formula-functions\" missing.",
+                "Metadata missing: formula-functions",
                 thrown.getMessage(),
                 "message"
         );
@@ -694,7 +694,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 )
         );
         this.checkEquals(
-                "Required properties \"date-formatter\", \"date-parser\", \"date-time-formatter\", \"date-time-parser\", \"number-formatter\", \"number-parser\", \"text-formatter\", \"time-formatter\", \"time-parser\" missing.",
+                "Metadata missing: date-formatter, date-parser, date-time-formatter, date-time-parser, number-formatter, number-parser, text-formatter, time-formatter, time-parser",
                 thrown.getMessage()
         );
     }
@@ -784,7 +784,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-                "Required properties \"date-time-offset\", \"expression-number-kind\", \"find-converter\" missing.",
+                "Metadata missing: date-time-offset, expression-number-kind, find-converter",
                 thrown.getMessage(),
                 "message"
         );
@@ -810,7 +810,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-                "Required properties \"comparators\", \"converters\", \"exporters\", \"formatters\", \"functions\", \"importers\", \"parsers\" missing.",
+                "Metadata missing: comparators, converters, exporters, formatters, functions, importers, parsers",
                 thrown.getMessage()
         );
     }

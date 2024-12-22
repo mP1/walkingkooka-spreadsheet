@@ -482,7 +482,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
                 thrown,
-                "Required properties \"find-converter\" missing."
+                "Metadata missing: find-converter"
         );
     }
     
@@ -526,7 +526,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
                 thrown,
-                "Required properties \"formula-converter\" missing."
+                "Metadata missing: formula-converter"
         );
     }
 
@@ -538,8 +538,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 IllegalStateException.class,
                 () -> this.createObject().dateTimeContext(LocalDateTime::now)
         );
-        checkMessage(thrown,
-                "Required properties \"default-year\", \"locale\", \"two-digit-year\" missing.");
+        checkMessage(
+                thrown,
+                "Metadata missing: default-year, locale, two-digit-year"
+        );
     }
 
     // HasDecimalNumberContext..........................................................................................
@@ -547,8 +549,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testHasDecimalNumberContextRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().decimalNumberContext());
-        checkMessage(thrown,
-                "Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.");
+        checkMessage(
+                thrown,
+                "Metadata missing: currency-symbol, decimal-separator, exponent-symbol, group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode"
+        );
     }
 
     // HasFormatter.....................................................................................................
@@ -565,7 +569,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
                 thrown,
-                "Required properties \"date-formatter\", \"date-time-formatter\", \"number-formatter\", \"text-formatter\", \"time-formatter\" missing."
+                "Metadata missing: date-formatter, date-time-formatter, number-formatter, text-formatter, time-formatter"
         );
     }
 
@@ -573,9 +577,13 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testHasMathContextRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().mathContext());
-        checkMessage(thrown,
-                "Required properties \"precision\", \"rounding-mode\" missing.");
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> this.createObject().mathContext()
+        );
+        checkMessage(
+                thrown,
+                "Metadata missing: precision, rounding-mode");
     }
 
     // setDefaults......................................................................................................

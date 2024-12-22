@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.text.CharSequences;
 
 import java.util.Collection;
 import java.util.Set;
@@ -56,8 +55,14 @@ final class SpreadsheetMetadataComponents {
         if (!missing.isEmpty()) {
             throw new IllegalStateException(missing.stream()
                     .map(Object::toString)
-                    .map(CharSequences::quoteAndEscape)
-                    .collect(Collectors.joining(", ", "Required properties ", " missing.")));
+                    .collect(
+                            Collectors.joining(
+                            ", ",
+                            "Metadata missing: ",
+                            ""
+                            )
+                    )
+            );
         }
     }
 

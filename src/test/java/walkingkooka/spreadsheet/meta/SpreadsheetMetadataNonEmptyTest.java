@@ -1897,7 +1897,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
                 .decimalNumberContext());
-        this.checkEquals("Required properties \"locale\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
+        this.checkEquals("Metadata missing: locale, percentage-symbol, positive-sign, precision, rounding-mode",
                 thrown.getMessage(),
                 "message");
     }
@@ -1909,7 +1909,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
                 .decimalNumberContext());
-        this.checkEquals("Required properties \"group-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
+        this.checkEquals("Metadata missing: group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode",
                 thrown.getMessage(),
                 "message");
     }
@@ -2020,9 +2020,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .expressionNumberContext());
-        this.checkEquals("Required properties \"rounding-mode\" missing.",
+        this.checkEquals(
+                "Metadata missing: rounding-mode",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     @Test
@@ -2031,9 +2033,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .expressionNumberContext());
-        this.checkEquals("Required properties \"precision\" missing.",
+        this.checkEquals(
+                "Metadata missing: precision",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     @Test
@@ -2240,9 +2244,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                         .jsonNodeUnmarshallContext()
         );
-        this.checkEquals("Required properties \"rounding-mode\" missing.",
+        this.checkEquals(
+                "Metadata missing: rounding-mode",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     @Test
@@ -2251,9 +2257,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
                 .jsonNodeUnmarshallContext());
-        this.checkEquals("Required properties \"precision\" missing.",
+        this.checkEquals(
+                "Metadata missing: precision",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     @Test
@@ -2292,9 +2300,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testHasMathContextRequiredPropertiesAbsentFails2() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1), SpreadsheetMetadata.EMPTY)
-                .mathContext());
-        this.checkMessage(thrown, "Required properties \"rounding-mode\" missing.");
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadataNonEmpty.with(
+                        Maps.of(
+                                SpreadsheetMetadataPropertyName.PRECISION, 1),
+                                SpreadsheetMetadata.EMPTY
+                        ).mathContext()
+        );
+        this.checkMessage(thrown, "Metadata missing: rounding-mode");
     }
 
     @Test
@@ -2344,7 +2358,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 )
         );
         this.checkEquals(
-                "Required properties \"date-time-parser\", \"number-parser\", \"time-parser\" missing.",
+                "Metadata missing: date-time-parser, number-parser, time-parser",
                 thrown.getMessage(),
                 "message"
         );
