@@ -31,7 +31,7 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
     public void testCheckValueWithInvalidFails3() {
         this.checkValueFails(
                 "invalid",
-                "Expected SpreadsheetCellQuery, but got \"invalid\" for \"find-query\""
+                "Metadata find-query=\"invalid\", Expected SpreadsheetCellQuery"
         );
     }
 

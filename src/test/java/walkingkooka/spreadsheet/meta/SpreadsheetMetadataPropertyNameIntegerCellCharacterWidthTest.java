@@ -22,12 +22,15 @@ import org.junit.jupiter.api.Test;
 public final class SpreadsheetMetadataPropertyNameIntegerCellCharacterWidthTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth> {
 
     @Test
-    public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected int > 0, but got -1 for \"cell-character-width\"");
+    public void testCheckValueWithNegativeValueFails() {
+        this.checkValueFails(
+                -1,
+                "Metadata cell-character-width=-1, <= 0"
+        );
     }
 
     @Test
-    public void testZeroValue() {
+    public void testCheckValueWithZeroValue() {
         this.checkValue(0);
     }
 

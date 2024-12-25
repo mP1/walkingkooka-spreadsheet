@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends Spre
     public void testCheckValueWithInvalidSpreadsheetIdFails() {
         this.checkValueFails(
                 "123-invalid",
-                "Expected SpreadsheetId, but got \"123-invalid\" for \"spreadsheet-id\""
+                "Metadata spreadsheet-id=\"123-invalid\", Expected SpreadsheetId"
         );
     }
 

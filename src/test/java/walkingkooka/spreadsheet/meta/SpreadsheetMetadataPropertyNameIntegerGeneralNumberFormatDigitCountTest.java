@@ -23,7 +23,10 @@ public final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigi
 
     @Test
     public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected value >= 0, but got -1 for \"general-number-format-digit-count\"");
+        this.checkValueFails(
+                -1,
+                "Metadata general-number-format-digit-count=-1, < 0"
+        );
     }
 
     @Test

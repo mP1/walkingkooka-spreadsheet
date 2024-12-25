@@ -31,7 +31,7 @@ public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends Spreads
     public void testCheckValueWithInvalidSpreadsheetRowRangeReferenceFails() {
         this.checkValueFails(
                 SpreadsheetSelection.parseRowRange("2:3"),
-                "Range must begin at '1', but got 2:3 for \"frozen-rows\""
+                "Metadata frozen-rows=2:3, Row range must begin at '1'"
         );
     }
 

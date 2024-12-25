@@ -27,7 +27,10 @@ public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends Sprea
 
     @Test
     public void testCheckValueWithInvalidRoundingModeFails() {
-        this.checkValueFails("invalid", "Expected RoundingMode, but got \"invalid\" for \"rounding-mode\"");
+        this.checkValueFails(
+                "invalid",
+                "Metadata rounding-mode=\"invalid\", Expected RoundingMode"
+        );
     }
 
     @Test

@@ -49,7 +49,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
                 v -> v instanceof SpreadsheetColumnRangeReference
         );
         if (range.begin().value() != 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Range must begin at 'A'", this, range);
+            throw new SpreadsheetMetadataPropertyValueException("Column range must begin at 'A'", this, range);
         }
         return range;
     }

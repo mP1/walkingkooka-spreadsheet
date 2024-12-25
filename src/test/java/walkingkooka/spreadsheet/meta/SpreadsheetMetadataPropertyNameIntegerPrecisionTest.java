@@ -22,12 +22,15 @@ import org.junit.jupiter.api.Test;
 public final class SpreadsheetMetadataPropertyNameIntegerPrecisionTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerPrecision> {
 
     @Test
-    public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected value >= 0, but got -1 for \"precision\"");
+    public void testCheckValueWithNegativeValueFails() {
+        this.checkValueFails(
+                -1,
+                "Metadata precision=-1, < 0"
+        );
     }
 
     @Test
-    public void testZeroValue() {
+    public void testCheckValueWithZeroValue() {
         this.checkValue(0);
     }
 

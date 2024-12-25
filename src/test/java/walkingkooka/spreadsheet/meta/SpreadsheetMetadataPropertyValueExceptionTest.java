@@ -36,7 +36,10 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
         final SpreadsheetMetadataPropertyValueException throwable = new SpreadsheetMetadataPropertyValueException(MESSAGE,
                 this.name(),
                 this.value());
-        this.checkMessage(throwable, "message, but got \"abc123\" for \"creator\"");
+        this.checkMessage(
+                throwable,
+                "Metadata creator=\"abc123\", message"
+        );
         this.checkPropertyNameAndValue(throwable);
     }
 
@@ -46,7 +49,10 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
                 this.name(),
                 this.value(),
                 CAUSE);
-        this.checkMessage(throwable, "message, but got \"abc123\" for \"creator\"");
+        this.checkMessage(
+                throwable,
+                "Metadata creator=\"abc123\", message"
+        );
         this.checkPropertyNameAndValue(throwable);
         this.checkCause(throwable, CAUSE);
     }

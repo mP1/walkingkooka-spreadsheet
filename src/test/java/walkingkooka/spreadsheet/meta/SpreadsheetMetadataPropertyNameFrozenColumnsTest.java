@@ -30,7 +30,7 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
     public void testCheckValueWithInvalidSpreadsheetColumnRangeReferenceFails() {
         this.checkValueFails(
                 SpreadsheetSelection.parseColumnRange("C:D"),
-                "Range must begin at 'A', but got C:D for \"frozen-columns\""
+                "Metadata frozen-columns=C:D, Column range must begin at 'A'"
         );
     }
 
