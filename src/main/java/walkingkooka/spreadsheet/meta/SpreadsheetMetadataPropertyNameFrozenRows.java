@@ -50,7 +50,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
                 v -> v instanceof SpreadsheetRowRangeReference
         );
         if (range.begin().value() != 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Range must begin at '1'", this, range);
+            throw new SpreadsheetMetadataPropertyValueException("Row range must begin at '1'", this, range);
         }
         return range;
     }

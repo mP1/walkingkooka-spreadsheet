@@ -58,10 +58,11 @@ public abstract class SpreadsheetMetadataPropertyNameCharacterTestCase<N extends
         }
     }
 
+    // Metadata negative-sign='\0', Expected Character symbol, not control character, whitespace, letter or digit
     private void checkValueFails2(final char c) {
         this.checkValueFails(
                 c,
-                "Expected Character symbol, not control character, whitespace, letter or digit, but got " + CharSequences.quoteIfChars(c) + " for " + CharSequences.quoteAndEscape(this.createName().toString())
+                "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(c) + ", Expected Character symbol, not control character, whitespace, letter or digit"
         );
     }
 

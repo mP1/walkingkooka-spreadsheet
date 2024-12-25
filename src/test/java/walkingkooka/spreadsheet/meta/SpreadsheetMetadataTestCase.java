@@ -161,7 +161,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
         final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> this.createObject().getOrFail(propertyName));
 
-        this.checkMessage(thrown, "Required property missing, but got null for " + CharSequences.quote(propertyName.value()));
+        this.checkMessage(
+                thrown,
+                "Metadata " + propertyName.value() + "=null, Missing"
+        );
         this.checkEquals(propertyName, thrown.name(), "property name");
         this.checkEquals(null, thrown.value(), "property value");
     }

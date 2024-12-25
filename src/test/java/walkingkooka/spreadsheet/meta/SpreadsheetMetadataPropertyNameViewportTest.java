@@ -91,7 +91,7 @@ public final class SpreadsheetMetadataPropertyNameViewportTest extends Spreadshe
     public void testCheckValueWithInvalidFails3() {
         this.checkValueFails(
                 "invalid",
-                "Expected SpreadsheetViewport, but got \"invalid\" for \"viewport\""
+                "Metadata viewport=\"invalid\", Expected SpreadsheetViewport"
         );
     }
 

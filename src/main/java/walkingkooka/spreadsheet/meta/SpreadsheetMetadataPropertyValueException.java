@@ -62,7 +62,13 @@ public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentEx
 
     @Override
     public String getMessage() {
-        return super.getMessage() + ", but got " + CharSequences.quoteIfChars(this.value()) + " for " + CharSequences.quote(this.name().value());
+        // Metadata frozen-column A:B: Column range must begin at 'A'
+        return "Metadata " +//
+                this.name.value() + //
+                "=" +
+                CharSequences.quoteIfChars(this.value()) +
+                ", " +
+                super.getMessage();
     }
 
     public SpreadsheetMetadataPropertyName<?> name() {

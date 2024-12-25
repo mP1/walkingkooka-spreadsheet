@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameExpressionNumberKindTest exten
     public void testCheckValueWithInvalidExpressionNumberKindFails() {
         this.checkValueFails(
                 "invalid",
-                "Expected ExpressionNumberKind, but got \"invalid\" for \"expression-number-kind\""
+                "Metadata expression-number-kind=\"invalid\", Expected ExpressionNumberKind"
         );
     }
 

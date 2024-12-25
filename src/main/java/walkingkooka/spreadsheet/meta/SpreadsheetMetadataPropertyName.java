@@ -525,9 +525,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * Creates a {@link SpreadsheetMetadataPropertyValueException} used to report an invalid value.
      */
     final SpreadsheetMetadataPropertyValueException spreadsheetMetadataPropertyValueException(final Object value) {
-        return new SpreadsheetMetadataPropertyValueException("Expected " + this.expected(),
+        // Metadata hide-zero-values=123, Expected XYZ
+        return new SpreadsheetMetadataPropertyValueException(
+                "Expected " +
+                        this.expected(),
                 this,
-                value);
+                value
+        );
     }
 
     abstract Class<T> type();

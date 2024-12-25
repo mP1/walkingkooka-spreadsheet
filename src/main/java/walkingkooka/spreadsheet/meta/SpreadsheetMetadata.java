@@ -253,7 +253,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> V getOrFail(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return this.get(propertyName)
-                .orElseThrow(() -> new SpreadsheetMetadataPropertyValueException("Required property missing", propertyName, null));
+                .orElseThrow(() -> new SpreadsheetMetadataPropertyValueException("Missing", propertyName, null));
     }
 
     /**

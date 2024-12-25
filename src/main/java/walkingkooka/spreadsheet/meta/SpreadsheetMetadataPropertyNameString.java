@@ -35,7 +35,7 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
         final String stringValue = this.checkValueType(value,
                 v -> v instanceof String);
         if (stringValue.isEmpty()) {
-            throw new SpreadsheetMetadataPropertyValueException("Invalid value", this, stringValue);
+            throw new SpreadsheetMetadataPropertyValueException("Is empty", this, stringValue);
         }
         return stringValue;
     }

@@ -89,21 +89,29 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
     @Test
     public final void testCheckValueWithNullFails() {
-        this.checkValueFails(null,
-                "Missing value, but got null for " + CharSequences.quote(this.createName().value()));
+        this.checkValueFails(
+                null,
+                "Metadata " + this.createName() + "=null, Missing value"
+        );
     }
 
     @Test
     public final void testCheckValueWithInvalidFails() {
-        this.checkValueFails(this,
-                "Expected " + this.propertyValueType() + ", but got " + this + " for " + CharSequences.quote(this.createName().value()));
+        this.checkValueFails(
+                this,
+                "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(this) + ", Expected " + this.propertyValueType());
     }
 
     @Test
     public final void testCheckValueWithInvalidValueFails2() {
         final StringBuilder value = new StringBuilder("123abc");
-        this.checkValueFails(value,
-                "Expected " + this.propertyValueType() + ", but got \"123abc\" for " + CharSequences.quote(this.createName().value()));
+
+        // sample:
+        // Metadata decimal-separator="123abc", Expected Character symbol, not control character, whitespace, letter or digit
+        this.checkValueFails(
+                value,
+                "Metadata " + this.createName() + "=" + CharSequences.quoteIfChars(value) + ", Expected " + this.propertyValueType()
+        );
     }
 
     @Test
@@ -118,10 +126,16 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     final void checkValueFails(final Object value, final String message) {
         final SpreadsheetMetadataPropertyName<?> propertyName = this.createName();
 
-        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> propertyName.checkValue(value));
+        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(
+                SpreadsheetMetadataPropertyValueException.class,
+                () -> propertyName.checkValue(value)
+        );
         this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
 
-        final SpreadsheetMetadataPropertyValueException thrown2 = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> propertyName.checkValue(value));
+        final SpreadsheetMetadataPropertyValueException thrown2 = assertThrows(
+                SpreadsheetMetadataPropertyValueException.class,
+                () -> propertyName.checkValue(value)
+        );
         this.checkSpreadsheetMetadataPropertyValueException(thrown2, message, propertyName, value);
     }
 
@@ -130,10 +144,22 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                                                                 final SpreadsheetMetadataPropertyName<?> propertyName,
                                                                 final Object value) {
         if (null != message) {
-            this.checkEquals(message, thrown.getMessage(), "message");
+            this.checkEquals(
+                    message,
+                    thrown.getMessage(),
+                    "message"
+            );
         }
-        this.checkEquals(propertyName, thrown.name(), "propertyName");
-        this.checkEquals(value, thrown.value(), "value");
+        this.checkEquals(
+                propertyName,
+                thrown.name(),
+                "propertyName"
+        );
+        this.checkEquals(
+                value,
+                thrown.value(),
+                "value"
+        );
     }
 
     // extractLocaleAwareValue...............................................................................................

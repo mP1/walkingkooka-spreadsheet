@@ -22,22 +22,28 @@ import org.junit.jupiter.api.Test;
 public final class SpreadsheetMetadataPropertyNameIntegerTwoDigitYearTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerTwoDigitYear> {
 
     @Test
-    public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected int between 0 and including 99, but got -1 for \"two-digit-year\"");
+    public void testCheckValueNegativeValueFails() {
+        this.checkValueFails(
+                -1,
+                "Metadata two-digit-year=-1, must be between 0 and including 99"
+        );
     }
 
     @Test
-    public void test100ValueFails() {
-        this.checkValueFails(100, "Expected int between 0 and including 99, but got 100 for \"two-digit-year\"");
+    public void testCheckValue100ValueFails() {
+        this.checkValueFails(
+                100,
+                "Metadata two-digit-year=100, must be between 0 and including 99"
+        );
     }
 
     @Test
-    public void testZero() {
+    public void testCheckValueWithZero() {
         this.checkValue(0);
     }
 
     @Test
-    public void test99() {
+    public void testCheckValueWith99() {
         this.checkValue(99);
     }
 

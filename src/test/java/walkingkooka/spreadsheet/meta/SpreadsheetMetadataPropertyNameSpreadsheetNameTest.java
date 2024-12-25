@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNameTest extends Sp
     public void testCheckValueWithInvalidSpreadsheetNameFails() {
         this.checkValueFails(
                 "\r",
-                "Expected SpreadsheetName, but got \"\\r\" for \"spreadsheet-name\""
+                "Metadata spreadsheet-name=\"\\r\", Expected SpreadsheetName"
         );
     }
 
