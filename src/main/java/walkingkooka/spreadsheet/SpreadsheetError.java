@@ -273,10 +273,10 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         }
 
         if (null == kind) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(KIND_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(KIND_PROPERTY, node);
         }
         if (null == message) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(MESSAGE_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(MESSAGE_PROPERTY, node);
         }
 
         return new SpreadsheetError(

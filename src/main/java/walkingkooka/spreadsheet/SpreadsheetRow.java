@@ -130,7 +130,7 @@ public final class SpreadsheetRow extends SpreadsheetColumnOrRow<SpreadsheetRowR
         }
 
         if (null == hidden) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(HIDDEN_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(HIDDEN_PROPERTY, node);
         }
 
         return new SpreadsheetRow(reference, hidden); // lgtm [java/dereferenced-value-may-be-null]

@@ -1944,10 +1944,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         }
 
         if (null == value) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(VALUE_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(VALUE_PROPERTY, node);
         }
         if (null == text) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(TEXT_PROPERTY, node);
         }
 
         return factory.apply(value, text);
@@ -2416,10 +2416,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         }
 
         if (null == value) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(VALUE_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(VALUE_PROPERTY, node);
         }
         if (null == text) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(TEXT_PROPERTY, node);
         }
 
         return factory.apply(value, text);

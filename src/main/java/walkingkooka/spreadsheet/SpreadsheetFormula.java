@@ -527,7 +527,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         SpreadsheetFormula formula = EMPTY;
         if (null == text) {
             if (null == token && null == expression) {
-                JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+                JsonNodeUnmarshallContext.missingProperty(TEXT_PROPERTY, node);
             }
         } else {
             formula = EMPTY.setText(text);

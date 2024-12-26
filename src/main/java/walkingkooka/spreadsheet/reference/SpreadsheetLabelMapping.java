@@ -178,10 +178,10 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         }
 
         if (null == labelName) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(LABEL_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(LABEL_PROPERTY, node);
         }
         if (null == target) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(TARGET_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(TARGET_PROPERTY, node);
         }
 
         return new SpreadsheetLabelMapping(labelName, target);

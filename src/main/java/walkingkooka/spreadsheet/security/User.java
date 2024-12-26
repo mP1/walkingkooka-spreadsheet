@@ -96,7 +96,7 @@ public final class User extends Identity<UserId> {
         }
 
         if (null == email) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(EMAIL_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(EMAIL_PROPERTY, node);
         }
 
         return new User(Optional.ofNullable(id), email);
