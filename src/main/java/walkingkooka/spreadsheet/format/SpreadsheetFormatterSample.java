@@ -173,13 +173,13 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
         }
 
         if (null == label) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(LABEL_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(LABEL_PROPERTY, node);
         }
         if (null == selector) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(SELECTOR_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(SELECTOR_PROPERTY, node);
         }
         if (null == value) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(SELECTOR_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(SELECTOR_PROPERTY, node);
         }
 
         return SpreadsheetFormatterSample.with(

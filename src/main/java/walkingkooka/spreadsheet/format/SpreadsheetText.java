@@ -190,7 +190,7 @@ public final class SpreadsheetText implements HasText,
         }
 
         if (null == text) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(TEXT_PROPERTY, node);
         }
 
         return with(text)

@@ -128,7 +128,7 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
         }
 
         if (null == hidden) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(HIDDEN_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(HIDDEN_PROPERTY, node);
         }
 
         return new SpreadsheetColumn(reference, hidden); // lgtm [java/dereferenced-value-may-be-null]

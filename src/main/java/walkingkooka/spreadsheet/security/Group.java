@@ -92,7 +92,7 @@ public final class Group extends Identity<GroupId> {
         }
 
         if (null == groupName) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(NAME_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(NAME_PROPERTY, node);
         }
 
         return new Group(Optional.ofNullable(id), groupName);
