@@ -1862,7 +1862,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void valueOrExpressionParserParseDivide2() {
         final String text = "111+222/333";
-        ;
 
         this.valueOrExpressionParserParseAndCheck(
                 text,

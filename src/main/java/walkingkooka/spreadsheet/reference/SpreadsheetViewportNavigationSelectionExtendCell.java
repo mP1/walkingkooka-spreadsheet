@@ -168,7 +168,6 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
                             );
                             break;
                     }
-                    ;
                     break;
                 default:
                     newAnchor = NeverError.unhandledEnum(
