@@ -74,7 +74,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     /**
      * Factory that creates a new {@link SpreadsheetViewportNavigationList} after taking a defensive copy.
      */
-    public static SpreadsheetViewportNavigationList EMPTY = new SpreadsheetViewportNavigationList(
+    public static final SpreadsheetViewportNavigationList EMPTY = new SpreadsheetViewportNavigationList(
             new SpreadsheetViewportNavigation[0]
     );
 

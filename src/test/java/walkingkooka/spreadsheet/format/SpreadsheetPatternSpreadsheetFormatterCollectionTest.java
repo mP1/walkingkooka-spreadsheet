@@ -102,9 +102,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
         );
     }
 
-    private SpreadsheetPatternSpreadsheetFormatter FORMATTER1 = formatter(VALUE1, TEXT1);
+    private final SpreadsheetPatternSpreadsheetFormatter FORMATTER1 = formatter(VALUE1, TEXT1);
 
-    private SpreadsheetPatternSpreadsheetFormatter FORMATTER2 = formatter(VALUE2, TEXT2);
+    private final SpreadsheetPatternSpreadsheetFormatter FORMATTER2 = formatter(VALUE2, TEXT2);
 
     private static SpreadsheetPatternSpreadsheetFormatter formatter(final Object value,
                                                                     final String text) {
