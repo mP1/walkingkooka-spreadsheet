@@ -41,6 +41,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         TypeNameTesting<S> {
 
     @Test
+    @Override
     default void testSaveNullFails() {
         assertThrows(UnsupportedOperationException.class, () -> this.createStore().save(Sets.of(SpreadsheetSelection.A1)));
     }
@@ -282,12 +283,14 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     /**
      * The key
      */
+    @Override
     T id();
 
     default void loadAndCheck(final S store, final T id, final SpreadsheetCellReference... references) {
         this.loadAndCheck(store, id, Sets.of(references));
     }
 
+    @Override
     default void loadAndCheck(final S store, final T id, final Set<SpreadsheetCellReference> references) {
         if (references.isEmpty()) {
             this.loadFailCheck(store, id);

@@ -46,6 +46,7 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
         super();
     }
 
+    @Override
     public final void accept(final Object value) {
         Objects.requireNonNull(value, "value");
 

@@ -117,6 +117,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     // HasId ...........................................................................................................
 
+    @Override
     public Optional<SpreadsheetCellReference> id() {
         return Optional.of(this.reference());
     }

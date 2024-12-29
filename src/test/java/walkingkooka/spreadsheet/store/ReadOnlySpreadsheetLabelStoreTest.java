@@ -40,6 +40,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     @Test
+    @Override
     public void testSaveAndLoad() {
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
 
@@ -75,11 +76,13 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     @Test
+    @Override
     public void testCount() {
         this.countAndCheck(this.createStore2(), 1);
     }
 
     @Test
+    @Override
     public void testIds() {
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
 
@@ -100,6 +103,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     @Test
+    @Override
     public void testValues() {
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
 

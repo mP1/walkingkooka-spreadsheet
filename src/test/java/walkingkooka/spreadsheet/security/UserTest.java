@@ -100,6 +100,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     }
 
     @Test
+    @Override
     public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }

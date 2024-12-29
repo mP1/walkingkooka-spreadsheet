@@ -110,6 +110,7 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     }
 
     @Test
+    @Override
     public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }

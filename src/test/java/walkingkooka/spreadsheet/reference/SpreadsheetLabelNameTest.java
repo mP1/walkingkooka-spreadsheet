@@ -595,6 +595,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     // toString.........................................................................................................
 
     @Test
+    @Override
     public void testToString() {
         final SpreadsheetLabelName labelName = this.createSelection();
         this.toStringAndCheck(

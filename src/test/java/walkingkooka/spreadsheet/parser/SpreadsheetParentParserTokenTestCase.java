@@ -72,6 +72,7 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     abstract T createToken(final String text, final List<ParserToken> tokens);
 
+    @Override
     final public T createToken(final String text) {
         return this.createToken(text, this.tokens());
     }

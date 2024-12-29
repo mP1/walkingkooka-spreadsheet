@@ -433,6 +433,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     // saveReference ......................................................................................
 
     @Test
+    @Override
     public void testSaveReferences() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 

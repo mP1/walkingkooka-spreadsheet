@@ -26,6 +26,7 @@ import java.util.Optional;
 
 public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends ExpressionNumberConverterContextTesting<C> {
 
+    @Override
     default C createCanConvert() {
         return this.createContext();
     }

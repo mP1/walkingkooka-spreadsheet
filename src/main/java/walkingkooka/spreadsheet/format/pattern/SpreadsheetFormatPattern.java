@@ -68,6 +68,7 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
     /**
      * Sub-classes of {@link SpreadsheetFormatPattern} always return this.
      */
+    @Override
     public final SpreadsheetFormatPattern toFormat() {
         return this;
     }

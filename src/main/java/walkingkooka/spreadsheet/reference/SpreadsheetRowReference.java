@@ -179,6 +179,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
      * Would be setter that returns a {@link SpreadsheetRowReference} with the given value creating a new
      * instance if it is different.
      */
+    @Override
     public SpreadsheetRowReference setValue(final int value) {
         checkValue(value);
         return this.value == value ?
@@ -314,6 +315,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     /**
      * Returns a {@link SpreadsheetRowRangeReference} holding only this row.
      */
+    @Override
     public SpreadsheetRowRangeReference toRowRange() {
         return SpreadsheetRowRangeReference.with(Range.singleton(this));
     }

@@ -2071,6 +2071,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // NamingTesting....................................................................................................
 
+    @Override
     public final void testTypeNaming() {
         // nop
     }

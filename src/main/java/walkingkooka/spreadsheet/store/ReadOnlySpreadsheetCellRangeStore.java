@@ -37,10 +37,12 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
         this.store = store;
     }
 
+    @Override
     public Optional<List<V>> load(final SpreadsheetCellRangeReference id) {
         return store.load(id);
     }
 
+    @Override
     public List<V> save(final List<V> value) {
         Objects.requireNonNull(value, "value");
         throw new UnsupportedOperationException();
@@ -52,6 +54,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void delete(final SpreadsheetCellRangeReference id) {
         Objects.requireNonNull(id, "id");
         throw new UnsupportedOperationException();

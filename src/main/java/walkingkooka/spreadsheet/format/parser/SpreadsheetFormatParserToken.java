@@ -759,6 +759,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     /**
      * Only {@link SpreadsheetFormatSymbolParserToken} return true
      */
+    @Override
     public final boolean isNoise() {
         return this instanceof SpreadsheetFormatSymbolParserToken;
     }
@@ -823,6 +824,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     /**
      * Only sub-classes of {@link SpreadsheetFormatSymbolParserToken} return true
      */
+    @Override
     public final boolean isSymbol() {
         return this instanceof SpreadsheetFormatSymbolParserToken;
     }
@@ -865,6 +867,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     /**
      * Only {@link SpreadsheetFormatWhitespaceParserToken} return true
      */
+    @Override
     public final boolean isWhitespace() {
         return this instanceof SpreadsheetFormatWhitespaceParserToken;
     }

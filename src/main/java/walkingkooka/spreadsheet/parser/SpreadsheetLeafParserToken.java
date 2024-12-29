@@ -58,5 +58,6 @@ abstract public class SpreadsheetLeafParserToken<T> extends SpreadsheetParserTok
 
     // SpreadsheetParserTokenVisitor....................................................................................
 
+    @Override
     abstract void accept(final SpreadsheetParserTokenVisitor visitor);
 }

@@ -60,6 +60,7 @@ public abstract class Identity<I extends IdentityId> implements Value<Optional<I
 
     // HateosResource ..................................................................................................
 
+    @Override
     public final Optional<I> id() {
         return this.id;
     }

@@ -147,6 +147,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         return "@";
     }
 
+    @Override
     Parser<SpreadsheetFormatParserContext> parser() {
         return SpreadsheetFormatParsers.textFormat()
                 .transform((v, c) -> v.cast(SequenceParserToken.class).value().get(0));

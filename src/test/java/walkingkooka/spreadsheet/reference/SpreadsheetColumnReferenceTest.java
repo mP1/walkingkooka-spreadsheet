@@ -182,6 +182,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     // columnOrRowReferenceKind.........................................................................................
 
     @Test
+    @Override
     public void testColumnOrRowReferenceKind() {
         this.columnOrRowReferenceKindAndCheck(
                 this.createSelection(),

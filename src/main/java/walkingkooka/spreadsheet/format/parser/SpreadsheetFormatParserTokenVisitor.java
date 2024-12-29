@@ -311,10 +311,12 @@ public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVis
 
     // ParserToken.......................................................................
 
+    @Override
     protected Visiting startVisit(final ParserToken token) {
         return Visiting.CONTINUE;
     }
 
+    @Override
     protected void endVisit(final ParserToken token) {
         // nop
     }

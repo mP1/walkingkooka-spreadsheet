@@ -351,6 +351,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     }
 
     @Test
+    @Override
     public void testMarshallRoundtripTwice() {
         this.marshallRoundTripTwiceAndCheck(this.createJsonNodeMarshallingValue());
     }

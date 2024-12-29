@@ -44,6 +44,7 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
     }
 
     @Test
+    @Override
     public final void testPublicStaticFactoryMethod() {
         PublicStaticFactoryTesting.checkFactoryMethods(SpreadsheetFormatParserToken.class,
                 "SpreadsheetFormat",

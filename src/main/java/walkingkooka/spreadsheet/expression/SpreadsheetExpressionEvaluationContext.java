@@ -67,6 +67,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     /**
      * If the {@link ExpressionReference} cannot be found returns a {@link SpreadsheetErrorKind#NAME} with a message.
      */
+    @Override
     default Object referenceOrFail(final ExpressionReference reference) {
         Object result;
         try {

@@ -544,6 +544,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
 
     // HasText..........................................................................................................
 
+    @Override
     public String text() {
         return SEPARATOR.toSeparatedString(
                 this,

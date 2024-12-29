@@ -84,6 +84,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     /**
      * Adds a delta to the value and returns an instance with the result.
      */
+    @Override
     public abstract SpreadsheetColumnOrRowReference add(final int value);
 
     final SpreadsheetColumnOrRowReference add0(final int value) {

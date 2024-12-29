@@ -36,6 +36,7 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     private final static String VALUE = "SpreadsheetName123";
 
     @Test
+    @Override
     public void testWith() {
         final SpreadsheetName name = SpreadsheetName.with(VALUE);
         this.checkEquals(VALUE, name.value(), "value");
@@ -62,6 +63,7 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     // Compare..........................................................................................................
 
     @Test
+    @Override
     public void testCompareLess() {
         this.compareToAndCheckLess(SpreadsheetName.with("Z"));
     }
@@ -101,6 +103,7 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     // ToString..........................................................................................................
 
     @Test
+    @Override
     public void testToString() {
         this.toStringAndCheck(SpreadsheetName.with(VALUE), VALUE);
     }
