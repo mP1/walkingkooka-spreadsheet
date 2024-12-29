@@ -31,6 +31,7 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
         super();
     }
 
+    @Override
     public final void accept(final SpreadsheetSelection selection) {
         Objects.requireNonNull(selection, "selection");
 

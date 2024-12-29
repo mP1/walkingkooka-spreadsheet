@@ -722,6 +722,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     /**
      * Returns the pattern in text form.
      */
+    @Override
     public final String text() {
         return this.value().text();
     }

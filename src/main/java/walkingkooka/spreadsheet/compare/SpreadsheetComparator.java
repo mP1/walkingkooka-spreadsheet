@@ -43,6 +43,7 @@ public interface SpreadsheetComparator<T> extends Comparator<T>,
     /**
      * Returns a reversed {@link SpreadsheetComparator}
      */
+    @Override
     default SpreadsheetComparator<T> reversed() {
         return SpreadsheetComparators.reverse(this);
     }

@@ -51,6 +51,7 @@ final class SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor e
         this.context = context;
     }
 
+    @Override
     protected Visiting startVisit(final SpreadsheetFormatParserToken token) {
         final Optional<SpreadsheetFormatParserTokenKind> maybeKind = token.kind();
 

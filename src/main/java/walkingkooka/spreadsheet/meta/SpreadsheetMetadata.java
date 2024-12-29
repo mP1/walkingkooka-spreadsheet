@@ -199,6 +199,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns the {@link SpreadsheetId} or throws a {@link IllegalStateException} if missing.
      */
+    @Override
     public Optional<SpreadsheetId> id() {
         return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
     }

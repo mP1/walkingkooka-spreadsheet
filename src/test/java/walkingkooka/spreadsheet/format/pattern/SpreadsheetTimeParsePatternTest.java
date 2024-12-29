@@ -677,6 +677,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                     )
             );
 
+            @Override
             public char decimalSeparator() {
                 return 'D';
             }

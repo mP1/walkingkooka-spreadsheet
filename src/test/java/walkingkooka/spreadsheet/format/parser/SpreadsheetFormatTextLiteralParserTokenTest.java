@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetFormatTextLiteralParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatTextLiteralParserToken, String> {
 
     @Test
+    @Override
     public void testWithWhitespaceTextFails() {
     }
 

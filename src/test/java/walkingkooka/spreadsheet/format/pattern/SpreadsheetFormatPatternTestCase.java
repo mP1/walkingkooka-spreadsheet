@@ -102,6 +102,7 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     // helpers..........................................................................................................
 
+    @Override
     final P createPattern(final String pattern) {
         return this.createPattern(
                 this.parseFormatParserToken(pattern)

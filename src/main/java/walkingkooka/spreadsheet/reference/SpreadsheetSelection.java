@@ -785,6 +785,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * row = false
      * </pre>
      */
+    @Override
     public final boolean test(final SpreadsheetSelection selection) {
         Objects.requireNonNull(selection, "selection");
 

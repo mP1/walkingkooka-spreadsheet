@@ -240,6 +240,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         throw new UnsupportedOperationException(this.toString());
     }
 
+    @Override
     public SpreadsheetLabelName addIfRelative(final int column,
                                               final int row) {
         return this;

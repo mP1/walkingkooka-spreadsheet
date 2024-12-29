@@ -170,8 +170,9 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
 
     // parse............................................................................................................
 
+    @Override
     public void testParseStringEmptyFails() {
-        // nop
+        throw new UnsupportedOperationException();
     }
 
     @Test

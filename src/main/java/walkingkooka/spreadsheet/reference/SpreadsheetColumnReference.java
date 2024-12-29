@@ -188,6 +188,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
      * Would be setter that returns a {@link SpreadsheetColumnReference} with the given value creating a new
      * instance if it is different.
      */
+    @Override
     public SpreadsheetColumnReference setValue(final int value) {
         checkValue(value);
         return this.value == value ?

@@ -1037,6 +1037,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * Only {@link SpreadsheetSymbolParserToken} return true
      */
+    @Override
     public final boolean isNoise() {
         return this instanceof SpreadsheetSymbolParserToken;
     }
@@ -1136,6 +1137,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * Only {@link SpreadsheetSymbolParserToken} return true
      */
+    @Override
     public final boolean isSymbol() {
         return this instanceof SpreadsheetSymbolParserToken;
     }
@@ -1178,6 +1180,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * Only {@link SpreadsheetWhitespaceParserToken} return true
      */
+    @Override
     public final boolean isWhitespace() {
         return this instanceof SpreadsheetWhitespaceParserToken;
     }
@@ -1222,7 +1225,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
             visitor2.endVisit(this);
         }
     }
-
+    
     abstract void accept(final SpreadsheetParserTokenVisitor visitor);
 
     // HasExpression................................................................................................

@@ -816,6 +816,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
 
     // Object...........................................................................................................
 
+    @Override
     public SpreadsheetCellFindQuery createObject() {
         return new SpreadsheetCellFindQuery(
                 PATH,

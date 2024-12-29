@@ -85,6 +85,7 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     /**
      * Returns a {@link Converter} which will try all the patterns.
      */
+    @Override
     public final Converter<SpreadsheetConverterContext> converter() {
         if (null == this.converter) {
             this.converter = this.createConverter();
@@ -107,6 +108,7 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
      * the if the value has extra trailing text. If this parse is for {@link walkingkooka.tree.expression.ExpressionNumber}
      * and will be used to parse number literals the {@link Parser#andEmptyTextCursor()} must be called afterwards.
      */
+    @Override
     public final SpreadsheetParser parser() {
         if (null == this.parser) {
             this.parser = this.createParser();

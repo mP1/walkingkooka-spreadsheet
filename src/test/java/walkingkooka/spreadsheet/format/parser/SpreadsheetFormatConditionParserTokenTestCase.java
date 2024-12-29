@@ -52,7 +52,9 @@ public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends Sp
 
     // helpers..........................................................................................................
 
-    abstract T createToken(final String text, final List<ParserToken> tokens);
+    @Override
+    abstract T createToken(final String text,
+                           final List<ParserToken> tokens);
 
     @Override
     public final String text() {

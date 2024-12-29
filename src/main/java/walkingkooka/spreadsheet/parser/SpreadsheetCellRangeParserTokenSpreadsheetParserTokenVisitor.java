@@ -35,10 +35,12 @@ final class SpreadsheetCellRangeParserTokenSpreadsheetParserTokenVisitor extends
         super();
     }
 
+    @Override
     protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
         return Visiting.CONTINUE;
     }
 
+    @Override
     protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
         this.components.add(token);
     }

@@ -160,6 +160,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     /**
      * Returns a {@link SpreadsheetCellReference} with both the column and row set to {@link SpreadsheetReferenceKind#RELATIVE}.
      */
+    @Override
     public SpreadsheetCellReference toRelative() {
         return this.setSpreadsheetReferenceKind(SpreadsheetReferenceKind.RELATIVE);
     }

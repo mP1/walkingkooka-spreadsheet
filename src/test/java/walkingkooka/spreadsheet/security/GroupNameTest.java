@@ -51,6 +51,7 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
     }
 
     @Test
+    @Override
     public void testWith() {
         this.createNameAndCheck("Abc-123");
     }

@@ -68,6 +68,7 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
     /**
      * {@see SpreadsheetFormatterConverter}
      */
+    @Override
     default Converter<SpreadsheetConverterContext> converter() {
         return SpreadsheetFormatterConverter.with(this);
     }

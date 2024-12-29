@@ -95,6 +95,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetFormatParserTokenVisitor ext
         this.patterns.add(components);
     }
 
+    @Override
     protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
         return this.failInvalid();
     }

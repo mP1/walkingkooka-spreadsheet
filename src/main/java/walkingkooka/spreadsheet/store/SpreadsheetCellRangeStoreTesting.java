@@ -76,6 +76,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     }
 
     @Test
+    @Override
     default void testAddDeleteWatcherAndDelete() {
         final SpreadsheetCellRangeReference range = this.id();
         final V value = this.valueValue();

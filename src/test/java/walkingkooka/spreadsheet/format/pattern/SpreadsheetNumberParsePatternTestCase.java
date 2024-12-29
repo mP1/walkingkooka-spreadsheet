@@ -48,6 +48,7 @@ public abstract class SpreadsheetNumberParsePatternTestCase<T> implements ClassT
     final static char MINUS = 'm';
     final static char DECIMAL = 'd';
 
+    @Override
     public final DecimalNumberContext decimalNumberContext() {
         return new FakeDecimalNumberContext() {
             @Override

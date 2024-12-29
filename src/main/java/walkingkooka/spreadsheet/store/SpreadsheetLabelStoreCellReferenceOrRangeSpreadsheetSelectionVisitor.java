@@ -51,10 +51,12 @@ final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor
         this.store = store;
     }
 
+    @Override
     protected void visit(final SpreadsheetCellReference reference) {
         this.cellReferenceOrRange = reference;
     }
 
+    @Override
     protected void visit(final SpreadsheetLabelName label) {
         final Optional<SpreadsheetLabelMapping> mapping = this.store.load(label);
         if (mapping.isPresent()) {
@@ -62,6 +64,7 @@ final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor
         }
     }
 
+    @Override
     protected void visit(final SpreadsheetCellRangeReference range) {
         this.cellReferenceOrRange = range;
     }
