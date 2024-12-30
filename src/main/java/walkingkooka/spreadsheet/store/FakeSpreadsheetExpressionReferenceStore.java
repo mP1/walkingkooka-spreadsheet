@@ -30,9 +30,10 @@ public class FakeSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
         extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetExpressionReferenceStore<T>, Fake {
 
     @Override
-    public void saveReferences(final T id, final Set<SpreadsheetCellReference> targets) {
-        Objects.requireNonNull(id, "id");
-        Objects.requireNonNull(targets, "targets");
+    public void saveReferences(final T target,
+                               final Set<SpreadsheetCellReference> references) {
+        Objects.requireNonNull(target, "target");
+        Objects.requireNonNull(references, "references");
 
         throw new UnsupportedOperationException();
     }
@@ -66,7 +67,7 @@ public class FakeSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
     }
 
     @Override
-    public Set<T> loadReferred(final SpreadsheetCellReference reference) {
+    public Set<T> loadTargets(final SpreadsheetCellReference reference) {
         Objects.requireNonNull(reference, "reference");
 
         throw new UnsupportedOperationException();
