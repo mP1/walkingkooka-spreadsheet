@@ -81,18 +81,18 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
      */
     private boolean removeAllWithTarget(final T target) {
         // where id=label remove label to cells, then remove cell to label.
-        final Set<SpreadsheetCellReference> referrers = this.targetToReferences.remove(target);
+        final Set<SpreadsheetCellReference> allReferences = this.targetToReferences.remove(target);
 
-        final boolean needsFire = null != referrers;
+        final boolean needsFire = null != allReferences;
         if (needsFire) {
-            for (final SpreadsheetCellReference referrer : referrers) {
-                final Set<T> targets = this.referenceToTargets.get(referrer);
+            for (final SpreadsheetCellReference reference : allReferences) {
+                final Set<T> targets = this.referenceToTargets.get(reference);
                 if (null != targets) {
                     if (targets.remove(target)) {
                         if (targets.isEmpty()) {
-                            this.referenceToTargets.remove(referrer);
+                            this.referenceToTargets.remove(reference);
                         }
-                        this.removeReferenceWatchers.accept(TargetAndSpreadsheetCellReference.with(target, referrer));
+                        this.removeReferenceWatchers.accept(TargetAndSpreadsheetCellReference.with(target, reference));
                     }
                 }
             }
@@ -202,17 +202,17 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     private void addReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        final T id = targetAndReference.target();
+        final T target = targetAndReference.target();
         final SpreadsheetCellReference reference = targetAndReference.reference()
                 .toRelative();
 
-        SortedSet<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
+        SortedSet<SpreadsheetCellReference> allReferences = this.targetToReferences.get(target);
         //noinspection Java8MapApi
-        if (null == referrers) {
-            referrers = SortedSets.tree();
-            this.targetToReferences.put(id, referrers);
+        if (null == allReferences) {
+            allReferences = SortedSets.tree();
+            this.targetToReferences.put(target, allReferences);
         }
-        referrers.add(reference);
+        allReferences.add(reference);
 
         SortedSet<T> targets = this.referenceToTargets.get(reference);
         //noinspection Java8MapApi
@@ -220,7 +220,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
             targets = SortedSets.tree();
             this.referenceToTargets.put(reference, targets);
         }
-        targets.add(id);
+        targets.add(target);
 
         this.addReferenceWatchers.accept(targetAndReference);
     }
@@ -240,24 +240,24 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     private void removeReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        final T id = targetAndReference.target();
+        final T target = targetAndReference.target();
         final SpreadsheetCellReference reference = targetAndReference.reference();
 
-        final Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
-        final boolean removed = null != referrers;
+        final Set<SpreadsheetCellReference> allReferences = this.targetToReferences.get(target);
+        final boolean removed = null != allReferences;
         if (removed) {
-            referrers.remove(reference);
-            if (referrers.isEmpty()) {
-                this.targetToReferences.remove(id);
-                this.deleteWatchers.accept(id);
+            allReferences.remove(reference);
+            if (allReferences.isEmpty()) {
+                this.targetToReferences.remove(target);
+                this.deleteWatchers.accept(target);
             }
         }
 
         if (removed) {
-            final Set<T> ids = this.referenceToTargets.get(reference);
-            if (null != ids) {
-                if (ids.remove(id)) {
-                    if (ids.isEmpty()) {
+            final Set<T> allTargets = this.referenceToTargets.get(reference);
+            if (null != allTargets) {
+                if (allTargets.remove(target)) {
+                    if (allTargets.isEmpty()) {
                         this.referenceToTargets.remove(reference);
                     }
                 }
