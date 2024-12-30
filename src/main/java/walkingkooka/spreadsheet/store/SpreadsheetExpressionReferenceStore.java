@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.Store;
 
 import java.util.Objects;
@@ -26,16 +27,15 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * A {@link Store} that holds one or more references for every {@link SpreadsheetCellReference}.
- * Parameters of {@link SpreadsheetExpressionReference} ignore their {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind}
- * property if one is present. Any return types of {@link SpreadsheetExpressionReference} will have their
- * {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind} set to {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind#RELATIVE}.
+ * A {@link Store} that tracks cells and labels references for a single {@link SpreadsheetCellReference} within its formula.
+ * Note that all operations ignore the {@link walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind} and treat
+ * absolute and relative references as equivalent.
  */
 public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference> extends SpreadsheetStore<T, Set<SpreadsheetCellReference>> {
 
     @Override
-    default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> value) {
-        Objects.requireNonNull(value, "value");
+    default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> references) {
+        Objects.requireNonNull(references, "references");
         throw new UnsupportedOperationException();
     }
 
@@ -46,13 +46,14 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
     }
 
     /**
-     * Saves many references to the given id. Note any {@link #addAddReferenceWatcher(Consumer)} and {@link #addRemoveReferenceWatcher(Consumer)}
-     * will be fired for all targets.
+     * Saves all the references for a cell or label.
+     * Note any {@link #addAddReferenceWatcher(Consumer)} and {@link #addRemoveReferenceWatcher(Consumer)} will be fired for all targets.
      */
-    void saveReferences(final T id, final Set<SpreadsheetCellReference> targets);
+    void saveReferences(final T target,
+                        final Set<SpreadsheetCellReference> references);
 
     /**
-     * Adds a reference to the given id.
+     * Adds a reference to the given target.
      */
     void addReference(final TargetAndSpreadsheetCellReference<T> targetAndReference);
 
@@ -73,7 +74,20 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
     Runnable addRemoveReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
 
     /**
-     * Loads the referred id given a {@link SpreadsheetCellReference}.
+     * Loads ALL the targets (references too or mentions) for a given {@link SpreadsheetCellReference reference}.
+     * <pre>
+     * target=references
+     * A1=Z9+11
+     * B2=Z9+22
+     *
+     * loadTargets(Z9) -> A1, B2
+     *
+     * // to find references within A1 (without walking the formula AST) try
+     * load(A1) -> Z9
+     * </pre>
+     *
+     * This might be useful to display all references to a particular cell. To display references to a label try
+     * {@link SpreadsheetLabelStore#loadCellReferencesOrRanges(SpreadsheetLabelName)}.
      */
-    Set<T> loadReferred(final SpreadsheetCellReference reference);
+    Set<T> loadTargets(final SpreadsheetCellReference reference);
 }

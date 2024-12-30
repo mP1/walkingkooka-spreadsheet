@@ -273,13 +273,6 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                 "fired remove reference");
     }
 
-    // loadReferred...........................................................................................
-
-    @Test
-    default void testLoadReferredNullReferenceFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().loadReferred(null));
-    }
-
     /**
      * The key
      */
@@ -300,28 +293,46 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         }
 
         for (SpreadsheetCellReference reference : references) {
-            final Set<T> referred = store.loadReferred(reference);
+            final Set<T> referred = store.loadTargets(reference);
             if (!referred.contains(id)) {
-                fail(store + " loadReferred " + reference + " didnt return id " + id + ", actual: " + referred);
+                fail(store + " loadTargets " + reference + " didnt return id " + id + ", actual: " + referred);
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
-    default void loadReferredAndCheck(final S store,
-                                      final SpreadsheetCellReference reference,
-                                      final T... ids) {
-        this.loadReferredAndCheck(store, reference, Sets.of(ids));
+    // loadTargets.....................................................................................................
+
+    @Test
+    default void testLoadTargetsWithNullReferenceFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().loadTargets(null)
+        );
     }
 
-    default void loadReferredAndCheck(final S store, final SpreadsheetCellReference reference, final Set<T> ids) {
-        this.checkEquals(ids,
-                store.loadReferred(reference),
-                "loadReferred " + reference);
+    @SuppressWarnings("unchecked")
+    default void loadTargetsAndCheck(final S store,
+                                     final SpreadsheetCellReference reference,
+                                     final T... targets) {
+        this.loadTargetsAndCheck(
+                store,
+                reference,
+                Sets.of(targets)
+        );
+    }
 
-        for (T id : ids) {
+    default void loadTargetsAndCheck(final S store,
+                                     final SpreadsheetCellReference reference,
+                                     final Set<T> targets) {
+        this.checkEquals(
+                targets,
+                store.loadTargets(reference),
+                "loadTargets " + reference
+        );
+
+        for (T id : targets) {
             final Optional<Set<SpreadsheetCellReference>> references = store.load(id);
-            if (!references.isPresent() && references.get().contains(reference)) {
+            if (false == references.isPresent() && references.get().contains(reference)) {
                 fail(store + " load " + id + " didnt return reference " + reference + ", actual: " + references);
             }
         }

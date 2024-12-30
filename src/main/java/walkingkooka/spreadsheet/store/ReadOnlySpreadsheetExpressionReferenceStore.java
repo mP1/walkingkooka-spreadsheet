@@ -53,8 +53,9 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
-    public void delete(final T id) {
-        checkId(id);
+    public void delete(final T target) {
+        Objects.requireNonNull(target, "target");
+
         throw new UnsupportedOperationException();
     }
 
@@ -90,9 +91,10 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
-    public void saveReferences(final T id, final Set<SpreadsheetCellReference> referrers) {
-        checkId(id);
-        Objects.requireNonNull(referrers, "referrers");
+    public void saveReferences(final T target,
+                               final Set<SpreadsheetCellReference> references) {
+        Objects.requireNonNull(target, "target");
+        Objects.requireNonNull(references, "references");
 
         throw new UnsupportedOperationException();
     }
@@ -126,8 +128,8 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
-    public Set<T> loadReferred(final SpreadsheetCellReference reference) {
-        return store.loadReferred(reference);
+    public Set<T> loadTargets(final SpreadsheetCellReference reference) {
+        return this.store.loadTargets(reference);
     }
 
     private final SpreadsheetExpressionReferenceStore<T> store;
@@ -135,10 +137,6 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     @Override
     public String toString() {
         return this.store.toString();
-    }
-
-    private void checkId(final T id) {
-        Objects.requireNonNull(id, "id");
     }
 
     private static void checkTargetedReference(final TargetAndSpreadsheetCellReference<?> targetedReference) {

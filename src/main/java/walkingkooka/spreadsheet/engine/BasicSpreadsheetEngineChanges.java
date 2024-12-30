@@ -215,7 +215,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         repository.cellReferences()
                 .delete(cell);
         repository.labelReferences()
-                .loadReferred(cell)
+                .loadTargets(cell)
                 .forEach(l -> repository.labelReferences().removeReference(TargetAndSpreadsheetCellReference.with(l, cell)));
         repository.rangeToCells()
                 .rangesWithValue(cell)
@@ -510,7 +510,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         final SpreadsheetStoreRepository repository = this.repository;
 
         repository.cellReferences()
-                .loadReferred(reference)
+                .loadTargets(reference)
                 .forEach(this::batchCell);
 
         repository.labels()

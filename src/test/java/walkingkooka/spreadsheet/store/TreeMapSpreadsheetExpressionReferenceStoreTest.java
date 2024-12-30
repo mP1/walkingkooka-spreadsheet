@@ -105,10 +105,10 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(a1, Sets.of(b1));
 
         this.loadAndCheck(store, a1, b1); // a1 --> b1
-        this.loadReferredAndCheck(store, b1, a1); // b1 --> a1
+        this.loadTargetsAndCheck(store, b1, a1); // b1 --> a1
 
         this.loadAndCheck(store, b1); // b1 -> nothing
-        this.loadReferredAndCheck(store, a1); // a1 --> nothing
+        this.loadTargetsAndCheck(store, a1); // a1 --> nothing
     }
 
     @Test
@@ -126,8 +126,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadAndCheck(store, b1, c1);
         this.loadFailCheck(store, c1);
 
-        this.loadReferredAndCheck(store, b1, a1);
-        this.loadReferredAndCheck(store, c1, b1);
+        this.loadTargetsAndCheck(store, b1, a1);
+        this.loadTargetsAndCheck(store, c1, b1);
     }
 
     @Test
@@ -145,8 +145,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadAndCheck(store, b1, c1);
         this.loadFailCheck(store, c1);
 
-        this.loadReferredAndCheck(store, b1, a1);
-        this.loadReferredAndCheck(store, c1, a1, b1);
+        this.loadTargetsAndCheck(store, b1, a1);
+        this.loadTargetsAndCheck(store, c1, a1, b1);
     }
 
     @Test
@@ -168,9 +168,9 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadAndCheck(store, b1, c1);
         this.loadFailCheck(store, c1);
 
-        this.loadReferredAndCheck(store, b1, a1);
-        this.loadReferredAndCheck(store, absoluteB1, a1);
-        this.loadReferredAndCheck(store, c1, a1, b1);
+        this.loadTargetsAndCheck(store, b1, a1);
+        this.loadTargetsAndCheck(store, absoluteB1, a1);
+        this.loadTargetsAndCheck(store, c1, a1, b1);
     }
 
     @Test
@@ -192,9 +192,9 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadAndCheck(store, b1.toAbsolute(), c1);
         this.loadFailCheck(store, c1.toAbsolute());
 
-        this.loadReferredAndCheck(store, b1, a1);
-        this.loadReferredAndCheck(store, absoluteB1, a1);
-        this.loadReferredAndCheck(store, c1, a1, b1);
+        this.loadTargetsAndCheck(store, b1, a1);
+        this.loadTargetsAndCheck(store, absoluteB1, a1);
+        this.loadTargetsAndCheck(store, c1, a1, b1);
     }
 
     // delete.........................................................................................
@@ -313,10 +313,10 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(a1, Sets.of(b1));
 
         this.loadAndCheck(store, a1, b1); // a1 --> b1
-        this.loadReferredAndCheck(store, b1, a1); // b1 --> a1
+        this.loadTargetsAndCheck(store, b1, a1); // b1 --> a1
 
         this.loadAndCheck(store, b1); // b1 -> nothing
-        this.loadReferredAndCheck(store, a1); // a1 --> nothing
+        this.loadTargetsAndCheck(store, a1); // a1 --> nothing
 
         this.idsAndCheck(store, 0, 2, a1); // b1 doesnt exist because it has 0 references to it
     }
@@ -416,10 +416,10 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(a1, Sets.of(b1));
 
         this.loadAndCheck(store, a1, b1); // a1 --> b1
-        this.loadReferredAndCheck(store, b1, a1); // b1 --> a1
+        this.loadTargetsAndCheck(store, b1, a1); // b1 --> a1
 
         this.loadAndCheck(store, b1); // b1 -> nothing
-        this.loadReferredAndCheck(store, a1); // a1 --> nothing
+        this.loadTargetsAndCheck(store, a1); // a1 --> nothing
 
         //noinspection unchecked
         this.valuesAndCheck(
@@ -618,9 +618,9 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, b1);
         this.loadFailCheck(store, c1);
 
-        this.loadReferredAndCheck(store, a1);
-        this.loadReferredAndCheck(store, b1, a1);
-        this.loadReferredAndCheck(store, c1, a1);
+        this.loadTargetsAndCheck(store, a1);
+        this.loadTargetsAndCheck(store, b1, a1);
+        this.loadTargetsAndCheck(store, c1, a1);
     }
 
     @Test
@@ -641,10 +641,10 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadAndCheck(store, a1, b1, c1);
         this.loadAndCheck(store, d1, a1, b1, c1, e1);
 
-        this.loadReferredAndCheck(store, a1, d1);
-        this.loadReferredAndCheck(store, b1, a1, d1);
-        this.loadReferredAndCheck(store, c1, a1, d1);
-        this.loadReferredAndCheck(store, e1, d1);
+        this.loadTargetsAndCheck(store, a1, d1);
+        this.loadTargetsAndCheck(store, b1, a1, d1);
+        this.loadTargetsAndCheck(store, c1, a1, d1);
+        this.loadTargetsAndCheck(store, e1, d1);
     }
 
     // removeReference.................................................................................
@@ -740,9 +740,9 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, b1);
         this.loadFailCheck(store, c1);
 
-        this.loadReferredAndCheck(store, a1);
-        this.loadReferredAndCheck(store, b1, a1);
-        this.loadReferredAndCheck(store, c1);
+        this.loadTargetsAndCheck(store, a1);
+        this.loadTargetsAndCheck(store, b1, a1);
+        this.loadTargetsAndCheck(store, c1);
     }
 
     @Test
@@ -760,9 +760,9 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, b1);
         this.loadFailCheck(store, c1);
 
-        this.loadReferredAndCheck(store, a1);
-        this.loadReferredAndCheck(store, b1, a1);
-        this.loadReferredAndCheck(store, c1);
+        this.loadTargetsAndCheck(store, a1);
+        this.loadTargetsAndCheck(store, b1, a1);
+        this.loadTargetsAndCheck(store, c1);
     }
 
     // addReference & removeReference.................................................................................
@@ -788,11 +788,11 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, d1);
         this.loadFailCheck(store, e1);
 
-        this.loadReferredAndCheck(store, a1);
-        this.loadReferredAndCheck(store, b1);
-        this.loadReferredAndCheck(store, c1, a1);
-        this.loadReferredAndCheck(store, d1, a1);
-        this.loadReferredAndCheck(store, e1, a1);
+        this.loadTargetsAndCheck(store, a1);
+        this.loadTargetsAndCheck(store, b1);
+        this.loadTargetsAndCheck(store, c1, a1);
+        this.loadTargetsAndCheck(store, d1, a1);
+        this.loadTargetsAndCheck(store, e1, a1);
     }
 
     @Test
@@ -819,11 +819,11 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, d1);
         this.loadFailCheck(store, e1);
 
-        this.loadReferredAndCheck(store, a1);
-        this.loadReferredAndCheck(store, b1);
-        this.loadReferredAndCheck(store, c1, a1, b1);
-        this.loadReferredAndCheck(store, d1, a1, b1);
-        this.loadReferredAndCheck(store, e1, b1);
+        this.loadTargetsAndCheck(store, a1);
+        this.loadTargetsAndCheck(store, b1);
+        this.loadTargetsAndCheck(store, c1, a1, b1);
+        this.loadTargetsAndCheck(store, d1, a1, b1);
+        this.loadTargetsAndCheck(store, e1, b1);
     }
 
     @Test
@@ -846,15 +846,15 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, d1);
         this.loadFailCheck(store, e1);
 
-        this.loadReferredAndCheck(store, a1);
-        this.loadReferredAndCheck(store, b1);
-        this.loadReferredAndCheck(store, c1, a1);
-        this.loadReferredAndCheck(store, d1);
-        this.loadReferredAndCheck(store, e1);
+        this.loadTargetsAndCheck(store, a1);
+        this.loadTargetsAndCheck(store, b1);
+        this.loadTargetsAndCheck(store, c1, a1);
+        this.loadTargetsAndCheck(store, d1);
+        this.loadTargetsAndCheck(store, e1);
     }
 
     @Test
-    public void testLoadReferredDefensivelyCopied() {
+    public void testLoadTargets() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
@@ -864,11 +864,13 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.addReference(TargetAndSpreadsheetCellReference.with(b1, a1));
         store.addReference(TargetAndSpreadsheetCellReference.with(c1, a1));
 
-        final Set<SpreadsheetCellReference> referred = store.loadReferred(a1);
-        this.checkEquals(Sets.of(b1, c1), referred, "Incorrect load referred.");
+        this.loadTargetsAndCheck(
+                store,
+                a1,
+                b1, c1
+        );
 
         store.removeReference(TargetAndSpreadsheetCellReference.with(b1, a1));
-        this.checkEquals(Sets.of(b1, c1), referred, "Past referred snapshot should not have changed.");
     }
 
     // count.................................................................................

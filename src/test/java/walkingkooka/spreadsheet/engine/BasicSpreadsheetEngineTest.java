@@ -14120,7 +14120,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                        final SpreadsheetCellReference cell,
                                        final SpreadsheetCellReference... out) {
         this.checkEquals(Sets.of(out),
-                store.loadReferred(cell),
+                store.loadTargets(cell),
                 "referrers parse " + cell);
     }
 
