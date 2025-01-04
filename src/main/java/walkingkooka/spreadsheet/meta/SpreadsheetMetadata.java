@@ -151,7 +151,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Prefix along with {@link SpreadsheetMetadataPropertyName} to form a {@link walkingkooka.environment.EnvironmentValueName}.
      */
-    public static final String ENVIRONMENT_VALUE_NAME_PREFIX = "metadata.";
+    public static final String ENVIRONMENT_VALUE_NAME_PREFIX = "spreadsheet.";
 
     /**
      * Private ctor to limit sub-classes.
