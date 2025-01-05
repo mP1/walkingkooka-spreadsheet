@@ -296,8 +296,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
                                     PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
                                     DUMMY_ENVIRONMENTAL_VALUE
                             ),
-                            NOW,
-                            Optional.of(USER)
+                            EnvironmentContexts.empty(
+                                    NOW,
+                                    Optional.of(USER)
+                            )
                     )
             ),
             PluginStores.fake()
