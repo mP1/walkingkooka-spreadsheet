@@ -2007,7 +2007,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                         EnvironmentContext.ANONYMOUS
                                 )
                         ),
-                EnvironmentValueName.with("spreadsheet." + SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL),
+                EnvironmentValueName.with(
+                        SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL.value()
+                ),
                 CURRENCY
         );
     }
