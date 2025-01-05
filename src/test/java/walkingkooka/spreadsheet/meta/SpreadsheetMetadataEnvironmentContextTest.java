@@ -37,23 +37,18 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     }
 
     @Test
-    public void testEnvironmentValueWithoutPrefix() {
-        this.environmentValueAndCheck(
-                EnvironmentValueName.with("missing.prefix")
-        );
-    }
-
-    @Test
     public void testEnvironmentValueWithPrefixButUnknown() {
         this.environmentValueAndCheck(
-                EnvironmentValueName.with("spreadsheet.missing")
+                EnvironmentValueName.with("missing")
         );
     }
 
     @Test
     public void testEnvironmentValue() {
         this.environmentValueAndCheck(
-                EnvironmentValueName.with("spreadsheet." + SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR),
+                EnvironmentValueName.with(
+                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()
+                ),
                 '.'
         );
     }

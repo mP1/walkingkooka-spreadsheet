@@ -28,8 +28,6 @@ import java.util.Optional;
 
 /**
  * An {@link EnvironmentContext} that returns properties belonging to a {@link SpreadsheetMetadata}.
- * Any {@link EnvironmentValueName} with a prefix of {@link SpreadsheetMetadata#ENVIRONMENT_VALUE_NAME_PREFIX} will have that removed and then used as a key into
- * {@link SpreadsheetMetadata#get(SpreadsheetMetadataPropertyName)}.
  */
 final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext {
 
@@ -48,25 +46,19 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
         Optional<T> value = Optional.empty();
 
         final String stringName = name.value();
-        if (stringName.startsWith(SpreadsheetMetadata.ENVIRONMENT_VALUE_NAME_PREFIX)) {
-            SpreadsheetMetadataPropertyName<?> propertyName;
+        SpreadsheetMetadataPropertyName<?> propertyName;
 
-            // will throw IllegalArgumentException if property is unknown.
-            try {
-                propertyName = SpreadsheetMetadataPropertyName.with(
-                        stringName.substring(
-                                SpreadsheetMetadata.ENVIRONMENT_VALUE_NAME_PREFIX.length()
-                        )
-                );
-            } catch (final IllegalArgumentException invalidNameEtc) {
-                propertyName = null;
-            }
+        // will throw IllegalArgumentException if property is unknown.
+        try {
+            propertyName = SpreadsheetMetadataPropertyName.with(stringName);
+        } catch (final IllegalArgumentException invalidNameEtc) {
+            propertyName = null;
+        }
 
-            if (null != propertyName) {
-                value = Cast.to(
-                        this.metadata.get(propertyName)
-                );
-            }
+        if (null != propertyName) {
+            value = Cast.to(
+                    this.metadata.get(propertyName)
+            );
         }
 
         return value;
