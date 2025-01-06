@@ -21,7 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextTesting2;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
+
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -50,6 +57,41 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
                         SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR.value()
                 ),
                 '.'
+        );
+    }
+
+    @Test
+    public void testEnvironmentValueNames() {
+        this.environmentValueNamesAndCheck(
+                SpreadsheetMetadata.EMPTY
+                        .set(
+                                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                                SpreadsheetId.with(1)
+                        ).set(
+                                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                                SpreadsheetName.with("Hello-spreadsheet-123")
+                        ).set(
+                                SpreadsheetMetadataPropertyName.LOCALE,
+                                Locale.forLanguageTag("EN-AU")
+                        ).setDefaults(
+                                SpreadsheetMetadata.EMPTY
+                                        .set(
+                                                SpreadsheetMetadataPropertyName.LOCALE,
+                                                Locale.forLanguageTag("EN-AU")
+                                        ).set(
+                                                SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+                                                RoundingMode.FLOOR
+                                        )
+                        ).environmentContext(
+                                EnvironmentContexts.empty(
+                                        LocalDateTime::now,
+                                        EnvironmentContext.ANONYMOUS
+                                )
+                        ),
+                EnvironmentValueName.with("spreadsheet-id"),
+                EnvironmentValueName.with("spreadsheet-name"),
+                EnvironmentValueName.with("locale"),
+                EnvironmentValueName.with("rounding-mode")
         );
     }
 
