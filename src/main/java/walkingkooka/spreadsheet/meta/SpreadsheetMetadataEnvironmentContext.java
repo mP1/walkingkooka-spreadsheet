@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.set.ImmutableSet;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -25,6 +27,9 @@ import walkingkooka.net.email.EmailAddress;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.stream.Collectors;
 
 /**
  * An {@link EnvironmentContext} that returns properties belonging to a {@link SpreadsheetMetadata}.
@@ -63,6 +68,31 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
 
         return value;
     }
+
+    @Override
+    public Set<EnvironmentValueName<?>> environmentValueNames() {
+        if (null == this.names) {
+            final SpreadsheetMetadata metadata = this.metadata;
+
+            final SortedSet<EnvironmentValueName<?>> names = metadata.value()
+                    .keySet()
+                    .stream()
+                    .map(m -> EnvironmentValueName.with(m.value()))
+                    .collect(Collectors.toCollection(SortedSets::tree));
+
+            metadata.defaults()
+                    .value()
+                    .keySet()
+                    .stream()
+                    .map(m -> EnvironmentValueName.with(m.value()))
+                    .forEach(names::add);
+
+            this.names = SortedSets.immutable(names);
+        }
+        return this.names;
+    }
+
+    private ImmutableSet<EnvironmentValueName<?>> names;
 
     private final SpreadsheetMetadata metadata;
 
