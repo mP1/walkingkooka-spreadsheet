@@ -36,7 +36,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.HasLocale;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
@@ -611,27 +610,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // EnvironmentContext...............................................................................................
 
     /**
-     * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata} combined with the given {@link EnvironmentContext}.
+     * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata} using the given {@link EnvironmentContext}
+     * for the time and user.
      */
     public final EnvironmentContext environmentContext(final EnvironmentContext context) {
-        Objects.requireNonNull(context, "context");
-
-        if (null == this.environmentContext) {
-            this.environmentContext = SpreadsheetMetadataEnvironmentContext.with(this);
-        }
-        return EnvironmentContexts.collection(
-                Lists.of(
-                        this.environmentContext,
-                        context
-                ),
-                context
+        return SpreadsheetMetadataEnvironmentContext.with(
+                    this,
+                    context
         );
     }
-
-    /**
-     * Cached {@link SpreadsheetMetadataEnvironmentContext}.
-     */
-    private EnvironmentContext environmentContext;
 
     // ExpressionFunctionProvider.......................................................................................
 
