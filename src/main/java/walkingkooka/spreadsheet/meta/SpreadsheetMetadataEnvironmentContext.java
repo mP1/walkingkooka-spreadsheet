@@ -36,14 +36,18 @@ import java.util.stream.Collectors;
  */
 final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext {
 
-    static SpreadsheetMetadataEnvironmentContext with(final SpreadsheetMetadata metadata) {
+    static SpreadsheetMetadataEnvironmentContext with(final SpreadsheetMetadata metadata,
+                                                      final EnvironmentContext context) {
         return new SpreadsheetMetadataEnvironmentContext(
-                Objects.requireNonNull(metadata, "metadata")
+                Objects.requireNonNull(metadata, "metadata"),
+                Objects.requireNonNull(context, "context")
         );
     }
 
-    private SpreadsheetMetadataEnvironmentContext(final SpreadsheetMetadata metadata) {
+    private SpreadsheetMetadataEnvironmentContext(final SpreadsheetMetadata metadata,
+                                                  final EnvironmentContext context) {
         this.metadata = metadata;
+        this.context = context;
     }
 
     @Override
@@ -98,13 +102,15 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
 
     @Override
     public LocalDateTime now() {
-        throw new UnsupportedOperationException();
+        return this.context.now();
     }
 
     @Override
     public Optional<EmailAddress> user() {
-        throw new UnsupportedOperationException();
+        return this.context.user();
     }
+
+    private final EnvironmentContext context;
 
     @Override
     public String toString() {

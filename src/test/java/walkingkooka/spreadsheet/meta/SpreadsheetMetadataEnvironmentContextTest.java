@@ -23,23 +23,54 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataEnvironmentContextTest implements EnvironmentContextTesting2<SpreadsheetMetadataEnvironmentContext>,
         ToStringTesting<SpreadsheetMetadataEnvironmentContext> {
 
+    private final static LocalDateTime NOW = LocalDateTime.of(
+            1999,
+            12,
+            31,
+            12,
+            58
+    );
+
+    private final static EmailAddress USER = EmailAddress.parse("user@example.com");
+
+    private final static EnvironmentContext CONTEXT = EnvironmentContexts.empty(
+            () -> NOW,
+            Optional.of(USER)
+    );
+
     @Test
-    public void testWithNullFails() {
+    public void testWithNullMetadataFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetMetadataEnvironmentContext.with(null)
+                () -> SpreadsheetMetadataEnvironmentContext.with(
+                        null,
+                        CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullEnvironmentContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetMetadataEnvironmentContext.with(
+                        SpreadsheetMetadata.EMPTY,
+                        null
+                )
         );
     }
 
@@ -97,13 +128,22 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
 
     @Override
     public void testUser() {
-        throw new UnsupportedOperationException();
+        this.userAndCheck(USER);
+    }
+
+    @Test
+    public void testNow() {
+        this.checkEquals(
+                this.createContext().now(),
+                NOW
+        );
     }
 
     @Override
     public SpreadsheetMetadataEnvironmentContext createContext() {
         return SpreadsheetMetadataEnvironmentContext.with(
-                SpreadsheetMetadataTesting.METADATA_EN_AU
+                SpreadsheetMetadataTesting.METADATA_EN_AU,
+                CONTEXT
         );
     }
 
