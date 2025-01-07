@@ -141,7 +141,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(expression, "expression");
 
         final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
-                .spreadsheetParserContext(this.spreadsheetConverterContext::now);
+                .spreadsheetParserContext(this.spreadsheetConverterContext);
 
         return SpreadsheetParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
