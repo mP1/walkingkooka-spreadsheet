@@ -108,7 +108,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     }
 
     private final SpreadsheetExporterProvider spreadsheetExporterProvider;
-    
+
     @Override
     public SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
         return this.spreadsheetFormatterProvider;

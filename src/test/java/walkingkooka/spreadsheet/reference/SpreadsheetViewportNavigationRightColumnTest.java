@@ -43,7 +43,7 @@ public final class SpreadsheetViewportNavigationRightColumnTest extends Spreadsh
                 SpreadsheetSelection.parseRow("2")
         );
     }
-    
+
     @Override
     SpreadsheetViewportNavigationRightColumn createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationRightColumn.INSTANCE;

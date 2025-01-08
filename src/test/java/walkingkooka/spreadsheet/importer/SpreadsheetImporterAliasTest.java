@@ -110,7 +110,7 @@ public final class SpreadsheetImporterAliasTest implements PluginAliasLikeTestin
     public SpreadsheetImporterAlias parseString(final String text) {
         return SpreadsheetImporterAlias.parse(text);
     }
-    
+
     // class............................................................................................................
 
     @Override

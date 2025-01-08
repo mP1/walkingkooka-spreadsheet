@@ -105,10 +105,10 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
         this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse(RENAMED_TIME_PARSER_PATTERN),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        ).spreadsheetParserNextToken(
-                                SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
-                        )
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                ).spreadsheetParserNextToken(
+                        SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
+                )
         );
     }
 

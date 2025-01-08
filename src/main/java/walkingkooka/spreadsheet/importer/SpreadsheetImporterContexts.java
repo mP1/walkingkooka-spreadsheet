@@ -31,7 +31,7 @@ public final class SpreadsheetImporterContexts implements PublicStaticHelper {
     public static SpreadsheetImporterContext basic(final JsonNodeUnmarshallContext context) {
         return BasicSpreadsheetImporterContext.with(context);
     }
-    
+
     /**
      * {@see FakeSpreadsheetImporterContext}
      */

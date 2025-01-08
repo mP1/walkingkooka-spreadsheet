@@ -218,7 +218,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
         this.checkWidth(different);
         this.checkHeight(different, height);
     }
-    
+
     // equals...........................................................................................................
 
     @Test

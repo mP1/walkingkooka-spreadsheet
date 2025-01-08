@@ -140,7 +140,7 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
 
     @Override
     public SpreadsheetImporterInfoSet replace(final SpreadsheetImporterInfo oldInfo,
-                                    final SpreadsheetImporterInfo newInfo) {
+                                              final SpreadsheetImporterInfo newInfo) {
         return this.setElements(
                 this.pluginInfoSet.replace(
                         oldInfo,
@@ -214,7 +214,7 @@ public final class SpreadsheetImporterInfoSet extends AbstractSet<SpreadsheetImp
 
     // @VisibleForTesting
     static SpreadsheetImporterInfoSet unmarshall(final JsonNode node,
-                                       final JsonNodeUnmarshallContext context) {
+                                                 final JsonNodeUnmarshallContext context) {
         return with(
                 context.unmarshallSet(
                         node,

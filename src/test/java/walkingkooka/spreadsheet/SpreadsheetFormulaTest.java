@@ -849,9 +849,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testReplaceReferencesOnlyLabel() {
         this.replaceReferencesAndCheck(
                 parseFormula("=1+Label123"),
-                        (r) -> {
-                            throw new UnsupportedOperationException();
-                        }
+                (r) -> {
+                    throw new UnsupportedOperationException();
+                }
         );
     }
 

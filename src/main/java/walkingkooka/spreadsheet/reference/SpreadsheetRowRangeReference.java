@@ -154,7 +154,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
                 )
         );
     }
-    
+
     // testXXX.........................................................................................................
 
     @Override

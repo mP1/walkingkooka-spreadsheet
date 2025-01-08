@@ -70,7 +70,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
         final Function<SpreadsheetCell, JsonNode> value;
         final MediaType contentType;
 
-        switch(valueKind) {
+        switch (valueKind) {
             case CELL:
                 value = (c) -> context.marshall(c)
                         .children()
@@ -104,11 +104,11 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 break;
             case PARSER:
                 value = (c) -> context.marshall(
-                                c.parser()
-                                        .orElse(null)
-                        ).setName(
-                                name(c)
-                        );
+                        c.parser()
+                                .orElse(null)
+                ).setName(
+                        name(c)
+                );
                 contentType = SpreadsheetMediaTypes.JSON_PARSERS;
                 break;
             case VALUE:

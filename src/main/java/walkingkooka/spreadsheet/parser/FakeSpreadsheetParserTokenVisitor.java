@@ -106,7 +106,7 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     protected void endVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
     protected Visiting startVisit(final SpreadsheetDateParserToken token) {
         throw new UnsupportedOperationException();

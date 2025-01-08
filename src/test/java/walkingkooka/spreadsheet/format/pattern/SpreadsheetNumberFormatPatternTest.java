@@ -794,7 +794,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
                 "$#.000"
         );
     }
-    
+
     @Test
     public void testPatternsWithLessThanCondition() {
         final SpreadsheetNumberFormatPattern pattern = this.createPattern("[<10]$#.0;$#.00;$#.000");

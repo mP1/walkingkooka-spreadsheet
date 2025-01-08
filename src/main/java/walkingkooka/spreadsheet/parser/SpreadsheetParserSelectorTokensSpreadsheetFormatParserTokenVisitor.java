@@ -37,7 +37,7 @@ final class SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor e
 
     // only called by SpreadsheetParserSelectorToken#tokens
     static List<SpreadsheetParserSelectorToken> tokens(final ParserToken token,
-                                                               final SpreadsheetParserContext context) {
+                                                       final SpreadsheetParserContext context) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(context, "context");
 

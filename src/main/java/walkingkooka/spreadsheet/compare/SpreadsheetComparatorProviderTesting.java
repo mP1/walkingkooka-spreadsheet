@@ -240,7 +240,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
                 () -> name + " " + values
         );
     }
-    
+
     // spreadsheetComparatorInfos.......................................................................................
 
     default void spreadsheetComparatorInfosAndCheck(final SpreadsheetComparatorInfo... expected) {

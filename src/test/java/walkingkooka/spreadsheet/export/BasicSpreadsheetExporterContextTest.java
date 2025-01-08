@@ -65,8 +65,8 @@ public final class BasicSpreadsheetExporterContextTest implements SpreadsheetExp
                 this.createContext(),
                 SpreadsheetMetadata.EMPTY +
                         " " +
-                JsonNodeMarshallContexts.basic()
-                        .toString()
+                        JsonNodeMarshallContexts.basic()
+                                .toString()
         );
     }
 

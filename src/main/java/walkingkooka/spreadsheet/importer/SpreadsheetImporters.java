@@ -32,14 +32,14 @@ public final class SpreadsheetImporters implements PublicStaticHelper {
     public static SpreadsheetImporter collection(final List<SpreadsheetImporter> importers) {
         return SpreadsheetImporterCollection.with(importers);
     }
-    
+
     /**
      * {@see EmptySpreadsheetImporter}
      */
     public static SpreadsheetImporter empty() {
         return EmptySpreadsheetImporter.INSTANCE;
     }
-    
+
     /**
      * {@see FakeSpreadsheetImporter}
      */

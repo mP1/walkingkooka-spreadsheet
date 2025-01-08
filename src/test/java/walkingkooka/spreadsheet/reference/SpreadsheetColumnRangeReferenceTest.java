@@ -1509,32 +1509,32 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     @Test
     public void testCompareToEquals() {
         this.compareToAndCheckEquals(
-                SpreadsheetSelection.parseColumnRange("A:B" ),
-                SpreadsheetSelection.parseColumnRange("A:B" )
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                SpreadsheetSelection.parseColumnRange("A:B")
         );
     }
 
     @Test
     public void testCompareToEqualsDifferentKind() {
         this.compareToAndCheckEquals(
-                SpreadsheetSelection.parseColumnRange("A:B" ),
-                SpreadsheetSelection.parseColumnRange("$A:$B" )
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                SpreadsheetSelection.parseColumnRange("$A:$B")
         );
     }
 
     @Test
     public void testCompareToEqualsLess() {
         this.compareToAndCheckLess(
-                SpreadsheetSelection.parseColumnRange("A:B" ),
-                SpreadsheetSelection.parseColumnRange("B:C" )
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                SpreadsheetSelection.parseColumnRange("B:C")
         );
     }
 
     @Test
     public void testCompareToEqualsLessDifferentKind() {
         this.compareToAndCheckLess(
-                SpreadsheetSelection.parseColumnRange("A:B" ),
-                SpreadsheetSelection.parseColumnRange("$B:$C" )
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                SpreadsheetSelection.parseColumnRange("$B:$C")
         );
     }
 

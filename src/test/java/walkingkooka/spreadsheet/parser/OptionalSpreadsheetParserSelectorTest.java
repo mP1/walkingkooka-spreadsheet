@@ -135,7 +135,7 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
 
     @Override
     public OptionalSpreadsheetParserSelector unmarshall(final JsonNode json,
-                                                           final JsonNodeUnmarshallContext context) {
+                                                        final JsonNodeUnmarshallContext context) {
         return OptionalSpreadsheetParserSelector.unmarshall(
                 json,
                 context

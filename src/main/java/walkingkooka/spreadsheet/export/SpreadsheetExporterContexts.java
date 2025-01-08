@@ -44,7 +44,7 @@ public final class SpreadsheetExporterContexts implements PublicStaticHelper {
     public static SpreadsheetExporterContext fake() {
         return new FakeSpreadsheetExporterContext();
     }
-    
+
     /**
      * Stop creation
      */

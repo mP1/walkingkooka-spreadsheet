@@ -610,7 +610,7 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
                 () -> path + " lastColumn " + cell + " " + range
         );
     }
-    
+
     // nextRow..........................................................................................................
 
     @Test

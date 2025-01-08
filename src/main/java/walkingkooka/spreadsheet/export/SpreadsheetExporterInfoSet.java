@@ -140,7 +140,7 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
 
     @Override
     public SpreadsheetExporterInfoSet replace(final SpreadsheetExporterInfo oldInfo,
-                                    final SpreadsheetExporterInfo newInfo) {
+                                              final SpreadsheetExporterInfo newInfo) {
         return this.setElements(
                 this.pluginInfoSet.replace(
                         oldInfo,

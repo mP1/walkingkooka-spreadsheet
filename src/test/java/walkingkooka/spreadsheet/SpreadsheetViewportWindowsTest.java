@@ -840,7 +840,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
                 windows::toString
         );
     }
-    
+
     // columns..........................................................................................................
 
     @Test

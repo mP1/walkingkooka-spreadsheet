@@ -71,7 +71,7 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
                 this.text()
         );
     }
-    
+
     // HasFormatter.....................................................................................................
 
     @Override

@@ -218,11 +218,11 @@ public final class Sample {
             public SpreadsheetParserToken parseFormula(final TextCursor formula) {
                 return Cast.to(
                         SpreadsheetParsers.expression()
-                        .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(
-                                formula,
-                                metadata.spreadsheetParserContext(NOW)
-                        ) // TODO should fetch parse metadata prop
+                                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                                .parse(
+                                        formula,
+                                        metadata.spreadsheetParserContext(NOW)
+                                ) // TODO should fetch parse metadata prop
                                 .get()
                 );
             }

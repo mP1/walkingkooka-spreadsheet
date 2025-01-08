@@ -97,6 +97,7 @@ public class TestGwtTest extends GWTTestCase {
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+
     public void testWithCellReference() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext(engine);

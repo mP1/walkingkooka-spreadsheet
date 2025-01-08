@@ -549,7 +549,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 context
         );
     }
-    
+
     // HasDateTimeContext...............................................................................................
 
     /**
@@ -615,8 +615,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final EnvironmentContext environmentContext(final EnvironmentContext context) {
         return SpreadsheetMetadataEnvironmentContext.with(
-                    this,
-                    context
+                this,
+                context
         );
     }
 
@@ -1330,15 +1330,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         ).set(
                 SpreadsheetMetadataPropertyName.CONVERTERS,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                        SpreadsheetMetadata.EMPTY,
-                        SpreadsheetFormatterProviders.fake(),
-                        SpreadsheetParserProviders.fake()
-                ).converterInfos()
+                                SpreadsheetMetadata.EMPTY,
+                                SpreadsheetFormatterProviders.fake(),
+                                SpreadsheetParserProviders.fake()
+                        ).converterInfos()
                         .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.COMPARATORS,
                 SpreadsheetComparatorProviders.spreadsheetComparators()
-                                .spreadsheetComparatorInfos()
+                        .spreadsheetComparatorInfos()
                         .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.EXPORTERS,
@@ -1360,8 +1360,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         ).set(
                 SpreadsheetMetadataPropertyName.PARSERS,
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                        spreadsheetFormatterProvider
-                ).spreadsheetParserInfos()
+                                spreadsheetFormatterProvider
+                        ).spreadsheetParserInfos()
                         .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,

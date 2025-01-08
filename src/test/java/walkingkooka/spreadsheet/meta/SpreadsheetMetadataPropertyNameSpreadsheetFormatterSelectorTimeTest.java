@@ -27,7 +27,7 @@ import java.time.LocalTime;
 import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime>
-        implements SpreadsheetMetadataTesting{
+        implements SpreadsheetMetadataTesting {
 
     @Test
     public void testExtractLocaleAwareValue() {

@@ -501,7 +501,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> type,
                                                  final SpreadsheetExpressionEvaluationContext context) {
-                if(this.canConvert(value, type, context)) {
+                if (this.canConvert(value, type, context)) {
                     if (type == String.class) {
                         return this.successfulConversion(
                                 "!!!" + value,

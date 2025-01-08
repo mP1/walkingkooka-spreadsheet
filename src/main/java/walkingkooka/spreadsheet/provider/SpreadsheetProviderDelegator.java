@@ -60,7 +60,7 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
     default SpreadsheetExporterProvider spreadsheetExporterProvider() {
         return this.spreadsheetProvider();
     }
-    
+
     @Override
     default SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
         return this.spreadsheetProvider();

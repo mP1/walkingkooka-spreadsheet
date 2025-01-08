@@ -104,7 +104,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                             this.checkEquals(SpreadsheetMetadataPropertyNameIntegerNamedColor.class, propertyName.getClass(), "class name");
                             this.checkEquals(value, propertyName.value(), "value");
 
-                    propertyName.checkValue(colorNumber);
+                            propertyName.checkValue(colorNumber);
                         }
                 );
     }

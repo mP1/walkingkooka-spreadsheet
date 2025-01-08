@@ -140,7 +140,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
 
     @Override
     public SpreadsheetParserInfoSet replace(final SpreadsheetParserInfo oldInfo,
-                                    final SpreadsheetParserInfo newInfo) {
+                                            final SpreadsheetParserInfo newInfo) {
         return this.setElements(
                 this.pluginInfoSet.replace(
                         oldInfo,
@@ -214,7 +214,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
 
     // @VisibleForTesting
     static SpreadsheetParserInfoSet unmarshall(final JsonNode node,
-                                       final JsonNodeUnmarshallContext context) {
+                                               final JsonNodeUnmarshallContext context) {
         return with(
                 context.unmarshallSet(
                         node,

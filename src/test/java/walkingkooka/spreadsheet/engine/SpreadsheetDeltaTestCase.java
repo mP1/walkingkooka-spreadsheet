@@ -712,7 +712,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after
         );
     }
-    
+
     // matchedCells.....................................................................................................
 
     @Test
@@ -796,7 +796,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
         this.checkEquals(Lists.of(a1.toRelative(), b2.toRelative(), c3.toRelative(), d4), new ArrayList<>(delta.matchedCells()));
     }
-    
+
     // setColumnWidths...............................................................................................
 
     @Test
@@ -1172,7 +1172,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final void checkViewport(final SpreadsheetDelta delta,
-                                      final Optional<SpreadsheetViewport> viewport) {
+                             final Optional<SpreadsheetViewport> viewport) {
         this.checkEquals(viewport, delta.viewport(), "viewport");
     }
 
@@ -1502,7 +1502,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final void checkDeletedLabels(final SpreadsheetDelta delta,
-                                final Set<SpreadsheetLabelName> labels) {
+                                  final Set<SpreadsheetLabelName> labels) {
         this.checkEquals(labels,
                 delta.deletedLabels(),
                 "deletedLabels");
@@ -1543,7 +1543,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 () -> delta.matchedCells().add(null)
         );
     }
-    
+
     // columnWidths..................................................................................................
 
     final Map<SpreadsheetColumnReference, Double> columnWidths() {

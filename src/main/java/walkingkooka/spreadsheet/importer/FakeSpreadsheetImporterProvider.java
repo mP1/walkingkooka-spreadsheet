@@ -21,7 +21,7 @@ import walkingkooka.plugin.ProviderContext;
 
 import java.util.List;
 
-public class FakeSpreadsheetImporterProvider implements SpreadsheetImporterProvider{
+public class FakeSpreadsheetImporterProvider implements SpreadsheetImporterProvider {
     @Override
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                    final ProviderContext context) {

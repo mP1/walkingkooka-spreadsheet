@@ -90,10 +90,10 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest impleme
                         "yyyy",
                         "yyyy",
                         Lists.of(
-                        SpreadsheetParserSelectorTokenAlternative.with(
-                                "yy",
-                                "yy"
-                        )
+                                SpreadsheetParserSelectorTokenAlternative.with(
+                                        "yy",
+                                        "yy"
+                                )
                         )
                 )
         );

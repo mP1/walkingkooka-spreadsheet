@@ -332,7 +332,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private void addCell(final SpreadsheetCellReference cell) {
-        if(this.window.test(cell)) {
+        if (this.window.test(cell)) {
             if (this.add(
                     cell,
                     this.cells,

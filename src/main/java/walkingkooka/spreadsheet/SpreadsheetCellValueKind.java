@@ -31,14 +31,14 @@ public enum SpreadsheetCellValueKind {
         }
     },
 
-    FORMULA{
+    FORMULA {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
             return cell.formula();
         }
     },
 
-    FORMATTER{
+    FORMATTER {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
             return cell.formula();

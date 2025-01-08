@@ -244,7 +244,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     @Override
     public int compareTo(final SpreadsheetLabelMapping other) {
         int compareTo = this.label.compareTo(other.label);
-        if(Comparators.EQUAL == compareTo) {
+        if (Comparators.EQUAL == compareTo) {
             compareTo = this.target.toRelative()
                     .toString()
                     .compareToIgnoreCase(

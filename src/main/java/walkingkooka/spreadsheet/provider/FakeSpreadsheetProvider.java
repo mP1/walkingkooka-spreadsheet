@@ -52,21 +52,21 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector
 import java.util.List;
 import java.util.Optional;
 
-public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider implements SpreadsheetProvider{
+public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider implements SpreadsheetProvider {
 
     public FakeSpreadsheetProvider() {
 
     }
 
     @Override
-    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector, 
+    public <C extends ConverterContext> Converter<C> converter(final ConverterSelector selector,
                                                                final ProviderContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public <C extends ConverterContext> Converter<C> converter(final ConverterName name, 
-                                                               final List<?> value, 
+    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                               final List<?> value,
                                                                final ProviderContext context) {
         throw new UnsupportedOperationException();
     }
@@ -116,7 +116,7 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
     public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
                                                    final ProviderContext context) {
@@ -136,7 +136,7 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
     }
 
     @Override
-    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector, 
+    public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
                                                final ProviderContext context) {
         throw new UnsupportedOperationException();
     }

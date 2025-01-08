@@ -108,7 +108,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                 ),
                                 SpreadsheetSelection.parseCell("A2")
                                         .setFormula(
-                                            SpreadsheetFormula.EMPTY.setText("=333")
+                                                SpreadsheetFormula.EMPTY.setText("=333")
                                         )
                         )
                 ),

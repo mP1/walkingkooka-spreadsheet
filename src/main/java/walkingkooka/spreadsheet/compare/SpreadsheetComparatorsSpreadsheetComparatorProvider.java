@@ -57,17 +57,17 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
 
     @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
-                                                           final List<?> values,
-                                                           final ProviderContext context) {
+                                                          final List<?> values,
+                                                          final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
         final SpreadsheetComparator<?> comparator = NAME_TO_COMPARATOR.get(name);
-        if(null == comparator) {
+        if (null == comparator) {
             throw new IllegalArgumentException("Unknown comparator " + name);
         }
-        if(false == values.isEmpty()) {
+        if (false == values.isEmpty()) {
             throw new IllegalArgumentException("Got " + values + " expected none");
         }
         return comparator;
@@ -92,22 +92,22 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
 
     private final static Map<SpreadsheetComparatorName, SpreadsheetComparator<?>> NAME_TO_COMPARATOR = Maps.readOnly(
             Lists.of(
-                    SpreadsheetComparators.date(),
-                    SpreadsheetComparators.dateTime(),
-                    SpreadsheetComparators.dayOfMonth(),
-                    SpreadsheetComparators.dayOfWeek(),
-                    SpreadsheetComparators.hourOfAmPm(),
-                    SpreadsheetComparators.hourOfDay(),
-                    SpreadsheetComparators.minuteOfHour(),
-                    SpreadsheetComparators.monthOfYear(),
-                    SpreadsheetComparators.nanoOfSecond(),
-                    SpreadsheetComparators.number(),
-                    SpreadsheetComparators.secondsOfMinute(),
-                    SpreadsheetComparators.text(),
-                    SpreadsheetComparators.textCaseInsensitive(),
-                    SpreadsheetComparators.time(),
-                    SpreadsheetComparators.year()
-            ).stream()
+                            SpreadsheetComparators.date(),
+                            SpreadsheetComparators.dateTime(),
+                            SpreadsheetComparators.dayOfMonth(),
+                            SpreadsheetComparators.dayOfWeek(),
+                            SpreadsheetComparators.hourOfAmPm(),
+                            SpreadsheetComparators.hourOfDay(),
+                            SpreadsheetComparators.minuteOfHour(),
+                            SpreadsheetComparators.monthOfYear(),
+                            SpreadsheetComparators.nanoOfSecond(),
+                            SpreadsheetComparators.number(),
+                            SpreadsheetComparators.secondsOfMinute(),
+                            SpreadsheetComparators.text(),
+                            SpreadsheetComparators.textCaseInsensitive(),
+                            SpreadsheetComparators.time(),
+                            SpreadsheetComparators.year()
+                    ).stream()
                     .collect(
                             Collectors.toMap(
                                     HasName::name,

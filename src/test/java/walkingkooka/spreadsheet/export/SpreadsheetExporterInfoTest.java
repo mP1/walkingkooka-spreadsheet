@@ -43,7 +43,7 @@ public final class SpreadsheetExporterInfoTest implements PluginInfoLikeTesting<
                 )
         );
     }
-    
+
     // ClassTesting.....................................................................................................
 
     @Override

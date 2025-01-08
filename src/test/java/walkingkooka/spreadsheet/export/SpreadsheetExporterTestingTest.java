@@ -86,7 +86,7 @@ public final class SpreadsheetExporterTestingTest implements SpreadsheetExporter
                 webEntity
         );
     }
-    
+
     @Override
     public TestSpreadsheetExporter createSpreadsheetExporter() {
         return new TestSpreadsheetExporter();

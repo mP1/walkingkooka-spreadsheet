@@ -54,7 +54,7 @@ final public class SpreadsheetExporterName implements PluginNameLike<Spreadsheet
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
     // constants........................................................................................................
-    
+
     final static String COLLECTION_STRING = "collection";
 
     /**

@@ -467,8 +467,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(
                         a1.setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=BasicSpreadsheetEngineTestStringParameter(A2)")
+                                SpreadsheetFormula.EMPTY
+                                        .setText("=BasicSpreadsheetEngineTestStringParameter(A2)")
                         )
                 );
 
@@ -1704,7 +1704,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(2)
                         )
-                );
+        );
 
         final SpreadsheetCell c3 = this.cell("$C$3", "=5+6");
         final SpreadsheetCell c3Formatted = this.formattedCell(c3, number(11));
@@ -1725,7 +1725,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(3)
                         )
-                );
+        );
 
         this.loadCellStoreAndCheck(cellStore, a1Formatted, b2Formatted, c3Formatted);
         this.loadLabelStoreAndCheck(labelStore);
@@ -1860,7 +1860,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(3)
                         )
-                );
+        );
     }
 
     @Test
@@ -1987,7 +1987,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(2)
                         )
-                );
+        );
     }
 
     @Test
@@ -2073,7 +2073,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(5)
                         )
-                );
+        );
 
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context
                 .storeRepository()
@@ -2126,7 +2126,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(4)
                         )
-                );
+        );
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
@@ -2184,7 +2184,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(5)
                         )
-                );
+        );
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5Reference.toRelative());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
@@ -5053,7 +5053,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(2)
                         )
-                ); // $b, $c deleted
+        ); // $b, $c deleted
 
         this.countAndCheck(context.storeRepository().cells(), 2);
 
@@ -8270,7 +8270,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(3)
                         )
-               );
+        );
 
         this.countAndCheck(context.storeRepository().cells(), 2); // a + b saved
 
@@ -8360,7 +8360,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(11)
                         )
-                );
+        );
 
         this.countAndCheck(cellStore, 3); // a + b saved + c
 
@@ -9041,7 +9041,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(41)
                         )
-                );
+        );
 
         this.countAndCheck(cellStore, 2 + 1);
     }
@@ -9123,7 +9123,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowCount(
                                 OptionalInt.of(1)
                         )
-                ); // copied
+        ); // copied
 
         this.countAndCheck(cellStore, 2 + 1);
     }
@@ -9611,7 +9611,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setLabels(
                                 Sets.of(mapping)
                         )
-                );
+        );
     }
 
     @Test
@@ -10239,7 +10239,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 99
         );
     }
-    
+
     // allColumnWidths .................................................................................................
 
     @Test
@@ -12656,7 +12656,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testFindCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
-        
+
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
         final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
@@ -12676,32 +12676,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         SpreadsheetFormula.EMPTY.setText("=-999")
                                 ),
                         a2.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=1")
-                                ),
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
                         b2.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=2")
-                                ),
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
                         c2.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=3")
-                                ),
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        ),
                         a3.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=4")
-                                ),
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                        ),
                         b3.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=5")
-                                ),
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                        ),
                         c3.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=6")
-                                ),
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                        ),
                         a4.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=7")
-                                ),
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                        ),
                         b4.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=8")
-                                ),
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                        ),
                         c4.setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=9")
-                                )
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                        )
                 ),
                 context
         );
@@ -13463,10 +13463,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
         return this.createContext(
-            20,
-            SpreadsheetEngines.fake(),
-            metadata,
-            this.createSpreadsheetStoreRepository(SpreadsheetCellStores.treeMap())
+                20,
+                SpreadsheetEngines.fake(),
+                metadata,
+                this.createSpreadsheetStoreRepository(SpreadsheetCellStores.treeMap())
         );
     }
 
@@ -13479,7 +13479,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
                 return this.storeRepository()
-                            .labels()
+                        .labels()
                         .cellReferenceOrRangeOrFail(labelName);
             }
 
@@ -13545,7 +13545,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         DateTimeContexts.fake(),
                                         ExpressionNumberContexts.basic(
                                                 this.spreadsheetMetadata().expressionNumberKind(),
-                                            converterContext()
+                                                converterContext()
                                         ),
                                         VALUE_SEPARATOR
                                 )
@@ -13871,11 +13871,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                         cnad -> cnad.direction()
                                                                                 .apply(
                                                                                         Cast.to(
-                                                                                            SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
-                                                                                                    cnad.name(),
-                                                                                                    Lists.empty(),
-                                                                                                    PROVIDER_CONTEXT
-                                                                                            )
+                                                                                                SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
+                                                                                                        cnad.name(),
+                                                                                                        Lists.empty(),
+                                                                                                        PROVIDER_CONTEXT
+                                                                                                )
                                                                                         )
                                                                                 )
                                                                 ).collect(Collectors.toList())
@@ -14025,11 +14025,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 text.isEmpty() ?
                         null :
                         SpreadsheetParsers.valueOrExpression(
-                                BasicSpreadsheetEngineTest.this.metadata()
-                                        .spreadsheetParser(
-                                                SPREADSHEET_PARSER_PROVIDER,
-                                                PROVIDER_CONTEXT
-                                        )
+                                        BasicSpreadsheetEngineTest.this.metadata()
+                                                .spreadsheetParser(
+                                                        SPREADSHEET_PARSER_PROVIDER,
+                                                        PROVIDER_CONTEXT
+                                                )
                                 ).orFailIfCursorNotEmpty(ParserReporters.basic())
                                 .parse(TextCursors.charSequence(text),
                                         SpreadsheetParserContexts.basic(

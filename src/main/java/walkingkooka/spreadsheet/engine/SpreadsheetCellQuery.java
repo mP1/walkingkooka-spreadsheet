@@ -89,9 +89,9 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
 
         return with(
                 PARSER.parseText(
-                                text,
-                                PARSER_CONTEXT
-                        ).cast(SpreadsheetParserToken.class)
+                        text,
+                        PARSER_CONTEXT
+                ).cast(SpreadsheetParserToken.class)
         );
     }
 

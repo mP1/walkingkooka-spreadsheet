@@ -1483,7 +1483,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 metadata.numberToColorName()
         );
     }
-    
+
     // setDefaults......................................................................................................
 
     @Test
@@ -1873,8 +1873,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                     .set(SpreadsheetMetadataPropertyName.LOCALE, l)
                                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear);
 
-                    final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
-                    final DateTimeContext context = metadata.dateTimeContext(NOW);
+                            final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
+                            final DateTimeContext context = metadata.dateTimeContext(NOW);
                             this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
                             this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
                             this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
@@ -2003,7 +2003,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY)
                         .environmentContext(
                                 EnvironmentContexts.empty(
-                                NOW,
+                                        NOW,
                                         EnvironmentContext.ANONYMOUS
                                 )
                         ),
@@ -2307,8 +2307,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> SpreadsheetMetadataNonEmpty.with(
                         Maps.of(
                                 SpreadsheetMetadataPropertyName.PRECISION, 1),
-                                SpreadsheetMetadata.EMPTY
-                        ).mathContext()
+                        SpreadsheetMetadata.EMPTY
+                ).mathContext()
         );
         this.checkMessage(thrown, "Metadata missing: rounding-mode");
     }

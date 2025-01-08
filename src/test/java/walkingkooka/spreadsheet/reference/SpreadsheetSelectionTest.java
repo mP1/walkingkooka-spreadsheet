@@ -1358,7 +1358,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 selection::toString
         );
     }
-    
+
     // toCellRangeResolvingLabels.......................................................................................................
 
     @Test
@@ -1585,7 +1585,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 selection::toString
         );
     }
-    
+
     // deletedText.......................................................................................................
 
     @Test

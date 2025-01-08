@@ -539,7 +539,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private static Set<SpreadsheetLabelName> checkDeletedLabels0(final Set<SpreadsheetLabelName> deletedLabels) {
         return Sets.immutable(deletedLabels);
     }
-    
+
     // matchedCells............................................................................................................
 
     /**

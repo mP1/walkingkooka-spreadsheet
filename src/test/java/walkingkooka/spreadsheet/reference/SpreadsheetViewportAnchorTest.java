@@ -573,8 +573,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     private void cellAndCheck(final String range,
-                                   final SpreadsheetViewportAnchor anchor,
-                                   final String cell) {
+                              final SpreadsheetViewportAnchor anchor,
+                              final String cell) {
         final SpreadsheetCellRangeReference parsed = SpreadsheetSelection.parseCellRange(range);
         final SpreadsheetCellReference fixed = SpreadsheetSelection.parseCell(cell);
 
@@ -612,8 +612,8 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     private void columnAndCheck(final String range,
-                                     final SpreadsheetViewportAnchor anchor,
-                                     final String column) {
+                                final SpreadsheetViewportAnchor anchor,
+                                final String column) {
         final SpreadsheetColumnRangeReference parsed = SpreadsheetSelection.parseColumnRange(range);
         final SpreadsheetColumnReference fixed = SpreadsheetSelection.parseColumn(column);
 
@@ -672,7 +672,7 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
     }
 
     // parse.............................................................................................................
-    
+
     @Test
     public void testParseUnknownFails() {
         assertThrows(

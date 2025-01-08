@@ -113,7 +113,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetExporterAliasSet}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> CLIPBOARD_EXPORTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetClipboard.instance());
-    
+
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link SpreadsheetImporterAliasSet}</code>
      */
@@ -348,7 +348,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-name {@link SpreadsheetName}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetName> SPREADSHEET_NAME = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetName.instance());
-    
+
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>style {@link TextStyle}</code>
      */

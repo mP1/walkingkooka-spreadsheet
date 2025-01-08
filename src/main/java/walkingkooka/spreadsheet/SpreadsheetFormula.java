@@ -119,9 +119,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             final Optional<ParserToken> token = parser.orFailIfCursorNotEmpty(
                     ParserReporters.invalidCharacterExceptionAndExpected()
             ).parse(
-                            text,
-                            context
-                    );
+                    text,
+                    context
+            );
             formula = EMPTY.setText(
                     begin.textBetween()
                             .toString()

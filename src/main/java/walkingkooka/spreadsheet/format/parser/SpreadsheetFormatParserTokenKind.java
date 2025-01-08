@@ -577,8 +577,8 @@ public enum SpreadsheetFormatParserTokenKind {
 
     private final String labelText = CharSequences.capitalize(
                     CaseKind.SNAKE.change(
-                                    this.name(),
-                                    CaseKind.NORMAL)
+                            this.name(),
+                            CaseKind.NORMAL)
             ).toString()
             .replace("Ampm", "AMPM");
 

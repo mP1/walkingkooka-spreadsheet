@@ -656,8 +656,8 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
         this.patternsAndCheck(
                 pattern,
-                        "ddmmyyyy",
-                        "ddmmyy"
+                "ddmmyyyy",
+                "ddmmyy"
         );
     }
 
@@ -667,9 +667,9 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
         this.patternsAndCheck(
                 pattern,
-                        "ddmmyyyy",
-                        "ddmmyy",
-                        "dd/mm/yyyy"
+                "ddmmyyyy",
+                "ddmmyy",
+                "dd/mm/yyyy"
         );
     }
 
@@ -679,8 +679,8 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
         this.patternsAndCheck(
                 pattern,
-                        "[green]dd/mm/yyyy",
-                        "[red]dd/mm/yyyy"
+                "[green]dd/mm/yyyy",
+                "[red]dd/mm/yyyy"
         );
     }
 

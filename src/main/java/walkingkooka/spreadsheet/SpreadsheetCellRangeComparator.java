@@ -72,9 +72,9 @@ public final class SpreadsheetCellRangeComparator implements Comparator<List<Spr
             }
             result = comparator.compare(
                     left.get(i),
-                            right.get(i),
-                            context
-                    );
+                    right.get(i),
+                    context
+            );
             if (Comparators.EQUAL != result) {
                 break;
             }

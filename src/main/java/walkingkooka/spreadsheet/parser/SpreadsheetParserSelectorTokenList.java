@@ -116,7 +116,7 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
                 "", // text
                 SpreadsheetParserSelectorToken.NO_ALTERNATIVES
         );
-        
+
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTokenList.class),
                 SpreadsheetParserSelectorTokenList::unmarshall,

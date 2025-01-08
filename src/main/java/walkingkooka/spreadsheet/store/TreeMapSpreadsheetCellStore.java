@@ -106,7 +106,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public void delete(final SpreadsheetCellReference id) {
         this.store.delete(id);
-        
+
         this.lrtd.remove(id);
         this.rltd.remove(id);
 
@@ -305,10 +305,10 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     private int max(final ToIntFunction<SpreadsheetCell> value) {
         return 1 +
                 this.all()
-                .stream()
-                .mapToInt(value)
-                .max()
-                .orElse(-1);
+                        .stream()
+                        .mapToInt(value)
+                        .max()
+                        .orElse(-1);
     }
 
     @Override

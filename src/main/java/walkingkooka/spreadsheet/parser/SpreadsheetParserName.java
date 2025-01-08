@@ -56,7 +56,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     public final static int MAX_LENGTH = PluginName.MAX_LENGTH;
 
     // SpreadsheetParserName instances...............................................................................
-    
+
     final static String DATE_PARSER_PATTERN_STRING = "date-parse-pattern";
 
     /**

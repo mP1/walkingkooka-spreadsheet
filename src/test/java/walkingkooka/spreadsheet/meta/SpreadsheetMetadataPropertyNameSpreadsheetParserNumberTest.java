@@ -38,7 +38,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserNumber>
-        implements SpreadsheetMetadataTesting{
+        implements SpreadsheetMetadataTesting {
 
     @Test
     public void testExtractLocaleAwareValue() throws ParseException {

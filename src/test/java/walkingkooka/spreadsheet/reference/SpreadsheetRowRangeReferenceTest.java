@@ -1396,7 +1396,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
                 selection
         );
     }
-    
+
     // IterableTesting..................................................................................................
 
     @Test
@@ -1526,32 +1526,32 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     @Test
     public void testCompareToEquals() {
         this.compareToAndCheckEquals(
-                SpreadsheetSelection.parseRowRange("1:2" ),
-                SpreadsheetSelection.parseRowRange("1:2" )
+                SpreadsheetSelection.parseRowRange("1:2"),
+                SpreadsheetSelection.parseRowRange("1:2")
         );
     }
 
     @Test
     public void testCompareToEqualsDifferentKind() {
         this.compareToAndCheckEquals(
-                SpreadsheetSelection.parseRowRange("1:2" ),
-                SpreadsheetSelection.parseRowRange("$1:$2" )
+                SpreadsheetSelection.parseRowRange("1:2"),
+                SpreadsheetSelection.parseRowRange("$1:$2")
         );
     }
 
     @Test
     public void testCompareToEqualsLess() {
         this.compareToAndCheckLess(
-                SpreadsheetSelection.parseRowRange("1:2" ),
-                SpreadsheetSelection.parseRowRange("2:3" )
+                SpreadsheetSelection.parseRowRange("1:2"),
+                SpreadsheetSelection.parseRowRange("2:3")
         );
     }
 
     @Test
     public void testCompareToEqualsLessDifferentKind() {
         this.compareToAndCheckLess(
-                SpreadsheetSelection.parseRowRange("1:2" ),
-                SpreadsheetSelection.parseRowRange("$2:$3" )
+                SpreadsheetSelection.parseRowRange("1:2"),
+                SpreadsheetSelection.parseRowRange("$2:$3")
         );
     }
 

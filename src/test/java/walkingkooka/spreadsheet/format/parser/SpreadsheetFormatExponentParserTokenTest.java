@@ -131,9 +131,9 @@ public final class SpreadsheetFormatExponentParserTokenTest extends SpreadsheetF
     @Override
     public SpreadsheetFormatExponentParserToken createDifferentToken() {
         return SpreadsheetFormatExponentParserToken.with(Lists.of(this.exponentSymbol(),
-                this.whitespace(),
-                this.digit(),
-                this.digit()),
+                        this.whitespace(),
+                        this.digit(),
+                        this.digit()),
                 "E+ ##");
     }
 

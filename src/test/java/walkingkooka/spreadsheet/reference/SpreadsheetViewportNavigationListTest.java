@@ -753,7 +753,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
                 SpreadsheetViewportNavigationList.parse("extend-left column,extend-right column,extend-up row,extend-down row")
         );
     }
-    
+
     // ClassTesting.....................................................................................................
 
     @Override

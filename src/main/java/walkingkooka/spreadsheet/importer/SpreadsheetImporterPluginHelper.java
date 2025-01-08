@@ -54,7 +54,7 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
 
     @Override
     public Optional<SpreadsheetImporterName> parseName(final TextCursor cursor,
-                                             final ParserContext context) {
+                                                       final ParserContext context) {
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
 
@@ -92,7 +92,7 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
 
     @Override
     public SpreadsheetImporterInfo info(final AbsoluteUrl url,
-                              final SpreadsheetImporterName name) {
+                                        final SpreadsheetImporterName name) {
         return SpreadsheetImporterInfo.with(url, name);
     }
 
@@ -131,7 +131,7 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
     public SpreadsheetImporterAliasSet aliasSet(final SortedSet<SpreadsheetImporterAlias> aliases) {
         return SpreadsheetImporterAliasSet.with(aliases);
     }
-    
+
     @Override
     public String label() {
         return "Importer";

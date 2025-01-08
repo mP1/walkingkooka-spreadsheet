@@ -95,10 +95,10 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
                               final Class<?> type) {
         return this.enableConverter ?
                 this.converter.canConvert(
-                value,
-                type,
-                this
-        ) :
+                        value,
+                        type,
+                        this
+                ) :
                 this.context.canConvert(value, type);
     }
 
@@ -107,10 +107,10 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
                                          final Class<T> target) {
         return this.enableConverter ?
                 this.converter.convert(
-                value,
-                target,
-                this
-        ) :
+                        value,
+                        target,
+                        this
+                ) :
                 this.context.convert(value, target);
     }
 
@@ -119,10 +119,10 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
                                final Class<T> target) {
         return this.enableConverter ?
                 this.converter.convertOrFail(
-                value,
-                target,
-                this
-        ):
+                        value,
+                        target,
+                        this
+                ) :
                 this.context.convertOrFail(value, target);
     }
 

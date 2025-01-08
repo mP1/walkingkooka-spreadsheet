@@ -326,11 +326,11 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return SpreadsheetConverterContexts.basic(
                 Converters.collection(
                         Cast.to(
-                            Lists.of(
-                                    Converters.numberToBoolean(),
-                                    SpreadsheetConverters.errorToString(),
-                                    SpreadsheetConverters.errorToNumber()
-                            )
+                                Lists.of(
+                                        Converters.numberToBoolean(),
+                                        SpreadsheetConverters.errorToString(),
+                                        SpreadsheetConverters.errorToNumber()
+                                )
                         )
                 ),
                 LABEL_NAME_RESOLVER,

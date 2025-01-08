@@ -77,10 +77,10 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     private static SpreadsheetComparatorNameList with0(final List<SpreadsheetComparatorName> names) {
         final SpreadsheetComparatorNameList list;
 
-        switch(names.size()) {
+        switch (names.size()) {
             case 0:
-              list = EMPTY;
-              break;
+                list = EMPTY;
+                break;
             default:
                 list = new SpreadsheetComparatorNameList(names);
                 break;

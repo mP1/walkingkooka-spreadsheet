@@ -65,7 +65,7 @@ public final class SpreadsheetImporterCollectionTest implements SpreadsheetImpor
 
     private final static List<SpreadsheetImporterCellValue> IMPORTED = Lists.of(
             SpreadsheetImporterCellValue.cell(
-                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                    SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
             )
     );
 
