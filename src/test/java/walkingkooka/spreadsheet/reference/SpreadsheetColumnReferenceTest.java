@@ -409,7 +409,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testToRowOrRowRangeFails() {
         this.toRowOrRowRangeFails();
     }
-    
+
     // toRelative........................................................................................................
 
     @Test

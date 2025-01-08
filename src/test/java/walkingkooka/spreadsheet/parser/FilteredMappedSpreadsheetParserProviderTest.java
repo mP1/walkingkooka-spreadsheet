@@ -90,10 +90,10 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
         this.spreadsheetParserNextTokenAndCheck(
                 SpreadsheetParserSelector.parse(NEW_PARSER_NAME),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
-                                SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                        ).spreadsheetParserNextToken(
-                                SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
-                        )
+                        SpreadsheetFormatterProviders.spreadsheetFormatPattern()
+                ).spreadsheetParserNextToken(
+                        SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
+                )
         );
     }
 

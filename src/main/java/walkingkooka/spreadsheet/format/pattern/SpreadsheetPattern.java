@@ -1091,7 +1091,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
-            this.value.text()
+                this.value.text()
         );
     }
 

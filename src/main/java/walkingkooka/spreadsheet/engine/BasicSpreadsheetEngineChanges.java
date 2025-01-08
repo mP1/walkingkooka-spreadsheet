@@ -187,7 +187,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
                                 cell.reference(),
                                 this.context
                         )::accept
-        );
+                );
     }
 
     /**
@@ -416,7 +416,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
         SpreadsheetRowReference top = null;
         SpreadsheetRowReference bottom = null;
 
-        for(final SpreadsheetCellReference cell : this.updatedAndDeletedCells.keySet()) {
+        for (final SpreadsheetCellReference cell : this.updatedAndDeletedCells.keySet()) {
             final SpreadsheetColumnReference column = cell.column();
             final SpreadsheetRowReference row = cell.row();
 
@@ -433,8 +433,8 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
             }
         }
 
-        for(final SpreadsheetLabelMapping labelMapping : this.updatedAndDeletedLabels.values()) {
-            if(null != labelMapping) {
+        for (final SpreadsheetLabelMapping labelMapping : this.updatedAndDeletedLabels.values()) {
+            if (null != labelMapping) {
                 SpreadsheetExpressionReference target;
                 do {
                     target = labelMapping.target();

@@ -486,10 +486,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName STRING_IDENTIFIER = EbnfIdentifierName.with("STRING");
     private static final Parser<SpreadsheetParserContext> STRING = Parsers.<SpreadsheetParserContext>stringCharPredicate(
-            CharPredicates.always(),
-            1,
-            65536
-    ).transform(SpreadsheetParsers::transformString)
+                    CharPredicates.always(),
+                    1,
+                    65536
+            ).transform(SpreadsheetParsers::transformString)
             .setToString(SpreadsheetTextLiteralParserToken.class.getSimpleName());
 
     private static ParserToken transformString(final ParserToken token,
@@ -559,8 +559,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         return parser(
                 resolveParsers(value)
-                .get(VALUE_OR_EXPRESSION_IDENTIFIER)
-                .transform(SpreadsheetParsers::transformValueOrExpression)
+                        .get(VALUE_OR_EXPRESSION_IDENTIFIER)
+                        .transform(SpreadsheetParsers::transformValueOrExpression)
         );
     }
 

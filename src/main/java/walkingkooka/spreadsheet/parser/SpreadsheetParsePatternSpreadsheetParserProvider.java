@@ -99,7 +99,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         SpreadsheetParserSelectorToken next;
 
         final SpreadsheetParserName name = selector.name();
-        switch(name.value()) {
+        switch (name.value()) {
             case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
                 next = spreadsheetParserNextToken(
                         selector,
@@ -152,7 +152,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                             .collect(Collectors.toList())
             );
         } else {
-            final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern)kind.parse(text);
+            final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern) kind.parse(text);
             next = SpreadsheetFormatParserTokenKind.last(
                             pattern.value()
                     ).map(k -> toSpreadsheetParserSelectorToken(kind, k))
@@ -163,7 +163,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
     }
 
     private static SpreadsheetParserSelectorToken toSpreadsheetParserSelectorToken(final SpreadsheetPatternKind kind,
-                                                                                           final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
+                                                                                   final SpreadsheetFormatParserTokenKind spreadsheetFormatParserTokenKind) {
         return SpreadsheetParserSelectorToken.with(
                 "", // label
                 "", // text

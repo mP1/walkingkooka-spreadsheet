@@ -57,9 +57,9 @@ final class SpreadsheetMetadataComponents {
                     .map(Object::toString)
                     .collect(
                             Collectors.joining(
-                            ", ",
-                            "Metadata missing: ",
-                            ""
+                                    ", ",
+                                    "Metadata missing: ",
+                                    ""
                             )
                     )
             );

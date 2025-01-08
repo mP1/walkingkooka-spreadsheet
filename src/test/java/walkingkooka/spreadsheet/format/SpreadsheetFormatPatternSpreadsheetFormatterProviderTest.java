@@ -692,7 +692,7 @@ public final class SpreadsheetFormatPatternSpreadsheetFormatterProviderTest impl
                         "",
                         Lists.of(
                                 SpreadsheetFormatterSelectorTokenAlternative.with(
-                                    ".",
+                                        ".",
                                         "."
                                 ),
                                 SpreadsheetFormatterSelectorTokenAlternative.with(

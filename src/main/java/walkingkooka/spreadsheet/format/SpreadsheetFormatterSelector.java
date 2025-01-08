@@ -124,7 +124,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
                 this :
                 new SpreadsheetFormatterSelector(different);
     }
-    
+
     private final PluginSelector<SpreadsheetFormatterName> selector;
 
     @Override

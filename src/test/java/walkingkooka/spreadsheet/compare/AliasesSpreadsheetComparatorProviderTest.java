@@ -61,7 +61,7 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
     private final static SpreadsheetComparatorName NAME4 = SpreadsheetComparatorName.with(NAME4_STRING);
 
     private final static SpreadsheetComparatorInfo INFO4 = SpreadsheetComparatorInfo.parse("https://example.com/custom4 " + NAME4);
-    
+
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
@@ -157,7 +157,7 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
                 new FakeSpreadsheetComparatorProvider() {
                     @Override
                     public SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorSelector selector,
-                                                                                                 final ProviderContext context) {
+                                                                       final ProviderContext context) {
                         return selector.evaluateValueText(
                                 this,
                                 context
@@ -166,8 +166,8 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
 
                     @Override
                     public SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorName name,
-                                                                                                 final List<?> values,
-                                                                                                 final ProviderContext context) {
+                                                                       final List<?> values,
+                                                                       final ProviderContext context) {
                         SpreadsheetComparator comparator;
 
                         switch (name.toString()) {

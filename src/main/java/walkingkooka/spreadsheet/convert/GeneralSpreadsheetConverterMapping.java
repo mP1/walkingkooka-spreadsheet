@@ -76,11 +76,11 @@ final class GeneralSpreadsheetConverterMapping<T> {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .separator(", " )
-                .label("boolean" ).value(this.booleanValue)
-                .label("date" ).value(this.date)
-                .label("dateTime" ).value(this.dateTime)
-                .label("number" ).value(this.number)
+                .separator(", ")
+                .label("boolean").value(this.booleanValue)
+                .label("date").value(this.date)
+                .label("dateTime").value(this.dateTime)
+                .label("number").value(this.number)
                 .label("string").value(this.string)
                 .label("time").value(this.time)
                 .build();

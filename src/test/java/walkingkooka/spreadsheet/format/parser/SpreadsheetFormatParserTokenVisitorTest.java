@@ -34,9 +34,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatColorParserToken token = SpreadsheetFormatParserToken.color(Lists.of(
-                open,
-                name,
-                close),
+                        open,
+                        name,
+                        close),
                 "[RED]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -101,10 +101,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.equalsParserToken(Lists.of(
-                open,
-                symbol,
-                number,
-                close),
+                        open,
+                        symbol,
+                        number,
+                        close),
                 "[=123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -174,10 +174,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.greaterThan(Lists.of(
-                open,
-                symbol,
-                number,
-                close),
+                        open,
+                        symbol,
+                        number,
+                        close),
                 "[>123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -247,10 +247,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.greaterThanEquals(Lists.of(
-                open,
-                symbol,
-                number,
-                close),
+                        open,
+                        symbol,
+                        number,
+                        close),
                 "[>=123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -320,10 +320,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.lessThan(Lists.of(
-                open,
-                symbol,
-                number,
-                close),
+                        open,
+                        symbol,
+                        number,
+                        close),
                 "[>123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -393,10 +393,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.lessThanEquals(Lists.of(
-                open,
-                symbol,
-                number,
-                close),
+                        open,
+                        symbol,
+                        number,
+                        close),
                 "[>=123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -466,10 +466,10 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.notEquals(Lists.of(
-                open,
-                symbol,
-                number,
-                close),
+                        open,
+                        symbol,
+                        number,
+                        close),
                 "[=123]");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -538,9 +538,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken y = year();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.date(Lists.of(
-                d,
-                m,
-                y),
+                        d,
+                        m,
+                        y),
                 "dmy");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -605,12 +605,12 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken s = second();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.date(Lists.of(
-                d,
-                month,
-                y,
-                h,
-                min,
-                s),
+                        d,
+                        month,
+                        y,
+                        h,
+                        min,
+                        s),
                 "dmyhms");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -692,8 +692,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken digit = digit();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.exponent(Lists.of(
-                e,
-                digit),
+                        e,
+                        digit),
                 "e+#");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -749,9 +749,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
         final SpreadsheetFormatColorParserToken color = SpreadsheetFormatParserToken.color(Lists.of(
-                open,
-                name,
-                close),
+                        open,
+                        name,
+                        close),
                 "[RED]");
 
         final SpreadsheetFormatExpressionParserToken token = SpreadsheetFormatParserToken.expression(Lists.of(color),
@@ -831,9 +831,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken bottom = digit();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.fraction(Lists.of(
-                top,
-                symbol,
-                bottom),
+                        top,
+                        symbol,
+                        bottom),
                 "#/#");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -880,9 +880,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     public void testFraction2() {
         new SpreadsheetFormatParserTokenVisitor() {
         }.accept(SpreadsheetFormatParserToken.fraction(Lists.of(
-                digit(),
-                fractionSymbol(),
-                digit()),
+                        digit(),
+                        fractionSymbol(),
+                        digit()),
                 "#/#"));
     }
 
@@ -891,7 +891,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken general = SpreadsheetFormatParserToken.generalSymbol("general", "general");
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.general(Lists.of(
-                general),
+                        general),
                 "general");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -939,9 +939,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken decimals = digitZero();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.number(Lists.of(
-                integer,
-                decimalPoint,
-                decimals),
+                        integer,
+                        decimalPoint,
+                        decimals),
                 "#/#");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -1002,8 +1002,8 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken placeholder = textPlaceholder();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.text(Lists.of(
-                whitespace,
-                placeholder),
+                        whitespace,
+                        placeholder),
                 " @");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
@@ -1058,9 +1058,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken s = second();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.time(Lists.of(
-                h,
-                m,
-                s),
+                        h,
+                        m,
+                        s),
                 "hms");
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();

@@ -43,7 +43,7 @@ public final class SpreadsheetViewportNavigationDownRowTest extends SpreadsheetV
                 SpreadsheetSelection.parseRow("3")
         );
     }
-    
+
     @Override
     SpreadsheetViewportNavigationDownRow createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationDownRow.INSTANCE;

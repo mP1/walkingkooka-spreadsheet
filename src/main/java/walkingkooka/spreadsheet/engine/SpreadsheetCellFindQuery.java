@@ -113,7 +113,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
             }
         }
 
-        if(false == cursor.isEmpty()) {
+        if (false == cursor.isEmpty()) {
             throw new IllegalArgumentException("Invalid query got " + CharSequences.quoteAndEscape(text));
         }
 
@@ -501,7 +501,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     public static final UrlParameterName QUERY = SpreadsheetCellQuery.QUERY;
 
     public static final UrlParameterName VALUE_TYPE = UrlParameterName.with(VALUE_TYPE_STRING);
-    
+
     public UrlQueryString toUrlQueryString() {
         UrlQueryString result = UrlQueryString.EMPTY;
 
@@ -590,7 +590,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return this.urlFragment()
                 .toString();
     }
-    
+
     // json.............................................................................................................
 
     static {

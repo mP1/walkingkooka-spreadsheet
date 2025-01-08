@@ -110,7 +110,7 @@ public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTest
     public SpreadsheetComparatorAlias parseString(final String text) {
         return SpreadsheetComparatorAlias.parse(text);
     }
-    
+
     // class............................................................................................................
 
     @Override

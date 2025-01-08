@@ -60,11 +60,11 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                                         .map(nad -> nad.direction()
                                                 .apply(
                                                         Cast.to(
-                                                            provider.spreadsheetComparator(
-                                                                nad.name(),
-                                                                Lists.empty(),
-                                                                context
-                                                            )
+                                                                provider.spreadsheetComparator(
+                                                                        nad.name(),
+                                                                        Lists.empty(),
+                                                                        context
+                                                                )
                                                         )
                                                 )
                                         ).collect(Collectors.toList())
@@ -127,7 +127,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                 result = missingLeft && missingRight ?
                         Comparators.EQUAL :
                         missingLeft ?
-                                        Comparators.MORE :
+                                Comparators.MORE :
                                 Comparators.LESS; // missing | nulls etc come AFTER
             } else {
                 result = comparator.compare(

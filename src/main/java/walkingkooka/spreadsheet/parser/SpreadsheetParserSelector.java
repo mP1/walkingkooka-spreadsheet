@@ -166,7 +166,7 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
         final String text = this.valueText();
 
         try {
-            return (SpreadsheetParsePattern)kind.parse(text);
+            return (SpreadsheetParsePattern) kind.parse(text);
         } catch (final InvalidCharacterException cause) {
             throw cause.setTextAndPosition(
                     this.toString(),

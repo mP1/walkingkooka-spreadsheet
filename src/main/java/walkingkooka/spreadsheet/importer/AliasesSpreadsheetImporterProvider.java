@@ -36,7 +36,7 @@ final class AliasesSpreadsheetImporterProvider implements SpreadsheetImporterPro
                 context
         );
     }
-    
+
     @Override
     public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterName name,
                                                    final List<?> values,

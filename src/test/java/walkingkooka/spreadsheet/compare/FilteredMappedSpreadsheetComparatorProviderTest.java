@@ -145,7 +145,7 @@ public final class FilteredMappedSpreadsheetComparatorProviderTest implements Sp
                     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
                                                                           final List<?> values,
                                                                           final ProviderContext context) {
-                        if(name.equals(ORIGINAL_NAME)) {
+                        if (name.equals(ORIGINAL_NAME)) {
                             checkEquals(VALUES, values);
                             return COMPARATOR;
                         }

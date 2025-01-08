@@ -230,7 +230,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     }
 
     private Set<SpreadsheetCellReference> cells;
-    
+
     // columns..........................................................................................................
 
     /**

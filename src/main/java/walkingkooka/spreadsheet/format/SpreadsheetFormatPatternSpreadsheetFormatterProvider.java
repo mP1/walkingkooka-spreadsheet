@@ -207,7 +207,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         SpreadsheetFormatterSelectorToken next;
 
         final SpreadsheetFormatterName name = selector.name();
-        switch(name.value()) {
+        switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
                 next = null;
                 break;
@@ -281,8 +281,8 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
             final SpreadsheetFormatPattern formatPattern = kind.parse(text)
                     .toFormat();
             next = SpreadsheetFormatParserTokenKind.last(
-                    formatPattern.value()
-            ).map(k -> toSpreadsheetFormatterSelectorTextComponent(kind, k))
+                            formatPattern.value()
+                    ).map(k -> toSpreadsheetFormatterSelectorTextComponent(kind, k))
                     .orElse(null);
         }
 

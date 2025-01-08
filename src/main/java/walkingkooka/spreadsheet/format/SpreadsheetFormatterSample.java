@@ -146,7 +146,7 @@ public final class SpreadsheetFormatterSample implements TreePrintable, Value<Te
     // json.............................................................................................................
 
     static SpreadsheetFormatterSample unmarshall(final JsonNode node,
-                                                    final JsonNodeUnmarshallContext context) {
+                                                 final JsonNodeUnmarshallContext context) {
         String label = null;
         SpreadsheetFormatterSelector selector = null;
         TextNode value = null;

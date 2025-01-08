@@ -104,6 +104,7 @@ public class JunitTest {
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+
     @Test
     public void testMetadataNonLocaleDefaults() {
         Assert.assertNotEquals(null, SpreadsheetMetadata.NON_LOCALE_DEFAULTS);

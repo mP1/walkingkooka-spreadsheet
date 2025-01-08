@@ -61,7 +61,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
     private final static SpreadsheetExporterName NAME4 = SpreadsheetExporterName.with(NAME4_STRING);
 
     private final static SpreadsheetExporterInfo INFO4 = SpreadsheetExporterInfo.parse("https://example.com/custom4 " + NAME4);
-    
+
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
 
     @Test
@@ -157,7 +157,7 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
                 new FakeSpreadsheetExporterProvider() {
                     @Override
                     public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterSelector selector,
-                                                                                                 final ProviderContext context) {
+                                                                   final ProviderContext context) {
                         return selector.evaluateValueText(
                                 this,
                                 context
@@ -166,8 +166,8 @@ public final class AliasesSpreadsheetExporterProviderTest implements Spreadsheet
 
                     @Override
                     public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterName name,
-                                                                                                 final List<?> values,
-                                                                                                 final ProviderContext context) {
+                                                                   final List<?> values,
+                                                                   final ProviderContext context) {
                         SpreadsheetExporter exporter;
 
                         switch (name.toString()) {

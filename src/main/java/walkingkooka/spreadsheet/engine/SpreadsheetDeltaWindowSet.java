@@ -37,7 +37,7 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
     @SuppressWarnings("lgtm[java/abstract-to-concrete-cast]")
     static SpreadsheetDeltaWindowSet with(final Set<SpreadsheetCellRangeReference> window) {
         return window instanceof SpreadsheetDeltaWindowSet ?
-                (SpreadsheetDeltaWindowSet)window :
+                (SpreadsheetDeltaWindowSet) window :
                 new SpreadsheetDeltaWindowSet(
                         window.toArray(new SpreadsheetCellRangeReference[window.size()]) // TODO Array.clone.
                 );

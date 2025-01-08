@@ -225,10 +225,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                 Optional.of(
                                         SpreadsheetParserToken.number(
                                                 Lists.of(SpreadsheetParserToken.digits(text, text)),
-                                        text
+                                                text
+                                        )
                                 )
                         )
-                )
                         .setExpression(expression)
         );
 
@@ -317,11 +317,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         };
 
         final SpreadsheetCell returned = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
-                        cellStore,
-                        METADATA,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        PROVIDER_CONTEXT
-                ).save(cell);
+                cellStore,
+                METADATA,
+                SPREADSHEET_PARSER_PROVIDER,
+                PROVIDER_CONTEXT
+        ).save(cell);
         this.checkEquals(saved,
                 this.saved,
                 () -> "saved " + cell + " metadata=" + METADATA
@@ -392,12 +392,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 )
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        Expression.value(
-                                                LocalDate.of(2021, 2, 9)
+                                        Optional.of(
+                                                Expression.value(
+                                                        LocalDate.of(2021, 2, 9)
+                                                )
                                         )
                                 )
-                        )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"
@@ -467,12 +467,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 )
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        Expression.value(
-                                                LocalDate.of(2021, 2, 9)
+                                        Optional.of(
+                                                Expression.value(
+                                                        LocalDate.of(2021, 2, 9)
+                                                )
                                         )
                                 )
-                        )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"
@@ -533,12 +533,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 )
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        Expression.value(
-                                                LocalDate.of(2021, 2, 9)
+                                        Optional.of(
+                                                Expression.value(
+                                                        LocalDate.of(2021, 2, 9)
+                                                )
                                         )
                                 )
-                        )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"
@@ -599,12 +599,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 )
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        Expression.value(
-                                                LocalDate.of(2021, 2, 9)
+                                        Optional.of(
+                                                Expression.value(
+                                                        LocalDate.of(2021, 2, 9)
+                                                )
                                         )
                                 )
-                        )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"
@@ -649,7 +649,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         Optional.of(
                                                 number(3.5)
                                         )
-                        )
+                                )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"
@@ -695,7 +695,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         Optional.of(
                                                 number(1.5)
                                         )
-                        )
+                                )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"
@@ -760,7 +760,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         Optional.of(
                                                 number(3.5)
                                         )
-                        )
+                                )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"
@@ -819,10 +819,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 )
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        number(3.5)
+                                        Optional.of(
+                                                number(3.5)
+                                        )
                                 )
-                        )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"
@@ -900,12 +900,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                                 )
                                         )
                                 ).setExpression(
-                                Optional.of(
-                                        Expression.value(
-                                                LocalTime.of(9 + 12, 59)
+                                        Optional.of(
+                                                Expression.value(
+                                                        LocalTime.of(9 + 12, 59)
+                                                )
                                         )
                                 )
-                        )
                 ),
                 loader.loadOrFail(requires.reference()),
                 () -> "didnt rewrite formula"

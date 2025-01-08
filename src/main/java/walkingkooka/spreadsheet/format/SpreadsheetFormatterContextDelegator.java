@@ -35,7 +35,7 @@ import java.util.Optional;
 /**
  * Simplifies implementing a delegate to a wrapped {@link SpreadsheetFormatterContext}.
  */
-public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatterContext{
+public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatterContext {
     @Override
     default int cellCharacterWidth() {
         return this.spreadsheetFormatterContext().cellCharacterWidth();

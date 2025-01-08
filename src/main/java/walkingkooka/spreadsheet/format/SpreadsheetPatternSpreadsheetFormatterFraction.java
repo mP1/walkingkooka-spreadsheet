@@ -74,7 +74,7 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
 
         return Optional.ofNullable(
                 context.convert(value, BigDecimal.class)
-                .mapLeft(v -> SpreadsheetText.with(this.format1(v, context)))
+                        .mapLeft(v -> SpreadsheetText.with(this.format1(v, context)))
                         .orElseLeft(null)
         );
     }

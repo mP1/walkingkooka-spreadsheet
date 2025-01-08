@@ -203,8 +203,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return this.spreadsheetProvider.expressionFunction(
                 function,
                 Lists.empty(),
-                        this
-                ).isPure(this);
+                this
+        ).isPure(this);
     }
 
     @Override

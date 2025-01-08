@@ -77,7 +77,7 @@ public final class SpreadsheetImporterProviderTestingTest implements Spreadsheet
     class TestSpreadsheetImporterProvider implements SpreadsheetImporterProvider {
         @Override
         public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterSelector selector,
-                                                         final ProviderContext context) {
+                                                       final ProviderContext context) {
             Objects.requireNonNull(selector, "selector");
             Objects.requireNonNull(context, "context");
 
@@ -87,8 +87,8 @@ public final class SpreadsheetImporterProviderTestingTest implements Spreadsheet
 
         @Override
         public SpreadsheetImporter spreadsheetImporter(final SpreadsheetImporterName name,
-                                                         final List<?> values,
-                                                         final ProviderContext context) {
+                                                       final List<?> values,
+                                                       final ProviderContext context) {
             Objects.requireNonNull(name, "name");
             Objects.requireNonNull(values, "values");
             Objects.requireNonNull(context, "context");
@@ -109,12 +109,12 @@ public final class SpreadsheetImporterProviderTestingTest implements Spreadsheet
     }
 
     // ClassTesting.....................................................................................................
-    
+
     @Override
     public Class<TestSpreadsheetImporterProvider> type() {
         return TestSpreadsheetImporterProvider.class;
     }
-    
+
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;

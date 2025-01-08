@@ -84,7 +84,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                 ),
                 SpreadsheetCellValueKind.CELL,
                 SpreadsheetImporterCellValue.cell(
-                      cellA1
+                        cellA1
                 ),
                 SpreadsheetImporterCellValue.cell(
                         cellA2
@@ -115,8 +115,8 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                 ),
                 SpreadsheetCellValueKind.FORMULA,
                 SpreadsheetImporterCellValue.formula(
-                     cellA1.reference(),
-                     cellA1.formula()
+                        cellA1.reference(),
+                        cellA1.formula()
                 ),
                 SpreadsheetImporterCellValue.formula(
                         cellA2.reference(),
@@ -270,7 +270,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                 )
         );
     }
-    
+
     private void doImportAndCheck(final SpreadsheetCellRange cells,
                                   final SpreadsheetCellValueKind valueKind,
                                   final SpreadsheetImporterCellValue... values) {
@@ -294,7 +294,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
                                         JSON_NODE_MARSHALL_CONTEXT
                                 )
                         ),
-               values
+                values
         );
     }
 

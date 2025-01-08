@@ -36,7 +36,7 @@ final class SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisito
 
     // only called by SpreadsheetFormatterSelectorToken#tokens
     static List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatParserToken token,
-                                                                  final SpreadsheetFormatterContext context) {
+                                                          final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(context, "context");
 

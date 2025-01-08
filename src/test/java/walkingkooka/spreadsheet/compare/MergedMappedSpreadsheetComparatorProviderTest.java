@@ -175,10 +175,10 @@ public final class MergedMappedSpreadsheetComparatorProviderTest implements Spre
                     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
                                                                           final List<?> values,
                                                                           final ProviderContext context) {
-                        if(name.equals(RENAME_PROVIDER_NAME)) {
+                        if (name.equals(RENAME_PROVIDER_NAME)) {
                             return RENAME_COMPARATOR;
                         }
-                        if(name.equals(PROVIDER_ONLY_NAME)) {
+                        if (name.equals(PROVIDER_ONLY_NAME)) {
                             return PROVIDER_ONLY_COMPARATOR;
                         }
                         throw new IllegalArgumentException("Unknown comparator " + name);

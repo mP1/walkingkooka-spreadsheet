@@ -44,7 +44,7 @@ public final class SpreadsheetConditionRightNotEqualsParserTokenTest extends Spr
                 )
         );
     }
-    
+
     @Override
     SpreadsheetSymbolParserToken symbolParserToken() {
         return SpreadsheetParserToken.notEqualsSymbol(

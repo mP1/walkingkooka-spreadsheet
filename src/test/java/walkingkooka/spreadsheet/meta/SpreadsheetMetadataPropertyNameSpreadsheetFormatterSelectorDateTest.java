@@ -30,7 +30,7 @@ import java.time.ZoneOffset;
 import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate>
-        implements SpreadsheetMetadataTesting{
+        implements SpreadsheetMetadataTesting {
 
     @Test
     public void testExtractLocaleAwareValue() {

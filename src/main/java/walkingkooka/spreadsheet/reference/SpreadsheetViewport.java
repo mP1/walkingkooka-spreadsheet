@@ -46,7 +46,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
      * No {@link AnchoredSpreadsheetSelection}
      */
     public final static Optional<AnchoredSpreadsheetSelection> NO_ANCHORED_SELECTION = Optional.empty();
-    
+
     /**
      * No navigations
      */

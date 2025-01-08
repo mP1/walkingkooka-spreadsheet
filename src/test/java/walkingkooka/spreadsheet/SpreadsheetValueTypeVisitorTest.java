@@ -210,19 +210,19 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visitCellRange() {
-                b.append("3" );
+                b.append("3");
             }
         }.accept(type);
 
@@ -244,19 +244,19 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visitCellReference() {
-                b.append("3" );
+                b.append("3");
             }
         }.accept(type);
 
@@ -312,7 +312,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
@@ -346,19 +346,19 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visitColumnReference() {
-                b.append("3" );
+                b.append("3");
             }
         }.accept(type);
 
@@ -380,19 +380,19 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visitColumnRangeReference() {
-                b.append("3" );
+                b.append("3");
             }
         }.accept(type);
 
@@ -495,14 +495,14 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
@@ -529,7 +529,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
@@ -597,19 +597,19 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visitLabel() {
-                b.append("3" );
+                b.append("3");
             }
         }.accept(type);
 
@@ -631,7 +631,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
@@ -801,19 +801,19 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visitRowRangeReference() {
-                b.append("3" );
+                b.append("3");
             }
         }.accept(type);
 
@@ -835,7 +835,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
             @Override
             protected Visiting startVisit(final Class<?> t) {
                 assertSame(type, t);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 

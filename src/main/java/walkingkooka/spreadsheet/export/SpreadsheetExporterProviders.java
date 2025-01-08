@@ -60,7 +60,7 @@ public final class SpreadsheetExporterProviders implements PublicStaticHelper {
     public static SpreadsheetExporterProvider empty() {
         return EmptySpreadsheetExporterProvider.INSTANCE;
     }
-    
+
     /**
      * {@see FakeSpreadsheetExporterProvider}
      */

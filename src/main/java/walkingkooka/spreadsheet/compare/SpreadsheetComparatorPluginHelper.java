@@ -54,7 +54,7 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
 
     @Override
     public Optional<SpreadsheetComparatorName> parseName(final TextCursor cursor,
-                                                       final ParserContext context) {
+                                                         final ParserContext context) {
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
 

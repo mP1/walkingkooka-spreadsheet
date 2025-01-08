@@ -43,7 +43,7 @@ public final class SpreadsheetFormatterInfoTest implements PluginInfoLikeTesting
                 )
         );
     }
-    
+
     // ClassTesting.....................................................................................................
 
     @Override

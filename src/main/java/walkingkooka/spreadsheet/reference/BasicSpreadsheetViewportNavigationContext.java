@@ -212,7 +212,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
                                                                                       final int delta,
                                                                                       final Function<T, Double> widthOrHeight,
                                                                                       final int pixels) {
-        if(pixels < 0) {
+        if (pixels < 0) {
             throw new IllegalArgumentException("Invalid pixels " + pixels + " <= 0");
         }
 
@@ -233,7 +233,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
             // advance moved
             moved = (T) moved.addSaturated(delta);
             if (hidden.test(moved)) {
-                if(stop.test(moved)) {
+                if (stop.test(moved)) {
                     break;
                 }
                 continue; // skip hidden result
@@ -242,7 +242,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
             final double length = widthOrHeight.apply(moved);
             pixelCountdown = pixelCountdown - length;
-            if(pixelCountdown < 0) {
+            if (pixelCountdown < 0) {
                 break; // moved enuff
             }
 

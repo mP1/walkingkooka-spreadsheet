@@ -44,7 +44,7 @@ public final class SpreadsheetViewportNavigationExtendLeftColumnTest extends Spr
                 SpreadsheetSelection.parseRow("3")
         );
     }
-    
+
     @Override
     SpreadsheetViewportNavigationExtendLeftColumn createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendLeftColumn.INSTANCE;

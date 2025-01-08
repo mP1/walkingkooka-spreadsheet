@@ -90,7 +90,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     }
 
     // format...........................................................................................................
-    
+
     @Test
     public void testFormatColorNameAndTextFormatted() {
         final String text = "abc123";

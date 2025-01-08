@@ -89,7 +89,7 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
                 selector.charAt(24)
         );
     }
-    
+
     @Test
     public void testSpreadsheetParsePatternWithDateParsePattern() {
         this.spreadsheetParsePatternAndCheck(

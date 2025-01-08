@@ -62,8 +62,8 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                 ).filter(n -> false == "fake".equals(n))
                 .forEach(n -> SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE.spreadsheetComparator(
                                 SpreadsheetComparatorName.with(n),
-                        Lists.empty(),
-                        ProviderContexts.fake()
+                                Lists.empty(),
+                                ProviderContexts.fake()
                         )
                 );
     }
@@ -82,9 +82,9 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
                                 ).toString()
                         ).filter(n -> false == "fake".equals(n))
                         .map(n -> SpreadsheetComparatorInfo.with(
-                                SpreadsheetComparatorProviders.BASE_URL.appendPath(
-                                        UrlPath.parse(n)
-                                ),
+                                        SpreadsheetComparatorProviders.BASE_URL.appendPath(
+                                                UrlPath.parse(n)
+                                        ),
                                         SpreadsheetComparatorName.with(n)
                                 )
                         ).toArray(SpreadsheetComparatorInfo[]::new)

@@ -67,9 +67,9 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     public Optional<EmailAddress> user() {
         throw new UnsupportedOperationException();
     }
-    
+
     // formula..........................................................................................................
-    
+
     @Override
     public SpreadsheetParserToken parseFormula(final TextCursor formula) {
         Objects.requireNonNull(formula, "formula");

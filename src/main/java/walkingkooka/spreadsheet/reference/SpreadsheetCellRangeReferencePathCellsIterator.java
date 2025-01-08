@@ -62,7 +62,7 @@ final class SpreadsheetCellRangeReferencePathCellsIterator implements Iterator<S
         final SpreadsheetCellRangeReference cells = this.cells;
 
         return this.path.comparator.xFirst ?
-            this.x <  cells.width() :
+                this.x < cells.width() :
                 this.y < cells.height();
     }
 
@@ -79,14 +79,14 @@ final class SpreadsheetCellRangeReferencePathCellsIterator implements Iterator<S
         final SpreadsheetCellRangeReferencePathComparator comparator = this.path.comparator;
 
         if (comparator.xFirst) {
-            if (y + 1>= cells.height()) {
+            if (y + 1 >= cells.height()) {
                 this.y = 0;
                 this.x++;
             } else {
                 this.y = 1 + y;
             }
         } else {
-            if (x + 1>= cells.width()) {
+            if (x + 1 >= cells.width()) {
                 this.x = 0;
                 this.y++;
             } else {

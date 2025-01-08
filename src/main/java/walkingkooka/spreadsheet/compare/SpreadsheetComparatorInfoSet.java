@@ -140,7 +140,7 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
 
     @Override
     public SpreadsheetComparatorInfoSet replace(final SpreadsheetComparatorInfo oldInfo,
-                                    final SpreadsheetComparatorInfo newInfo) {
+                                                final SpreadsheetComparatorInfo newInfo) {
         return this.setElements(
                 this.pluginInfoSet.replace(
                         oldInfo,

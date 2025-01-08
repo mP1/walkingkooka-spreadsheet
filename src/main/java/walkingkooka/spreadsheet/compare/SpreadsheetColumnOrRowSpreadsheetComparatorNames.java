@@ -107,7 +107,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     }
 
 
-
     /**
      * Parses the text into a single {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      * <pre>

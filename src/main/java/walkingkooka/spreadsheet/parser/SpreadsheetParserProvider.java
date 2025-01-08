@@ -50,7 +50,7 @@ public interface SpreadsheetParserProvider extends Provider {
      * Constant for {@link #spreadsheetParserNextToken(SpreadsheetParserSelector)} when there is no next.
      */
     Optional<SpreadsheetParserSelectorToken> NO_NEXT_TOKEN = Optional.empty();
-    
+
     /**
      * Returns the next {@link SpreadsheetParserSelectorToken} for the given {@link SpreadsheetParserSelector}.
      */

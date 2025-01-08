@@ -23,7 +23,6 @@ package walkingkooka.spreadsheet.reference;
 public enum SpreadsheetReferenceKind {
 
     ABSOLUTE {
-
         @Override
         SpreadsheetColumnReference columnFromCache(final int column) {
             return SpreadsheetColumnReference.absoluteCache()[column];
@@ -45,7 +44,6 @@ public enum SpreadsheetReferenceKind {
         }
     },
     RELATIVE {
-
         @Override
         SpreadsheetColumnReference columnFromCache(final int column) {
             return SpreadsheetColumnReference.relativeCache()[column];

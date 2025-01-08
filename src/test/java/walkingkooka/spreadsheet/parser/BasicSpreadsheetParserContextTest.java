@@ -83,7 +83,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
                 VALUE_SEPARATOR)
         );
     }
-    
+
     @Test
     public void testLocale() {
         this.hasLocaleAndCheck(this.createContext(), LOCALE);

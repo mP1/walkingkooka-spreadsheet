@@ -46,7 +46,7 @@ public final class SpreadsheetViewportNavigationExtendDownRowTest extends Spread
                         .setAnchor(SpreadsheetViewportAnchor.TOP)
         );
     }
-    
+
     @Override
     SpreadsheetViewportNavigationExtendDownRow createSpreadsheetViewportNavigation() {
         return SpreadsheetViewportNavigationExtendDownRow.INSTANCE;

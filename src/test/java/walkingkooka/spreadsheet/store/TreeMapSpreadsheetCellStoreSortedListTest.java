@@ -647,7 +647,7 @@ public final class TreeMapSpreadsheetCellStoreSortedListTest implements ClassTes
                 () -> list + " indexOfOrNext " + indexOfOrNext
         );
     }
-    
+
     // offset..........................................................................................................
 
     @Test

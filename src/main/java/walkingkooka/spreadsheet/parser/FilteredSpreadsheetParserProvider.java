@@ -51,7 +51,7 @@ final class FilteredSpreadsheetParserProvider implements SpreadsheetParserProvid
 
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
-                                                     final ProviderContext context) {
+                                               final ProviderContext context) {
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
@@ -63,8 +63,8 @@ final class FilteredSpreadsheetParserProvider implements SpreadsheetParserProvid
 
     @Override
     public SpreadsheetParser spreadsheetParser(final SpreadsheetParserName name,
-                                                     final List<?> values,
-                                                     final ProviderContext context) {
+                                               final List<?> values,
+                                               final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");

@@ -155,7 +155,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 SpreadsheetComparatorAliasSet.parse("day, month, year")
         );
     }
-    
+
     @Test
     public void testVisitConverters() {
         new TestSpreadsheetMetadataVisitor() {
@@ -632,7 +632,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 SpreadsheetComparatorAliasSet.EMPTY
         );
     }
-    
+
     @Test
     public void testVisitSpreadsheetExporters() {
         new TestSpreadsheetMetadataVisitor() {
@@ -645,7 +645,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 SpreadsheetExporterAliasSet.EMPTY
         );
     }
-    
+
     @Test
     public void testVisitSpreadsheetFormatters() {
         new TestSpreadsheetMetadataVisitor() {

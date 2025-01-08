@@ -26,7 +26,7 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
         return new BasicSpreadsheetFormatterProviderSamplesContext(
                 Objects.requireNonNull(
                         spreadsheetFormatterContext,
-                "spreadsheetFormatterContext"
+                        "spreadsheetFormatterContext"
                 )
         );
     }

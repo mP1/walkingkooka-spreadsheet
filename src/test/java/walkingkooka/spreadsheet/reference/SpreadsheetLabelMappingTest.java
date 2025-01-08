@@ -341,7 +341,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     private void checkTarget(final SpreadsheetLabelMapping mapping,
-                                final SpreadsheetExpressionReference reference) {
+                             final SpreadsheetExpressionReference reference) {
         this.checkEquals(reference, mapping.target(), "reference");
     }
 

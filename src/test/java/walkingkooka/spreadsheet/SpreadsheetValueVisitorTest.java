@@ -218,20 +218,20 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Object v) {
                 assertSame(value, v);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visit(final SpreadsheetCellRangeReference v) {
                 assertSame(value, v);
-                b.append("3" );
+                b.append("3");
             }
         }.accept(value);
 
@@ -241,32 +241,32 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptCellRange2() {
         new SpreadsheetValueVisitor() {
-        }.accept(SpreadsheetSelection.parseCellRange("A1:B2" ));
+        }.accept(SpreadsheetSelection.parseCellRange("A1:B2"));
     }
 
     @Test
     public void testAcceptCellReference() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetCellReference value = SpreadsheetSelection.parseCell("C3" );
+        final SpreadsheetCellReference value = SpreadsheetSelection.parseCell("C3");
 
         new FakeSpreadsheetValueVisitor() {
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Object v) {
                 assertSame(value, v);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visit(final SpreadsheetCellReference v) {
                 assertSame(value, v);
-                b.append("3" );
+                b.append("3");
             }
         }.accept(value);
 
@@ -276,32 +276,32 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptCellReference2() {
         new SpreadsheetValueVisitor() {
-        }.accept(SpreadsheetSelection.parseCell("C3" ));
+        }.accept(SpreadsheetSelection.parseCell("C3"));
     }
 
     @Test
     public void testAcceptColumnReference() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetColumnReference value = SpreadsheetSelection.parseColumn("D" );
+        final SpreadsheetColumnReference value = SpreadsheetSelection.parseColumn("D");
 
         new FakeSpreadsheetValueVisitor() {
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Object v) {
                 assertSame(value, v);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visit(final SpreadsheetColumnReference v) {
                 assertSame(value, v);
-                b.append("3" );
+                b.append("3");
             }
         }.accept(value);
 
@@ -311,7 +311,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptColumnReference2() {
         new SpreadsheetValueVisitor() {
-        }.accept(SpreadsheetSelection.parseColumn("C" ));
+        }.accept(SpreadsheetSelection.parseColumn("C"));
     }
 
     @Test
@@ -323,20 +323,20 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Object v) {
                 assertSame(value, v);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visit(final SpreadsheetColumnRangeReference v) {
                 assertSame(value, v);
-                b.append("3" );
+                b.append("3");
             }
         }.accept(value);
 
@@ -346,7 +346,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptColumnRangeReference2() {
         new SpreadsheetValueVisitor() {
-        }.accept(SpreadsheetSelection.parseColumnRange("E:F" ));
+        }.accept(SpreadsheetSelection.parseColumnRange("E:F"));
     }
 
     @Test
@@ -358,7 +358,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
@@ -492,26 +492,26 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptLabel() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetLabelName value = SpreadsheetSelection.labelName("Label123" );
+        final SpreadsheetLabelName value = SpreadsheetSelection.labelName("Label123");
 
         new FakeSpreadsheetValueVisitor() {
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Object v) {
                 assertSame(value, v);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visit(final SpreadsheetLabelName v) {
                 assertSame(value, v);
-                b.append("3" );
+                b.append("3");
             }
         }.accept(value);
 
@@ -521,7 +521,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptLabel2() {
         new SpreadsheetValueVisitor() {
-        }.accept(SpreadsheetSelection.labelName("Label123" ));
+        }.accept(SpreadsheetSelection.labelName("Label123"));
     }
 
     @Test
@@ -667,26 +667,26 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptRowReference() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetRowReference value = SpreadsheetSelection.parseRow("1" );
+        final SpreadsheetRowReference value = SpreadsheetSelection.parseRow("1");
 
         new FakeSpreadsheetValueVisitor() {
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Object v) {
                 assertSame(value, v);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visit(final SpreadsheetRowReference v) {
                 assertSame(value, v);
-                b.append("3" );
+                b.append("3");
             }
         }.accept(value);
 
@@ -696,7 +696,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptRowReference2() {
         new SpreadsheetValueVisitor() {
-        }.accept(SpreadsheetSelection.parseRow("1" ));
+        }.accept(SpreadsheetSelection.parseRow("1"));
     }
 
     @Test
@@ -708,20 +708,20 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
             @Override
             protected Visiting startVisit(final Object v) {
                 assertSame(value, v);
-                b.append("1" );
+                b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final Object v) {
                 assertSame(value, v);
-                b.append("2" );
+                b.append("2");
             }
 
             @Override
             protected void visit(final SpreadsheetRowRangeReference v) {
                 assertSame(value, v);
-                b.append("3" );
+                b.append("3");
             }
         }.accept(value);
 
@@ -731,7 +731,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     @Test
     public void testAcceptRowRangeReference2() {
         new SpreadsheetValueVisitor() {
-        }.accept(SpreadsheetSelection.parseRowRange("2:3" ));
+        }.accept(SpreadsheetSelection.parseRowRange("2:3"));
     }
 
     @Test

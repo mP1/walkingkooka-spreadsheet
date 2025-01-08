@@ -383,7 +383,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         .toColumnOrColumnRange()
         );
     }
-    
+
     // toRow.........................................................................................................
 
     final void toRowFails() {
@@ -1045,12 +1045,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void upPixelsAndCheck(final S selection,
                                 final SpreadsheetViewportAnchor anchor,
-                                   final int count,
-                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
-                                   final Function<SpreadsheetColumnReference, Double> columnWidths,
-                                   final Predicate<SpreadsheetRowReference> hiddenRows,
-                                   final Function<SpreadsheetRowReference, Double> rowHeight,
-                                   final Optional<SpreadsheetSelection> expected) {
+                                final int count,
+                                final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                final Predicate<SpreadsheetRowReference> hiddenRows,
+                                final Function<SpreadsheetRowReference, Double> rowHeight,
+                                final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.upPixels(
@@ -1129,12 +1129,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     final void rightPixelsAndCheck(final S selection,
                                    final SpreadsheetViewportAnchor anchor,
-                                  final int count,
-                                  final Predicate<SpreadsheetColumnReference> hiddenColumns,
-                                  final Function<SpreadsheetColumnReference, Double> columnWidths,
-                                  final Predicate<SpreadsheetRowReference> hiddenRows,
-                                  final Function<SpreadsheetRowReference, Double> rowHeight,
-                                  final Optional<SpreadsheetSelection> expected) {
+                                   final int count,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
+                                   final Function<SpreadsheetRowReference, Double> rowHeight,
+                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected.map(SpreadsheetSelection::toScalarIfUnit),
                 selection.rightPixels(
@@ -2012,7 +2012,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 this.createSelection().isCellReferenceOrCellRangeReference()
         );
     }
-    
+
     @Test
     public void testIsColumnReferenceOrColumnRangeReference() {
         this.checkEquals(

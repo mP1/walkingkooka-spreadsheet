@@ -43,7 +43,7 @@ public final class SpreadsheetComparatorInfoTest implements PluginInfoLikeTestin
                 )
         );
     }
-    
+
     // ClassTesting.....................................................................................................
 
     @Override

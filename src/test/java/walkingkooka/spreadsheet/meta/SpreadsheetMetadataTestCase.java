@@ -488,7 +488,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 "Metadata missing: find-converter"
         );
     }
-    
+
     @Test
     public final void testFormulaConverterWithNullConverterProviderFails() {
         assertThrows(

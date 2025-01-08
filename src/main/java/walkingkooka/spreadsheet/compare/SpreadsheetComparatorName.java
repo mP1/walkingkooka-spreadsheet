@@ -56,7 +56,7 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
     // constants........................................................................................................
 
     private final static String DATE_STRING = "date";
-    
+
     public final static SpreadsheetComparatorName DATE = registerConstant(DATE_STRING);
 
     private final static String DATE_TIME_STRING = "date-time";

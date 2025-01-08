@@ -151,7 +151,7 @@ public final class MergedMappedSpreadsheetExporterProviderTest implements Spread
             public SpreadsheetExporter spreadsheetExporter(final SpreadsheetExporterName name,
                                                            final List<?> values,
                                                            final ProviderContext context) {
-                switch(name.value()) {
+                switch (name.value()) {
                     case RENAMED_PROVIDER_NAME:
                         return RENAMED_EXPORTER;
                     case PROVIDER_ONLY_NAME:

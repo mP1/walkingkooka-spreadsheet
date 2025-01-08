@@ -142,7 +142,7 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
     }
 
     // extract..........................................................................................................
-    
+
     @Test
     public void testExtractNullParametersFails() {
         assertThrows(
@@ -208,7 +208,7 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
                 () -> parameters.toString()
         );
     }
-    
+
     // class............................................................................................................
 
     @Override

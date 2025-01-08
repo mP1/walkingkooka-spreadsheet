@@ -110,7 +110,7 @@ public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesti
     public SpreadsheetFormatterAlias parseString(final String text) {
         return SpreadsheetFormatterAlias.parse(text);
     }
-    
+
     // class............................................................................................................
 
     @Override

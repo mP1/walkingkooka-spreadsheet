@@ -1118,7 +1118,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 "5"
         );
     }
-    
+
     // extendRange......................................................................................................
 
     @Test

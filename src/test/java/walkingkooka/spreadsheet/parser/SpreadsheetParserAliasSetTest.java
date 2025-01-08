@@ -126,7 +126,7 @@ public final class SpreadsheetParserAliasSetTest implements PluginAliasSetLikeTe
 
     @Override
     public SpreadsheetParserAliasSet unmarshall(final JsonNode json,
-                                                   final JsonNodeUnmarshallContext context) {
+                                                final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserAliasSet.unmarshall(
                 json,
                 context

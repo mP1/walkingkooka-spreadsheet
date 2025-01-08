@@ -76,7 +76,7 @@ final class SpreadsheetParserProviderCollection implements SpreadsheetParserProv
                 selector,
                 context
         );
-        if(null == parser) {
+        if (null == parser) {
             throw new IllegalArgumentException("Unknown parser " + selector.name());
         }
         return parser;

@@ -696,7 +696,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     public final boolean isConditionRightGreaterThan() {
         return this instanceof SpreadsheetConditionRightGreaterThanParserToken;
     }
-    
+
     /**
      * Only {@link SpreadsheetConditionRightGreaterThanEqualsParserToken} return true
      */
@@ -1225,7 +1225,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
             visitor2.endVisit(this);
         }
     }
-    
+
     abstract void accept(final SpreadsheetParserTokenVisitor visitor);
 
     // HasExpression................................................................................................

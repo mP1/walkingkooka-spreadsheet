@@ -17,5 +17,5 @@
 
 package walkingkooka.spreadsheet.format;
 
-public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsheetFormatterContext implements SpreadsheetFormatterProviderSamplesContext{
+public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsheetFormatterContext implements SpreadsheetFormatterProviderSamplesContext {
 }
