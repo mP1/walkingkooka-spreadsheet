@@ -81,7 +81,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         final SpreadsheetCellReference cell = this.cell();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.mapping(cell));
+        store.save(label.setLabelMappingTarget(cell));
 
         this.cellReferenceOrRangeAndCheck(
                 label,
@@ -97,8 +97,8 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         final SpreadsheetCellReference cell = this.cell();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.mapping(label2));
-        store.save(label2.mapping(cell));
+        store.save(label.setLabelMappingTarget(label2));
+        store.save(label2.setLabelMappingTarget(cell));
 
         this.cellReferenceOrRangeAndCheck(
                 label,
@@ -113,7 +113,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         final SpreadsheetLabelName label = this.label();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.mapping(range));
+        store.save(label.setLabelMappingTarget(range));
 
         this.cellReferenceOrRangeAndCheck(
                 range,
@@ -128,7 +128,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         final SpreadsheetCellRangeReference range = this.range();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.mapping(range));
+        store.save(label.setLabelMappingTarget(range));
 
         this.cellReferenceOrRangeAndCheck(
                 label,

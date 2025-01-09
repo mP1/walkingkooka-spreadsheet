@@ -191,7 +191,9 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
                                     @Override
                                     public Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName l) {
                                         checkEquals(label, l);
-                                        return Optional.of(l.mapping(cell));
+                                        return Optional.of(
+                                                l.setLabelMappingTarget(cell)
+                                        );
                                     }
                                 };
                             }

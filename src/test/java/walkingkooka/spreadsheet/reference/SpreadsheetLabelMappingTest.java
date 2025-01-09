@@ -177,7 +177,8 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     private void marshallRoundTrip2(final SpreadsheetExpressionReference reference) {
         this.marshallRoundTripTwiceAndCheck(
-                SpreadsheetLabelName.with("Label234").mapping(reference)
+                SpreadsheetLabelName.with("Label234")
+                        .setLabelMappingTarget(reference)
         );
     }
 

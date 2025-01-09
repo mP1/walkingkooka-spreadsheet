@@ -39,8 +39,8 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("DEFGHI456");
 
         final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.of(
-                label1, label1.mapping(a1),
-                label2, label2.mapping(a1)
+                label1, label1.setLabelMappingTarget(a1),
+                label2, label2.setLabelMappingTarget(a1)
         );
 
         final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(

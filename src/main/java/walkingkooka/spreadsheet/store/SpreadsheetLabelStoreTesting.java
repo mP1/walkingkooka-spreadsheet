@@ -110,7 +110,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         this.labelsAndCheck(
                 store,
                 reference,
-                label.mapping(reference)
+                label.setLabelMappingTarget(reference)
         );
     }
 
