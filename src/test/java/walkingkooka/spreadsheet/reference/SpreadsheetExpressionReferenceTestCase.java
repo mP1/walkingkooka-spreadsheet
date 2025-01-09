@@ -93,6 +93,13 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
         this.cellColumnOrRowTextAndCheck("cell");
     }
 
+    // toExpressionReference............................................................................................
+
+    @Test
+    public final void testExpressionReference() {
+        this.toExpressionReferenceAndCheck();
+    }
+
     // pick.............................................................................................................
 
     @Test

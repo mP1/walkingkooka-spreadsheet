@@ -991,6 +991,17 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
+     * A cell or cell ranges or label will return a {@link SpreadsheetExpressionReference} otherwise a
+     * {@link UnsupportedOperationException} will be thrown.
+     */
+    public final SpreadsheetExpressionReference toExpressionReference() {
+        if (false == this.isCellReference() && false == this.isCellRangeReference() && false == this.isLabelName()) {
+            throw new UnsupportedOperationException(this.toString());
+        }
+        return (SpreadsheetExpressionReference) this;
+    }
+
+    /**
      * Type safe cast to {@link SpreadsheetLabelName}.
      */
     public final SpreadsheetLabelName toLabelName() {
