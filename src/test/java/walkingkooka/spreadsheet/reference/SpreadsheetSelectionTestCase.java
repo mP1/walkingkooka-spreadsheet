@@ -384,6 +384,24 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    // toExpressionReference............................................................................................
+
+    final void toExpressionReferenceAndCheck() {
+        final S selection = this.createSelection();
+        assertSame(
+                selection,
+                selection.toExpressionReference()
+        );
+    }
+
+    final void toExpressionReferenceFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection()
+                        .toExpressionReference()
+        );
+    }
+
     // toRow.........................................................................................................
 
     final void toRowFails() {
