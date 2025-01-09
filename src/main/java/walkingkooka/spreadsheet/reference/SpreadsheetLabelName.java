@@ -127,7 +127,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     /**
      * Creates a {@link SpreadsheetLabelMapping} using this label and the given {@link SpreadsheetExpressionReference}.
      */
-    public SpreadsheetLabelMapping mapping(final SpreadsheetExpressionReference reference) {
+    public SpreadsheetLabelMapping setLabelMappingTarget(final SpreadsheetExpressionReference reference) {
         return SpreadsheetLabelMapping.with(this, reference);
     }
 

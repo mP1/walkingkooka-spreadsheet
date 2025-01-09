@@ -134,7 +134,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     public void testLabelsWithCellReference() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LabelZ99");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
-        final SpreadsheetLabelMapping mapping = label.mapping(reference);
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingTarget(reference);
 
         this.labelsAndCheck(
                 ReadOnlySpreadsheetLabelStore.with(

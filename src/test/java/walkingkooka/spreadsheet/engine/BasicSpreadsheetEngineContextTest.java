@@ -425,7 +425,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label456");
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.mapping(cell));
+        store.save(label.setLabelMappingTarget(cell));
 
         this.resolveLabelAndCheck(
                 this.createContext(store),
@@ -441,8 +441,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label222");
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label1.mapping(label2));
-        store.save(label2.mapping(cell));
+        store.save(label1.setLabelMappingTarget(label2));
+        store.save(label2.setLabelMappingTarget(cell));
 
         this.resolveLabelAndCheck(
                 this.createContext(store),
