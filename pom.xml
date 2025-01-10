@@ -203,6 +203,12 @@
 
     <dependency>
       <groupId>walkingkooka</groupId>
+      <artifactId>walkingkooka-template</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>walkingkooka</groupId>
       <artifactId>walkingkooka-tree-expression-function-provider</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
