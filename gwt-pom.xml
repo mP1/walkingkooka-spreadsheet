@@ -117,6 +117,12 @@
 
         <dependency>
             <groupId>walkingkooka</groupId>
+            <artifactId>walkingkooka-template-gwt</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>walkingkooka</groupId>
             <artifactId>walkingkooka-tree-expression-convert-provider-gwt</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
