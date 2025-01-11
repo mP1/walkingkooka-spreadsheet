@@ -53,6 +53,11 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
     );
 
     /**
+     * The minimum valid length
+     */
+    public final static int MIN_LENGTH = 1;
+
+    /**
      * The maximum valid length
      */
     public final static int MAX_LENGTH = 255;

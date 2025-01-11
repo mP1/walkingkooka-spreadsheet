@@ -292,7 +292,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             Parsers.<SpreadsheetParserContext>stringInitialAndPartCharPredicate(
                             SpreadsheetFunctionName.INITIAL,
                             SpreadsheetFunctionName.PART,
-                            1,
+                            SpreadsheetFunctionName.MIN_LENGTH,
                             SpreadsheetFunctionName.MAX_LENGTH)
                     .transform(SpreadsheetParsers::transformFunctionName)
                     .setToString(SpreadsheetFunctionName.class.getSimpleName())
