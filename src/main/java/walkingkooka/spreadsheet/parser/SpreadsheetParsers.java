@@ -574,7 +574,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                             1,
                             Integer.MAX_VALUE
                     ).transform(SpreadsheetParsers::transformWhitespace)
-                    .setToString(SpreadsheetWhitespaceParserToken.class.getSimpleName())
+                    .setToString("WHITESPACE")
     );
 
     private static ParserToken transformWhitespace(final ParserToken token,
