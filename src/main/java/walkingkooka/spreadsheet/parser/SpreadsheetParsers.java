@@ -183,22 +183,22 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         final String operatorText = symbol.text();
         switch (operatorText) {
-            case "=":
+            case EQUALS_SIGN:
                 factory = SpreadsheetParserToken::conditionRightEquals;
                 break;
-            case "<":
+            case LESS_THAN_SIGN:
                 factory = SpreadsheetParserToken::conditionRightLessThan;
                 break;
-            case "<=":
+            case LESS_THAN_EQUALS_SIGN:
                 factory = SpreadsheetParserToken::conditionRightLessThanEquals;
                 break;
-            case ">":
+            case GREATER_THAN_SIGN:
                 factory = SpreadsheetParserToken::conditionRightGreaterThan;
                 break;
-            case ">=":
+            case GREATER_THAN_EQUALS_SIGN:
                 factory = SpreadsheetParserToken::conditionRightGreaterThanEquals;
                 break;
-            case "<>":
+            case NOT_EQUALS_SIGN:
                 factory = SpreadsheetParserToken::conditionRightNotEquals;
                 break;
             default:
@@ -210,6 +210,18 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                 sequenceParserToken.text()
         );
     }
+
+    private final static String EQUALS_SIGN = "=";
+
+    private final static String NOT_EQUALS_SIGN = "<>";
+
+    private final static String LESS_THAN_SIGN = "<";
+
+    private final static String LESS_THAN_EQUALS_SIGN = "<=";
+
+    private final static String GREATER_THAN_SIGN = ">";
+
+    private final static String GREATER_THAN_EQUALS_SIGN = ">=";
 
     /**
      * Returns a {@link Parser} that parsers errors such as <code>#REF!</code>.
@@ -354,27 +366,27 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private static final Parser<SpreadsheetParserContext> EQUALS_SYMBOL = symbol(
-            '=',
+            EQUALS_SIGN,
             SpreadsheetParserToken::equalsSymbol
     );
     private static final Parser<SpreadsheetParserContext> NOT_EQUALS_SYMBOL = symbol(
-            "<>",
+            NOT_EQUALS_SIGN,
             SpreadsheetParserToken::notEqualsSymbol
     );
     private static final Parser<SpreadsheetParserContext> GREATER_THAN_SYMBOL = symbol(
-            '>',
+            GREATER_THAN_SIGN,
             SpreadsheetParserToken::greaterThanSymbol
     );
     private static final Parser<SpreadsheetParserContext> GREATER_THAN_EQUALS_SYMBOL = symbol(
-            ">=",
+            GREATER_THAN_EQUALS_SIGN,
             SpreadsheetParserToken::greaterThanEqualsSymbol
     );
     private static final Parser<SpreadsheetParserContext> LESS_THAN_SYMBOL = symbol(
-            '<',
+            LESS_THAN_SIGN,
             SpreadsheetParserToken::lessThanSymbol
     );
     private static final Parser<SpreadsheetParserContext> LESS_THAN_EQUALS_SYMBOL = symbol(
-            "<=",
+            LESS_THAN_EQUALS_SIGN,
             SpreadsheetParserToken::lessThanEqualsSymbol
     );
 
@@ -479,7 +491,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName FORMULA_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("FORMULA_EQUALS_SYMBOL");
     private static final Parser<SpreadsheetParserContext> FORMULA_EQUALS_SYMBOL = symbol(
-            "=",
+            EQUALS_SIGN,
             SpreadsheetParserToken::equalsSymbol
     );
 
@@ -542,7 +554,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      */
     private static ParserToken transformValueOrExpression(final ParserToken token, final SpreadsheetParserContext context) {
         final String text = token.text();
-        return text.startsWith("=") ?
+        return text.startsWith(EQUALS_SIGN) ?
                 SpreadsheetParserToken.expression(
                         token.cast(SequenceParserToken.class).value(),
                         text) :
@@ -645,10 +657,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static Parser<SpreadsheetParserContext> symbol(final String text,
                                                            final BiFunction<String, String, ParserToken> factory) {
-        return Parsers.string(text, CaseSensitivity.INSENSITIVE)
-                .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value(), stringParserToken.text()))
-                .setToString(CharSequences.quoteAndEscape(text).toString())
-                .cast();
+        return text.length() == 1 ?
+                symbol(
+                        text.charAt(0),
+                        factory
+                ) :
+                Parsers.string(text, CaseSensitivity.INSENSITIVE)
+                        .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value(), stringParserToken.text()))
+                        .setToString(CharSequences.quoteAndEscape(text).toString())
+                        .cast();
     }
 
     public static int valueFromDigit(final char c) {
