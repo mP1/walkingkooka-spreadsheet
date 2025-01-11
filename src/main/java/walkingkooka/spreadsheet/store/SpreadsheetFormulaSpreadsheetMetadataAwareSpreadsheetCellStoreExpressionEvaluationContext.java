@@ -19,8 +19,10 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.Either;
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -33,8 +35,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
-import java.math.MathContext;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -44,7 +44,9 @@ import java.util.function.Function;
  * A minimalist {@link ExpressionEvaluationContext} that is used by {@link SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore} to
  * convert {@link walkingkooka.spreadsheet.parser.SpreadsheetParserToken} to an {@link Expression}.
  */
-final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext implements ExpressionEvaluationContext {
+final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext implements ExpressionEvaluationContext,
+        DateTimeContextDelegator,
+        DecimalNumberContextDelegator {
 
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetMetadata metadata,
                                                                                                           final HasNow now) {
@@ -133,114 +135,32 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     // DateTimeContext..................................................................................................
 
     @Override
-    public List<String> ampms() {
-        return this.dateTimeContext()
-                .ampms();
+    public DateTimeContext dateTimeContext() {
+        if(null == this.dateTimeContext) {
+            this.dateTimeContext = this.metadata.dateTimeContext(this.now);
+        }
+        return this.dateTimeContext;
     }
 
-    @Override
-    public int defaultYear() {
-        return this.dateTimeContext()
-                .defaultYear();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        return this.dateTimeContext()
-                .monthNames();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.dateTimeContext()
-                .monthNameAbbreviations();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.dateTimeContext()
-                .now();
-    }
-
-    @Override
-    public int twoToFourDigitYear(final int year) {
-        return this.dateTimeContext()
-                .twoToFourDigitYear(year);
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.dateTimeContext()
-                .twoDigitYear();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.dateTimeContext()
-                .weekDayNames();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.dateTimeContext()
-                .weekDayNameAbbreviations();
-    }
-
-    private DateTimeContext dateTimeContext() {
-        return this.metadata.dateTimeContext(this.now);
-    }
+    private DateTimeContext dateTimeContext;
 
     private final HasNow now;
 
     // DecimalNumberContext.............................................................................................
 
     @Override
-    public String currencySymbol() {
-        return this.decimalNumberContext().currencySymbol();
+    public DecimalNumberContext decimalNumberContext() {
+        if(null == this.decimalNumberContext) {
+            this.decimalNumberContext = this.metadata.decimalNumberContext();
+        }
+        return this.decimalNumberContext;
     }
 
-    @Override
-    public char decimalSeparator() {
-        return this.decimalNumberContext().decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.decimalNumberContext().exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.decimalNumberContext().groupSeparator();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.decimalNumberContext().percentageSymbol();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.decimalNumberContext().negativeSign();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.decimalNumberContext().positiveSign();
-    }
-
-    private DecimalNumberContext decimalNumberContext() {
-        return this.metadata.decimalNumberContext();
-    }
+    private DecimalNumberContext decimalNumberContext;
 
     @Override
     public Locale locale() {
         return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return this.metadata.mathContext();
     }
 
     @Override
