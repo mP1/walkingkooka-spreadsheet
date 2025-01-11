@@ -206,28 +206,26 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         );
     }
 
+    // reference........................................................................................................
+
     @Test
     public void testReferenceLocalLabelNonNullValue() {
-        this.referenceAndCheck(
+        this.referenceAndCheck3(
                 LABEL_TO_VALUES,
                 LABEL,
-                Optional.of(
-                        Optional.of(LOCAL_VALUE)
-                )
+                Optional.of(LOCAL_VALUE)
         );
     }
 
     @Test
     public void testReferenceLocalLabelNullValue() {
-        this.referenceAndCheck(
+        this.referenceAndCheck3(
                 (r) -> {
                     this.checkEquals(LABEL, r);
                     return Optional.of(Optional.empty());
                 },
                 LABEL,
-                Optional.of(
-                        Optional.empty()
-                )
+                Optional.empty()
         );
     }
 
@@ -237,7 +235,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                 Optional.of("abc123")
         );
 
-        this.referenceAndCheck(
+        this.referenceAndCheck2(
                 LocalLabelsSpreadsheetExpressionEvaluationContext.with(
                         (r) -> Optional.empty(),
                         new FakeSpreadsheetExpressionEvaluationContext() {
@@ -253,9 +251,9 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         );
     }
 
-    private void referenceAndCheck(final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
-                                   final ExpressionReference reference,
-                                   final Object expected) {
+    private void referenceAndCheck3(final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
+                                    final ExpressionReference reference,
+                                    final Optional<Object> expected) {
         this.referenceAndCheck(
                 LocalLabelsSpreadsheetExpressionEvaluationContext.with(
                         labelToValues,
@@ -266,15 +264,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         );
     }
 
-    private void referenceAndCheck(final SpreadsheetExpressionEvaluationContext context,
-                                   final ExpressionReference reference,
-                                   final Object expected) {
-        this.checkEquals(
-                expected,
-                context.reference(reference),
-                () -> "referenceOrFail " + reference
-        );
-    }
+    // resolveIfLabel...................................................................................................
 
     @Test
     public void testResolveIfLabelLocalLabelFails() {
