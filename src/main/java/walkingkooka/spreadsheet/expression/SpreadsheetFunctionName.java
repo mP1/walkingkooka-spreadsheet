@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
+import walkingkooka.InvalidTextLengthException;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
@@ -68,10 +69,12 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
     public static SpreadsheetFunctionName with(final String name) {
         CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, SpreadsheetFunctionName.class.getSimpleName(), INITIAL, PART);
 
-        final int length = name.length();
-        if (length > MAX_LENGTH) {
-            throw new IllegalArgumentException("Function name length " + length + " greater than allowed of " + MAX_LENGTH);
-        }
+        InvalidTextLengthException.throwIfFail(
+                "function name",
+                name,
+                MIN_LENGTH,
+                MAX_LENGTH
+        );
 
         return new SpreadsheetFunctionName(name);
     }
