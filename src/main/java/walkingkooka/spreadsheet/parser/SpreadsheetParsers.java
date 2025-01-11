@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.collect.map.Maps;
-import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -277,28 +276,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return FUNCTION_NAME;
     }
 
-    static {
-        final CharPredicate initial = CharPredicates.range('A', 'Z')
-                .or(
-                        CharPredicates.range('a', 'z')
-                ); // SpreadsheetFunctionName.INITIAL
-
-        FUNCTION_NAME =
-                SpreadsheetParsers.parser(
-                        Parsers.<SpreadsheetParserContext>stringInitialAndPartCharPredicate(
-                                        initial,
-                                        initial.or(
-                                                CharPredicates.range('0', '9')
-                                                        .or(CharPredicates.is('.'))
-                                        ), // SpreadsheetFunctionName.PART,
-                                        1,
-                                        SpreadsheetFunctionName.MAX_LENGTH)
-                                .transform(SpreadsheetParsers::transformFunctionName)
-                                .setToString(SpreadsheetFunctionName.class.getSimpleName())
-                );
-    }
-
-    private final static SpreadsheetParser FUNCTION_NAME;
+    private final static SpreadsheetParser FUNCTION_NAME = SpreadsheetParsers.parser(
+            Parsers.<SpreadsheetParserContext>stringInitialAndPartCharPredicate(
+                            SpreadsheetFunctionName.INITIAL,
+                            SpreadsheetFunctionName.PART,
+                            1,
+                            SpreadsheetFunctionName.MAX_LENGTH)
+                    .transform(SpreadsheetParsers::transformFunctionName)
+                    .setToString(SpreadsheetFunctionName.class.getSimpleName())
+    );
 
     private static ParserToken transformFunctionName(final ParserToken token, final SpreadsheetParserContext context) {
         return SpreadsheetParserToken.functionName(
