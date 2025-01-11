@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.MathContext;
 import java.util.Objects;
@@ -94,6 +95,12 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     final static class TestSpreadsheetExpressionEvaluationContextDelegator implements SpreadsheetExpressionEvaluationContextDelegator {
+
+        @Override
+        public Optional<Optional<Object>> reference(final ExpressionReference reference) {
+            return this.expressionEvaluationContext().reference(reference);
+        }
+
         @Override
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
             return SpreadsheetExpressionEvaluationContexts.basic(
