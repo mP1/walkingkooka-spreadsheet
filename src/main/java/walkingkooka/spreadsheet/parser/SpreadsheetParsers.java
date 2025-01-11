@@ -104,10 +104,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName LABEL_NAME_IDENTIFIER = EbnfIdentifierName.with("LABEL_NAME");
     private static final EbnfIdentifierName BETWEEN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("BETWEEN_SYMBOL");
 
-    private static final Parser<SpreadsheetParserContext> BETWEEN_SYMBOL = symbol(RANGE_SEPARATOR.character(),
-            SpreadsheetParserToken::betweenSymbol,
-            SpreadsheetBetweenSymbolParserToken.class);
-
+    private static final Parser<SpreadsheetParserContext> BETWEEN_SYMBOL = symbol(
+            RANGE_SEPARATOR.character(),
+            SpreadsheetParserToken::betweenSymbol
+    );
 
     /**
      * A {@link SpreadsheetParser} that returns a range but not cell reference or labels.
@@ -355,33 +355,27 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static final Parser<SpreadsheetParserContext> EQUALS_SYMBOL = symbol(
             '=',
-            SpreadsheetParserToken::equalsSymbol,
-            SpreadsheetEqualsSymbolParserToken.class
+            SpreadsheetParserToken::equalsSymbol
     );
     private static final Parser<SpreadsheetParserContext> NOT_EQUALS_SYMBOL = symbol(
             "<>",
-            SpreadsheetParserToken::notEqualsSymbol,
-            SpreadsheetNotEqualsSymbolParserToken.class
+            SpreadsheetParserToken::notEqualsSymbol
     );
     private static final Parser<SpreadsheetParserContext> GREATER_THAN_SYMBOL = symbol(
             '>',
-            SpreadsheetParserToken::greaterThanSymbol,
-            SpreadsheetGreaterThanSymbolParserToken.class
+            SpreadsheetParserToken::greaterThanSymbol
     );
     private static final Parser<SpreadsheetParserContext> GREATER_THAN_EQUALS_SYMBOL = symbol(
             ">=",
-            SpreadsheetParserToken::greaterThanEqualsSymbol,
-            SpreadsheetGreaterThanEqualsSymbolParserToken.class
+            SpreadsheetParserToken::greaterThanEqualsSymbol
     );
     private static final Parser<SpreadsheetParserContext> LESS_THAN_SYMBOL = symbol(
             '<',
-            SpreadsheetParserToken::lessThanSymbol,
-            SpreadsheetLessThanSymbolParserToken.class
+            SpreadsheetParserToken::lessThanSymbol
     );
     private static final Parser<SpreadsheetParserContext> LESS_THAN_EQUALS_SYMBOL = symbol(
             "<=",
-            SpreadsheetParserToken::lessThanEqualsSymbol,
-            SpreadsheetLessThanEqualsSymbolParserToken.class
+            SpreadsheetParserToken::lessThanEqualsSymbol
     );
 
     private static final EbnfIdentifierName EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("EQUALS_SYMBOL");
@@ -412,28 +406,23 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static final Parser<SpreadsheetParserContext> PLUS_SYMBOL = symbol(
             '+',
-            SpreadsheetParserToken::plusSymbol,
-            SpreadsheetPlusSymbolParserToken.class
+            SpreadsheetParserToken::plusSymbol
     );
     private static final Parser<SpreadsheetParserContext> NEGATIVE_SYMBOL = symbol(
             '-',
-            SpreadsheetParserToken::minusSymbol,
-            SpreadsheetMinusSymbolParserToken.class
+            SpreadsheetParserToken::minusSymbol
     );
     private static final Parser<SpreadsheetParserContext> MULTIPLY_SYMBOL = symbol(
             '*',
-            SpreadsheetParserToken::multiplySymbol,
-            SpreadsheetMultiplySymbolParserToken.class
+            SpreadsheetParserToken::multiplySymbol
     );
     private static final Parser<SpreadsheetParserContext> DIVIDE_SYMBOL = symbol(
             '/',
-            SpreadsheetParserToken::divideSymbol,
-            SpreadsheetDivideSymbolParserToken.class
+            SpreadsheetParserToken::divideSymbol
     );
     private static final Parser<SpreadsheetParserContext> POWER_SYMBOL = symbol(
             '^',
-            SpreadsheetParserToken::powerSymbol,
-            SpreadsheetPowerSymbolParserToken.class
+            SpreadsheetParserToken::powerSymbol
     );
 
     // misc.............................................................................................................
@@ -467,8 +456,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName APOSTROPHE_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("APOSTROPHE_SYMBOL");
     private static final Parser<SpreadsheetParserContext> APOSTROPHE_SYMBOL = symbol(
             "'",
-            SpreadsheetParserToken::apostropheSymbol,
-            SpreadsheetApostropheSymbolParserToken.class
+            SpreadsheetParserToken::apostropheSymbol
     );
 
     private static final EbnfIdentifierName STRING_IDENTIFIER = EbnfIdentifierName.with("STRING");
@@ -492,8 +480,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName FORMULA_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("FORMULA_EQUALS_SYMBOL");
     private static final Parser<SpreadsheetParserContext> FORMULA_EQUALS_SYMBOL = symbol(
             "=",
-            SpreadsheetParserToken::equalsSymbol,
-            SpreadsheetEqualsSymbolParserToken.class
+            SpreadsheetParserToken::equalsSymbol
     );
 
     private static final EbnfIdentifierName LAMBDA_FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("LAMBDA_FUNCTION_NAME");
@@ -510,18 +497,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static final Parser<SpreadsheetParserContext> PERCENT_SYMBOL = symbol(
             '%',
-            SpreadsheetParserToken::percentSymbol,
-            SpreadsheetPercentSymbolParserToken.class
+            SpreadsheetParserToken::percentSymbol
     );
     private static final Parser<SpreadsheetParserContext> PARENTHESIS_OPEN_SYMBOL = symbol(
             '(',
-            SpreadsheetParserToken::parenthesisOpenSymbol,
-            SpreadsheetParenthesisOpenSymbolParserToken.class
+            SpreadsheetParserToken::parenthesisOpenSymbol
     );
     private static final Parser<SpreadsheetParserContext> PARENTHESIS_CLOSE_SYMBOL = symbol(
             ')',
-            SpreadsheetParserToken::parenthesisCloseSymbol,
-            SpreadsheetParenthesisCloseSymbolParserToken.class
+            SpreadsheetParserToken::parenthesisCloseSymbol
     );
 
     /**
@@ -652,20 +636,18 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private static Parser<SpreadsheetParserContext> symbol(final char c,
-                                                           final BiFunction<String, String, ParserToken> factory,
-                                                           final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
+                                                           final BiFunction<String, String, ParserToken> factory) {
         return Parsers.character(CharPredicates.is(c))
                 .transform((charParserToken, context) -> factory.apply(charParserToken.cast(CharacterParserToken.class).value().toString(), charParserToken.text()))
-                .setToString(tokenClass.getSimpleName())
+                .setToString(CharSequences.quoteAndEscape(c).toString())
                 .cast();
     }
 
     private static Parser<SpreadsheetParserContext> symbol(final String text,
-                                                           final BiFunction<String, String, ParserToken> factory,
-                                                           final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
+                                                           final BiFunction<String, String, ParserToken> factory) {
         return Parsers.string(text, CaseSensitivity.INSENSITIVE)
                 .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value(), stringParserToken.text()))
-                .setToString(tokenClass.getSimpleName())
+                .setToString(CharSequences.quoteAndEscape(text).toString())
                 .cast();
     }
 
