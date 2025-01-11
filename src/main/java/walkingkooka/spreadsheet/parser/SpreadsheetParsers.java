@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -649,35 +650,19 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      */
     static {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.fake());
+        final Function<String, SpreadsheetParser> getParser = (name) ->
+                parser(
+                        parsers.get(
+                                EbnfIdentifierName.with(name)
+                        )
+                );
 
-        CELL_OR_CELL_RANGE_OR_LABEL_PARSER = parser(
-                parsers.get(
-                        EbnfIdentifierName.with("CELL_OR_CELL_RANGE_OR_LABEL")
-                )
-        );
-        CELL_RANGE_PARSER = parser(
-                parsers.get(
-                        EbnfIdentifierName.with("CELL_RANGE")
-                )
-        );
-        EXPRESSION_PARSER = parser(
-                parsers.get(
-                        EbnfIdentifierName.with("EXPRESSION")
-                )
-        );
-        FUNCTION_PARAMETERS_PARSER = parser(
-                parsers.get(
-                        EbnfIdentifierName.with("FUNCTION_PARAMETERS")
-                )
-        );
-        LAMBDA_FUNCTION = parser(
-                parsers.get(
-                        EbnfIdentifierName.with("LAMBDA_FUNCTION")
-                )
-        );
-        NAMED_FUNCTION_PARSER = parser(
-                parsers.get(EbnfIdentifierName.with("NAMED_FUNCTION"))
-        );
+        CELL_OR_CELL_RANGE_OR_LABEL_PARSER = getParser.apply("CELL_OR_CELL_RANGE_OR_LABEL");
+        CELL_RANGE_PARSER = getParser.apply("CELL_RANGE");
+        EXPRESSION_PARSER = getParser.apply("EXPRESSION");
+        FUNCTION_PARAMETERS_PARSER = getParser.apply("FUNCTION_PARAMETERS");
+        LAMBDA_FUNCTION = getParser.apply("LAMBDA_FUNCTION");
+        NAMED_FUNCTION_PARSER = getParser.apply("NAMED_FUNCTION");
     }
 
     private static Parser<SpreadsheetParserContext> symbol(final char c,
