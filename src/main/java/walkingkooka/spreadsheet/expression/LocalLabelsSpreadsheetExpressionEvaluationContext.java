@@ -22,6 +22,10 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -40,8 +44,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
-import java.math.MathContext;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -55,6 +57,8 @@ import java.util.function.Function;
  * forwarded to the wrapped {@link SpreadsheetExpressionEvaluationContext}.
  */
 final class LocalLabelsSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
+        DateTimeContextDelegator,
+        DecimalNumberContextDelegator,
         UsesToStringBuilder {
 
     static SpreadsheetExpressionEvaluationContext with(
@@ -239,104 +243,36 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         return this.context.dateOffset();
     }
 
-    // DateTimeContext.................................................................................................
-
-    @Override
-    public List<String> ampms() {
-        return this.context.ampms();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        return this.context.monthNames();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.context.monthNames();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.context.weekDayNames();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.context.weekDayNameAbbreviations();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.context.now();
-    }
-
-    @Override
-    public int defaultYear() {
-        return this.context.defaultYear();
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.context.twoDigitYear();
-    }
-
-    // DecimalNumberContext............................................................................................
-
-    @Override
-    public String currencySymbol() {
-        return this.context.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.context.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.context.exponentSymbol();
-    }
-
     @Override
     public ExpressionNumberKind expressionNumberKind() {
         return this.context.expressionNumberKind();
     }
 
-    @Override
-    public char groupSeparator() {
-        return this.context.groupSeparator();
-    }
+    // DateTimeContext.................................................................................................
 
     @Override
-    public char percentageSymbol() {
-        return this.context.percentageSymbol();
+    public DateTimeContext dateTimeContext() {
+        return this.context;
     }
 
-    @Override
-    public MathContext mathContext() {
-        return this.context.mathContext();
-    }
+    // DecimalNumberContext.............................................................................................
 
     @Override
-    public char negativeSign() {
-        return this.context.negativeSign();
+    public DecimalNumberContext decimalNumberContext() {
+        return this.context;
     }
 
+    // Object...........................................................................................................
+
     @Override
-    public char positiveSign() {
-        return this.context.positiveSign();
+    public String toString() {
+        return ToStringBuilder.buildFrom(this);
     }
 
     /**
      * The wrapped {@link SpreadsheetExpressionEvaluationContext}.
      */
     private final SpreadsheetExpressionEvaluationContext context;
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.buildFrom(this);
-    }
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
