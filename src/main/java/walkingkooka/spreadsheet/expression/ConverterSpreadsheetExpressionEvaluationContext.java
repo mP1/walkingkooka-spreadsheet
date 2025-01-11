@@ -19,6 +19,10 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -38,8 +42,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
-import java.math.MathContext;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -55,7 +57,9 @@ import java.util.Optional;
  * {@link SpreadsheetExpressionEvaluationContext} is useful.
  * <br>
  */
-final class ConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
+final class ConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
+        DateTimeContextDelegator,
+        DecimalNumberContextDelegator {
 
     static ConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -152,6 +156,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public long dateOffset() {
         return this.context.dateOffset();
+    }
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.context.expressionNumberKind();
     }
 
     // SpreadsheetExpressionEvaluationContext delegate..................................................................
@@ -295,126 +304,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context.referenceNotFound(reference);
     }
 
-    // DateTimeContext.................................................................................................
-
-    @Override
-    public List<String> ampms() {
-        return this.context.ampms();
-    }
-
-    @Override
-    public String ampm(final int hourOfDay) {
-        return this.context.ampm(hourOfDay);
-    }
-
-    @Override
-    public int defaultYear() {
-        return this.context.defaultYear();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        return this.context.monthNames();
-    }
-
-    @Override
-    public String monthName(final int month) {
-        return this.context.monthName(month);
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.context.monthNameAbbreviations();
-    }
-
-    @Override
-    public String monthNameAbbreviation(final int month) {
-        return this.context.monthNameAbbreviation(month);
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.context.now();
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.context.twoDigitYear();
-    }
-
-    @Override
-    public int twoToFourDigitYear(final int year) {
-        return this.context.twoToFourDigitYear(year);
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.context.weekDayNames();
-    }
-
-    @Override
-    public String weekDayName(final int day) {
-        return this.context.weekDayName(day);
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.context.weekDayNameAbbreviations();
-    }
-
-    @Override
-    public String weekDayNameAbbreviation(final int day) {
-        return this.context.weekDayNameAbbreviation(day);
-    }
-
-    // DecimalContext...................................................................................................
-
-    @Override
-    public String currencySymbol() {
-        return this.context.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.context.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.context.exponentSymbol();
-    }
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.context.expressionNumberKind();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.context.groupSeparator();
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return this.context.mathContext();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.context.percentageSymbol();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.context.negativeSign();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.context.positiveSign();
-    }
-
-    // misc............................................................................................................
+    // misc.............................................................................................................
 
     @Override
     public CaseSensitivity stringEqualsCaseSensitivity() {
@@ -426,11 +316,19 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context.locale();
     }
 
-    /**
-     * The wrapped {@link SpreadsheetExpressionEvaluationContext}
-     */
-    // @VisibleForTesting
-    final SpreadsheetExpressionEvaluationContext context;
+    // DateTimeContext.................................................................................................
+
+    @Override
+    public DateTimeContext dateTimeContext() {
+        return this.context;
+    }
+
+    // DecimalNumberContext.............................................................................................
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        return this.context;
+    }
 
     // Object...........................................................................................................
 
@@ -438,4 +336,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     public String toString() {
         return this.converter + " " + this.context;
     }
+
+    /**
+     * The wrapped {@link SpreadsheetExpressionEvaluationContext}
+     */
+    // @VisibleForTesting
+    final SpreadsheetExpressionEvaluationContext context;
+
 }
