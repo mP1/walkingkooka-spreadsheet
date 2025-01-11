@@ -34,9 +34,23 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  */
 final public class SpreadsheetFunctionName implements Name, Comparable<SpreadsheetFunctionName> {
 
-    private final static CharPredicate INITIAL = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
+    /**
+     * {@link CharPredicate} that may be used to match the first valid character of a {@link SpreadsheetFunctionName}.
+     */
+    public final static CharPredicate INITIAL = CharPredicates.range('A', 'Z')
+            .or(
+                    CharPredicates.range('a', 'z')
+            );
 
-    private final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9').or(CharPredicates.is('.')));
+    /**
+     * {@link CharPredicate} that may be used to match the non first valid character of a {@link SpreadsheetFunctionName}.
+     */
+    public final static CharPredicate PART = INITIAL.or(
+            CharPredicates.range('0', '9')
+                    .or(
+                            CharPredicates.is('.')
+                    )
+    );
 
     /**
      * The maximum valid length
