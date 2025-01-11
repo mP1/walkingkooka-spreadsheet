@@ -20,9 +20,13 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -104,6 +108,21 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Object evaluate(final Expression expression) {
+            Objects.requireNonNull(expression, "expression");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
+                                       final List<Object> values) {
+            Objects.requireNonNull(function, "function");
+            Objects.requireNonNull(values, "values");
+
             throw new UnsupportedOperationException();
         }
 
