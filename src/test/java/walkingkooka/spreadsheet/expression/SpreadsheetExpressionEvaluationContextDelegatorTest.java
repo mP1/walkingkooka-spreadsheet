@@ -25,6 +25,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import java.math.MathContext;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 public final class SpreadsheetExpressionEvaluationContextDelegatorTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextDelegatorTest.TestSpreadsheetExpressionEvaluationContextDelegator>,
         SpreadsheetMetadataTesting {
@@ -99,6 +100,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         @Override
         public Optional<Optional<Object>> reference(final ExpressionReference reference) {
             return this.expressionEvaluationContext().reference(reference);
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+            throw new UnsupportedOperationException();
         }
 
         @Override
