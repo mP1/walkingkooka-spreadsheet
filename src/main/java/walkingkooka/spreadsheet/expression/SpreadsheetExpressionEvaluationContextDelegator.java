@@ -51,9 +51,9 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+    default SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         return this.spreadsheetExpressionEvaluationContext()
-                .context(scoped);
+                .enterScope(scoped);
     }
 
     @Override

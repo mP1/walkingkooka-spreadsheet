@@ -21,6 +21,11 @@ import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 
 public interface SpreadsheetDataValidatorContextTesting<C extends SpreadsheetDataValidatorContext> extends ExpressionEvaluationContextTesting<C> {
 
+    @Override
+    default void testEnterScopeGivesDifferentInstance() {
+        throw new UnsupportedOperationException();
+    }
+
     // TypeNameTesting .........................................................................................
 
     @Override
