@@ -29,10 +29,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
         ExpressionEvaluationContextDelegator {
@@ -48,12 +46,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default Optional<SpreadsheetCell> cell() {
         return this.spreadsheetExpressionEvaluationContext()
                 .cell();
-    }
-
-    @Override
-    default SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
-        return this.spreadsheetExpressionEvaluationContext()
-                .enterScope(scoped);
     }
 
     @Override
