@@ -172,7 +172,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public Object evaluate(final Expression expression) {
+    public Object evaluateExpression(final Expression expression) {
         Objects.requireNonNull(expression, "expression");
 
         Object result;

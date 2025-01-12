@@ -89,7 +89,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             }
 
             @Override
-            public Object evaluate(final Expression expression) {
+            public Object evaluateExpression(final Expression expression) {
                 return expression.toValue(this);
             }
 
