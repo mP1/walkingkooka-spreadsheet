@@ -44,7 +44,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
         HasSpreadsheetMetadata {
 
     @Override
-    default SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+    default SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         return SpreadsheetExpressionEvaluationContexts.localLabels(
                 Cast.to(scoped),
                 this

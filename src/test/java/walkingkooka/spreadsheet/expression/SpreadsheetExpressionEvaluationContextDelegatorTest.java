@@ -107,8 +107,10 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         }
 
         @Override
-        public SpreadsheetExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
-            throw new UnsupportedOperationException();
+        public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+            Objects.requireNonNull(scoped, "scoped");
+
+            return new TestSpreadsheetExpressionEvaluationContextDelegator();
         }
 
         @Override

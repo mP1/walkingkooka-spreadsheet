@@ -21,6 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -30,7 +31,9 @@ import java.util.function.Function;
 public interface SpreadsheetDataValidatorContext extends ExpressionEvaluationContext {
 
     @Override
-    default ExpressionEvaluationContext context(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+    default ExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
+        Objects.requireNonNull(scoped, "scoped");
+
         throw new UnsupportedOperationException();
     }
 
