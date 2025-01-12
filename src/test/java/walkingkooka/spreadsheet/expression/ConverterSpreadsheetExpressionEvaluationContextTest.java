@@ -343,7 +343,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testEvaluateExpression() {
         final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(111);
 
-        this.evaluateAndCheck(
+        this.evaluateExpressionAndCheck(
                 Expression.value(
                         value
                 ),
@@ -353,7 +353,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Test
     public void testEvaluateExpression2() {
-        this.evaluateAndCheck(
+        this.evaluateExpressionAndCheck(
                 Expression.add(
                         Expression.value(EXPRESSION_NUMBER_KIND.create(111)),
                         Expression.value(EXPRESSION_NUMBER_KIND.create(222))

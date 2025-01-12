@@ -113,7 +113,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     // ExpressionEvaluationContext......................................................................................
 
     @Override
-    public Object evaluate(final Expression expression) {
+    public Object evaluateExpression(final Expression expression) {
         return expression.toValue(this);
     }
 

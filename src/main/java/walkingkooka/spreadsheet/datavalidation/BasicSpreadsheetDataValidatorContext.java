@@ -84,8 +84,8 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public Object evaluate(final Expression expression) {
-        return this.context.evaluate(expression);
+    public Object evaluateExpression(final Expression expression) {
+        return this.context.evaluateExpression(expression);
     }
 
     @Override

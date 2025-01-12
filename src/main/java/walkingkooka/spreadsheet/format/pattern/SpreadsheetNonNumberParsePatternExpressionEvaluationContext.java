@@ -62,7 +62,7 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
     }
 
     @Override
-    public Object evaluate(final Expression expression) {
+    public Object evaluateExpression(final Expression expression) {
         throw new UnsupportedOperationException();
     }
 
