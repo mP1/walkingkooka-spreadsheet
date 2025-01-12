@@ -18,6 +18,10 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Either;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
@@ -29,8 +33,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
-import java.math.MathContext;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -40,7 +42,9 @@ import java.util.function.Function;
  * A {@link ExpressionEvaluationContext} view of a {@link ExpressionNumberConverterContext}.
  * Note a few methods throw {@link UnsupportedOperationException}.
  */
-final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implements ExpressionEvaluationContext {
+final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implements ExpressionEvaluationContext,
+        DateTimeContextDelegator,
+        DecimalNumberContextDelegator {
 
     static SpreadsheetNonNumberParsePatternExpressionEvaluationContext with(final ExpressionNumberConverterContext context) {
         return new SpreadsheetNonNumberParsePatternExpressionEvaluationContext(context);
@@ -120,93 +124,9 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
         return this.context.dateOffset();
     }
 
-    // DateTimeContext..................................................................................................
-
-    @Override
-    public List<String> ampms() {
-        return this.context.ampms();
-    }
-
-    @Override
-    public int defaultYear() {
-        return this.context.defaultYear();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        return this.context.monthNames();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.context.monthNameAbbreviations();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.context.now();
-    }
-
-    @Override
-    public int twoToFourDigitYear(final int year) {
-        return this.context.twoToFourDigitYear(year);
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.context.twoDigitYear();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.context.weekDayNames();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.context.weekDayNameAbbreviations();
-    }
-
-    // DecimalNumberContext............................................................................................
-
-    @Override
-    public String currencySymbol() {
-        return this.context.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.context.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.context.exponentSymbol();
-    }
-
     @Override
     public ExpressionNumberKind expressionNumberKind() {
         return this.context.expressionNumberKind();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.context.groupSeparator();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.context.percentageSymbol();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.context.negativeSign();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.context.positiveSign();
     }
 
     @Override
@@ -214,9 +134,18 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
         return this.context.locale();
     }
 
+    // DateTimeContext..................................................................................................
+
     @Override
-    public MathContext mathContext() {
-        return this.context.mathContext();
+    public DateTimeContext dateTimeContext() {
+        return this.context;
+    }
+
+    // DecimalNumberContext.............................................................................................
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        return this.context;
     }
 
     private final ExpressionNumberConverterContext context;
