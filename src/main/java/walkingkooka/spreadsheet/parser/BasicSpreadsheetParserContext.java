@@ -21,9 +21,8 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionNumberContextDelegator;
 
-import java.math.MathContext;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -31,7 +30,8 @@ import java.util.Objects;
  * A {@link SpreadsheetParserContext} without any functionality.
  */
 final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
-        DateTimeContextDelegator {
+        DateTimeContextDelegator,
+        ExpressionNumberContextDelegator {
 
     /**
      * Creates a new {@link BasicSpreadsheetParserContext}.
@@ -61,6 +61,18 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
         this.valueSeparator = valueSeparator;
     }
 
+    @Override
+    public char valueSeparator() {
+        return this.valueSeparator;
+    }
+
+    private final char valueSeparator;
+
+    @Override
+    public Locale locale() {
+        return this.expressionNumberContext.locale();
+    }
+
     // DateTimeContextDelegator.........................................................................................
 
     @Override
@@ -73,63 +85,11 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     // ExpressionNumberContext.............................................................................................
 
     @Override
-    public String currencySymbol() {
-        return this.expressionNumberContext.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.expressionNumberContext.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.expressionNumberContext.exponentSymbol();
-    }
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.expressionNumberContext.expressionNumberKind();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.expressionNumberContext.groupSeparator();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.expressionNumberContext.negativeSign();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.expressionNumberContext.percentageSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.expressionNumberContext.positiveSign();
-    }
-
-    @Override
-    public Locale locale() {
-        return this.expressionNumberContext.locale();
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return this.expressionNumberContext.mathContext();
+    public ExpressionNumberContext expressionNumberContext() {
+        return this.expressionNumberContext;
     }
 
     private final ExpressionNumberContext expressionNumberContext;
-
-    @Override
-    public char valueSeparator() {
-        return this.valueSeparator;
-    }
-
-    private final char valueSeparator;
 
     @Override
     public String toString() {
