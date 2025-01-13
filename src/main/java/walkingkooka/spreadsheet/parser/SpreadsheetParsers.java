@@ -668,9 +668,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                         .cast();
     }
 
-    public static int valueFromDigit(final char c) {
+    /**
+     * Given a column letter such as A or B, returns the numeric column number, so A returns 0, B = 2 etc.
+     */
+    public static int columnLetterValue(final char c) {
         final int digit = Character.toUpperCase(c) - 'A';
-        return digit >= 0 && digit < SpreadsheetColumnReferenceSpreadsheetParser.RADIX ? digit + 1 : -1;
+        return digit >= 0 &&
+                digit < SpreadsheetColumnReferenceSpreadsheetParser.RADIX ?
+                digit + 1 :
+                -1;
     }
 
     /**
