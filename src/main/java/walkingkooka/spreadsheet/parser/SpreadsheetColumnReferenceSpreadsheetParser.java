@@ -43,7 +43,7 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
 
     @Override
     int valueFromDigit(final char c) {
-        return SpreadsheetParsers.valueFromDigit(c);
+        return SpreadsheetParsers.columnLetterValue(c);
     }
 
     @Override

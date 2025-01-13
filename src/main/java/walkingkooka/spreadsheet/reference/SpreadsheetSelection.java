@@ -146,7 +146,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
             // try and consume column letters
             if (MODE_COLUMN == mode) {
-                final int digit = SpreadsheetParsers.valueFromDigit(c);
+                final int digit = SpreadsheetParsers.columnLetterValue(c);
                 if (-1 != digit) {
                     column = column * SpreadsheetColumnReference.RADIX + digit;
                     if (column > 1 + SpreadsheetColumnReference.MAX_VALUE) {
