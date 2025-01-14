@@ -83,66 +83,74 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testColorDigitFails() {
-        this.colorThrows(digit());
-    }
-
-    @Test
-    public void testColorDigitZeroFails() {
-        this.colorThrows(digitZero());
-    }
-
-    @Test
-    public void testColorDigitSpaceFails() {
-        this.colorThrows(digitSpace());
-    }
-
-    @Test
-    public void testColorHourFails() {
-        this.colorThrows(hour());
-    }
-
-    @Test
-    public void testColorMinuteFails() {
-        this.colorThrows(minute());
-    }
-
-    @Test
-    public void testColorMonthFails() {
-        this.colorThrows(month());
-    }
-
-    @Test
-    public void testColorSecondFails() {
-        this.colorThrows(second());
-    }
-
-    @Test
-    public void testColorDayFails() {
-        this.colorThrows(day());
-    }
-
-    @Test
-    public void testColorYearFails() {
-        this.colorThrows(year());
-    }
-
-    @Test
-    public void testColorNameWhitespaceBeforeFails() {
-        this.colorThrows(
-                whitespace(),
-                bracketOpenSymbol(),
-                red(),
-                bracketCloseSymbol()
+        this.colorParserFails(
+                digit()
         );
     }
 
     @Test
-    public void testColorNameWhitespaceAfterFails() {
-        this.colorThrows(
+    public void testColorDigitZeroFails() {
+        this.colorParserFails(
+                digitZero()
+        );
+    }
+
+    @Test
+    public void testColorDigitSpaceFails() {
+        this.colorParserFails(
+                digitSpace()
+        );
+    }
+
+    @Test
+    public void testColorHourFails() {
+        this.colorParserFails(
+                hour()
+        );
+    }
+
+    @Test
+    public void testColorMinuteFails() {
+        this.colorParserFails(
+                minute()
+        );
+    }
+
+    @Test
+    public void testColorMonthFails() {
+        this.colorParserFails(
+                month()
+        );
+    }
+
+    @Test
+    public void testColorSecondFails() {
+        this.colorParserFails(
+                second()
+        );
+    }
+
+    @Test
+    public void testColorDayFails() {
+        this.colorParserFails(
+                day()
+        );
+    }
+
+    @Test
+    public void testColorYearFails() {
+        this.colorParserFails(
+                year()
+        );
+    }
+
+    @Test
+    public void testColorNameWhitespaceBeforeFails() {
+        this.colorParserFails(
+                whitespace(),
                 bracketOpenSymbol(),
                 red(),
-                bracketCloseSymbol(),
-                whitespace()
+                bracketCloseSymbol()
         );
     }
 
@@ -167,17 +175,17 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testColorNumberWhitespaceBeforeFails() {
-        this.colorThrows(
-                whitespace(),
-                bracketOpenSymbol(),
-                colorNumberFive(),
-                bracketCloseSymbol()
-        );
+this.colorParserFails(
+        whitespace(),
+        bracketOpenSymbol(),
+        colorNumberFive(),
+        bracketCloseSymbol()
+);
     }
 
     @Test
     public void testColorNumberWhitespaceAfterFails() {
-        this.colorThrows(
+        this.colorParserFails(
                 bracketOpenSymbol(),
                 colorNumberFive(),
                 bracketCloseSymbol(),
@@ -220,178 +228,296 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     private void colorParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
         this.parseAndCheck3(
-                this.colorParser(),
+                SpreadsheetFormatParsers.color(),
                 SpreadsheetFormatParserToken::color,
                 tokens
         );
     }
 
-    private void colorThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
-                this.colorParser(),
-                tokens
+    private void colorParserFails(final SpreadsheetFormatParserToken...tokens) {
+        this.parseFailAndCheck(
+                SpreadsheetFormatParsers.color(),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
         );
     }
 
-    private Parser<SpreadsheetFormatParserContext> colorParser() {
-        return SpreadsheetFormatParsers.color();
+    private void colorParserThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                   final String expected) {
+        this.parseThrows(
+                SpreadsheetFormatParsers.color(),
+                ParserToken.text(tokens),
+                expected
+        );
     }
 
     // condition........................................................................................................
 
     @Test
     public void testConditionCloseParensFails() {
-        this.conditionParseThrows(textLiteralCloseParens());
+        this.conditionParseThrows(
+                textLiteralCloseParens(),
+                "Invalid character ')' at (1,1) \")\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionColonFails() {
-        this.conditionParseThrows(textLiteralColon());
+        this.conditionParseThrows(
+                textLiteralColon(),
+                "Invalid character ':' at (1,1) \":\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionDayFails() {
-        this.conditionParseThrows(day());
+        this.conditionParseThrows(
+                day(),
+                "Invalid character 'D' at (1,1) \"D\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionDigitFails() {
-        this.conditionParseThrows(digit());
+        this.conditionParseThrows(
+                digit(),
+                "Invalid character '#' at (1,1) \"#\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionDigitZeroFails() {
-        this.conditionParseThrows(digitZero());
+        this.conditionParseThrows(
+                digitZero(),
+                "Invalid character '0' at (1,1) \"0\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionDigitSpaceFails() {
-        this.conditionParseThrows(digitSpace());
+        this.conditionParseThrows(
+                digitSpace(),
+                "Invalid character '?' at (1,1) \"?\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionDollarFails() {
-        this.conditionParseThrows(textLiteralDollar());
+        this.conditionParseThrows(
+                textLiteralDollar(),
+                "Invalid character '$' at (1,1) \"$\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionFractionFails() {
-        this.conditionParseThrows(fractionSymbol());
+        this.conditionParseThrows(
+                fractionSymbol(),
+                "Invalid character '/' at (1,1) \"/\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionHourFails() {
-        this.conditionParseThrows(hour());
+        this.conditionParseThrows(
+                hour(),
+                "Invalid character 'H' at (1,1) \"H\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionMinusFails() {
-        this.conditionParseThrows(textLiteralMinus());
+        this.conditionParseThrows(
+                textLiteralMinus(),
+                "Invalid character '-' at (1,1) \"-\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionMonthFails() {
-        this.conditionParseThrows(month());
+        this.conditionParseThrows(
+                month(),
+                "Invalid character 'M' at (1,1) \"M\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenParensFails() {
-        this.conditionParseThrows(textLiteralOpenParens());
+        this.conditionParseThrows(
+                textLiteralOpenParens(),
+                "Invalid character '(' at (1,1) \"(\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionPlusFails() {
-        this.conditionParseThrows(textLiteralPlus());
+        this.conditionParseThrows(
+                textLiteralPlus(),
+                "Invalid character '+' at (1,1) \"+\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionSecondFails() {
-        this.conditionParseThrows(second());
+        this.conditionParseThrows(
+                second(),
+                "Invalid character 'S' at (1,1) \"S\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionSlashFails() {
-        this.conditionParseThrows(textLiteralSlash());
+        this.conditionParseThrows(
+                textLiteralSlash(),
+                "Invalid character '/' at (1,1) \"/\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionSpaceFails() {
-        this.conditionParseThrows(whitespace());
+        this.conditionParseThrows(
+                whitespace(),
+                "Invalid character ' ' at (1,1) \" \" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionYearFails() {
-        this.conditionParseThrows(year());
+        this.conditionParseThrows(
+                year(),
+                "Invalid character 'Y' at (1,1) \"Y\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionTextPlaceholderFails() {
-        this.conditionParseThrows(textPlaceholder());
+        this.conditionParseThrows(
+                textPlaceholder(),
+                "@"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketFails() {
-        this.conditionParseThrows(bracketOpenSymbol());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                "Invalid character '[' at (1,1) \"[\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketEqualsFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), equalsSymbol());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                equalsSymbol(),
+                "Invalid character '[' at (1,1) \"[=\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), greaterThan());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                greaterThan(),
+                "Invalid character '[' at (1,1) \"[>\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanEqualsFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), greaterThanEquals());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                greaterThanEquals(),
+                "Invalid character '[' at (1,1) \"[>=\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), lessThan());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                lessThan(),
+                "Invalid character '[' at (1,1) \"[<\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanEqualsFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), lessThanEquals());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                lessThanEquals(),
+                "Invalid character '[' at (1,1) \"[<=\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketNotEqualsFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), notEquals());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                notEquals(),
+                "Invalid character '[' at (1,1) \"[<>\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketEqualsNumberFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), equalsSymbol(), conditionNumber());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                equalsSymbol(),
+                conditionNumber(),
+                "Invalid character '[' at (1,1) \"[=12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanNumberFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), greaterThan(), conditionNumber());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                greaterThan(),
+                conditionNumber(),
+                "Invalid character '[' at (1,1) \"[>12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanEqualsNumberFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), greaterThanEquals(), conditionNumber());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                greaterThanEquals(),
+                conditionNumber(),
+                "Invalid character '[' at (1,1) \"[>=12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanNumberFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), lessThan(), conditionNumber());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                lessThan(),
+                conditionNumber(),
+                "Invalid character '[' at (1,1) \"[<12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanEqualsNumberFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), lessThanEquals(), conditionNumber());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                lessThanEquals(),
+                conditionNumber(),
+                "Invalid character '[' at (1,1) \"[<=12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
     public void testConditionOpenSquareBracketNotEqualsNumberFails() {
-        this.conditionParseThrows(bracketOpenSymbol(), notEquals(), conditionNumber());
+        this.conditionParseThrows(
+                bracketOpenSymbol(),
+                notEquals(),
+                conditionNumber(),
+                "Invalid character '[' at (1,1) \"[<>12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+        );
     }
 
     @Test
@@ -433,21 +559,56 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     private void conditionParseAndCheck(final BiFunction<List<ParserToken>, String, SpreadsheetFormatParserToken> factory,
                                         final SpreadsheetFormatParserToken... tokens) {
         this.parseAndCheck3(
-                this.conditionParser(),
+                SpreadsheetFormatParsers.condition(),
                 factory,
                 tokens
         );
     }
 
-    private void conditionParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
-                this.conditionParser(),
-                tokens
+    private void conditionParseThrows(final SpreadsheetFormatParserToken token,
+                                      final String expected) {
+        this.conditionParseThrows(
+                Lists.of(token),
+                expected
         );
     }
 
-    private Parser<SpreadsheetFormatParserContext> conditionParser() {
-        return SpreadsheetFormatParsers.condition();
+    private void conditionParseThrows(final SpreadsheetFormatParserToken token,
+                                      final SpreadsheetFormatParserToken token2,
+                                      final String expected) {
+        this.conditionParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void conditionParseThrows(final SpreadsheetFormatParserToken token,
+                                      final SpreadsheetFormatParserToken token2,
+                                      final SpreadsheetFormatParserToken token3,
+                                      final String expected) {
+        this.conditionParseThrows(
+                Lists.of(
+                        token,
+                        token2,
+                        token3
+                ),
+                expected
+        );
+    }
+
+    private void conditionParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                      final String expected) {
+        this.parseThrows(
+                SpreadsheetFormatParsers.condition()
+                        .orFailIfCursorNotEmpty(
+                                ParserReporters.basic()
+                        ),
+                ParserToken.text(tokens),
+                expected
+        );
     }
 
     // date format......................................................................................................
@@ -556,42 +717,48 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateFormatTextDigitFails() {
         this.dateFormatParseThrows(
-                digit()
+                digit(),
+                "Invalid character '#' at (1,1) \"#\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatTextDigitZeroFails() {
         this.dateFormatParseThrows(
-                digitZero()
+                digitZero(),
+                "Invalid character '0' at (1,1) \"0\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatTextDigitSpaceFails() {
         this.dateFormatParseThrows(
-                digitSpace()
+                digitSpace(),
+                "Invalid character '?' at (1,1) \"?\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatHourFails() {
         this.dateFormatParseThrows(
-                hour()
+                hour(),
+                "Invalid character 'H' at (1,1) \"H\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatSecondFails() {
         this.dateFormatParseThrows(
-                second()
+                second(),
+                "Invalid character 'S' at (1,1) \"S\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatTextPlaceholderFails() {
         this.dateFormatParseThrows(
-                textPlaceholder()
+                textPlaceholder(),
+                "Invalid character '@' at (1,1) \"@\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1291,40 +1458,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateFormatEqualsDayMonthYearFails() {
         this.dateFormatParseThrows(
-                equalsSymbol(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        equalsSymbol(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '=' at (1,1) \"=DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayEqualsMonthYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                equalsSymbol(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        equalsSymbol(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '=' at (2,1) \"D=MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthEqualsYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                equalsSymbol(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        equalsSymbol(),
+                        year()
+                ),
+                "Invalid character '=' at (3,1) \"DM=Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthYearEqualsFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                year(),
-                equalsSymbol()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        equalsSymbol()
+                ),
+                "Invalid character '=' at (4,1) \"DMY=\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1333,40 +1512,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateFormatGreaterThanDayMonthYearFails() {
         this.dateFormatParseThrows(
-                greaterThan(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        greaterThan(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '>' at (1,1) \">DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayGreaterThanMonthYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                greaterThan(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        greaterThan(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '>' at (2,1) \"D>MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthGreaterThanYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                greaterThan(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        greaterThan(),
+                        year()
+                ),
+                "Invalid character '>' at (3,1) \"DM>Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthYearGreaterThanFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                year(),
-                greaterThan()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        greaterThan()
+                ),
+                "Invalid character '>' at (4,1) \"DMY>\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1375,40 +1566,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateFormatGreaterThanEqualsDayMonthYearFails() {
         this.dateFormatParseThrows(
-                greaterThanEquals(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        greaterThanEquals(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '>' at (1,1) \">=DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayGreaterThanEqualsMonthYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                greaterThanEquals(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        greaterThanEquals(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '>' at (2,1) \"D>=MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthGreaterThanEqualsYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                greaterThanEquals(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        greaterThanEquals(),
+                        year()
+                ),
+                "Invalid character '>' at (3,1) \"DM>=Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthYearGreaterThanEqualsFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                year(),
-                greaterThanEquals()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        greaterThanEquals()
+                ),
+                "Invalid character '>' at (4,1) \"DMY>=\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1417,80 +1620,104 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateFormatLessThanDayMonthYearFails() {
         this.dateFormatParseThrows(
-                lessThan(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        lessThan(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (1,1) \"<DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayLessThanMonthYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                lessThan(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        lessThan(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (2,1) \"D<MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthLessThanYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                lessThan(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        lessThan(),
+                        year()
+                ),
+                "Invalid character '<' at (3,1) \"DM<Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthYearLessThanFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                year(),
-                lessThan()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        lessThan()
+                ),
+                "Invalid character '<' at (4,1) \"DMY<\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatLessThanEqualsDayMonthYearFails() {
         this.dateFormatParseThrows(
-                lessThanEquals(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        lessThanEquals(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (1,1) \"<=DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayLessThanEqualsMonthYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                lessThanEquals(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        lessThanEquals(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (2,1) \"D<=MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthLessThanEqualsYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                lessThanEquals(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        lessThanEquals(),
+                        year()
+                ),
+                "Invalid character '<' at (3,1) \"DM<=Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthYearLessThanEqualsFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                year(),
-                lessThanEquals()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        lessThanEquals()
+                ),
+                "Invalid character '<' at (4,1) \"DMY<=\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1499,40 +1726,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateFormatNotEqualsDayMonthYearFails() {
         this.dateFormatParseThrows(
-                notEquals(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        notEquals(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (1,1) \"<>DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayNotEqualsMonthYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                notEquals(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        notEquals(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (2,1) \"D<>MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthNotEqualsYearFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                notEquals(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        notEquals(),
+                        year()
+                ),
+                "Invalid character '<' at (3,1) \"DM<>Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayMonthYearNotEqualsFails() {
         this.dateFormatParseThrows(
-                day(),
-                month(),
-                year(),
-                notEquals()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        notEquals()
+                ),
+                "Invalid character '<' at (4,1) \"DMY<>\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1661,50 +1900,68 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDayFormatDateConditionEqualsFails() {
+    public void testDateFormatDateConditionEqualsFails() {
         this.dateFormatParseThrows(
-                day(),
-                conditionEquals()
+                Lists.of(
+                        day(),
+                        conditionEquals()
+                ),
+                "Invalid character '[' at (2,1) \"D[   =12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayConditionGreaterThanFails() {
         this.dateFormatParseThrows(
-                day(),
-                conditionGreaterThan()
+                Lists.of(
+                        day(),
+                        conditionGreaterThan()
+                ),
+                "Invalid character '[' at (2,1) \"D[>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayConditionGreaterThanEqualsFails() {
         this.dateFormatParseThrows(
-                day(),
-                conditionGreaterThanEquals()
+                Lists.of(
+                        day(),
+                        conditionGreaterThanEquals()
+                ),
+                "Invalid character '[' at (2,1) \"D[>=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayConditionLessThanFails() {
         this.dateFormatParseThrows(
-                day(),
-                conditionLessThan()
+                Lists.of(
+                        day(),
+                        conditionLessThan()
+                ),
+                "Invalid character '[' at (2,1) \"D[<12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayConditionLessThanEqualsFails() {
         this.dateFormatParseThrows(
-                day(),
-                conditionLessThanEquals()
+                Lists.of(
+                        day(),
+                        conditionLessThanEquals()
+                ),
+                "Invalid character '[' at (2,1) \"D[<=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateFormatDayConditionNotEqualsFails() {
         this.dateFormatParseThrows(
-                day(),
-                conditionNotEquals()
+                Lists.of(
+                        day(),
+                        conditionNotEquals()
+                ),
+                "Invalid character '[' at (2,1) \"D[<>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1789,10 +2046,20 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void dateFormatParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void dateFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                       final String expected) {
+        this.dateFormatParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void dateFormatParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                       final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.dateFormat(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -1871,49 +2138,56 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         color(),
                         escape()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]\\\\A\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseTextDigitFails() {
         this.dateParseParseThrows(
-                digit()
+                digit(),
+                "Invalid character '#' at (1,1) \"#\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseTextDigitZeroFails() {
         this.dateParseParseThrows(
-                digitZero()
+                digitZero(),
+                "Invalid character '0' at (1,1) \"0\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseTextDigitSpaceFails() {
         this.dateParseParseThrows(
-                digitSpace()
+                digitSpace(),
+                "Invalid character '?' at (1,1) \"?\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseHourFails() {
         this.dateParseParseThrows(
-                hour()
+                hour(),
+                "Invalid character 'H' at (1,1) \"H\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseSecondFails() {
         this.dateParseParseThrows(
-                second()
+                second(),
+                "Invalid character 'S' at (1,1) \"S\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseTextPlaceholderFails() {
         this.dateParseParseThrows(
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -2613,40 +2887,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateParseEqualsDayMonthYearFails() {
         this.dateParseParseThrows(
-                equalsSymbol(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        equalsSymbol(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '=' at (1,1) \"=DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayEqualsMonthYearFails() {
         this.dateParseParseThrows(
-                day(),
-                equalsSymbol(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        equalsSymbol(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '=' at (2,1) \"D=MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthEqualsYearFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                equalsSymbol(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        equalsSymbol(),
+                        year()
+                ),
+                "Invalid character '=' at (3,1) \"DM=Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthYearEqualsFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                year(),
-                equalsSymbol()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        equalsSymbol()
+                ),
+                "Invalid character '=' at (4,1) \"DMY=\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2655,40 +2941,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateParseGreaterThanDayMonthYearFails() {
         this.dateParseParseThrows(
-                greaterThan(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        greaterThan(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '>' at (1,1) \">DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayGreaterThanMonthYearFails() {
         this.dateParseParseThrows(
-                day(),
-                greaterThan(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        greaterThan(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '>' at (2,1) \"D>MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthGreaterThanYearFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                greaterThan(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        greaterThan(),
+                        year()
+                ),
+                "Invalid character '>' at (3,1) \"DM>Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthYearGreaterThanFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                year(),
-                greaterThan()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        greaterThan()
+                ),
+                "Invalid character '>' at (4,1) \"DMY>\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2697,40 +2995,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateParseGreaterThanEqualsDayMonthYearFails() {
         this.dateParseParseThrows(
-                greaterThanEquals(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        greaterThanEquals(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '>' at (1,1) \">=DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayGreaterThanEqualsMonthYearFails() {
         this.dateParseParseThrows(
-                day(),
-                greaterThanEquals(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        greaterThanEquals(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '>' at (2,1) \"D>=MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthGreaterThanEqualsYearFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                greaterThanEquals(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        greaterThanEquals(),
+                        year()
+                ),
+                "Invalid character '>' at (3,1) \"DM>=Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthYearGreaterThanEqualsFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                year(),
-                greaterThanEquals()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        greaterThanEquals()
+                ),
+                "Invalid character '>' at (4,1) \"DMY>=\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2739,80 +3049,104 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateParseLessThanDayMonthYearFails() {
         this.dateParseParseThrows(
-                lessThan(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        lessThan(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (1,1) \"<DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayLessThanMonthYearFails() {
         this.dateParseParseThrows(
-                day(),
-                lessThan(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        lessThan(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (2,1) \"D<MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthLessThanYearFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                lessThan(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        lessThan(),
+                        year()
+                ),
+                "Invalid character '<' at (3,1) \"DM<Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthYearLessThanFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                year(),
-                lessThan()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        lessThan()
+                ),
+                "Invalid character '<' at (4,1) \"DMY<\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseLessThanEqualsDayMonthYearFails() {
         this.dateParseParseThrows(
-                lessThanEquals(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        lessThanEquals(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (1,1) \"<=DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayLessThanEqualsMonthYearFails() {
         this.dateParseParseThrows(
-                day(),
-                lessThanEquals(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        lessThanEquals(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (2,1) \"D<=MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthLessThanEqualsYearFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                lessThanEquals(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        lessThanEquals(),
+                        year()
+                ),
+                "Invalid character '<' at (3,1) \"DM<=Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthYearLessThanEqualsFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                year(),
-                lessThanEquals()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        lessThanEquals()
+                ),
+                "Invalid character '<' at (4,1) \"DMY<=\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2821,40 +3155,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateParseNotEqualsDayMonthYearFails() {
         this.dateParseParseThrows(
-                notEquals(),
-                day(),
-                month(),
-                year()
+                Lists.of(
+                        notEquals(),
+                        day(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (1,1) \"<>DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayNotEqualsMonthYearFails() {
         this.dateParseParseThrows(
-                day(),
-                notEquals(),
-                month(),
-                year()
+                Lists.of(
+                        day(),
+                        notEquals(),
+                        month(),
+                        year()
+                ),
+                "Invalid character '<' at (2,1) \"D<>MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthNotEqualsYearFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                notEquals(),
-                year()
+                Lists.of(
+                        day(),
+                        month(),
+                        notEquals(),
+                        year()
+                ),
+                "Invalid character '<' at (3,1) \"DM<>Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateParseDayMonthYearNotEqualsFails() {
         this.dateParseParseThrows(
-                day(),
-                month(),
-                year(),
-                notEquals()
+                Lists.of(
+                        day(),
+                        month(),
+                        year(),
+                        notEquals()
+                ),
+                "Invalid character '<' at (4,1) \"DMY<>\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2866,7 +3212,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         color(),
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2876,7 +3223,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         color(),
                         month()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]M\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2886,7 +3234,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         color(),
                         year()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2896,7 +3245,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         day(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (2,1) \"D[COLOR   5]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2906,7 +3256,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         month(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (2,1) \"M[COLOR   5]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2916,7 +3267,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 date(
                         year(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (2,1) \"Y[COLOR   5]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2926,7 +3278,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseConditionEqualsDayFails() {
         this.dateParseParseThrows(
                 conditionEquals(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[   =12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2934,7 +3287,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseConditionGreaterThanDayFails() {
         this.dateParseParseThrows(
                 conditionGreaterThan(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[>12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2942,7 +3296,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseConditionGreaterThanEqualsDayFails() {
         this.dateParseParseThrows(
                 conditionGreaterThanEquals(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[>=12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2950,14 +3305,17 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseConditionLessThanDayFails() {
         this.dateParseParseThrows(
                 conditionLessThan(),
-                day());
+                day(),
+                "Invalid character '[' at (1,1) \"[<12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+        );
     }
 
     @Test
     public void testDateParseConditionLessThanEqualsDayFails() {
         this.dateParseParseThrows(
                 conditionLessThanEquals(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[<=12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2965,7 +3323,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseConditionNotEqualsDayFails() {
         this.dateParseParseThrows(
                 conditionNotEquals(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[<>12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2973,7 +3332,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateDayConditionEqualsFails() {
         this.dateParseParseThrows(
                 day(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"D[   =12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2981,7 +3341,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayConditionGreaterThanFails() {
         this.dateParseParseThrows(
                 day(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"D[>12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2989,7 +3350,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayConditionGreaterThanEqualsFails() {
         this.dateParseParseThrows(
                 day(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"D[>=12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2997,7 +3359,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayConditionLessThanFails() {
         this.dateParseParseThrows(
                 day(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"D[<12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3005,7 +3368,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayConditionLessThanEqualsFails() {
         this.dateParseParseThrows(
                 day(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"D[<=12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3013,7 +3377,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateParseDayConditionNotEqualsFails() {
         this.dateParseParseThrows(
                 day(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"D[<>12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3049,18 +3414,21 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateParseColorPatternSeparatorPatternFails() {
         this.dateParseParseThrows(
-                date(
-                        color(),
-                        day(),
-                        month(),
-                        year()
+                Lists.of(
+                        date(
+                                color(),
+                                day(),
+                                month(),
+                                year()
+                        ),
+                        separator(),
+                        date(
+                                year(),
+                                month(),
+                                day()
+                        )
                 ),
-                separator(),
-                date(
-                        year(),
-                        month(),
-                        day()
-                )
+                "Invalid character '[' at (1,1) \"[COLOR   5]DMY;YMD\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3073,10 +3441,32 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void dateParseParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void dateParseParseThrows(final SpreadsheetFormatParserToken token,
+                                      final String expected) {
+        this.dateParseParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void dateParseParseThrows(final SpreadsheetFormatParserToken token,
+                                      final SpreadsheetFormatParserToken token2,
+                                      final String expected) {
+        this.dateParseParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void dateParseParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                      final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.dateParse(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -3118,7 +3508,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDayFails() {
         this.numberFormatParseThrows(
                 digit(),
-                day()
+                day(),
+                "Invalid character 'D' at (2,1) \"#D\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3126,7 +3517,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatHourFails() {
         this.numberFormatParseThrows(
                 digit(),
-                hour()
+                hour(),
+                "Invalid character 'H' at (2,1) \"#H\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3134,7 +3526,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatMinuteFails() {
         this.numberFormatParseThrows(
                 digit(),
-                minute()
+                minute(),
+                "Invalid character 'M' at (2,1) \"#M\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3142,7 +3535,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatMonthFails() {
         this.numberFormatParseThrows(
                 digit(),
-                month()
+                month(),
+                "Invalid character 'M' at (2,1) \"#M\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3150,14 +3544,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatSecondFails() {
         this.numberFormatParseThrows(
                 digit(),
-                second()
+                second(),
+                "Invalid character 'S' at (2,1) \"#S\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatStarFails() {
         this.numberFormatParseThrows(
-                star()
+                star(),
+                "Invalid character '*' at (1,1) \"*?\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3165,14 +3561,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatTextPlaceholderFails() {
         this.numberFormatParseThrows(
                 digit(),
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
     @Test
     public void testNumberFormatUnderscoreFails() {
         this.numberFormatParseThrows(
-                underscore()
+                underscore(),
+                "Invalid character '_' at (1,1) \"_?\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3180,14 +3578,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatYearFails() {
         this.numberFormatParseThrows(
                 digit(),
-                year()
+                year(),
+                "Invalid character 'Y' at (2,1) \"#Y\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatSlashFails() {
         this.numberFormatParseThrows(
-                fractionSymbol()
+                fractionSymbol(),
+                "Invalid character '/' at (1,1) \"/\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3195,7 +3595,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitSpaceNumberFails() {
         this.numberFormatParseThrows(
                 digitSpace(),
-                fractionSymbol()
+                fractionSymbol(),
+                "Invalid character '/' at (2,1) \"?/\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3203,7 +3604,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitZeroNumberFails() {
         this.numberFormatParseThrows(
                 digitZero(),
-                fractionSymbol()
+                fractionSymbol(),
+                "Invalid character '/' at (2,1) \"0/\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3211,7 +3613,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitNumberFails() {
         this.numberFormatParseThrows(
                 digit(),
-                fractionSymbol()
+                fractionSymbol(),
+                "Invalid character '/' at (2,1) \"#/\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4126,40 +4529,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatEqualsDigitDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                equalsSymbol(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        equalsSymbol(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '=' at (1,1) \"=#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitEqualsDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                equalsSymbol(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        equalsSymbol(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '=' at (2,1) \"#=.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointEqualsDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                equalsSymbol(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        equalsSymbol(),
+                        digit()
+                ),
+                "Invalid character '=' at (3,1) \"#.=#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointDigitEqualsFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                equalsSymbol()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        equalsSymbol()
+                ),
+                "Invalid character '=' at (4,1) \"#.#=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4168,40 +4583,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatGreaterThanDigitDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                greaterThan(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        greaterThan(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '>' at (1,1) \">#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitGreaterThanDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                greaterThan(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        greaterThan(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '>' at (2,1) \"#>.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointGreaterThanDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                greaterThan(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        greaterThan(),
+                        digit()
+                ),
+                "Invalid character '>' at (3,1) \"#.>#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointDigitGreaterThanFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                greaterThan()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        greaterThan()
+                ),
+                "Invalid character '>' at (4,1) \"#.#>\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4210,40 +4637,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatGreaterThanEqualsDigitDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                greaterThanEquals(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        greaterThanEquals(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '>' at (1,1) \">=#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitGreaterThanEqualsDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                greaterThanEquals(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        greaterThanEquals(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '>' at (2,1) \"#>=.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointGreaterThanEqualsDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                greaterThanEquals(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        greaterThanEquals(),
+                        digit()
+                ),
+                "Invalid character '>' at (3,1) \"#.>=#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointDigitGreaterThanEqualsFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                greaterThanEquals()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        greaterThanEquals()
+                ),
+                "Invalid character '>' at (4,1) \"#.#>=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4252,40 +4691,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatLessThanDigitDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                lessThan(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        lessThan(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitLessThanDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                lessThan(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        lessThan(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (2,1) \"#<.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointLessThanDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                lessThan(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        lessThan(),
+                        digit()
+                ),
+                "Invalid character '<' at (3,1) \"#.<#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointDigitLessThanFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                lessThan()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        lessThan()
+                ),
+                "Invalid character '<' at (4,1) \"#.#<\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4294,40 +4745,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatLessThanEqualsDigitDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                lessThanEquals(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        lessThanEquals(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<=#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitLessThanEqualsDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                lessThanEquals(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        lessThanEquals(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (2,1) \"#<=.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointLessThanEqualsDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                lessThanEquals(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        lessThanEquals(),
+                        digit()
+                ),
+                "Invalid character '<' at (3,1) \"#.<=#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointDigitLessThanEqualsFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                lessThanEquals()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        lessThanEquals()
+                ),
+                "Invalid character '<' at (4,1) \"#.#<=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4336,40 +4799,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatNotEqualsDigitDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                notEquals(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        notEquals(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<>#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitNotEqualsDecimalPointDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                notEquals(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        notEquals(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (2,1) \"#<>.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointNotEqualsDigitFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                notEquals(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        notEquals(),
+                        digit()
+                ),
+                "Invalid character '<' at (3,1) \"#.<>#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointDigitNotEqualsFails() {
         this.numberFormatParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                notEquals()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        notEquals()
+                ),
+                "Invalid character '<' at (4,1) \"#.#<>\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4671,7 +5146,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentEqualsDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent1(equalsSymbol())
+                exponent1(equalsSymbol()),
+                "Invalid character '=' at (4,1) \"#E-=?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4679,7 +5155,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitEqualsDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent2(equalsSymbol())
+                exponent2(equalsSymbol()),
+                "Invalid character '=' at (5,1) \"#E+?=0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4687,7 +5164,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitEqualsFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent3(equalsSymbol())
+                exponent3(equalsSymbol()),
+                "Invalid character '=' at (7,1) \"#E+?0#=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4697,7 +5175,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentGreaterThanDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent1(greaterThan())
+                exponent1(greaterThan()),
+                "Invalid character '>' at (4,1) \"#E->?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4705,7 +5184,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitGreaterThanDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent2(greaterThan())
+                exponent2(greaterThan()),
+                "Invalid character '>' at (5,1) \"#E+?>0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4713,7 +5193,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitGreaterThanFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent3(greaterThan())
+                exponent3(greaterThan()),
+                "Invalid character '>' at (7,1) \"#E+?0#>\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4723,7 +5204,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentGreaterThanEqualsDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent1(greaterThanEquals())
+                exponent1(greaterThanEquals()),
+                "Invalid character '>' at (4,1) \"#E->=?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4731,7 +5213,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitGreaterThanEqualsDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent2(greaterThanEquals())
+                exponent2(greaterThanEquals()),
+                "Invalid character '>' at (5,1) \"#E+?>=0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4739,7 +5222,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitGreaterThanEqualsFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent3(greaterThanEquals())
+                exponent3(greaterThanEquals()),
+                "Invalid character '>' at (7,1) \"#E+?0#>=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4749,7 +5233,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentLessThanDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent1(lessThan())
+                exponent1(lessThan()),
+                "Invalid character '<' at (4,1) \"#E-<?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4757,7 +5242,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitLessThanDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent2(lessThan())
+                exponent2(lessThan()),
+                "Invalid character '<' at (5,1) \"#E+?<0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4765,7 +5251,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitLessThanFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent3(lessThan())
+                exponent3(lessThan()),
+                "Invalid character '<' at (7,1) \"#E+?0#<\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4775,7 +5262,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentLessThanEqualsDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent1(lessThanEquals())
+                exponent1(lessThanEquals()),
+                "Invalid character '<' at (4,1) \"#E-<=?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLO"
         );
     }
 
@@ -4783,7 +5271,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitLessThanEqualsDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent2(lessThanEquals())
+                exponent2(lessThanEquals()),
+                "Invalid character '<' at (5,1) \"#E+?<=0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4791,7 +5280,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitLessThanEqualsFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent3(lessThanEquals())
+                exponent3(lessThanEquals()),
+                "Invalid character '<' at (7,1) \"#E+?0#<=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4801,7 +5291,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentNotEqualsDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent1(notEquals())
+                exponent1(notEquals()),
+                "Invalid character '<' at (4,1) \"#E-<>?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4809,7 +5300,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitNotEqualsDigitFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent2(notEquals())
+                exponent2(notEquals()),
+                "Invalid character '<' at (5,1) \"#E+?<>0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4817,7 +5309,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatDigitExponentDigitNotEqualsFails() {
         this.numberFormatParseThrows(
                 digit(),
-                exponent3(notEquals())
+                exponent3(notEquals()),
+                "Invalid character '<' at (7,1) \"#E+?0#<>\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4962,7 +5455,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatTokenEqualsConditionFails() {
         this.numberFormatParseThrows(
                 digit(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"#[   =12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4970,7 +5464,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatTokenLessThanConditionFails() {
         this.numberFormatParseThrows(
                 digit(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"#[<12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4978,7 +5473,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatTokenLessThanEqualsConditionFails() {
         this.numberFormatParseThrows(
                 digit(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"#[<=12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4986,7 +5482,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatTokenGreaterThanConditionFails() {
         this.numberFormatParseThrows(
                 digit(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"#[>12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4994,7 +5491,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatTokenGreaterThanEqualsConditionFails() {
         this.numberFormatParseThrows(
                 digit(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"#[>=12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5002,7 +5500,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberFormatTokenNotEqualsConditionFails() {
         this.numberFormatParseThrows(
                 digit(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"#[<>12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5045,14 +5544,17 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatPatternSeparatorTextPatternSeparatorFails() {
         this.numberFormatParseThrows(
-                number(
-                        digit()
+                Lists.of(
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        text(
+                                textPlaceholder()
+                        ),
+                        separator()
                 ),
-                separator(),
-                text(
-                        textPlaceholder()
-                ),
-                separator()
+                "@"
         );
     }
 
@@ -5126,6 +5628,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatPatternSeparatorPatternSeparatorTextPatternSeparatorFails() {
         this.numberFormatParseThrows(
+                Lists.of(
                 number(
                         digit()
                 ),
@@ -5138,6 +5641,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         textPlaceholder()
                 ),
                 separator()
+                ),
+                "@"
         );
     }
 
@@ -5165,6 +5670,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorTextPatternSeparatorFails() {
         this.numberFormatParseThrows(
+                Lists.of(
                 number(
                         digit()
                 ),
@@ -5181,12 +5687,15 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         textPlaceholder()
                 ),
                 separator()
+                ),
+                "@"
         );
     }
 
     @Test
     public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorConditionPatternFails() {
         this.numberFormatParseThrows(
+                Lists.of(
                 number(
                         digit()
                 ),
@@ -5203,6 +5712,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 text(
                         textPlaceholder()
                 )
+                ),
+                "@"
         );
     }
 
@@ -5215,10 +5726,32 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void numberFormatParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void numberFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                         final String expected) {
+        this.numberFormatParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void numberFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                         final SpreadsheetFormatParserToken token2,
+                                         final String expected) {
+        this.numberFormatParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void numberFormatParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                         final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.numberFormat(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -5236,7 +5769,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDayFails() {
         this.numberParseParseThrows(
                 digit(),
-                day()
+                day(),
+                "Invalid character 'D' at (2,1) \"#D\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5244,7 +5778,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseHourFails() {
         this.numberParseParseThrows(
                 digit(),
-                hour()
+                hour(),
+                "Invalid character 'H' at (2,1) \"#H\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5252,7 +5787,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseMonthFails() {
         this.numberParseParseThrows(
                 digit(),
-                month()
+                month(),
+                "Invalid character 'M' at (2,1) \"#M\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5260,14 +5796,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseSecondFails() {
         this.numberParseParseThrows(
                 digit(),
-                second()
+                second(),
+                "Invalid character 'S' at (2,1) \"#S\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseStarFails() {
         this.numberParseParseThrows(
-                star()
+                star(),
+                "Invalid character '*' at (1,1) \"*?\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5275,14 +5813,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseTextPlaceholderFails() {
         this.numberParseParseThrows(
                 digit(),
-                textPlaceholder()
+                textPlaceholder(),
+                "Invalid character '@' at (2,1) \"#@\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseUnderscoreFails() {
         this.numberParseParseThrows(
-                underscore()
+                underscore(),
+                "Invalid character '_' at (1,1) \"_?\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5290,14 +5830,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseYearFails() {
         this.numberParseParseThrows(
                 digit(),
-                year()
+                year(),
+                "Invalid character 'Y' at (2,1) \"#Y\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseSlashFails() {
         this.numberParseParseThrows(
-                fractionSymbol()
+                fractionSymbol(),
+                "Invalid character '/' at (1,1) \"/\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5305,7 +5847,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitSpaceNumberFails() {
         this.numberParseParseThrows(
                 digitSpace(),
-                fractionSymbol()
+                fractionSymbol(),
+                "Invalid character '/' at (2,1) \"?/\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5313,7 +5856,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitZeroNumberFails() {
         this.numberParseParseThrows(
                 digitZero(),
-                fractionSymbol()
+                fractionSymbol(),
+                "Invalid character '/' at (2,1) \"0/\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5321,7 +5865,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitNumberFails() {
         this.numberParseParseThrows(
                 digit(),
-                fractionSymbol()
+                fractionSymbol(),
+                "Invalid character '/' at (2,1) \"#/\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5380,7 +5925,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionEqualsGeneralFails() {
         this.numberParseParseThrows(
                 conditionEquals(),
-                general()
+                general(),
+                "Invalid character '[' at (1,1) \"[   =12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5388,7 +5934,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionGreaterThanGeneralFails() {
         this.numberParseParseThrows(
                 conditionGreaterThan(),
-                general()
+                general(),
+                "Invalid character '[' at (1,1) \"[>12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5396,7 +5943,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionGreaterThanEqualsGeneralFails() {
         this.numberParseParseThrows(
                 conditionGreaterThanEquals(),
-                general()
+                general(),
+                "Invalid character '[' at (1,1) \"[>=12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5404,7 +5952,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionLessThanGeneralFails() {
         this.numberParseParseThrows(
                 conditionLessThan(),
-                general()
+                general(),
+                "Invalid character '[' at (1,1) \"[<12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5412,7 +5961,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionLessThanEqualsGeneralFails() {
         this.numberParseParseThrows(
                 conditionLessThanEquals(),
-                general()
+                general(),
+                "Invalid character '[' at (1,1) \"[<=12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5420,7 +5970,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionNotEqualsGeneralFails() {
         this.numberParseParseThrows(
                 conditionNotEquals(),
-                general()
+                general(),
+                "Invalid character '[' at (1,1) \"[<>12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6236,40 +6787,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberParseEqualsDigitDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                equalsSymbol(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        equalsSymbol(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '=' at (1,1) \"=#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitEqualsDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                equalsSymbol(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        equalsSymbol(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '=' at (2,1) \"#=.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointEqualsDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                equalsSymbol(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        equalsSymbol(),
+                        digit()
+                ),
+                "Invalid character '=' at (3,1) \"#.=#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointDigitEqualsFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                equalsSymbol()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        equalsSymbol()
+                ),
+                "Invalid character '=' at (4,1) \"#.#=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6278,40 +6841,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberParseGreaterThanDigitDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                greaterThan(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        greaterThan(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '>' at (1,1) \">#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitGreaterThanDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                greaterThan(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        greaterThan(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '>' at (2,1) \"#>.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointGreaterThanDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                greaterThan(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        greaterThan(),
+                        digit()
+                ),
+                "Invalid character '>' at (3,1) \"#.>#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointDigitGreaterThanFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                greaterThan()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        greaterThan()
+                ),
+                "Invalid character '>' at (4,1) \"#.#>\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6320,40 +6895,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberParseGreaterThanEqualsDigitDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                greaterThanEquals(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        greaterThanEquals(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '>' at (1,1) \">=#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitGreaterThanEqualsDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                greaterThanEquals(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        greaterThanEquals(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '>' at (2,1) \"#>=.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointGreaterThanEqualsDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                greaterThanEquals(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        greaterThanEquals(),
+                        digit()
+                ),
+                "Invalid character '>' at (3,1) \"#.>=#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointDigitGreaterThanEqualsFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                greaterThanEquals()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        greaterThanEquals()
+                ),
+                "Invalid character '>' at (4,1) \"#.#>=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6362,40 +6949,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberParseLessThanDigitDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                lessThan(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        lessThan(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitLessThanDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                lessThan(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        lessThan(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (2,1) \"#<.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointLessThanDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                lessThan(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        lessThan(),
+                        digit()
+                ),
+                "Invalid character '<' at (3,1) \"#.<#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointDigitLessThanFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                lessThan()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        lessThan()
+                ),
+                "Invalid character '<' at (4,1) \"#.#<\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6404,40 +7003,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberParseLessThanEqualsDigitDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                lessThanEquals(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        lessThanEquals(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<=#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitLessThanEqualsDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                lessThanEquals(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        lessThanEquals(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (2,1) \"#<=.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointLessThanEqualsDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                lessThanEquals(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        lessThanEquals(),
+                        digit()
+                ),
+                "Invalid character '<' at (3,1) \"#.<=#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointDigitLessThanEqualsFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                lessThanEquals()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        lessThanEquals()
+                ),
+                "Invalid character '<' at (4,1) \"#.#<=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6446,40 +7057,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberParseNotEqualsDigitDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                notEquals(),
-                digit(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        notEquals(),
+                        digit(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<>#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitNotEqualsDecimalPointDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                notEquals(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        digit(),
+                        notEquals(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '<' at (2,1) \"#<>.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointNotEqualsDigitFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                notEquals(),
-                digit()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        notEquals(),
+                        digit()
+                ),
+                "Invalid character '<' at (3,1) \"#.<>#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testNumberParseDigitDecimalPointDigitNotEqualsFails() {
         this.numberParseParseThrows(
-                digit(),
-                decimalPoint(),
-                digit(),
-                notEquals()
+                Lists.of(
+                        digit(),
+                        decimalPoint(),
+                        digit(),
+                        notEquals()
+                ),
+                "Invalid character '<' at (4,1) \"#.#<>\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6781,7 +7404,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentEqualsDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent1(equalsSymbol())
+                exponent1(equalsSymbol()),
+                "Invalid character '=' at (4,1) \"#E-=?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6789,7 +7413,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitEqualsDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent2(equalsSymbol())
+                exponent2(equalsSymbol()),
+                "Invalid character '=' at (5,1) \"#E+?=0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6797,7 +7422,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitEqualsFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent3(equalsSymbol())
+                exponent3(equalsSymbol()),
+                "Invalid character '=' at (7,1) \"#E+?0#=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6807,7 +7433,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentGreaterThanDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent1(greaterThan())
+                exponent1(greaterThan()),
+                "Invalid character '>' at (4,1) \"#E->?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6815,7 +7442,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitGreaterThanDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent2(greaterThan())
+                exponent2(greaterThan()),
+                "Invalid character '>' at (5,1) \"#E+?>0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6823,7 +7451,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitGreaterThanFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent3(greaterThan())
+                exponent3(greaterThan()),
+                "Invalid character '>' at (7,1) \"#E+?0#>\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6833,7 +7462,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentGreaterThanEqualsDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent1(greaterThanEquals())
+                exponent1(greaterThanEquals()),
+                "Invalid character '>' at (4,1) \"#E->=?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6841,7 +7471,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitGreaterThanEqualsDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent2(greaterThanEquals())
+                exponent2(greaterThanEquals()),
+                "Invalid character '>' at (5,1) \"#E+?>=0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6849,7 +7480,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitGreaterThanEqualsFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent3(greaterThanEquals())
+                exponent3(greaterThanEquals()),
+                "Invalid character '>' at (7,1) \"#E+?0#>=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6859,7 +7491,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentLessThanDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent1(lessThan())
+                exponent1(lessThan()),
+                "Invalid character '<' at (4,1) \"#E-<?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6867,7 +7500,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitLessThanDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent2(lessThan())
+                exponent2(lessThan()),
+                "Invalid character '<' at (5,1) \"#E+?<0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6875,7 +7509,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitLessThanFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent3(lessThan())
+                exponent3(lessThan()),
+                "Invalid character '<' at (7,1) \"#E+?0#<\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6885,7 +7520,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentLessThanEqualsDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent1(lessThanEquals())
+                exponent1(lessThanEquals()),
+                "Invalid character '<' at (4,1) \"#E-<=?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6893,7 +7529,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitLessThanEqualsDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent2(lessThanEquals())
+                exponent2(lessThanEquals()),
+                "Invalid character '<' at (5,1) \"#E+?<=0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6901,7 +7538,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitLessThanEqualsFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent3(lessThanEquals())
+                exponent3(lessThanEquals()),
+                "Invalid character '<' at (7,1) \"#E+?0#<=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6911,7 +7549,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentNotEqualsDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent1(notEquals())
+                exponent1(notEquals()),
+                "Invalid character '<' at (4,1) \"#E-<>?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6919,7 +7558,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitNotEqualsDigitFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent2(notEquals())
+                exponent2(notEquals()),
+                "Invalid character '<' at (5,1) \"#E+?<>0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6927,7 +7567,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseDigitExponentDigitNotEqualsFails() {
         this.numberParseParseThrows(
                 digit(),
-                exponent3(notEquals())
+                exponent3(notEquals()),
+                "Invalid character '<' at (7,1) \"#E+?0#<>\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6939,7 +7580,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 number(
                         color(),
                         digit()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6949,7 +7591,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 number(
                         digit(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (2,1) \"#[COLOR   5]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6960,7 +7603,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         digit(),
                         decimalPoint(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (3,1) \"#.[COLOR   5]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6972,7 +7616,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         decimalPoint(),
                         digit(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (4,1) \"#.#[COLOR   5]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6982,7 +7627,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 number(
                         digit(),
                         exponent1(color())
-                )
+                ) ,
+                "Invalid character '[' at (4,1) \"#E-[COLOR   5]?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6992,7 +7638,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 number(
                         digit(),
                         exponent2(color())
-                )
+                ),
+                "Invalid character '[' at (5,1) \"#E+?[COLOR   5]0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7002,7 +7649,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 number(
                         digit(),
                         exponent3(color())
-                )
+                ),
+                "Invalid character '[' at (7,1) \"#E+?0#[COLOR   5]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7012,7 +7660,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionEqualsNumberFails() {
         this.numberParseParseThrows(
                 conditionEquals(),
-                digit()
+                digit(),
+                "Invalid character '[' at (1,1) \"[   =12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7020,7 +7669,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionGreaterThanNumberFails() {
         this.numberParseParseThrows(
                 conditionGreaterThan(),
-                digit()
+                digit(),
+                "Invalid character '[' at (1,1) \"[>12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7028,7 +7678,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionGreaterThanEqualsNumberFails() {
         this.numberParseParseThrows(
                 conditionGreaterThanEquals(),
-                digit()
+                digit(),
+                "Invalid character '[' at (1,1) \"[>=12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7036,7 +7687,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionLessThanNumberFails() {
         this.numberParseParseThrows(
                 conditionLessThan(),
-                digit()
+                digit(),
+                "Invalid character '[' at (1,1) \"[<12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7044,7 +7696,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionLessThanEqualsNumberFails() {
         this.numberParseParseThrows(
                 conditionLessThanEquals(),
-                digit()
+                digit(),
+                "Invalid character '[' at (1,1) \"[<=12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7052,7 +7705,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseConditionNotEqualsNumberFails() {
         this.numberParseParseThrows(
                 conditionNotEquals(),
-                digit()
+                digit(),
+                "Invalid character '[' at (1,1) \"[<>12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7060,7 +7714,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseTokenEqualsConditionFails() {
         this.numberParseParseThrows(
                 digit(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"#[   =12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7068,7 +7723,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseTokenLessThanConditionFails() {
         this.numberParseParseThrows(
                 digit(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"#[<12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7076,7 +7732,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseTokenLessThanEqualsConditionFails() {
         this.numberParseParseThrows(
                 digit(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"#[<=12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7084,7 +7741,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseTokenGreaterThanConditionFails() {
         this.numberParseParseThrows(
                 digit(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"#[>12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7092,7 +7750,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseTokenGreaterThanEqualsConditionFails() {
         this.numberParseParseThrows(
                 digit(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"#[>=12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7100,7 +7759,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testNumberParseTokenNotEqualsConditionFails() {
         this.numberParseParseThrows(
                 digit(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"#[<>12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7130,13 +7790,16 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testNumberParsePatternSeparatorTextPatternFails() {
         this.numberParseParseThrows(
-                number(
-                        digit()
+                Lists.of(
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        text(
+                                textPlaceholder()
+                        )
                 ),
-                separator(),
-                text(
-                        textPlaceholder()
-                )
+                "@"
         );
     }
 
@@ -7163,10 +7826,32 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void numberParseParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void numberParseParseThrows(final SpreadsheetFormatParserToken token,
+                                        final String expected) {
+        this.numberParseParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void numberParseParseThrows(final SpreadsheetFormatParserToken token,
+                                        final SpreadsheetFormatParserToken token2,
+                                        final String expected) {
+        this.numberParseParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void numberParseParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                        final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.numberParse(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -7174,82 +7859,141 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testFractionDayFails() {
-        this.fractionParseThrows(digit(), day());
+        this.fractionParseThrows(
+                digit(),
+                day(),
+                "Invalid character '#' at (1,1) \"#D\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionHourFails() {
-        this.fractionParseThrows(digit(), hour());
+        this.fractionParseThrows(
+                digit(),
+                hour(),
+                "Invalid character '#' at (1,1) \"#H\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionMinuteFails() {
-        this.fractionParseThrows(digit(), minute());
+        this.fractionParseThrows(
+                digit(),
+                minute(),
+                "Invalid character '#' at (1,1) \"#M\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionMonthFails() {
-        this.fractionParseThrows(digit(), month());
+        this.fractionParseThrows(
+                digit(),
+                month(),
+                "Invalid character '#' at (1,1) \"#M\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionSecondFails() {
-        this.fractionParseThrows(digit(), second());
+        this.fractionParseThrows(
+                digit(),
+                second(),
+                "Invalid character '#' at (1,1) \"#S\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionStarFails() {
-        this.fractionParseThrows(star());
+        this.fractionParseThrows(
+                star(),
+                "Invalid character '*' at (1,1) \"*?\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionTextPlaceholderFails() {
-        this.fractionParseThrows(digit(), textPlaceholder());
+        this.fractionParseThrows(
+                digit(),
+                textPlaceholder(),
+                "@"
+        );
     }
 
     @Test
     public void testFractionUnderscoreFails() {
-        this.fractionParseThrows(underscore());
+        this.fractionParseThrows(
+                underscore(),
+                "Invalid character '_' at (1,1) \"_?\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionYearFails() {
-        this.fractionParseThrows(digit(), year());
+        this.fractionParseThrows(
+                digit(),
+                year(),
+                "Invalid character '#' at (1,1) \"#Y\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionSlashFails() {
-        this.fractionParseThrows(fractionSymbol());
+        this.fractionParseThrows(
+                fractionSymbol(),
+                "Invalid character '/' at (1,1) \"/\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitSpaceFractionFails() {
-        this.fractionParseThrows(digitSpace(), fractionSymbol());
+        this.fractionParseThrows(
+                digitSpace(),
+                fractionSymbol(),
+                "Invalid character '?' at (1,1) \"?/\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitZeroFractionFails() {
-        this.fractionParseThrows(digitZero(), fractionSymbol());
+        this.fractionParseThrows(
+                digitZero(),
+                fractionSymbol(),
+                "Invalid character '0' at (1,1) \"0/\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionFails() {
-        this.fractionParseThrows(digit(), fractionSymbol());
+        this.fractionParseThrows(
+                digit(),
+                fractionSymbol(),
+                "Invalid character '#' at (1,1) \"#/\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionGroupSeparatorFails() {
-        this.fractionParseThrows(groupSeparator());
+        this.fractionParseThrows(
+                groupSeparator(),
+                "Invalid character ',' at (1,1) \",\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitGroupSeparatorFails() {
-        this.fractionParseThrows(digit(), groupSeparator());
+        this.fractionParseThrows(
+                digit(),
+                groupSeparator(),
+                "Invalid character '#' at (1,1) \"#,\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionGeneralFails() {
-        this.fractionParseThrows(generalSymbol());
+        this.fractionParseThrows(
+                generalSymbol(),
+                "Invalid character 'G' at (1,1) \"GENERAL\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     // digitSpace
@@ -7576,132 +8320,324 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testFractionEqualsDigitFractionDigitFails() {
-        this.fractionParseThrows(equalsSymbol(), digit(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        equalsSymbol(),
+                        digit(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '=' at (1,1) \"=#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitEqualsFractionDigitFails() {
-        this.fractionParseThrows(digit(), equalsSymbol(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        equalsSymbol(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#=/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionEqualsDigitFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), equalsSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        equalsSymbol(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#/=#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitEqualsFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), digit(), equalsSymbol());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        digit(),
+                        equalsSymbol()
+                ),
+                "Invalid character '=' at (4,1) \"#/#=\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     // greaterThan
 
     @Test
     public void testFractionGreaterThanDigitFractionDigitFails() {
-        this.fractionParseThrows(greaterThan(), digit(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        greaterThan(),
+                        digit(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '>' at (1,1) \">#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitGreaterThanFractionDigitFails() {
-        this.fractionParseThrows(digit(), greaterThan(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        greaterThan(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#>/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionGreaterThanDigitFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), greaterThan(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        greaterThan(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#/>#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitGreaterThanFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), digit(), greaterThan());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        digit(),
+                        greaterThan()
+                ),
+                "Invalid character '>' at (4,1) \"#/#>\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     // greaterThanEquals
 
     @Test
     public void testFractionGreaterThanEqualsDigitFractionDigitFails() {
-        this.fractionParseThrows(greaterThanEquals(), digit(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        greaterThanEquals(),
+                        digit(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '>' at (1,1) \">=#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitGreaterThanEqualsFractionDigitFails() {
-        this.fractionParseThrows(digit(), greaterThanEquals(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        greaterThanEquals(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#>=/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionGreaterThanEqualsDigitFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), greaterThanEquals(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        greaterThanEquals(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#/>=#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitGreaterThanEqualsFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), digit(), greaterThanEquals());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        digit(),
+                        greaterThanEquals()
+                ),
+                "Invalid character '>' at (4,1) \"#/#>=\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     // lessThan
 
     @Test
     public void testFractionLessThanDigitFractionDigitFails() {
-        this.fractionParseThrows(lessThan(), digit(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        lessThan(),
+                        digit(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitLessThanFractionDigitFails() {
-        this.fractionParseThrows(digit(), lessThan(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        lessThan(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#</#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionLessThanDigitFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), lessThan(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        lessThan(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#/<#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitLessThanFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), digit(), lessThan());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        digit(),
+                        lessThan()
+                ),
+                "Invalid character '<' at (4,1) \"#/#<\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     // lessThanEquals
 
     @Test
     public void testFractionLessThanEqualsDigitFractionDigitFails() {
-        this.fractionParseThrows(lessThanEquals(), digit(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        lessThanEquals(),
+                        digit(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<=#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitLessThanEqualsFractionDigitFails() {
-        this.fractionParseThrows(digit(), lessThanEquals(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        lessThanEquals(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#<=/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionLessThanEqualsDigitFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), lessThanEquals(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        lessThanEquals(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#/<=#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitLessThanEqualsFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), digit(), lessThanEquals());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        digit(),
+                        lessThanEquals()
+                ),
+                "Invalid character '<' at (4,1) \"#/#<=\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     // notEquals
 
     @Test
     public void testFractionNotEqualsDigitFractionDigitFails() {
-        this.fractionParseThrows(notEquals(), digit(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        notEquals(),
+                        digit(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '<' at (1,1) \"<>#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitNotEqualsFractionDigitFails() {
-        this.fractionParseThrows(digit(), notEquals(), fractionSymbol(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        notEquals(),
+                        fractionSymbol(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#<>/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionNotEqualsDigitFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), notEquals(), digit());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        notEquals(),
+                        digit()
+                ),
+                "Invalid character '#' at (1,1) \"#/<>#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitNotEqualsFails() {
-        this.fractionParseThrows(digit(), fractionSymbol(), digit(), notEquals());
+        this.fractionParseThrows(
+                Lists.of(
+                        digit(),
+                        fractionSymbol(),
+                        digit(),
+                        notEquals()
+                ),
+                "Invalid character '<' at (4,1) \"#/#<>\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+        );
     }
 
     // color
@@ -7808,10 +8744,35 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void fractionParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
-                this.fractionParser(),
-                tokens
+    private void fractionParseThrows(final SpreadsheetFormatParserToken token,
+                                     final String expected) {
+        this.fractionParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void fractionParseThrows(final SpreadsheetFormatParserToken token,
+                                     final SpreadsheetFormatParserToken token2,
+                                     final String expected) {
+        this.fractionParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void fractionParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                     final String expected) {
+        this.parseThrows(
+                this.fractionParser()
+                        .orFailIfCursorNotEmpty(
+                                ParserReporters.basic()
+                        ),
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -7889,35 +8850,40 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTextFormatSeparatorFails() {
         this.textFormatParseThrows(
-                separator()
+                separator(),
+                "Invalid character ';' at (1,1) \";\" expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTextFormatTextDigitZeroFails() {
         this.textFormatParseThrows(
-                digitZero()
+                digitZero(),
+                "Invalid character '0' at (1,1) \"0\" expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTextFormatTextDigitSpaceFails() {
         this.textFormatParseThrows(
-                digitSpace()
+                digitSpace(),
+                "Invalid character '?' at (1,1) \"?\" expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTextFormatLetterFails() {
         this.textFormatParseThrows(
-                textLiteral('A')
+                textLiteral('A'),
+                "Invalid character 'A' at (1,1) \"A\" expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTextFormatGeneraFails() {
         this.textFormatParseThrows(
-                generalSymbol()
+                generalSymbol(),
+                "Invalid character 'G' at (1,1) \"GENERAL\" expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7952,16 +8918,20 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatStarStarFails() {
         this.textFormatParseThrows(
                 star(),
-                star2()
+                star2(),
+                "Invalid character '*' at (3,1) \"*?*#\" expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTextFormatStarTextPlaceholderStarFails() {
         this.textFormatParseThrows(
-                star(),
-                textPlaceholder(),
-                star2()
+                Lists.of(
+                        star(),
+                        textPlaceholder(),
+                        star2()
+                ),
+                "@"
         );
     }
 
@@ -8194,7 +9164,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionNotEqualsTextPlaceholderFails() {
         this.textFormatParseThrows(
                 conditionNotEquals(),
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -8202,7 +9173,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionEqualsTextPlaceholderFails() {
         this.textFormatParseThrows(
                 conditionEquals(),
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -8210,7 +9182,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionGreaterThanTextPlaceholderFails() {
         this.textFormatParseThrows(
                 conditionGreaterThan(),
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -8218,7 +9191,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionGreaterThanEqualsTextPlaceholderFails() {
         this.textFormatParseThrows(
                 conditionGreaterThanEquals(),
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -8226,7 +9200,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionLessThanTextPlaceholderFails() {
         this.textFormatParseThrows(
                 conditionLessThan(),
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -8234,7 +9209,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionLessThanEqualsTextPlaceholderFails() {
         this.textFormatParseThrows(
                 conditionLessThanEquals(),
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -8242,7 +9218,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatConditionEqualsFails() {
         this.textFormatParseThrows(
                 textPlaceholder(),
-                conditionEquals()
+                conditionEquals(),
+                "@"
         );
     }
 
@@ -8250,7 +9227,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatPlaceholderConditionGreaterThanFails() {
         this.textFormatParseThrows(
                 textPlaceholder(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "@"
         );
     }
 
@@ -8258,7 +9236,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatPlaceholderConditionGreaterThanEqualsFails() {
         this.textFormatParseThrows(
                 textPlaceholder(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "@"
         );
     }
 
@@ -8266,7 +9245,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatPlaceholderConditionLessThanFails() {
         this.textFormatParseThrows(
                 textPlaceholder(),
-                conditionLessThan()
+                conditionLessThan(),
+                "@"
         );
     }
 
@@ -8274,7 +9254,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatPlaceholderConditionLessThanEqualsFails() {
         this.textFormatParseThrows(
                 textPlaceholder(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "@"
         );
     }
 
@@ -8282,7 +9263,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTextFormatPlaceholderConditionNotEqualsFails() {
         this.textFormatParseThrows(
                 textPlaceholder(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"@[<>12.75]\""
         );
     }
 
@@ -8295,10 +9277,32 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void textFormatParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void textFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                       final String expected) {
+        this.textFormatParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void textFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                       final SpreadsheetFormatParserToken token2,
+                                       final String expected) {
+        this.textFormatParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void textFormatParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                       final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.textFormat(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -8339,42 +9343,48 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeFormatTextDigitFails() {
         this.timeFormatParseThrows(
-                digit()
+                digit(),
+                "Invalid character '#' at (1,1) \"#\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatTextDigitZeroFails() {
         this.timeFormatParseThrows(
-                digitZero()
+                digitZero(),
+                "Invalid character '0' at (1,1) \"0\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatTextDigitSpaceFails() {
         this.timeFormatParseThrows(
-                digitSpace()
+                digitSpace(),
+                "Invalid character '?' at (1,1) \"?\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatDayFails() {
         this.timeFormatParseThrows(
-                day()
+                day(),
+                "Invalid character 'D' at (1,1) \"D\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatYearFails() {
         this.timeFormatParseThrows(
-                year()
+                year(),
+                "Invalid character 'Y' at (1,1) \"Y\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatTextPlaceholderFails() {
         this.timeFormatParseThrows(
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -9184,40 +10194,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeFormatEqualsHourMinuteSecondFails() {
         this.timeFormatParseThrows(
-                equalsSymbol(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        equalsSymbol(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '=' at (1,1) \"=HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourEqualsMinuteSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                equalsSymbol(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        equalsSymbol(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '=' at (2,1) \"H=MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteEqualsSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                equalsSymbol(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        equalsSymbol(),
+                        second()
+                ),
+                "Invalid character '=' at (3,1) \"HM=S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteSecondsEqualsFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                second(),
-                equalsSymbol()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        equalsSymbol()
+                ),
+                "Invalid character '=' at (4,1) \"HMS=\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9226,40 +10248,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeFormatGreaterThanHourMinuteSecondFails() {
         this.timeFormatParseThrows(
-                greaterThan(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        greaterThan(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '>' at (1,1) \">HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourGreaterThanMinuteSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                greaterThan(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        greaterThan(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '>' at (2,1) \"H>MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteGreaterThanSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                greaterThan(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        greaterThan(),
+                        second()
+                ),
+                "Invalid character '>' at (3,1) \"HM>S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteSecondsGreaterThanFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                second(),
-                greaterThan()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        greaterThan()
+                ),
+                "Invalid character '>' at (4,1) \"HMS>\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9268,40 +10302,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeFormatGreaterThanEqualsHourMinuteSecondFails() {
         this.timeFormatParseThrows(
-                greaterThanEquals(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        greaterThanEquals(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '>' at (1,1) \">=HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourGreaterThanEqualsMinuteSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                greaterThanEquals(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        greaterThanEquals(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '>' at (2,1) \"H>=MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteGreaterThanEqualsSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                greaterThanEquals(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        greaterThanEquals(),
+                        second()
+                ),
+                "Invalid character '>' at (3,1) \"HM>=S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteSecondsGreaterThanEqualsFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                second(),
-                greaterThanEquals()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        greaterThanEquals()
+                ),
+                "Invalid character '>' at (4,1) \"HMS>=\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9310,40 +10356,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeFormatLessThanHourMinuteSecondFails() {
         this.timeFormatParseThrows(
-                lessThan(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        lessThan(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (1,1) \"<HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourLessThanMinuteSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                lessThan(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        lessThan(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (2,1) \"H<MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteLessThanSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                lessThan(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        lessThan(),
+                        second()
+                ),
+                "Invalid character '<' at (3,1) \"HM<S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteSecondsLessThanFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                second(),
-                lessThan()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        lessThan()
+                ),
+                "Invalid character '<' at (4,1) \"HMS<\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9352,40 +10410,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeFormatLessThanEqualsHourMinuteSecondFails() {
         this.timeFormatParseThrows(
-                lessThanEquals(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        lessThanEquals(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (1,1) \"<=HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourLessThanEqualsMinuteSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                lessThanEquals(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        lessThanEquals(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (2,1) \"H<=MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteLessThanEqualsSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                lessThanEquals(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        lessThanEquals(),
+                        second()
+                ),
+                "Invalid character '<' at (3,1) \"HM<=S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteSecondsLessThanEqualsFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                second(),
-                lessThanEquals()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        lessThanEquals()
+                ),
+                "Invalid character '<' at (4,1) \"HMS<=\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9394,40 +10464,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeFormatNotEqualsHourMinuteSecondFails() {
         this.timeFormatParseThrows(
-                notEquals(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        notEquals(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (1,1) \"<>HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourNotEqualsMinuteSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                notEquals(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        notEquals(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (2,1) \"H<>MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteNotEqualsSecondFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                notEquals(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        notEquals(),
+                        second()
+                ),
+                "Invalid character '<' at (3,1) \"HM<>S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeFormatHourMinuteSecondsNotEqualsFails() {
         this.timeFormatParseThrows(
-                hour(),
-                minute(),
-                second(),
-                notEquals()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        notEquals()
+                ),
+                "Invalid character '<' at (4,1) \"HMS<>\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9559,7 +10641,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatHourConditionEqualsFails() {
         this.timeFormatParseThrows(
                 hour(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"H[   =12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9567,7 +10650,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatHourConditionGreaterThanFails() {
         this.timeFormatParseThrows(
                 hour(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"H[>12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9575,7 +10659,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatHourConditionGreaterThanEqualsFails() {
         this.timeFormatParseThrows(
                 hour(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"H[>=12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9583,7 +10668,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatHourConditionLessThanFails() {
         this.timeFormatParseThrows(
                 hour(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"H[<12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9591,7 +10677,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatHourConditionLessThanEqualsFails() {
         this.timeFormatParseThrows(
                 hour(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"H[<=12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9599,7 +10686,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeFormatHourConditionNotEqualsFails() {
         this.timeFormatParseThrows(
                 hour(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"H[<>12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9673,10 +10761,32 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void timeFormatParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void timeFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                       final String expected) {
+        this.timeFormatParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void timeFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                       final SpreadsheetFormatParserToken token2,
+                                       final String expected) {
+        this.timeFormatParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void timeFormatParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                       final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.timeFormat(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -9693,42 +10803,48 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeParseTextDigitFails() {
         this.timeParseParseThrows(
-                digit()
+                digit(),
+                "Invalid character '#' at (1,1) \"#\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseTextDigitZeroFails() {
         this.timeParseParseThrows(
-                digitZero()
+                digitZero(),
+                "Invalid character '0' at (1,1) \"0\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseTextDigitSpaceFails() {
         this.timeParseParseThrows(
-                digitSpace()
+                digitSpace(),
+                "Invalid character '?' at (1,1) \"?\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseDayFails() {
         this.timeParseParseThrows(
-                day()
+                day(),
+                "Invalid character 'D' at (1,1) \"D\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseYearFails() {
         this.timeParseParseThrows(
-                year()
+                year(),
+                "Invalid character 'Y' at (1,1) \"Y\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseTextPlaceholderFails() {
         this.timeParseParseThrows(
-                textPlaceholder()
+                textPlaceholder(),
+                "@"
         );
     }
 
@@ -9797,7 +10913,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         color(),
                         escape()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]\\\\A\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10538,40 +11655,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeParseEqualsHourMinuteSecondFails() {
         this.timeParseParseThrows(
-                equalsSymbol(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        equalsSymbol(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '=' at (1,1) \"=HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourEqualsMinuteSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                equalsSymbol(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        equalsSymbol(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '=' at (2,1) \"H=MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteEqualsSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                equalsSymbol(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        equalsSymbol(),
+                        second()
+                ),
+                "Invalid character '=' at (3,1) \"HM=S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteSecondsEqualsFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                second(),
-                equalsSymbol()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        equalsSymbol()
+                ),
+                "Invalid character '=' at (4,1) \"HMS=\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10580,40 +11709,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeParseGreaterThanHourMinuteSecondFails() {
         this.timeParseParseThrows(
-                greaterThan(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        greaterThan(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '>' at (1,1) \">HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourGreaterThanMinuteSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                greaterThan(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        greaterThan(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '>' at (2,1) \"H>MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteGreaterThanSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                greaterThan(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        greaterThan(),
+                        second()
+                ),
+                "Invalid character '>' at (3,1) \"HM>S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteSecondsGreaterThanFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                second(),
-                greaterThan()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        greaterThan()
+                ),
+                "Invalid character '>' at (4,1) \"HMS>\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10622,40 +11763,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeParseGreaterThanEqualsHourMinuteSecondFails() {
         this.timeParseParseThrows(
-                greaterThanEquals(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        greaterThanEquals(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '>' at (1,1) \">=HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourGreaterThanEqualsMinuteSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                greaterThanEquals(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        greaterThanEquals(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '>' at (2,1) \"H>=MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteGreaterThanEqualsSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                greaterThanEquals(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        greaterThanEquals(),
+                        second()
+                ),
+                "Invalid character '>' at (3,1) \"HM>=S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteSecondsGreaterThanEqualsFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                second(),
-                greaterThanEquals()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        greaterThanEquals()
+                ),
+                "Invalid character '>' at (4,1) \"HMS>=\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10664,40 +11817,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeParseLessThanHourMinuteSecondFails() {
         this.timeParseParseThrows(
-                lessThan(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        lessThan(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (1,1) \"<HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourLessThanMinuteSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                lessThan(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        lessThan(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (2,1) \"H<MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteLessThanSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                lessThan(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        lessThan(),
+                        second()
+                ),
+                "Invalid character '<' at (3,1) \"HM<S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteSecondsLessThanFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                second(),
-                lessThan()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        lessThan()
+                ),
+                "Invalid character '<' at (4,1) \"HMS<\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10706,40 +11871,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeParseLessThanEqualsHourMinuteSecondFails() {
         this.timeParseParseThrows(
-                lessThanEquals(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        lessThanEquals(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (1,1) \"<=HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourLessThanEqualsMinuteSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                lessThanEquals(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        lessThanEquals(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (2,1) \"H<=MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteLessThanEqualsSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                lessThanEquals(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        lessThanEquals(),
+                        second()
+                ),
+                "Invalid character '<' at (3,1) \"HM<=S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteSecondsLessThanEqualsFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                second(),
-                lessThanEquals()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        lessThanEquals()
+                ),
+                "Invalid character '<' at (4,1) \"HMS<=\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10748,40 +11925,52 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeParseNotEqualsHourMinuteSecondFails() {
         this.timeParseParseThrows(
-                notEquals(),
-                hour(),
-                minute(),
-                second()
+                Lists.of(
+                        notEquals(),
+                        hour(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (1,1) \"<>HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourNotEqualsMinuteSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                notEquals(),
-                minute(),
-                second()
+                Lists.of(
+                        hour(),
+                        notEquals(),
+                        minute(),
+                        second()
+                ),
+                "Invalid character '<' at (2,1) \"H<>MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteNotEqualsSecondFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                notEquals(),
-                second()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        notEquals(),
+                        second()
+                ),
+                "Invalid character '<' at (3,1) \"HM<>S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourMinuteSecondsNotEqualsFails() {
         this.timeParseParseThrows(
-                hour(),
-                minute(),
-                second(),
-                notEquals()
+                Lists.of(
+                        hour(),
+                        minute(),
+                        second(),
+                        notEquals()
+                ),
+                "Invalid character '<' at (4,1) \"HMS<>\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10793,7 +11982,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         color(),
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10803,7 +11993,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         color(),
                         minute()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]M\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10813,7 +12004,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         color(),
                         second()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10823,7 +12015,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         hour(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (2,1) \"H[COLOR   5]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10833,7 +12026,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         minute(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (2,1) \"M[COLOR   5]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10843,7 +12037,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 time(
                         second(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (2,1) \"S[COLOR   5]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10853,7 +12048,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseConditionEqualsHourFails() {
         this.timeParseParseThrows(
                 conditionEquals(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[   =12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10861,7 +12057,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseConditionGreaterThanHourFails() {
         this.timeParseParseThrows(
                 conditionGreaterThan(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[>12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10869,7 +12066,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseConditionGreaterThanEqualsHourFails() {
         this.timeParseParseThrows(
                 conditionGreaterThanEquals(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[>=12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10877,7 +12075,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseConditionLessThanHourFails() {
         this.timeParseParseThrows(
                 conditionLessThan(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[<12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10885,7 +12084,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseConditionLessThanEqualsHourFails() {
         this.timeParseParseThrows(
                 conditionLessThanEquals(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[<=12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10893,7 +12093,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseConditionNotEqualsHourFails() {
         this.timeParseParseThrows(
                 conditionNotEquals(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[<>12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10901,7 +12102,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseHourConditionEqualsFails() {
         this.timeParseParseThrows(
                 hour(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"H[   =12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10909,7 +12111,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseHourConditionGreaterThanFails() {
         this.timeParseParseThrows(
                 hour(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"H[>12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10917,7 +12120,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseHourConditionGreaterThanEqualsFails() {
         this.timeParseParseThrows(
                 hour(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"H[>=12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10925,7 +12129,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseHourConditionLessThanFails() {
         this.timeParseParseThrows(
                 hour(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"H[<12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10933,15 +12138,19 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testTimeParseHourConditionLessThanEqualsFails() {
         this.timeParseParseThrows(
                 hour(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"H[<=12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testTimeParseHourConditionNotEqualsFails() {
         this.timeParseParseThrows(
+                Lists.of(
                 hour(),
                 conditionNotEquals()
+                ),
+                "Invalid character '[' at (2,1) \"H[<>12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10975,6 +12184,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeParseColorPatternSeparatorPatternFails() {
         this.timeParseParseThrows(
+                Lists.of(
                 time(
                         color(),
                         hour(),
@@ -10986,6 +12196,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         minute(),
                         second()
                 )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]HM;HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10996,10 +12208,32 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void timeParseParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void timeParseParseThrows(final SpreadsheetFormatParserToken token,
+                                      final String expected) {
+        this.timeParseParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void timeParseParseThrows(final SpreadsheetFormatParserToken token,
+                                      final SpreadsheetFormatParserToken token2,
+                                      final String expected) {
+        this.timeParseParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void timeParseParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                      final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.timeParse(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -11275,18 +12509,24 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateTimeFormatSecondsDecimalNonZeroFails() {
         this.dateTimeFormatParseThrows(
-                second(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        second(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '#' at (3,1) \"S.#\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateTimeFormatSecondsDecimalSpaceFails() {
         this.dateTimeFormatParseThrows(
-                second(),
-                decimalPoint(),
-                digitSpace()
+                Lists.of(
+                        second(),
+                        decimalPoint(),
+                        digitSpace()
+                ),
+                "Invalid character '?' at (3,1) \"S.?\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11552,7 +12792,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatDayConditionFails() {
         this.dateTimeFormatParseThrows(
                 day(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"D[   =12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11560,7 +12801,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatDayConditionGreaterThanFails() {
         this.dateTimeFormatParseThrows(
                 day(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"D[>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11568,7 +12810,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatDayConditionGreaterThanEqualsFails() {
         this.dateTimeFormatParseThrows(
                 day(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"D[>=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11576,7 +12819,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatDayConditionLessThanFails() {
         this.dateTimeFormatParseThrows(
                 day(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"D[<12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11584,7 +12828,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatDayConditionLessThanEqualsFails() {
         this.dateTimeFormatParseThrows(
                 day(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"D[<=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11592,7 +12837,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatDayConditionNotEqualsFails() {
         this.dateTimeFormatParseThrows(
                 day(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"D[<>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11600,7 +12846,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatHourConditionEqualsFails() {
         this.dateTimeFormatParseThrows(
                 hour(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"H[   =12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11608,7 +12855,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatHourConditionGreaterThanFails() {
         this.dateTimeFormatParseThrows(
                 hour(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"H[>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11616,7 +12864,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatHourConditionGreaterThanEqualsFails() {
         this.dateTimeFormatParseThrows(
                 hour(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"H[>=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11624,7 +12873,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatHourConditionLessThanFails() {
         this.dateTimeFormatParseThrows(
                 hour(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"H[<12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11632,7 +12882,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatHourConditionLessThanEqualsFails() {
         this.dateTimeFormatParseThrows(
                 hour(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"H[<=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11640,7 +12891,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeFormatHourConditionNotEqualsFails() {
         this.dateTimeFormatParseThrows(
                 hour(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"H[<>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11735,10 +12987,32 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void dateTimeFormatParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void dateTimeFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                           final String expected) {
+        this.dateTimeFormatParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void dateTimeFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                           final SpreadsheetFormatParserToken token2,
+                                           final String expected) {
+        this.dateTimeFormatParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void dateTimeFormatParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                           final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.dateTimeFormat(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -11817,7 +13091,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 dateTime(
                         color(),
                         escape()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]\\\\A\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11990,18 +13265,24 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateTimeParseSecondsDecimalNonZeroFails() {
         this.dateTimeParseParseThrows(
-                second(),
-                decimalPoint(),
-                digit()
+                Lists.of(
+                        second(),
+                        decimalPoint(),
+                        digit()
+                ),
+                "Invalid character '#' at (3,1) \"S.#\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
     @Test
     public void testDateTimeParseSecondsDecimalSpaceFails() {
         this.dateTimeParseParseThrows(
-                second(),
-                decimalPoint(),
-                digitSpace()
+                Lists.of(
+                        second(),
+                        decimalPoint(),
+                        digitSpace()
+                ),
+                "Invalid character '?' at (3,1) \"S.?\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12114,7 +13395,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 dateTime(
                         color(),
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12124,7 +13406,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 dateTime(
                         day(),
                         color()
-                )
+                ),
+                "Invalid character '[' at (2,1) \"D[COLOR   5]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12147,7 +13430,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionEqualsDayFails() {
         this.dateTimeParseParseThrows(
                 conditionEquals(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[   =12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12155,7 +13439,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionGreaterThanDayFails() {
         this.dateTimeParseParseThrows(
                 conditionGreaterThan(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[>12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12163,7 +13448,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionGreaterThanEqualsDayFails() {
         this.dateTimeParseParseThrows(
                 conditionGreaterThanEquals(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[>=12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12171,7 +13457,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionLessThanDayFails() {
         this.dateTimeParseParseThrows(
                 conditionLessThan(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[<12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12179,7 +13466,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionLessThanEqualsDayFails() {
         this.dateTimeParseParseThrows(
                 conditionLessThanEquals(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[<=12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12187,7 +13475,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionNotEqualsDayFails() {
         this.dateTimeParseParseThrows(
                 conditionNotEquals(),
-                day()
+                day(),
+                "Invalid character '[' at (1,1) \"[<>12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12195,7 +13484,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionEqualsHourFails() {
         this.dateTimeParseParseThrows(
                 conditionEquals(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[   =12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12203,7 +13493,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionGreaterThanHourFails() {
         this.dateTimeParseParseThrows(
                 conditionGreaterThan(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[>12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12211,7 +13502,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionGreaterThanEqualsHourFails() {
         this.dateTimeParseParseThrows(
                 conditionGreaterThanEquals(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[>=12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12219,7 +13511,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionLessThanHourFails() {
         this.dateTimeParseParseThrows(
                 conditionLessThan(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[<12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12227,7 +13520,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionLessThanEqualsHourFails() {
         this.dateTimeParseParseThrows(
                 conditionLessThanEquals(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[<=12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12235,7 +13529,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseConditionNotEqualsHourFails() {
         this.dateTimeParseParseThrows(
                 conditionNotEquals(),
-                hour()
+                hour(),
+                "Invalid character '[' at (1,1) \"[<>12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12243,7 +13538,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseDayConditionFails() {
         this.dateTimeParseParseThrows(
                 day(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"D[   =12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12251,7 +13547,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseDayConditionGreaterThanFails() {
         this.dateTimeParseParseThrows(
                 day(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"D[>12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12259,7 +13556,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseDayConditionGreaterThanEqualsFails() {
         this.dateTimeParseParseThrows(
                 day(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"D[>=12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12267,7 +13565,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseDayConditionLessThanFails() {
         this.dateTimeParseParseThrows(
                 day(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"D[<12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12275,7 +13574,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseDayConditionLessThanEqualsFails() {
         this.dateTimeParseParseThrows(
                 day(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"D[<=12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12283,7 +13583,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseDayConditionNotEqualsFails() {
         this.dateTimeParseParseThrows(
                 day(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"D[<>12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12291,7 +13592,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseHourConditionEqualsFails() {
         this.dateTimeParseParseThrows(
                 hour(),
-                conditionEquals()
+                conditionEquals(),
+                "Invalid character '[' at (2,1) \"H[   =12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12299,7 +13601,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseHourConditionGreaterThanFails() {
         this.dateTimeParseParseThrows(
                 hour(),
-                conditionGreaterThan()
+                conditionGreaterThan(),
+                "Invalid character '[' at (2,1) \"H[>12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12307,7 +13610,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseHourConditionGreaterThanEqualsFails() {
         this.dateTimeParseParseThrows(
                 hour(),
-                conditionGreaterThanEquals()
+                conditionGreaterThanEquals(),
+                "Invalid character '[' at (2,1) \"H[>=12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12315,7 +13619,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseHourConditionLessThanFails() {
         this.dateTimeParseParseThrows(
                 hour(),
-                conditionLessThan()
+                conditionLessThan(),
+                "Invalid character '[' at (2,1) \"H[<12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12323,7 +13628,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseHourConditionLessThanEqualsFails() {
         this.dateTimeParseParseThrows(
                 hour(),
-                conditionLessThanEquals()
+                conditionLessThanEquals(),
+                "Invalid character '[' at (2,1) \"H[<=12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12331,7 +13637,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testDateTimeParseHourConditionNotEqualsFails() {
         this.dateTimeParseParseThrows(
                 hour(),
-                conditionNotEquals()
+                conditionNotEquals(),
+                "Invalid character '[' at (2,1) \"H[<>12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12375,6 +13682,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateTimeParseColorPatternSeparatorPatternFails() {
         this.dateTimeParseParseThrows(
+                Lists.of(
                 dateTime(
                         color(),
                         year(),
@@ -12392,6 +13700,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                         minute(),
                         second()
                 )
+                ),
+                "Invalid character '[' at (1,1) \"[COLOR   5]YMDHM;YMDHMS\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12402,10 +13712,32 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         );
     }
 
-    private void dateTimeParseParseThrows(final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows2(
+    private void dateTimeParseParseThrows(final SpreadsheetFormatParserToken token,
+                                          final String expected) {
+        this.dateTimeParseParseThrows(
+                Lists.of(token),
+                expected
+        );
+    }
+
+    private void dateTimeParseParseThrows(final SpreadsheetFormatParserToken token,
+                                          final SpreadsheetFormatParserToken token2,
+                                          final String expected) {
+        this.dateTimeParseParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
+                expected
+        );
+    }
+
+    private void dateTimeParseParseThrows(final List<SpreadsheetFormatParserToken> tokens,
+                                          final String expected) {
+        this.parseThrows(
                 SpreadsheetFormatParsers.dateTimeParse(),
-                tokens
+                ParserToken.text(tokens),
+                expected
         );
     }
 
@@ -12527,12 +13859,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 text,
                 start.textBetween().toString()
         );
-    }
-
-    private void parseThrows2(final Parser<SpreadsheetFormatParserContext> parser,
-                              final SpreadsheetFormatParserToken... tokens) {
-        this.parseThrows(parser.orFailIfCursorNotEmpty(ParserReporters.basic()),
-                ParserToken.text(Lists.of(tokens)));
     }
 
     @Override
