@@ -315,7 +315,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.parseFormulaAndFail(
                 text,
-                "Invalid character '=' at (1,1) \"=1+2\" expected EXPRESSION_OPT"
+                "Invalid character '=' at (1,1) expected EXPRESSION_OPT"
         );
     }
 

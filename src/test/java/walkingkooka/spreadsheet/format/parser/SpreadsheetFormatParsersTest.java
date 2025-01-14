@@ -258,7 +258,7 @@ this.colorParserFails(
     public void testConditionCloseParensFails() {
         this.conditionParseThrows(
                 textLiteralCloseParens(),
-                "Invalid character ')' at (1,1) \")\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character ')' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -266,7 +266,7 @@ this.colorParserFails(
     public void testConditionColonFails() {
         this.conditionParseThrows(
                 textLiteralColon(),
-                "Invalid character ':' at (1,1) \":\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character ':' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -274,7 +274,7 @@ this.colorParserFails(
     public void testConditionDayFails() {
         this.conditionParseThrows(
                 day(),
-                "Invalid character 'D' at (1,1) \"D\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'D' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -282,7 +282,7 @@ this.colorParserFails(
     public void testConditionDigitFails() {
         this.conditionParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) \"#\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '#' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -290,7 +290,7 @@ this.colorParserFails(
     public void testConditionDigitZeroFails() {
         this.conditionParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) \"0\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '0' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -298,7 +298,7 @@ this.colorParserFails(
     public void testConditionDigitSpaceFails() {
         this.conditionParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) \"?\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '?' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -306,7 +306,7 @@ this.colorParserFails(
     public void testConditionDollarFails() {
         this.conditionParseThrows(
                 textLiteralDollar(),
-                "Invalid character '$' at (1,1) \"$\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '$' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -314,7 +314,7 @@ this.colorParserFails(
     public void testConditionFractionFails() {
         this.conditionParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) \"/\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '/' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -322,7 +322,7 @@ this.colorParserFails(
     public void testConditionHourFails() {
         this.conditionParseThrows(
                 hour(),
-                "Invalid character 'H' at (1,1) \"H\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'H' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -330,7 +330,7 @@ this.colorParserFails(
     public void testConditionMinusFails() {
         this.conditionParseThrows(
                 textLiteralMinus(),
-                "Invalid character '-' at (1,1) \"-\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '-' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -338,7 +338,7 @@ this.colorParserFails(
     public void testConditionMonthFails() {
         this.conditionParseThrows(
                 month(),
-                "Invalid character 'M' at (1,1) \"M\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'M' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -346,7 +346,7 @@ this.colorParserFails(
     public void testConditionOpenParensFails() {
         this.conditionParseThrows(
                 textLiteralOpenParens(),
-                "Invalid character '(' at (1,1) \"(\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '(' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -354,7 +354,7 @@ this.colorParserFails(
     public void testConditionPlusFails() {
         this.conditionParseThrows(
                 textLiteralPlus(),
-                "Invalid character '+' at (1,1) \"+\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '+' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -362,7 +362,7 @@ this.colorParserFails(
     public void testConditionSecondFails() {
         this.conditionParseThrows(
                 second(),
-                "Invalid character 'S' at (1,1) \"S\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'S' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -370,7 +370,7 @@ this.colorParserFails(
     public void testConditionSlashFails() {
         this.conditionParseThrows(
                 textLiteralSlash(),
-                "Invalid character '/' at (1,1) \"/\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '/' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -378,7 +378,7 @@ this.colorParserFails(
     public void testConditionSpaceFails() {
         this.conditionParseThrows(
                 whitespace(),
-                "Invalid character ' ' at (1,1) \" \" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character ' ' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -386,7 +386,7 @@ this.colorParserFails(
     public void testConditionYearFails() {
         this.conditionParseThrows(
                 year(),
-                "Invalid character 'Y' at (1,1) \"Y\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'Y' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -394,7 +394,7 @@ this.colorParserFails(
     public void testConditionTextPlaceholderFails() {
         this.conditionParseThrows(
                 textPlaceholder(),
-                "@"
+                "Invalid character '@' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -402,7 +402,7 @@ this.colorParserFails(
     public void testConditionOpenSquareBracketFails() {
         this.conditionParseThrows(
                 bracketOpenSymbol(),
-                "Invalid character '[' at (1,1) \"[\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -411,7 +411,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 equalsSymbol(),
-                "Invalid character '[' at (1,1) \"[=\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -420,7 +420,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 greaterThan(),
-                "Invalid character '[' at (1,1) \"[>\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -429,7 +429,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 greaterThanEquals(),
-                "Invalid character '[' at (1,1) \"[>=\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -438,7 +438,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 lessThan(),
-                "Invalid character '[' at (1,1) \"[<\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -447,7 +447,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 lessThanEquals(),
-                "Invalid character '[' at (1,1) \"[<=\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -456,7 +456,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 notEquals(),
-                "Invalid character '[' at (1,1) \"[<>\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -466,7 +466,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 equalsSymbol(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) \"[=12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -476,7 +476,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 greaterThan(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) \"[>12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -486,7 +486,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 greaterThanEquals(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) \"[>=12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -496,7 +496,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 lessThan(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) \"[<12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -506,7 +506,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 lessThanEquals(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) \"[<=12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -516,7 +516,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 notEquals(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) \"[<>12.75\" expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
         );
     }
 
@@ -718,7 +718,7 @@ this.colorParserFails(
     public void testDateFormatTextDigitFails() {
         this.dateFormatParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) \"#\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -726,7 +726,7 @@ this.colorParserFails(
     public void testDateFormatTextDigitZeroFails() {
         this.dateFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) \"0\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -734,7 +734,7 @@ this.colorParserFails(
     public void testDateFormatTextDigitSpaceFails() {
         this.dateFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) \"?\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -742,7 +742,7 @@ this.colorParserFails(
     public void testDateFormatHourFails() {
         this.dateFormatParseThrows(
                 hour(),
-                "Invalid character 'H' at (1,1) \"H\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'H' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -750,7 +750,7 @@ this.colorParserFails(
     public void testDateFormatSecondFails() {
         this.dateFormatParseThrows(
                 second(),
-                "Invalid character 'S' at (1,1) \"S\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'S' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -758,7 +758,7 @@ this.colorParserFails(
     public void testDateFormatTextPlaceholderFails() {
         this.dateFormatParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at (1,1) \"@\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '@' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1464,7 +1464,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '=' at (1,1) \"=DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1477,7 +1477,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '=' at (2,1) \"D=MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1490,7 +1490,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         year()
                 ),
-                "Invalid character '=' at (3,1) \"DM=Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1503,7 +1503,7 @@ this.colorParserFails(
                         year(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) \"DMY=\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1518,7 +1518,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (1,1) \">DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1531,7 +1531,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (2,1) \"D>MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1544,7 +1544,7 @@ this.colorParserFails(
                         greaterThan(),
                         year()
                 ),
-                "Invalid character '>' at (3,1) \"DM>Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1557,7 +1557,7 @@ this.colorParserFails(
                         year(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) \"DMY>\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1572,7 +1572,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (1,1) \">=DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1585,7 +1585,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (2,1) \"D>=MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1598,7 +1598,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         year()
                 ),
-                "Invalid character '>' at (3,1) \"DM>=Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1611,7 +1611,7 @@ this.colorParserFails(
                         year(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) \"DMY>=\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1626,7 +1626,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) \"<DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1639,7 +1639,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) \"D<MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1652,7 +1652,7 @@ this.colorParserFails(
                         lessThan(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) \"DM<Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1665,7 +1665,7 @@ this.colorParserFails(
                         year(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) \"DMY<\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1678,7 +1678,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) \"<=DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1691,7 +1691,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) \"D<=MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1704,7 +1704,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) \"DM<=Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1717,7 +1717,7 @@ this.colorParserFails(
                         year(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) \"DMY<=\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1732,7 +1732,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) \"<>DMY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1745,7 +1745,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) \"D<>MY\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1758,7 +1758,7 @@ this.colorParserFails(
                         notEquals(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) \"DM<>Y\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1771,7 +1771,7 @@ this.colorParserFails(
                         year(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) \"DMY<>\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1906,7 +1906,7 @@ this.colorParserFails(
                         day(),
                         conditionEquals()
                 ),
-                "Invalid character '[' at (2,1) \"D[   =12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1917,7 +1917,7 @@ this.colorParserFails(
                         day(),
                         conditionGreaterThan()
                 ),
-                "Invalid character '[' at (2,1) \"D[>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1928,7 +1928,7 @@ this.colorParserFails(
                         day(),
                         conditionGreaterThanEquals()
                 ),
-                "Invalid character '[' at (2,1) \"D[>=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1939,7 +1939,7 @@ this.colorParserFails(
                         day(),
                         conditionLessThan()
                 ),
-                "Invalid character '[' at (2,1) \"D[<12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1950,7 +1950,7 @@ this.colorParserFails(
                         day(),
                         conditionLessThanEquals()
                 ),
-                "Invalid character '[' at (2,1) \"D[<=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -1961,7 +1961,7 @@ this.colorParserFails(
                         day(),
                         conditionNotEquals()
                 ),
-                "Invalid character '[' at (2,1) \"D[<>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2139,7 +2139,7 @@ this.colorParserFails(
                         color(),
                         escape()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]\\\\A\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2147,7 +2147,7 @@ this.colorParserFails(
     public void testDateParseTextDigitFails() {
         this.dateParseParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) \"#\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2155,7 +2155,7 @@ this.colorParserFails(
     public void testDateParseTextDigitZeroFails() {
         this.dateParseParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) \"0\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2163,7 +2163,7 @@ this.colorParserFails(
     public void testDateParseTextDigitSpaceFails() {
         this.dateParseParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) \"?\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2171,7 +2171,7 @@ this.colorParserFails(
     public void testDateParseHourFails() {
         this.dateParseParseThrows(
                 hour(),
-                "Invalid character 'H' at (1,1) \"H\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'H' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2179,7 +2179,7 @@ this.colorParserFails(
     public void testDateParseSecondFails() {
         this.dateParseParseThrows(
                 second(),
-                "Invalid character 'S' at (1,1) \"S\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'S' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2187,7 +2187,7 @@ this.colorParserFails(
     public void testDateParseTextPlaceholderFails() {
         this.dateParseParseThrows(
                 textPlaceholder(),
-                "@"
+                "Invalid character '@' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2893,7 +2893,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '=' at (1,1) \"=DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2906,7 +2906,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '=' at (2,1) \"D=MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2919,7 +2919,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         year()
                 ),
-                "Invalid character '=' at (3,1) \"DM=Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2932,7 +2932,7 @@ this.colorParserFails(
                         year(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) \"DMY=\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2947,7 +2947,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (1,1) \">DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2960,7 +2960,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (2,1) \"D>MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2973,7 +2973,7 @@ this.colorParserFails(
                         greaterThan(),
                         year()
                 ),
-                "Invalid character '>' at (3,1) \"DM>Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -2986,7 +2986,7 @@ this.colorParserFails(
                         year(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) \"DMY>\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3001,7 +3001,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (1,1) \">=DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3014,7 +3014,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (2,1) \"D>=MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3027,7 +3027,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         year()
                 ),
-                "Invalid character '>' at (3,1) \"DM>=Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3040,7 +3040,7 @@ this.colorParserFails(
                         year(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) \"DMY>=\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3055,7 +3055,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) \"<DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3068,7 +3068,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) \"D<MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3081,7 +3081,7 @@ this.colorParserFails(
                         lessThan(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) \"DM<Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3094,7 +3094,7 @@ this.colorParserFails(
                         year(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) \"DMY<\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3107,7 +3107,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) \"<=DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3120,7 +3120,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) \"D<=MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3133,7 +3133,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) \"DM<=Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3146,7 +3146,7 @@ this.colorParserFails(
                         year(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) \"DMY<=\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3161,7 +3161,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) \"<>DMY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3174,7 +3174,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) \"D<>MY\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3187,7 +3187,7 @@ this.colorParserFails(
                         notEquals(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) \"DM<>Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3200,7 +3200,7 @@ this.colorParserFails(
                         year(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) \"DMY<>\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3213,7 +3213,7 @@ this.colorParserFails(
                         color(),
                         day()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3224,7 +3224,7 @@ this.colorParserFails(
                         color(),
                         month()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]M\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3235,7 +3235,7 @@ this.colorParserFails(
                         color(),
                         year()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]Y\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3246,7 +3246,7 @@ this.colorParserFails(
                         day(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) \"D[COLOR   5]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3257,7 +3257,7 @@ this.colorParserFails(
                         month(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) \"M[COLOR   5]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3268,7 +3268,7 @@ this.colorParserFails(
                         year(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) \"Y[COLOR   5]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3279,7 +3279,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionEquals(),
                 day(),
-                "Invalid character '[' at (1,1) \"[   =12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3288,7 +3288,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionGreaterThan(),
                 day(),
-                "Invalid character '[' at (1,1) \"[>12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3297,7 +3297,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionGreaterThanEquals(),
                 day(),
-                "Invalid character '[' at (1,1) \"[>=12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3306,7 +3306,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionLessThan(),
                 day(),
-                "Invalid character '[' at (1,1) \"[<12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3315,7 +3315,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionLessThanEquals(),
                 day(),
-                "Invalid character '[' at (1,1) \"[<=12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3324,7 +3324,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionNotEquals(),
                 day(),
-                "Invalid character '[' at (1,1) \"[<>12.75]D\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3333,7 +3333,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"D[   =12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3342,7 +3342,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"D[>12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3351,7 +3351,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"D[>=12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3360,7 +3360,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"D[<12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3369,7 +3369,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"D[<=12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3378,7 +3378,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"D[<>12.75]\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3428,7 +3428,7 @@ this.colorParserFails(
                                 day()
                         )
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]DMY;YMD\" expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -3509,7 +3509,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 day(),
-                "Invalid character 'D' at (2,1) \"#D\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'D' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3518,7 +3518,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 hour(),
-                "Invalid character 'H' at (2,1) \"#H\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'H' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3527,7 +3527,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 minute(),
-                "Invalid character 'M' at (2,1) \"#M\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'M' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3536,7 +3536,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 month(),
-                "Invalid character 'M' at (2,1) \"#M\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'M' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3545,7 +3545,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 second(),
-                "Invalid character 'S' at (2,1) \"#S\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'S' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3553,7 +3553,7 @@ this.colorParserFails(
     public void testNumberFormatStarFails() {
         this.numberFormatParseThrows(
                 star(),
-                "Invalid character '*' at (1,1) \"*?\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '*' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3562,7 +3562,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 textPlaceholder(),
-                "@"
+                "Invalid character '@' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3570,7 +3570,7 @@ this.colorParserFails(
     public void testNumberFormatUnderscoreFails() {
         this.numberFormatParseThrows(
                 underscore(),
-                "Invalid character '_' at (1,1) \"_?\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '_' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3579,7 +3579,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 year(),
-                "Invalid character 'Y' at (2,1) \"#Y\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'Y' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3587,7 +3587,7 @@ this.colorParserFails(
     public void testNumberFormatSlashFails() {
         this.numberFormatParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) \"/\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '/' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3596,7 +3596,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digitSpace(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) \"?/\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '/' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3605,7 +3605,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digitZero(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) \"0/\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '/' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -3614,7 +3614,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) \"#/\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '/' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4535,7 +4535,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '=' at (1,1) \"=#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '=' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4548,7 +4548,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '=' at (2,1) \"#=.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '=' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4561,7 +4561,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         digit()
                 ),
-                "Invalid character '=' at (3,1) \"#.=#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '=' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4574,7 +4574,7 @@ this.colorParserFails(
                         digit(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) \"#.#=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '=' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4589,7 +4589,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '>' at (1,1) \">#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4602,7 +4602,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '>' at (2,1) \"#>.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4615,7 +4615,7 @@ this.colorParserFails(
                         greaterThan(),
                         digit()
                 ),
-                "Invalid character '>' at (3,1) \"#.>#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4628,7 +4628,7 @@ this.colorParserFails(
                         digit(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) \"#.#>\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4643,7 +4643,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '>' at (1,1) \">=#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4656,7 +4656,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '>' at (2,1) \"#>=.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4669,7 +4669,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         digit()
                 ),
-                "Invalid character '>' at (3,1) \"#.>=#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4682,7 +4682,7 @@ this.colorParserFails(
                         digit(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) \"#.#>=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4697,7 +4697,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4710,7 +4710,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (2,1) \"#<.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4723,7 +4723,7 @@ this.colorParserFails(
                         lessThan(),
                         digit()
                 ),
-                "Invalid character '<' at (3,1) \"#.<#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4736,7 +4736,7 @@ this.colorParserFails(
                         digit(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) \"#.#<\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4751,7 +4751,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<=#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4764,7 +4764,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (2,1) \"#<=.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4777,7 +4777,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         digit()
                 ),
-                "Invalid character '<' at (3,1) \"#.<=#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4790,7 +4790,7 @@ this.colorParserFails(
                         digit(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) \"#.#<=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4805,7 +4805,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<>#.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4818,7 +4818,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (2,1) \"#<>.#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4831,7 +4831,7 @@ this.colorParserFails(
                         notEquals(),
                         digit()
                 ),
-                "Invalid character '<' at (3,1) \"#.<>#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -4844,7 +4844,7 @@ this.colorParserFails(
                         digit(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) \"#.#<>\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5147,7 +5147,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent1(equalsSymbol()),
-                "Invalid character '=' at (4,1) \"#E-=?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '=' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5156,7 +5156,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent2(equalsSymbol()),
-                "Invalid character '=' at (5,1) \"#E+?=0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '=' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5165,7 +5165,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent3(equalsSymbol()),
-                "Invalid character '=' at (7,1) \"#E+?0#=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '=' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5176,7 +5176,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent1(greaterThan()),
-                "Invalid character '>' at (4,1) \"#E->?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5185,7 +5185,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent2(greaterThan()),
-                "Invalid character '>' at (5,1) \"#E+?>0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5194,7 +5194,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent3(greaterThan()),
-                "Invalid character '>' at (7,1) \"#E+?0#>\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5205,7 +5205,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent1(greaterThanEquals()),
-                "Invalid character '>' at (4,1) \"#E->=?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5214,7 +5214,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent2(greaterThanEquals()),
-                "Invalid character '>' at (5,1) \"#E+?>=0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5223,7 +5223,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent3(greaterThanEquals()),
-                "Invalid character '>' at (7,1) \"#E+?0#>=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '>' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5234,7 +5234,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent1(lessThan()),
-                "Invalid character '<' at (4,1) \"#E-<?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5243,7 +5243,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent2(lessThan()),
-                "Invalid character '<' at (5,1) \"#E+?<0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5252,7 +5252,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent3(lessThan()),
-                "Invalid character '<' at (7,1) \"#E+?0#<\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5263,7 +5263,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent1(lessThanEquals()),
-                "Invalid character '<' at (4,1) \"#E-<=?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLO"
+                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLO"
         );
     }
 
@@ -5272,7 +5272,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent2(lessThanEquals()),
-                "Invalid character '<' at (5,1) \"#E+?<=0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5281,7 +5281,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent3(lessThanEquals()),
-                "Invalid character '<' at (7,1) \"#E+?0#<=\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5292,7 +5292,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent1(notEquals()),
-                "Invalid character '<' at (4,1) \"#E-<>?0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5301,7 +5301,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent2(notEquals()),
-                "Invalid character '<' at (5,1) \"#E+?<>0#\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5310,7 +5310,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent3(notEquals()),
-                "Invalid character '<' at (7,1) \"#E+?0#<>\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '<' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5456,7 +5456,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"#[   =12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5465,7 +5465,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"#[<12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5474,7 +5474,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"#[<=12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5483,7 +5483,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"#[>12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5492,7 +5492,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"#[>=12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5501,7 +5501,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"#[<>12.75]\" expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5554,7 +5554,7 @@ this.colorParserFails(
                         ),
                         separator()
                 ),
-                "@"
+                "Invalid character ';' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5642,7 +5642,7 @@ this.colorParserFails(
                 ),
                 separator()
                 ),
-                "@"
+                "Invalid character ';' at (6,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5688,7 +5688,7 @@ this.colorParserFails(
                 ),
                 separator()
                 ),
-                "@"
+                "Invalid character ';' at (8,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5713,7 +5713,7 @@ this.colorParserFails(
                         textPlaceholder()
                 )
                 ),
-                "@"
+                "Invalid character '@' at (18,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
@@ -5770,7 +5770,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 day(),
-                "Invalid character 'D' at (2,1) \"#D\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'D' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5779,7 +5779,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 hour(),
-                "Invalid character 'H' at (2,1) \"#H\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'H' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5788,7 +5788,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 month(),
-                "Invalid character 'M' at (2,1) \"#M\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'M' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5797,7 +5797,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 second(),
-                "Invalid character 'S' at (2,1) \"#S\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'S' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5805,7 +5805,7 @@ this.colorParserFails(
     public void testNumberParseStarFails() {
         this.numberParseParseThrows(
                 star(),
-                "Invalid character '*' at (1,1) \"*?\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '*' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5814,7 +5814,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 textPlaceholder(),
-                "Invalid character '@' at (2,1) \"#@\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '@' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5822,7 +5822,7 @@ this.colorParserFails(
     public void testNumberParseUnderscoreFails() {
         this.numberParseParseThrows(
                 underscore(),
-                "Invalid character '_' at (1,1) \"_?\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '_' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5831,7 +5831,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 year(),
-                "Invalid character 'Y' at (2,1) \"#Y\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'Y' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5839,7 +5839,7 @@ this.colorParserFails(
     public void testNumberParseSlashFails() {
         this.numberParseParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) \"/\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '/' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5848,7 +5848,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digitSpace(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) \"?/\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '/' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5857,7 +5857,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digitZero(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) \"0/\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '/' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5866,7 +5866,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) \"#/\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '/' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5926,7 +5926,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionEquals(),
                 general(),
-                "Invalid character '[' at (1,1) \"[   =12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5935,7 +5935,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionGreaterThan(),
                 general(),
-                "Invalid character '[' at (1,1) \"[>12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5944,7 +5944,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionGreaterThanEquals(),
                 general(),
-                "Invalid character '[' at (1,1) \"[>=12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5953,7 +5953,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionLessThan(),
                 general(),
-                "Invalid character '[' at (1,1) \"[<12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5962,7 +5962,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionLessThanEquals(),
                 general(),
-                "Invalid character '[' at (1,1) \"[<=12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -5971,7 +5971,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionNotEquals(),
                 general(),
-                "Invalid character '[' at (1,1) \"[<>12.75]GENERAL\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6793,7 +6793,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '=' at (1,1) \"=#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6806,7 +6806,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '=' at (2,1) \"#=.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6819,7 +6819,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         digit()
                 ),
-                "Invalid character '=' at (3,1) \"#.=#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6832,7 +6832,7 @@ this.colorParserFails(
                         digit(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) \"#.#=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6847,7 +6847,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '>' at (1,1) \">#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6860,7 +6860,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '>' at (2,1) \"#>.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6873,7 +6873,7 @@ this.colorParserFails(
                         greaterThan(),
                         digit()
                 ),
-                "Invalid character '>' at (3,1) \"#.>#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6886,7 +6886,7 @@ this.colorParserFails(
                         digit(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) \"#.#>\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6901,7 +6901,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '>' at (1,1) \">=#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6914,7 +6914,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '>' at (2,1) \"#>=.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6927,7 +6927,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         digit()
                 ),
-                "Invalid character '>' at (3,1) \"#.>=#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6940,7 +6940,7 @@ this.colorParserFails(
                         digit(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) \"#.#>=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6955,7 +6955,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6968,7 +6968,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (2,1) \"#<.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6981,7 +6981,7 @@ this.colorParserFails(
                         lessThan(),
                         digit()
                 ),
-                "Invalid character '<' at (3,1) \"#.<#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -6994,7 +6994,7 @@ this.colorParserFails(
                         digit(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) \"#.#<\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7009,7 +7009,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<=#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7022,7 +7022,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (2,1) \"#<=.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7035,7 +7035,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         digit()
                 ),
-                "Invalid character '<' at (3,1) \"#.<=#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7048,7 +7048,7 @@ this.colorParserFails(
                         digit(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) \"#.#<=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7063,7 +7063,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<>#.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7076,7 +7076,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '<' at (2,1) \"#<>.#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7089,7 +7089,7 @@ this.colorParserFails(
                         notEquals(),
                         digit()
                 ),
-                "Invalid character '<' at (3,1) \"#.<>#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7102,7 +7102,7 @@ this.colorParserFails(
                         digit(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) \"#.#<>\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7405,7 +7405,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent1(equalsSymbol()),
-                "Invalid character '=' at (4,1) \"#E-=?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7414,7 +7414,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent2(equalsSymbol()),
-                "Invalid character '=' at (5,1) \"#E+?=0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7423,7 +7423,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent3(equalsSymbol()),
-                "Invalid character '=' at (7,1) \"#E+?0#=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7434,7 +7434,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent1(greaterThan()),
-                "Invalid character '>' at (4,1) \"#E->?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7443,7 +7443,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent2(greaterThan()),
-                "Invalid character '>' at (5,1) \"#E+?>0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7452,7 +7452,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent3(greaterThan()),
-                "Invalid character '>' at (7,1) \"#E+?0#>\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7463,7 +7463,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent1(greaterThanEquals()),
-                "Invalid character '>' at (4,1) \"#E->=?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7472,7 +7472,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent2(greaterThanEquals()),
-                "Invalid character '>' at (5,1) \"#E+?>=0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7481,7 +7481,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent3(greaterThanEquals()),
-                "Invalid character '>' at (7,1) \"#E+?0#>=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7492,7 +7492,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent1(lessThan()),
-                "Invalid character '<' at (4,1) \"#E-<?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7501,7 +7501,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent2(lessThan()),
-                "Invalid character '<' at (5,1) \"#E+?<0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7510,7 +7510,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent3(lessThan()),
-                "Invalid character '<' at (7,1) \"#E+?0#<\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7521,7 +7521,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent1(lessThanEquals()),
-                "Invalid character '<' at (4,1) \"#E-<=?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7530,7 +7530,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent2(lessThanEquals()),
-                "Invalid character '<' at (5,1) \"#E+?<=0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7539,7 +7539,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent3(lessThanEquals()),
-                "Invalid character '<' at (7,1) \"#E+?0#<=\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7550,7 +7550,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent1(notEquals()),
-                "Invalid character '<' at (4,1) \"#E-<>?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7559,7 +7559,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent2(notEquals()),
-                "Invalid character '<' at (5,1) \"#E+?<>0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7568,7 +7568,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 exponent3(notEquals()),
-                "Invalid character '<' at (7,1) \"#E+?0#<>\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7581,7 +7581,7 @@ this.colorParserFails(
                         color(),
                         digit()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7592,7 +7592,7 @@ this.colorParserFails(
                         digit(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) \"#[COLOR   5]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7604,7 +7604,7 @@ this.colorParserFails(
                         decimalPoint(),
                         color()
                 ),
-                "Invalid character '[' at (3,1) \"#.[COLOR   5]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7617,7 +7617,7 @@ this.colorParserFails(
                         digit(),
                         color()
                 ),
-                "Invalid character '[' at (4,1) \"#.#[COLOR   5]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7628,7 +7628,7 @@ this.colorParserFails(
                         digit(),
                         exponent1(color())
                 ) ,
-                "Invalid character '[' at (4,1) \"#E-[COLOR   5]?0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7639,7 +7639,7 @@ this.colorParserFails(
                         digit(),
                         exponent2(color())
                 ),
-                "Invalid character '[' at (5,1) \"#E+?[COLOR   5]0#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7650,7 +7650,7 @@ this.colorParserFails(
                         digit(),
                         exponent3(color())
                 ),
-                "Invalid character '[' at (7,1) \"#E+?0#[COLOR   5]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7661,7 +7661,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionEquals(),
                 digit(),
-                "Invalid character '[' at (1,1) \"[   =12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7670,7 +7670,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionGreaterThan(),
                 digit(),
-                "Invalid character '[' at (1,1) \"[>12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7679,7 +7679,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionGreaterThanEquals(),
                 digit(),
-                "Invalid character '[' at (1,1) \"[>=12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7688,7 +7688,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionLessThan(),
                 digit(),
-                "Invalid character '[' at (1,1) \"[<12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7697,7 +7697,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionLessThanEquals(),
                 digit(),
-                "Invalid character '[' at (1,1) \"[<=12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7706,7 +7706,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionNotEquals(),
                 digit(),
-                "Invalid character '[' at (1,1) \"[<>12.75]#\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7715,7 +7715,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"#[   =12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7724,7 +7724,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"#[<12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7733,7 +7733,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"#[<=12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7742,7 +7742,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"#[>12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7751,7 +7751,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"#[>=12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7760,7 +7760,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"#[<>12.75]\" expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7799,7 +7799,7 @@ this.colorParserFails(
                                 textPlaceholder()
                         )
                 ),
-                "@"
+                "Invalid character '@' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -7862,7 +7862,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 day(),
-                "Invalid character '#' at (1,1) \"#D\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7871,7 +7871,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 hour(),
-                "Invalid character '#' at (1,1) \"#H\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7880,7 +7880,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 minute(),
-                "Invalid character '#' at (1,1) \"#M\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7889,7 +7889,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 month(),
-                "Invalid character '#' at (1,1) \"#M\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7898,7 +7898,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 second(),
-                "Invalid character '#' at (1,1) \"#S\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7906,7 +7906,7 @@ this.colorParserFails(
     public void testFractionStarFails() {
         this.fractionParseThrows(
                 star(),
-                "Invalid character '*' at (1,1) \"*?\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '*' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7915,7 +7915,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 textPlaceholder(),
-                "@"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7923,7 +7923,7 @@ this.colorParserFails(
     public void testFractionUnderscoreFails() {
         this.fractionParseThrows(
                 underscore(),
-                "Invalid character '_' at (1,1) \"_?\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '_' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7932,7 +7932,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 year(),
-                "Invalid character '#' at (1,1) \"#Y\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7940,7 +7940,7 @@ this.colorParserFails(
     public void testFractionSlashFails() {
         this.fractionParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) \"/\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '/' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7949,7 +7949,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digitSpace(),
                 fractionSymbol(),
-                "Invalid character '?' at (1,1) \"?/\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '?' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7958,7 +7958,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digitZero(),
                 fractionSymbol(),
-                "Invalid character '0' at (1,1) \"0/\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '0' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7967,7 +7967,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 fractionSymbol(),
-                "Invalid character '#' at (1,1) \"#/\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7975,7 +7975,7 @@ this.colorParserFails(
     public void testFractionGroupSeparatorFails() {
         this.fractionParseThrows(
                 groupSeparator(),
-                "Invalid character ',' at (1,1) \",\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character ',' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7984,7 +7984,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 groupSeparator(),
-                "Invalid character '#' at (1,1) \"#,\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -7992,7 +7992,7 @@ this.colorParserFails(
     public void testFractionGeneralFails() {
         this.fractionParseThrows(
                 generalSymbol(),
-                "Invalid character 'G' at (1,1) \"GENERAL\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character 'G' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8327,7 +8327,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '=' at (1,1) \"=#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '=' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8340,7 +8340,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#=/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8353,7 +8353,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#/=#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8366,7 +8366,7 @@ this.colorParserFails(
                         digit(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) \"#/#=\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '=' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8381,7 +8381,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '>' at (1,1) \">#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '>' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8394,7 +8394,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#>/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8407,7 +8407,7 @@ this.colorParserFails(
                         greaterThan(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#/>#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8420,7 +8420,7 @@ this.colorParserFails(
                         digit(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) \"#/#>\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '>' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8435,7 +8435,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '>' at (1,1) \">=#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '>' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8448,7 +8448,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#>=/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8461,7 +8461,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#/>=#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8474,7 +8474,7 @@ this.colorParserFails(
                         digit(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) \"#/#>=\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '>' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8489,7 +8489,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '<' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8502,7 +8502,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#</#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8515,7 +8515,7 @@ this.colorParserFails(
                         lessThan(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#/<#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8528,7 +8528,7 @@ this.colorParserFails(
                         digit(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) \"#/#<\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '<' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8543,7 +8543,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<=#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '<' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8556,7 +8556,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#<=/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8569,7 +8569,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#/<=#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8582,7 +8582,7 @@ this.colorParserFails(
                         digit(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) \"#/#<=\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '<' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8597,7 +8597,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '<' at (1,1) \"<>#/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '<' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8610,7 +8610,7 @@ this.colorParserFails(
                         fractionSymbol(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#<>/#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8623,7 +8623,7 @@ this.colorParserFails(
                         notEquals(),
                         digit()
                 ),
-                "Invalid character '#' at (1,1) \"#/<>#\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8636,7 +8636,7 @@ this.colorParserFails(
                         digit(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) \"#/#<>\" expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '<' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
         );
     }
 
@@ -8851,7 +8851,7 @@ this.colorParserFails(
     public void testTextFormatSeparatorFails() {
         this.textFormatParseThrows(
                 separator(),
-                "Invalid character ';' at (1,1) \";\" expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character ';' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -8859,7 +8859,7 @@ this.colorParserFails(
     public void testTextFormatTextDigitZeroFails() {
         this.textFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) \"0\" expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -8867,7 +8867,7 @@ this.colorParserFails(
     public void testTextFormatTextDigitSpaceFails() {
         this.textFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) \"?\" expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -8875,7 +8875,7 @@ this.colorParserFails(
     public void testTextFormatLetterFails() {
         this.textFormatParseThrows(
                 textLiteral('A'),
-                "Invalid character 'A' at (1,1) \"A\" expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character 'A' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -8883,7 +8883,7 @@ this.colorParserFails(
     public void testTextFormatGeneraFails() {
         this.textFormatParseThrows(
                 generalSymbol(),
-                "Invalid character 'G' at (1,1) \"GENERAL\" expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character 'G' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -8919,7 +8919,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 star(),
                 star2(),
-                "Invalid character '*' at (3,1) \"*?*#\" expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '*' at (3,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -8931,7 +8931,7 @@ this.colorParserFails(
                         textPlaceholder(),
                         star2()
                 ),
-                "@"
+                "Invalid character '*' at (4,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9165,7 +9165,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionNotEquals(),
                 textPlaceholder(),
-                "@"
+                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9174,7 +9174,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionEquals(),
                 textPlaceholder(),
-                "@"
+                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9183,7 +9183,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionGreaterThan(),
                 textPlaceholder(),
-                "@"
+                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9192,7 +9192,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionGreaterThanEquals(),
                 textPlaceholder(),
-                "@"
+                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9201,7 +9201,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionLessThan(),
                 textPlaceholder(),
-                "@"
+                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9210,7 +9210,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionLessThanEquals(),
                 textPlaceholder(),
-                "@"
+                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9219,7 +9219,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionEquals(),
-                "@"
+                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9228,7 +9228,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionGreaterThan(),
-                "@"
+                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9237,7 +9237,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionGreaterThanEquals(),
-                "@"
+                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9246,7 +9246,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionLessThan(),
-                "@"
+                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9255,7 +9255,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionLessThanEquals(),
-                "@"
+                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9264,7 +9264,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"@[<>12.75]\""
+                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9344,7 +9344,7 @@ this.colorParserFails(
     public void testTimeFormatTextDigitFails() {
         this.timeFormatParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) \"#\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9352,7 +9352,7 @@ this.colorParserFails(
     public void testTimeFormatTextDigitZeroFails() {
         this.timeFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) \"0\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9360,7 +9360,7 @@ this.colorParserFails(
     public void testTimeFormatTextDigitSpaceFails() {
         this.timeFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) \"?\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9368,7 +9368,7 @@ this.colorParserFails(
     public void testTimeFormatDayFails() {
         this.timeFormatParseThrows(
                 day(),
-                "Invalid character 'D' at (1,1) \"D\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'D' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9376,7 +9376,7 @@ this.colorParserFails(
     public void testTimeFormatYearFails() {
         this.timeFormatParseThrows(
                 year(),
-                "Invalid character 'Y' at (1,1) \"Y\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'Y' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -9384,7 +9384,7 @@ this.colorParserFails(
     public void testTimeFormatTextPlaceholderFails() {
         this.timeFormatParseThrows(
                 textPlaceholder(),
-                "@"
+                "Invalid character '@' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10200,7 +10200,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '=' at (1,1) \"=HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10213,7 +10213,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '=' at (2,1) \"H=MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10226,7 +10226,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         second()
                 ),
-                "Invalid character '=' at (3,1) \"HM=S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10239,7 +10239,7 @@ this.colorParserFails(
                         second(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) \"HMS=\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10254,7 +10254,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (1,1) \">HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10267,7 +10267,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (2,1) \"H>MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10280,7 +10280,7 @@ this.colorParserFails(
                         greaterThan(),
                         second()
                 ),
-                "Invalid character '>' at (3,1) \"HM>S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10293,7 +10293,7 @@ this.colorParserFails(
                         second(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) \"HMS>\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10308,7 +10308,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (1,1) \">=HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10321,7 +10321,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (2,1) \"H>=MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10334,7 +10334,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         second()
                 ),
-                "Invalid character '>' at (3,1) \"HM>=S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10347,7 +10347,7 @@ this.colorParserFails(
                         second(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) \"HMS>=\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10362,7 +10362,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) \"<HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10375,7 +10375,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) \"H<MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10388,7 +10388,7 @@ this.colorParserFails(
                         lessThan(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) \"HM<S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10401,7 +10401,7 @@ this.colorParserFails(
                         second(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) \"HMS<\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10416,7 +10416,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) \"<=HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10429,7 +10429,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) \"H<=MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10442,7 +10442,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) \"HM<=S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10455,7 +10455,7 @@ this.colorParserFails(
                         second(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) \"HMS<=\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10470,7 +10470,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) \"<>HMS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10483,7 +10483,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) \"H<>MS\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10496,7 +10496,7 @@ this.colorParserFails(
                         notEquals(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) \"HM<>S\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10509,7 +10509,7 @@ this.colorParserFails(
                         second(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) \"HMS<>\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10642,7 +10642,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"H[   =12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10651,7 +10651,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"H[>12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10660,7 +10660,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"H[>=12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10669,7 +10669,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"H[<12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10678,7 +10678,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"H[<=12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10687,7 +10687,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"H[<>12.75]\" expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10804,7 +10804,7 @@ this.colorParserFails(
     public void testTimeParseTextDigitFails() {
         this.timeParseParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) \"#\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10812,7 +10812,7 @@ this.colorParserFails(
     public void testTimeParseTextDigitZeroFails() {
         this.timeParseParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) \"0\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10820,7 +10820,7 @@ this.colorParserFails(
     public void testTimeParseTextDigitSpaceFails() {
         this.timeParseParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) \"?\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10828,7 +10828,7 @@ this.colorParserFails(
     public void testTimeParseDayFails() {
         this.timeParseParseThrows(
                 day(),
-                "Invalid character 'D' at (1,1) \"D\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'D' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10836,7 +10836,7 @@ this.colorParserFails(
     public void testTimeParseYearFails() {
         this.timeParseParseThrows(
                 year(),
-                "Invalid character 'Y' at (1,1) \"Y\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'Y' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10844,7 +10844,7 @@ this.colorParserFails(
     public void testTimeParseTextPlaceholderFails() {
         this.timeParseParseThrows(
                 textPlaceholder(),
-                "@"
+                "Invalid character '@' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -10914,7 +10914,7 @@ this.colorParserFails(
                         color(),
                         escape()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]\\\\A\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11661,7 +11661,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '=' at (1,1) \"=HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11674,7 +11674,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '=' at (2,1) \"H=MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11687,7 +11687,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         second()
                 ),
-                "Invalid character '=' at (3,1) \"HM=S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11700,7 +11700,7 @@ this.colorParserFails(
                         second(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) \"HMS=\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11715,7 +11715,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (1,1) \">HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11728,7 +11728,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (2,1) \"H>MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11741,7 +11741,7 @@ this.colorParserFails(
                         greaterThan(),
                         second()
                 ),
-                "Invalid character '>' at (3,1) \"HM>S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11754,7 +11754,7 @@ this.colorParserFails(
                         second(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) \"HMS>\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11769,7 +11769,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (1,1) \">=HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11782,7 +11782,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (2,1) \"H>=MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11795,7 +11795,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         second()
                 ),
-                "Invalid character '>' at (3,1) \"HM>=S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11808,7 +11808,7 @@ this.colorParserFails(
                         second(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) \"HMS>=\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11823,7 +11823,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) \"<HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11836,7 +11836,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) \"H<MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11849,7 +11849,7 @@ this.colorParserFails(
                         lessThan(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) \"HM<S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11862,7 +11862,7 @@ this.colorParserFails(
                         second(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) \"HMS<\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11877,7 +11877,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) \"<=HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11890,7 +11890,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) \"H<=MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11903,7 +11903,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) \"HM<=S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11916,7 +11916,7 @@ this.colorParserFails(
                         second(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) \"HMS<=\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11931,7 +11931,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) \"<>HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11944,7 +11944,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) \"H<>MS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11957,7 +11957,7 @@ this.colorParserFails(
                         notEquals(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) \"HM<>S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11970,7 +11970,7 @@ this.colorParserFails(
                         second(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) \"HMS<>\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11983,7 +11983,7 @@ this.colorParserFails(
                         color(),
                         hour()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -11994,7 +11994,7 @@ this.colorParserFails(
                         color(),
                         minute()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]M\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12005,7 +12005,7 @@ this.colorParserFails(
                         color(),
                         second()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]S\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12016,7 +12016,7 @@ this.colorParserFails(
                         hour(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) \"H[COLOR   5]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12027,7 +12027,7 @@ this.colorParserFails(
                         minute(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) \"M[COLOR   5]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12038,7 +12038,7 @@ this.colorParserFails(
                         second(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) \"S[COLOR   5]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12049,7 +12049,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[   =12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12058,7 +12058,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionGreaterThan(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[>12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12067,7 +12067,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionGreaterThanEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[>=12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12076,7 +12076,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionLessThan(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[<12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12085,7 +12085,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionLessThanEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[<=12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12094,7 +12094,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionNotEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[<>12.75]H\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12103,7 +12103,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"H[   =12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12112,7 +12112,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"H[>12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12121,7 +12121,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"H[>=12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12130,7 +12130,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"H[<12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12139,7 +12139,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"H[<=12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12150,7 +12150,7 @@ this.colorParserFails(
                 hour(),
                 conditionNotEquals()
                 ),
-                "Invalid character '[' at (2,1) \"H[<>12.75]\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12197,7 +12197,7 @@ this.colorParserFails(
                         second()
                 )
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]HM;HMS\" expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12514,7 +12514,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '#' at (3,1) \"S.#\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12526,7 +12526,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digitSpace()
                 ),
-                "Invalid character '?' at (3,1) \"S.?\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12793,7 +12793,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"D[   =12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12802,7 +12802,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"D[>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12811,7 +12811,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"D[>=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12820,7 +12820,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"D[<12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12829,7 +12829,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"D[<=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12838,7 +12838,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"D[<>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12847,7 +12847,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"H[   =12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12856,7 +12856,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"H[>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12865,7 +12865,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"H[>=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12874,7 +12874,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"H[<12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12883,7 +12883,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"H[<=12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -12892,7 +12892,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"H[<>12.75]\" expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13092,7 +13092,7 @@ this.colorParserFails(
                         color(),
                         escape()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]\\\\A\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13270,7 +13270,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '#' at (3,1) \"S.#\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (3,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13282,7 +13282,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digitSpace()
                 ),
-                "Invalid character '?' at (3,1) \"S.?\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (3,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13396,7 +13396,7 @@ this.colorParserFails(
                         color(),
                         day()
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13407,7 +13407,7 @@ this.colorParserFails(
                         day(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) \"D[COLOR   5]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13431,7 +13431,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionEquals(),
                 day(),
-                "Invalid character '[' at (1,1) \"[   =12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13440,7 +13440,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionGreaterThan(),
                 day(),
-                "Invalid character '[' at (1,1) \"[>12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13449,7 +13449,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionGreaterThanEquals(),
                 day(),
-                "Invalid character '[' at (1,1) \"[>=12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13458,7 +13458,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionLessThan(),
                 day(),
-                "Invalid character '[' at (1,1) \"[<12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13467,7 +13467,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionLessThanEquals(),
                 day(),
-                "Invalid character '[' at (1,1) \"[<=12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13476,7 +13476,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionNotEquals(),
                 day(),
-                "Invalid character '[' at (1,1) \"[<>12.75]D\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13485,7 +13485,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[   =12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13494,7 +13494,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionGreaterThan(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[>12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13503,7 +13503,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionGreaterThanEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[>=12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13512,7 +13512,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionLessThan(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[<12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13521,7 +13521,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionLessThanEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[<=12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13530,7 +13530,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionNotEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) \"[<>12.75]H\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13539,7 +13539,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"D[   =12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13548,7 +13548,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"D[>12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13557,7 +13557,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"D[>=12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13566,7 +13566,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"D[<12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13575,7 +13575,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"D[<=12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13584,7 +13584,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"D[<>12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13593,7 +13593,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) \"H[   =12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13602,7 +13602,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) \"H[>12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13611,7 +13611,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) \"H[>=12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13620,7 +13620,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) \"H[<12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13629,7 +13629,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) \"H[<=12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13638,7 +13638,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) \"H[<>12.75]\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 
@@ -13701,7 +13701,7 @@ this.colorParserFails(
                         second()
                 )
                 ),
-                "Invalid character '[' at (1,1) \"[COLOR   5]YMDHM;YMDHMS\" expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
         );
     }
 

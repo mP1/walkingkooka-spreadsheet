@@ -134,7 +134,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testConditionRightParserParseEqualsSignMissingValueOrExpressionFails() {
         this.conditionRightParserParseThrows(
                 "<",
-                "End of text at (2,1) \"<\" expected CONDITION_RIGHT_VALUE_OR_EXPRESSION"
+                "End of text at (2,1) expected CONDITION_RIGHT_VALUE_OR_EXPRESSION"
         );
     }
 
