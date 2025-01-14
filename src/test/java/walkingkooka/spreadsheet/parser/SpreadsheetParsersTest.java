@@ -131,18 +131,21 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testConditionRightParserParseEqualsSignMissingValueOrExpression() {
+    public void testConditionRightParserParseEqualsSignMissingValueOrExpressionFails() {
         this.conditionRightParserParseThrows(
-                "<"
+                "<",
+                "End of text at (2,1) \"<\" expected CONDITION_RIGHT_VALUE_OR_EXPRESSION"
         );
     }
 
-    private void conditionRightParserParseThrows(final String text) {
+    private void conditionRightParserParseThrows(final String text,
+                                                 final String message) {
         this.parseThrows(
                 SpreadsheetParsers.conditionRight(
                         valueOrExpressionParser()
                 ),
-                text
+                text,
+                message
         );
     }
 
@@ -775,7 +778,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testCellParserParseLabelFails() {
         this.parseThrows(
                 SpreadsheetParsers.cell(),
-                "LABEL123"
+                "LABEL123",
+                "Invalid column \"LABEL\" not between \"A\" and \"XFE\""
         );
     }
 
