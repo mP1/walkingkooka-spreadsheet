@@ -21,9 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.TextCursorSavePoint;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTesting2;
@@ -33,7 +30,6 @@ import walkingkooka.text.cursor.parser.Parsers;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -13813,51 +13809,6 @@ this.colorParserFails(
                 text,
                 token,
                 text
-        );
-    }
-
-    private void parseFailAndCheck2(final Parser<SpreadsheetFormatParserContext> parser,
-                                    final SpreadsheetFormatParserToken... tokens) {
-        // https://github.com/mP1/walkingkooka-spreadsheet/issues/2626
-        final TextCursor cursor = TextCursors.charSequence(
-                ParserToken.text(
-                        Lists.of(tokens)
-                )
-        );
-        final TextCursorSavePoint start = cursor.save();
-
-        this.parse(
-                parser,
-                cursor,
-                this.createContext()
-        );
-        this.checkNotEquals(
-                "",
-                start.textBetween().toString()
-        );
-    }
-
-    private void parseFailAndCheck3(final Parser<SpreadsheetFormatParserContext> parser,
-                                    final SpreadsheetFormatParserToken... tokens) {
-        // https://github.com/mP1/walkingkooka-spreadsheet/issues/2626
-        final String text = ParserToken.text(
-                Lists.of(tokens)
-        );
-        final TextCursor cursor = TextCursors.charSequence(text);
-        final TextCursorSavePoint start = cursor.save();
-
-        this.checkEquals(
-                Optional.empty(),
-                this.parse(
-                        parser,
-                        cursor,
-                        this.createContext()
-                )
-        );
-
-        this.checkEquals(
-                text,
-                start.textBetween().toString()
         );
     }
 
