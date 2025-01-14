@@ -1045,7 +1045,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testValueOrExpressionParserParseStarFails() {
         this.valueOrExpressionParserParseFails(
                 "1+*",
-                "Invalid character '*' at (3,1)"
+                "Invalid character '*' at (3,1) expected BINARY_SUB_EXPRESSION"
         );
     }
 
@@ -3063,7 +3063,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testValueOrExpressionParserParseInvalidTokenFails() {
         this.valueOrExpressionParserParseFails(
                 "!",
-                this.reporterMessage('!', 1, 1)
+                "Invalid character '!' at (1,1) expected EXPRESSION_OPT"
         );
     }
 
@@ -3071,7 +3071,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testValueOrExpressionParserParseInvalidTokenFails2() {
         this.valueOrExpressionParserParseFails(
                 "  !",
-                this.reporterMessage('!', 3, 1)
+                "Invalid character '!' at (3,1) expected EXPRESSION_OPT"
         );
     }
 
@@ -3088,7 +3088,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void valueOrExpressionParserParseFails() {
         this.valueOrExpressionParserParseFails(
                 "1+!",
-                this.reporterMessage('!', 3, 1)
+                "Invalid character '!' at (3,1) expected BINARY_SUB_EXPRESSION"
         );
     }
 
@@ -3096,14 +3096,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testParseInvalidGroupTokenFails() {
         this.valueOrExpressionParserParseFails(
                 "( !",
-                this.reporterMessage('!', 3, 1)
+                "Invalid character '!' at (3,1) expected EXPRESSION_OPT"
         );
-    }
-
-    private String reporterMessage(final char c,
-                                   final int column,
-                                   final int row) {
-        return "Invalid character " + CharSequences.quoteIfChars(c) + " at (" + column + "," + row + ")";
     }
 
     @Test

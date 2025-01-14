@@ -5259,7 +5259,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 exponent1(lessThanEquals()),
-                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLO"
+                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
         );
     }
 
