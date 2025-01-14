@@ -296,7 +296,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellFails(
                 "=1+",
                 SpreadsheetErrorKind.ERROR.setMessage(
-                        "End of text at (4,1) \"=1+\" expected BINARY_SUB_EXPRESSION"
+                        "End of text at (4,1) expected BINARY_SUB_EXPRESSION"
                 )
         );
     }
