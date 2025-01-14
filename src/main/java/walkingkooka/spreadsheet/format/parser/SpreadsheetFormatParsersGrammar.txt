@@ -260,5 +260,3 @@ TEXT_COLOR_WITHOUT_STAR        = [{ TEXT_COLOR_COMPONENT }];
 TEXT_COLOR_COMPONENT           = COLOR | WHITESPACE | TEXT_CHARACTER | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
 
 TEXT_CHARACTER                 = { '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '&' | '/' | ',' | ':' };
-
-ZTEXT_CHARACTER                 = { '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '#' | '&' | '/' | ',' | ':' };
