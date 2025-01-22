@@ -134,7 +134,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return parser(
                 resolveParsers(value)
                         .apply(CONDITION_RIGHT_PARSER_IDENTIFIER)
-                        .orElseThrow(() -> new IllegalStateException("Missing parser " + CharSequences.quoteAndEscape(CONDITION_RIGHT_PARSER_IDENTIFIER.value())))
                         .transform(SpreadsheetParsers::transformConditionRight)
         );
     }
@@ -541,7 +540,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return parser(
                 resolveParsers(value)
                         .apply(VALUE_OR_EXPRESSION_IDENTIFIER)
-                        .orElseThrow(() -> new IllegalStateException("Missing parser " + CharSequences.quoteAndEscape(VALUE_OR_EXPRESSION_IDENTIFIER.value())))
                         .transform(SpreadsheetParsers::transformValueOrExpression)
         );
     }
@@ -596,7 +594,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * Returns a {@link Map} of all parsers.
      */
-    private static Function<EbnfIdentifierName, Optional<Parser<SpreadsheetParserContext>>> resolveParsers(final Parser<SpreadsheetParserContext> value) {
+    private static Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> resolveParsers(final Parser<SpreadsheetParserContext> value) {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined = Maps.sorted();
 
         cellOrCellRangeOrLabel(predefined);
@@ -612,11 +610,12 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         predefined.put(VALUE_IDENTIFIER, value.setToString(VALUE_IDENTIFIER.toString()));
 
         return GRAMMAR_PARSER_TOKEN
-                .combinator(
+                .combinatorForFile(
                         (n) -> Optional.ofNullable(
                                 predefined.get(n)
                         ),
-                        SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.create()
+                        SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.create(),
+                        FILENAME
                 );
     }
 
@@ -627,12 +626,12 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * Processes the grammar and sets all parsers that have static fields.
      */
     static {
-        final Function<EbnfIdentifierName, Optional<Parser<SpreadsheetParserContext>>> parsers = resolveParsers(Parsers.fake());
+        final Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.fake());
         final Function<String, SpreadsheetParser> getParser = (name) ->
                 parser(
                         parsers.apply(
                                 EbnfIdentifierName.with(name)
-                        ).orElseThrow(() -> new IllegalStateException("Missing parser " + CharSequences.quoteAndEscape(name) + " from " + FILENAME))
+                        )
                 );
 
         CELL_OR_CELL_RANGE_OR_LABEL_PARSER = getParser.apply("CELL_OR_CELL_RANGE_OR_LABEL");

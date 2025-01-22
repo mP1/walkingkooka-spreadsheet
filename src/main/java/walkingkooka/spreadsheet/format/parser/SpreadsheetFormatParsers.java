@@ -604,25 +604,17 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
             misc(predefined);
 
-            final Function<EbnfIdentifierName, Optional<Parser<SpreadsheetFormatParserContext>>> optionalParsers = EbnfParserToken.parseFile(
-                            new SpreadsheetFormatParsersGrammarProvider()
-                                    .text(),
-                            filename
-                    ).combinator(
-                            (nn) -> Optional.ofNullable(
-                                    predefined.get(nn)
-                            ),
-                            SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.create()
-                    );
-            final Function<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> parsers = (n) -> optionalParsers.apply(n)
-                    .orElseThrow(
-                            () -> new IllegalStateException(
-                                    "Missing parser " +
-                                            CharSequences.quoteAndEscape(n.value()) +
-                                            " from " +
-                                            CharSequences.quoteAndEscape(filename)
-                            )
-                    );
+            final Function<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> parsers = EbnfParserToken.parseFile(
+                    new SpreadsheetFormatParsersGrammarProvider()
+                            .text(),
+                    filename
+            ).combinatorForFile(
+                    (nn) -> Optional.ofNullable(
+                            predefined.get(nn)
+                    ),
+                    SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.create(),
+                    filename
+            );
 
             COLOR_PARSER = parsers.apply(COLOR_IDENTIFIER);
             CONDITION_PARSER = parsers.apply(EbnfIdentifierName.with("CONDITION"));
