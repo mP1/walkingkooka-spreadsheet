@@ -22,8 +22,6 @@ import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.BigIntegerParserToken;
 import walkingkooka.text.cursor.parser.CharacterParserToken;
@@ -34,9 +32,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.StringParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
-import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
 
 import java.util.Map;
@@ -590,13 +586,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Parsers the grammar and returns the selected parser.
      */
     static {
-        final CharSequence filename = CharSequences.quoteAndEscape(
-                SpreadsheetFormatParsers.class.getSimpleName() + "Grammar.txt"
-        );
+        final String filename = SpreadsheetFormatParsers.class.getSimpleName() + "Grammar.txt";
+
         //noinspection CaughtExceptionImmediatelyRethrown
         try {
-            final TextCursor grammarFile = TextCursors.charSequence(new SpreadsheetFormatParsersGrammarProvider().text());
-
             final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined = Maps.sorted();
 
             patternSeparator(predefined);
@@ -611,19 +604,25 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
             misc(predefined);
 
-            final Function<EbnfIdentifierName, Optional<Parser<SpreadsheetFormatParserContext>>> optionalParsers = EbnfParserToken.grammarParser()
-                    .orFailIfCursorNotEmpty(ParserReporters.basic())
-                    .parse(grammarFile, EbnfParserContexts.basic())
-                    .orElseThrow(() -> new IllegalStateException("Unable to read grammar in " + filename))
-                    .cast(EbnfGrammarParserToken.class)
-                    .combinator(
+            final Function<EbnfIdentifierName, Optional<Parser<SpreadsheetFormatParserContext>>> optionalParsers = EbnfParserToken.parseFile(
+                            new SpreadsheetFormatParsersGrammarProvider()
+                                    .text(),
+                            filename
+                    ).combinator(
                             (nn) -> Optional.ofNullable(
                                     predefined.get(nn)
                             ),
                             SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.create()
                     );
             final Function<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> parsers = (n) -> optionalParsers.apply(n)
-                    .orElseThrow(() -> new IllegalStateException("Missing parser " + CharSequences.quoteAndEscape(n.value()) + " from " + filename));
+                    .orElseThrow(
+                            () -> new IllegalStateException(
+                                    "Missing parser " +
+                                            CharSequences.quoteAndEscape(n.value()) +
+                                            " from " +
+                                            CharSequences.quoteAndEscape(filename)
+                            )
+                    );
 
             COLOR_PARSER = parsers.apply(COLOR_IDENTIFIER);
             CONDITION_PARSER = parsers.apply(EbnfIdentifierName.with("CONDITION"));
