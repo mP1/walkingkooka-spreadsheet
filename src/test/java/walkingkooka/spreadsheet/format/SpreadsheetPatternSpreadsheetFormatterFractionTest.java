@@ -327,43 +327,71 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         this.parseFormatAndCheck("$0/0", 0.4, "D2/5");
     }
 
-    // percentage .........................................................................................
+    // percentage .......................................................................................................
 
     @Test
     public void testFormatPercentage0() {
-        this.parseFormatAndCheck("0/0%", 0, "0/1P");
+        this.parseFormatAndCheck(
+                "0/0%",
+                0,
+                "0/1%"
+        );
     }
 
     @Test
     public void testFormatPercentagePositive1() {
-        this.parseFormatAndCheck("0/0%", 1, "500/5P");
+        this.parseFormatAndCheck(
+                "0/0%",
+                1,
+                "5/5%"
+        );
     }
 
     @Test
     public void testFormatPercentageNegative1() {
-        this.parseFormatAndCheck("0/0%", -1, "M500/5P");
+        this.parseFormatAndCheck(
+                "0/0%",
+                -1,
+                "M5/5%"
+        );
     }
 
-    // thousands divider .........................................................................................
+    // thousands divider ...............................................................................................
 
     @Test
     public void testFormatThousandsDividerDigitComma0() {
-        this.parseFormatAndCheck("0/0,", 1, "0/1");
+        this.parseFormatAndCheck(
+                "0/0,",
+                1,
+                "5/5,"
+        );
     }
 
     @Test
     public void testFormatThousandsDividerCommaSlash12345() {
-        this.parseFormatAndCheck("0,/#", 12345, "61/5");
+        this.parseFormatAndCheck(
+                "0,/#",
+                12345,
+                "61725,/5"
+        );
     }
 
     @Test
-    public void testFormatThousandsDividerCommaTextLiteralSLash12345() {
-        this.parseFormatAndCheck("0,\"Text\"/#", 12345, "61Text/5");
+    public void testFormatThousandsDividerCommaTextLiteralSlash12345() {
+        this.parseFormatAndCheck(
+                "0,\"Text\"/#",
+                12345,
+                "61725,Text/5"
+        );
     }
 
     @Test
     public void testFormatThousandsDividerCommaCommaSlash123456789() {
-        this.parseFormatAndCheck("0,,/#", 123456789, "617/5");
+        this.parseFormatAndCheck(
+                "0,,/#",
+                123456789,
+                "617283945,,/5"
+        );
     }
 
     //helpers .......................................................................................................

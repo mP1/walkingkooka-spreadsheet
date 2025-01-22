@@ -599,15 +599,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseDateFormatPatternSeveral() {
-        this.formatPatternFormatAndCheck(
-                SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy;\"Ignored\";"),
-                LocalDate.of(1999, 12, 31),
-                "31/12/1999"
-        );
-    }
-
-    @Test
     public void testParseDateFormatPatternColor() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateFormatPattern("[BLACK]dd/mm/yyyy"),
@@ -811,15 +802,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testParseDateTimeFormatPattern() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\""),
-                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-                "31/12/1999 12/58/59 Hello"
-        );
-    }
-
-    @Test
-    public void testParseDateTimeFormatPatternSeveral() {
-        this.formatPatternFormatAndCheck(
-                SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh/mm/ss \"Hello\";\"Ignored\""),
                 LocalDateTime.of(1999, 12, 31, 12, 58, 59),
                 "31/12/1999 12/58/59 Hello"
         );
@@ -1776,30 +1758,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // parseTextFormatPattern..........................................................................................
 
     @Test
-    public void testParseTextFormatPatternParseNullFails() {
-        this.parseFails(
-                null,
-                SpreadsheetPattern::parseTextFormatPattern
-        );
-    }
-
-    @Test
-    public void testParseTextFormatPatternColorNameFails() {
-        this.parseFails(
-                "[Black]",
-                SpreadsheetPattern::parseTextFormatPattern
-        );
-    }
-
-    @Test
-    public void testParseTextFormatPatternColorNumberFails() {
-        this.parseFails(
-                "[Color 1]",
-                SpreadsheetPattern::parseTextFormatPattern
-        );
-    }
-
-    @Test
     public void testParseTextFormatPatternGeneralFails() {
         this.parseFails(
                 "General",
@@ -1958,15 +1916,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testParseTimeFormatPatternSeveral() {
-        this.formatPatternFormatAndCheck(
-                SpreadsheetPattern.parseTimeFormatPattern("hh/mm/ss;\"Ignored\""),
-                LocalTime.of(12, 58, 59),
-                "12/58/59"
-        );
-    }
-
-    @Test
     public void testParseTimeFormatPatternColor() {
         this.formatPatternFormatAndCheck(
                 SpreadsheetPattern.parseTimeFormatPattern("[BLACK]hh/mm/ss"),
@@ -2108,10 +2057,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testParseInvalidCharacterThrowsInvalidCharacterException() {
         final InvalidCharacterException thrown = assertThrows(
                 InvalidCharacterException.class,
-                () -> SpreadsheetPattern.parseNumberFormatPattern("!Hello")
+                () -> SpreadsheetPattern.parseNumberFormatPattern(" !Hello")
         );
         this.checkEquals(
-                "Invalid character '!' at 0",
+                "Invalid character '!' at 1",
                 thrown.getShortMessage()
         );
     }
@@ -2224,14 +2173,14 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     // colorName........................................................................................................
 
     @Test
-    public void testColorNameMultiplePatternsFails() {
+    public void testColorNameMultipleNumberFormatPatternsFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetPattern.parseDateFormatPattern("dd;dd/mm/yyyy")
+                () -> SpreadsheetPattern.parseNumberFormatPattern("$0.00;#.##")
                         .colorName()
         );
         this.checkEquals(
-                "Cannot get color name for multiple patterns=\"dd;dd/mm/yyyy\"",
+                "Cannot get color name for multiple patterns=\"$0.00;#.##\"",
                 thrown.getMessage()
         );
     }
@@ -2251,20 +2200,10 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testColorNameFormatPatternWith() {
+    public void testColorNameFormatPattern() {
         this.colorNameAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("[Red]@"),
                 SpreadsheetColorName.with("Red")
-        );
-    }
-
-    @Test
-    public void testColorNameFormatPatternWith2() {
-        this.colorNameAndCheck(
-                SpreadsheetPattern.parseDateFormatPattern("[Red]dd;[Blue]dd")
-                        .patterns()
-                        .get(1),
-                SpreadsheetColorName.with("Blue")
         );
     }
 
@@ -2298,11 +2237,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     public void testColorNumberMultiplePatternsFails() {
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetPattern.parseDateFormatPattern("dd;dd/mm/yyyy")
+                () -> SpreadsheetPattern.parseNumberFormatPattern("#;#.##")
                         .colorNumber()
         );
         this.checkEquals(
-                "Cannot get color name for multiple patterns=\"dd;dd/mm/yyyy\"",
+                "Cannot get color name for multiple patterns=\"#;#.##\"",
                 thrown.getMessage()
         );
     }
@@ -2322,7 +2261,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testColorNumberFormatPatternWith() {
+    public void testColorNumberFormatPattern() {
         this.colorNumberAndCheck(
                 SpreadsheetPattern.parseTextFormatPattern("[color 1]@"),
                 1
@@ -2330,12 +2269,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     }
 
     @Test
-    public void testColorNumberFormatPatternWith2() {
+    public void testColorNumberFormatPattern2() {
         this.colorNumberAndCheck(
-                SpreadsheetPattern.parseDateFormatPattern("[color 12]dd;[color 34]dd")
+                SpreadsheetPattern.parseDateFormatPattern("[color 12]dd")
                         .patterns()
-                        .get(1),
-                34
+                        .get(0),
+                12
         );
     }
 

@@ -36,45 +36,6 @@ import java.util.stream.Collectors;
 public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserTestCase implements PublicStaticHelperTesting<SpreadsheetFormatParsers>,
         ParserTesting2<Parser<SpreadsheetFormatParserContext>, SpreadsheetFormatParserContext> {
 
-    // snakeCaseParserClassSimpleName...................................................................................
-
-    @Test
-    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatFractionSymbolParserToken() {
-        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatFractionSymbolParserToken.class, "FRACTION");
-    }
-
-    @Test
-    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatGreaterThanSymbolParserToken() {
-        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatGreaterThanSymbolParserToken.class, "GREATER_THAN");
-    }
-
-    @Test
-    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatGreaterThanEqualsSymbolParserToken() {
-        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatGreaterThanEqualsSymbolParserToken.class, "GREATER_THAN_EQUALS");
-    }
-
-    @Test
-    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatEscapeParserToken() {
-        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatEscapeParserToken.class, "ESCAPE");
-    }
-
-    @Test
-    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatStarParserToken() {
-        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatStarParserToken.class, "STAR");
-    }
-
-    @Test
-    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatUnderscoreParserToken() {
-        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatUnderscoreParserToken.class, "UNDERSCORE");
-    }
-
-    private void snakeCaseParserClassSimpleNameAndCheck(final Class<? extends SpreadsheetFormatParserToken> type,
-                                                        final String expected) {
-        this.checkEquals(expected,
-                SpreadsheetFormatParsers.snakeCaseParserClassSimpleName(type),
-                () -> "snakeCaseParserClassSimpleName " + type.getSimpleName());
-    }
-
     // color............................................................................................................
 
     @Test
@@ -171,12 +132,12 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testColorNumberWhitespaceBeforeFails() {
-this.colorParserFails(
-        whitespace(),
-        bracketOpenSymbol(),
-        colorNumberFive(),
-        bracketCloseSymbol()
-);
+        this.colorParserFails(
+                whitespace(),
+                bracketOpenSymbol(),
+                colorNumberFive(),
+                bracketCloseSymbol()
+        );
     }
 
     @Test
@@ -223,14 +184,14 @@ this.colorParserFails(
     }
 
     private void colorParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck3(
+        this.parseAndCheck4(
                 SpreadsheetFormatParsers.color(),
                 SpreadsheetFormatParserToken::color,
                 tokens
         );
     }
 
-    private void colorParserFails(final SpreadsheetFormatParserToken...tokens) {
+    private void colorParserFails(final SpreadsheetFormatParserToken... tokens) {
         this.parseFailAndCheck(
                 SpreadsheetFormatParsers.color(),
                 ParserToken.text(
@@ -254,7 +215,7 @@ this.colorParserFails(
     public void testConditionCloseParensFails() {
         this.conditionParseThrows(
                 textLiteralCloseParens(),
-                "Invalid character ')' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character ')' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -262,7 +223,7 @@ this.colorParserFails(
     public void testConditionColonFails() {
         this.conditionParseThrows(
                 textLiteralColon(),
-                "Invalid character ':' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character ':' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -270,7 +231,7 @@ this.colorParserFails(
     public void testConditionDayFails() {
         this.conditionParseThrows(
                 day(),
-                "Invalid character 'D' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'D' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -278,7 +239,7 @@ this.colorParserFails(
     public void testConditionDigitFails() {
         this.conditionParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '#' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -286,7 +247,7 @@ this.colorParserFails(
     public void testConditionDigitZeroFails() {
         this.conditionParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '0' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -294,7 +255,7 @@ this.colorParserFails(
     public void testConditionDigitSpaceFails() {
         this.conditionParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '?' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -302,7 +263,7 @@ this.colorParserFails(
     public void testConditionDollarFails() {
         this.conditionParseThrows(
                 textLiteralDollar(),
-                "Invalid character '$' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '$' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -310,7 +271,7 @@ this.colorParserFails(
     public void testConditionFractionFails() {
         this.conditionParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '/' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -318,7 +279,7 @@ this.colorParserFails(
     public void testConditionHourFails() {
         this.conditionParseThrows(
                 hour(),
-                "Invalid character 'H' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'H' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -326,7 +287,7 @@ this.colorParserFails(
     public void testConditionMinusFails() {
         this.conditionParseThrows(
                 textLiteralMinus(),
-                "Invalid character '-' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '-' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -334,7 +295,7 @@ this.colorParserFails(
     public void testConditionMonthFails() {
         this.conditionParseThrows(
                 month(),
-                "Invalid character 'M' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'M' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -342,7 +303,7 @@ this.colorParserFails(
     public void testConditionOpenParensFails() {
         this.conditionParseThrows(
                 textLiteralOpenParens(),
-                "Invalid character '(' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '(' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -350,7 +311,7 @@ this.colorParserFails(
     public void testConditionPlusFails() {
         this.conditionParseThrows(
                 textLiteralPlus(),
-                "Invalid character '+' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '+' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -358,7 +319,7 @@ this.colorParserFails(
     public void testConditionSecondFails() {
         this.conditionParseThrows(
                 second(),
-                "Invalid character 'S' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'S' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -366,15 +327,15 @@ this.colorParserFails(
     public void testConditionSlashFails() {
         this.conditionParseThrows(
                 textLiteralSlash(),
-                "Invalid character '/' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '/' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
     @Test
-    public void testConditionSpaceFails() {
+    public void testConditionWhitespaceFails() {
         this.conditionParseThrows(
                 whitespace(),
-                "Invalid character ' ' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character ' ' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -382,7 +343,7 @@ this.colorParserFails(
     public void testConditionYearFails() {
         this.conditionParseThrows(
                 year(),
-                "Invalid character 'Y' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character 'Y' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -390,7 +351,7 @@ this.colorParserFails(
     public void testConditionTextPlaceholderFails() {
         this.conditionParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '@' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -398,7 +359,7 @@ this.colorParserFails(
     public void testConditionOpenSquareBracketFails() {
         this.conditionParseThrows(
                 bracketOpenSymbol(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -407,7 +368,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 equalsSymbol(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -416,7 +377,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 greaterThan(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -425,7 +386,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 greaterThanEquals(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -434,7 +395,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 lessThan(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -443,7 +404,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 lessThanEquals(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -452,7 +413,7 @@ this.colorParserFails(
         this.conditionParseThrows(
                 bracketOpenSymbol(),
                 notEquals(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -462,7 +423,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 equalsSymbol(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -472,7 +433,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 greaterThan(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -482,7 +443,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 greaterThanEquals(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -492,7 +453,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 lessThan(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -502,7 +463,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 lessThanEquals(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -512,7 +473,7 @@ this.colorParserFails(
                 bracketOpenSymbol(),
                 notEquals(),
                 conditionNumber(),
-                "Invalid character '[' at (1,1) expected CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN | CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL"
+                "Invalid character '[' at (1,1) expected (('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))"
         );
     }
 
@@ -554,7 +515,7 @@ this.colorParserFails(
 
     private void conditionParseAndCheck(final BiFunction<List<ParserToken>, String, SpreadsheetFormatParserToken> factory,
                                         final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck3(
+        this.parseAndCheck4(
                 SpreadsheetFormatParsers.condition(),
                 factory,
                 tokens
@@ -618,26 +579,12 @@ this.colorParserFails(
     }
 
     @Test
-    public void testDateFormatSeparator() {
-        this.dateFormatParseAndCheck(
-                separator()
-        );
-    }
-
-    @Test
-    public void testDateFormatSeparatorSeparator() {
-        this.dateFormatParseAndCheck(
-                separator(),
-                separator()
-        );
-    }
-
-    @Test
-    public void testDateFormatSeparatorSeparatorSeparator() {
-        this.dateFormatParseAndCheck(
-                separator(),
-                separator(),
-                separator()
+    public void testDateFormatSeparatorFails() {
+        this.dateFormatParseThrows(
+                date(
+                        separator()
+                ),
+                "Invalid character ';' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -714,7 +661,7 @@ this.colorParserFails(
     public void testDateFormatTextDigitFails() {
         this.dateFormatParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -722,7 +669,7 @@ this.colorParserFails(
     public void testDateFormatTextDigitZeroFails() {
         this.dateFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -730,7 +677,7 @@ this.colorParserFails(
     public void testDateFormatTextDigitSpaceFails() {
         this.dateFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -738,7 +685,7 @@ this.colorParserFails(
     public void testDateFormatHourFails() {
         this.dateFormatParseThrows(
                 hour(),
-                "Invalid character 'H' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'H' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -746,7 +693,7 @@ this.colorParserFails(
     public void testDateFormatSecondFails() {
         this.dateFormatParseThrows(
                 second(),
-                "Invalid character 'S' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'S' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -754,7 +701,7 @@ this.colorParserFails(
     public void testDateFormatTextPlaceholderFails() {
         this.dateFormatParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '@' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -834,7 +781,7 @@ this.colorParserFails(
     public void testDateFormatSpace() {
         this.dateFormatParseAndCheck(
                 date(
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -1405,7 +1352,7 @@ this.colorParserFails(
     public void testDateFormatSpaceDayMonthYear() {
         this.dateFormatParseAndCheck(
                 date(
-                        whitespace(),
+                        textLiteralSpace(),
                         day(),
                         month(),
                         year()
@@ -1418,7 +1365,7 @@ this.colorParserFails(
         this.dateFormatParseAndCheck(
                 date(
                         day(),
-                        whitespace(),
+                        textLiteralSpace(),
                         month(),
                         year()
                 )
@@ -1431,7 +1378,7 @@ this.colorParserFails(
                 date(
                         day(),
                         month(),
-                        whitespace(),
+                        textLiteralSpace(),
                         year()
                 )
         );
@@ -1444,7 +1391,7 @@ this.colorParserFails(
                         day(),
                         month(),
                         year(),
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -1460,7 +1407,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '=' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1473,7 +1420,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '=' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1486,7 +1433,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         year()
                 ),
-                "Invalid character '=' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1499,7 +1446,7 @@ this.colorParserFails(
                         year(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1514,7 +1461,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1527,7 +1474,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1540,7 +1487,7 @@ this.colorParserFails(
                         greaterThan(),
                         year()
                 ),
-                "Invalid character '>' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1553,7 +1500,7 @@ this.colorParserFails(
                         year(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1568,7 +1515,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1581,7 +1528,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1594,7 +1541,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         year()
                 ),
-                "Invalid character '>' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1607,7 +1554,7 @@ this.colorParserFails(
                         year(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1622,7 +1569,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1635,7 +1582,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1648,7 +1595,7 @@ this.colorParserFails(
                         lessThan(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1661,7 +1608,7 @@ this.colorParserFails(
                         year(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1674,7 +1621,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1687,7 +1634,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1700,7 +1647,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1713,7 +1660,7 @@ this.colorParserFails(
                         year(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1728,7 +1675,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1741,7 +1688,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1754,7 +1701,7 @@ this.colorParserFails(
                         notEquals(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1767,7 +1714,7 @@ this.colorParserFails(
                         year(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1836,62 +1783,68 @@ this.colorParserFails(
     // condition
 
     @Test
-    public void testDateFormatConditionEqualsDay() {
-        this.dateFormatParseAndCheck(
+    public void testDateFormatConditionEqualsDayFails() {
+        this.dateFormatParseThrows(
                 conditionEquals(),
                 date(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateFormatConditionGreaterThanDay() {
-        this.dateFormatParseAndCheck(
+    public void testDateFormatConditionGreaterThanDayFails() {
+        this.dateFormatParseThrows(
                 conditionGreaterThan(),
                 date(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateFormatConditionGreaterThanEqualsDay() {
-        this.dateFormatParseAndCheck(
+    public void testDateFormatConditionGreaterThanEqualsDayFails() {
+        this.dateFormatParseThrows(
                 conditionGreaterThanEquals(),
                 date(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateFormatConditionLessThanDay() {
-        this.dateFormatParseAndCheck(
+    public void testDateFormatConditionLessThanDayFails() {
+        this.dateFormatParseThrows(
                 conditionLessThan(),
                 date(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateFormatConditionLessThanEqualsDay() {
-        this.dateFormatParseAndCheck(
+    public void testDateFormatConditionLessThanEqualsDayFails() {
+        this.dateFormatParseThrows(
                 conditionLessThanEquals(),
                 date(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateFormatConditionNotEqualsDay() {
-        this.dateFormatParseAndCheck(
+    public void testDateFormatConditionNotEqualsDayFails() {
+        this.dateFormatParseThrows(
                 conditionNotEquals(),
                 date(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1902,7 +1855,7 @@ this.colorParserFails(
                         day(),
                         conditionEquals()
                 ),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1913,7 +1866,7 @@ this.colorParserFails(
                         day(),
                         conditionGreaterThan()
                 ),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1924,7 +1877,7 @@ this.colorParserFails(
                         day(),
                         conditionGreaterThanEquals()
                 ),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1935,7 +1888,7 @@ this.colorParserFails(
                         day(),
                         conditionLessThan()
                 ),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1946,7 +1899,7 @@ this.colorParserFails(
                         day(),
                         conditionLessThanEquals()
                 ),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -1957,88 +1910,70 @@ this.colorParserFails(
                         day(),
                         conditionNotEquals()
                 ),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATE_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateFormatPatternSeparator() {
-        this.dateFormatParseAndCheck(
+    public void testDateFormatPatternSeparatorFails() {
+        this.dateFormatParseThrows(
                 date(
                         year(),
                         month(),
                         day()
-                ),
-                separator()
-        );
-    }
-
-    @Test
-    public void testDateFormatPatternSeparatorPattern() {
-        this.dateFormatParseAndCheck(
-                date(
-                        day(),
-                        month(),
-                        year()
                 ),
                 separator(),
-                date(
-                        year(),
-                        month(),
-                        day()
-                )
+                "Invalid character ';' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateFormatColorPatternSeparatorPattern() {
-        this.dateFormatParseAndCheck(
-                date(
-                        color(),
-                        day(),
-                        month(),
-                        year()
+    public void testDateFormatPatternSeparatorPatternFails() {
+        this.dateFormatParseThrows(
+                Lists.of(
+                        date(
+                                day(),
+                                month(),
+                                year()
+                        ),
+                        separator(),
+                        date(
+                                year(),
+                                month(),
+                                day()
+                        )
                 ),
-                separator(),
-                date(
-                        year(),
-                        month(),
-                        day()
-                )
+                "Invalid character ';' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateFormatConditionPatternSeparatorPattern() {
-        this.dateFormatParseAndCheck(
-                conditionEquals(),
-                date(
-                        day(),
-                        month(),
-                        year()
+    public void testDateFormatConditionPatternSeparatorPatternFails() {
+        this.dateFormatParseThrows(
+                Lists.of(
+                        conditionEquals(),
+                        date(
+                                day(),
+                                month(),
+                                year()
+                        ),
+                        separator(),
+                        date(
+                                year(),
+                                month(),
+                                day()
+                        )
                 ),
-                separator(),
-                date(
-                        year(),
-                        month(),
-                        day()
-                )
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     // date format helpers..............................................................................................
 
-    private void dateFormatParseAndCheck(final SpreadsheetFormatDateParserToken... tokens) {
+    private void dateFormatParseAndCheck(final SpreadsheetFormatParserToken token) {
         this.parseAndCheck2(
                 SpreadsheetFormatParsers.dateFormat(),
-                tokens
-        );
-    }
-
-    private void dateFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(
-                SpreadsheetFormatParsers.dateFormat(),
-                tokens
+                token
         );
     }
 
@@ -2046,6 +1981,18 @@ this.colorParserFails(
                                        final String expected) {
         this.dateFormatParseThrows(
                 Lists.of(token),
+                expected
+        );
+    }
+
+    private void dateFormatParseThrows(final SpreadsheetFormatParserToken token,
+                                       final SpreadsheetFormatParserToken token2,
+                                       final String expected) {
+        this.dateFormatParseThrows(
+                Lists.of(
+                        token,
+                        token2
+                ),
                 expected
         );
     }
@@ -2135,7 +2082,7 @@ this.colorParserFails(
                         color(),
                         escape()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2143,7 +2090,7 @@ this.colorParserFails(
     public void testDateParseTextDigitFails() {
         this.dateParseParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2151,7 +2098,7 @@ this.colorParserFails(
     public void testDateParseTextDigitZeroFails() {
         this.dateParseParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2159,7 +2106,7 @@ this.colorParserFails(
     public void testDateParseTextDigitSpaceFails() {
         this.dateParseParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2167,7 +2114,7 @@ this.colorParserFails(
     public void testDateParseHourFails() {
         this.dateParseParseThrows(
                 hour(),
-                "Invalid character 'H' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'H' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2175,7 +2122,7 @@ this.colorParserFails(
     public void testDateParseSecondFails() {
         this.dateParseParseThrows(
                 second(),
-                "Invalid character 'S' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'S' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2183,7 +2130,7 @@ this.colorParserFails(
     public void testDateParseTextPlaceholderFails() {
         this.dateParseParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '@' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2263,7 +2210,7 @@ this.colorParserFails(
     public void testDateParseSpace() {
         this.dateParseParseAndCheck(
                 date(
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -2834,7 +2781,7 @@ this.colorParserFails(
     public void testDateParseSpaceDayMonthYear() {
         this.dateParseParseAndCheck(
                 date(
-                        whitespace(),
+                        textLiteralSpace(),
                         day(),
                         month(),
                         year()
@@ -2847,7 +2794,7 @@ this.colorParserFails(
         this.dateParseParseAndCheck(
                 date(
                         day(),
-                        whitespace(),
+                        textLiteralSpace(),
                         month(),
                         year()
                 )
@@ -2860,7 +2807,7 @@ this.colorParserFails(
                 date(
                         day(),
                         month(),
-                        whitespace(),
+                        textLiteralSpace(),
                         year()
                 )
         );
@@ -2873,7 +2820,7 @@ this.colorParserFails(
                         day(),
                         month(),
                         year(),
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -2889,7 +2836,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '=' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2902,7 +2849,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '=' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2915,7 +2862,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         year()
                 ),
-                "Invalid character '=' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2928,7 +2875,7 @@ this.colorParserFails(
                         year(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2943,7 +2890,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2956,7 +2903,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2969,7 +2916,7 @@ this.colorParserFails(
                         greaterThan(),
                         year()
                 ),
-                "Invalid character '>' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2982,7 +2929,7 @@ this.colorParserFails(
                         year(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -2997,7 +2944,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3010,7 +2957,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '>' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3023,7 +2970,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         year()
                 ),
-                "Invalid character '>' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3036,7 +2983,7 @@ this.colorParserFails(
                         year(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3051,7 +2998,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3064,7 +3011,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3077,7 +3024,7 @@ this.colorParserFails(
                         lessThan(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3090,7 +3037,7 @@ this.colorParserFails(
                         year(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3103,7 +3050,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3116,7 +3063,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3129,7 +3076,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3142,7 +3089,7 @@ this.colorParserFails(
                         year(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3157,7 +3104,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3170,7 +3117,7 @@ this.colorParserFails(
                         month(),
                         year()
                 ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3183,7 +3130,7 @@ this.colorParserFails(
                         notEquals(),
                         year()
                 ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3196,7 +3143,7 @@ this.colorParserFails(
                         year(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3209,7 +3156,7 @@ this.colorParserFails(
                         color(),
                         day()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3220,7 +3167,7 @@ this.colorParserFails(
                         color(),
                         month()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3231,7 +3178,7 @@ this.colorParserFails(
                         color(),
                         year()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3242,7 +3189,7 @@ this.colorParserFails(
                         day(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3253,7 +3200,7 @@ this.colorParserFails(
                         month(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3264,7 +3211,7 @@ this.colorParserFails(
                         year(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3275,7 +3222,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionEquals(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3284,7 +3231,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionGreaterThan(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3293,7 +3240,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionGreaterThanEquals(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3302,7 +3249,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionLessThan(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3311,7 +3258,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionLessThanEquals(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3320,7 +3267,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 conditionNotEquals(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3329,7 +3276,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3338,7 +3285,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3347,7 +3294,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3356,7 +3303,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3365,7 +3312,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3374,7 +3321,7 @@ this.colorParserFails(
         this.dateParseParseThrows(
                 day(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -3424,14 +3371,14 @@ this.colorParserFails(
                                 day()
                         )
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATE, [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
     // date parse helpers...............................................................................................
 
     private void dateParseParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(
+        this.parseAndCheck3(
                 SpreadsheetFormatParsers.dateParse(),
                 tokens
         );
@@ -3505,7 +3452,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 day(),
-                "Invalid character 'D' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'D' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3514,7 +3461,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 hour(),
-                "Invalid character 'H' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'H' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3523,7 +3470,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 minute(),
-                "Invalid character 'M' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'M' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3532,7 +3479,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 month(),
-                "Invalid character 'M' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'M' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3541,7 +3488,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 second(),
-                "Invalid character 'S' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'S' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3549,7 +3496,7 @@ this.colorParserFails(
     public void testNumberFormatStarFails() {
         this.numberFormatParseThrows(
                 star(),
-                "Invalid character '*' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '*' at (1,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3558,7 +3505,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 textPlaceholder(),
-                "Invalid character '@' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '@' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3566,7 +3513,7 @@ this.colorParserFails(
     public void testNumberFormatUnderscoreFails() {
         this.numberFormatParseThrows(
                 underscore(),
-                "Invalid character '_' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '_' at (1,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3575,7 +3522,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 year(),
-                "Invalid character 'Y' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character 'Y' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3583,7 +3530,7 @@ this.colorParserFails(
     public void testNumberFormatSlashFails() {
         this.numberFormatParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '/' at (1,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3592,7 +3539,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digitSpace(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '/' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3601,7 +3548,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digitZero(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '/' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3610,7 +3557,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '/' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -3773,7 +3720,7 @@ this.colorParserFails(
     public void testNumberFormatSpace() {
         this.numberFormatParseAndCheck(
                 number(
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -3959,7 +3906,7 @@ this.colorParserFails(
         );
     }
 
-    // currency
+    // Currency
 
     @Test
     public void testNumberFormatCurrencyDigitSlashDigit() {
@@ -3999,7 +3946,7 @@ this.colorParserFails(
     }
 
     @Test
-    public void testNumberFormatDigitSlashDigitCurrency() {
+    public void testNumberFormatDigitSlashDigitcurrency() {
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
@@ -4475,7 +4422,7 @@ this.colorParserFails(
     public void testNumberFormatSpaceDigitSlashDigit() {
         this.numberFormatParseAndCheck(
                 number(
-                        whitespace(),
+                        textLiteralSpace(),
                         digit(),
                         decimalPoint(),
                         digit()
@@ -4488,7 +4435,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        whitespace(),
+                        textLiteralSpace(),
                         decimalPoint(),
                         digit()
                 )
@@ -4499,10 +4446,10 @@ this.colorParserFails(
     public void testNumberFormatDigitSlashSpaceDigit() {
         this.numberFormatParseAndCheck(
                 number(
-                        whitespace(),
+                        textLiteralSpace(),
                         digit(),
                         decimalPoint(),
-                        whitespace(),
+                        textLiteralSpace(),
                         digit()
                 )
         );
@@ -4515,7 +4462,7 @@ this.colorParserFails(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -4523,337 +4470,313 @@ this.colorParserFails(
     // equals
 
     @Test
-    public void testNumberFormatEqualsDigitDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
-                        equalsSymbol(),
+    public void testNumberFormatEqualsDigitDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        textLiteral("="),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '=' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitEqualsDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitEqualsDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
-                        equalsSymbol(),
+                        textLiteral("="),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '=' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        equalsSymbol(),
+                        textLiteral("="),
                         digit()
-                ),
-                "Invalid character '=' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointDigitEqualsFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointDigitEquals() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        equalsSymbol()
-                ),
-                "Invalid character '=' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                        textLiteral("=")
+                )
         );
     }
 
-    // greater than....................................................................................................
+    // greater than.....................................................................................................
 
     @Test
-    public void testNumberFormatGreaterThanDigitDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
-                        greaterThan(),
+    public void testNumberFormatGreaterThanDigitDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        textLiteral(">"),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '>' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitGreaterThanDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitGreaterThanDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
-                        greaterThan(),
+                        textLiteral(">"),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '>' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointGreaterThanDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointGreaterThanDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        greaterThan(),
+                        textLiteral(">"),
                         digit()
-                ),
-                "Invalid character '>' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointDigitGreaterThanFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointDigitGreaterThan() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        greaterThan()
-                ),
-                "Invalid character '>' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                        textLiteral(">")
+                )
         );
     }
 
-    // greaterThanEquals
+    // greaterThanEquals................................................................................................
 
     @Test
-    public void testNumberFormatGreaterThanEqualsDigitDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
-                        greaterThanEquals(),
+    public void testNumberFormatGreaterThanEqualsDigitDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        textLiteral(">="),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '>' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitGreaterThanEqualsDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitGreaterThanEqualsDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
-                        greaterThanEquals(),
+                        textLiteral(">="),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '>' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointGreaterThanEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointGreaterThanEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        greaterThanEquals(),
+                        textLiteral(">="),
                         digit()
-                ),
-                "Invalid character '>' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointDigitGreaterThanEqualsFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointDigitGreaterThanEquals() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        greaterThanEquals()
-                ),
-                "Invalid character '>' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                        textLiteral(">=")
+                )
         );
     }
 
     // lessThan
 
     @Test
-    public void testNumberFormatLessThanDigitDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
-                        lessThan(),
+    public void testNumberFormatLessThanDigitDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        textLiteral("<"),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitLessThanDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitLessThanDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
-                        lessThan(),
+                        textLiteral("<"),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointLessThanDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointLessThanDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        lessThan(),
+                        textLiteral("<"),
                         digit()
-                ),
-                "Invalid character '<' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointDigitLessThanFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointDigitLessThan() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        lessThan()
-                ),
-                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                        textLiteral("<")
+                )
         );
     }
 
     // lessThanEquals
 
     @Test
-    public void testNumberFormatLessThanEqualsDigitDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
-                        lessThanEquals(),
+    public void testNumberFormatLessThanEqualsDigitDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        textLiteral("<="),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitLessThanEqualsDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitLessThanEqualsDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
-                        lessThanEquals(),
+                        textLiteral("<="),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
     public void testNumberFormatDigitDecimalPointLessThanEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        lessThanEquals(),
+                        textLiteral("<="),
                         digit()
-                ),
-                "Invalid character '<' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointDigitLessThanEqualsFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointDigitLessThanEquals() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        lessThanEquals()
-                ),
-                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                        textLiteral("<=")
+                )
         );
     }
 
     // notEquals
 
     @Test
-    public void testNumberFormatNotEqualsDigitDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
-                        notEquals(),
+    public void testNumberFormatNotEqualsDigitDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        textLiteral("<>"),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (1,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitNotEqualsDecimalPointDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitNotEqualsDecimalPointDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
-                        notEquals(),
+                        textLiteral("<>"),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointNotEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointNotEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        notEquals(),
+                        textLiteral("<>"),
                         digit()
-                ),
-                "Invalid character '<' at (3,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitDecimalPointDigitNotEqualsFails() {
-        this.numberFormatParseThrows(
-                Lists.of(
+    public void testNumberFormatDigitDecimalPointDigitNotEquals() {
+        this.numberFormatParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        notEquals()
-                ),
-                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                        textLiteral("<>")
+                )
         );
     }
 
     // exponent.............................................................................
 
-    // currency
+    // Currency
 
     @Test
     public void testNumberFormatDigitExponentCurrencyDigit() {
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(currency())
+                        exponentPlusTokenSpaceZeroDigit(currency())
                 )
         );
     }
@@ -4863,17 +4786,17 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(currency())
+                        exponentPlusDigitSpaceTokenZeroDigit(currency())
                 )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitCurrency() {
+    public void testNumberFormatDigitExponentDigitcurrency() {
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(currency())
+                        exponentPlusSpaceZeroDigitToken(currency())
                 )
         );
     }
@@ -4887,7 +4810,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(escape())
+                        exponentPlusTokenSpaceZeroDigit(escape())
                 )
         );
     }
@@ -4897,7 +4820,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(escape())
+                        exponentPlusDigitSpaceTokenZeroDigit(escape())
                 )
         );
     }
@@ -4907,7 +4830,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(escape())
+                        exponentPlusSpaceZeroDigitToken(escape())
                 )
         );
     }
@@ -4919,7 +4842,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(quotedText())
+                        exponentPlusTokenSpaceZeroDigit(quotedText())
                 )
         );
     }
@@ -4929,7 +4852,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(quotedText())
+                        exponentPlusDigitSpaceTokenZeroDigit(quotedText())
                 )
         );
     }
@@ -4939,7 +4862,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(quotedText())
+                        exponentPlusSpaceZeroDigitToken(quotedText())
                 )
         );
     }
@@ -4951,7 +4874,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralCloseParens())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralCloseParens())
                 )
         );
     }
@@ -4961,7 +4884,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralCloseParens())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralCloseParens())
                 )
         );
     }
@@ -4971,7 +4894,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralCloseParens())
+                        exponentPlusSpaceZeroDigitToken(textLiteralCloseParens())
                 )
         );
     }
@@ -4983,7 +4906,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralColon())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralColon())
                 )
         );
     }
@@ -4993,7 +4916,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralColon())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralColon())
                 )
         );
     }
@@ -5003,7 +4926,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralColon())
+                        exponentPlusSpaceZeroDigitToken(textLiteralColon())
                 )
         );
     }
@@ -5015,7 +4938,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralMinus())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralMinus())
                 )
         );
     }
@@ -5025,7 +4948,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralMinus())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralMinus())
                 )
         );
     }
@@ -5035,7 +4958,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralMinus())
+                        exponentPlusSpaceZeroDigitToken(textLiteralMinus())
                 )
         );
     }
@@ -5047,7 +4970,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralOpenParens())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralOpenParens())
                 )
         );
     }
@@ -5057,7 +4980,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralOpenParens())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralOpenParens())
                 )
         );
     }
@@ -5067,7 +4990,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralOpenParens())
+                        exponentPlusSpaceZeroDigitToken(textLiteralOpenParens())
                 )
         );
     }
@@ -5079,7 +5002,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralPlus())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralPlus())
                 )
         );
     }
@@ -5089,7 +5012,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralPlus())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralPlus())
                 )
         );
     }
@@ -5099,7 +5022,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralPlus())
+                        exponentPlusSpaceZeroDigitToken(textLiteralPlus())
                 )
         );
     }
@@ -5111,7 +5034,9 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(whitespace())
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteralSpace()
+                        )
                 )
         );
     }
@@ -5121,7 +5046,9 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(whitespace())
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteralSpace()
+                        )
                 )
         );
     }
@@ -5131,182 +5058,200 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(whitespace())
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteralSpace()
+                        )
                 )
         );
     }
 
-    // equals
+    // equals...........................................................................................................
 
     @Test
-    public void testNumberFormatDigitExponentEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent1(equalsSymbol()),
-                "Invalid character '=' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral("=")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent2(equalsSymbol()),
-                "Invalid character '=' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentDigitEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral("=")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitEqualsFails() {
-        this.numberFormatParseThrows(
+    public void testNumberFormatDigitExponentDigitEquals() {
+        this.numberFormatParseAndCheck(
+                number(
                 digit(),
-                exponent3(equalsSymbol()),
-                "Invalid character '=' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                    exponentPlusSpaceZeroDigitToken(
+                            textLiteral("=")
+                    )
+                )
         );
     }
 
     // greaterThan
 
     @Test
-    public void testNumberFormatDigitExponentGreaterThanDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent1(greaterThan()),
-                "Invalid character '>' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentGreaterThanDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral(">")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitGreaterThanDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent2(greaterThan()),
-                "Invalid character '>' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentDigitGreaterThanDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral(">")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitGreaterThanFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent3(greaterThan()),
-                "Invalid character '>' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
-        );
-    }
-
-    // greaterThanEquals
-
-    @Test
-    public void testNumberFormatDigitExponentGreaterThanEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent1(greaterThanEquals()),
-                "Invalid character '>' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
-        );
-    }
-
-    @Test
-    public void testNumberFormatDigitExponentDigitGreaterThanEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent2(greaterThanEquals()),
-                "Invalid character '>' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
-        );
-    }
-
-    @Test
-    public void testNumberFormatDigitExponentDigitGreaterThanEqualsFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent3(greaterThanEquals()),
-                "Invalid character '>' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
-        );
-    }
-
-    // lessThan
-
-    @Test
-    public void testNumberFormatDigitExponentLessThanDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent1(lessThan()),
-                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
-        );
-    }
-
-    @Test
-    public void testNumberFormatDigitExponentDigitLessThanDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent2(lessThan()),
-                "Invalid character '<' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
-        );
-    }
-
-    @Test
-    public void testNumberFormatDigitExponentDigitLessThanFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent3(lessThan()),
-                "Invalid character '<' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentDigitGreaterThan() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral(">")
+                        )
+                )
         );
     }
 
     // lessThanEquals
 
     @Test
-    public void testNumberFormatDigitExponentLessThanEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent1(lessThanEquals()),
-                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentLessThanEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral("<=")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitLessThanEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent2(lessThanEquals()),
-                "Invalid character '<' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentDigitLessThanEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral("<=")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitLessThanEqualsFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent3(lessThanEquals()),
-                "Invalid character '<' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentDigitLessThanEquals() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral("<=")
+                        )
+                )
+        );
+    }
+
+    // lessThan
+
+    @Test
+    public void testNumberFormatDigitExponentLessThanDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral("<")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNumberFormatDigitExponentDigitLessThanDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral("<")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNumberFormatDigitExponentDigitLessThan() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral("<")
+                        )
+                )
         );
     }
 
     // notEquals
 
     @Test
-    public void testNumberFormatDigitExponentNotEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent1(notEquals()),
-                "Invalid character '<' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentNotEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral("<>")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitNotEqualsDigitFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent2(notEquals()),
-                "Invalid character '<' at (5,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentDigitNotEqualsDigit() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral("<>")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberFormatDigitExponentDigitNotEqualsFails() {
-        this.numberFormatParseThrows(
-                digit(),
-                exponent3(notEquals()),
-                "Invalid character '<' at (7,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+    public void testNumberFormatDigitExponentDigitNotEquals() {
+        this.numberFormatParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral("<>")
+                        )
+                )
         );
     }
 
@@ -5360,7 +5305,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent1(color())
+                        exponentPlusTokenSpaceZeroDigit(color())
                 )
         );
     }
@@ -5370,7 +5315,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent2(color())
+                        exponentPlusDigitSpaceTokenZeroDigit(color())
                 )
         );
     }
@@ -5380,7 +5325,7 @@ this.colorParserFails(
         this.numberFormatParseAndCheck(
                 number(
                         digit(),
-                        exponent3(color())
+                        exponentPlusSpaceZeroDigitToken(color())
                 )
         );
     }
@@ -5452,7 +5397,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5461,7 +5406,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5470,7 +5415,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5479,7 +5424,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5488,7 +5433,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5497,7 +5442,7 @@ this.colorParserFails(
         this.numberFormatParseThrows(
                 digit(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '[' at (2,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5550,7 +5495,7 @@ this.colorParserFails(
                         ),
                         separator()
                 ),
-                "Invalid character ';' at (4,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character ';' at (4,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5625,20 +5570,20 @@ this.colorParserFails(
     public void testNumberFormatPatternSeparatorPatternSeparatorTextPatternSeparatorFails() {
         this.numberFormatParseThrows(
                 Lists.of(
-                number(
-                        digit()
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        text(
+                                textPlaceholder()
+                        ),
+                        separator()
                 ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                text(
-                        textPlaceholder()
-                ),
-                separator()
-                ),
-                "Invalid character ';' at (6,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character ';' at (6,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5667,24 +5612,24 @@ this.colorParserFails(
     public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorTextPatternSeparatorFails() {
         this.numberFormatParseThrows(
                 Lists.of(
-                number(
-                        digit()
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        text(
+                                textPlaceholder()
+                        ),
+                        separator()
                 ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                text(
-                        textPlaceholder()
-                ),
-                separator()
-                ),
-                "Invalid character ';' at (8,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character ';' at (8,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
@@ -5692,31 +5637,31 @@ this.colorParserFails(
     public void testNumberFormatPatternSeparatorPatternSeparatorPatternSeparatorConditionPatternFails() {
         this.numberFormatParseThrows(
                 Lists.of(
-                number(
-                        digit()
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        number(
+                                digit()
+                        ),
+                        separator(),
+                        conditionEquals(),
+                        text(
+                                textPlaceholder()
+                        )
                 ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                number(
-                        digit()
-                ),
-                separator(),
-                conditionEquals(),
-                text(
-                        textPlaceholder()
-                )
-                ),
-                "Invalid character '@' at (18,1) expected NUMBER_NUMBER_NUMBER_TEXT | NUMBER_NUMBER_TEXT | NUMBER_TEXT | CONDITION_GENERAL_OR_NUMBER_COLOR"
+                "Invalid character '@' at (18,1) expected (([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})])], ';', [(([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]) | (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}))]) | ([(('[', [WHITESPACE], '=', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<>\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \">=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '>', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], \"<=\", [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']') | ('[', [WHITESPACE], '<', [WHITESPACE], CONDITION_NUMBER, [WHITESPACE], ']'))], [(([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]))})]))"
         );
     }
 
     // number helpers...................................................................................................
 
     private void numberFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(
+        this.parseAndCheck3(
                 SpreadsheetFormatParsers.numberFormat(),
                 tokens
         );
@@ -5766,7 +5711,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 day(),
-                "Invalid character 'D' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'D' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5775,7 +5720,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 hour(),
-                "Invalid character 'H' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'H' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5784,7 +5729,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 month(),
-                "Invalid character 'M' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'M' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5793,7 +5738,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 second(),
-                "Invalid character 'S' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'S' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5801,7 +5746,7 @@ this.colorParserFails(
     public void testNumberParseStarFails() {
         this.numberParseParseThrows(
                 star(),
-                "Invalid character '*' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '*' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5810,7 +5755,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 textPlaceholder(),
-                "Invalid character '@' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '@' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5818,7 +5763,7 @@ this.colorParserFails(
     public void testNumberParseUnderscoreFails() {
         this.numberParseParseThrows(
                 underscore(),
-                "Invalid character '_' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '_' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5827,7 +5772,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 year(),
-                "Invalid character 'Y' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'Y' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5835,7 +5780,7 @@ this.colorParserFails(
     public void testNumberParseSlashFails() {
         this.numberParseParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '/' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5844,7 +5789,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digitSpace(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '/' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5853,7 +5798,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digitZero(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '/' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5862,7 +5807,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 fractionSymbol(),
-                "Invalid character '/' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '/' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5922,7 +5867,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionEquals(),
                 general(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5931,7 +5876,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionGreaterThan(),
                 general(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5940,7 +5885,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionGreaterThanEquals(),
                 general(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5949,7 +5894,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionLessThan(),
                 general(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5958,7 +5903,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionLessThanEquals(),
                 general(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -5967,7 +5912,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionNotEquals(),
                 general(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -6031,7 +5976,7 @@ this.colorParserFails(
     public void testNumberParseSpace() {
         this.numberParseParseAndCheck(
                 number(
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -6217,7 +6162,7 @@ this.colorParserFails(
         );
     }
 
-    // currency
+    // Currency
 
     @Test
     public void testNumberParseCurrencyDigitSlashDigit() {
@@ -6257,7 +6202,7 @@ this.colorParserFails(
     }
 
     @Test
-    public void testNumberParseDigitSlashDigitCurrency() {
+    public void testNumberParseDigitSlashDigitcurrency() {
         this.numberParseParseAndCheck(
                 number(
                         digit(),
@@ -6733,7 +6678,7 @@ this.colorParserFails(
     public void testNumberParseSpaceDigitSlashDigit() {
         this.numberParseParseAndCheck(
                 number(
-                        whitespace(),
+                        textLiteralSpace(),
                         digit(),
                         decimalPoint(),
                         digit()
@@ -6746,7 +6691,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        whitespace(),
+                        textLiteralSpace(),
                         decimalPoint(),
                         digit()
                 )
@@ -6757,10 +6702,10 @@ this.colorParserFails(
     public void testNumberParseDigitSlashSpaceDigit() {
         this.numberParseParseAndCheck(
                 number(
-                        whitespace(),
+                        textLiteralSpace(),
                         digit(),
                         decimalPoint(),
-                        whitespace(),
+                        textLiteralSpace(),
                         digit()
                 )
         );
@@ -6773,345 +6718,321 @@ this.colorParserFails(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
 
-    // equals
+    // equals...........................................................................................................
 
     @Test
-    public void testNumberParseEqualsDigitDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
-                        equalsSymbol(),
+    public void testNumberParseEqualsDigitDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        textLiteral("="),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '=' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitEqualsDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitEqualsDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
-                        equalsSymbol(),
+                        textLiteral("="),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '=' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointEqualsDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        equalsSymbol(),
+                        textLiteral("="),
                         digit()
-                ),
-                "Invalid character '=' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointDigitEqualsFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointDigitEquals() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        equalsSymbol()
-                ),
-                "Invalid character '=' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                        textLiteral("=")
+                )
         );
     }
 
-    // greater than....................................................................................................
+    // greaterThan......................................................................................................
 
     @Test
-    public void testNumberParseGreaterThanDigitDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
-                        greaterThan(),
+    public void testNumberParseGreaterThanDigitDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        textLiteral(">"),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '>' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitGreaterThanDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitGreaterThanDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
-                        greaterThan(),
+                        textLiteral(">"),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '>' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointGreaterThanDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointGreaterThanDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        greaterThan(),
+                        textLiteral(">"),
                         digit()
-                ),
-                "Invalid character '>' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointDigitGreaterThanFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointDigitGreaterThan() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        greaterThan()
-                ),
-                "Invalid character '>' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                        textLiteral(">")
+                )
         );
     }
 
-    // greaterThanEquals
+    // greaterThanEquals................................................................................................
 
     @Test
-    public void testNumberParseGreaterThanEqualsDigitDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
-                        greaterThanEquals(),
+    public void testNumberParseGreaterThanEqualsDigitDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        textLiteral(">="),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '>' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitGreaterThanEqualsDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitGreaterThanEqualsDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
-                        greaterThanEquals(),
+                        textLiteral(">="),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '>' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointGreaterThanEqualsDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointGreaterThanEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        greaterThanEquals(),
+                        textLiteral(">="),
                         digit()
-                ),
-                "Invalid character '>' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointDigitGreaterThanEqualsFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointDigitGreaterThanEquals() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        greaterThanEquals()
-                ),
-                "Invalid character '>' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                        textLiteral(">=")
+                )
         );
     }
 
-    // lessThan
+    // lessThan.........................................................................................................
 
     @Test
-    public void testNumberParseLessThanDigitDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
-                        lessThan(),
+    public void testNumberParseLessThanDigitDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        textLiteral("<"),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitLessThanDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitLessThanDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
-                        lessThan(),
+                        textLiteral("<"),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointLessThanDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointLessThanDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        lessThan(),
+                        textLiteral("<"),
                         digit()
-                ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointDigitLessThanFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointDigitLessThan() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        lessThan()
-                ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                        textLiteral("<")
+                )
         );
     }
 
-    // lessThanEquals
+    // lessThanEquals...................................................................................................
 
     @Test
-    public void testNumberParseLessThanEqualsDigitDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
-                        lessThanEquals(),
+    public void testNumberParseLessThanEqualsDigitDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        textLiteral("<="),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitLessThanEqualsDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitLessThanEqualsDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
-                        lessThanEquals(),
+                        textLiteral("<="),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointLessThanEqualsDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointLessThanEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        lessThanEquals(),
+                        textLiteral("<="),
                         digit()
-                ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointDigitLessThanEqualsFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointDigitLessThanEquals() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        lessThanEquals()
-                ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                        textLiteral("<=")
+                )
         );
     }
 
-    // notEquals
+    // notEquals........................................................................................................
 
     @Test
-    public void testNumberParseNotEqualsDigitDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
-                        notEquals(),
+    public void testNumberParseNotEqualsDigitDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        textLiteral("<>"),
                         digit(),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitNotEqualsDecimalPointDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitNotEqualsDecimalPointDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
-                        notEquals(),
+                        textLiteral("<>"),
                         decimalPoint(),
                         digit()
-                ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointNotEqualsDigitFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointNotEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
-                        notEquals(),
+                        textLiteral("<>"),
                         digit()
-                ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitDecimalPointDigitNotEqualsFails() {
-        this.numberParseParseThrows(
-                Lists.of(
+    public void testNumberParseDigitDecimalPointDigitNotEquals() {
+        this.numberParseParseAndCheck(
+                number(
                         digit(),
                         decimalPoint(),
                         digit(),
-                        notEquals()
-                ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                        textLiteral("<>")
+                )
         );
     }
 
     // exponent.............................................................................
 
-    // currency
+    // Currency
 
     @Test
     public void testNumberParseDigitExponentCurrencyDigit() {
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(currency())
+                        exponentPlusTokenSpaceZeroDigit(currency())
                 )
         );
     }
@@ -7121,17 +7042,17 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(currency())
+                        exponentPlusDigitSpaceTokenZeroDigit(currency())
                 )
         );
     }
 
     @Test
-    public void testNumberParseDigitExponentDigitCurrency() {
+    public void testNumberParseDigitExponentDigitcurrency() {
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(currency())
+                        exponentPlusSpaceZeroDigitToken(currency())
                 )
         );
     }
@@ -7145,7 +7066,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(escape())
+                        exponentPlusTokenSpaceZeroDigit(escape())
                 )
         );
     }
@@ -7155,7 +7076,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(escape())
+                        exponentPlusDigitSpaceTokenZeroDigit(escape())
                 )
         );
     }
@@ -7165,7 +7086,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(escape())
+                        exponentPlusSpaceZeroDigitToken(escape())
                 )
         );
     }
@@ -7177,7 +7098,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(quotedText())
+                        exponentPlusTokenSpaceZeroDigit(quotedText())
                 )
         );
     }
@@ -7187,7 +7108,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(quotedText())
+                        exponentPlusDigitSpaceTokenZeroDigit(quotedText())
                 )
         );
     }
@@ -7197,7 +7118,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(quotedText())
+                        exponentPlusSpaceZeroDigitToken(quotedText())
                 )
         );
     }
@@ -7209,7 +7130,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralCloseParens())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralCloseParens())
                 )
         );
     }
@@ -7219,7 +7140,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralCloseParens())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralCloseParens())
                 )
         );
     }
@@ -7229,7 +7150,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralCloseParens())
+                        exponentPlusSpaceZeroDigitToken(textLiteralCloseParens())
                 )
         );
     }
@@ -7241,7 +7162,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralColon())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralColon())
                 )
         );
     }
@@ -7251,7 +7172,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralColon())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralColon())
                 )
         );
     }
@@ -7261,7 +7182,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralColon())
+                        exponentPlusSpaceZeroDigitToken(textLiteralColon())
                 )
         );
     }
@@ -7273,7 +7194,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralMinus())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralMinus())
                 )
         );
     }
@@ -7283,7 +7204,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralMinus())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralMinus())
                 )
         );
     }
@@ -7293,7 +7214,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralMinus())
+                        exponentPlusSpaceZeroDigitToken(textLiteralMinus())
                 )
         );
     }
@@ -7305,7 +7226,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralOpenParens())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralOpenParens())
                 )
         );
     }
@@ -7315,7 +7236,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralOpenParens())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralOpenParens())
                 )
         );
     }
@@ -7325,7 +7246,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralOpenParens())
+                        exponentPlusSpaceZeroDigitToken(textLiteralOpenParens())
                 )
         );
     }
@@ -7337,7 +7258,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(textLiteralPlus())
+                        exponentPlusTokenSpaceZeroDigit(textLiteralPlus())
                 )
         );
     }
@@ -7347,7 +7268,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(textLiteralPlus())
+                        exponentPlusDigitSpaceTokenZeroDigit(textLiteralPlus())
                 )
         );
     }
@@ -7357,7 +7278,7 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(textLiteralPlus())
+                        exponentPlusSpaceZeroDigitToken(textLiteralPlus())
                 )
         );
     }
@@ -7365,11 +7286,13 @@ this.colorParserFails(
     // space
 
     @Test
-    public void testNumberParseDigitExponentSpaceDigit() {
+    public void testNumberParseDigitExponentWhitepaceDigit() {
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent1(whitespace())
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteralSpace()
+                        )
                 )
         );
     }
@@ -7379,7 +7302,9 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent2(whitespace())
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteralSpace()
+                        )
                 )
         );
     }
@@ -7389,182 +7314,238 @@ this.colorParserFails(
         this.numberParseParseAndCheck(
                 number(
                         digit(),
-                        exponent3(whitespace())
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteralSpace()
+                        )
                 )
         );
     }
 
-    // equals
+    // equals...........................................................................................................
 
     @Test
-    public void testNumberParseDigitExponentEqualsDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent1(equalsSymbol()),
-                "Invalid character '=' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral("=")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitExponentDigitEqualsDigitFails() {
-        this.numberParseParseThrows(
+    public void testNumberParseDigitExponentDigitEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
                 digit(),
-                exponent2(equalsSymbol()),
-                "Invalid character '=' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                    exponentPlusDigitSpaceTokenZeroDigit(
+                            textLiteral("=")
+                    )
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitExponentDigitEqualsFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent3(equalsSymbol()),
-                "Invalid character '=' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentDigitEquals() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral("=")
+                        )
+                )
         );
     }
 
-    // greaterThan
+    // greaterThan......................................................................................................
 
     @Test
-    public void testNumberParseDigitExponentGreaterThanDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent1(greaterThan()),
-                "Invalid character '>' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
-        );
-    }
-
-    @Test
-    public void testNumberParseDigitExponentDigitGreaterThanDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent2(greaterThan()),
-                "Invalid character '>' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
-        );
-    }
-
-    @Test
-    public void testNumberParseDigitExponentDigitGreaterThanFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent3(greaterThan()),
-                "Invalid character '>' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
-        );
-    }
-
-    // greaterThanEquals
-
-    @Test
-    public void testNumberParseDigitExponentGreaterThanEqualsDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent1(greaterThanEquals()),
-                "Invalid character '>' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentGreaterThanDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral(">")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitExponentDigitGreaterThanEqualsDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent2(greaterThanEquals()),
-                "Invalid character '>' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentDigitGreaterThanDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral(">")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitExponentDigitGreaterThanEqualsFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent3(greaterThanEquals()),
-                "Invalid character '>' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentDigitGreaterThan() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral(">")
+                        )
+                )
         );
     }
 
-    // lessThan
+    // greaterThanEquals................................................................................................
 
     @Test
-    public void testNumberParseDigitExponentLessThanDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent1(lessThan()),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
-        );
-    }
-
-    @Test
-    public void testNumberParseDigitExponentDigitLessThanDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent2(lessThan()),
-                "Invalid character '<' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
-        );
-    }
-
-    @Test
-    public void testNumberParseDigitExponentDigitLessThanFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent3(lessThan()),
-                "Invalid character '<' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
-        );
-    }
-
-    // lessThanEquals
-
-    @Test
-    public void testNumberParseDigitExponentLessThanEqualsDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent1(lessThanEquals()),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentGreaterThanEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral(">=")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitExponentDigitLessThanEqualsDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent2(lessThanEquals()),
-                "Invalid character '<' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentDigitGreaterThanEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral(">=")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitExponentDigitLessThanEqualsFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent3(lessThanEquals()),
-                "Invalid character '<' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentDigitGreaterThanEquals() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral(">=")
+                        )
+                )
         );
     }
 
-    // notEquals
+    // lessThan.........................................................................................................
 
     @Test
-    public void testNumberParseDigitExponentNotEqualsDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent1(notEquals()),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
-        );
-    }
-
-    @Test
-    public void testNumberParseDigitExponentDigitNotEqualsDigitFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent2(notEquals()),
-                "Invalid character '<' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentLessThanDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral("<")
+                        )
+                )
         );
     }
 
     @Test
-    public void testNumberParseDigitExponentDigitNotEqualsFails() {
-        this.numberParseParseThrows(
-                digit(),
-                exponent3(notEquals()),
-                "Invalid character '<' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+    public void testNumberParseDigitExponentDigitLessThanDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral("<")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNumberParseDigitExponentDigitLessThan() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral("<")
+                        )
+                )
+        );
+    }
+
+    // lessThanEquals...................................................................................................
+
+    @Test
+    public void testNumberParseDigitExponentLessThanEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral("<=")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNumberParseDigitExponentDigitLessThanEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral("<=")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNumberParseDigitExponentDigitLessThanEquals() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral("<=")
+                        )
+                )
+        );
+    }
+
+    // notEquals........................................................................................................
+
+    @Test
+    public void testNumberParseDigitExponentNotEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusTokenSpaceZeroDigit(
+                                textLiteral("<>")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNumberParseDigitExponentDigitNotEqualsDigit() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusDigitSpaceTokenZeroDigit(
+                                textLiteral("<>")
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testNumberParseDigitExponentDigitNotEquals() {
+        this.numberParseParseAndCheck(
+                number(
+                        digit(),
+                        exponentPlusSpaceZeroDigitToken(
+                                textLiteral("<>")
+                        )
+                )
         );
     }
 
@@ -7577,7 +7558,7 @@ this.colorParserFails(
                         color(),
                         digit()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7588,7 +7569,7 @@ this.colorParserFails(
                         digit(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7600,7 +7581,7 @@ this.colorParserFails(
                         decimalPoint(),
                         color()
                 ),
-                "Invalid character '[' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7613,7 +7594,7 @@ this.colorParserFails(
                         digit(),
                         color()
                 ),
-                "Invalid character '[' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7622,9 +7603,9 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 number(
                         digit(),
-                        exponent1(color())
-                ) ,
-                "Invalid character '[' at (4,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                        exponentPlusTokenSpaceZeroDigit(color())
+                ),
+                "Invalid character '[' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7633,9 +7614,9 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 number(
                         digit(),
-                        exponent2(color())
+                        exponentPlusDigitSpaceTokenZeroDigit(color())
                 ),
-                "Invalid character '[' at (5,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (5,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7644,9 +7625,9 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 number(
                         digit(),
-                        exponent3(color())
+                        exponentPlusSpaceZeroDigitToken(color())
                 ),
-                "Invalid character '[' at (7,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (7,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7657,7 +7638,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionEquals(),
                 digit(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7666,7 +7647,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionGreaterThan(),
                 digit(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7675,7 +7656,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionGreaterThanEquals(),
                 digit(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7684,7 +7665,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionLessThan(),
                 digit(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7693,7 +7674,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionLessThanEquals(),
                 digit(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7702,7 +7683,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 conditionNotEquals(),
                 digit(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7711,7 +7692,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7720,7 +7701,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7729,7 +7710,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7738,7 +7719,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7747,7 +7728,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7756,7 +7737,7 @@ this.colorParserFails(
         this.numberParseParseThrows(
                 digit(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7795,7 +7776,7 @@ this.colorParserFails(
                                 textPlaceholder()
                         )
                 ),
-                "Invalid character '@' at (3,1) expected GENERAL_OR_NUMBER, [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '@' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {('$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED | ((\"E+\" | \"e+\" | \"E-\" | \"e-\"), [{('.' | '#' | '?' | '0' | ',' | '$' | '.' | ESCAPE | '#' | '?' | '0' | ',' | NUMBER_LITERAL | '%' | QUOTED)}]))}))}], [';'])"
         );
     }
 
@@ -7816,7 +7797,7 @@ this.colorParserFails(
     // number helpers...................................................................................................
 
     private void numberParseParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(
+        this.parseAndCheck3(
                 SpreadsheetFormatParsers.numberParse(),
                 tokens
         );
@@ -7858,7 +7839,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 day(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7867,7 +7848,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 hour(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7876,7 +7857,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 minute(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7885,7 +7866,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 month(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7894,7 +7875,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 second(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7902,7 +7883,7 @@ this.colorParserFails(
     public void testFractionStarFails() {
         this.fractionParseThrows(
                 star(),
-                "Invalid character '*' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '*' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7911,7 +7892,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 textPlaceholder(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7919,7 +7900,7 @@ this.colorParserFails(
     public void testFractionUnderscoreFails() {
         this.fractionParseThrows(
                 underscore(),
-                "Invalid character '_' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '_' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7928,7 +7909,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 year(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7936,7 +7917,7 @@ this.colorParserFails(
     public void testFractionSlashFails() {
         this.fractionParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '/' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7945,7 +7926,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digitSpace(),
                 fractionSymbol(),
-                "Invalid character '?' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '?' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7954,7 +7935,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digitZero(),
                 fractionSymbol(),
-                "Invalid character '0' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '0' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7963,7 +7944,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 fractionSymbol(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7971,7 +7952,7 @@ this.colorParserFails(
     public void testFractionGroupSeparatorFails() {
         this.fractionParseThrows(
                 groupSeparator(),
-                "Invalid character ',' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character ',' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7980,7 +7961,7 @@ this.colorParserFails(
         this.fractionParseThrows(
                 digit(),
                 groupSeparator(),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character '#' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
@@ -7988,106 +7969,195 @@ this.colorParserFails(
     public void testFractionGeneralFails() {
         this.fractionParseThrows(
                 generalSymbol(),
-                "Invalid character 'G' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+                "Invalid character 'G' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]), '/', ([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}], ('#' | '?' | '0'), [{('#' | '?' | '0' | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | '$' | ESCAPE | FRACTION_LITERAL | QUOTED)}]))"
         );
     }
 
-    // digitSpace
+    // digitSpace.......................................................................................................
 
     @Test
     public void testFractionDigitSpaceFractionDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), fractionSymbol(), digitSpace());
+        this.fractionParseAndCheck(
+                digitSpace(),
+                fractionSymbol(),
+                digitSpace()
+        );
     }
 
     @Test
     public void testFractionDigitSpaceDigitSpaceFractionDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), digitSpace(), fractionSymbol(), digitSpace());
+        this.fractionParseAndCheck(
+                digitSpace(),
+                digitSpace(),
+                fractionSymbol(),
+                digitSpace()
+        );
     }
 
     @Test
     public void testFractionDigitSpaceDigitZeroFractionDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), digitZero(), fractionSymbol(), digitSpace());
+        this.fractionParseAndCheck(
+                digitSpace(),
+                digitZero(),
+                fractionSymbol(),
+                digitSpace()
+        );
     }
 
     @Test
     public void testFractionDigitSpaceDigitFractionDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), digit(), fractionSymbol(), digitSpace());
+        this.fractionParseAndCheck(
+                digitSpace(),
+                digit(),
+                fractionSymbol(),
+                digitSpace()
+        );
     }
 
     @Test
     public void testFractionDigitSpaceFractionDigitSpaceDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), fractionSymbol(), digitSpace(), digitSpace());
+        this.fractionParseAndCheck(
+                digitSpace(),
+                fractionSymbol(),
+                digitSpace(),
+                digitSpace()
+        );
     }
 
-    // digitSpace
+    // digitSpace.......................................................................................................
 
     @Test
     public void testFractionDigitZeroDigitSpaceFractionDigitZero() {
-        this.fractionParseAndCheck(digitZero(), digitSpace(), fractionSymbol(), digitZero());
+        this.fractionParseAndCheck(
+                digitZero(),
+                digitSpace(),
+                fractionSymbol(),
+                digitZero()
+        );
     }
 
     @Test
     public void testFractionDigitZeroDigitZeroFractionDigitZero() {
-        this.fractionParseAndCheck(digitZero(), digitZero(), fractionSymbol(), digitZero());
+        this.fractionParseAndCheck(
+                digitZero(),
+                digitZero(),
+                fractionSymbol(),
+                digitZero()
+        );
     }
 
     @Test
     public void testFractionDigitZeroDigitFractionDigitZero() {
-        this.fractionParseAndCheck(digitZero(), digit(), fractionSymbol(), digitZero());
+        this.fractionParseAndCheck(
+                digitZero(),
+                digit(),
+                fractionSymbol(),
+                digitZero()
+        );
     }
 
     @Test
     public void testFractionDigitZeroFractionDigitZeroDigitZero() {
-        this.fractionParseAndCheck(digitZero(), fractionSymbol(), digitZero(), digitZero());
+        this.fractionParseAndCheck(
+                digitZero(),
+                fractionSymbol(),
+                digitZero(),
+                digitZero()
+        );
     }
 
-    // digitSpace
+    // digitSpace.......................................................................................................
 
     @Test
     public void testFractionDigitFractionDigit() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitDigitSpaceFractionDigit() {
-        this.fractionParseAndCheck(digit(), digitSpace(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                digitSpace(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitDigitZeroFractionDigit() {
-        this.fractionParseAndCheck(digit(), digitZero(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                digitZero(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitDigitFractionDigit() {
-        this.fractionParseAndCheck(digit(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitDigit() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                digit()
+        );
     }
 
-    // currency
+    // Currency..........................................................................................................
 
     @Test
-    public void testFractioncurrencyDigitSlashDigit() {
-        this.fractionParseAndCheck(currency(), digit(), fractionSymbol(), digit());
+    public void testFractionCurrencyDigitSlashDigit() {
+        this.fractionParseAndCheck(
+                currency(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionDigitcurrencySlashDigit() {
-        this.fractionParseAndCheck(digit(), currency(), fractionSymbol(), digit());
+    public void testFractionDigitCurrencySlashDigit() {
+        this.fractionParseAndCheck(
+                digit(), 
+                currency(), 
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionDigitSlashcurrencyDigit() {
-        this.fractionParseAndCheck(currency(), digit(), fractionSymbol(), currency(), digit());
+    public void testFractionDigitSlashCurrencyDigit() {
+        this.fractionParseAndCheck(
+                currency(),
+                digit(),
+                fractionSymbol(),
+                currency(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitcurrency() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), currency());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                currency()
+        );
     }
 
     // text literals
@@ -8096,644 +8166,880 @@ this.colorParserFails(
 
     @Test
     public void testFractionEscapedDigitSlashDigit() {
-        this.fractionParseAndCheck(escape(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                escape(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitEscapedSlashDigit() {
-        this.fractionParseAndCheck(digit(), escape(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                escape(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashEscapedDigit() {
-        this.fractionParseAndCheck(escape(), digit(), fractionSymbol(), escape(), digit());
+        this.fractionParseAndCheck(
+                escape(),
+                digit(),
+                fractionSymbol(),
+                escape(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitEscaped() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), escape());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                escape()
+        );
     }
 
-    // quotedText
+    // quotedText.......................................................................................................
 
     @Test
     public void testFractionQuotedTextDigitSlashDigit() {
-        this.fractionParseAndCheck(quotedText(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                quotedText(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitQuotedTextSlashDigit() {
-        this.fractionParseAndCheck(digit(), quotedText(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                quotedText(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashQuotedTextDigit() {
-        this.fractionParseAndCheck(quotedText(), digit(), fractionSymbol(), quotedText(), digit());
+        this.fractionParseAndCheck(
+                quotedText(),
+                digit(),
+                fractionSymbol(),
+                quotedText(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitQuotedText() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), quotedText());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                quotedText()
+        );
     }
 
-    // closeParens
+    // closeParens......................................................................................................
 
     @Test
     public void testFractionCloseParensDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralCloseParens(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                textLiteralCloseParens(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitCloseParensSlashDigit() {
-        this.fractionParseAndCheck(digit(), textLiteralCloseParens(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralCloseParens(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashCloseParensDigit() {
-        this.fractionParseAndCheck(textLiteralCloseParens(), digit(), fractionSymbol(), textLiteralCloseParens(), digit());
+        this.fractionParseAndCheck(
+                textLiteralCloseParens(),
+                digit(),
+                fractionSymbol(),
+                textLiteralCloseParens(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitCloseParens() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), textLiteralCloseParens());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralCloseParens()
+        );
     }
 
-    // colon
+    // colon......................................................................................................
 
     @Test
     public void testFractionColonDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralColon(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                textLiteralColon(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitColonSlashDigit() {
-        this.fractionParseAndCheck(digit(), textLiteralColon(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralColon(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashColonDigit() {
-        this.fractionParseAndCheck(textLiteralColon(), digit(), fractionSymbol(), textLiteralColon(), digit());
+        this.fractionParseAndCheck(
+                textLiteralColon(),
+                digit(),
+                fractionSymbol(),
+                textLiteralColon(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitColon() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), textLiteralColon());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralColon()
+        );
     }
 
-    // minus
+    // minus............................................................................................................
 
     @Test
     public void testFractionMinusDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralMinus(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                textLiteralMinus(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitMinusSlashDigit() {
-        this.fractionParseAndCheck(digit(), textLiteralMinus(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralMinus(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashMinusDigit() {
-        this.fractionParseAndCheck(textLiteralMinus(), digit(), fractionSymbol(), textLiteralMinus(), digit());
+        this.fractionParseAndCheck(
+                textLiteralMinus(),
+                digit(),
+                fractionSymbol(),
+                textLiteralMinus(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitMinus() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), textLiteralMinus());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralMinus()
+        );
     }
 
-    // openParens
+    // openParens.......................................................................................................
 
     @Test
     public void testFractionOpenParensDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralOpenParens(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                textLiteralOpenParens(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitOpenParensSlashDigit() {
-        this.fractionParseAndCheck(digit(), textLiteralOpenParens(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralOpenParens(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashOpenParensDigit() {
-        this.fractionParseAndCheck(textLiteralOpenParens(), digit(), fractionSymbol(), textLiteralOpenParens(), digit());
+        this.fractionParseAndCheck(
+                textLiteralOpenParens(),
+                digit(),
+                fractionSymbol(),
+                textLiteralOpenParens(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitOpenParens() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), textLiteralOpenParens());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralOpenParens()
+        );
     }
 
-    // percentage
+    // percent..........................................................................................................
 
     @Test
-    public void testFractionPercentageDigitSlashDigit() {
-        this.fractionParseAndCheck(percentSymbol(), digit(), fractionSymbol(), digit());
+    public void testFractionPercentDigitSlashDigit() {
+        this.fractionParseAndCheck(
+                textLiteralPercent(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionDigitPercentageSlashDigit() {
-        this.fractionParseAndCheck(digit(), percentSymbol(), fractionSymbol(), digit());
+    public void testFractionDigitPercentSlashDigit() {
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralPercent(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionDigitSlashPercentageDigit() {
-        this.fractionParseAndCheck(percentSymbol(), digit(), fractionSymbol(), percentSymbol(), digit());
+    public void testFractionDigitSlashPercentDigit() {
+        this.fractionParseAndCheck(
+                textLiteralPercent(),
+                digit(),
+                fractionSymbol(),
+                textLiteralPercent(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionDigitSlashDigitPercentage() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), percentSymbol());
+    public void testFractionDigitSlashDigitPercent() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralPercent()
+        );
     }
 
-    // plus
+    // plus.............................................................................................................
 
     @Test
     public void testFractionPlusDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralPlus(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                textLiteralPlus(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitPlusSlashDigit() {
-        this.fractionParseAndCheck(digit(), textLiteralPlus(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralPlus(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashPlusDigit() {
-        this.fractionParseAndCheck(textLiteralPlus(), digit(), fractionSymbol(), textLiteralPlus(), digit());
+        this.fractionParseAndCheck(
+                textLiteralPlus(),
+                digit(),
+                fractionSymbol(),
+                textLiteralPlus(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitPlus() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), textLiteralPlus());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralPlus()
+        );
     }
 
-    // space
+    // space.............................................................................................................
 
     @Test
     public void testFractionSpaceDigitSlashDigit() {
-        this.fractionParseAndCheck(whitespace(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                textLiteralSpace(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSpaceSlashDigit() {
-        this.fractionParseAndCheck(digit(), whitespace(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralSpace(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashSpaceDigit() {
-        this.fractionParseAndCheck(whitespace(), digit(), fractionSymbol(), whitespace(), digit());
+        this.fractionParseAndCheck(
+                textLiteralSpace(),
+                digit(),
+                fractionSymbol(),
+                textLiteralSpace(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitSpace() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), whitespace());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralSpace()
+        );
     }
 
-    // groupSeparator
+    // groupSeparator...................................................................................................
 
     @Test
     public void testFractionGroupSeparatorDigitSlashDigit() {
-        this.fractionParseAndCheck(groupSeparator(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                textLiteralGroupSeparator(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitGroupSeparatorSlashDigit() {
-        this.fractionParseAndCheck(digit(), groupSeparator(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralGroupSeparator(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashGroupSeparatorDigit() {
-        this.fractionParseAndCheck(groupSeparator(), digit(), fractionSymbol(), groupSeparator(), digit());
+        this.fractionParseAndCheck(
+                textLiteralGroupSeparator(),
+                digit(),
+                fractionSymbol(),
+                textLiteralGroupSeparator(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitSlashDigitGroupSeparator() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), groupSeparator());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralGroupSeparator()
+        );
     }
 
-    // equals
+    // equals...........................................................................................................
 
     @Test
-    public void testFractionEqualsDigitFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        equalsSymbol(),
-                        digit(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '=' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionEqualsDigitSlashDigit() {
+        this.fractionParseAndCheck(
+                textLiteralEquals(),
+                digit(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitEqualsFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        equalsSymbol(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitEqualsSlashDigit() {
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralEquals(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionEqualsDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        equalsSymbol(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashEqualsDigit() {
+        this.fractionParseAndCheck(
+                textLiteralEquals(),
+                digit(),
+                fractionSymbol(),
+                textLiteralEquals(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionDigitEqualsFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        digit(),
-                        equalsSymbol()
-                ),
-                "Invalid character '=' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashDigitEquals() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralEquals()
         );
     }
 
-    // greaterThan
+    // greaterThan......................................................................................................
 
     @Test
-    public void testFractionGreaterThanDigitFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        greaterThan(),
-                        digit(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '>' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionGreaterThanDigitSlashDigit() {
+        this.fractionParseAndCheck(
+                textLiteralGreaterThan(),
+                digit(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitGreaterThanFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        greaterThan(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitGreaterThanSlashDigit() {
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralGreaterThan(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionGreaterThanDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        greaterThan(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashGreaterThanDigit() {
+        this.fractionParseAndCheck(
+                textLiteralGreaterThan(),
+                digit(),
+                fractionSymbol(),
+                textLiteralGreaterThan(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionDigitGreaterThanFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        digit(),
-                        greaterThan()
-                ),
-                "Invalid character '>' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashDigitGreaterThan() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralGreaterThan()
         );
     }
 
-    // greaterThanEquals
+    // greaterThanEquals................................................................................................
 
     @Test
-    public void testFractionGreaterThanEqualsDigitFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        greaterThanEquals(),
-                        digit(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '>' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionGreaterThanEqualsDigitSlashDigit() {
+        this.fractionParseAndCheck(
+                textLiteralGreaterThanEquals(),
+                digit(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitGreaterThanEqualsFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        greaterThanEquals(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitGreaterThanEqualsSlashDigit() {
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralGreaterThanEquals(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionGreaterThanEqualsDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        greaterThanEquals(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashGreaterThanEqualsDigit() {
+        this.fractionParseAndCheck(
+                textLiteralGreaterThanEquals(),
+                digit(),
+                fractionSymbol(),
+                textLiteralGreaterThanEquals(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionDigitGreaterThanEqualsFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        digit(),
-                        greaterThanEquals()
-                ),
-                "Invalid character '>' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashDigitGreaterThanEquals() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralGreaterThanEquals()
         );
     }
 
-    // lessThan
+    // lessThan.........................................................................................................
 
     @Test
-    public void testFractionLessThanDigitFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        lessThan(),
-                        digit(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '<' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionLessThanDigitSlashDigit() {
+        this.fractionParseAndCheck(
+                textLiteralLessThan(),
+                digit(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitLessThanFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        lessThan(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitLessThanSlashDigit() {
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralLessThan(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionLessThanDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        lessThan(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashLessThanDigit() {
+        this.fractionParseAndCheck(
+                textLiteralLessThan(),
+                digit(),
+                fractionSymbol(),
+                textLiteralLessThan(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionDigitLessThanFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        digit(),
-                        lessThan()
-                ),
-                "Invalid character '<' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashDigitLessThan() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralLessThan()
         );
     }
 
-    // lessThanEquals
+    // lessThanEquals...................................................................................................
 
     @Test
-    public void testFractionLessThanEqualsDigitFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        lessThanEquals(),
-                        digit(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '<' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionLessThanEqualsDigitSlashDigit() {
+        this.fractionParseAndCheck(
+                textLiteralLessThanEquals(),
+                digit(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitLessThanEqualsFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        lessThanEquals(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitLessThanEqualsSlashDigit() {
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralLessThanEquals(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionLessThanEqualsDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        lessThanEquals(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashLessThanEqualsDigit() {
+        this.fractionParseAndCheck(
+                textLiteralLessThanEquals(),
+                digit(),
+                fractionSymbol(),
+                textLiteralLessThanEquals(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionDigitLessThanEqualsFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        digit(),
-                        lessThanEquals()
-                ),
-                "Invalid character '<' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashDigitLessThanEquals() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralLessThanEquals()
         );
     }
 
-    // notEquals
+    // notEquals........................................................................................................
 
     @Test
-    public void testFractionNotEqualsDigitFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        notEquals(),
-                        digit(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '<' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionNotEqualsDigitSlashDigit() {
+        this.fractionParseAndCheck(
+                textLiteralNotEquals(),
+                digit(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitNotEqualsFractionDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        notEquals(),
-                        fractionSymbol(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitNotEqualsSlashDigit() {
+        this.fractionParseAndCheck(
+                digit(),
+                textLiteralNotEquals(),
+                fractionSymbol(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionNotEqualsDigitFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        notEquals(),
-                        digit()
-                ),
-                "Invalid character '#' at (1,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashNotEqualsDigit() {
+        this.fractionParseAndCheck(
+                textLiteralNotEquals(),
+                digit(),
+                fractionSymbol(),
+                textLiteralNotEquals(),
+                digit()
         );
     }
 
     @Test
-    public void testFractionDigitFractionDigitNotEqualsFails() {
-        this.fractionParseThrows(
-                Lists.of(
-                        digit(),
-                        fractionSymbol(),
-                        digit(),
-                        notEquals()
-                ),
-                "Invalid character '<' at (4,1) expected FRACTION_COMPONENT, FRACTION_SYMBOL, FRACTION_COMPONENT"
+    public void testFractionDigitSlashDigitNotEquals() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralNotEquals()
         );
     }
 
-    // color
+    // color............................................................................................................
 
     @Test
     public void testFractionColorDigitFractionDigit() {
-        this.fractionParseAndCheck(color(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                color(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitColorFractionDigit() {
-        this.fractionParseAndCheck(digit(), color(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                color(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitColorDigitFractionDigit() {
-        this.fractionParseAndCheck(digit(), color(), digit(), fractionSymbol(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                color(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitFractionColorDigit() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), color(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                color(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitColorDigit() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), color(), digit());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                color(),
+                digit()
+        );
     }
 
     @Test
     public void testFractionDigitFractionDigitColor() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), color());
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                color()
+        );
     }
 
-    // condition
+    // condition characters but not condition............................................................................
 
     @Test
-    public void testFractionConditionEqualsFraction() {
-        this.fractionParseAndCheck(conditionEquals(), digit(), fractionSymbol(), digit());
-    }
-
-    @Test
-    public void testFractionConditionGreaterThanFraction() {
-        this.fractionParseAndCheck(conditionGreaterThan(), digit(), fractionSymbol(), digit());
-    }
-
-    @Test
-    public void testFractionConditionGreaterThanEqualsFraction() {
-        this.fractionParseAndCheck(conditionGreaterThanEquals(), digit(), fractionSymbol(), digit());
-    }
-
-    @Test
-    public void testFractionConditionLessThanFraction() {
-        this.fractionParseAndCheck(conditionLessThan(), digit(), fractionSymbol(), digit());
+    public void testFractionEqualsFraction() {
+        this.fractionParseAndCheck(
+                textLiteralEquals(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionConditionLessThanEqualsFraction() {
-        this.fractionParseAndCheck(conditionLessThanEquals(), digit(), fractionSymbol(), digit());
+    public void testFractionGreaterThanFraction() {
+        this.fractionParseAndCheck(
+                textLiteralGreaterThan(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionConditionNotEqualsFraction() {
-        this.fractionParseAndCheck(conditionNotEquals(), digit(), fractionSymbol(), digit());
+    public void testFractionGreaterThanEqualsFraction() {
+        this.fractionParseAndCheck(
+                textLiteralGreaterThanEquals(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionFractionConditionEquals() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), conditionEquals());
+    public void testFractionLessThanFraction() {
+        this.fractionParseAndCheck(
+                textLiteralLessThan(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionFractionConditionGreaterThan() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), conditionGreaterThan());
+    public void testFractionLessThanEqualsFraction() {
+        this.fractionParseAndCheck(
+                textLiteralLessThanEquals(), 
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionFractionConditionGreaterThanEquals() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), conditionGreaterThanEquals());
+    public void testFractionNotEqualsFraction() {
+        this.fractionParseAndCheck(
+                textLiteralNotEquals(),
+                digit(),
+                fractionSymbol(),
+                digit()
+        );
     }
 
     @Test
-    public void testFractionFractionConditionLessThan() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), conditionLessThan());
+    public void testFractionFractionEquals() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralEquals()
+        );
     }
 
     @Test
-    public void testFractionFractionConditionLessThanEquals() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), conditionLessThanEquals());
+    public void testFractionFractionGreaterThan() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(), 
+                textLiteralGreaterThan()
+        );
     }
 
     @Test
-    public void testFractionFractionConditionNotEquals() {
-        this.fractionParseAndCheck(digit(), fractionSymbol(), digit(), conditionNotEquals());
+    public void testFractionFractionGreaterThanEquals() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(),
+                textLiteralGreaterThanEquals()
+        );
+    }
+
+    @Test
+    public void testFractionFractionLessThan() {
+        this.fractionParseAndCheck(
+                digit(), 
+                fractionSymbol(),
+                digit(),
+                textLiteralLessThan()
+        );
+    }
+
+    @Test
+    public void testFractionFractionLessThanEquals() {
+        this.fractionParseAndCheck(
+                digit(), 
+                fractionSymbol(), 
+                digit(), 
+                textLiteralLessThanEquals()
+        );
+    }
+
+    @Test
+    public void testFractionFractionNotEquals() {
+        this.fractionParseAndCheck(
+                digit(),
+                fractionSymbol(),
+                digit(), 
+                textLiteralNotEquals()
+        );
     }
 
     // fraction helpers...
 
     private void fractionParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck3(
+        this.parseAndCheck4(
                 this.fractionParser(),
                 SpreadsheetFormatParserToken::fraction,
                 tokens
@@ -8785,44 +9091,68 @@ this.colorParserFails(
 
     @Test
     public void testGeneralWhitespaceGeneral() {
-        this.generalParseAndCheck(whitespace3(), generalSymbol());
+        this.generalParseAndCheck(
+                whitespace3(),
+                generalSymbol()
+        );
     }
 
     @Test
     public void testGeneralGeneralWhitespace() {
-        this.generalParseAndCheck(generalSymbol(), whitespace3());
+        this.generalParseAndCheck(
+                generalSymbol(),
+                whitespace3()
+        );
     }
 
     @Test
     public void testGeneralColorGeneral() {
-        this.generalParseAndCheck(color(), generalSymbol());
+        this.generalParseAndCheck(
+                color(),
+                generalSymbol()
+        );
     }
 
     @Test
     public void testGeneralColorWhitespaceGeneral() {
-        this.generalParseAndCheck(color(), whitespace3(), generalSymbol());
+        this.generalParseAndCheck(
+                color(),
+                whitespace3(),
+                generalSymbol()
+        );
     }
 
     @Test
     public void testGeneralGeneralColor() {
-        this.generalParseAndCheck(generalSymbol(), color());
+        this.generalParseAndCheck(
+                generalSymbol(),
+                color()
+        );
     }
 
     @Test
     public void testGeneralGeneralColorWhitespace() {
-        this.generalParseAndCheck(generalSymbol(), color(), whitespace3());
+        this.generalParseAndCheck(
+                generalSymbol(),
+                color(),
+                whitespace3()
+        );
     }
 
     @Test
     public void testGeneralGeneralWhitespaceColor() {
-        this.generalParseAndCheck(generalSymbol(), whitespace3(), color());
+        this.generalParseAndCheck(
+                generalSymbol(),
+                whitespace3(),
+                color()
+        );
     }
 
     /**
      * Parsers the general expression using the general parser.
      */
     private void generalParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck3(
+        this.parseAndCheck4(
                 this.generalParser(),
                 SpreadsheetFormatParserToken::general,
                 tokens
@@ -8833,7 +9163,7 @@ this.colorParserFails(
         return SpreadsheetFormatParsers.general();
     }
 
-    // text........................................................................................................
+    // text.............................................................................................................
 
     @Test
     public void testTextFormatEmpty() {
@@ -8847,7 +9177,7 @@ this.colorParserFails(
     public void testTextFormatSeparatorFails() {
         this.textFormatParseThrows(
                 separator(),
-                "Invalid character ';' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character ';' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -8855,7 +9185,7 @@ this.colorParserFails(
     public void testTextFormatTextDigitZeroFails() {
         this.textFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -8863,7 +9193,7 @@ this.colorParserFails(
     public void testTextFormatTextDigitSpaceFails() {
         this.textFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -8871,7 +9201,7 @@ this.colorParserFails(
     public void testTextFormatLetterFails() {
         this.textFormatParseThrows(
                 textLiteral('A'),
-                "Invalid character 'A' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character 'A' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -8879,7 +9209,7 @@ this.colorParserFails(
     public void testTextFormatGeneraFails() {
         this.textFormatParseThrows(
                 generalSymbol(),
-                "Invalid character 'G' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character 'G' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -8915,7 +9245,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 star(),
                 star2(),
-                "Invalid character '*' at (3,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '*' at (3,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -8927,7 +9257,7 @@ this.colorParserFails(
                         textPlaceholder(),
                         star2()
                 ),
-                "Invalid character '*' at (4,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '*' at (4,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9054,7 +9384,7 @@ this.colorParserFails(
     public void testTextFormatSpace() {
         this.textFormatParseAndCheck(
                 text(
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -9063,7 +9393,7 @@ this.colorParserFails(
     public void testTextFormatSpaceSpaceSpace() {
         this.textFormatParseAndCheck(
                 text(
-                        whitespace3()
+                        textLiteralSpaceSpaceSpace()
                 )
         );
     }
@@ -9128,7 +9458,7 @@ this.colorParserFails(
     public void testTextFormatAll() {
         this.textFormatParseAndCheck(
                 text(
-                        whitespace(),
+                        textLiteralSpaceSpaceSpace(),
                         quotedText(),
                         textPlaceholder(),
                         underscore()
@@ -9161,7 +9491,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionNotEquals(),
                 textPlaceholder(),
-                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9170,7 +9500,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionEquals(),
                 textPlaceholder(),
-                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9179,7 +9509,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionGreaterThan(),
                 textPlaceholder(),
-                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9188,7 +9518,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionGreaterThanEquals(),
                 textPlaceholder(),
-                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9197,7 +9527,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionLessThan(),
                 textPlaceholder(),
-                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9206,7 +9536,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 conditionLessThanEquals(),
                 textPlaceholder(),
-                "Invalid character '[' at (1,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9215,7 +9545,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9224,7 +9554,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9233,7 +9563,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9242,7 +9572,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9251,7 +9581,7 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
@@ -9260,16 +9590,16 @@ this.colorParserFails(
         this.textFormatParseThrows(
                 textPlaceholder(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected TEXT, [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}], STAR, [{(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {(\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\")} | ESCAPE | QUOTED | '@' | UNDERSCORE)})"
         );
     }
 
     // text helpers......................................................................................................
 
-    private void textFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+    private void textFormatParseAndCheck(final SpreadsheetFormatParserToken token) {
         this.parseAndCheck2(
                 SpreadsheetFormatParsers.textFormat(),
-                tokens
+                token
         );
     }
 
@@ -9313,26 +9643,19 @@ this.colorParserFails(
     }
 
     @Test
-    public void testTimeFormatSeparator() {
-        this.timeFormatParseAndCheck(
-                separator()
+    public void testTimeFormatSeparatorFails() {
+        this.timeFormatParseThrows(
+                separator(),
+                "Invalid character ';' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatSeparatorSeparator() {
-        this.timeFormatParseAndCheck(
-                separator(),
-                separator()
-        );
-    }
-
-    @Test
-    public void testTimeFormatSeparatorSeparatorSeparator() {
-        this.timeFormatParseAndCheck(
+    public void testTimeFormatSeparatorSeparatorFails() {
+        this.timeFormatParseThrows(
                 separator(),
                 separator(),
-                separator()
+                "Invalid character ';' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -9340,7 +9663,7 @@ this.colorParserFails(
     public void testTimeFormatTextDigitFails() {
         this.timeFormatParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -9348,7 +9671,7 @@ this.colorParserFails(
     public void testTimeFormatTextDigitZeroFails() {
         this.timeFormatParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -9356,7 +9679,7 @@ this.colorParserFails(
     public void testTimeFormatTextDigitSpaceFails() {
         this.timeFormatParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -9364,7 +9687,7 @@ this.colorParserFails(
     public void testTimeFormatDayFails() {
         this.timeFormatParseThrows(
                 day(),
-                "Invalid character 'D' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'D' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -9372,7 +9695,7 @@ this.colorParserFails(
     public void testTimeFormatYearFails() {
         this.timeFormatParseThrows(
                 year(),
-                "Invalid character 'Y' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'Y' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -9380,10 +9703,10 @@ this.colorParserFails(
     public void testTimeFormatTextPlaceholderFails() {
         this.timeFormatParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '@' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
-
+    
     @Test
     public void testTimeFormatGeneral() {
         this.timeFormatParseAndCheck(
@@ -9529,7 +9852,7 @@ this.colorParserFails(
     public void testTimeFormatSpace() {
         this.timeFormatParseAndCheck(
                 time(
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -10141,7 +10464,7 @@ this.colorParserFails(
     public void testTimeFormatSpaceHourMinuteSecond() {
         this.timeFormatParseAndCheck(
                 time(
-                        whitespace(),
+                        textLiteralSpace(),
                         hour(),
                         minute(),
                         second()
@@ -10154,7 +10477,7 @@ this.colorParserFails(
         this.timeFormatParseAndCheck(
                 time(
                         hour(),
-                        whitespace(),
+                        textLiteralSpace(),
                         minute(),
                         second()
                 )
@@ -10167,7 +10490,7 @@ this.colorParserFails(
                 time(
                         hour(),
                         minute(),
-                        whitespace(),
+                        textLiteralSpace(),
                         second()
                 )
         );
@@ -10180,7 +10503,7 @@ this.colorParserFails(
                         hour(),
                         minute(),
                         second(),
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -10196,7 +10519,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '=' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10209,7 +10532,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '=' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10222,7 +10545,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         second()
                 ),
-                "Invalid character '=' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10235,7 +10558,7 @@ this.colorParserFails(
                         second(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10250,7 +10573,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10263,7 +10586,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10276,7 +10599,7 @@ this.colorParserFails(
                         greaterThan(),
                         second()
                 ),
-                "Invalid character '>' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10289,7 +10612,7 @@ this.colorParserFails(
                         second(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10304,7 +10627,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10317,7 +10640,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10330,7 +10653,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         second()
                 ),
-                "Invalid character '>' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10343,7 +10666,7 @@ this.colorParserFails(
                         second(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10358,7 +10681,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10371,7 +10694,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10384,7 +10707,7 @@ this.colorParserFails(
                         lessThan(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10397,7 +10720,7 @@ this.colorParserFails(
                         second(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10412,7 +10735,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10425,7 +10748,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10438,7 +10761,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10451,7 +10774,7 @@ this.colorParserFails(
                         second(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10466,7 +10789,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10479,7 +10802,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10492,7 +10815,7 @@ this.colorParserFails(
                         notEquals(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10505,7 +10828,7 @@ this.colorParserFails(
                         second(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10574,62 +10897,68 @@ this.colorParserFails(
     // condition
 
     @Test
-    public void testTimeFormatConditionEqualsHour() {
-        this.timeFormatParseAndCheck(
+    public void testTimeFormatConditionEqualsHourFails() {
+        this.timeFormatParseThrows(
                 conditionEquals(),
                 time(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatConditionGreaterThanHour() {
-        this.timeFormatParseAndCheck(
+    public void testTimeFormatConditionGreaterThanHourFails() {
+        this.timeFormatParseThrows(
                 conditionGreaterThan(),
                 time(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatConditionGreaterThanEqualsHour() {
-        this.timeFormatParseAndCheck(
+    public void testTimeFormatConditionGreaterThanEqualsHourFails() {
+        this.timeFormatParseThrows(
                 conditionGreaterThanEquals(),
                 time(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatConditionLessThanHour() {
-        this.timeFormatParseAndCheck(
+    public void testTimeFormatConditionLessThanHourFails() {
+        this.timeFormatParseThrows(
                 conditionLessThan(),
                 time(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatConditionLessThanEqualsHour() {
-        this.timeFormatParseAndCheck(
+    public void testTimeFormatConditionLessThanEqualsHourFails() {
+        this.timeFormatParseThrows(
                 conditionLessThanEquals(),
                 time(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatConditionNotEqualsHour() {
-        this.timeFormatParseAndCheck(
+    public void testTimeFormatConditionNotEqualsHourFails() {
+        this.timeFormatParseThrows(
                 conditionNotEquals(),
                 time(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10638,7 +10967,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10647,7 +10976,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10656,7 +10985,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10665,7 +10994,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10674,7 +11003,7 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -10683,77 +11012,87 @@ this.colorParserFails(
         this.timeFormatParseThrows(
                 hour(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_TIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatPatternSeparator() {
-        this.timeFormatParseAndCheck(
-                time(
-                        hour(),
-                        minute()
-                ),
-                separator()
-        );
-    }
-
-    @Test
-    public void testTimeFormatPatternSeparatorPattern() {
-        this.timeFormatParseAndCheck(
+    public void testTimeFormatPatternSeparatorFails() {
+        this.timeFormatParseThrows(
                 time(
                         hour(),
                         minute()
                 ),
                 separator(),
-                time(
-                        hour(),
-                        minute(),
-                        second()
-                )
+                "Invalid character ';' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatColorPatternSeparatorPattern() {
-        this.timeFormatParseAndCheck(
-                time(
-                        color(),
-                        hour(),
-                        minute()
+    public void testTimeFormatPatternSeparatorPatternFails() {
+        this.timeFormatParseThrows(
+                Lists.of(
+                        time(
+                                hour(),
+                                minute()
+                        ),
+                        separator(),
+                        time(
+                                hour(),
+                                minute(),
+                                second()
+                        )
                 ),
-                separator(),
-                time(
-                        hour(),
-                        minute(),
-                        second()
-                )
+                "Invalid character ';' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testTimeFormatConditionPatternSeparatorPattern() {
-        this.timeFormatParseAndCheck(
-                conditionEquals(),
-                time(
-                        hour(),
-                        minute()
+    public void testTimeFormatColorPatternSeparatorPatternFails() {
+        this.timeFormatParseThrows(
+                Lists.of(
+                        time(
+                                color(),
+                                hour(),
+                                minute()
+                        ),
+                        separator(),
+                        time(
+                                hour(),
+                                minute(),
+                                second()
+                        )
                 ),
-                separator(),
-                time(
-                        hour(),
-                        minute(),
-                        second()
-                )
+                "Invalid character ';' at (14,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
+        );
+    }
+
+    @Test
+    public void testTimeFormatConditionPatternSeparatorPatternFails() {
+        this.timeFormatParseThrows(
+                Lists.of(
+                        conditionEquals(),
+                        time(
+                                hour(),
+                                minute()
+                        ),
+                        separator(),
+                        time(
+                                hour(),
+                                minute(),
+                                second()
+                        )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     // time format helpers..............................................................................................
 
-    private void timeFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+    private void timeFormatParseAndCheck(final SpreadsheetFormatParserToken token) {
         this.parseAndCheck2(
                 SpreadsheetFormatParsers.timeFormat(),
-                tokens
+                token
         );
     }
 
@@ -10800,7 +11139,7 @@ this.colorParserFails(
     public void testTimeParseTextDigitFails() {
         this.timeParseParseThrows(
                 digit(),
-                "Invalid character '#' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -10808,7 +11147,7 @@ this.colorParserFails(
     public void testTimeParseTextDigitZeroFails() {
         this.timeParseParseThrows(
                 digitZero(),
-                "Invalid character '0' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '0' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -10816,7 +11155,7 @@ this.colorParserFails(
     public void testTimeParseTextDigitSpaceFails() {
         this.timeParseParseThrows(
                 digitSpace(),
-                "Invalid character '?' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -10824,7 +11163,7 @@ this.colorParserFails(
     public void testTimeParseDayFails() {
         this.timeParseParseThrows(
                 day(),
-                "Invalid character 'D' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'D' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -10832,7 +11171,7 @@ this.colorParserFails(
     public void testTimeParseYearFails() {
         this.timeParseParseThrows(
                 year(),
-                "Invalid character 'Y' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character 'Y' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -10840,7 +11179,7 @@ this.colorParserFails(
     public void testTimeParseTextPlaceholderFails() {
         this.timeParseParseThrows(
                 textPlaceholder(),
-                "Invalid character '@' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '@' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -10910,7 +11249,7 @@ this.colorParserFails(
                         color(),
                         escape()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -10990,7 +11329,7 @@ this.colorParserFails(
     public void testTimeParseSpace() {
         this.timeParseParseAndCheck(
                 time(
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -11602,7 +11941,7 @@ this.colorParserFails(
     public void testTimeParseSpaceHourMinuteSecond() {
         this.timeParseParseAndCheck(
                 time(
-                        whitespace(),
+                        textLiteralSpace(),
                         hour(),
                         minute(),
                         second()
@@ -11615,7 +11954,7 @@ this.colorParserFails(
         this.timeParseParseAndCheck(
                 time(
                         hour(),
-                        whitespace(),
+                        textLiteralSpace(),
                         minute(),
                         second()
                 )
@@ -11628,7 +11967,7 @@ this.colorParserFails(
                 time(
                         hour(),
                         minute(),
-                        whitespace(),
+                        textLiteralSpace(),
                         second()
                 )
         );
@@ -11641,7 +11980,7 @@ this.colorParserFails(
                         hour(),
                         minute(),
                         second(),
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -11657,7 +11996,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '=' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11670,7 +12009,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '=' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11683,7 +12022,7 @@ this.colorParserFails(
                         equalsSymbol(),
                         second()
                 ),
-                "Invalid character '=' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11696,7 +12035,7 @@ this.colorParserFails(
                         second(),
                         equalsSymbol()
                 ),
-                "Invalid character '=' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '=' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11711,7 +12050,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11724,7 +12063,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11737,7 +12076,7 @@ this.colorParserFails(
                         greaterThan(),
                         second()
                 ),
-                "Invalid character '>' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11750,7 +12089,7 @@ this.colorParserFails(
                         second(),
                         greaterThan()
                 ),
-                "Invalid character '>' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11765,7 +12104,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11778,7 +12117,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '>' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11791,7 +12130,7 @@ this.colorParserFails(
                         greaterThanEquals(),
                         second()
                 ),
-                "Invalid character '>' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11804,7 +12143,7 @@ this.colorParserFails(
                         second(),
                         greaterThanEquals()
                 ),
-                "Invalid character '>' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '>' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11819,7 +12158,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11832,7 +12171,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11845,7 +12184,7 @@ this.colorParserFails(
                         lessThan(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11858,7 +12197,7 @@ this.colorParserFails(
                         second(),
                         lessThan()
                 ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11873,7 +12212,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11886,7 +12225,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11899,7 +12238,7 @@ this.colorParserFails(
                         lessThanEquals(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11912,7 +12251,7 @@ this.colorParserFails(
                         second(),
                         lessThanEquals()
                 ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11927,7 +12266,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11940,7 +12279,7 @@ this.colorParserFails(
                         minute(),
                         second()
                 ),
-                "Invalid character '<' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11953,7 +12292,7 @@ this.colorParserFails(
                         notEquals(),
                         second()
                 ),
-                "Invalid character '<' at (3,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11966,7 +12305,7 @@ this.colorParserFails(
                         second(),
                         notEquals()
                 ),
-                "Invalid character '<' at (4,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '<' at (4,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11979,7 +12318,7 @@ this.colorParserFails(
                         color(),
                         hour()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -11990,7 +12329,7 @@ this.colorParserFails(
                         color(),
                         minute()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12001,7 +12340,7 @@ this.colorParserFails(
                         color(),
                         second()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12012,7 +12351,7 @@ this.colorParserFails(
                         hour(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12023,7 +12362,7 @@ this.colorParserFails(
                         minute(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12034,7 +12373,7 @@ this.colorParserFails(
                         second(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12045,7 +12384,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12054,7 +12393,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionGreaterThan(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12063,7 +12402,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionGreaterThanEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12072,7 +12411,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionLessThan(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12081,7 +12420,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionLessThanEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12090,7 +12429,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 conditionNotEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12099,7 +12438,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12108,7 +12447,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12117,7 +12456,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12126,7 +12465,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12135,7 +12474,7 @@ this.colorParserFails(
         this.timeParseParseThrows(
                 hour(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12143,10 +12482,10 @@ this.colorParserFails(
     public void testTimeParseHourConditionNotEqualsFails() {
         this.timeParseParseThrows(
                 Lists.of(
-                hour(),
-                conditionNotEquals()
+                        hour(),
+                        conditionNotEquals()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -12181,24 +12520,24 @@ this.colorParserFails(
     public void testTimeParseColorPatternSeparatorPatternFails() {
         this.timeParseParseThrows(
                 Lists.of(
-                time(
-                        color(),
-                        hour(),
-                        minute()
+                        time(
+                                color(),
+                                hour(),
+                                minute()
+                        ),
+                        separator(),
+                        time(
+                                hour(),
+                                minute(),
+                                second()
+                        )
                 ),
-                separator(),
-                time(
-                        hour(),
-                        minute(),
-                        second()
-                )
-                ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_TIME, [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'H'} | {'M'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
     private void timeParseParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(
+        this.parseAndCheck3(
                 SpreadsheetFormatParsers.timeParse(),
                 tokens
         );
@@ -12244,26 +12583,19 @@ this.colorParserFails(
     }
 
     @Test
-    public void testDateTimeFormatSeparator() {
-        this.dateTimeFormatParseAndCheck(
-                separator()
+    public void testDateTimeFormatSeparatorFails() {
+        this.dateTimeFormatParseThrows(
+                separator(),
+                "Invalid character ';' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatSeparatorSeparator() {
-        this.dateTimeFormatParseAndCheck(
-                separator(),
-                separator()
-        );
-    }
-
-    @Test
-    public void testDateTimeFormatSeparatorSeparatorSeparator() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatSeparatorSeparatorFails() {
+        this.dateTimeFormatParseThrows(
                 separator(),
                 separator(),
-                separator()
+                "Invalid character ';' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12278,7 +12610,7 @@ this.colorParserFails(
     public void testDateTimeFormatWhitespaceGeneral() {
         this.dateTimeFormatParseAndCheck(
                 general(
-                        whitespace3(),
+                        whitespace(),
                         generalSymbol()
                 )
         );
@@ -12289,7 +12621,7 @@ this.colorParserFails(
         this.dateTimeFormatParseAndCheck(
                 general(
                         generalSymbol(),
-                        whitespace3()
+                        whitespace()
                 )
         );
     }
@@ -12298,9 +12630,9 @@ this.colorParserFails(
     public void testDateTimeFormatWhitespaceGeneralWhitespace() {
         this.dateTimeFormatParseAndCheck(
                 general(
-                        whitespace3(),
+                        whitespace(),
                         generalSymbol(),
-                        whitespace3()
+                        whitespace()
                 )
         );
     }
@@ -12412,7 +12744,7 @@ this.colorParserFails(
     public void testDateTimeFormatSpace() {
         this.dateTimeFormatParseAndCheck(
                 dateTime(
-                        whitespace()
+                        textLiteralSpaceSpaceSpace()
                 )
         );
     }
@@ -12510,7 +12842,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '#' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12522,7 +12854,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digitSpace()
                 ),
-                "Invalid character '?' at (3,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (3,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12665,122 +12997,134 @@ this.colorParserFails(
     // condition
 
     @Test
-    public void testDateTimeFormatConditionEqualsDay() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionEqualsDayFails() {
+        this.dateTimeFormatParseThrows(
                 conditionEquals(),
                 dateTime(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionGreaterThanDay() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionGreaterThanDayFails() {
+        this.dateTimeFormatParseThrows(
                 conditionGreaterThan(),
                 dateTime(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
     public void testDateTimeFormatConditionGreaterThanEqualsDay() {
-        this.dateTimeFormatParseAndCheck(
+        this.dateTimeFormatParseThrows(
                 conditionGreaterThanEquals(),
                 dateTime(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
     public void testDateTimeFormatConditionLessThanDay() {
-        this.dateTimeFormatParseAndCheck(
+        this.dateTimeFormatParseThrows(
                 conditionLessThan(),
                 dateTime(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionLessThanEqualsDay() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionLessThanEqualsDayFails() {
+        this.dateTimeFormatParseThrows(
                 conditionLessThanEquals(),
                 dateTime(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionNotEqualsDay() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionNotEqualsDayFails() {
+        this.dateTimeFormatParseThrows(
                 conditionNotEquals(),
                 dateTime(
                         day()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionEqualsHour() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionEqualsHourFails() {
+        this.dateTimeFormatParseThrows(
                 conditionEquals(),
                 dateTime(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionGreaterThanHour() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionGreaterThanHourFails() {
+        this.dateTimeFormatParseThrows(
                 conditionGreaterThan(),
                 dateTime(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionGreaterThanEqualsHour() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionGreaterThanEqualsHourFails() {
+        this.dateTimeFormatParseThrows(
                 conditionGreaterThanEquals(),
                 dateTime(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionLessThanHour() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionLessThanHourFails() {
+        this.dateTimeFormatParseThrows(
                 conditionLessThan(),
                 dateTime(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionLessThanEqualsHour() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionLessThanEqualsHourFails() {
+        this.dateTimeFormatParseThrows(
                 conditionLessThanEquals(),
                 dateTime(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionNotEqualsHour() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatConditionNotEqualsHourFails() {
+        this.dateTimeFormatParseThrows(
                 conditionNotEquals(),
                 dateTime(
                         hour()
-                )
+                ),
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12789,7 +13133,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12798,7 +13142,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12807,7 +13151,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12816,7 +13160,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12825,7 +13169,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12834,7 +13178,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 day(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12843,7 +13187,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12852,7 +13196,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12861,7 +13205,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12870,7 +13214,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12879,7 +13223,7 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
@@ -12888,27 +13232,13 @@ this.colorParserFails(
         this.dateTimeFormatParseThrows(
                 hour(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ], [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatPatternSeparator() {
-        this.dateTimeFormatParseAndCheck(
-                dateTime(
-                        year(),
-                        month(),
-                        day(),
-                        hour(),
-                        minute()
-                ),
-                separator()
-        );
-    }
-
-    @Test
-    public void testDateTimeFormatPatternSeparatorPattern() {
-        this.dateTimeFormatParseAndCheck(
+    public void testDateTimeFormatPatternSeparatorFails() {
+        this.dateTimeFormatParseThrows(
                 dateTime(
                         year(),
                         month(),
@@ -12917,69 +13247,93 @@ this.colorParserFails(
                         minute()
                 ),
                 separator(),
-                dateTime(
-                        year(),
-                        month(),
-                        day(),
-                        hour(),
-                        minute(),
-                        second()
-                )
+                "Invalid character ';' at (6,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatColorPatternSeparatorPattern() {
-        this.dateTimeFormatParseAndCheck(
-                dateTime(
-                        color(),
-                        year(),
-                        month(),
-                        day(),
-                        hour(),
-                        minute()
+    public void testDateTimeFormatPatternSeparatorPatternFails() {
+        this.dateTimeFormatParseThrows(
+                Lists.of(
+                        dateTime(
+                                year(),
+                                month(),
+                                day(),
+                                hour(),
+                                minute()
+                        ),
+                        separator(),
+                        dateTime(
+                                year(),
+                                month(),
+                                day(),
+                                hour(),
+                                minute(),
+                                second()
+                        )
                 ),
-                separator(),
-                dateTime(
-                        year(),
-                        month(),
-                        day(),
-                        hour(),
-                        minute(),
-                        second()
-                )
+                "Invalid character ';' at (6,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
+        );
+    }
+    
+    @Test
+    public void testDateTimeFormatColorPatternSeparatorPatternFails() {
+        this.dateTimeFormatParseThrows(
+                Lists.of(
+                        dateTime(
+                                color(),
+                                year(),
+                                month(),
+                                day(),
+                                hour(),
+                                minute()
+                        ),
+                        separator(),
+                        dateTime(
+                                year(),
+                                month(),
+                                day(),
+                                hour(),
+                                minute(),
+                                second()
+                        )
+                ),
+                "Invalid character ';' at (17,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     @Test
-    public void testDateTimeFormatConditionPatternSeparatorPattern() {
-        this.dateTimeFormatParseAndCheck(
-                conditionEquals(),
-                dateTime(
-                        year(),
-                        month(),
-                        day(),
-                        hour(),
-                        minute()
+    public void testDateTimeFormatConditionPatternSeparatorPatternFails() {
+        this.dateTimeFormatParseThrows(
+                Lists.of(
+                        conditionEquals(),
+                        dateTime(
+                                year(),
+                                month(),
+                                day(),
+                                hour(),
+                                minute()
+                        ),
+                        separator(),
+                        dateTime(
+                                year(),
+                                month(),
+                                day(),
+                                hour(),
+                                minute(),
+                                second()
+                        )
                 ),
-                separator(),
-                dateTime(
-                        year(),
-                        month(),
-                        day(),
-                        hour(),
-                        minute(),
-                        second()
-                )
+                "Invalid character '[' at (1,1) expected (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {(('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']') | {'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)})"
         );
     }
 
     // date format helpers..............................................................................................
 
-    private void dateTimeFormatParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
+    private void dateTimeFormatParseAndCheck(final SpreadsheetFormatParserToken token) {
         this.parseAndCheck2(
                 SpreadsheetFormatParsers.dateTimeFormat(),
-                tokens
+                token
         );
     }
 
@@ -13033,7 +13387,7 @@ this.colorParserFails(
     public void testDateTimeParseWhitespaceGeneral() {
         this.dateTimeParseParseAndCheck(
                 general(
-                        whitespace3(),
+                        whitespace(),
                         generalSymbol()
                 )
         );
@@ -13044,7 +13398,7 @@ this.colorParserFails(
         this.dateTimeParseParseAndCheck(
                 general(
                         generalSymbol(),
-                        whitespace3()
+                        whitespace()
                 )
         );
     }
@@ -13053,9 +13407,9 @@ this.colorParserFails(
     public void testDateTimeParseWhitespaceGeneralWhitespace() {
         this.dateTimeParseParseAndCheck(
                 general(
-                        whitespace3(),
+                        whitespace(),
                         generalSymbol(),
-                        whitespace3()
+                        whitespace()
                 )
         );
     }
@@ -13075,7 +13429,7 @@ this.colorParserFails(
         this.dateTimeParseParseAndCheck(
                 general(
                         color(),
-                        whitespace3(),
+                        whitespace(),
                         generalSymbol()
                 )
         );
@@ -13088,7 +13442,7 @@ this.colorParserFails(
                         color(),
                         escape()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13168,7 +13522,7 @@ this.colorParserFails(
     public void testDateTimeParseSpace() {
         this.dateTimeParseParseAndCheck(
                 dateTime(
-                        whitespace()
+                        textLiteralSpace()
                 )
         );
     }
@@ -13266,7 +13620,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digit()
                 ),
-                "Invalid character '#' at (3,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '#' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13278,7 +13632,7 @@ this.colorParserFails(
                         decimalPoint(),
                         digitSpace()
                 ),
-                "Invalid character '?' at (3,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '?' at (3,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13392,7 +13746,7 @@ this.colorParserFails(
                         color(),
                         day()
                 ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13403,7 +13757,7 @@ this.colorParserFails(
                         day(),
                         color()
                 ),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13427,7 +13781,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionEquals(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13436,7 +13790,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionGreaterThan(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13445,7 +13799,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionGreaterThanEquals(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13454,7 +13808,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionLessThan(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13463,7 +13817,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionLessThanEquals(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13472,7 +13826,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionNotEquals(),
                 day(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13481,7 +13835,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13490,7 +13844,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionGreaterThan(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13499,7 +13853,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionGreaterThanEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13508,7 +13862,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionLessThan(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13517,7 +13871,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionLessThanEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13526,7 +13880,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 conditionNotEquals(),
                 hour(),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13535,7 +13889,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13544,7 +13898,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13553,7 +13907,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13562,7 +13916,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13571,7 +13925,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13580,7 +13934,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 day(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13589,7 +13943,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13598,7 +13952,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionGreaterThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13607,7 +13961,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionGreaterThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13616,7 +13970,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionLessThan(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13625,7 +13979,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionLessThanEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13634,7 +13988,7 @@ this.colorParserFails(
         this.dateTimeParseParseThrows(
                 hour(),
                 conditionNotEquals(),
-                "Invalid character '[' at (2,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (2,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
@@ -13679,30 +14033,30 @@ this.colorParserFails(
     public void testDateTimeParseColorPatternSeparatorPatternFails() {
         this.dateTimeParseParseThrows(
                 Lists.of(
-                dateTime(
-                        color(),
-                        year(),
-                        month(),
-                        day(),
-                        hour(),
-                        minute()
+                        dateTime(
+                                color(),
+                                year(),
+                                month(),
+                                day(),
+                                hour(),
+                                minute()
+                        ),
+                        separator(),
+                        dateTime(
+                                year(),
+                                month(),
+                                day(),
+                                hour(),
+                                minute(),
+                                second()
+                        )
                 ),
-                separator(),
-                dateTime(
-                        year(),
-                        month(),
-                        day(),
-                        hour(),
-                        minute(),
-                        second()
-                )
-                ),
-                "Invalid character '[' at (1,1) expected GENERAL_OR_DATETIME, [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}], [ PATTERN_SEPARATOR ]"
+                "Invalid character '[' at (1,1) expected ((([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}), [{(';', (([{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}], GENERAL, [{(WHITESPACE | ('[', (COLOR_NUMBER | COLOR_NAME), [WHITESPACE], ']'))}]) | {({'D'} | {'M'} | {'Y'} | {'H'} | ({'S'}, [('.', [{'0'}])]) | \"AM/PM\" | \"A/P\" | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED)}))}], [';'])"
         );
     }
 
     private void dateTimeParseParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
-        this.parseAndCheck2(
+        this.parseAndCheck3(
                 SpreadsheetFormatParsers.dateTimeParse(),
                 tokens
         );
@@ -13740,6 +14094,29 @@ this.colorParserFails(
     // helpers................................................................................................
 
     private void parseAndCheck2(final Parser<SpreadsheetFormatParserContext> parser,
+                                final SpreadsheetFormatParserToken token) {
+        final String text = ParserToken.text(
+                Lists.of(token)
+        );
+
+        this.checkEquals(
+                text.toUpperCase(),
+                text,
+                "text should be all upper case"
+        );
+
+        this.parseAndCheck5(
+                parser,
+                token
+        );
+
+        this.parseAndCheck5(
+                parser,
+                SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor.toLower(token)
+        );
+    }
+
+    private void parseAndCheck3(final Parser<SpreadsheetFormatParserContext> parser,
                                 final SpreadsheetFormatParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
         final String text = ParserToken.text(list);
@@ -13750,7 +14127,7 @@ this.colorParserFails(
                 "text should be all upper case"
         );
 
-        this.parseAndCheck4(
+        this.parseAndCheck5(
                 parser,
                 sequence(list)
         );
@@ -13759,13 +14136,13 @@ this.colorParserFails(
                 .map(SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor::toLower)
                 .collect(Collectors.toList());
 
-        this.parseAndCheck4(
+        this.parseAndCheck5(
                 parser,
                 sequence(lower)
         );
     }
 
-    private void parseAndCheck3(final Parser<SpreadsheetFormatParserContext> parser,
+    private void parseAndCheck4(final Parser<SpreadsheetFormatParserContext> parser,
                                 final BiFunction<List<ParserToken>, String, SpreadsheetFormatParserToken> factory,
                                 final SpreadsheetFormatParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
@@ -13777,7 +14154,7 @@ this.colorParserFails(
                 "text should be all upper case"
         );
 
-        this.parseAndCheck4(
+        this.parseAndCheck5(
                 parser,
                 factory.apply(
                         list,
@@ -13790,7 +14167,7 @@ this.colorParserFails(
                 .collect(Collectors.toList());
         final String textLower = text.toLowerCase();
 
-        this.parseAndCheck4(
+        this.parseAndCheck5(
                 parser,
                 factory.apply(
                         lower,
@@ -13799,7 +14176,7 @@ this.colorParserFails(
         );
     }
 
-    private void parseAndCheck4(final Parser<SpreadsheetFormatParserContext> parser,
+    private void parseAndCheck5(final Parser<SpreadsheetFormatParserContext> parser,
                                 final ParserToken token) {
         final List<ParserToken> list = Lists.of(token);
         final String text = ParserToken.text(list);
