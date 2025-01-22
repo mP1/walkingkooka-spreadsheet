@@ -27,19 +27,14 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.CharacterParserToken;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
-import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
-import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
 
 import java.util.Arrays;
 import java.util.List;
@@ -593,20 +588,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private final static String FILENAME = SpreadsheetParsers.class.getSimpleName() + "Grammar.txt";
 
-    /**
-     * Loads the grammar text file.
-     */
-    private static EbnfGrammarParserToken loadGrammar() {
-        final TextCursor grammarFile = TextCursors.charSequence(new SpreadsheetParsersGrammarProvider().text());
-
-        return EbnfParserToken.grammarParser()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(grammarFile, EbnfParserContexts.basic())
-                .orElseThrow(() -> new IllegalStateException("Unable to parse parsers grammar file."))
-                .cast(EbnfGrammarParserToken.class);
-    }
-
-    private final static EbnfGrammarParserToken GRAMMAR_PARSER_TOKEN = loadGrammar();
+    private final static EbnfGrammarParserToken GRAMMAR_PARSER_TOKEN = EbnfGrammarParserToken.parseFile(
+            new SpreadsheetParsersGrammarProvider().text(),
+            FILENAME
+    );
 
     /**
      * Returns a {@link Map} of all parsers.
