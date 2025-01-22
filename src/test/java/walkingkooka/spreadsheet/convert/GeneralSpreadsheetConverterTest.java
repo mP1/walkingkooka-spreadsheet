@@ -1295,7 +1295,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     }
 
     private SpreadsheetFormatter numberFormatter() {
-        return formatter("\\N #.#",
+        return formatter(
+                "\\N #.#",
                 SpreadsheetFormatParsers.numberParse(),
                 SpreadsheetFormatNumberParserToken.class,
                 SpreadsheetFormatters::number
@@ -1349,7 +1350,10 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                                                                                     final Function<T, SpreadsheetFormatter> formatterFactory) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map(t -> t.cast(SequenceParserToken.class).value().get(0).cast(token))
+                .map(t -> t instanceof SequenceParserToken ?
+                        t.cast(SequenceParserToken.class).value().get(0) :
+                        t
+                ).map(t -> t.cast(token))
                 .map(formatterFactory)
                 .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
     }

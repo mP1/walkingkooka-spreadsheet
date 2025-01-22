@@ -18,13 +18,15 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetLabelNameSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetLabelNameSpreadsheetParser>,
-        ClassTesting2<SpreadsheetLabelNameSpreadsheetParser> {
+        ClassTesting2<SpreadsheetLabelNameSpreadsheetParser>,
+        ToStringTesting<SpreadsheetLabelNameSpreadsheetParser> {
 
     @Test
     public void testParseWrongFirstCharFail() {
@@ -131,6 +133,16 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     public void testTokens() {
         this.tokensAndCheck(
                 this.createContext()
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                SpreadsheetLabelNameSpreadsheetParser.INSTANCE,
+                "SPREADSHEETLABELNAME"
         );
     }
 

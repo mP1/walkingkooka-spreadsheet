@@ -44,7 +44,13 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken color() {
-        final List<ParserToken> tokens = Lists.of(bracketOpenSymbol(), colorLiteral(), whitespace3(), colorNumberFive(), bracketCloseSymbol());
+        final List<ParserToken> tokens = Lists.of(
+                bracketOpenSymbol(),
+                colorLiteral(),
+                whitespace3(),
+                colorNumberFive(),
+                bracketCloseSymbol()
+        );
         return SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens));
     }
 
@@ -65,38 +71,90 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken conditionEquals() {
-        final List<ParserToken> list = Lists.of(bracketOpenSymbol(), whitespace3(), equalsSymbol(), conditionNumber(), bracketCloseSymbol());
-        return SpreadsheetFormatParserToken.equalsParserToken(list, ParserToken.text(list));
+        final List<ParserToken> list = Lists.of(
+                bracketOpenSymbol(),
+                whitespace3(),
+                equalsSymbol(),
+                conditionNumber(),
+                bracketCloseSymbol()
+        );
+        return SpreadsheetFormatParserToken.equalsParserToken(
+                list,
+                ParserToken.text(list)
+        );
     }
 
     static SpreadsheetFormatParserToken conditionGreaterThanEquals() {
-        final List<ParserToken> list = Lists.of(bracketOpenSymbol(), greaterThanEquals(), conditionNumber(), bracketCloseSymbol());
-        return SpreadsheetFormatParserToken.greaterThanEquals(list, ParserToken.text(list));
+        final List<ParserToken> list = Lists.of(
+                bracketOpenSymbol(),
+                greaterThanEquals(),
+                conditionNumber(),
+                bracketCloseSymbol()
+        );
+        return SpreadsheetFormatParserToken.greaterThanEquals(
+                list,
+                ParserToken.text(list)
+        );
     }
 
     static SpreadsheetFormatParserToken conditionGreaterThan() {
-        final List<ParserToken> list = Lists.of(bracketOpenSymbol(), greaterThan(), conditionNumber(), bracketCloseSymbol());
-        return SpreadsheetFormatParserToken.greaterThan(list, ParserToken.text(list));
+        final List<ParserToken> list = Lists.of(
+                bracketOpenSymbol(),
+                greaterThan(),
+                conditionNumber(),
+                bracketCloseSymbol()
+        );
+        return SpreadsheetFormatParserToken.greaterThan(
+                list,
+                ParserToken.text(list)
+        );
     }
 
     static SpreadsheetFormatParserToken conditionLessThanEquals() {
-        final List<ParserToken> list = Lists.of(bracketOpenSymbol(), lessThanEquals(), conditionNumber(), bracketCloseSymbol());
-        return SpreadsheetFormatParserToken.lessThanEquals(list, ParserToken.text(list));
+        final List<ParserToken> list = Lists.of(
+                bracketOpenSymbol(),
+                lessThanEquals(),
+                conditionNumber(),
+                bracketCloseSymbol()
+        );
+        return SpreadsheetFormatParserToken.lessThanEquals(
+                list,
+                ParserToken.text(list)
+        );
     }
 
     static SpreadsheetFormatParserToken conditionLessThan() {
-        final List<ParserToken> list = Lists.of(bracketOpenSymbol(), lessThan(), conditionNumber(), bracketCloseSymbol());
-        return SpreadsheetFormatParserToken.lessThan(list, ParserToken.text(list));
+        final List<ParserToken> list = Lists.of(
+                bracketOpenSymbol(),
+                lessThan(),
+                conditionNumber(),
+                bracketCloseSymbol()
+        );
+        return SpreadsheetFormatParserToken.lessThan(
+                list,
+                ParserToken.text(list)
+        );
     }
 
     static SpreadsheetFormatParserToken conditionNotEquals() {
-        final List<ParserToken> list = Lists.of(bracketOpenSymbol(), notEquals(), conditionNumber(), bracketCloseSymbol());
-        return SpreadsheetFormatParserToken.notEquals(list, ParserToken.text(list));
+        final List<ParserToken> list = Lists.of(
+                bracketOpenSymbol(),
+                notEquals(),
+                conditionNumber(),
+                bracketCloseSymbol()
+        );
+        return SpreadsheetFormatParserToken.notEquals(
+                list,
+                ParserToken.text(list)
+        );
     }
 
     static SpreadsheetFormatParserToken conditionNumber() {
         final String text = "12.75";
-        return SpreadsheetFormatParserToken.conditionNumber(new BigDecimal(text), text);
+        return SpreadsheetFormatParserToken.conditionNumber(
+                new BigDecimal(text),
+                text
+        );
     }
 
     static SpreadsheetFormatParserToken currency() {
@@ -154,7 +212,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.escape('A', "\\A");
     }
 
-    static SpreadsheetFormatParserToken exponent1(final SpreadsheetFormatParserToken token) {
+    static SpreadsheetFormatParserToken exponentPlusTokenSpaceZeroDigit(final SpreadsheetFormatParserToken token) {
         final List<ParserToken> tokens = Lists.of(
                 exponentSymbolMinus(),
                 token,
@@ -168,7 +226,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         );
     }
 
-    static SpreadsheetFormatParserToken exponent2(final SpreadsheetFormatParserToken token) {
+    static SpreadsheetFormatParserToken exponentPlusDigitSpaceTokenZeroDigit(final SpreadsheetFormatParserToken token) {
         final List<ParserToken> tokens = Lists.of(
                 exponentSymbolPlus(),
                 digitSpace(),
@@ -182,7 +240,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         );
     }
 
-    static SpreadsheetFormatParserToken exponent3(final SpreadsheetFormatParserToken token) {
+    static SpreadsheetFormatParserToken exponentPlusSpaceZeroDigitToken(final SpreadsheetFormatParserToken token) {
         final List<ParserToken> tokens = Lists.of(
                 exponentSymbolPlus(),
                 digitSpace(),
@@ -366,20 +424,60 @@ public abstract class SpreadsheetFormatParserTestCase {
         return textLiteral('$');
     }
 
+    static SpreadsheetFormatParserToken textLiteralEquals() {
+        return textLiteral('=');
+    }
+
+    static SpreadsheetFormatParserToken textLiteralGreaterThan() {
+        return textLiteral('>');
+    }
+
+    static SpreadsheetFormatParserToken textLiteralGreaterThanEquals() {
+        return textLiteral(">=");
+    }
+
+    static SpreadsheetFormatParserToken textLiteralGroupSeparator() {
+        return textLiteral(",");
+    }
+
+    static SpreadsheetFormatParserToken textLiteralLessThan() {
+        return textLiteral('<');
+    }
+
+    static SpreadsheetFormatParserToken textLiteralLessThanEquals() {
+        return textLiteral("<=");
+    }
+
     static SpreadsheetFormatParserToken textLiteralMinus() {
         return textLiteral('-');
     }
 
-    static SpreadsheetFormatParserToken textLiteralPlus() {
-        return textLiteral('+');
+    static SpreadsheetFormatParserToken textLiteralNotEquals() {
+        return textLiteral("<>");
     }
 
     static SpreadsheetFormatParserToken textLiteralOpenParens() {
         return textLiteral('(');
     }
 
+    static SpreadsheetFormatParserToken textLiteralPlus() {
+        return textLiteral('+');
+    }
+
+    static SpreadsheetFormatParserToken textLiteralPercent() {
+        return textLiteral('%');
+    }
+
     static SpreadsheetFormatParserToken textLiteralSlash() {
         return textLiteral('/');
+    }
+
+    static SpreadsheetFormatParserToken textLiteralSpace() {
+        return textLiteral(' ');
+    }
+
+    static SpreadsheetFormatParserToken textLiteralSpaceSpaceSpace() {
+        return textLiteral("   ");
     }
 
     static SpreadsheetFormatParserToken textLiteral(final char c) {

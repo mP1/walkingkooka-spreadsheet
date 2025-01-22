@@ -749,42 +749,6 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testFormatterFormatOnePatternTrailingSeparator() {
-        this.formatAndCheck2(
-                "yyyymmddhhmmss;",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with("20001231125859")
-        );
-    }
-
-    @Test
-    public void testFormatterFormatFirstPattern() {
-        this.formatAndCheck2(
-                "[>0]yyyymmddhhmmss;yyyy",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with("20001231125859")
-        );
-    }
-
-    @Test
-    public void testFormatterFormatSecondPattern() {
-        this.formatAndCheck2(
-                "[=0]yyyyy;ddmmyyyyhhmmss",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with("31122000125859")
-        );
-    }
-
-    @Test
-    public void testFormatterFormatSecondPatternTrailingPattern() {
-        this.formatAndCheck2(
-                "[=0]yyyyy;ddmmyyyyhhmmss;",
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                SpreadsheetText.with("31122000125859")
-        );
-    }
-
-    @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
@@ -949,41 +913,6 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         );
     }
 
-    @Test
-    public void testTreePrintWithSeparator() {
-        final String pattern = "dd/mm/yyyy;";
-
-        this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "date-time-format-pattern\n" +
-                        "  \"dd/mm/yyyy\" ;\n"
-        );
-    }
-
-    @Test
-    public void testTreePrintSeveralPatterns() {
-        final String pattern = "dd/mm/yyyy;dd/mmm/yyyy";
-
-        this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "date-time-format-pattern\n" +
-                        "  \"dd/mm/yyyy\" ;\n" +
-                        "  \"dd/mmm/yyyy\"\n"
-        );
-    }
-
-    @Test
-    public void testTreePrintSeveralPatternsAndSeparator() {
-        final String pattern = "dd/mm/yyyy;dd/mmm/yyyy;";
-
-        this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "date-time-format-pattern\n" +
-                        "  \"dd/mm/yyyy\" ;\n" +
-                        "  \"dd/mmm/yyyy\" ;\n"
-        );
-    }
-
     // patterns..........................................................................................................
 
     @Test
@@ -997,36 +926,12 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
-    public void testPatternsTwo() {
-        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("hh:mm:ss;hh:mm");
+    public void testPatternWithColor() {
+        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[red]hh:mm:ss");
 
         this.patternsAndCheck(
                 pattern,
-                "hh:mm:ss",
-                "hh:mm"
-        );
-    }
-
-    @Test
-    public void testPatternsThree() {
-        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("hh:mm:ss;hh:mm;hh");
-
-        this.patternsAndCheck(
-                pattern,
-                "hh:mm:ss",
-                "hh:mm",
-                "hh"
-        );
-    }
-
-    @Test
-    public void testPatternsWithColor() {
-        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[red]hh:mm:ss;[yellow]hh:mm");
-
-        this.patternsAndCheck(
-                pattern,
-                "[red]hh:mm:ss",
-                "[yellow]hh:mm"
+                "[red]hh:mm:ss"
         );
     }
 
@@ -1091,26 +996,6 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     // removeCondition..................................................................................................
-
-    @Test
-    public void testRemoveCondition() {
-        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[<0]dd/mm/yyyy hh:mm:ss");
-
-        this.removeConditionAndCheck(
-                pattern,
-                this.createPattern("dd/mm/yyyy hh:mm:ss")
-        );
-    }
-
-    @Test
-    public void testRemoveConditionWithColor() {
-        final SpreadsheetDateTimeFormatPattern pattern = this.createPattern("[<0][White]dd/mm/yyyy hh:mm:ss");
-
-        this.removeConditionAndCheck(
-                pattern,
-                this.createPattern("[White]dd/mm/yyyy hh:mm:ss")
-        );
-    }
 
     @Test
     public void testRemoveConditionConditionMissing() {

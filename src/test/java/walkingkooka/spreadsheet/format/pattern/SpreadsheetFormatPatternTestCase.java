@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -164,22 +163,6 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     // setColor.........................................................................................................
 
-    @Test
-    public final void testSetColorNameMultiplePatternsFails() {
-        if (false == this instanceof SpreadsheetTextFormatPatternTest) {
-            final IllegalStateException thrown = assertThrows(
-                    IllegalStateException.class,
-                    () -> this.createPattern("\"Hello\";\"Hello2\"")
-                            .setColorName(SpreadsheetColorName.BLACK)
-            );
-
-            this.checkEquals(
-                    "Cannot color name for multiple patterns=\"Hello\\\";\\\"Hello2\"",
-                    thrown.getMessage()
-            );
-        }
-    }
-
     final void setColorNameAndCheck(final P pattern,
                                     final SpreadsheetColorName name,
                                     final String expected) {
@@ -188,22 +171,6 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
                 pattern.setColorName(name),
                 () -> pattern + " set color name " + name
         );
-    }
-
-    @Test
-    public final void testSetColorNumberMultiplePatternsFails() {
-        if (false == this instanceof SpreadsheetTextFormatPatternTest) {
-            final IllegalStateException thrown = assertThrows(
-                    IllegalStateException.class,
-                    () -> this.createPattern("\"Hello\";\"Hello2\"")
-                            .setColorNumber(SpreadsheetColors.MIN)
-            );
-
-            this.checkEquals(
-                    "Cannot color number for multiple patterns=\"Hello\\\";\\\"Hello2\"",
-                    thrown.getMessage()
-            );
-        }
     }
 
     final void setColorNumberAndCheck(final P pattern,

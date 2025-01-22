@@ -998,7 +998,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testText() {
-        final SpreadsheetFormatParserToken whitespace = whitespace3();
+        final SpreadsheetFormatParserToken whitespace = textLiteral("   ");
         final SpreadsheetFormatParserToken placeholder = textPlaceholder();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.text(Lists.of(
@@ -1030,19 +1030,23 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+            protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
         };
         visitor.accept(token);
         this.checkEquals("1351384213742642", b.toString(), "visited");
-        this.checkEquals(Lists.of(token, token, token,
+        this.checkEquals(
+                Lists.of(
+                        token, token, token,
                         whitespace, whitespace, whitespace, whitespace, whitespace,
                         placeholder, placeholder, placeholder, placeholder, placeholder,
-                        token, token, token),
+                        token, token, token
+                ),
                 visited,
-                "visitedTokens");
+                "visitedTokens"
+        );
     }
 
     @Test
@@ -2039,33 +2043,6 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     public void testSeparatorSymbol2() {
         new SpreadsheetFormatParserTokenVisitor() {
         }.accept(separator());
-    }
-
-    @Test
-    public void testWhitespace() {
-        final SpreadsheetFormatParserToken token = whitespace3();
-        final StringBuilder b = new StringBuilder();
-        final List<ParserToken> visited = Lists.array();
-
-        final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
-
-            @Override
-            protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
-                b.append("5");
-                visited.add(token);
-            }
-        };
-        visitor.accept(token);
-        this.checkEquals("13542", b.toString(), "visited");
-        this.checkEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
-    }
-
-    @Test
-    public void testWhitespace2() {
-        new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(whitespace3());
     }
 
     abstract static class TestSpreadsheetFormatParserTokenVisitor extends FakeSpreadsheetFormatParserTokenVisitor {

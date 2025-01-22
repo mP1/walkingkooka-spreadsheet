@@ -420,11 +420,11 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     }
 
     @Test
-    public void testParseWhitespaceDigit() {
+    public void testParseSpaceDigit() {
         this.parseAndCheck2(
                 " #",
                 " 5",
-                SpreadsheetParserToken.whitespace(" ", " "),
+                SpreadsheetParserToken.textLiteral(" ", " "),
                 digit5()
         );
     }
