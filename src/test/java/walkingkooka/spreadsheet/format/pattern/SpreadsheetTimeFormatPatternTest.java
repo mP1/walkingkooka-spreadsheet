@@ -428,42 +428,6 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    public void testFormatterFormatTrailingPattern() {
-        this.formatAndCheck2(
-                "hhmmss;",
-                LocalTime.of(12, 58, 59),
-                "125859"
-        );
-    }
-
-    @Test
-    public void testFormatterFormatFirstPattern() {
-        this.formatAndCheck2(
-                "[>0]hhmmss;hhmm",
-                LocalTime.of(12, 58, 59),
-                "125859"
-        );
-    }
-
-    @Test
-    public void testFormatterFormatSecondPattern() {
-        this.formatAndCheck2(
-                "[=0]hh;hhmmss",
-                LocalTime.of(12, 58, 59),
-                "125859"
-        );
-    }
-
-    @Test
-    public void testFormatterFormatSecondPatternTrailingSeparator() {
-        this.formatAndCheck2(
-                "[=0]hh;hhmmss;",
-                LocalTime.of(12, 58, 59),
-                "125859"
-        );
-    }
-
-    @Test
     public void testFormatterGeneral() {
         this.formatAndCheck2(
                 "General",
@@ -569,41 +533,6 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
-    @Test
-    public void testTreePrintWithSeparator() {
-        final String pattern = "hhmmss;";
-
-        this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "time-format-pattern\n" +
-                        "  \"hhmmss\" ;\n"
-        );
-    }
-
-    @Test
-    public void testTreePrintSeveralPatterns() {
-        final String pattern = "hhmm;hhmmss";
-
-        this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "time-format-pattern\n" +
-                        "  \"hhmm\" ;\n" +
-                        "  \"hhmmss\"\n"
-        );
-    }
-
-    @Test
-    public void testTreePrintSeveralPatternsAndSeparator() {
-        final String pattern = "hhmm;hhmmss;";
-
-        this.treePrintAndCheck(
-                this.createPattern(pattern),
-                "time-format-pattern\n" +
-                        "  \"hhmm\" ;\n" +
-                        "  \"hhmmss\" ;\n"
-        );
-    }
-
     // patterns..........................................................................................................
 
     @Test
@@ -617,36 +546,12 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    public void testPatternsTwo() {
-        final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss;hh:mm");
-
-        this.patternsAndCheck(
-                pattern,
-                "hh:mm:ss",
-                "hh:mm"
-        );
-    }
-
-    @Test
-    public void testPatternsThree() {
-        final SpreadsheetTimeFormatPattern pattern = this.createPattern("hh:mm:ss;hh:mm;[red]hh");
-
-        this.patternsAndCheck(
-                pattern,
-                "hh:mm:ss",
-                "hh:mm",
-                "[red]hh"
-        );
-    }
-
-    @Test
     public void testPatternsWithColor() {
-        final SpreadsheetTimeFormatPattern pattern = this.createPattern("[green]hh:mm:ss;[red]hh:mm");
+        final SpreadsheetTimeFormatPattern pattern = this.createPattern("[green]hh:mm:ss");
 
         this.patternsAndCheck(
                 pattern,
-                "[green]hh:mm:ss",
-                "[red]hh:mm"
+                "[green]hh:mm:ss"
         );
     }
 
@@ -710,27 +615,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
-    // removeCondition.......................................................................................................
-
-    @Test
-    public void testRemoveCondition() {
-        final SpreadsheetTimeFormatPattern pattern = this.createPattern("[<0]hh:mm:ss");
-
-        this.removeConditionAndCheck(
-                pattern,
-                this.createPattern("hh:mm:ss")
-        );
-    }
-
-    @Test
-    public void testRemoveConditionWithColor() {
-        final SpreadsheetTimeFormatPattern pattern = this.createPattern("[<0][red]hh:mm:ss");
-
-        this.removeConditionAndCheck(
-                pattern,
-                this.createPattern("[red]hh:mm:ss")
-        );
-    }
+    // removeCondition..................................................................................................
 
     @Test
     public void testRemoveConditionMissingCondition() {

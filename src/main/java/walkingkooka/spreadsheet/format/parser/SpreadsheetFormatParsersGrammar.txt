@@ -1,19 +1,12 @@
 (* color ..............................................................................................................*)
 COLOR                         = BRACKET_OPEN,
-                                ( COLOR_AND_NUMBER | COLOR_NAME ),
+                                ( COLOR_NUMBER | COLOR_NAME ),
                                 [ WHITESPACE ],
                                 BRACKET_CLOSE;
 
 
 
 (* condition ..........................................................................................................*)
-CONDITION                     = CONDITION_EQUAL |
-                                CONDITION_GREATER_THAN_EQUAL |
-                                CONDITION_GREATER_THAN |
-                                CONDITION_LESS_THAN_EQUAL |
-                                CONDITION_LESS_THAN |
-                                CONDITION_NOT_EQUAL;
-
 CONDITION_EQUAL               = BRACKET_OPEN,
                                 [ WHITESPACE ],
                                 EQUALS,
@@ -21,7 +14,7 @@ CONDITION_EQUAL               = BRACKET_OPEN,
                                 CONDITION_NUMBER,
                                 [ WHITESPACE ],
                                 BRACKET_CLOSE;
-                                
+
 CONDITION_GREATER_THAN        = BRACKET_OPEN,
                                 [ WHITESPACE ],
                                 GREATER_THAN,
@@ -37,7 +30,7 @@ CONDITION_GREATER_THAN_EQUAL  = BRACKET_OPEN,
                                 CONDITION_NUMBER,
                                 [ WHITESPACE ],
                                 BRACKET_CLOSE;
-                                
+
 CONDITION_LESS_THAN           = BRACKET_OPEN,
                                 [ WHITESPACE ],
                                 LESS_THAN,
@@ -53,7 +46,7 @@ CONDITION_LESS_THAN_EQUAL     = BRACKET_OPEN,
                                 CONDITION_NUMBER,
                                 [ WHITESPACE ],
                                 BRACKET_CLOSE;
-                                    
+
 CONDITION_NOT_EQUAL           = BRACKET_OPEN,
                                 [ WHITESPACE ],
                                 NOT_EQUALS,
@@ -62,93 +55,115 @@ CONDITION_NOT_EQUAL           = BRACKET_OPEN,
                                 [ WHITESPACE ],
                                 BRACKET_CLOSE;
 
-
-
-(* date ..............................................................................................................*)
-DATE_FORMAT                   = [ CONDITION ], [ GENERAL_OR_DATE_COLOR ],
-                                [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATE_COLOR ] }],
-                                [ PATTERN_SEPARATOR ];
-
-
-
-DATE_PARSE                    = GENERAL_OR_DATE,
-                                [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}],
-                                [ PATTERN_SEPARATOR ];
+CONDITION                     = CONDITION_EQUAL |
+                                CONDITION_NOT_EQUAL |
+                                CONDITION_GREATER_THAN_EQUAL |
+                                CONDITION_GREATER_THAN |
+                                CONDITION_LESS_THAN_EQUAL |
+                                CONDITION_LESS_THAN;
 
 
 
-GENERAL_OR_DATE               = GENERAL | DATE;
+(* text common........................................................................................................*)
+TEXT_LITERAL                   = { ' ' | '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '&' | '/' | ',' | ':' };
 
-DATE                          = [{ DATE_COMPONENT }];
+TEXT_COLOR_WITH_STAR           = [{ TEXT_COLOR_COMPONENT }],
+                                 STAR,
+                                 [{ TEXT_COLOR_COMPONENT }];
 
-GENERAL_OR_DATE_COLOR         = GENERAL | DATE_COLOR;
+TEXT_COLOR_WITHOUT_STAR        = { TEXT_COLOR_COMPONENT };
 
-DATE_COLOR                    = [{ COLOR | DATE_COMPONENT }];
+TEXT_COLOR_COMPONENT           = COLOR | TEXT_LITERAL | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
 
+(* text WITH color but NO condition used by the last format patterns..................................................*)
+TEXT                           = TEXT_COLOR_WITH_STAR | TEXT_COLOR_WITHOUT_STAR;
 
-
-DATE_COMPONENT                = DAY | MONTH | YEAR | DATETIME_LITERAL;
-
-
-
-(* date/time .........................................................................................................*)
-DATETIME_FORMAT                = [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ],
-                                [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_DATETIME_COLOR ] }],
-                                [ PATTERN_SEPARATOR ];
+TEXT_FORMAT                    = TEXT;
 
 
 
-DATETIME_PARSE                = GENERAL_OR_DATETIME,
-                                [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}],
-                                [ PATTERN_SEPARATOR ];
+(* text without color used in parse patterns, some magic placeholder tokens are not valid like STAR...................*)
+TEXT_PARSE                    = TEXT_LITERAL | ESCAPE | QUOTED | UNDERSCORE;
 
 
 
-GENERAL_OR_DATETIME           = GENERAL | DATETIME;
+(* general ...........................................................................................................*)
+COLOR_WHITESPACE              = WHITESPACE | COLOR;
 
-DATETIME                      = [{ DATETIME_COMPONENT }];
-
-GENERAL_OR_DATETIME_COLOR     = GENERAL | DATETIME_COLOR;
-
-DATETIME_COLOR                = [{ COLOR | DATETIME_COMPONENT }];
-
+GENERAL                       = [{ COLOR_WHITESPACE }],
+                                GENERAL_SYMBOL,
+                                [{ COLOR_WHITESPACE }];
 
 
-DATETIME_COMPONENT            = DAY | MONTH | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATETIME_LITERAL;
+(* NUMBER .............................................................................................................*)
+CONDITION_GENERAL_OR_NUMBER_COLOR = [ CONDITION ], [ GENERAL_OR_NUMBER_COLOR ];
+
+NUMBER_NUMBER_NUMBER_TEXT         = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    PATTERN_SEPARATOR,
+                                    [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    PATTERN_SEPARATOR,
+                                    [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    PATTERN_SEPARATOR,
+                                    [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+
+
+NUMBER_NUMBER_TEXT                = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    PATTERN_SEPARATOR,
+                                    [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    PATTERN_SEPARATOR,
+                                    [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+
+NUMBER_TEXT                       = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
+                                    PATTERN_SEPARATOR,
+                                    [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+
+NUMBER_EXPONENT_SYMBOL            = ( 'E+' | 'e+' | 'E-' | 'e-' );
+
+NUMBER_DIGIT                      = DIGIT | DIGIT_SPACE | DIGIT_ZERO | GROUP_SEPARATOR;
+
+NUMBER_COMPONENT                  = CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_DIGIT | NUMBER_LITERAL | PERCENTAGE | QUOTED;
+
+NUMBER_EXPONENT                   = NUMBER_EXPONENT_SYMBOL,
+                                    [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_COMPONENT }];
+
+NUMBER_EXPONENT_COLOR             = NUMBER_EXPONENT_SYMBOL,
+                                    [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_COMPONENT | COLOR }];
+
+NUMBER_COLOR                      = { COLOR | NUMBER_COMPONENT | NUMBER_EXPONENT_COLOR };
+
+NUMBER                            = { NUMBER_COMPONENT | NUMBER_EXPONENT };
+
+GENERAL_OR_NUMBER                 = GENERAL | NUMBER;
+GENERAL_OR_NUMBER_COLOR           = GENERAL | NUMBER_COLOR;
+
+NUMBER_FORMAT                     = NUMBER_NUMBER_NUMBER_TEXT |
+                                    NUMBER_NUMBER_TEXT |
+                                    NUMBER_TEXT |
+                                    CONDITION_GENERAL_OR_NUMBER_COLOR;
+
+NUMBER_PARSE                      = GENERAL_OR_NUMBER,
+                                    [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}],
+                                    [ PATTERN_SEPARATOR ];
 
 
 
-(* time ..............................................................................................................*)
-TIME_FORMAT                   = [ CONDITION ], [ GENERAL_OR_TIME_COLOR ],
-                                [{ PATTERN_SEPARATOR, [ CONDITION ], [ GENERAL_OR_TIME_COLOR ] }],
-                                [ PATTERN_SEPARATOR ];
+(* fractions .........................................................................................................*)
+FRACTION_OR_LITERAL           = COLOR | CURRENCY | ESCAPE | FRACTION_LITERAL | QUOTED;
 
+FRACTION_DIGIT                = DIGIT | DIGIT_SPACE | DIGIT_ZERO;
 
+FRACTION_COMPONENT            = [{ FRACTION_OR_LITERAL }],
+                                FRACTION_DIGIT,
+                                [{ FRACTION_DIGIT | FRACTION_OR_LITERAL }];
 
-TIME_PARSE                    = GENERAL_OR_TIME,
-                                [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}],
-                                [ PATTERN_SEPARATOR ];
-
-
-
-GENERAL_OR_TIME_COLOR         = GENERAL | TIME_COLOR;
-
-TIME_COLOR                    = [{ COLOR | TIME_COMPONENT }];
-
-GENERAL_OR_TIME               = GENERAL | TIME;
-
-TIME                          = [{ TIME_COMPONENT }];
-
-
-
-TIME_COMPONENT                = HOUR | MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATETIME_LITERAL;
+FRACTION                      = FRACTION_COMPONENT,
+                                FRACTION_SYMBOL,
+                                FRACTION_COMPONENT;
 
 
 
 (* date, datetime, time ..............................................................................................*)
-DATETIME_LITERAL              = ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
-
-
+DATE_OR_DATETIME_OR_TIME_LITERAL = ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
 
 (* seconds decimal zeroes.............................................................................................*)
 SECOND_MILLIS                 = SECOND,
@@ -156,107 +171,66 @@ SECOND_MILLIS                 = SECOND,
 
 
 
+(* date ..............................................................................................................*)
 
-(* fractions .........................................................................................................*)
-FRACTION                      = FRACTION_COMPONENT,
-                                FRACTION_SYMBOL,
-                                FRACTION_COMPONENT;
+DATE_COMPONENT         = DAY | MONTH | YEAR | DATE_OR_DATETIME_OR_TIME_LITERAL;
 
-FRACTION_COMPONENT            = [{ FRACTION_OR_LITERAL }],
-                                FRACTION_DIGIT,
-                                [{ FRACTION_DIGIT | FRACTION_OR_LITERAL }];
-FRACTION_OR_LITERAL           = COLOR | CONDITION | CURRENCY | ESCAPE | NUMBER_LITERAL | PERCENTAGE | QUOTED;
-FRACTION_DIGIT                = DIGIT | DIGIT_SPACE | DIGIT_ZERO | GROUP_SEPARATOR;
+DATE                   = { DATE_COMPONENT };
 
+DATE_COLOR             = { COLOR | DATE_COMPONENT };
 
+GENERAL_OR_DATE        = GENERAL | DATE;
 
-(* general ...........................................................................................................*)
-GENERAL                       = [{ GENERAL_COLOR_WHITESPACE }],
-                                GENERAL_SYMBOL,
-                                [{ GENERAL_COLOR_WHITESPACE }];
+GENERAL_OR_DATE_COLOR  = GENERAL | DATE_COLOR;
 
-GENERAL_COLOR_WHITESPACE      = WHITESPACE | COLOR;
+DATE_FORMAT            = [ GENERAL_OR_DATE_COLOR ];
+
+DATE_PARSE             = GENERAL_OR_DATE,
+                         [{ PATTERN_SEPARATOR, GENERAL_OR_DATE}],
+                         [ PATTERN_SEPARATOR ];
 
 
 
-(* NUMBER .............................................................................................................*)
+(* date/time .........................................................................................................*)
+DATETIME_COMPONENT        = DAY | MONTH | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_OR_DATETIME_OR_TIME_LITERAL;
 
-NUMBER_FORMAT                        = NUMBER_NUMBER_NUMBER_TEXT |
-                                       NUMBER_NUMBER_TEXT |
-                                       NUMBER_TEXT |
-                                       CONDITION_GENERAL_OR_NUMBER_COLOR;
+DATETIME                  = { DATETIME_COMPONENT };
 
-NUMBER_NUMBER_NUMBER_TEXT            = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+DATETIME_COLOR            = { COLOR | DATETIME_COMPONENT };
 
+GENERAL_OR_DATETIME       = GENERAL | DATETIME;
 
-NUMBER_NUMBER_TEXT                   = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+GENERAL_OR_DATETIME_COLOR = GENERAL | DATETIME_COLOR;
 
-NUMBER_TEXT                          = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
-                                       PATTERN_SEPARATOR, [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
+DATETIME_FORMAT           = [ GENERAL_OR_DATETIME_COLOR ];
+
+DATETIME_PARSE            = GENERAL_OR_DATETIME,
+                            [{ PATTERN_SEPARATOR, GENERAL_OR_DATETIME}],
+                            [ PATTERN_SEPARATOR ];
 
 
 
-CONDITION_GENERAL_OR_NUMBER_COLOR = [ CONDITION ], [ GENERAL_OR_NUMBER_COLOR ];
+(* time ..............................................................................................................*)
 
-GENERAL_OR_NUMBER_OR_TEXT_COLOR = GENERAL_OR_NUMBER_COLOR | TEXT;
+TIME_COMPONENT         = HOUR | MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_OR_DATETIME_OR_TIME_LITERAL;
 
-GENERAL_OR_NUMBER_COLOR         = GENERAL |
-                                  NUMBER_COLOR;
+TIME                   = { TIME_COMPONENT };
 
-NUMBER_COLOR                    = { COLOR | NUMBER_COMPONENT | NUMBER_EXPONENT_COLOR };
+TIME_COLOR             = { COLOR | TIME_COMPONENT };
 
-NUMBER_EXPONENT_COLOR           = NUMBER_EXPONENT_SYMBOL,
-                                  [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_COMPONENT | COLOR }];
+GENERAL_OR_TIME        = GENERAL | TIME;
 
+GENERAL_OR_TIME_COLOR  = GENERAL | TIME_COLOR;
 
+TIME_FORMAT            = [ GENERAL_OR_TIME_COLOR ];
 
-NUMBER_PARSE                    = GENERAL_OR_NUMBER,
-                                  [{ PATTERN_SEPARATOR, GENERAL_OR_NUMBER}],
-                                  [ PATTERN_SEPARATOR ];
-
-GENERAL_OR_NUMBER               = GENERAL |
-                                  NUMBER;
-
-NUMBER                          = { NUMBER_COMPONENT | NUMBER_EXPONENT };
-
-NUMBER_COMPONENT                = CURRENCY | DECIMAL_POINT | ESCAPE | NUMBER_DIGIT | NUMBER_LITERAL | PERCENTAGE | QUOTED;
-
-NUMBER_EXPONENT                 = NUMBER_EXPONENT_SYMBOL,
-                                  [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_COMPONENT }];
-
-NUMBER_EXPONENT_SYMBOL          = ( 'E+' | 'e+' | 'E-' | 'e-' );
-
-NUMBER_DIGIT                    = DIGIT | DIGIT_SPACE | DIGIT_ZERO | GROUP_SEPARATOR;
+TIME_PARSE             = GENERAL_OR_TIME,
+                         [{ PATTERN_SEPARATOR, GENERAL_OR_TIME}],
+                         [ PATTERN_SEPARATOR ];
 
 
 
-(* text format, note the last pattern may not have a condition........................................................*)
-TEXT_FORMAT                   = TEXT,
-                                [ PATTERN_SEPARATOR ];
-
-
-(* text without color/condition used in parse patterns, some magic placeholder tokens are not valid like STAR.........*)
-TEXT_PARSE                    = TEXT_CHARACTER | ESCAPE | QUOTED | UNDERSCORE;
 
 
 
-(* text WITH color but NO condition used by the last format patterns..................................................*)
-TEXT                           = TEXT_COLOR_WITH_STAR | TEXT_COLOR_WITHOUT_STAR;
 
-
-
-(* text common........................................................................................................*)
-TEXT_COLOR_WITH_STAR           = [{ TEXT_COLOR_COMPONENT }],
-                                 STAR,
-                                 [{ TEXT_COLOR_COMPONENT }];
-
-TEXT_COLOR_WITHOUT_STAR        = [{ TEXT_COLOR_COMPONENT }];
-
-TEXT_COLOR_COMPONENT           = COLOR | WHITESPACE | TEXT_CHARACTER | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
-
-TEXT_CHARACTER                 = { '<' | '>' | '=' | '!' | '$' | '-' | '+' | '(' | ')' | '%' | '&' | '/' | ',' | ':' };

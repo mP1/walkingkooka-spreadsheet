@@ -32,6 +32,7 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfOptionalParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfRangeParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfRepeatedParserToken;
+import walkingkooka.text.cursor.parser.ebnf.EbnfRuleParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfTerminalParserToken;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformer;
 
@@ -166,22 +167,17 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static final EbnfIdentifierName TEXT_IDENTIFIER = EbnfIdentifierName.with("TEXT");
 
-    private static ParserToken transformTextCharacter(final ParserToken token,
-                                                      final SpreadsheetFormatParserContext context) {
+    private static final EbnfIdentifierName TEXT_LITERAL_IDENTIFIER = EbnfIdentifierName.with("TEXT_LITERAL");
+
+    private static ParserToken transformTextLiteral(final ParserToken token,
+                                                    final SpreadsheetFormatParserContext context) {
         final String text = token.text();
 
-        return text.equals(" ") ?
-                SpreadsheetFormatParserToken.whitespace(
-                        text,
-                        text
-                ) :
-                SpreadsheetFormatParserToken.textLiteral(
-                        text,
-                        text
-                );
+        return SpreadsheetFormatParserToken.textLiteral(
+                text,
+                text
+        );
     }
-
-    private static final EbnfIdentifierName TEXT_CHARACTER_IDENTIFIER = EbnfIdentifierName.with("TEXT_CHARACTER");
 
     private static ParserToken transformTime(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
@@ -226,16 +222,12 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
         );
     }
 
-    private static List<ParserToken> flat(final ParserToken token) {
-        return token.cast(RepeatedOrSequenceParserToken.class)
-                .flat()
-                .value();
-    }
-
     /**
-     * Singleton
+     * Factory
      */
-    final static SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer INSTANCE = new SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer();
+    static SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer create() {
+        return new SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer();
+    }
 
     /**
      * Private ctor use singleton
@@ -266,31 +258,30 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
         identifierToTransform.put(FRACTION_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformFraction);
 
-        identifierToTransform.put(SpreadsheetFormatParsers.DATE_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+//        identifierToTransform.put(SpreadsheetFormatParsers.DATE_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
         identifierToTransform.put(SpreadsheetFormatParsers.DATE_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
 
         identifierToTransform.put(DATE_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
         identifierToTransform.put(DATE_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
 
-        identifierToTransform.put(SpreadsheetFormatParsers.DATETIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+//        identifierToTransform.put(SpreadsheetFormatParsers.DATETIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
         identifierToTransform.put(SpreadsheetFormatParsers.DATETIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
 
         identifierToTransform.put(DATETIME_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
         identifierToTransform.put(DATETIME_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
 
-        identifierToTransform.put(SpreadsheetFormatParsers.TIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+  //      identifierToTransform.put(SpreadsheetFormatParsers.TIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
         identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
 
         identifierToTransform.put(TIME_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
         identifierToTransform.put(TIME_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
+        identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
 
         identifierToTransform.put(SpreadsheetFormatParsers.GENERAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformGeneral);
 
+        identifierToTransform.put(TEXT_LITERAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformTextLiteral);
         identifierToTransform.put(TEXT_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformText);
-        identifierToTransform.put(SpreadsheetFormatParsers.TEXT_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
-        identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
-
-        identifierToTransform.put(TEXT_CHARACTER_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformTextCharacter);
+        //identifierToTransform.put(SpreadsheetFormatParsers.TEXT_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
 
         this.identifierToTransform = identifierToTransform;
     }
@@ -299,6 +290,12 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
                                     final SpreadsheetFormatParserContext context) {
         return token.cast(RepeatedOrSequenceParserToken.class)
                 .flat();
+    }
+
+    private static List<ParserToken> flat(final ParserToken token) {
+        return token.cast(RepeatedOrSequenceParserToken.class)
+                .flat()
+                .value();
     }
 
     @Override
@@ -325,55 +322,13 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
         return parser; //leave group definitions as they are.
     }
 
-    /**
-     * Uses the {@link EbnfIdentifierName} to potentially wrap the given {@link Parser} in another will reset the
-     * {@link walkingkooka.text.cursor.TextCursor} if only a color is matched, adds a transformer or a required token check.
-     * <br>
-     * The {@link #colorCheck(EbnfIdentifierName, Parser)} will fail patterns with only a color such as <code>[BLACK]</code>.
-     */
     @Override
     public Parser<SpreadsheetFormatParserContext> identifier(final EbnfIdentifierParserToken token,
                                                              final Parser<SpreadsheetFormatParserContext> parser) {
-        final EbnfIdentifierName name = token.value();
-
-        return requiredCheck(
-                name,
-                transformIfNecessary(
-                        name,
-                        colorCheck(name,
-                                parser
-                        )
-                )
+        return this.transformIfNecessary(
+                token.value(),
+                parser
         );
-    }
-
-    private final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identifierToTransform;
-
-    private Parser<SpreadsheetFormatParserContext> transformIfNecessary(final EbnfIdentifierName name,
-                                                                        final Parser<SpreadsheetFormatParserContext> parser) {
-        final BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken> transform = this.identifierToTransform.get(name);
-        return null == transform ?
-                parser :
-                parser.transform(transform);
-    }
-
-    private Parser<SpreadsheetFormatParserContext> colorCheck(final EbnfIdentifierName name,
-                                                              final Parser<SpreadsheetFormatParserContext> parser) {
-        return name.equals(DATE_COLOR_IDENTIFIER) ||
-                name.equals(DATETIME_COLOR_IDENTIFIER) ||
-                name.equals(SpreadsheetFormatParsers.GENERAL_IDENTIFIER) ||
-                name.equals(NUMBER_COLOR_IDENTIFIER) ||
-                name.equals(TIME_COLOR_IDENTIFIER) ||
-                name.equals(TEXT_IDENTIFIER) ?
-                SpreadsheetFormatParsersFormatColorParser.with(parser) :
-                parser;
-    }
-
-    private Parser<SpreadsheetFormatParserContext> requiredCheck(final EbnfIdentifierName name,
-                                                                 final Parser<SpreadsheetFormatParserContext> parser) {
-        return name.value().endsWith("REQUIRED") ?
-                parser.orReport(ParserReporters.basic()) :
-                parser; // leave as is...
     }
 
     @Override
@@ -384,7 +339,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     @Override
     public Parser<SpreadsheetFormatParserContext> range(final EbnfRangeParserToken token,
-                                                        final Parser<SpreadsheetFormatParserContext> parser) {
+                                                        final String beginText,
+                                                        final String endText) {
         throw new UnsupportedOperationException(token.text()); // there are no ranges...
     }
 
@@ -395,8 +351,56 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
     }
 
     @Override
+    public Parser<SpreadsheetFormatParserContext> rule(final EbnfRuleParserToken token,
+                                                       final Parser<SpreadsheetFormatParserContext> parser) {
+        return this.transformIfNecessary(
+                token.identifier()
+                        .value(),
+                parser
+        );
+    }
+
+    @Override
     public Parser<SpreadsheetFormatParserContext> terminal(final EbnfTerminalParserToken token,
                                                            final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
+    }
+
+    /**
+     * Uses the {@link EbnfIdentifierName} to potentially wrap the given {@link Parser} in another will reset the
+     * {@link walkingkooka.text.cursor.TextCursor} if only a color is matched, adds a transformer or a required token check.
+     * <br>
+     * The {@link #colorCheck(EbnfIdentifierName, Parser)} will fail patterns with only a color such as <code>[BLACK]</code>.
+     */
+    private Parser<SpreadsheetFormatParserContext> transformIfNecessary(final EbnfIdentifierName name,
+                                                                        final Parser<SpreadsheetFormatParserContext> parser) {
+        Parser<SpreadsheetFormatParserContext> result = parser;
+
+        final BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken> transformer = this.identifierToTransform.remove(name);
+        if(null != transformer) {
+            result = parser.transform(transformer);
+        }
+
+        result = colorCheck(
+                name,
+                result
+        );
+
+        return name.value().endsWith("REQUIRED") ?
+                result.orReport(ParserReporters.basic()) :
+                result;
+    }
+
+    private final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identifierToTransform;
+
+    private Parser<SpreadsheetFormatParserContext> colorCheck(final EbnfIdentifierName name,
+                                                              final Parser<SpreadsheetFormatParserContext> parser) {
+        return name.equals(DATE_COLOR_IDENTIFIER) ||
+                name.equals(DATETIME_COLOR_IDENTIFIER) ||
+                name.equals(SpreadsheetFormatParsers.GENERAL_IDENTIFIER) ||
+                name.equals(NUMBER_COLOR_IDENTIFIER) ||
+                name.equals(TIME_COLOR_IDENTIFIER) ?
+                SpreadsheetFormatParsersFormatColorParser.with(parser) :
+                parser;
     }
 }

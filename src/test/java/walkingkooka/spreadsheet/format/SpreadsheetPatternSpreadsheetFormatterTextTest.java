@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -149,8 +148,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
 
     @Override
     Parser<SpreadsheetFormatParserContext> parser() {
-        return SpreadsheetFormatParsers.textFormat()
-                .transform((v, c) -> v.cast(SequenceParserToken.class).value().get(0));
+        return SpreadsheetFormatParsers.textFormat();
     }
 
     @Override

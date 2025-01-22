@@ -29,7 +29,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.SequenceParserToken;
 
 import java.util.Arrays;
 import java.util.List;
@@ -236,12 +235,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     private SpreadsheetPatternSpreadsheetFormatter textFormatter() {
         return SpreadsheetFormatters.text(
                 this.parsePatternOrFail(
-                                SpreadsheetFormatParsers.textFormat(),
-                                TEXT_PATTERN
-                        ).cast(SequenceParserToken.class)
-                        .value()
-                        .get(0)
-                        .cast(SpreadsheetFormatTextParserToken.class)
+                        SpreadsheetFormatParsers.textFormat(),
+                        TEXT_PATTERN
+                ).cast(SpreadsheetFormatTextParserToken.class)
         );
     }
 

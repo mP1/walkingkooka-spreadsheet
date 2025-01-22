@@ -138,15 +138,15 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     }
 
     private SpreadsheetFormatDateParserToken dmyy() {
-        return this.parseDateParserToken("dmyy");
+        return this.dateFormatParse("dmyy");
     }
 
     private SpreadsheetFormatDateParserToken ddmmyyyy() {
-        return this.parseDateParserToken("ddmmyyyy");
+        return this.dateFormatParse("ddmmyyyy");
     }
 
-    private SpreadsheetFormatDateParserToken parseDateParserToken(final String text) {
-        return this.parseAndGetFirst(
+    private SpreadsheetFormatDateParserToken dateFormatParse(final String text) {
+        return this.parseAndGet(
                 text,
                 SpreadsheetFormatParsers.dateFormat(),
                 SpreadsheetFormatDateParserToken.class
@@ -154,15 +154,15 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     }
 
     private SpreadsheetFormatDateTimeParserToken hhmmyyyy() {
-        return this.parseDateTimeParserToken("hhmmyyyy");
+        return this.dateTimeFormatParse("hhmmyyyy");
     }
 
     private SpreadsheetFormatDateTimeParserToken yyyymmhh() {
-        return this.parseDateTimeParserToken("yyyymmhh");
+        return this.dateTimeFormatParse("yyyymmhh");
     }
 
-    private SpreadsheetFormatDateTimeParserToken parseDateTimeParserToken(final String text) {
-        return this.parseAndGetFirst(
+    private SpreadsheetFormatDateTimeParserToken dateTimeFormatParse(final String text) {
+        return this.parseAndGet(
                 text,
                 SpreadsheetFormatParsers.dateTimeFormat(),
                 SpreadsheetFormatDateTimeParserToken.class
@@ -170,14 +170,14 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     }
 
     private SpreadsheetFormatNumberParserToken number() {
-        return this.parseNumberParserToken("#0.0");
+        return this.numberParseParse("#0.0");
     }
 
     private SpreadsheetFormatNumberParserToken money() {
-        return this.parseNumberParserToken("$ #0.00");
+        return this.numberParseParse("$ #0.00");
     }
 
-    private SpreadsheetFormatNumberParserToken parseNumberParserToken(final String text) {
+    private SpreadsheetFormatNumberParserToken numberParseParse(final String text) {
         return SpreadsheetFormatParsers.numberParse()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
@@ -189,30 +189,29 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     }
 
     private SpreadsheetFormatTimeParserToken hhmm() {
-        return this.parseTimeParserToken("hhmm");
+        return this.timeFormatParse("hhmm");
     }
 
     private SpreadsheetFormatTimeParserToken hhmmss() {
-        return this.parseTimeParserToken("hhmmss");
+        return this.timeFormatParse("hhmmss");
     }
 
-    private SpreadsheetFormatTimeParserToken parseTimeParserToken(final String text) {
-        return this.parseAndGetFirst(
+    private SpreadsheetFormatTimeParserToken timeFormatParse(final String text) {
+        return this.parseAndGet(
                 text,
-                SpreadsheetFormatParsers.timeParse(),
+                SpreadsheetFormatParsers.timeFormat(),
                 SpreadsheetFormatTimeParserToken.class
         );
     }
 
-    private <T extends SpreadsheetFormatParserToken> T parseAndGetFirst(final String text,
-                                                                        final Parser<SpreadsheetFormatParserContext> parser,
-                                                                        final Class<T> type) {
+    private <T extends SpreadsheetFormatParserToken> T parseAndGet(final String text,
+                                                                   final Parser<SpreadsheetFormatParserContext> parser,
+                                                                   final Class<T> type) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .get()
-                .cast(SequenceParserToken.class)
-                .value()
-                .get(0)
+                .parse(
+                        TextCursors.charSequence(text),
+                        SpreadsheetFormatParserContexts.basic()
+                ).get()
                 .cast(type);
     }
 
@@ -222,6 +221,8 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
                 ";"
         );
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetParsePattern> type() {

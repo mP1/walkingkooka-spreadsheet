@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format.parser;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -41,7 +40,9 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Parsers that know how to parse formatting patterns<br>.
@@ -56,7 +57,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName WHITESPACE_IDENTIFIER = EbnfIdentifierName.with("WHITESPACE");
     private final static Parser<SpreadsheetFormatParserContext> WHITESPACE = Parsers.stringCharPredicate(CharPredicates.whitespace(), 1, Integer.MAX_VALUE)
             .transform(SpreadsheetFormatParsers::transformWhitespace)
-            .setToString(SpreadsheetFormatWhitespaceParserToken.class.getSimpleName())
+            .setToString(WHITESPACE_IDENTIFIER.toString())
             .cast();
 
     private static ParserToken transformWhitespace(final ParserToken token, final ParserContext context) {
@@ -79,12 +80,11 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetFormatParserContext> COLOR_PARSER;
 
     private static void color(final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined) {
-        predefined.put(COLOR_AND_NUMBER_IDENTIFIER, COLOR_AND_NUMBER);
-        predefined.put(COLOR_NAME_IDENTIFIER, COLOR_NAME);
         predefined.put(COLOR_NUMBER_IDENTIFIER, COLOR_NUMBER);
+        predefined.put(COLOR_NAME_IDENTIFIER, COLOR_NAME);
     }
 
-    private static final EbnfIdentifierName COLOR_AND_NUMBER_IDENTIFIER = EbnfIdentifierName.with("COLOR_AND_NUMBER");
+    private static final EbnfIdentifierName COLOR_NUMBER_IDENTIFIER = EbnfIdentifierName.with("COLOR_NUMBER");
 
     private static final EbnfIdentifierName COLOR_NAME_IDENTIFIER = EbnfIdentifierName.with("COLOR_NAME");
 
@@ -100,27 +100,25 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         );
     }
 
-    private static final EbnfIdentifierName COLOR_NUMBER_IDENTIFIER = EbnfIdentifierName.with("COLOR_NUMBER");
-
-    private static final Parser<SpreadsheetFormatParserContext> COLOR_NUMBER = Parsers.bigInteger(10)
-            .transform(SpreadsheetFormatParsers::transformColorNumber)
-            .setToString(COLOR_NUMBER_IDENTIFIER.toString())
+    private static final Parser<SpreadsheetFormatParserContext> COLOR_DIGITS = Parsers.bigInteger(10)
+            .transform(SpreadsheetFormatParsers::transformColorDigits)
+            .setToString("COLOR_DIGITS")
             .cast();
 
-    private static ParserToken transformColorNumber(final ParserToken token, final ParserContext context) {
+    private static ParserToken transformColorDigits(final ParserToken token, final ParserContext context) {
         return SpreadsheetFormatParserToken.colorNumber(
                 token.cast(BigIntegerParserToken.class).value().intValueExact(),
                 token.text()
         );
     }
 
-    private static final Parser<SpreadsheetFormatParserContext> COLOR_AND_NUMBER = Parsers.string("COLOR", CaseSensitivity.INSENSITIVE)
+    private static final Parser<SpreadsheetFormatParserContext> COLOR_NUMBER = Parsers.string("COLOR", CaseSensitivity.INSENSITIVE)
             .transform(SpreadsheetFormatParsers::transformColorLiteral)
             .builder()
             .optional(WHITESPACE.cast())
-            .required(COLOR_NUMBER.cast())
+            .required(COLOR_DIGITS.cast())
             .build()
-            .setToString(COLOR_NAME_IDENTIFIER.toString())
+            .setToString(COLOR_NUMBER_IDENTIFIER.toString())
             .cast();
 
     private static SpreadsheetFormatColorLiteralSymbolParserToken transformColorLiteral(final ParserToken string, final ParserContext context) {
@@ -165,34 +163,40 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         );
     }
 
-    private static final Parser<SpreadsheetFormatParserContext> EQUALS_SYMBOL = symbol('=',
-            SpreadsheetFormatParserToken::equalsSymbol,
-            SpreadsheetFormatEqualsSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> EQUALS_SYMBOL = symbol(
+            '=',
+            SpreadsheetFormatParserToken::equalsSymbol
+    );
     private static final EbnfIdentifierName EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("EQUALS");
 
-    private static final Parser<SpreadsheetFormatParserContext> NOT_EQUALS_SYMBOL = symbol("<>",
-            SpreadsheetFormatParserToken::notEqualsSymbol,
-            SpreadsheetFormatNotEqualsSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> NOT_EQUALS_SYMBOL = symbol(
+            "<>",
+            SpreadsheetFormatParserToken::notEqualsSymbol
+    );
     private static final EbnfIdentifierName NOT_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("NOT_EQUALS");
 
-    private static final Parser<SpreadsheetFormatParserContext> GREATER_THAN_SYMBOL = symbol('>',
-            SpreadsheetFormatParserToken::greaterThanSymbol,
-            SpreadsheetFormatGreaterThanSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> GREATER_THAN_SYMBOL = symbol(
+            '>',
+            SpreadsheetFormatParserToken::greaterThanSymbol
+    );
     private static final EbnfIdentifierName GREATER_THAN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("GREATER_THAN");
 
-    private static final Parser<SpreadsheetFormatParserContext> GREATER_THAN_EQUALS_SYMBOL = symbol(">=",
-            SpreadsheetFormatParserToken::greaterThanEqualsSymbol,
-            SpreadsheetFormatGreaterThanEqualsSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> GREATER_THAN_EQUALS_SYMBOL = symbol(
+            ">=",
+            SpreadsheetFormatParserToken::greaterThanEqualsSymbol
+    );
     private static final EbnfIdentifierName GREATER_THAN_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("GREATER_THAN_EQUALS");
 
-    private static final Parser<SpreadsheetFormatParserContext> LESS_THAN_SYMBOL = symbol('<',
-            SpreadsheetFormatParserToken::lessThanSymbol,
-            SpreadsheetFormatLessThanSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> LESS_THAN_SYMBOL = symbol(
+            '<',
+            SpreadsheetFormatParserToken::lessThanSymbol
+    );
     private static final EbnfIdentifierName LESS_THAN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("LESS_THAN");
 
-    private static final Parser<SpreadsheetFormatParserContext> LESS_THAN_EQUALS_SYMBOL = symbol("<=",
-            SpreadsheetFormatParserToken::lessThanEqualsSymbol,
-            SpreadsheetFormatLessThanEqualsSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> LESS_THAN_EQUALS_SYMBOL = symbol(
+            "<=",
+            SpreadsheetFormatParserToken::lessThanEqualsSymbol
+    );
     private static final EbnfIdentifierName LESS_THAN_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("LESS_THAN_EQUALS");
 
     // date..............................................................................................................
@@ -222,14 +226,16 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     }
 
     private static final EbnfIdentifierName DAY_IDENTIFIER = EbnfIdentifierName.with("DAY");
-    private static final Parser<SpreadsheetFormatParserContext> DAY = repeatingSymbol('D',
-            SpreadsheetFormatParserToken::day,
-            SpreadsheetFormatDayParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> DAY = repeatingSymbol(
+            'D',
+            SpreadsheetFormatParserToken::day
+    );
 
     private static final EbnfIdentifierName YEAR_IDENTIFIER = EbnfIdentifierName.with("YEAR");
-    private static final Parser<SpreadsheetFormatParserContext> YEAR = repeatingSymbol('Y',
-            SpreadsheetFormatParserToken::year,
-            SpreadsheetFormatYearParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> YEAR = repeatingSymbol(
+            'Y',
+            SpreadsheetFormatParserToken::year
+    );
 
     // dateTime..............................................................................................................
 
@@ -259,15 +265,17 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName MINUTE_IDENTIFIER = EbnfIdentifierName.with("MINUTE");
 
-    private static final Parser<SpreadsheetFormatParserContext> MINUTE = repeatingSymbol('M',
-            SpreadsheetFormatParserToken::minute,
-            SpreadsheetFormatMinuteParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> MINUTE = repeatingSymbol(
+            'M',
+            SpreadsheetFormatParserToken::minute
+    );
 
     private static final EbnfIdentifierName MONTH_IDENTIFIER = EbnfIdentifierName.with("MONTH");
 
-    private static final Parser<SpreadsheetFormatParserContext> MONTH = repeatingSymbol('M',
-            SpreadsheetFormatParserToken::month,
-            SpreadsheetFormatMonthParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> MONTH = repeatingSymbol(
+            'M',
+            SpreadsheetFormatParserToken::month
+    );
 
     // general ..........................................................................................................
 
@@ -289,7 +297,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final Parser<SpreadsheetFormatParserContext> GENERAL_SYMBOL = Parsers.string("GENERAL", CaseSensitivity.INSENSITIVE)
             .transform(SpreadsheetFormatParsers::transformGeneralSymbol)
-            .setToString(GENERAL_SYMBOL_IDENTIFIER.toString())
+            .setToString("GENERAL")
             .cast();
 
     private static ParserToken transformGeneralSymbol(final ParserToken token, final ParserContext context) {
@@ -340,44 +348,52 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     }
 
     private static final EbnfIdentifierName CURRENCY_IDENTIFIER = EbnfIdentifierName.with("CURRENCY");
-    private static final Parser<SpreadsheetFormatParserContext> CURRENCY = symbol('$',
-            SpreadsheetFormatParserToken::currency,
-            SpreadsheetFormatCurrencyParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> CURRENCY = symbol(
+            '$',
+            SpreadsheetFormatParserToken::currency
+    );
 
     private static final EbnfIdentifierName DECIMAL_POINT_IDENTIFIER = EbnfIdentifierName.with("DECIMAL_POINT");
-    private static final Parser<SpreadsheetFormatParserContext> DECIMAL_POINT_PARSER = symbol('.',
-            SpreadsheetFormatParserToken::decimalPoint,
-            SpreadsheetFormatDecimalPointParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> DECIMAL_POINT_PARSER = symbol(
+            '.',
+            SpreadsheetFormatParserToken::decimalPoint
+    );
 
     private static final EbnfIdentifierName DIGIT_IDENTIFIER = EbnfIdentifierName.with("DIGIT");
-    private static final Parser<SpreadsheetFormatParserContext> DIGIT = symbol('#',
-            SpreadsheetFormatParserToken::digit,
-            SpreadsheetFormatDigitParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> DIGIT = symbol(
+            '#',
+            SpreadsheetFormatParserToken::digit
+    );
 
     private static final EbnfIdentifierName DIGIT_SPACE_IDENTIFIER = EbnfIdentifierName.with("DIGIT_SPACE");
-    private static final Parser<SpreadsheetFormatParserContext> DIGIT_SPACE = symbol('?',
-            SpreadsheetFormatParserToken::digitSpace,
-            SpreadsheetFormatDigitSpaceParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> DIGIT_SPACE = symbol(
+            '?',
+            SpreadsheetFormatParserToken::digitSpace
+    );
 
     private static final EbnfIdentifierName DIGIT_ZERO_IDENTIFIER = EbnfIdentifierName.with("DIGIT_ZERO");
-    private static final Parser<SpreadsheetFormatParserContext> DIGIT_ZERO = symbol('0',
-            SpreadsheetFormatParserToken::digitZero,
-            SpreadsheetFormatDigitZeroParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> DIGIT_ZERO = symbol(
+            '0',
+            SpreadsheetFormatParserToken::digitZero
+    );
 
     private static final EbnfIdentifierName FRACTION_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("FRACTION_SYMBOL");
-    private static final Parser<SpreadsheetFormatParserContext> FRACTION_SYMBOL = symbol('/',
-            SpreadsheetFormatParserToken::fractionSymbol,
-            SpreadsheetFormatFractionSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> FRACTION_SYMBOL = symbol(
+            '/',
+            SpreadsheetFormatParserToken::fractionSymbol
+    );
 
-    private static final Parser<SpreadsheetFormatParserContext> GROUP_SEPARATOR = symbol(',',
-            SpreadsheetFormatParserToken::groupSeparator,
-            SpreadsheetFormatGroupSeparatorParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> GROUP_SEPARATOR = symbol(
+            ',',
+            SpreadsheetFormatParserToken::groupSeparator
+    );
     private static final EbnfIdentifierName GROUP_SEPARATOR_IDENTIFIER = EbnfIdentifierName.with("GROUP_SEPARATOR");
 
     private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");
-    private static final Parser<SpreadsheetFormatParserContext> PERCENTAGE = symbol('%',
-            SpreadsheetFormatParserToken::percent,
-            SpreadsheetFormatPercentParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> PERCENTAGE = symbol(
+            '%',
+            SpreadsheetFormatParserToken::percent
+    );
 
     // pattern..........................................................................................................
 
@@ -390,8 +406,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final Parser<SpreadsheetFormatParserContext> PATTERN_SEPARATOR_SYMBOL_PARSER = symbol(
             ';', // cant call SpreadsheetPattern.SEPARATOR.character() because will NPE,
-            SpreadsheetFormatParserToken::separatorSymbol,
-            SpreadsheetFormatSeparatorSymbolParserToken.class
+            SpreadsheetFormatParserToken::separatorSymbol
     );
 
     private static final EbnfIdentifierName PATTERN_SEPARATOR_IDENTIFIER = EbnfIdentifierName.with("PATTERN_SEPARATOR");
@@ -434,19 +449,24 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     }
 
     private static final EbnfIdentifierName STAR_IDENTIFIER = EbnfIdentifierName.with("STAR");
-    private static final Parser<SpreadsheetFormatParserContext> STAR = escapeStarOrUnderline('*',
+    private static final Parser<SpreadsheetFormatParserContext> STAR = escapeStarOrUnderline(
+            '*',
             SpreadsheetFormatParserToken::star,
-            SpreadsheetFormatStarParserToken.class);
+            "STAR"
+    );
 
     private static final EbnfIdentifierName TEXT_PLACEHOLDER_IDENTIFIER = EbnfIdentifierName.with("TEXT_PLACEHOLDER");
-    private static final Parser<SpreadsheetFormatParserContext> TEXT_PLACEHOLDER = symbol('@',
-            SpreadsheetFormatParserToken::textPlaceholder,
-            SpreadsheetFormatTextPlaceholderParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> TEXT_PLACEHOLDER = symbol(
+            '@',
+            SpreadsheetFormatParserToken::textPlaceholder
+    );
 
     private static final EbnfIdentifierName UNDERSCORE_IDENTIFIER = EbnfIdentifierName.with("UNDERSCORE");
-    private static final Parser<SpreadsheetFormatParserContext> UNDERSCORE = escapeStarOrUnderline('_',
+    private static final Parser<SpreadsheetFormatParserContext> UNDERSCORE = escapeStarOrUnderline(
+            '_',
             SpreadsheetFormatParserToken::underscore,
-            SpreadsheetFormatUnderscoreParserToken.class);
+            "UNDERSCORE"
+    );
 
     // time..............................................................................................................
 
@@ -478,24 +498,28 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     }
 
     private static final EbnfIdentifierName A_SLASH_P_IDENTIFIER = EbnfIdentifierName.with("A_SLASH_P");
-    private static final Parser<SpreadsheetFormatParserContext> A_SLASH_P = symbol("A/P",
-            SpreadsheetFormatParserToken::amPm,
-            SpreadsheetFormatAmPmParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> A_SLASH_P = symbol(
+            "A/P",
+            SpreadsheetFormatParserToken::amPm
+    );
 
     private static final EbnfIdentifierName AM_SLASH_PM_IDENTIFIER = EbnfIdentifierName.with("AM_SLASH_PM");
-    private static final Parser<SpreadsheetFormatParserContext> AM_SLASH_PM = symbol("AM/PM",
-            SpreadsheetFormatParserToken::amPm,
-            SpreadsheetFormatAmPmParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> AM_SLASH_PM = symbol(
+            "AM/PM",
+            SpreadsheetFormatParserToken::amPm
+    );
 
     private static final EbnfIdentifierName HOUR_IDENTIFIER = EbnfIdentifierName.with("HOUR");
-    private static final Parser<SpreadsheetFormatParserContext> HOUR = repeatingSymbol('H',
-            SpreadsheetFormatParserToken::hour,
-            SpreadsheetFormatHourParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> HOUR = repeatingSymbol(
+            'H',
+            SpreadsheetFormatParserToken::hour
+    );
 
     private static final EbnfIdentifierName SECOND_IDENTIFIER = EbnfIdentifierName.with("SECOND");
-    private static final Parser<SpreadsheetFormatParserContext> SECOND = repeatingSymbol('S',
-            SpreadsheetFormatParserToken::second,
-            SpreadsheetFormatSecondParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> SECOND = repeatingSymbol(
+            'S',
+            SpreadsheetFormatParserToken::second
+    );
 
     // misc..............................................................................................................
 
@@ -505,29 +529,48 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
         predefined.put(ESCAPE_IDENTIFIER, ESCAPE);
         predefined.put(NUMBER_LITERAL_IDENTIFIER, NUMBER_LITERAL);
+        predefined.put(FRACTION_LITERAL_IDENTIFIER, FRACTION_LITERAL);
         predefined.put(DATETIME_TEXT_LITERAL_IDENTIFIER, DATETIME_TEXT_LITERAL);
     }
 
     private static final EbnfIdentifierName BRACKET_OPEN_IDENTIFIER = EbnfIdentifierName.with("BRACKET_OPEN");
-    private static final Parser<SpreadsheetFormatParserContext> BRACKET_OPEN = symbol('[',
-            SpreadsheetFormatParserToken::bracketOpenSymbol,
-            SpreadsheetFormatBracketOpenSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> BRACKET_OPEN = symbol(
+            '[',
+            SpreadsheetFormatParserToken::bracketOpenSymbol
+    );
 
     private static final EbnfIdentifierName BRACKET_CLOSE_IDENTIFIER = EbnfIdentifierName.with("BRACKET_CLOSE");
-    private static final Parser<SpreadsheetFormatParserContext> BRACKET_CLOSE = symbol(']',
-            SpreadsheetFormatParserToken::bracketCloseSymbol,
-            SpreadsheetFormatBracketCloseSymbolParserToken.class);
+    private static final Parser<SpreadsheetFormatParserContext> BRACKET_CLOSE = symbol(
+            ']',
+            SpreadsheetFormatParserToken::bracketCloseSymbol
+    );
 
     private static final EbnfIdentifierName ESCAPE_IDENTIFIER = EbnfIdentifierName.with("ESCAPE");
-    private static final Parser<SpreadsheetFormatParserContext> ESCAPE = escapeStarOrUnderline('\\',
+    private static final Parser<SpreadsheetFormatParserContext> ESCAPE = escapeStarOrUnderline(
+            '\\',
             SpreadsheetFormatParserToken::escape,
-            SpreadsheetFormatEscapeParserToken.class);
+            "ESCAPE"
+    );
 
     private static final EbnfIdentifierName NUMBER_LITERAL_IDENTIFIER = EbnfIdentifierName.with("NUMBER_LITERAL");
-    private static final Parser<SpreadsheetFormatParserContext> NUMBER_LITERAL = literal("(): +-", NUMBER_LITERAL_IDENTIFIER);
+    private static final Parser<SpreadsheetFormatParserContext> NUMBER_LITERAL = literal(
+            "(): +-=<>",
+            NUMBER_LITERAL_IDENTIFIER
+    );
+
+    /**
+     * Note fractions literals are slightly different too number literals, eg percentage-symbol
+     */
+    private static final EbnfIdentifierName FRACTION_LITERAL_IDENTIFIER = EbnfIdentifierName.with("FRACTION_LITERAL");
+    private static final Parser<SpreadsheetFormatParserContext> FRACTION_LITERAL = literal(
+            "(): +-=<>%,",
+            FRACTION_LITERAL_IDENTIFIER
+    );
 
     private static final EbnfIdentifierName DATETIME_TEXT_LITERAL_IDENTIFIER = EbnfIdentifierName.with("DATETIME_TEXT_LITERAL");
-    private static final Parser<SpreadsheetFormatParserContext> DATETIME_TEXT_LITERAL = literal("$-+(): /+-,", DATETIME_TEXT_LITERAL_IDENTIFIER);
+    private static final Parser<SpreadsheetFormatParserContext> DATETIME_TEXT_LITERAL = literal(
+            "$-+(): /+-,",
+            DATETIME_TEXT_LITERAL_IDENTIFIER);
 
     // helpers..............................................................................................................
 
@@ -547,6 +590,9 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Parsers the grammar and returns the selected parser.
      */
     static {
+        final CharSequence filename = CharSequences.quoteAndEscape(
+                SpreadsheetFormatParsers.class.getSimpleName() + "Grammar.txt"
+        );
         //noinspection CaughtExceptionImmediatelyRethrown
         try {
             final TextCursor grammarFile = TextCursors.charSequence(new SpreadsheetFormatParsersGrammarProvider().text());
@@ -565,53 +611,63 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
             misc(predefined);
 
-            final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> parsers = EbnfParserToken.grammarParser()
+            final Function<EbnfIdentifierName, Optional<Parser<SpreadsheetFormatParserContext>>> optionalParsers = EbnfParserToken.grammarParser()
                     .orFailIfCursorNotEmpty(ParserReporters.basic())
                     .parse(grammarFile, EbnfParserContexts.basic())
-                    .orElseThrow(() -> new IllegalStateException("Unable to parse format parsers grammar file."))
+                    .orElseThrow(() -> new IllegalStateException("Unable to read grammar in " + filename))
                     .cast(EbnfGrammarParserToken.class)
-                    .combinator(predefined, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
+                    .combinator(
+                            (nn) -> Optional.ofNullable(
+                                    predefined.get(nn)
+                            ),
+                            SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.create()
+                    );
+            final Function<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> parsers = (n) -> optionalParsers.apply(n)
+                    .orElseThrow(() -> new IllegalStateException("Missing parser " + CharSequences.quoteAndEscape(n.value()) + " from " + filename));
 
-            COLOR_PARSER = parsers.get(COLOR_IDENTIFIER);
-            CONDITION_PARSER = parsers.get(EbnfIdentifierName.with("CONDITION"));
+            COLOR_PARSER = parsers.apply(COLOR_IDENTIFIER);
+            CONDITION_PARSER = parsers.apply(EbnfIdentifierName.with("CONDITION"));
 
-            DATE_FORMAT_PARSER = parsers.get(DATE_FORMAT)
+            DATE_FORMAT_PARSER = parsers.apply(DATE_FORMAT)
                     .orFailIfCursorNotEmpty(ParserReporters.basic());
-            DATE_PARSE_PARSER = parsers.get(DATE_PARSE)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-
-            DATETIME_FORMAT_PARSER = parsers.get(DATETIME_FORMAT)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-            DATETIME_PARSE_PARSER = parsers.get(DATETIME_PARSE)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-
-            FRACTION_PARSER = parsers.get(EbnfIdentifierName.with("FRACTION"));
-            GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER);
-
-            NUMBER_FORMAT_PARSER = parsers.get(NUMBER_FORMAT)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-            NUMBER_PARSE_PARSER = parsers.get(NUMBER_PARSE)
+            DATE_PARSE_PARSER = parsers.apply(DATE_PARSE)
                     .orFailIfCursorNotEmpty(ParserReporters.basic());
 
-            TEXT_FORMAT_PARSER = parsers.get(TEXT_FORMAT)
+            DATETIME_FORMAT_PARSER = parsers.apply(DATETIME_FORMAT)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+            DATETIME_PARSE_PARSER = parsers.apply(DATETIME_PARSE)
                     .orFailIfCursorNotEmpty(ParserReporters.basic());
 
-            TIME_FORMAT_PARSER = parsers.get(TIME_FORMAT)
+            FRACTION_PARSER = parsers.apply(EbnfIdentifierName.with("FRACTION"));
+            GENERAL_PARSER = parsers.apply(GENERAL_IDENTIFIER);
+
+            NUMBER_FORMAT_PARSER = parsers.apply(NUMBER_FORMAT)
                     .orFailIfCursorNotEmpty(ParserReporters.basic());
-            TIME_PARSE_PARSER = parsers.get(TIME_PARSE)
+            NUMBER_PARSE_PARSER = parsers.apply(NUMBER_PARSE)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+
+            TEXT_FORMAT_PARSER = parsers.apply(TEXT_FORMAT)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+
+            TIME_FORMAT_PARSER = parsers.apply(TIME_FORMAT)
+                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+            TIME_PARSE_PARSER = parsers.apply(TIME_PARSE)
                     .orFailIfCursorNotEmpty(ParserReporters.basic());
 
         } catch (final SpreadsheetFormatParserException rethrow) {
             throw rethrow;
-        } catch (final Exception cause) {
-            throw new SpreadsheetFormatParserException("Failed to return parsers parse excel format grammar file, message: " + cause.getMessage(), cause);
+        } catch (final RuntimeException cause) {
+            throw new SpreadsheetFormatParserException("Failed to set parsers from grammar file " + filename + " , message: " + cause.getMessage(), cause);
         }
     }
 
     private static Parser<SpreadsheetFormatParserContext> literal(final String any,
                                                                   final EbnfIdentifierName name) {
-        return Parsers.character(CharPredicates.any(any))
-                .transform(SpreadsheetFormatParsers::literalTransform)
+        return Parsers.stringCharPredicate(
+                    CharPredicates.any(any),
+                1, // min
+                        65535 // max
+                ).transform(SpreadsheetFormatParsers::literalTransform)
                 .setToString(name.toString())
                 .cast();
     }
@@ -621,28 +677,21 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      */
     private static SpreadsheetFormatParserToken literalTransform(final ParserToken token,
                                                                  final ParserContext context) {
-        final CharacterParserToken characterParserToken = token.cast(CharacterParserToken.class);
-        final char c = characterParserToken.value();
-        final String value = String.valueOf(c);
-        final String text = characterParserToken.text();
+        final StringParserToken stringParserToken = token.cast(StringParserToken.class);
+        final String value = stringParserToken.value();
+        final String text = stringParserToken.text();
 
-        return ' ' == c ?
-                SpreadsheetFormatParserToken.whitespace(
-                        value,
-                        text
-                ) :
-                SpreadsheetFormatParserToken.textLiteral(
-                        value,
-                        text
-                );
+        return SpreadsheetFormatParserToken.textLiteral(
+                value,
+                text
+        );
     }
 
     /**
      * Matches a token filled with the given c ignoring case.
      */
     private static Parser<SpreadsheetFormatParserContext> repeatingSymbol(final char c,
-                                                                          final BiFunction<String, String, ParserToken> factory,
-                                                                          final Class<? extends SpreadsheetFormatLeafParserToken<?>> tokenClass) {
+                                                                          final BiFunction<String, String, ParserToken> factory) {
         return Parsers.stringCharPredicate(
                         CaseSensitivity.INSENSITIVE.charPredicate(c),
                         1,
@@ -653,7 +702,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 .value(),
                                         stringParserToken.text()
                                 )
-                ).setToString(snakeCaseParserClassSimpleName(tokenClass))
+                ).setToString("{" + CharSequences.quoteIfChars(c) + "}")
                 .cast();
     }
 
@@ -661,8 +710,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Matches a token holding a single character.
      */
     private static Parser<SpreadsheetFormatParserContext> symbol(final char c,
-                                                                 final BiFunction<String, String, ParserToken> factory,
-                                                                 final Class<? extends SpreadsheetFormatLeafParserToken<?>> tokenClass) {
+                                                                 final BiFunction<String, String, ParserToken> factory) {
         return Parsers.character(CaseSensitivity.SENSITIVE.charPredicate(c))
                 .transform(
                         (characterParserToken, context) ->
@@ -672,13 +720,12 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 .toString(),
                                         characterParserToken.text()
                                 )
-                ).setToString(snakeCaseParserClassSimpleName(tokenClass))
+                ).setToString(CharSequences.quoteIfChars(c).toString())
                 .cast();
     }
 
     private static Parser<SpreadsheetFormatParserContext> symbol(final String text,
-                                                                 final BiFunction<String, String, ParserToken> factory,
-                                                                 final Class<? extends SpreadsheetFormatLeafParserToken<?>> tokenClass) {
+                                                                 final BiFunction<String, String, ParserToken> factory) {
         return Parsers.string(
                         text,
                         CaseSensitivity.INSENSITIVE
@@ -689,7 +736,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 .value(),
                                         stringParserToken.text()
                                 )
-                ).setToString(snakeCaseParserClassSimpleName(tokenClass))
+                ).setToString(CharSequences.quoteIfChars(text).toString())
                 .cast();
     }
 
@@ -698,7 +745,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      */
     private static Parser<SpreadsheetFormatParserContext> escapeStarOrUnderline(final char initial,
                                                                                 final BiFunction<Character, String, ParserToken> factory,
-                                                                                final Class<? extends SpreadsheetFormatLeafParserToken<?>> tokenClass) {
+                                                                                final String toString) {
         return Parsers.stringInitialAndPartCharPredicate(
                         CharPredicates.is(initial),
                         CharPredicates.always(),
@@ -711,29 +758,8 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 .charAt(1),
                                         stringParserToken.text()
                                 )
-                ).setToString(snakeCaseParserClassSimpleName(tokenClass))
+                ).setToString(toString)
                 .cast();
-    }
-
-    /**
-     * Converts the type simple name into snake case dropping the <pre>SpreadsheetFormat</pre> and trailing <pre>Symbol</pre>
-     * and <pre>ParserToken</pre>
-     */
-    // VisibleForTesting.
-    static String snakeCaseParserClassSimpleName(final Class<?> type) {
-        String simpleName = CharSequences.subSequence(type.getSimpleName(),
-                        "SpreadsheetFormat".length(),
-                        -(ParserToken.class.getSimpleName().length()))
-                .toString();
-        if (simpleName.endsWith("Symbol")) {
-            simpleName = CharSequences.subSequence(simpleName, 0, -"Symbol".length()).toString();
-        }
-
-        // turn name into snake case.
-        return CaseKind.CAMEL.change(
-                simpleName,
-                CaseKind.SNAKE
-        );
     }
 
     /**

@@ -253,7 +253,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 formula.setValue(
                         Optional.of(
                                 SpreadsheetErrorKind.ERROR.setMessage(
-                                        "Invalid character '9' at (1,1) expected APOSTROPHE_STRING | EQUALS_EXPRESSION | VALUE"
+                                        "Invalid character '9' at (1,1) expected (('\\'', [STRING]) | EQUALS_EXPRESSION | \"d/m/y\" | \"d/m/y h:mm\" | \"#;#.#\" | \"hh:mm\")"
                                 )
                         )
                 )
