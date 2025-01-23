@@ -290,7 +290,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                             SpreadsheetFunctionName.MIN_LENGTH,
                             SpreadsheetFunctionName.MAX_LENGTH)
                     .transform(SpreadsheetParsers::transformFunctionName)
-                    .setToString(SpreadsheetFunctionName.class.getSimpleName())
+                    .setToString(FUNCTION_NAME_IDENTIFIER.value())
     );
 
     private static ParserToken transformFunctionName(final ParserToken token, final SpreadsheetParserContext context) {
@@ -493,7 +493,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName LAMBDA_FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("LAMBDA_FUNCTION_NAME");
     private static final Parser<SpreadsheetParserContext> LAMBDA_FUNCTION_NAME = Parsers.<SpreadsheetParserContext>string("lambda", CaseSensitivity.INSENSITIVE)
             .transform(SpreadsheetParsers::transformFunctionName)
-            .setToString(SpreadsheetFunctionName.class.getSimpleName())
+            .setToString(LAMBDA_FUNCTION_NAME_IDENTIFIER.value())
             .cast();
 
     private static final EbnfIdentifierName PERCENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PERCENT_SYMBOL");
