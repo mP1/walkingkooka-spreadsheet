@@ -512,7 +512,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
                         final int maxWidth,
                         final BiFunction<ParserToken, SpreadsheetParserContext, ParserToken> transformer) {
         this.addParser(
-                Parsers.<SpreadsheetParserContext>stringCharPredicate(
+                Parsers.<SpreadsheetParserContext>charPredicateString(
                         CharPredicates.digit(),
                         minWidth,
                         maxWidth
