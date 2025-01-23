@@ -610,7 +610,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                 (nn) -> Optional.ofNullable(
                         predefined.get(nn)
                 ),
-                SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.create(),
+                SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer.create(),
                 filename
         );
 

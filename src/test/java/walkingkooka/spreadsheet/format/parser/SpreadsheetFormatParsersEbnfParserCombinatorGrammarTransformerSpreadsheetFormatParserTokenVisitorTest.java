@@ -19,21 +19,21 @@ package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor> {
 
     @Override
-    public SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.class.getSimpleName();
+        return SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer.class.getSimpleName();
     }
 
     @Override
-    public Class<SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor.class;
     }
 
     @Override

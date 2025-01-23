@@ -34,7 +34,7 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfRangeParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfRepeatedParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfRuleParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfTerminalParserToken;
-import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformer;
+import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformer;
 
 import java.util.List;
 import java.util.Map;
@@ -43,7 +43,7 @@ import java.util.function.BiFunction;
 /**
  * Helps transform the EBNF grammar into a {@link Parser} which will then return a {@link SpreadsheetFormatParserToken}
  */
-final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer<SpreadsheetFormatParserContext> {
+final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer implements EbnfParserCombinatorGrammarTransformer<SpreadsheetFormatParserContext> {
 
     // constants must be init before singleton/ctor is run........................................................................
 
@@ -128,7 +128,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
 
     private static ParserToken transformDateTime(final ParserToken token,
                                                  final SpreadsheetFormatParserContext context) {
-        return SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor.fixMinutes(token);
+        return SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor.fixMinutes(token);
     }
 
     private static final EbnfIdentifierName DATETIME_IDENTIFIER = EbnfIdentifierName.with("DATETIME");
@@ -225,63 +225,63 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer im
     /**
      * Factory
      */
-    static SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer create() {
-        return new SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer();
+    static SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer create() {
+        return new SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer();
     }
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer() {
+    private SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer() {
         super();
 
         final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identifierToTransform = Maps.sorted();
 
-        identifierToTransform.put(SpreadsheetFormatParsers.COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformColor);
+        identifierToTransform.put(SpreadsheetFormatParsers.COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformColor);
 
-        identifierToTransform.put(CONDITION_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformConditionEqual);
-        identifierToTransform.put(CONDITION_GREATER_THAN_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformConditionGreaterThan);
-        identifierToTransform.put(CONDITION_GREATER_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformConditionGreaterThanEqual);
-        identifierToTransform.put(CONDITION_LESS_THAN_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformConditionLessThan);
-        identifierToTransform.put(CONDITION_LESS_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformConditionLessThanEqual);
-        identifierToTransform.put(CONDITION_NOT_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformConditionNotEqual);
+        identifierToTransform.put(CONDITION_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionEqual);
+        identifierToTransform.put(CONDITION_GREATER_THAN_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionGreaterThan);
+        identifierToTransform.put(CONDITION_GREATER_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionGreaterThanEqual);
+        identifierToTransform.put(CONDITION_LESS_THAN_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionLessThan);
+        identifierToTransform.put(CONDITION_LESS_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionLessThanEqual);
+        identifierToTransform.put(CONDITION_NOT_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionNotEqual);
 
-        identifierToTransform.put(SpreadsheetFormatParsers.NUMBER_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
-        identifierToTransform.put(SpreadsheetFormatParsers.NUMBER_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+        identifierToTransform.put(SpreadsheetFormatParsers.NUMBER_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
+        identifierToTransform.put(SpreadsheetFormatParsers.NUMBER_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
 
-        identifierToTransform.put(NUMBER_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformNumber);
-        identifierToTransform.put(NUMBER_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformNumber);
+        identifierToTransform.put(NUMBER_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformNumber);
+        identifierToTransform.put(NUMBER_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformNumber);
 
-        identifierToTransform.put(NUMBER_EXPONENT_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimalExponent);
-        identifierToTransform.put(NUMBER_EXPONENT_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimalExponent);
-        identifierToTransform.put(NUMBER_EXPONENT_SYMBOL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformExponentSymbol);
+        identifierToTransform.put(NUMBER_EXPONENT_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformBigDecimalExponent);
+        identifierToTransform.put(NUMBER_EXPONENT_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformBigDecimalExponent);
+        identifierToTransform.put(NUMBER_EXPONENT_SYMBOL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformExponentSymbol);
 
-        identifierToTransform.put(FRACTION_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformFraction);
+        identifierToTransform.put(FRACTION_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformFraction);
 
-//        identifierToTransform.put(SpreadsheetFormatParsers.DATE_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
-        identifierToTransform.put(SpreadsheetFormatParsers.DATE_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+//        identifierToTransform.put(SpreadsheetFormatParsers.DATE_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
+        identifierToTransform.put(SpreadsheetFormatParsers.DATE_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
 
-        identifierToTransform.put(DATE_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
-        identifierToTransform.put(DATE_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
+        identifierToTransform.put(DATE_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformDate);
+        identifierToTransform.put(DATE_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformDate);
 
-//        identifierToTransform.put(SpreadsheetFormatParsers.DATETIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
-        identifierToTransform.put(SpreadsheetFormatParsers.DATETIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+//        identifierToTransform.put(SpreadsheetFormatParsers.DATETIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
+        identifierToTransform.put(SpreadsheetFormatParsers.DATETIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
 
-        identifierToTransform.put(DATETIME_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
-        identifierToTransform.put(DATETIME_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
+        identifierToTransform.put(DATETIME_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformDateTime);
+        identifierToTransform.put(DATETIME_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformDateTime);
 
-  //      identifierToTransform.put(SpreadsheetFormatParsers.TIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
-        identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+  //      identifierToTransform.put(SpreadsheetFormatParsers.TIME_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
+        identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
 
-        identifierToTransform.put(TIME_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
-        identifierToTransform.put(TIME_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
-        identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+        identifierToTransform.put(TIME_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformTime);
+        identifierToTransform.put(TIME_COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformTime);
+        identifierToTransform.put(SpreadsheetFormatParsers.TIME_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
 
-        identifierToTransform.put(SpreadsheetFormatParsers.GENERAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformGeneral);
+        identifierToTransform.put(SpreadsheetFormatParsers.GENERAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformGeneral);
 
-        identifierToTransform.put(TEXT_LITERAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformTextLiteral);
-        identifierToTransform.put(TEXT_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::transformText);
-        //identifierToTransform.put(SpreadsheetFormatParsers.TEXT_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer::flat);
+        identifierToTransform.put(TEXT_LITERAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformTextLiteral);
+        identifierToTransform.put(TEXT_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformText);
+        //identifierToTransform.put(SpreadsheetFormatParsers.TEXT_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
 
         this.identifierToTransform = identifierToTransform;
     }
