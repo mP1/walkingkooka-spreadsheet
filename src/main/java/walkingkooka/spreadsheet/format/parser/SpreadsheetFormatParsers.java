@@ -588,68 +588,60 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     static {
         final String filename = SpreadsheetFormatParsers.class.getSimpleName() + "Grammar.txt";
 
-        //noinspection CaughtExceptionImmediatelyRethrown
-        try {
-            final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined = Maps.sorted();
+        final Map<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> predefined = Maps.sorted();
 
-            patternSeparator(predefined);
-            color(predefined);
-            condition(predefined);
-            date(predefined);
-            dateAndTime(predefined);
-            general(predefined);
-            number(predefined);
-            text(predefined);
-            time(predefined);
+        patternSeparator(predefined);
+        color(predefined);
+        condition(predefined);
+        date(predefined);
+        dateAndTime(predefined);
+        general(predefined);
+        number(predefined);
+        text(predefined);
+        time(predefined);
 
-            misc(predefined);
+        misc(predefined);
 
-            final Function<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> parsers = EbnfParserToken.parseFile(
-                    new SpreadsheetFormatParsersGrammarProvider()
-                            .text(),
-                    filename
-            ).combinatorForFile(
-                    (nn) -> Optional.ofNullable(
-                            predefined.get(nn)
-                    ),
-                    SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.create(),
-                    filename
-            );
+        final Function<EbnfIdentifierName, Parser<SpreadsheetFormatParserContext>> parsers = EbnfParserToken.parseFile(
+                new SpreadsheetFormatParsersGrammarProvider()
+                        .text(),
+                filename
+        ).combinatorForFile(
+                (nn) -> Optional.ofNullable(
+                        predefined.get(nn)
+                ),
+                SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.create(),
+                filename
+        );
 
-            COLOR_PARSER = parsers.apply(COLOR_IDENTIFIER);
-            CONDITION_PARSER = parsers.apply(EbnfIdentifierName.with("CONDITION"));
+        COLOR_PARSER = parsers.apply(COLOR_IDENTIFIER);
+        CONDITION_PARSER = parsers.apply(EbnfIdentifierName.with("CONDITION"));
 
-            DATE_FORMAT_PARSER = parsers.apply(DATE_FORMAT)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-            DATE_PARSE_PARSER = parsers.apply(DATE_PARSE)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+        DATE_FORMAT_PARSER = parsers.apply(DATE_FORMAT)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
+        DATE_PARSE_PARSER = parsers.apply(DATE_PARSE)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
 
-            DATETIME_FORMAT_PARSER = parsers.apply(DATETIME_FORMAT)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-            DATETIME_PARSE_PARSER = parsers.apply(DATETIME_PARSE)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+        DATETIME_FORMAT_PARSER = parsers.apply(DATETIME_FORMAT)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
+        DATETIME_PARSE_PARSER = parsers.apply(DATETIME_PARSE)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
 
-            FRACTION_PARSER = parsers.apply(EbnfIdentifierName.with("FRACTION"));
-            GENERAL_PARSER = parsers.apply(GENERAL_IDENTIFIER);
+        FRACTION_PARSER = parsers.apply(EbnfIdentifierName.with("FRACTION"));
+        GENERAL_PARSER = parsers.apply(GENERAL_IDENTIFIER);
 
-            NUMBER_FORMAT_PARSER = parsers.apply(NUMBER_FORMAT)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-            NUMBER_PARSE_PARSER = parsers.apply(NUMBER_PARSE)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+        NUMBER_FORMAT_PARSER = parsers.apply(NUMBER_FORMAT)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
+        NUMBER_PARSE_PARSER = parsers.apply(NUMBER_PARSE)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
 
-            TEXT_FORMAT_PARSER = parsers.apply(TEXT_FORMAT)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
+        TEXT_FORMAT_PARSER = parsers.apply(TEXT_FORMAT)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
 
-            TIME_FORMAT_PARSER = parsers.apply(TIME_FORMAT)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-            TIME_PARSE_PARSER = parsers.apply(TIME_PARSE)
-                    .orFailIfCursorNotEmpty(ParserReporters.basic());
-
-        } catch (final SpreadsheetFormatParserException rethrow) {
-            throw rethrow;
-        } catch (final RuntimeException cause) {
-            throw new SpreadsheetFormatParserException("Failed to set parsers from grammar file " + filename + " , message: " + cause.getMessage(), cause);
-        }
+        TIME_FORMAT_PARSER = parsers.apply(TIME_FORMAT)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
+        TIME_PARSE_PARSER = parsers.apply(TIME_PARSE)
+                .orFailIfCursorNotEmpty(ParserReporters.basic());
     }
 
     private static Parser<SpreadsheetFormatParserContext> literal(final String any,
