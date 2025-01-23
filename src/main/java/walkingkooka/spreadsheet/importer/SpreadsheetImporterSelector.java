@@ -40,7 +40,7 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
     /**
      * A parser that returns a {@link SpreadsheetImporterName}.
      */
-    private final static Parser<ParserContext> NAME_PARSER = Parsers.stringInitialAndPartCharPredicate(
+    private final static Parser<ParserContext> NAME_PARSER = Parsers.initialAndPartCharPredicateString(
             (c) -> SpreadsheetImporterName.isChar(0, c),
             (c) -> SpreadsheetImporterName.isChar(1, c),
             1,

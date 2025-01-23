@@ -159,7 +159,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     /**
      * A {@link Parser} that consumes a path component within an {@link UrlFragment}.
      */
-    private final static Parser<ParserContext> COMPONENT = Parsers.stringInitialAndPartCharPredicate(
+    private final static Parser<ParserContext> COMPONENT = Parsers.initialAndPartCharPredicateString(
             CharPredicates.is('/'),
             CharPredicates.not(
                     CharPredicates.is('/')

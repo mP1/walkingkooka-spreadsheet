@@ -58,7 +58,7 @@ final class SpreadsheetParserPluginHelper implements PluginHelper<SpreadsheetPar
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
 
-        return Parsers.stringInitialAndPartCharPredicate(
+        return Parsers.initialAndPartCharPredicateString(
                 c -> SpreadsheetParserName.isChar(0, c),
                 c -> SpreadsheetParserName.isChar(1, c),
                 SpreadsheetParserName.MIN_LENGTH, // minLength

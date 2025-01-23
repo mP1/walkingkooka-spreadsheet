@@ -284,7 +284,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private final static SpreadsheetParser FUNCTION_NAME = SpreadsheetParsers.parser(
-            Parsers.<SpreadsheetParserContext>stringInitialAndPartCharPredicate(
+            Parsers.<SpreadsheetParserContext>initialAndPartCharPredicateString(
                             SpreadsheetFunctionName.INITIAL,
                             SpreadsheetFunctionName.PART,
                             SpreadsheetFunctionName.MIN_LENGTH,

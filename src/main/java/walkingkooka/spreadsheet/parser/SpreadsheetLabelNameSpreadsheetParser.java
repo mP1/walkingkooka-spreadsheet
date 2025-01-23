@@ -94,7 +94,7 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
         final CharPredicate DIGIT = CharPredicates.range('0', '9');
         final CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('_')));
 
-        LABEL = Parsers.stringInitialAndPartCharPredicate(
+        LABEL = Parsers.initialAndPartCharPredicateString(
                 INITIAL,
                 PART,
                 1,

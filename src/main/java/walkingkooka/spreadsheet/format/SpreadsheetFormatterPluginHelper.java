@@ -59,7 +59,7 @@ final class SpreadsheetFormatterPluginHelper implements PluginHelper<
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
 
-        return Parsers.stringInitialAndPartCharPredicate(
+        return Parsers.initialAndPartCharPredicateString(
                 c -> SpreadsheetFormatterName.isChar(0, c),
                 c -> SpreadsheetFormatterName.isChar(1, c),
                 SpreadsheetFormatterName.MIN_LENGTH, // minLength
