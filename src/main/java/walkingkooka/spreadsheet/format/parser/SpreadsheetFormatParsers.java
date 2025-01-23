@@ -693,7 +693,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 .value(),
                                         stringParserToken.text()
                                 )
-                ).setToString("{" + CharSequences.quoteIfChars(c) + "}")
+                ).setToString("{" + CharSequences.quoteAndEscape(String.valueOf(c)) + "}")
                 .cast();
     }
 
@@ -711,8 +711,11 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 .toString(),
                                         characterParserToken.text()
                                 )
-                ).setToString(CharSequences.quoteIfChars(c).toString())
-                .cast();
+                ).setToString(
+                        CharSequences.quoteAndEscape(
+                                String.valueOf(c)
+                        ).toString()
+                ).cast();
     }
 
     private static Parser<SpreadsheetFormatParserContext> symbol(final String text,
@@ -727,8 +730,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 .value(),
                                         stringParserToken.text()
                                 )
-                ).setToString(CharSequences.quoteIfChars(text).toString())
-                .cast();
+                ).setToString(
+                        CharSequences.quoteAndEscape(text)
+                                .toString()
+                ).cast();
     }
 
     /**

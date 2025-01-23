@@ -287,7 +287,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadCellsWithFormulaWithInvalidValueFails() {
         this.loadCellFails(
                 "1.X",
-                SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'1\' at 0 expected ((\'\\\'\', [STRING]) | EQUALS_EXPRESSION | VALUE)")
+                SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'1\' at 0 expected ((\"\\\'\", [STRING]) | EQUALS_EXPRESSION | VALUE)")
         );
     }
 
@@ -296,7 +296,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellFails(
                 "=1+",
                 SpreadsheetErrorKind.ERROR.setMessage(
-                        "End of text at (4,1) expected (LAMBDA_FUNCTION | NAMED_FUNCTION | SPREADSHEETLABELNAME | (CELL, [WHITESPACE], \':\', [WHITESPACE], CELL) | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | (\"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"))"
+                        "End of text at (4,1) expected (LAMBDA_FUNCTION | NAMED_FUNCTION | SPREADSHEETLABELNAME | (CELL, [WHITESPACE], \":\", [WHITESPACE], CELL) | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | (\"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"))"
                 )
         );
     }

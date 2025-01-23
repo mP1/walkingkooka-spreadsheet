@@ -523,7 +523,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText(text)
                         .setValue(
                                 Optional.of(
-                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 2 expected ((\'\\\'\', [STRING]) | EQUALS_EXPRESSION | VALUE)")
+                                        SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'@\' at 2 expected ((\"\\\'\", [STRING]) | EQUALS_EXPRESSION | VALUE)")
                                 )
                         )
         );
