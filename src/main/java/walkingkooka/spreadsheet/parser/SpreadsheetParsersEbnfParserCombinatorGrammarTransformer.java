@@ -34,61 +34,61 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfRangeParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfRepeatedParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfRuleParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfTerminalParserToken;
-import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformer;
+import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformer;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
 /**
- * A {@link EbnfParserCombinatorSyntaxTreeTransformer} that only transforms terminal and ranges into their corresponding {@link SpreadsheetParserToken} equivalents.
+ * A {@link EbnfParserCombinatorGrammarTransformer} that only transforms terminal and ranges into their corresponding {@link SpreadsheetParserToken} equivalents.
  * Processing of other tokens will be done after this process completes.
  */
-final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer<SpreadsheetParserContext> {
+final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements EbnfParserCombinatorGrammarTransformer<SpreadsheetParserContext> {
 
-    static SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer create() {
-        return new SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer();
+    static SpreadsheetParsersEbnfParserCombinatorGrammarTransformer create() {
+        return new SpreadsheetParsersEbnfParserCombinatorGrammarTransformer();
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer() {
+    private SpreadsheetParsersEbnfParserCombinatorGrammarTransformer() {
         super();
 
         final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetParserContext, ParserToken>> identifierToTransformer = Maps.sorted();
     
         identifierToTransformer.put(
                 EbnfIdentifierName.with("APOSTROPHE_STRING"),
-                SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::apostropheString
+                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::apostropheString
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("EXPRESSION"),
-                SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::expression
+                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::expression
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("FUNCTION_PARAMETERS"),
-                SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::functionParameters
+                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::functionParameters
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("GROUP"),
-                SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::group
+                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::group
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("LAMBDA_FUNCTION"),
-                SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::lambdaFunction
+                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::lambdaFunction
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("NAMED_FUNCTION"),
-                SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::namedFunction
+                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::namedFunction
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("NEGATIVE"),
-                SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::negative
+                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::negative
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("PERCENTAGE"),
-                SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::percentage
+                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::percentage
         );
 
         this.identifierToTransformer = identifierToTransformer;
@@ -219,7 +219,7 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
     private ParserToken concatenation(final ParserToken token,
                                       final SpreadsheetParserContext context) {
         return token.cast(SequenceParserToken.class)
-                .binaryOperator(SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
+                .binaryOperator(SpreadsheetParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE);
     }
 
     @Override

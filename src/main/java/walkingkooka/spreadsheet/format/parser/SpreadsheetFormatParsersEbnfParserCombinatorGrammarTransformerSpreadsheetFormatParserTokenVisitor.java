@@ -29,10 +29,10 @@ import java.util.List;
 /**
  * The DateTime {@link Parser} initially parses all M tokens into {@link SpreadsheetFormatMonthParserToken}, however some of these particularly those after HOURS, need to be converted into {@link SpreadsheetFormatMinuteParserToken}.
  */
-final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     static SpreadsheetFormatDateTimeParserToken fixMinutes(final ParserToken token) {
-        final SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         return SpreadsheetFormatParserToken.dateTime(
                 visitor.tokens,
@@ -41,7 +41,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpr
     }
 
     // @VisibleForTesting
-    SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformerSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 

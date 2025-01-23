@@ -20,18 +20,18 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
-import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformer;
-import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformerTesting;
+import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformer;
+import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformerTesting;
 
-public final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerTest implements ClassTesting2<SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer>,
-        EbnfParserCombinatorSyntaxTreeTransformerTesting<SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer, SpreadsheetParserContext>,
-        TypeNameTesting<SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer> {
+public final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformerTest implements ClassTesting2<SpreadsheetParsersEbnfParserCombinatorGrammarTransformer>,
+        EbnfParserCombinatorGrammarTransformerTesting<SpreadsheetParsersEbnfParserCombinatorGrammarTransformer, SpreadsheetParserContext>,
+        TypeNameTesting<SpreadsheetParsersEbnfParserCombinatorGrammarTransformer> {
 
     // Class............................................................................................................
 
     @Override
-    public Class<SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer> type() {
-        return SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.class;
+    public Class<SpreadsheetParsersEbnfParserCombinatorGrammarTransformer> type() {
+        return SpreadsheetParsersEbnfParserCombinatorGrammarTransformer.class;
     }
 
     @Override
@@ -48,6 +48,6 @@ public final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerTe
 
     @Override
     public String typeNameSuffix() {
-        return EbnfParserCombinatorSyntaxTreeTransformer.class.getSimpleName();
+        return EbnfParserCombinatorGrammarTransformer.class.getSimpleName();
     }
 }
