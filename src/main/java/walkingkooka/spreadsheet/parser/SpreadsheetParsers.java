@@ -467,7 +467,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     );
 
     private static final EbnfIdentifierName STRING_IDENTIFIER = EbnfIdentifierName.with("STRING");
-    private static final Parser<SpreadsheetParserContext> STRING = Parsers.<SpreadsheetParserContext>stringCharPredicate(
+    private static final Parser<SpreadsheetParserContext> STRING = Parsers.<SpreadsheetParserContext>charPredicateString(
                     CharPredicates.always(),
                     1,
                     65536
@@ -566,7 +566,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private final static SpreadsheetParser WHITESPACE = parser(
-            Parsers.<SpreadsheetParserContext>stringCharPredicate(
+            Parsers.<SpreadsheetParserContext>charPredicateString(
                             CharPredicates.whitespace(),
                             1,
                             Integer.MAX_VALUE

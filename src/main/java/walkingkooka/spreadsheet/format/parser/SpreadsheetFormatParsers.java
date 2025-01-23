@@ -51,7 +51,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     // shared
 
     private static final EbnfIdentifierName WHITESPACE_IDENTIFIER = EbnfIdentifierName.with("WHITESPACE");
-    private final static Parser<SpreadsheetFormatParserContext> WHITESPACE = Parsers.stringCharPredicate(CharPredicates.whitespace(), 1, Integer.MAX_VALUE)
+    private final static Parser<SpreadsheetFormatParserContext> WHITESPACE = Parsers.charPredicateString(CharPredicates.whitespace(), 1, Integer.MAX_VALUE)
             .transform(SpreadsheetFormatParsers::transformWhitespace)
             .setToString(WHITESPACE_IDENTIFIER.toString())
             .cast();
@@ -84,7 +84,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName COLOR_NAME_IDENTIFIER = EbnfIdentifierName.with("COLOR_NAME");
 
-    private static final Parser<SpreadsheetFormatParserContext> COLOR_NAME = Parsers.stringCharPredicate(CharPredicates.letter(), 1, Integer.MAX_VALUE)
+    private static final Parser<SpreadsheetFormatParserContext> COLOR_NAME = Parsers.charPredicateString(CharPredicates.letter(), 1, Integer.MAX_VALUE)
             .transform(SpreadsheetFormatParsers::colorName)
             .setToString(COLOR_NAME_IDENTIFIER.toString())
             .cast();
@@ -654,7 +654,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static Parser<SpreadsheetFormatParserContext> literal(final String any,
                                                                   final EbnfIdentifierName name) {
-        return Parsers.stringCharPredicate(
+        return Parsers.charPredicateString(
                     CharPredicates.any(any),
                 1, // min
                         65535 // max
@@ -683,7 +683,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      */
     private static Parser<SpreadsheetFormatParserContext> repeatingSymbol(final char c,
                                                                           final BiFunction<String, String, ParserToken> factory) {
-        return Parsers.stringCharPredicate(
+        return Parsers.charPredicateString(
                         CaseSensitivity.INSENSITIVE.charPredicate(c),
                         1,
                         Integer.MAX_VALUE
