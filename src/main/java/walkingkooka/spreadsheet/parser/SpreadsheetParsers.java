@@ -646,7 +646,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                                                            final BiFunction<String, String, ParserToken> factory) {
         return Parsers.character(CharPredicates.is(c))
                 .transform((charParserToken, context) -> factory.apply(charParserToken.cast(CharacterParserToken.class).value().toString(), charParserToken.text()))
-                .setToString(CharSequences.quoteAndEscape(c).toString())
+                .setToString(
+                        CharSequences.quoteAndEscape(
+                                String.valueOf(c)
+                        ).toString()
+                )
                 .cast();
     }
 

@@ -315,7 +315,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.parseFormulaAndFail(
                 text,
-                "Invalid character '=' at (1,1) expected (BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | SPREADSHEETLABELNAME | (CELL, [WHITESPACE], ':', [WHITESPACE], CELL) | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | (\"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"))"
+                "Invalid character '=' at (1,1) expected (BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | SPREADSHEETLABELNAME | (CELL, [WHITESPACE], \":\", [WHITESPACE], CELL) | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | (\"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"))"
         );
     }
 
