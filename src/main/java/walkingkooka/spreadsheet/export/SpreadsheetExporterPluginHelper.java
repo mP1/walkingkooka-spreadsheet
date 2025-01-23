@@ -58,7 +58,7 @@ final class SpreadsheetExporterPluginHelper implements PluginHelper<SpreadsheetE
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
 
-        return Parsers.stringInitialAndPartCharPredicate(
+        return Parsers.initialAndPartCharPredicateString(
                 c -> SpreadsheetExporterName.isChar(0, c),
                 c -> SpreadsheetExporterName.isChar(1, c),
                 SpreadsheetExporterName.MIN_LENGTH, // minLength

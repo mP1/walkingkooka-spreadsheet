@@ -58,7 +58,7 @@ final class SpreadsheetImporterPluginHelper implements PluginHelper<SpreadsheetI
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
 
-        return Parsers.stringInitialAndPartCharPredicate(
+        return Parsers.initialAndPartCharPredicateString(
                 c -> SpreadsheetImporterName.isChar(0, c),
                 c -> SpreadsheetImporterName.isChar(1, c),
                 SpreadsheetImporterName.MIN_LENGTH, // minLength

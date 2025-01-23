@@ -58,7 +58,7 @@ final class SpreadsheetComparatorPluginHelper implements PluginHelper<Spreadshee
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
 
-        return Parsers.stringInitialAndPartCharPredicate(
+        return Parsers.initialAndPartCharPredicateString(
                 c -> SpreadsheetComparatorName.isChar(0, c),
                 c -> SpreadsheetComparatorName.isChar(1, c),
                 SpreadsheetComparatorName.MIN_LENGTH, // minLength

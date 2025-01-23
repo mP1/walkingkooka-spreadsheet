@@ -737,7 +737,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static Parser<SpreadsheetFormatParserContext> escapeStarOrUnderline(final char initial,
                                                                                 final BiFunction<Character, String, ParserToken> factory,
                                                                                 final String toString) {
-        return Parsers.stringInitialAndPartCharPredicate(
+        return Parsers.initialAndPartCharPredicateString(
                         CharPredicates.is(initial),
                         CharPredicates.always(),
                         2,

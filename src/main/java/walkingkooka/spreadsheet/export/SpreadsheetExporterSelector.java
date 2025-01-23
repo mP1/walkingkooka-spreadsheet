@@ -40,7 +40,7 @@ public final class SpreadsheetExporterSelector implements PluginSelectorLike<Spr
     /**
      * A parser that returns a {@link SpreadsheetExporterName}.
      */
-    private final static Parser<ParserContext> NAME_PARSER = Parsers.stringInitialAndPartCharPredicate(
+    private final static Parser<ParserContext> NAME_PARSER = Parsers.initialAndPartCharPredicateString(
             (c) -> SpreadsheetExporterName.isChar(0, c),
             (c) -> SpreadsheetExporterName.isChar(1, c),
             1,
