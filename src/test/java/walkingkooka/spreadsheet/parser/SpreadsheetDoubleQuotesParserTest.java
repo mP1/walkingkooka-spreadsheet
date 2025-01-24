@@ -26,62 +26,62 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
         ToStringTesting<SpreadsheetDoubleQuotesParser> {
 
     @Test
-    public void testNotDoubleQuote() {
+    public void testParseNotDoubleQuote() {
         this.parseFailAndCheck("not a double quoted string/text");
     }
 
     @Test
-    public void testUnclosed() {
+    public void testParseUnclosed() {
         this.parseFailAndCheck("\"");
     }
 
     @Test
-    public void testUnclosed2() {
+    public void testParseUnclosed2() {
         this.parseFailAndCheck("\"a");
     }
 
     @Test
-    public void testUnclosed3() {
+    public void testParseUnclosed3() {
         this.parseFailAndCheck("\"abc");
     }
 
     @Test
-    public void testEmptyDoubleQuotedText() {
+    public void testParseEmptyDoubleQuotedText() {
         this.parseAndCheck2("");
     }
 
     @Test
-    public void testSingleCharacter() {
+    public void testParseSingleCharacter() {
         this.parseAndCheck2("a");
     }
 
     @Test
-    public void testSingleCharacter2() {
+    public void testParseSingleCharacter2() {
         this.parseAndCheck2("b");
     }
 
     @Test
-    public void testSeveralCharacters() {
+    public void testParseSeveralCharacters() {
         this.parseAndCheck2("abc");
     }
 
     @Test
-    public void testDoubleQuote() {
+    public void testParseDoubleQuote() {
         this.parseAndCheck2("\"\"");
     }
 
     @Test
-    public void testIncludesDoubleQuote() {
+    public void testParseIncludesDoubleQuote() {
         this.parseAndCheck2("abc\"\"123");
     }
 
     @Test
-    public void testIncludesDoubleQuote2() {
+    public void testParseIncludesDoubleQuote2() {
         this.parseAndCheck2("abc\"\"123\"\"xyz");
     }
 
     @Test
-    public void testIncludesDoubleQuote3() {
+    public void testParseIncludesDoubleQuote3() {
         this.parseAndCheck2("abc\"\"\"\"xyz");
     }
 
