@@ -25,7 +25,6 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.Parsers;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -14191,12 +14190,27 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Override
     public Parser<SpreadsheetFormatParserContext> createParser() {
-        return Parsers.fake();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public SpreadsheetFormatParserContext createContext() {
         return SpreadsheetFormatParserContexts.basic();
+    }
+
+    @Override
+    public void testIsOptional() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testIsRequired() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testMinCountGreaterThanEqualZero() {
+        throw new UnsupportedOperationException();
     }
 
     // PublicStaticHelperTesting........................................................................................
