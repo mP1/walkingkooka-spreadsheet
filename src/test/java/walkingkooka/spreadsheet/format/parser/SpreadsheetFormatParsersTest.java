@@ -14213,6 +14213,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testMaxCountGreaterThanEqualMinCount() {
+        throw new UnsupportedOperationException();
+    }
+
     // PublicStaticHelperTesting........................................................................................
 
     @Override
