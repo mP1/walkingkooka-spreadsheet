@@ -53,11 +53,4 @@ public final class SpreadsheetNotEqualsSymbolParserToken extends SpreadsheetSymb
     void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetNotEqualsSymbolParserToken;
-    }
 }

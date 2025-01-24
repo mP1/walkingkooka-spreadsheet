@@ -44,11 +44,6 @@ public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolP
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetLabelNameParserToken;
-    }
-
     // HasSpreadsheetReference..........................................................................................
 
     @Override

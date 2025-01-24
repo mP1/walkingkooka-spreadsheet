@@ -54,11 +54,4 @@ public final class SpreadsheetSubtractionParserToken extends SpreadsheetArithmet
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetSubtractionParserToken;
-    }
 }

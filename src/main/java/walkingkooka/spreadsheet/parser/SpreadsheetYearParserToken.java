@@ -39,9 +39,4 @@ public final class SpreadsheetYearParserToken extends SpreadsheetNonSymbolParser
     void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetYearParserToken;
-    }
 }

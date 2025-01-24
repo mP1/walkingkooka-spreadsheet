@@ -69,11 +69,4 @@ public final class SpreadsheetFunctionParametersParserToken extends SpreadsheetP
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFunctionParametersParserToken;
-    }
 }

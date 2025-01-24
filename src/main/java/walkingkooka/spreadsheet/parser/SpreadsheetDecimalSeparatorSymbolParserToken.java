@@ -53,11 +53,4 @@ public final class SpreadsheetDecimalSeparatorSymbolParserToken extends Spreadsh
     void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetDecimalSeparatorSymbolParserToken;
-    }
 }

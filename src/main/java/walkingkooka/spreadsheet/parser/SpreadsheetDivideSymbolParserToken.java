@@ -53,11 +53,4 @@ public final class SpreadsheetDivideSymbolParserToken extends SpreadsheetSymbolP
     void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetDivideSymbolParserToken;
-    }
 }

@@ -40,9 +40,4 @@ public final class SpreadsheetDigitsParserToken extends SpreadsheetNonSymbolPars
     void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetDigitsParserToken;
-    }
 }

@@ -66,11 +66,4 @@ public final class SpreadsheetDateTimeParserToken extends SpreadsheetValueParser
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetDateTimeParserToken;
-    }
 }

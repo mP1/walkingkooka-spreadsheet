@@ -68,11 +68,4 @@ public final class SpreadsheetConditionRightNotEqualsParserToken extends Spreads
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetConditionRightNotEqualsParserToken;
-    }
 }
