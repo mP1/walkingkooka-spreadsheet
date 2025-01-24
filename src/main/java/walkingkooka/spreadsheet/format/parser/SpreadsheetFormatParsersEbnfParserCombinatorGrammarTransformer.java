@@ -47,8 +47,8 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
 
     // constants must be init before singleton/ctor is run........................................................................
 
-    private static ParserToken transformColor(final ParserToken token,
-                                              final SpreadsheetFormatParserContext context) {
+    private static ParserToken transformColorParserToken(final ParserToken token,
+                                                         final SpreadsheetFormatParserContext context) {
         return SpreadsheetFormatParserToken.color(
                 flat(token),
                 token.text()
@@ -237,7 +237,10 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
 
         final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identifierToTransform = Maps.sorted();
 
-        identifierToTransform.put(SpreadsheetFormatParsers.COLOR_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformColor);
+        identifierToTransform.put(
+                SpreadsheetFormatParsers.COLOR_IDENTIFIER,
+                SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformColorParserToken
+        );
 
         identifierToTransform.put(CONDITION_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionEqual);
         identifierToTransform.put(CONDITION_GREATER_THAN_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionGreaterThan);
@@ -379,6 +382,13 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
         final BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken> transformer = this.identifierToTransform.remove(name);
         if(null != transformer) {
             result = parser.transform(transformer);
+
+            // replace grammar definition with COLOR
+            if(SpreadsheetFormatParsers.COLOR_IDENTIFIER.equals(name)) {
+                result = result.setToString(
+                        name.toString()
+                );
+            }
         }
 
         result = colorCheck(
