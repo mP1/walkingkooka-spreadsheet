@@ -22,7 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.FakeParser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -50,7 +50,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
         );
         this.parseAndCheck(
                 SpreadsheetFormatParsersFormatColorParser.with(
-                        new Parser<>() {
+                        new FakeParser<>() {
                             @Override
                             public Optional<ParserToken> parse(final TextCursor cursor,
                                                                final SpreadsheetFormatParserContext context) {
@@ -87,7 +87,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
         );
         this.parseAndCheck(
                 SpreadsheetFormatParsersFormatColorParser.with(
-                        new Parser<>() {
+                        new FakeParser<>() {
                             @Override
                             public Optional<ParserToken> parse(final TextCursor cursor,
                                                                final SpreadsheetFormatParserContext context) {
@@ -117,7 +117,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
 
         this.parseFailAndCheck(
                 SpreadsheetFormatParsersFormatColorParser.with(
-                        new Parser<>() {
+                        new FakeParser<>() {
                             @Override
                             public Optional<ParserToken> parse(final TextCursor cursor,
                                                                final SpreadsheetFormatParserContext context) {
@@ -175,7 +175,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
 
         this.parseAndCheck(
                 SpreadsheetFormatParsersFormatColorParser.with(
-                        new Parser<>() {
+                        new FakeParser<>() {
                             @Override
                             public Optional<ParserToken> parse(final TextCursor cursor,
                                                                final SpreadsheetFormatParserContext context) {
@@ -196,6 +196,20 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
     }
 
     @Test
+    public void testMinCount() {
+        this.minCountAndCheck(
+                111
+        );
+    }
+
+    @Test
+    public void testMaxCount() {
+        this.maxCountAndCheck(
+                222
+        );
+    }
+
+    @Test
     public void testToString() {
         final String toString = "wrapped parser toString";
 
@@ -212,7 +226,17 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
     @Override
     public SpreadsheetFormatParsersFormatColorParser createParser() {
         return SpreadsheetFormatParsersFormatColorParser.with(
-                Parsers.fake()
+                new FakeParser<>() {
+                    @Override
+                    public int minCount() {
+                        return 111;
+                    }
+
+                    @Override
+                    public int maxCount() {
+                        return 222;
+                    }
+                }
         );
     }
 

@@ -20,13 +20,15 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.RequiredParser;
 
 import java.util.Optional;
 
 /**
  * This {@link Parser} attempts to match the {@link SpreadsheetParserContext#valueSeparator()} and then creates a {@link SpreadsheetValueSeparatorSymbolParserToken}.
  */
-final class SpreadsheetParsersValueSeparatorParser implements Parser<SpreadsheetParserContext> {
+final class SpreadsheetParsersValueSeparatorParser implements Parser<SpreadsheetParserContext>,
+        RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton
