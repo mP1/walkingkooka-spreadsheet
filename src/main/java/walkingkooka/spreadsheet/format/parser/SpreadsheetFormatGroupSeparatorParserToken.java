@@ -46,11 +46,4 @@ public final class SpreadsheetFormatGroupSeparatorParserToken extends Spreadshee
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.GROUP_SEPARATOR.asOptional;
     }
-
-    // equals...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatGroupSeparatorParserToken;
-    }
 }

@@ -61,12 +61,4 @@ public final class SpreadsheetFormatNotEqualsParserToken extends SpreadsheetForm
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatNotEqualsParserToken;
-    }
-
 }

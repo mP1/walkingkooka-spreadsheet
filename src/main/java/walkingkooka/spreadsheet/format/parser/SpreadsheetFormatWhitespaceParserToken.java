@@ -47,11 +47,4 @@ public final class SpreadsheetFormatWhitespaceParserToken extends SpreadsheetFor
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.TEXT_LITERAL.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatWhitespaceParserToken;
-    }
 }

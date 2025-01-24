@@ -47,12 +47,4 @@ public final class SpreadsheetFormatSeparatorSymbolParserToken extends Spreadshe
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.SEPARATOR.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatSeparatorSymbolParserToken;
-    }
-
 }

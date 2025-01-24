@@ -47,12 +47,4 @@ public final class SpreadsheetFormatDecimalPointParserToken extends SpreadsheetF
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.DECIMAL_PLACE.asOptional;
     }
-
-    // equals ..........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatDecimalPointParserToken;
-    }
-
 }

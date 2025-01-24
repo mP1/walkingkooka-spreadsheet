@@ -61,12 +61,4 @@ public final class SpreadsheetFormatGreaterThanEqualsParserToken extends Spreads
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatGreaterThanEqualsParserToken;
-    }
-
 }

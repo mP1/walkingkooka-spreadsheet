@@ -94,11 +94,4 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
                         SpreadsheetFormatParserTokenKind.COLOR_NUMBER
         );
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatColorParserToken;
-    }
 }

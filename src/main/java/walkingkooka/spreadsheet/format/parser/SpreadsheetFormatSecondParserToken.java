@@ -58,12 +58,4 @@ public final class SpreadsheetFormatSecondParserToken extends SpreadsheetFormatN
 
         return kind.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatSecondParserToken;
-    }
-
 }

@@ -64,12 +64,4 @@ public final class SpreadsheetFormatDayParserToken extends SpreadsheetFormatNonS
 
         return kind.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatDayParserToken;
-    }
-
 }

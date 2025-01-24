@@ -46,12 +46,4 @@ public final class SpreadsheetFormatExponentSymbolParserToken extends Spreadshee
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.EXPONENT.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatExponentSymbolParserToken;
-    }
-
 }

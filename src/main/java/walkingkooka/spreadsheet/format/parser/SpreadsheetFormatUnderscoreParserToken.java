@@ -46,12 +46,4 @@ public final class SpreadsheetFormatUnderscoreParserToken extends SpreadsheetFor
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.UNDERSCORE.asOptional;
     }
-
-    // equals...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatUnderscoreParserToken;
-    }
-
 }

@@ -46,11 +46,4 @@ public final class SpreadsheetFormatGeneralSymbolParserToken extends Spreadsheet
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.GENERAL.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatGeneralSymbolParserToken;
-    }
 }

@@ -47,12 +47,4 @@ public final class SpreadsheetFormatDigitSpaceParserToken extends SpreadsheetFor
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.DIGIT_SPACE.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatDigitSpaceParserToken;
-    }
-
 }
