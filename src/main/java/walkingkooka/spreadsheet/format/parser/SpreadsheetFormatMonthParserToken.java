@@ -67,12 +67,4 @@ public final class SpreadsheetFormatMonthParserToken extends SpreadsheetFormatNo
 
         return kind.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatMonthParserToken;
-    }
-
 }

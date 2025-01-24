@@ -47,11 +47,4 @@ public final class SpreadsheetFormatConditionNumberParserToken extends Spreadshe
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.CONDITION.asOptional;
     }
-
-    // equals ..........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatConditionNumberParserToken;
-    }
 }

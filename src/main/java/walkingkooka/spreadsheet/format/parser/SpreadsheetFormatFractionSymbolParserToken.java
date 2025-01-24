@@ -46,12 +46,4 @@ public final class SpreadsheetFormatFractionSymbolParserToken extends Spreadshee
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.FRACTION.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatFractionSymbolParserToken;
-    }
-
 }

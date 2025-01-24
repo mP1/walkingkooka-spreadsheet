@@ -47,12 +47,4 @@ public final class SpreadsheetFormatTextPlaceholderParserToken extends Spreadshe
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.TEXT_PLACEHOLDER.asOptional;
     }
-
-    // equals ..........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatTextPlaceholderParserToken;
-    }
-
 }

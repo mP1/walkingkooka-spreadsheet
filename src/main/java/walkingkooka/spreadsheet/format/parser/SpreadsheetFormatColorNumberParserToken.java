@@ -49,12 +49,4 @@ public final class SpreadsheetFormatColorNumberParserToken extends SpreadsheetFo
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return EMPTY_KIND;
     }
-
-    // equals ..........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatColorNumberParserToken;
-    }
-
 }

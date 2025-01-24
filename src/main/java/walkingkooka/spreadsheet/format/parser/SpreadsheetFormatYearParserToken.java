@@ -59,12 +59,4 @@ public final class SpreadsheetFormatYearParserToken extends SpreadsheetFormatNon
 
         return kind.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatYearParserToken;
-    }
-
 }

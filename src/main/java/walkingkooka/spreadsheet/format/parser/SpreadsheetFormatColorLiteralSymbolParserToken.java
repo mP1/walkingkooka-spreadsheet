@@ -46,12 +46,4 @@ public final class SpreadsheetFormatColorLiteralSymbolParserToken extends Spread
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return EMPTY_KIND;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatColorLiteralSymbolParserToken;
-    }
-
 }

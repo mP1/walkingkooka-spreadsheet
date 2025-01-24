@@ -47,12 +47,4 @@ public final class SpreadsheetFormatDigitZeroParserToken extends SpreadsheetForm
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.DIGIT_ZERO.asOptional;
     }
-
-    // equals ..........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatDigitZeroParserToken;
-    }
-
 }

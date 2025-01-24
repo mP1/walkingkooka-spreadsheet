@@ -46,12 +46,4 @@ public final class SpreadsheetFormatPercentParserToken extends SpreadsheetFormat
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.PERCENT.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatPercentParserToken;
-    }
-
 }

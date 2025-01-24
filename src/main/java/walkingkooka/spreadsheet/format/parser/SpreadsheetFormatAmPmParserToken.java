@@ -65,12 +65,4 @@ public final class SpreadsheetFormatAmPmParserToken extends SpreadsheetFormatNon
 
         return kind.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatAmPmParserToken;
-    }
-
 }

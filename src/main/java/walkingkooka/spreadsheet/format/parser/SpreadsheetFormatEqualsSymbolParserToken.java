@@ -46,12 +46,4 @@ public final class SpreadsheetFormatEqualsSymbolParserToken extends SpreadsheetF
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.CONDITION.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatEqualsSymbolParserToken;
-    }
-
 }

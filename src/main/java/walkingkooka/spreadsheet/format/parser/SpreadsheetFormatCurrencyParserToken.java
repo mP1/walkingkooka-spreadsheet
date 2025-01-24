@@ -46,12 +46,4 @@ public final class SpreadsheetFormatCurrencyParserToken extends SpreadsheetForma
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.CURRENCY_SYMBOL.asOptional;
     }
-
-    // equals ..........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatCurrencyParserToken;
-    }
-
 }

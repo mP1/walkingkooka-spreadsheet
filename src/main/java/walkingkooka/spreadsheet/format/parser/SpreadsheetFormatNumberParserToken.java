@@ -70,12 +70,4 @@ public final class SpreadsheetFormatNumberParserToken extends SpreadsheetFormatP
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return EMPTY_KIND;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatNumberParserToken;
-    }
-
 }

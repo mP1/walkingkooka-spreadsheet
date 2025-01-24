@@ -46,12 +46,4 @@ public final class SpreadsheetFormatBracketOpenSymbolParserToken extends Spreads
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.TEXT_LITERAL.asOptional;
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatBracketOpenSymbolParserToken;
-    }
-
 }

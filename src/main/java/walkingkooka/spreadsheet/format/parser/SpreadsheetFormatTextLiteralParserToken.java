@@ -47,11 +47,4 @@ public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFo
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.TEXT_LITERAL.asOptional;
     }
-
-    // equals ..........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatTextLiteralParserToken;
-    }
 }

@@ -46,12 +46,4 @@ public final class SpreadsheetFormatStarParserToken extends SpreadsheetFormatNon
     public Optional<SpreadsheetFormatParserTokenKind> kind() {
         return SpreadsheetFormatParserTokenKind.STAR.asOptional;
     }
-
-    // equals...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatStarParserToken;
-    }
-
 }
