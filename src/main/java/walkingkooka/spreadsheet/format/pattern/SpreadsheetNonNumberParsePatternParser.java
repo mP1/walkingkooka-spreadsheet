@@ -23,6 +23,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.RequiredParser;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,8 @@ import java.util.function.Function;
 /**
  * Abstract {@link Parser} that requires a {@link SpreadsheetParserContext} that provides some template methods.
  */
-abstract class SpreadsheetNonNumberParsePatternParser implements Parser<SpreadsheetParserContext> {
+abstract class SpreadsheetNonNumberParsePatternParser implements Parser<SpreadsheetParserContext>,
+        RequiredParser<SpreadsheetParserContext> {
 
     /**
      * @see SpreadsheetNonNumberParsePatternParserDecimalSeparator

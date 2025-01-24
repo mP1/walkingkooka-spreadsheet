@@ -61,6 +61,16 @@ final class SpreadsheetFormatParsersFormatColorParser implements Parser<Spreadsh
         return maybeToken;
     }
 
+    @Override
+    public int minCount() {
+        return this.parser.minCount();
+    }
+
+    @Override
+    public int maxCount() {
+        return this.parser.maxCount();
+    }
+
     private final Parser<SpreadsheetFormatParserContext> parser;
 
     @Override

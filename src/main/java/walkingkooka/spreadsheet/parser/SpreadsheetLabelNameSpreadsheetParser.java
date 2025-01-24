@@ -26,6 +26,7 @@ import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.text.cursor.parser.RequiredParser;
 
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +36,8 @@ import java.util.Optional;
  * A {@link SpreadsheetParser} that consumes a {@link SpreadsheetLabelNameParserToken} matching a label.
  * Note {@link #tokens(SpreadsheetParserContext)} has no pattern representation and always returns {@link #NO_TOKENS}.
  */
-final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser {
+final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
+        RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton

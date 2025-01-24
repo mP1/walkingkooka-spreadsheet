@@ -54,6 +54,16 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     }
 
     @Override
+    public int minCount() {
+        return this.parser.minCount();
+    }
+
+    @Override
+    public int maxCount() {
+        return this.parser.maxCount();
+    }
+
+    @Override
     public List<SpreadsheetParserSelectorToken> tokens(final SpreadsheetParserContext context) {
         Objects.requireNonNull(context, "context");
 

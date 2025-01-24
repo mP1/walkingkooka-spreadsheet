@@ -71,6 +71,20 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
         );
     }
 
+    @Test
+    public void testMinCount() {
+        this.minCountAndCheck(
+                1
+        );
+    }
+
+    @Test
+    public void testMaxCount() {
+        this.maxCountAndCheck(
+                1
+        );
+    }
+
     @Override
     public ParserSpreadsheetParser createParser() {
         return (ParserSpreadsheetParser) ParserSpreadsheetParser.with(PARSER);

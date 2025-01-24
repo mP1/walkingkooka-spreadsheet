@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -30,6 +31,20 @@ public abstract class SpreadsheetNonNumberParsePatternParserTestCase<P extends S
 
     SpreadsheetNonNumberParsePatternParserTestCase() {
         super();
+    }
+
+    @Test
+    public final void testMinCount() {
+        this.minCountAndCheck(
+                1
+        );
+    }
+
+    @Test
+    public final void testMaxCount() {
+        this.maxCountAndCheck(
+                1
+        );
     }
 
     // TypeNameTesting..................................................................................................

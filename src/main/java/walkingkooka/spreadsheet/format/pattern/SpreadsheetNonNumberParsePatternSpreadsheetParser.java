@@ -57,6 +57,16 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
         );
     }
 
+    @Override
+    public int minCount() {
+        return this.parser.minCount();
+    }
+
+    @Override
+    public int maxCount() {
+        return this.parser.maxCount();
+    }
+
     private final Parser<SpreadsheetParserContext> parser;
 
     @Override

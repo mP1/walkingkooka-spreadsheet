@@ -569,6 +569,20 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
         );
     }
 
+    @Test
+    public void testMinCount() {
+        this.minCountAndCheck(
+                1
+        );
+    }
+
+    @Test
+    public void testMaxCount() {
+        this.maxCountAndCheck(
+                1
+        );
+    }
+
     // ParserTesting....................................................................................................
 
     @Override

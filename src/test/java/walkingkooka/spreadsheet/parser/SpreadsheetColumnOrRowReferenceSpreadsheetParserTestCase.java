@@ -32,6 +32,20 @@ public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     final static char VALUE_SEPARATOR = ',';
 
+    @Test
+    public final void testMinCount() {
+        this.minCountAndCheck(
+                1
+        );
+    }
+
+    @Test
+    public final void testMaxCount() {
+        this.maxCountAndCheck(
+                1
+        );
+    }
+
     @Override
     public final SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.basic(

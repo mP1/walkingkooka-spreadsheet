@@ -17,17 +17,14 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.FakeParser;
 
 import java.util.List;
-import java.util.Optional;
 
-public class FakeSpreadsheetParser implements SpreadsheetParser {
-    @Override
-    public Optional<ParserToken> parse(final TextCursor cursor,
-                                       final SpreadsheetParserContext context) {
-        return Optional.empty();
+public class FakeSpreadsheetParser extends FakeParser<SpreadsheetParserContext> implements SpreadsheetParser  {
+
+    public FakeSpreadsheetParser() {
+        super();
     }
 
     @Override

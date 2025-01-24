@@ -22,6 +22,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.RequiredParser;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -37,7 +38,8 @@ import java.util.Optional;
  *  ="The movie """ &B5 &""" is good."
  * </pre>
  */
-final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserContext> {
+final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserContext>,
+        RequiredParser<SpreadsheetParserContext> {
 
     /**
      * Singleton instance

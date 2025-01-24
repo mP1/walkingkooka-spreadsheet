@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.RequiredParser;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +33,8 @@ import java.util.Optional;
 /**
  * The {@link SpreadsheetParser} returned by {@link SpreadsheetNumberParsePattern#converter()}.
  */
-final class SpreadsheetNumberParsePatternSpreadsheetParser implements SpreadsheetParser {
+final class SpreadsheetNumberParsePatternSpreadsheetParser implements SpreadsheetParser,
+        RequiredParser<SpreadsheetParserContext> {
 
     static SpreadsheetNumberParsePatternSpreadsheetParser with(final SpreadsheetNumberParsePattern pattern,
                                                                final SpreadsheetNumberParsePatternMode mode) {

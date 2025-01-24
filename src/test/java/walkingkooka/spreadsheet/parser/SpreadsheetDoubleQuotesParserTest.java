@@ -114,6 +114,20 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
     }
 
     @Test
+    public void testMinCount() {
+        this.minCountAndCheck(
+                1
+        );
+    }
+
+    @Test
+    public void testMaxCount() {
+        this.maxCountAndCheck(
+                1
+        );
+    }
+
+    @Test
     public void testToString() {
         this.toStringAndCheck(this.createParser(), "Text");
     }
