@@ -54,11 +54,4 @@ public final class SpreadsheetGroupParserToken extends SpreadsheetParentParserTo
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetGroupParserToken;
-    }
 }

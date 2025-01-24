@@ -64,11 +64,4 @@ public final class SpreadsheetGreaterThanParserToken extends SpreadsheetConditio
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetGreaterThanParserToken;
-    }
 }

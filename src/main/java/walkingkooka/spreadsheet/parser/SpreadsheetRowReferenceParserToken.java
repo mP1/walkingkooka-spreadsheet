@@ -44,11 +44,6 @@ public final class SpreadsheetRowReferenceParserToken extends SpreadsheetNonSymb
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetRowReferenceParserToken;
-    }
-
     // HasSpreadsheetReference..........................................................................................
 
     @Override

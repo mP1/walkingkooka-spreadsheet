@@ -55,11 +55,4 @@ public final class SpreadsheetAdditionParserToken extends SpreadsheetArithmeticP
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetAdditionParserToken;
-    }
 }

@@ -66,11 +66,4 @@ public final class SpreadsheetNumberParserToken extends SpreadsheetValueParserTo
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetNumberParserToken;
-    }
 }

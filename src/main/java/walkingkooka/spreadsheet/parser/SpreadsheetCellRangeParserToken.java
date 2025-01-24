@@ -83,13 +83,6 @@ public final class SpreadsheetCellRangeParserToken extends SpreadsheetBinaryPars
         visitor.endVisit(this);
     }
 
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetCellRangeParserToken;
-    }
-
     // HasSpreadsheetReference..........................................................................................
 
     @Override

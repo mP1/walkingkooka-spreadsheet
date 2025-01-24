@@ -64,11 +64,4 @@ public final class SpreadsheetLessThanEqualsParserToken extends SpreadsheetCondi
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetLessThanEqualsParserToken;
-    }
 }

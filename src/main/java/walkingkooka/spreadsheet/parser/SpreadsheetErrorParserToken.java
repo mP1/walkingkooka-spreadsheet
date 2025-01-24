@@ -43,9 +43,4 @@ public final class SpreadsheetErrorParserToken extends SpreadsheetNonSymbolParse
     void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetErrorParserToken;
-    }
 }

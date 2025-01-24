@@ -79,13 +79,6 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
         visitor.endVisit(this);
     }
 
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetCellReferenceParserToken;
-    }
-
     // HasSpreadsheetReference..........................................................................................
 
     @Override

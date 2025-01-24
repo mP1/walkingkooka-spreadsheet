@@ -113,11 +113,4 @@ public final class SpreadsheetLambdaFunctionParserToken extends SpreadsheetFunct
         }
         visitor.endVisit(this);
     }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetLambdaFunctionParserToken;
-    }
 }

@@ -39,9 +39,4 @@ public final class SpreadsheetDayNameAbbreviationParserToken extends Spreadsheet
     void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetDayNameAbbreviationParserToken;
-    }
 }
