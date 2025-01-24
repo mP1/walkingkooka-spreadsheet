@@ -156,7 +156,7 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetLabelNameSpreadsheetParser.INSTANCE,
-                "SPREADSHEETLABELNAME"
+                "LABEL"
         );
     }
 

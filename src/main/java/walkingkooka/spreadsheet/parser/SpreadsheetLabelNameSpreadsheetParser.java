@@ -115,8 +115,6 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
 
     @Override
     public String toString() {
-        return TO_STRING;
+        return "LABEL";
     }
-
-    private final static String TO_STRING = SpreadsheetLabelName.class.getSimpleName().toUpperCase();
 }
