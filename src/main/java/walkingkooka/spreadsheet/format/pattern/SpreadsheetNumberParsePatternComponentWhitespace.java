@@ -25,7 +25,6 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.text.cursor.parser.SequenceParserBuilder;
 
 import java.util.Optional;
 
@@ -45,16 +44,12 @@ final class SpreadsheetNumberParsePatternComponentWhitespace extends Spreadsheet
         super();
         this.length = length;
 
-        SequenceParserBuilder<ParserContext> repeating = Parsers.sequenceParserBuilder();
-
-        for (int i = 0; i < length; i++) {
-            repeating = repeating.required(WHITESPACE);
-        }
-
-        this.parser = repeating.build();
+        this.parser = Parsers.charPredicateString(
+                CharPredicates.whitespace(),
+                length,
+                length
+        );
     }
-
-    private final static Parser<ParserContext> WHITESPACE = Parsers.character(CharPredicates.whitespace());
 
     @Override
     boolean isExpressionCompatible() {

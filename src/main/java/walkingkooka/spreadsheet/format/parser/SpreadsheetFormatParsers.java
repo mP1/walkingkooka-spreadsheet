@@ -110,10 +110,8 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final Parser<SpreadsheetFormatParserContext> COLOR_NUMBER = Parsers.string("COLOR", CaseSensitivity.INSENSITIVE)
             .transform(SpreadsheetFormatParsers::transformColorLiteral)
-            .builder()
-            .optional(WHITESPACE.cast())
-            .required(COLOR_DIGITS.cast())
-            .build()
+            .and(WHITESPACE.optional().cast())
+            .and(COLOR_DIGITS.cast())
             .setToString(COLOR_NUMBER_IDENTIFIER.toString())
             .cast();
 
