@@ -139,12 +139,9 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
 
     private static SpreadsheetDateParserToken transformDate(final ParserToken token,
                                                             final SpreadsheetParserContext context) {
-        final SequenceParserToken sequenceParserToken = token.cast(SequenceParserToken.class);
-
-        return SpreadsheetParserToken.date(
-                sequenceParserToken.flat()
-                        .value(),
-                sequenceParserToken.text()
+        return transform(
+                token,
+                SpreadsheetParserToken::date
         );
     }
 
@@ -158,12 +155,9 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
 
     private static SpreadsheetDateTimeParserToken transformDateTime(final ParserToken token,
                                                                     final SpreadsheetParserContext context) {
-        final SequenceParserToken sequenceParserToken = token.cast(SequenceParserToken.class);
-
-        return SpreadsheetParserToken.dateTime(
-                sequenceParserToken.flat()
-                        .value(),
-                sequenceParserToken.text()
+        return transform(
+                token,
+                SpreadsheetParserToken::dateTime
         );
     }
 
@@ -185,12 +179,21 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
 
     private static SpreadsheetTimeParserToken transformTime(final ParserToken token,
                                                             final SpreadsheetParserContext context) {
-        final SequenceParserToken sequenceParserToken = token.cast(SequenceParserToken.class);
+        return transform(
+                token,
+                SpreadsheetParserToken::time
+        );
+    }
 
-        return SpreadsheetParserToken.time(
-                sequenceParserToken.flat()
-                        .value(),
-                sequenceParserToken.text()
+    private static <T extends SpreadsheetParserToken> T transform(final ParserToken token,
+                                                                  final BiFunction<List<ParserToken>, String, T> factory) {
+        return factory.apply(
+                token instanceof SequenceParserToken ?
+                        token.cast(SequenceParserToken.class)
+                                .flat()
+                                .value() :
+                        Lists.of(token),
+                token.text()
         );
     }
 
