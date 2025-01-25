@@ -65,7 +65,6 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.text.cursor.parser.SequenceParserBuilder;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.visit.Visiting;
@@ -124,7 +123,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     }
 
     private Visiting startParser() {
-        this.sequenceParserBuilder = Parsers.sequenceParserBuilder();
+        this.parser = null;
         this.milliseconds = 0;
         return Visiting.CONTINUE;
     }
@@ -201,7 +200,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
                            final BiFunction<ParserToken, SpreadsheetParserContext, ParserToken> transformer) {
         this.appendDecimalSeparatorMillisecondsIfNecessary();
 
-        Parser<SpreadsheetParserContext> parser = this.sequenceParserBuilder.build();
+        Parser parser = this.parser;
         if (null != transformer) {
             parser = parser.transform(transformer);
         }
@@ -210,6 +209,8 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
                 parser.andEmptyTextCursor()
                         .setToString(token.text())
         );
+
+        this.parser = null;
     }
 
     private final List<Parser<SpreadsheetParserContext>> parsers = Lists.array();
@@ -578,11 +579,16 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         final int millis = this.milliseconds;
         if (millis > 0) {
 
-            this.sequenceParserBuilder.optional(
-                    Parsers.<SpreadsheetParserContext>sequenceParserBuilder()
-                            .required(SpreadsheetNonNumberParsePatternParser.decimalSeparator())
-                            .optional(SpreadsheetNonNumberParsePatternParser.milliseconds(CharSequences.repeating('0', millis - 1).toString()))
-                            .build()
+            this.addParser(
+                    SpreadsheetNonNumberParsePatternParser.decimalSeparator()
+                            .and(
+                                    SpreadsheetNonNumberParsePatternParser.milliseconds(
+                                            CharSequences.repeating(
+                                                    '0',
+                                                    millis - 1
+                                            ).toString()
+                                    ).optional()
+                            ).optional()
             );
 
             this.milliseconds = 0;
@@ -599,13 +605,17 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
      * {@link SpreadsheetParserToken} sub class like {@link walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken}.
      */
     private void addParser(final Parser<SpreadsheetParserContext> parser) {
-        this.sequenceParserBuilder.required(parser);
+        if (null == this.parser) {
+            this.parser = parser;
+        } else {
+            this.parser = this.parser.and(parser);
+        }
     }
 
     /**
      * Multiple parsers for each of the tokens in the pattern.
      */
-    private SequenceParserBuilder<SpreadsheetParserContext> sequenceParserBuilder;
+    private Parser<SpreadsheetParserContext> parser;
 
     private void failInvalid(final SpreadsheetFormatParserToken token) {
         throw new IllegalStateException("Invalid token " + token);

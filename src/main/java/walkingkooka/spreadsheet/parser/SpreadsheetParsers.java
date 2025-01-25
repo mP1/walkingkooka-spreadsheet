@@ -64,9 +64,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static final SpreadsheetParser CELL = parser(
                     column()
-                            .builder()
-                            .required(row())
-                            .build()
+                            .and(row())
                             .transform(SpreadsheetParsers::transformCell)
                             .setToString("CELL")
             );
