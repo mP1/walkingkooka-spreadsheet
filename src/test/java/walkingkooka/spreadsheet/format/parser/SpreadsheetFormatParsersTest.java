@@ -7838,7 +7838,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 day(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7847,7 +7847,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 hour(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7856,7 +7856,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 minute(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7865,7 +7865,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 month(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7874,7 +7874,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 second(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7882,7 +7882,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testFractionStarFails() {
         this.fractionParseThrows(
                 star(),
-                "Invalid character '*' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '*' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7891,7 +7891,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 textPlaceholder(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7899,7 +7899,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testFractionUnderscoreFails() {
         this.fractionParseThrows(
                 underscore(),
-                "Invalid character '_' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '_' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7908,7 +7908,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 year(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7916,7 +7916,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testFractionSlashFails() {
         this.fractionParseThrows(
                 fractionSymbol(),
-                "Invalid character '/' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '/' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7925,7 +7925,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digitSpace(),
                 fractionSymbol(),
-                "Invalid character '?' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '?' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7934,7 +7934,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digitZero(),
                 fractionSymbol(),
-                "Invalid character '0' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '0' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7943,7 +7943,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 fractionSymbol(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7951,7 +7951,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testFractionGroupSeparatorFails() {
         this.fractionParseThrows(
                 groupSeparator(),
-                "Invalid character ',' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character ',' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7960,7 +7960,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.fractionParseThrows(
                 digit(),
                 groupSeparator(),
-                "Invalid character '#' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character '#' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
@@ -7968,7 +7968,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testFractionGeneralFails() {
         this.fractionParseThrows(
                 generalSymbol(),
-                "Invalid character 'G' at (1,1) expected (({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}), \"/\", ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}))"
+                "Invalid character 'G' at (1,1) expected ({(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, \"/\", {(COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)}, (\"#\" | \"?\" | \"0\"), {(\"#\" | \"?\" | \"0\" | COLOR | \"$\" | ESCAPE | FRACTION_LITERAL | QUOTED)})"
         );
     }
 
