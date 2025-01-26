@@ -206,7 +206,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     /**
      * Returns a {@link Parser} that returns a date format expression as {@link SpreadsheetFormatParserToken tokens}.
-     * Note unlike {@link #dateFormat()}, condition and color tokens are not allowed.
      */
     public static Parser<SpreadsheetFormatParserContext> dateParse() {
         return DATE_PARSE_PARSER;
@@ -244,7 +243,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     /**
      * Returns a {@link Parser} that returns a datetime format expression as {@link SpreadsheetFormatParserToken tokens}.
-     * Note unlike {@link #dateTimeFormat()}, condition and color tokens are not allowed.
      */
     public static Parser<SpreadsheetFormatParserContext> dateTimeParse() {
         return DATETIME_PARSE_PARSER;
@@ -475,7 +473,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     /**
      * Returns a {@link Parser} that returns a time format expression as {@link SpreadsheetFormatParserToken tokens}.
-     * Note unlike {@link #timeFormat()}, condition and color tokens are not allowed.
      */
     public static Parser<SpreadsheetFormatParserContext> timeParse() {
         return TIME_PARSE_PARSER;
