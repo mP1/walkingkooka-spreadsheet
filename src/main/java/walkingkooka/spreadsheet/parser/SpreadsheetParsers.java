@@ -55,6 +55,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      */
     public static final CharacterConstant RANGE_SEPARATOR = CharacterConstant.with(':');
 
+    private static final EbnfIdentifierName CELL_IDENTIFIER = EbnfIdentifierName.with("CELL");
+    private static final EbnfIdentifierName LABEL_NAME_IDENTIFIER = EbnfIdentifierName.with("LABEL_NAME");
+    private static final EbnfIdentifierName BETWEEN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("BETWEEN_SYMBOL");
+
     /**
      * A {@link SpreadsheetParser} that knows how to parse a cell reference, but not cell-range or label.
      */
@@ -66,7 +70,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                     column()
                             .and(row())
                             .transform(SpreadsheetParsers::transformCell)
-                            .setToString("CELL")
+                            .setToString(CELL_IDENTIFIER.value())
             );
 
     private static ParserToken transformCell(final ParserToken token,
@@ -92,10 +96,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         predefined.put(LABEL_NAME_IDENTIFIER, labelName());
         predefined.put(BETWEEN_SYMBOL_IDENTIFIER, BETWEEN_SYMBOL);
     }
-
-    private static final EbnfIdentifierName CELL_IDENTIFIER = EbnfIdentifierName.with("CELL");
-    private static final EbnfIdentifierName LABEL_NAME_IDENTIFIER = EbnfIdentifierName.with("LABEL_NAME");
-    private static final EbnfIdentifierName BETWEEN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("BETWEEN_SYMBOL");
 
     private static final Parser<SpreadsheetParserContext> BETWEEN_SYMBOL = symbol(
             RANGE_SEPARATOR.character(),
@@ -470,7 +470,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                     1,
                     65536
             ).transform(SpreadsheetParsers::transformString)
-            .setToString("STRING");
+            .setToString(STRING_IDENTIFIER.value());
 
     private static ParserToken transformString(final ParserToken token,
                                                final SpreadsheetParserContext context) {
@@ -569,7 +569,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                             1,
                             Integer.MAX_VALUE
                     ).transform(SpreadsheetParsers::transformWhitespace)
-                    .setToString("WHITESPACE")
+                    .setToString(WHITESPACE_IDENTIFIER.value())
     );
 
     private static ParserToken transformWhitespace(final ParserToken token,
