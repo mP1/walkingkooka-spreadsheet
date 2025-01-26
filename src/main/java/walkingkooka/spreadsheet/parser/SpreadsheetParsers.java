@@ -625,19 +625,19 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      */
     static {
         final Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.fake());
-        final Function<String, SpreadsheetParser> getParser = (name) ->
+        final Function<String, SpreadsheetParser> getSpreadsheetParser = (name) ->
                 parser(
                         parsers.apply(
                                 EbnfIdentifierName.with(name)
                         )
                 );
 
-        CELL_OR_CELL_RANGE_OR_LABEL_PARSER = getParser.apply("CELL_OR_CELL_RANGE_OR_LABEL");
-        CELL_RANGE_PARSER = getParser.apply("CELL_RANGE");
-        EXPRESSION_PARSER = getParser.apply("EXPRESSION");
-        FUNCTION_PARAMETERS_PARSER = getParser.apply("FUNCTION_PARAMETERS");
-        LAMBDA_FUNCTION = getParser.apply("LAMBDA_FUNCTION");
-        NAMED_FUNCTION_PARSER = getParser.apply("NAMED_FUNCTION");
+        CELL_OR_CELL_RANGE_OR_LABEL_PARSER = getSpreadsheetParser.apply("CELL_OR_CELL_RANGE_OR_LABEL");
+        CELL_RANGE_PARSER = getSpreadsheetParser.apply("CELL_RANGE");
+        EXPRESSION_PARSER = getSpreadsheetParser.apply("EXPRESSION");
+        FUNCTION_PARAMETERS_PARSER = getSpreadsheetParser.apply("FUNCTION_PARAMETERS");
+        LAMBDA_FUNCTION = getSpreadsheetParser.apply("LAMBDA_FUNCTION");
+        NAMED_FUNCTION_PARSER = getSpreadsheetParser.apply("NAMED_FUNCTION");
     }
 
     private static Parser<SpreadsheetParserContext> symbol(final char c,
