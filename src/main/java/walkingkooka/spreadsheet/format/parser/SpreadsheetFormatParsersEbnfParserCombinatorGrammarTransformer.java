@@ -23,17 +23,17 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RepeatedOrSequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfAlternativeParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfConcatenationParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfExceptionParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfGroupParserToken;
+import walkingkooka.text.cursor.parser.ebnf.AlternativeEbnfParserToken;
+import walkingkooka.text.cursor.parser.ebnf.ConcatenationEbnfParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
-import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfOptionalParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfRangeParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfRepeatedParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfRuleParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfTerminalParserToken;
+import walkingkooka.text.cursor.parser.ebnf.ExceptionEbnfParserToken;
+import walkingkooka.text.cursor.parser.ebnf.GroupEbnfParserToken;
+import walkingkooka.text.cursor.parser.ebnf.IdentifierEbnfParserToken;
+import walkingkooka.text.cursor.parser.ebnf.OptionalEbnfParserToken;
+import walkingkooka.text.cursor.parser.ebnf.RangeEbnfParserToken;
+import walkingkooka.text.cursor.parser.ebnf.RepeatedEbnfParserToken;
+import walkingkooka.text.cursor.parser.ebnf.RuleEbnfParserToken;
+import walkingkooka.text.cursor.parser.ebnf.TerminalEbnfParserToken;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformer;
 
 import java.util.List;
@@ -247,31 +247,31 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> alternatives(final EbnfAlternativeParserToken token,
+    public Parser<SpreadsheetFormatParserContext> alternatives(final AlternativeEbnfParserToken token,
                                                                final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> concatenation(final EbnfConcatenationParserToken token,
+    public Parser<SpreadsheetFormatParserContext> concatenation(final ConcatenationEbnfParserToken token,
                                                                 final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> exception(final EbnfExceptionParserToken token,
+    public Parser<SpreadsheetFormatParserContext> exception(final ExceptionEbnfParserToken token,
                                                             final Parser<SpreadsheetFormatParserContext> parser) {
         throw new UnsupportedOperationException(token.text()); // there are no exception tokens.
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> group(final EbnfGroupParserToken token,
+    public Parser<SpreadsheetFormatParserContext> group(final GroupEbnfParserToken token,
                                                         final Parser<SpreadsheetFormatParserContext> parser) {
         return parser; //leave group definitions as they are.
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> identifier(final EbnfIdentifierParserToken token,
+    public Parser<SpreadsheetFormatParserContext> identifier(final IdentifierEbnfParserToken token,
                                                              final Parser<SpreadsheetFormatParserContext> parser) {
         return this.transformIfNecessary(
                 token.value(),
@@ -280,26 +280,26 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> optional(final EbnfOptionalParserToken token,
+    public Parser<SpreadsheetFormatParserContext> optional(final OptionalEbnfParserToken token,
                                                            final Parser<SpreadsheetFormatParserContext> parser) {
         return parser; // leave optionals alone...
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> range(final EbnfRangeParserToken token,
+    public Parser<SpreadsheetFormatParserContext> range(final RangeEbnfParserToken token,
                                                         final String beginText,
                                                         final String endText) {
         throw new UnsupportedOperationException(token.text()); // there are no ranges...
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> repeated(final EbnfRepeatedParserToken token,
+    public Parser<SpreadsheetFormatParserContext> repeated(final RepeatedEbnfParserToken token,
                                                            final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> rule(final EbnfRuleParserToken token,
+    public Parser<SpreadsheetFormatParserContext> rule(final RuleEbnfParserToken token,
                                                        final Parser<SpreadsheetFormatParserContext> parser) {
         return this.transformIfNecessary(
                 token.identifier()
@@ -309,7 +309,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
     }
 
     @Override
-    public Parser<SpreadsheetFormatParserContext> terminal(final EbnfTerminalParserToken token,
+    public Parser<SpreadsheetFormatParserContext> terminal(final TerminalEbnfParserToken token,
                                                            final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
     }

@@ -33,8 +33,8 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
+import walkingkooka.text.cursor.parser.ebnf.GrammarEbnfParserToken;
 
 import java.util.Arrays;
 import java.util.List;
@@ -584,7 +584,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private final static String FILENAME = SpreadsheetParsers.class.getSimpleName() + "Grammar.txt";
 
-    private final static EbnfGrammarParserToken GRAMMAR_PARSER_TOKEN = EbnfGrammarParserToken.parseFile(
+    private final static GrammarEbnfParserToken GRAMMAR_PARSER_TOKEN = GrammarEbnfParserToken.parseFile(
             new SpreadsheetParsersGrammarProvider().text(),
             FILENAME
     );
