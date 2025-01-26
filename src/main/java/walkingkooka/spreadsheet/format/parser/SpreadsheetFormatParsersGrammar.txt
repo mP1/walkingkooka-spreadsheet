@@ -117,7 +117,7 @@ NUMBER_TEXT                       = [ CONDITION_GENERAL_OR_NUMBER_COLOR ],
                                     PATTERN_SEPARATOR,
                                     [ CONDITION_GENERAL_OR_NUMBER_COLOR | TEXT ];
 
-NUMBER_EXPONENT_SYMBOL            = ( 'E+' | 'e+' | 'E-' | 'e-' );
+NUMBER_EXPONENT_SYMBOL            = 'E+' | 'e+' | 'E-' | 'e-';
 
 NUMBER_DIGIT                      = DIGIT | DIGIT_SPACE | DIGIT_ZERO | GROUP_SEPARATOR;
 
