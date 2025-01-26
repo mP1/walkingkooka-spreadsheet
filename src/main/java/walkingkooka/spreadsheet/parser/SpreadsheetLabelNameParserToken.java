@@ -20,7 +20,7 @@ import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 
 /**
- * Represents a label or name for a cell or range etc.
+ * Represents a {@link SpreadsheetLabelName} within an expression.
  */
 public final class SpreadsheetLabelNameParserToken extends SpreadsheetNonSymbolParserToken<SpreadsheetLabelName> implements SpreadsheetReferenceParserToken,
         HasSpreadsheetReference<SpreadsheetLabelName> {
