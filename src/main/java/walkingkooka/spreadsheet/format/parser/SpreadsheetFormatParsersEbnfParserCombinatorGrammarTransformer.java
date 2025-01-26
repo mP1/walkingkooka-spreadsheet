@@ -55,65 +55,15 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
         );
     }
 
-    private static ParserToken transformConditionEqual(final ParserToken token,
-                                                       final SpreadsheetFormatParserContext context) {
+    private static final EbnfIdentifierName CONDITION_IDENTIFIER = EbnfIdentifierName.with("CONDITION");
+
+    private static ParserToken transformCondition(final ParserToken token,
+                                                  final SpreadsheetFormatParserContext context) {
         return flatAndCreate(
                 token,
-                SpreadsheetFormatParserToken::equalsParserToken
+                SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerConditionSpreadsheetFormatParserTokenVisitor::condition
         );
     }
-
-    private static final EbnfIdentifierName CONDITION_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_EQUAL");
-
-    private static ParserToken transformConditionGreaterThan(final ParserToken token,
-                                                             final SpreadsheetFormatParserContext context) {
-        return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::greaterThan
-        );
-    }
-
-    private static final EbnfIdentifierName CONDITION_GREATER_THAN_IDENTIFIER = EbnfIdentifierName.with("CONDITION_GREATER_THAN");
-
-    private static ParserToken transformConditionGreaterThanEqual(final ParserToken token,
-                                                                  final SpreadsheetFormatParserContext context) {
-        return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::greaterThanEquals
-        );
-    }
-
-    private static final EbnfIdentifierName CONDITION_GREATER_THAN_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_GREATER_THAN_EQUAL");
-
-    private static ParserToken transformConditionLessThan(final ParserToken token,
-                                                          final SpreadsheetFormatParserContext context) {
-        return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::lessThan
-        );
-    }
-
-    private static final EbnfIdentifierName CONDITION_LESS_THAN_IDENTIFIER = EbnfIdentifierName.with("CONDITION_LESS_THAN");
-
-    private static ParserToken transformConditionLessThanEqual(final ParserToken token,
-                                                               final SpreadsheetFormatParserContext context) {
-        return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::lessThanEquals
-        );
-    }
-
-    private static final EbnfIdentifierName CONDITION_LESS_THAN_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_LESS_THAN_EQUAL");
-
-    private static ParserToken transformConditionNotEqual(final ParserToken token,
-                                                          final SpreadsheetFormatParserContext context) {
-        return flatAndCreate(
-                token,
-                SpreadsheetFormatParserToken::notEquals
-        );
-    }
-
-    private static final EbnfIdentifierName CONDITION_NOT_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_NOT_EQUAL");
 
     private static ParserToken transformDate(final ParserToken token,
                                              final SpreadsheetFormatParserContext context) {
@@ -242,12 +192,7 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer imple
                 SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformColorParserToken
         );
 
-        identifierToTransform.put(CONDITION_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionEqual);
-        identifierToTransform.put(CONDITION_GREATER_THAN_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionGreaterThan);
-        identifierToTransform.put(CONDITION_GREATER_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionGreaterThanEqual);
-        identifierToTransform.put(CONDITION_LESS_THAN_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionLessThan);
-        identifierToTransform.put(CONDITION_LESS_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionLessThanEqual);
-        identifierToTransform.put(CONDITION_NOT_EQUAL_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformConditionNotEqual);
+        identifierToTransform.put(CONDITION_IDENTIFIER, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::transformCondition);
 
         identifierToTransform.put(SpreadsheetFormatParsers.NUMBER_FORMAT, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
         identifierToTransform.put(SpreadsheetFormatParsers.NUMBER_PARSE, SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformer::flat);
