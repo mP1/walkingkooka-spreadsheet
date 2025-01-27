@@ -390,6 +390,93 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         );
     }
 
+    // expression.......................................................................................................
+
+    @Test
+    public void testExpressionApostropheStringFails() {
+        this.expressionParserParseFails(
+                "'Apostrophe String",
+                "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL, [WHITESPACE], \":\", [WHITESPACE], CELL | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+        );
+    }
+
+    @Test
+    public void testExpressionFunction() {
+        final String text = "z(123)";
+
+        this.expressionParserParseStringAndCheck(
+                text,
+                namedFunction(
+                        functionName("z"),
+                        functionParameters(
+                                parenthesisOpen(),
+                                number(123),
+                                parenthesisClose()
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testExpressionNumber() {
+        final String text = "123";
+
+        this.expressionParserParseStringAndCheck(
+                text,
+                number(123)
+        );
+    }
+
+    @Test
+    public void testExpressionAdditionNegativeNumberPlusNumber() {
+        final String text = "-1+2";
+
+        this.expressionParserParseStringAndCheck(
+                text,
+                addition(
+                        negative(
+                                minusSymbol(),
+                                number(1)
+                        ),
+                        plusSymbol(),
+                        number(2)
+                )
+        );
+    }
+
+    @Test
+    public void testExpressionAdditionNumberPlusNumber() {
+        final String text = "1+2";
+
+        this.expressionParserParseStringAndCheck(
+                text,
+                addition(
+                        number(1),
+                        plusSymbol(),
+                        number(2)
+                )
+        );
+    }
+
+    private void expressionParserParseFails(final String text,
+                                            final String expected) {
+        this.parseThrows(
+                SpreadsheetFormulaParsers.expression(),
+                text,
+                expected
+        );
+    }
+
+    private void expressionParserParseStringAndCheck(final String text,
+                                                     final SpreadsheetFormulaParserToken expected) {
+        this.parseAndCheck(
+                expressionParser(),
+                text,
+                expected,
+                text
+        );
+    }
+
     // apostrophe string values.........................................................................................
 
     @Test
