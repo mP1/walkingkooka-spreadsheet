@@ -637,7 +637,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                 parser(
                         parsers.apply(
                                 EbnfIdentifierName.with(name)
-                        )
+                        ).setToString(name)
                 );
 
         CELL_OR_CELL_RANGE_OR_LABEL_PARSER = getSpreadsheetParser.apply("CELL_OR_CELL_RANGE_OR_LABEL");
