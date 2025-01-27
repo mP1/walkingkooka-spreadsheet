@@ -128,7 +128,7 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
                                           final SpreadsheetParserContext context) {
         return token instanceof SpreadsheetFormulaParserToken ?
                 token :
-                SpreadsheetFormulaParserToken.group(
+                SpreadsheetFormulaParserToken.expression(
                         token.cast(SequenceParserToken.class).value(),
                         token.text()
                 );
