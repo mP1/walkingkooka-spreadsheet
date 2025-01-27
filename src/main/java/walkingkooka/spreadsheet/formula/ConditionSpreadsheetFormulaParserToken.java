@@ -32,7 +32,7 @@ abstract public class ConditionSpreadsheetFormulaParserToken extends BinarySprea
     /**
      * Returns a sub-class of {@link ConditionRightSpreadsheetFormulaParserToken} from the RHS argument of this condition.
      */
-    public final ConditionRightSpreadsheetFormulaParserToken toConditionRightSpreadsheetParserToken() {
+    public final ConditionRightSpreadsheetFormulaParserToken toConditionRightSpreadsheetFormulaParserToken() {
         // find symbol, return  the symbol and tokens following it to the factory method.
         final List<ParserToken> tokens = this.value();
 
@@ -56,12 +56,12 @@ abstract public class ConditionSpreadsheetFormulaParserToken extends BinarySprea
                 tokens.size()
         );
 
-        return this.toConditionRightSpreadsheetParserToken0(
+        return this.toConditionRightSpreadsheetFormulaParserToken0(
                 conditionRightTokens,
                 ParserToken.text(conditionRightTokens)
         );
     }
 
-    abstract ConditionRightSpreadsheetFormulaParserToken toConditionRightSpreadsheetParserToken0(final List<ParserToken> tokens,
+    abstract ConditionRightSpreadsheetFormulaParserToken toConditionRightSpreadsheetFormulaParserToken0(final List<ParserToken> tokens,
                                                                                                  final String text);
 }

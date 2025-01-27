@@ -35,8 +35,8 @@ public final class LessThanEqualsSpreadsheetFormulaParserToken extends Condition
     }
 
     @Override
-    ConditionRightLessThanEqualsSpreadsheetFormulaParserToken toConditionRightSpreadsheetParserToken0(final List<ParserToken> tokens,
-                                                                                                      final String text) {
+    ConditionRightLessThanEqualsSpreadsheetFormulaParserToken toConditionRightSpreadsheetFormulaParserToken0(final List<ParserToken> tokens,
+                                                                                                             final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightLessThanEquals(
                 tokens,

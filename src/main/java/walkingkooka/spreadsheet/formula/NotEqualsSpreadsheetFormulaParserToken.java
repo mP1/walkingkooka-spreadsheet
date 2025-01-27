@@ -35,8 +35,8 @@ public final class NotEqualsSpreadsheetFormulaParserToken extends ConditionSprea
     }
 
     @Override
-    ConditionRightNotEqualsSpreadsheetFormulaParserToken toConditionRightSpreadsheetParserToken0(final List<ParserToken> tokens,
-                                                                                                 final String text) {
+    ConditionRightNotEqualsSpreadsheetFormulaParserToken toConditionRightSpreadsheetFormulaParserToken0(final List<ParserToken> tokens,
+                                                                                                        final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightNotEquals(
                 tokens,

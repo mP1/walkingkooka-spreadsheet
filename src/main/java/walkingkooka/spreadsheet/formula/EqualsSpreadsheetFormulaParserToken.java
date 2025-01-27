@@ -36,8 +36,8 @@ public final class EqualsSpreadsheetFormulaParserToken extends ConditionSpreadsh
     }
 
     @Override
-    ConditionRightEqualsSpreadsheetFormulaParserToken toConditionRightSpreadsheetParserToken0(final List<ParserToken> tokens,
-                                                                                              final String text) {
+    ConditionRightEqualsSpreadsheetFormulaParserToken toConditionRightSpreadsheetFormulaParserToken0(final List<ParserToken> tokens,
+                                                                                                     final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightEquals(
                 tokens,
