@@ -427,7 +427,18 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
 
     @Override
     protected void visit(final LabelNameSpreadsheetFormulaParserToken token) {
-        this.addReference(token.value(), token);
+        this.addReference(
+                token.value(),
+                token
+        );
+    }
+
+    @Override
+    protected void visit(final TemplateValueNameSpreadsheetFormulaParserToken token) {
+        this.addReference(
+                token.value(),
+                token
+        );
     }
 
     @Override
@@ -467,14 +478,19 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
         this.previousChildren = this.previousChildren.pop();
     }
 
-    private void exitReference(final ExpressionReference reference, final SpreadsheetFormulaParserToken token) {
+    private void exitReference(final ExpressionReference reference,
+                               final SpreadsheetFormulaParserToken token) {
         final Expression node = Expression.reference(reference);
         this.exit();
         this.add(node, token);
     }
 
-    private void addReference(final ExpressionReference reference, final SpreadsheetFormulaParserToken token) {
-        this.add(Expression.reference(reference), token);
+    private void addReference(final ExpressionReference reference,
+                              final SpreadsheetFormulaParserToken token) {
+        this.add(
+                Expression.reference(reference),
+                token
+        );
     }
 
     private void add(final Expression node, final SpreadsheetFormulaParserToken token) {

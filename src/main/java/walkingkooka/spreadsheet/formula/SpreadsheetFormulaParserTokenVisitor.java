@@ -481,6 +481,10 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
+    protected void visit(final TemplateValueNameSpreadsheetFormulaParserToken token) {
+        // nop
+    }
+
     protected void visit(final TextLiteralSpreadsheetFormulaParserToken token) {
         // nop
     }

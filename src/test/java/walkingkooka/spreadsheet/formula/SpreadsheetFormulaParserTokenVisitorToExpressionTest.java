@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -182,6 +183,20 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
                             }
                         }),
                 "expression.toValue"
+        );
+    }
+
+    @Test
+    public void testTemplateValueName() {
+        final String text = "template-value-name123";
+        final TemplateValueName template = TemplateValueName.with(text);
+
+        this.toExpressionAndCheck(
+                SpreadsheetFormulaParserToken.templateValueName(
+                        template,
+                        text
+                ),
+                Expression.reference(template)
         );
     }
 

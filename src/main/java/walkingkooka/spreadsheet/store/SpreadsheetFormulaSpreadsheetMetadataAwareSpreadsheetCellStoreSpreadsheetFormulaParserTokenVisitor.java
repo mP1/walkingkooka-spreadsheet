@@ -91,6 +91,7 @@ import walkingkooka.spreadsheet.formula.SecondsSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserTokenVisitor;
 import walkingkooka.spreadsheet.formula.SubtractionSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.TemplateValueNameSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.TextLiteralSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.TextSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.TimeSpreadsheetFormulaParserToken;
@@ -684,6 +685,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void visit(final SecondsSpreadsheetFormulaParserToken token) {
         this.leaf(token);
+    }
+
+    @Override
+    protected void visit(final TemplateValueNameSpreadsheetFormulaParserToken token) {
+        throw new IllegalStateException("Cells should never have a " + TemplateValueNameSpreadsheetFormulaParserToken.class.getSimpleName());
     }
 
     @Override

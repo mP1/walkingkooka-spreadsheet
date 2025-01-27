@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -52,6 +53,10 @@ import java.util.stream.Collectors;
  * Numerous {@link Parser parsers} that parse individual tokens of a formula or an entire formula.
  */
 public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
+
+    static {
+        TemplateValueName.with("Force-json-registry");
+    }
 
     /**
      * Range separator character used to separate the lower and upper bounds.
