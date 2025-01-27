@@ -31,281 +31,281 @@ public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVis
         super();
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+    protected Visiting startVisit(final ColorSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatColorParserToken token) {
+    protected void endVisit(final ColorSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatDateParserToken token) {
+    protected void endVisit(final DateSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected Visiting startVisit(final DateTimeSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected void endVisit(final DateTimeSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatEqualsParserToken token) {
+    protected Visiting startVisit(final EqualsSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatEqualsParserToken token) {
+    protected void endVisit(final EqualsSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatExponentParserToken token) {
+    protected Visiting startVisit(final ExponentSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatExponentParserToken token) {
+    protected void endVisit(final ExponentSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatExpressionParserToken token) {
+    protected Visiting startVisit(final ExpressionSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatExpressionParserToken token) {
+    protected void endVisit(final ExpressionSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatFractionParserToken token) {
+    protected Visiting startVisit(final FractionSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatFractionParserToken token) {
+    protected void endVisit(final FractionSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatGeneralParserToken token) {
+    protected Visiting startVisit(final GeneralSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
+    protected void endVisit(final GeneralSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+    protected void endVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+    protected Visiting startVisit(final GreaterThanSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+    protected void endVisit(final GreaterThanSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+    protected void endVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatLessThanParserToken token) {
+    protected Visiting startVisit(final LessThanSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatLessThanParserToken token) {
+    protected void endVisit(final LessThanSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+    protected Visiting startVisit(final NotEqualsSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+    protected void endVisit(final NotEqualsSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+    protected Visiting startVisit(final NumberSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
+    protected void endVisit(final NumberSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
+    protected Visiting startVisit(final TextSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatTextParserToken token) {
+    protected void endVisit(final TextSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetFormatParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected void endVisit(final TimeSpreadsheetFormatParserToken token) {
         // nop
     }
 
     // SpreadsheetFormatLeafParserToken ....................................................................................
 
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+    protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+    protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatColorLiteralSymbolParserToken token) {
+    protected void visit(final ColorLiteralSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+    protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+    protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+    protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
+    protected void visit(final CurrencySpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatDayParserToken token) {
+    protected void visit(final DaySpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
+    protected void visit(final DecimalPointSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatDigitParserToken token) {
+    protected void visit(final DigitSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
+    protected void visit(final DigitSpaceSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
+    protected void visit(final DigitZeroSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatEqualsSymbolParserToken token) {
+    protected void visit(final EqualsSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatEscapeParserToken token) {
+    protected void visit(final EscapeSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
+    protected void visit(final ExponentSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatFractionSymbolParserToken token) {
+    protected void visit(final FractionSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatGeneralSymbolParserToken token) {
+    protected void visit(final GeneralSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatGreaterThanEqualsSymbolParserToken token) {
+    protected void visit(final GreaterThanEqualsSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatGreaterThanSymbolParserToken token) {
+    protected void visit(final GreaterThanSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
+    protected void visit(final GroupSeparatorSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatHourParserToken token) {
+    protected void visit(final HourSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatLessThanEqualsSymbolParserToken token) {
+    protected void visit(final LessThanEqualsSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatLessThanSymbolParserToken token) {
+    protected void visit(final LessThanSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+    protected void visit(final MonthSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatNotEqualsSymbolParserToken token) {
+    protected void visit(final NotEqualsSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatPercentParserToken token) {
+    protected void visit(final PercentSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
+    protected void visit(final QuotedTextSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatSecondParserToken token) {
+    protected void visit(final SecondSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
+    protected void visit(final SeparatorSymbolSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatStarParserToken token) {
+    protected void visit(final StarSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
+    protected void visit(final TextPlaceholderSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatUnderscoreParserToken token) {
+    protected void visit(final UnderscoreSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+    protected void visit(final WhitespaceSpreadsheetFormatParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatYearParserToken token) {
+    protected void visit(final YearSpreadsheetFormatParserToken token) {
         // nop
     }
 

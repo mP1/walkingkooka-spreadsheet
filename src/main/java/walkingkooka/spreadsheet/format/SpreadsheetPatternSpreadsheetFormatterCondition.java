@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,7 +33,7 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterCondition}
      */
-    static SpreadsheetPatternSpreadsheetFormatterCondition with(final SpreadsheetFormatConditionParserToken token,
+    static SpreadsheetPatternSpreadsheetFormatterCondition with(final ConditionSpreadsheetFormatParserToken token,
                                                                 final SpreadsheetPatternSpreadsheetFormatter formatter) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(formatter, "formatter");
@@ -47,7 +47,7 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
     /**
      * Private use factory
      */
-    private SpreadsheetPatternSpreadsheetFormatterCondition(final SpreadsheetFormatConditionParserToken token,
+    private SpreadsheetPatternSpreadsheetFormatterCondition(final ConditionSpreadsheetFormatParserToken token,
                                                             final SpreadsheetPatternSpreadsheetFormatter formatter) {
         super();
 
@@ -110,5 +110,5 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
         return this.token.text() + " " + this.formatter;
     }
 
-    private final SpreadsheetFormatConditionParserToken token;
+    private final ConditionSpreadsheetFormatParserToken token;
 }

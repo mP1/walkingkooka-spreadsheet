@@ -19,25 +19,25 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.compare.CompareResult;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionNumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GreaterThanEqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GreaterThanSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.LessThanEqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.LessThanSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NotEqualsSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 import java.math.BigDecimal;
 import java.util.function.Predicate;
 
 /**
- * Finds the condition and number parameter in the {@link SpreadsheetFormatConditionParserToken}.
+ * Finds the condition and number parameter in the {@link ConditionSpreadsheetFormatParserToken}.
  */
 final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    static Predicate<BigDecimal> predicateOrFail(final SpreadsheetFormatConditionParserToken token) {
+    static Predicate<BigDecimal> predicateOrFail(final ConditionSpreadsheetFormatParserToken token) {
         final SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor();
         token.accept(visitor);
         return visitor.relation.predicate(visitor.number);
@@ -49,41 +49,41 @@ final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatPars
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatEqualsParserToken token) {
+    protected void endVisit(final EqualsSpreadsheetFormatParserToken token) {
         this.setRelation(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+    protected void endVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
         this.setRelation(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+    protected void endVisit(final GreaterThanSpreadsheetFormatParserToken token) {
         this.setRelation(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+    protected void endVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
         this.setRelation(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatLessThanParserToken token) {
+    protected void endVisit(final LessThanSpreadsheetFormatParserToken token) {
         this.setRelation(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+    protected void endVisit(final NotEqualsSpreadsheetFormatParserToken token) {
         this.setRelation(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+    protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
         this.number = token.value();
     }
 
-    private void setRelation(final SpreadsheetFormatConditionParserToken token) {
+    private void setRelation(final ConditionSpreadsheetFormatParserToken token) {
         this.relation = token.compareResult();
     }
 

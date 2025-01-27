@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.util.List;
@@ -32,9 +32,9 @@ import java.util.Optional;
 final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
-     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterNumber} parse a {@link SpreadsheetFormatNumberParserToken}.
+     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterNumber} parse a {@link NumberSpreadsheetFormatParserToken}.
      */
-    static SpreadsheetPatternSpreadsheetFormatterNumber with(final SpreadsheetFormatNumberParserToken token) {
+    static SpreadsheetPatternSpreadsheetFormatterNumber with(final NumberSpreadsheetFormatParserToken token) {
         Objects.requireNonNull(token, "token");
 
         return new SpreadsheetPatternSpreadsheetFormatterNumber(token);
@@ -43,7 +43,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     /**
      * Private ctor use static method.
      */
-    private SpreadsheetPatternSpreadsheetFormatterNumber(final SpreadsheetFormatNumberParserToken token) {
+    private SpreadsheetPatternSpreadsheetFormatterNumber(final NumberSpreadsheetFormatParserToken token) {
         super();
 
         this.token = token;
@@ -176,5 +176,5 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
         return this.token.text();
     }
 
-    private final SpreadsheetFormatNumberParserToken token;
+    private final NumberSpreadsheetFormatParserToken token;
 }

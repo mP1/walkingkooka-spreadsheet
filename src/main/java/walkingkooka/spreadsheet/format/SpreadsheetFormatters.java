@@ -20,12 +20,12 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.convert.Converter;
 import walkingkooka.math.Fraction;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.FractionSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -70,7 +70,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterColor}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter color(final SpreadsheetFormatColorParserToken token,
+    public static SpreadsheetPatternSpreadsheetFormatter color(final ColorSpreadsheetFormatParserToken token,
                                                                final SpreadsheetPatternSpreadsheetFormatter formatter) {
         return SpreadsheetPatternSpreadsheetFormatterColor.with(token, formatter);
     }
@@ -78,7 +78,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@link SpreadsheetPatternSpreadsheetFormatterCondition}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter conditional(final SpreadsheetFormatConditionParserToken token,
+    public static SpreadsheetPatternSpreadsheetFormatter conditional(final ConditionSpreadsheetFormatParserToken token,
                                                                      final SpreadsheetPatternSpreadsheetFormatter formatter) {
         return SpreadsheetPatternSpreadsheetFormatterCondition.with(token, formatter);
     }
@@ -100,7 +100,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterDateTime}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter dateTime(final SpreadsheetFormatDateTimeParserToken token,
+    public static SpreadsheetPatternSpreadsheetFormatter dateTime(final DateTimeSpreadsheetFormatParserToken token,
                                                                   final Class<? extends Temporal> valueType) {
         return SpreadsheetPatternSpreadsheetFormatterDateTime.with(
                 token,
@@ -140,7 +140,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterFraction}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter fraction(final SpreadsheetFormatFractionParserToken token,
+    public static SpreadsheetPatternSpreadsheetFormatter fraction(final FractionSpreadsheetFormatParserToken token,
                                                                   final Function<BigDecimal, Fraction> fractioner) {
         return SpreadsheetPatternSpreadsheetFormatterFraction.with(token, fractioner);
     }
@@ -155,7 +155,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterNumber}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter number(final SpreadsheetFormatNumberParserToken token) {
+    public static SpreadsheetPatternSpreadsheetFormatter number(final NumberSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterNumber.with(token);
     }
 
@@ -177,7 +177,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterText}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter text(final SpreadsheetFormatTextParserToken token) {
+    public static SpreadsheetPatternSpreadsheetFormatter text(final TextSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterText.with(token);
     }
 

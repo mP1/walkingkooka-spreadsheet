@@ -27,8 +27,8 @@ import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -853,7 +853,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
         return this.value()
                 .findFirst(COLOR_NAME_PREDICATE)
-                .map(t -> t.cast(SpreadsheetFormatColorNameParserToken.class).colorName());
+                .map(t -> t.cast(ColorNameSpreadsheetFormatParserToken.class).colorName());
     }
 
     private final static Predicate<ParserToken> COLOR_NAME_PREDICATE = SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorName);
@@ -869,7 +869,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                         SpreadsheetFormatParserToken.predicate(SpreadsheetFormatParserToken::isColorNumber)
                 ).map(t ->
                         OptionalInt.of(
-                                t.cast(SpreadsheetFormatColorNumberParserToken.class).value()
+                                t.cast(ColorNumberSpreadsheetFormatParserToken.class).value()
                         )
                 ).orElse(OptionalInt.empty());
     }

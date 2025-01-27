@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A {@link Parser} that wraps another returning {@link Optional#empty()} and resetting the {@link TextCursor} if only a {@link SpreadsheetFormatColorParserToken} is matched.
+ * A {@link Parser} that wraps another returning {@link Optional#empty()} and resetting the {@link TextCursor} if only a {@link ColorSpreadsheetFormatParserToken} is matched.
  */
 final class SpreadsheetFormatParsersFormatColorParser implements Parser<SpreadsheetFormatParserContext> {
 
@@ -51,7 +51,7 @@ final class SpreadsheetFormatParsersFormatColorParser implements Parser<Spreadsh
             final List<ParserToken> tokens = maybeToken.get()
                     .children();
             if (tokens.size() == 1) {
-                if (tokens.get(0) instanceof SpreadsheetFormatColorParserToken) {
+                if (tokens.get(0) instanceof ColorSpreadsheetFormatParserToken) {
                     maybeToken = Optional.empty();
                     save.restore();
                 }

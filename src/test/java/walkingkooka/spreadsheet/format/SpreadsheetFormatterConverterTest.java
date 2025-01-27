@@ -26,7 +26,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
@@ -110,7 +110,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
         return SpreadsheetFormatParsers.numberFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(SpreadsheetFormatNumberParserToken.class))
+                .map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(NumberSpreadsheetFormatParserToken.class))
                 .map(SpreadsheetFormatters::number)
                 .orElseThrow(UnsupportedOperationException::new);
     }

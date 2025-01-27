@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
 
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
@@ -32,9 +32,9 @@ import java.util.Optional;
 final class SpreadsheetPatternSpreadsheetFormatterDateTime implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
-     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterDateTime} parse a {@link SpreadsheetFormatDateTimeParserToken}
+     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterDateTime} parse a {@link DateTimeSpreadsheetFormatParserToken}
      */
-    static SpreadsheetPatternSpreadsheetFormatterDateTime with(final SpreadsheetFormatDateTimeParserToken token,
+    static SpreadsheetPatternSpreadsheetFormatterDateTime with(final DateTimeSpreadsheetFormatParserToken token,
                                                                final Class<? extends Temporal> valueType) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(valueType, "valueType");
@@ -45,7 +45,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
     /**
      * Private ctor use static parse.
      */
-    private SpreadsheetPatternSpreadsheetFormatterDateTime(final SpreadsheetFormatDateTimeParserToken token,
+    private SpreadsheetPatternSpreadsheetFormatterDateTime(final DateTimeSpreadsheetFormatParserToken token,
                                                            final Class<? extends Temporal> valueType) {
         super();
         this.token = token;
@@ -131,5 +131,5 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
         return this.token.text();
     }
 
-    private final SpreadsheetFormatDateTimeParserToken token;
+    private final DateTimeSpreadsheetFormatParserToken token;
 }

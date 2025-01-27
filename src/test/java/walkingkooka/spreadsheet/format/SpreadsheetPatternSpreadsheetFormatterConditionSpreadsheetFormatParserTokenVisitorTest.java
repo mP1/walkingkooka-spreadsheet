@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.PredicateTesting;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -37,7 +37,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFor
     @Test
     public void testEquals() {
         this.predicateOrFailAndCheck(SpreadsheetFormatParserToken.equalsSymbol("=", "="),
-                SpreadsheetFormatParserToken::equalsParserToken,
+                SpreadsheetFormatParserToken::equalsSpreadsheetFormatParserToken,
                 10,
                 10,
                 11);
@@ -89,7 +89,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFor
     }
 
     private void predicateOrFailAndCheck(final SpreadsheetFormatParserToken symbol,
-                                         final BiFunction<List<ParserToken>, String, SpreadsheetFormatConditionParserToken> factory,
+                                         final BiFunction<List<ParserToken>, String, ConditionSpreadsheetFormatParserToken> factory,
                                          final Integer trueValue,
                                          final Integer trueValue2,
                                          final Integer falseValue) {
@@ -99,7 +99,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFor
                 SpreadsheetFormatParserToken.conditionNumber(BigDecimal.valueOf(10), "1.5"),
                 SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]"));
 
-        final SpreadsheetFormatConditionParserToken token = factory.apply(tokens, ParserToken.text(tokens));
+        final ConditionSpreadsheetFormatParserToken token = factory.apply(tokens, ParserToken.text(tokens));
         final Predicate<BigDecimal> predicate = SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
 
         this.testTrue(predicate, BigDecimal.valueOf(trueValue));

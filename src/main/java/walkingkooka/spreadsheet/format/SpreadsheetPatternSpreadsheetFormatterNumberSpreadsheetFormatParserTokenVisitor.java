@@ -18,22 +18,22 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDecimalPointParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupSeparatorParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.CurrencySpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DecimalPointSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitSpaceSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitZeroSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EscapeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ExponentSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GroupSeparatorSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.PercentSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.QuotedTextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
+import walkingkooka.spreadsheet.format.parser.TextLiteralSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.WhitespaceSpreadsheetFormatParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.visit.Visiting;
 
@@ -67,18 +67,18 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
     // Visitor.....................................................................................................
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatExponentParserToken token) {
+    protected Visiting startVisit(final ExponentSpreadsheetFormatParserToken token) {
         this.digitMode.exponent(token, this);
         return super.startVisit(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+    protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.color = token.colorName();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+    protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         this.color = token.value();
     }
 
@@ -86,49 +86,49 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
     Object color = null;
 
     @Override
-    protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
+    protected void visit(final CurrencySpreadsheetFormatParserToken token) {
         this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.currencySymbol());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
+    protected void visit(final DecimalPointSpreadsheetFormatParserToken token) {
         this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.decimalSeparator());
         this.digitMode.decimalPoint(this);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitParserToken token) {
+    protected void visit(final DigitSpreadsheetFormatParserToken token) {
         this.addDigit(SpreadsheetPatternSpreadsheetFormatterNumberZero.HASH);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
+    protected void visit(final DigitSpaceSpreadsheetFormatParserToken token) {
         this.addDigit(SpreadsheetPatternSpreadsheetFormatterNumberZero.QUESTION_MARK);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
+    protected void visit(final DigitZeroSpreadsheetFormatParserToken token) {
         this.addDigit(SpreadsheetPatternSpreadsheetFormatterNumberZero.ZERO);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatEscapeParserToken token) {
+    protected void visit(final EscapeSpreadsheetFormatParserToken token) {
         this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value().toString()));
     }
 
-    void exponent(final SpreadsheetFormatExponentParserToken token) {
+    void exponent(final ExponentSpreadsheetFormatParserToken token) {
         this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.exponentSymbol());
         this.digitMode = SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitorDigitMode.EXPONENT;
         this.normalOrScientific = SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific.SCENTIFIC;
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
+    protected void visit(final GroupSeparatorSpreadsheetFormatParserToken token) {
         this.digitMode.groupSeparator(this);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatPercentParserToken token) {
+    protected void visit(final PercentSpreadsheetFormatParserToken token) {
         if (!this.percentage) {
             this.percentage = true;
             this.decimalPlacesShift = this.decimalPlacesShift + 2; // x100
@@ -142,17 +142,17 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserT
     private boolean percentage = false;
 
     @Override
-    protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
+    protected void visit(final QuotedTextSpreadsheetFormatParserToken token) {
         this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value()));
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetFormatParserToken token) {
         this.add(walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(token.value()));
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+    protected void visit(final WhitespaceSpreadsheetFormatParserToken token) {
         this.add(
                 walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterNumberComponent.textLiteral(
                         CharSequences.repeating(

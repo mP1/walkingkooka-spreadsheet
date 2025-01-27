@@ -24,7 +24,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -43,7 +43,7 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterCondition,
-        SpreadsheetFormatConditionParserToken> {
+        ConditionSpreadsheetFormatParserToken> {
 
     private final static String TEXT_PATTERN = "@!condition-true";
 
@@ -224,7 +224,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     @Override
-    SpreadsheetPatternSpreadsheetFormatterCondition createFormatter0(final SpreadsheetFormatConditionParserToken token) {
+    SpreadsheetPatternSpreadsheetFormatterCondition createFormatter0(final ConditionSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterCondition.with(
                 token,
                 SpreadsheetFormatters.text(
@@ -384,7 +384,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
 
     @Test
     public void testEqualsDifferentFormatter() {
-        final SpreadsheetFormatConditionParserToken token = this.parsePatternOrFail("[=0]");
+        final ConditionSpreadsheetFormatParserToken token = this.parsePatternOrFail("[=0]");
 
         this.checkNotEquals(
                 SpreadsheetPatternSpreadsheetFormatterCondition.with(

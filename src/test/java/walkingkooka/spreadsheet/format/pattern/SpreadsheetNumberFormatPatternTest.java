@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetNumberFormatPattern,
-        SpreadsheetFormatNumberParserToken> {
+        NumberSpreadsheetFormatParserToken> {
 
     private final static String TEXT = "Text123";
 
@@ -105,7 +105,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     }
 
     @Override
-    SpreadsheetFormatNumberParserToken createFormatParserToken(final List<ParserToken> tokens,
+    NumberSpreadsheetFormatParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                                final String text) {
         return SpreadsheetFormatParserToken.number(tokens, text);
     }

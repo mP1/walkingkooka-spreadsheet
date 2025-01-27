@@ -18,18 +18,18 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupSeparatorParserToken;
+import walkingkooka.spreadsheet.format.parser.CurrencySpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitSpaceSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitZeroSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EscapeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.FractionSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GroupSeparatorSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.PercentSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.QuotedTextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
+import walkingkooka.spreadsheet.format.parser.TextLiteralSpreadsheetFormatParserToken;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -60,43 +60,43 @@ final class SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParse
     // Visitor.....................................................................................................
 
     @Override
-    protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
+    protected void visit(final CurrencySpreadsheetFormatParserToken token) {
         this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.currencySymbol());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitParserToken token) {
+    protected void visit(final DigitSpreadsheetFormatParserToken token) {
         this.addDigit(SpreadsheetPatternSpreadsheetFormatterFractionZero.HASH);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
+    protected void visit(final DigitSpaceSpreadsheetFormatParserToken token) {
         this.addDigit(SpreadsheetPatternSpreadsheetFormatterFractionZero.QUESTION_MARK);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
+    protected void visit(final DigitZeroSpreadsheetFormatParserToken token) {
         this.addDigit(SpreadsheetPatternSpreadsheetFormatterFractionZero.ZERO);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatEscapeParserToken token) {
+    protected void visit(final EscapeSpreadsheetFormatParserToken token) {
         this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.textLiteral(token.value().toString()));
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatFractionSymbolParserToken token) {
+    protected void visit(final FractionSymbolSpreadsheetFormatParserToken token) {
         this.mode.slash(this);
         this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.slashSymbol());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
+    protected void visit(final GroupSeparatorSpreadsheetFormatParserToken token) {
         this.multiplier = this.multiplier.scaleByPowerOfTen(-3); // divide by 1000
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatPercentParserToken token) {
+    protected void visit(final PercentSpreadsheetFormatParserToken token) {
         if (!this.percentage) {
             this.percentage = true;
             this.multiplier = this.multiplier.scaleByPowerOfTen(2);// x100
@@ -110,12 +110,12 @@ final class SpreadsheetPatternSpreadsheetFormatterFractionSpreadsheetFormatParse
     private boolean percentage = false;
 
     @Override
-    protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
+    protected void visit(final QuotedTextSpreadsheetFormatParserToken token) {
         this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.textLiteral(token.value()));
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetFormatParserToken token) {
         this.add(SpreadsheetPatternSpreadsheetFormatterFractionComponent.textLiteral(token.value()));
     }
 

@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,9 +29,9 @@ import java.util.Optional;
 final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
-     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterText} parse a {@link SpreadsheetFormatTextParserToken}.
+     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterText} parse a {@link TextSpreadsheetFormatParserToken}.
      */
-    static SpreadsheetPatternSpreadsheetFormatterText with(final SpreadsheetFormatTextParserToken token) {
+    static SpreadsheetPatternSpreadsheetFormatterText with(final TextSpreadsheetFormatParserToken token) {
         Objects.requireNonNull(token, "token");
 
         return new SpreadsheetPatternSpreadsheetFormatterText(token);
@@ -40,7 +40,7 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
     /**
      * Private ctor use static parse.
      */
-    private SpreadsheetPatternSpreadsheetFormatterText(final SpreadsheetFormatTextParserToken token) {
+    private SpreadsheetPatternSpreadsheetFormatterText(final TextSpreadsheetFormatParserToken token) {
         super();
 
         this.token = token;
@@ -93,5 +93,5 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
         return this.token.text();
     }
 
-    private final SpreadsheetFormatTextParserToken token;
+    private final TextSpreadsheetFormatParserToken token;
 }

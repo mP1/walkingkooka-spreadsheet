@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -50,7 +50,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateTimeFormatPattern,
-        SpreadsheetFormatDateTimeParserToken> {
+        DateTimeSpreadsheetFormatParserToken> {
 
     @Test
     public void testWithCurrencyFails() {
@@ -123,7 +123,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Override
-    SpreadsheetFormatDateTimeParserToken createFormatParserToken(final List<ParserToken> tokens,
+    DateTimeSpreadsheetFormatParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                                  final String text) {
         return SpreadsheetFormatParserToken.dateTime(tokens, text);
     }

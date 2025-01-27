@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralSymbolParserToken;
+import walkingkooka.spreadsheet.format.parser.GeneralSymbolSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
@@ -31,7 +31,7 @@ abstract class SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor exten
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatGeneralSymbolParserToken token) {
+    protected final void visit(final GeneralSymbolSpreadsheetFormatParserToken token) {
         // OK!
     }
 

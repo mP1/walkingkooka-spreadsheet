@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Optional;
 
 public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTextFormatPattern,
-        SpreadsheetFormatTextParserToken> {
+        TextSpreadsheetFormatParserToken> {
 
     @Test
     public void testWithAmpmFails() {
@@ -244,7 +244,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Override
-    SpreadsheetFormatTextParserToken createFormatParserToken(final List<ParserToken> tokens,
+    TextSpreadsheetFormatParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                              final String text) {
         return SpreadsheetFormatParserToken.text(tokens, text);
     }

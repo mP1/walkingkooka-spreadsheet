@@ -1070,7 +1070,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
 
         new SpreadsheetFormatParserTokenVisitor() {
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+            protected Visiting startVisit(final ColorSpreadsheetFormatParserToken token) {
                 SpreadsheetFormatParserTokenKindTest.this.colorParserToken = token;
                 return super.startVisit(token);
             }
@@ -1092,7 +1092,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
 
         new SpreadsheetFormatParserTokenVisitor() {
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+            protected Visiting startVisit(final ColorSpreadsheetFormatParserToken token) {
                 SpreadsheetFormatParserTokenKindTest.this.colorParserToken = token;
                 return super.startVisit(token);
             }
@@ -1110,7 +1110,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
         );
     }
 
-    private SpreadsheetFormatColorParserToken colorParserToken;
+    private ColorSpreadsheetFormatParserToken colorParserToken;
 
     @Test
     public void testPatterns_DAY_WITH_LEADING_ZERO() {
@@ -1419,7 +1419,7 @@ public final class SpreadsheetFormatParserTokenKindTest implements ClassTesting<
             );
 
             final Set<SpreadsheetFormatParserToken> wrong = tokens.stream()
-                    .filter(t -> t instanceof SpreadsheetFormatNonSymbolParserToken)
+                    .filter(t -> t instanceof NonSymbolSpreadsheetFormatParserToken)
                     .filter(t -> kind != t.kind().get())
                     .collect(Collectors.toSet());
 

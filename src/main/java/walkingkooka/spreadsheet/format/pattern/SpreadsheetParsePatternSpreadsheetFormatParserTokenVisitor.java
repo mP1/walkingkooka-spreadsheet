@@ -17,28 +17,28 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBracketCloseSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBracketOpenSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorLiteralSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsSymbolParserToken;
+import walkingkooka.spreadsheet.format.parser.BracketCloseSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.BracketOpenSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorLiteralSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionNumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EqualsSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EscapeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GeneralSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GreaterThanEqualsSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GreaterThanSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.LessThanEqualsSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.LessThanSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NotEqualsSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.QuotedTextSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SeparatorSymbolSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatStarParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
+import walkingkooka.spreadsheet.format.parser.StarSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TextLiteralSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TextPlaceholderSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.UnderscoreSpreadsheetFormatParserToken;
 
 /**
  * A base {@link SpreadsheetFormatParserTokenVisitor} where most (almost all overrides fail when an unexpected or invalid
@@ -51,102 +51,102 @@ abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T exte
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+    protected final void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+    protected final void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatColorLiteralSymbolParserToken token) {
+    protected final void visit(final ColorLiteralSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatColorNameParserToken token) {
+    protected final void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatColorNumberParserToken token) {
+    protected final void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+    protected final void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatEqualsSymbolParserToken token) {
+    protected final void visit(final EqualsSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatEscapeParserToken token) {
+    protected final void visit(final EscapeSpreadsheetFormatParserToken token) {
         this.text(String.valueOf(token.value()));
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatGeneralSymbolParserToken token) {
+    protected final void visit(final GeneralSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatGreaterThanEqualsSymbolParserToken token) {
+    protected final void visit(final GreaterThanEqualsSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatGreaterThanSymbolParserToken token) {
+    protected final void visit(final GreaterThanSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatLessThanEqualsSymbolParserToken token) {
+    protected final void visit(final LessThanEqualsSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatLessThanSymbolParserToken token) {
+    protected final void visit(final LessThanSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatNotEqualsSymbolParserToken token) {
+    protected final void visit(final NotEqualsSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatQuotedTextParserToken token) {
+    protected final void visit(final QuotedTextSpreadsheetFormatParserToken token) {
         this.text(token.value());
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
+    protected final void visit(final SeparatorSymbolSpreadsheetFormatParserToken token) {
         // separators do not contribute any required or optional text in anything being parsed.
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatStarParserToken token) {
+    protected final void visit(final StarSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+    protected final void visit(final TextLiteralSpreadsheetFormatParserToken token) {
         this.text(token.text());
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
+    protected final void visit(final TextPlaceholderSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected final void visit(final SpreadsheetFormatUnderscoreParserToken token) {
+    protected final void visit(final UnderscoreSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 

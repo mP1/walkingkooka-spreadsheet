@@ -27,11 +27,11 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * The DateTime {@link Parser} initially parses all M tokens into {@link SpreadsheetFormatMonthParserToken}, however some of these particularly those after HOURS, need to be converted into {@link SpreadsheetFormatMinuteParserToken}.
+ * The DateTime {@link Parser} initially parses all M tokens into {@link MonthSpreadsheetFormatParserToken}, however some of these particularly those after HOURS, need to be converted into {@link MinuteSpreadsheetFormatParserToken}.
  */
 final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    static SpreadsheetFormatDateTimeParserToken fixMinutes(final ParserToken token) {
+    static DateTimeSpreadsheetFormatParserToken fixMinutes(final ParserToken token) {
         final SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         return SpreadsheetFormatParserToken.dateTime(
@@ -77,28 +77,28 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetFormatParserToken token) {
         this.minute = true;
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDayParserToken token) {
+    protected void visit(final DaySpreadsheetFormatParserToken token) {
         this.minute = false;
     }
 
     // any month after an hour should be replaced by a minute.
     @Override
-    protected void visit(final SpreadsheetFormatHourParserToken token) {
+    protected void visit(final HourSpreadsheetFormatParserToken token) {
         this.minute = true;
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetFormatParserToken token) {
         throw new UnsupportedOperationException(); // minutes cannot appear in a DATETIME_FORMAT or DATETIME_PARSE
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+    protected void visit(final MonthSpreadsheetFormatParserToken token) {
         if (this.minute) {
             this.add = SpreadsheetFormatParserToken.minute(
                     token.value(),
@@ -108,18 +108,18 @@ final class SpreadsheetFormatParsersEbnfParserCombinatorGrammarTransformerSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSecondParserToken token) {
+    protected void visit(final SecondSpreadsheetFormatParserToken token) {
         this.minute = true;
     }
 
     // any month after a year should stay as a month
     @Override
-    protected void visit(final SpreadsheetFormatYearParserToken token) {
+    protected void visit(final YearSpreadsheetFormatParserToken token) {
         this.minute = false;
     }
 
     /**
-     * When true any {@link SpreadsheetFormatMonthParserToken} will be replaced by a {@link SpreadsheetFormatMinuteParserToken},
+     * When true any {@link MonthSpreadsheetFormatParserToken} will be replaced by a {@link MinuteSpreadsheetFormatParserToken},
      * with the same text.
      */
     private boolean minute = false;

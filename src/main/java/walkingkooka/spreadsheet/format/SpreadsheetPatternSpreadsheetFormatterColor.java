@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +34,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterColor}
      */
-    static SpreadsheetPatternSpreadsheetFormatterColor with(final SpreadsheetFormatColorParserToken token,
+    static SpreadsheetPatternSpreadsheetFormatterColor with(final ColorSpreadsheetFormatParserToken token,
                                                             final SpreadsheetPatternSpreadsheetFormatter formatter) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(formatter, "formatter");
@@ -55,7 +55,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     /**
      * Private use factory
      */
-    private SpreadsheetPatternSpreadsheetFormatterColor(final SpreadsheetFormatColorParserToken token,
+    private SpreadsheetPatternSpreadsheetFormatterColor(final ColorSpreadsheetFormatParserToken token,
                                                         final SpreadsheetPatternSpreadsheetFormatter formatter) {
         super();
 
@@ -132,5 +132,5 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
         return this.token.text() + " " + this.formatter;
     }
 
-    private final SpreadsheetFormatColorParserToken token;
+    private final ColorSpreadsheetFormatParserToken token;
 }

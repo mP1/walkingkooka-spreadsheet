@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
+import walkingkooka.spreadsheet.format.parser.GeneralSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
@@ -32,7 +32,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterGeneral, SpreadsheetFormatGeneralParserToken> {
+public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterGeneral, GeneralSpreadsheetFormatParserToken> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -279,7 +279,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     }
 
     @Override
-    SpreadsheetPatternSpreadsheetFormatterGeneral createFormatter0(final SpreadsheetFormatGeneralParserToken pattern) {
+    SpreadsheetPatternSpreadsheetFormatterGeneral createFormatter0(final GeneralSpreadsheetFormatParserToken pattern) {
         Objects.requireNonNull(pattern, "pattern");
 
         return SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE;

@@ -21,24 +21,24 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.FractionSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GeneralSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GreaterThanEqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GreaterThanSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.LessThanEqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.LessThanSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NotEqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SeparatorSymbolSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.time.LocalDate;
@@ -87,7 +87,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatDateParserToken token) {
+    protected void endVisit(final DateSpreadsheetFormatParserToken token) {
         this.saveFormatter(
                 SpreadsheetFormatters.dateTime(
                         SpreadsheetFormatParserToken.dateTime(
@@ -100,7 +100,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected void endVisit(final DateTimeSpreadsheetFormatParserToken token) {
         this.saveFormatter(
                 SpreadsheetFormatters.dateTime(
                         token,
@@ -110,12 +110,12 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatEqualsParserToken token) {
+    protected void endVisit(final EqualsSpreadsheetFormatParserToken token) {
         this.saveCondition(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatFractionParserToken token) {
+    protected void endVisit(final FractionSpreadsheetFormatParserToken token) {
         this.saveFormatter(
                 SpreadsheetFormatters.fraction(
                         token,
@@ -127,10 +127,10 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
+    protected void endVisit(final GeneralSpreadsheetFormatParserToken token) {
         final SpreadsheetPatternSpreadsheetFormatter generalFormatter = SpreadsheetFormatters.general();
 
-        final Optional<SpreadsheetFormatColorParserToken> color = SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor.extractColor(token);
+        final Optional<ColorSpreadsheetFormatParserToken> color = SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor.extractColor(token);
 
         this.saveFormatter(
                 color.map(
@@ -143,50 +143,50 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+    protected void endVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
         this.saveCondition(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+    protected void endVisit(final GreaterThanSpreadsheetFormatParserToken token) {
         this.saveCondition(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+    protected void endVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
         this.saveCondition(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatLessThanParserToken token) {
+    protected void endVisit(final LessThanSpreadsheetFormatParserToken token) {
         this.saveCondition(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+    protected void endVisit(final NotEqualsSpreadsheetFormatParserToken token) {
         this.saveCondition(token);
     }
 
-    private void saveCondition(final SpreadsheetFormatConditionParserToken token) {
+    private void saveCondition(final ConditionSpreadsheetFormatParserToken token) {
         this.component().condition = token;
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
+    protected void endVisit(final NumberSpreadsheetFormatParserToken token) {
         this.saveFormatter(
                 SpreadsheetFormatters.number(token)
         );
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatTextParserToken token) {
+    protected void endVisit(final TextSpreadsheetFormatParserToken token) {
         this.saveFormatter(
                 SpreadsheetFormatters.text(token)
         );
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected void endVisit(final TimeSpreadsheetFormatParserToken token) {
         this.saveFormatter(
                 SpreadsheetFormatters.dateTime(
                         SpreadsheetFormatParserToken.dateTime(
@@ -203,7 +203,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
+    protected void visit(final SeparatorSymbolSpreadsheetFormatParserToken token) {
         this.component = null;
     }
 

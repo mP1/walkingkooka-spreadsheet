@@ -22,7 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetColors;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * In expectations all symbols are changed parse defaults to characters to verify the context is supplying such symbols.
  */
 public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterNumber,
-        SpreadsheetFormatNumberParserToken> {
+        NumberSpreadsheetFormatParserToken> {
 
     @Test
     public void testFormatDateFails() {
@@ -2439,7 +2439,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
     }
 
     @Override
-    SpreadsheetPatternSpreadsheetFormatterNumber createFormatter0(final SpreadsheetFormatNumberParserToken token) {
+    SpreadsheetPatternSpreadsheetFormatterNumber createFormatter0(final NumberSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterNumber.with(token);
     }
 

@@ -33,7 +33,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken name = colorName("RED");
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
-        final SpreadsheetFormatColorParserToken token = SpreadsheetFormatParserToken.color(Lists.of(
+        final ColorSpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.color(Lists.of(
                         open,
                         name,
                         close),
@@ -44,32 +44,32 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+            protected Visiting startVisit(final ColorSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatColorParserToken token) {
+            protected void endVisit(final ColorSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+            protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
@@ -100,7 +100,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken number = conditionNumber();
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
-        final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.equalsParserToken(Lists.of(
+        final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.equalsSpreadsheetFormatParserToken(Lists.of(
                         open,
                         symbol,
                         number,
@@ -112,38 +112,38 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatEqualsParserToken token) {
+            protected Visiting startVisit(final EqualsSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatEqualsParserToken token) {
+            protected void endVisit(final EqualsSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+            protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatEqualsSymbolParserToken token) {
+            protected void visit(final EqualsSymbolSpreadsheetFormatParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
@@ -185,38 +185,38 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+            protected Visiting startVisit(final GreaterThanSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+            protected void endVisit(final GreaterThanSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+            protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatGreaterThanSymbolParserToken token) {
+            protected void visit(final GreaterThanSymbolSpreadsheetFormatParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
@@ -258,38 +258,38 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+            protected Visiting startVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+            protected void endVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+            protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatGreaterThanEqualsSymbolParserToken token) {
+            protected void visit(final GreaterThanEqualsSymbolSpreadsheetFormatParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
@@ -331,38 +331,38 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatLessThanParserToken token) {
+            protected Visiting startVisit(final LessThanSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatLessThanParserToken token) {
+            protected void endVisit(final LessThanSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+            protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatLessThanSymbolParserToken token) {
+            protected void visit(final LessThanSymbolSpreadsheetFormatParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
@@ -404,38 +404,38 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+            protected Visiting startVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+            protected void endVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+            protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatLessThanEqualsSymbolParserToken token) {
+            protected void visit(final LessThanEqualsSymbolSpreadsheetFormatParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
@@ -477,38 +477,38 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+            protected Visiting startVisit(final NotEqualsSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+            protected void endVisit(final NotEqualsSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+            protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatNotEqualsSymbolParserToken token) {
+            protected void visit(final NotEqualsSymbolSpreadsheetFormatParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
@@ -548,32 +548,32 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+            protected Visiting startVisit(final DateSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatDateParserToken token) {
+            protected void endVisit(final DateSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatDayParserToken token) {
+            protected void visit(final DaySpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatMonthParserToken token) {
+            protected void visit(final MonthSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatYearParserToken token) {
+            protected void visit(final YearSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
@@ -618,50 +618,50 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+            protected Visiting startVisit(final DateSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatDateParserToken token) {
+            protected void endVisit(final DateSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatDayParserToken token) {
+            protected void visit(final DaySpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatHourParserToken token) {
+            protected void visit(final HourSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+            protected void visit(final MinuteSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatMonthParserToken token) {
+            protected void visit(final MonthSpreadsheetFormatParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatSecondParserToken token) {
+            protected void visit(final SecondSpreadsheetFormatParserToken token) {
                 b.append("B");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatYearParserToken token) {
+            protected void visit(final YearSpreadsheetFormatParserToken token) {
                 b.append("C");
                 visited.add(token);
             }
@@ -701,26 +701,26 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatExponentParserToken token) {
+            protected Visiting startVisit(final ExponentSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatExponentParserToken token) {
+            protected void endVisit(final ExponentSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
+            protected void visit(final ExponentSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatDigitParserToken token) {
+            protected void visit(final DigitSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
@@ -748,13 +748,13 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserToken name = colorName("RED");
         final SpreadsheetFormatParserToken close = bracketCloseSymbol();
 
-        final SpreadsheetFormatColorParserToken color = SpreadsheetFormatParserToken.color(Lists.of(
+        final ColorSpreadsheetFormatParserToken color = SpreadsheetFormatParserToken.color(Lists.of(
                         open,
                         name,
                         close),
                 "[RED]");
 
-        final SpreadsheetFormatExpressionParserToken token = SpreadsheetFormatParserToken.expression(Lists.of(color),
+        final ExpressionSpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.expression(Lists.of(color),
                 "[RED]");
 
         final StringBuilder b = new StringBuilder();
@@ -762,45 +762,45 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatExpressionParserToken token) {
+            protected Visiting startVisit(final ExpressionSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatExpressionParserToken token) {
+            protected void endVisit(final ExpressionSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+            protected Visiting startVisit(final ColorSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatColorParserToken token) {
+            protected void endVisit(final ColorSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("A");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+            protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
                 b.append("B");
                 visited.add(token);
             }
@@ -841,26 +841,26 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatFractionParserToken token) {
+            protected Visiting startVisit(final FractionSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatFractionParserToken token) {
+            protected void endVisit(final FractionSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatFractionSymbolParserToken token) {
+            protected void visit(final FractionSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatDigitParserToken token) {
+            protected void visit(final DigitSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
@@ -899,20 +899,20 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatGeneralParserToken token) {
+            protected Visiting startVisit(final GeneralSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
+            protected void endVisit(final GeneralSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatGeneralSymbolParserToken token) {
+            protected void visit(final GeneralSymbolSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
@@ -949,32 +949,32 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+            protected Visiting startVisit(final NumberSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
+            protected void endVisit(final NumberSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
+            protected void visit(final DecimalPointSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatDigitParserToken token) {
+            protected void visit(final DigitSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
+            protected void visit(final DigitZeroSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
@@ -1011,26 +1011,26 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
+            protected Visiting startVisit(final TextSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatTextParserToken token) {
+            protected void endVisit(final TextSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
+            protected void visit(final TextPlaceholderSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+            protected void visit(final TextLiteralSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
@@ -1072,32 +1072,32 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+            protected Visiting startVisit(final TimeSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
+            protected void endVisit(final TimeSpreadsheetFormatParserToken token) {
                 b.append("6");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatHourParserToken token) {
+            protected void visit(final HourSpreadsheetFormatParserToken token) {
                 b.append("7");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+            protected void visit(final MinuteSpreadsheetFormatParserToken token) {
                 b.append("8");
                 visited.add(token);
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatSecondParserToken token) {
+            protected void visit(final SecondSpreadsheetFormatParserToken token) {
                 b.append("9");
                 visited.add(token);
             }
@@ -1130,7 +1130,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+            protected void visit(final AmPmSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1157,7 +1157,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+            protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1184,7 +1184,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+            protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1211,7 +1211,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+            protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1238,7 +1238,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
+            protected void visit(final CurrencySpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1264,7 +1264,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
             @Override
-            protected void visit(final SpreadsheetFormatDayParserToken token) {
+            protected void visit(final DaySpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1291,7 +1291,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
+            protected void visit(final DecimalPointSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1318,7 +1318,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatDigitParserToken token) {
+            protected void visit(final DigitSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1345,7 +1345,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
+            protected void visit(final DigitSpaceSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1372,7 +1372,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
+            protected void visit(final DigitZeroSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1399,7 +1399,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatEscapeParserToken token) {
+            protected void visit(final EscapeSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1426,7 +1426,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
+            protected void visit(final GroupSeparatorSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1453,7 +1453,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatHourParserToken token) {
+            protected void visit(final HourSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1480,7 +1480,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatMonthParserToken token) {
+            protected void visit(final MonthSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1513,7 +1513,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatPercentParserToken token) {
+            protected void visit(final PercentSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1540,7 +1540,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
+            protected void visit(final QuotedTextSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1567,7 +1567,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatSecondParserToken token) {
+            protected void visit(final SecondSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1594,7 +1594,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatStarParserToken token) {
+            protected void visit(final StarSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1620,7 +1620,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
             @Override
-            protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+            protected void visit(final TextLiteralSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1647,7 +1647,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
+            protected void visit(final TextPlaceholderSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1674,7 +1674,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatUnderscoreParserToken token) {
+            protected void visit(final UnderscoreSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1701,7 +1701,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatYearParserToken token) {
+            protected void visit(final YearSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1730,7 +1730,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+            protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1757,7 +1757,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+            protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1784,7 +1784,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatColorLiteralSymbolParserToken token) {
+            protected void visit(final ColorLiteralSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1811,7 +1811,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatEqualsSymbolParserToken token) {
+            protected void visit(final EqualsSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1838,7 +1838,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
+            protected void visit(final ExponentSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1865,7 +1865,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatFractionSymbolParserToken token) {
+            protected void visit(final FractionSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1892,7 +1892,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatGreaterThanSymbolParserToken token) {
+            protected void visit(final GreaterThanSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1919,7 +1919,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatGreaterThanEqualsSymbolParserToken token) {
+            protected void visit(final GreaterThanEqualsSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1946,7 +1946,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatLessThanSymbolParserToken token) {
+            protected void visit(final LessThanSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -1973,7 +1973,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatLessThanEqualsSymbolParserToken token) {
+            protected void visit(final LessThanEqualsSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -2000,7 +2000,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatNotEqualsSymbolParserToken token) {
+            protected void visit(final NotEqualsSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }
@@ -2027,7 +2027,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
 
             @Override
-            protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
+            protected void visit(final SeparatorSymbolSpreadsheetFormatParserToken token) {
                 b.append("5");
                 visited.add(token);
             }

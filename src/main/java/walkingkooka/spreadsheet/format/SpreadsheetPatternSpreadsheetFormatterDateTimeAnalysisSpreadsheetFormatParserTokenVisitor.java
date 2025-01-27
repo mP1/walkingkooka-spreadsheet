@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
+import walkingkooka.spreadsheet.format.parser.AmPmSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitZeroSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
@@ -46,7 +46,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFor
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetFormatParserToken token) {
         this.twelveHour = true;
     }
 
@@ -56,7 +56,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFor
     boolean twelveHour;
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
+    protected void visit(final DigitZeroSpreadsheetFormatParserToken token) {
         this.millisecondDecimals++;
     }
 
