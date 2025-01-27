@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.CellReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -37,7 +37,7 @@ final class SpreadsheetFormulaReplaceReferencesFunctionParserToken extends Sprea
     @Override
     public ParserToken apply(final ParserToken token) {
         return this.mapper.apply(
-                        token.cast(SpreadsheetCellReferenceParserToken.class).cell()
+                        token.cast(CellReferenceSpreadsheetParserToken.class).cell()
                 ).map(t -> (ParserToken) t.toParserToken())
                 .orElse(token);
     }

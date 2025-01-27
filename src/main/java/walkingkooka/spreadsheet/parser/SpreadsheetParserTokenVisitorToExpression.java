@@ -63,103 +63,103 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetAdditionParserToken token) {
+    protected Visiting startVisit(final AdditionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetAdditionParserToken token) {
+    protected void endVisit(final AdditionSpreadsheetParserToken token) {
         this.exitBinary(Expression::add, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetCellRangeParserToken token) {
+    protected Visiting startVisit(final CellRangeSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetCellRangeParserToken token) {
+    protected void endVisit(final CellRangeSpreadsheetParserToken token) {
         this.exitReference(token.toCellRange(), token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected Visiting startVisit(final CellReferenceSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected void endVisit(final CellReferenceSpreadsheetParserToken token) {
         this.exitReference(token.cell(), token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+    protected void endVisit(final ConditionRightEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+    protected Visiting startVisit(final ConditionRightGreaterThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+    protected void endVisit(final ConditionRightGreaterThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightGreaterThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+    protected void endVisit(final ConditionRightGreaterThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+    protected Visiting startVisit(final ConditionRightLessThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+    protected void endVisit(final ConditionRightLessThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightLessThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+    protected void endVisit(final ConditionRightLessThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightNotEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+    protected void endVisit(final ConditionRightNotEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetParserToken token) {
         this.enter();
         return Visiting.SKIP;
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDateParserToken token) {
+    protected void endVisit(final DateSpreadsheetParserToken token) {
         this.exit();
         this.add(
                 Expression.value(token.toLocalDate(this.context)),
@@ -168,13 +168,13 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
+    protected Visiting startVisit(final DateTimeSpreadsheetParserToken token) {
         this.enter();
         return Visiting.SKIP;
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDateTimeParserToken token) {
+    protected void endVisit(final DateTimeSpreadsheetParserToken token) {
         this.exit();
         this.add(
                 Expression.value(token.toLocalDateTime(this.context)),
@@ -185,75 +185,75 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     private final ExpressionEvaluationContext context;
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
+    protected Visiting startVisit(final DivisionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDivisionParserToken token) {
+    protected void endVisit(final DivisionSpreadsheetParserToken token) {
         this.exitBinary(Expression::divide, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetEqualsParserToken token) {
+    protected Visiting startVisit(final EqualsSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetEqualsParserToken token) {
+    protected void endVisit(final EqualsSpreadsheetParserToken token) {
         this.exitBinary(Expression::equalsExpression, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetExpressionParserToken token) {
+    protected Visiting startVisit(final ExpressionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetExpressionParserToken token) {
+    protected void endVisit(final ExpressionSpreadsheetParserToken token) {
         this.exitUnary(token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected Visiting startVisit(final GreaterThanSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected void endVisit(final GreaterThanSpreadsheetParserToken token) {
         this.exitBinary(Expression::greaterThan, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final GreaterThanEqualsSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected void endVisit(final GreaterThanEqualsSpreadsheetParserToken token) {
         this.exitBinary(Expression::greaterThanEquals, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGroupParserToken token) {
+    protected Visiting startVisit(final GroupSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGroupParserToken token) {
+    protected void endVisit(final GroupSpreadsheetParserToken token) {
         this.exitUnary(token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLambdaFunctionParserToken token) {
+    protected Visiting startVisit(final LambdaFunctionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetLambdaFunctionParserToken token) {
+    protected void endVisit(final LambdaFunctionSpreadsheetParserToken token) {
         final List<Expression> children = this.children;
 
-        final SpreadsheetFunctionParametersParserToken parametersTokens = token.parameters();
+        final FunctionParametersSpreadsheetParserToken parametersTokens = token.parameters();
         final int parameterCount = parametersTokens.parameters().size();
 
         final Expression call = Expression.call(
@@ -272,42 +272,42 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLessThanParserToken token) {
+    protected Visiting startVisit(final LessThanSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetLessThanParserToken token) {
+    protected void endVisit(final LessThanSpreadsheetParserToken token) {
         this.exitBinary(Expression::lessThan, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final LessThanEqualsSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected void endVisit(final LessThanEqualsSpreadsheetParserToken token) {
         this.exitBinary(Expression::lessThanEquals, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected Visiting startVisit(final MultiplicationSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected void endVisit(final MultiplicationSpreadsheetParserToken token) {
         this.exitBinary(Expression::multiply, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNamedFunctionParserToken token) {
+    protected Visiting startVisit(final NamedFunctionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNamedFunctionParserToken token) {
+    protected void endVisit(final NamedFunctionSpreadsheetParserToken token) {
         final Expression callNamedFunction = Expression.call(
                 Expression.namedFunction(
                         token.functionName()
@@ -320,32 +320,32 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNegativeParserToken token) {
+    protected Visiting startVisit(final NegativeSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNegativeParserToken token) {
+    protected void endVisit(final NegativeSpreadsheetParserToken token) {
         this.exitUnary(Expression::negative, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected Visiting startVisit(final NotEqualsSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected void endVisit(final NotEqualsSpreadsheetParserToken token) {
         this.exitBinary(Expression::notEquals, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNumberParserToken token) {
+    protected Visiting startVisit(final NumberSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNumberParserToken token) {
+    protected void endVisit(final NumberSpreadsheetParserToken token) {
         this.exit();
         this.add(
                 Expression.value(token.toNumber(this.context)),
@@ -354,33 +354,33 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
+    protected Visiting startVisit(final PowerSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetPowerParserToken token) {
+    protected void endVisit(final PowerSpreadsheetParserToken token) {
         this.exitBinary(Expression::power, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
+    protected Visiting startVisit(final SubtractionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetSubtractionParserToken token) {
+    protected void endVisit(final SubtractionSpreadsheetParserToken token) {
         this.exitBinary(Expression::subtract, token);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetTextParserToken token) {
+    protected Visiting startVisit(final TextSpreadsheetParserToken token) {
         this.text = new StringBuilder();
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetTextParserToken token) {
+    protected void endVisit(final TextSpreadsheetParserToken token) {
         this.exit();
         this.add(
                 Expression.value(this.text.toString()),
@@ -390,18 +390,18 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     /**
-     * Collects the text within a {@link SpreadsheetTextParserToken}.
+     * Collects the text within a {@link TextSpreadsheetParserToken}.
      */
     private StringBuilder text = new StringBuilder();
 
     @Override
-    protected Visiting startVisit(final SpreadsheetTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetParserToken token) {
         this.enter();
         return Visiting.SKIP;
     }
 
     @Override
-    protected void endVisit(final SpreadsheetTimeParserToken token) {
+    protected void endVisit(final TimeSpreadsheetParserToken token) {
         this.exit();
         this.add(
                 Expression.value(token.toLocalTime()),
@@ -413,7 +413,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     // ignore all SymbolParserTokens, dont bother to collect them.
 
     @Override
-    protected void visit(final SpreadsheetErrorParserToken token) {
+    protected void visit(final ErrorSpreadsheetParserToken token) {
         this.add(
                 Expression.value(
                         token.value()
@@ -425,12 +425,12 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
-    protected void visit(final SpreadsheetLabelNameParserToken token) {
+    protected void visit(final LabelNameSpreadsheetParserToken token) {
         this.addReference(token.value(), token);
     }
 
     @Override
-    protected void visit(final SpreadsheetTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetParserToken token) {
         this.text.append(token.value());
     }
 
@@ -451,7 +451,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
         this.add(factory.apply(left, right), token);
     }
 
-    private void exitUnary(final SpreadsheetParentParserToken token) {
+    private void exitUnary(final ParentSpreadsheetParserToken token) {
         this.exitUnary(Function.identity(), token);
     }
 

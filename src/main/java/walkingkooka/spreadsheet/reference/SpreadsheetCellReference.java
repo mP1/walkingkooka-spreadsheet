@@ -23,7 +23,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.CellReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -672,7 +672,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     // HasParserToken...................................................................................................
 
     @Override
-    public SpreadsheetCellReferenceParserToken toParserToken() {
+    public CellReferenceSpreadsheetParserToken toParserToken() {
         // GWTC fails if type parameter missing
         //
         // [INFO]       [ERROR] Errors in 'walkingkooka/spreadsheet/reference/SpreadsheetCellReference.java'

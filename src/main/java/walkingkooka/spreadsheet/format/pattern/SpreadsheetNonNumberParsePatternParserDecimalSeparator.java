@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
+import walkingkooka.spreadsheet.parser.DecimalSeparatorSymbolSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
@@ -25,7 +25,7 @@ import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
 
 /**
- * A {@link Parser} that matches the {@link SpreadsheetParserContext#decimalSeparator()} and returns a {@link SpreadsheetDecimalSeparatorSymbolParserToken}
+ * A {@link Parser} that matches the {@link SpreadsheetParserContext#decimalSeparator()} and returns a {@link DecimalSeparatorSymbolSpreadsheetParserToken}
  */
 final class SpreadsheetNonNumberParsePatternParserDecimalSeparator extends SpreadsheetNonNumberParsePatternParser {
 
@@ -39,10 +39,10 @@ final class SpreadsheetNonNumberParsePatternParserDecimalSeparator extends Sprea
     }
 
     @Override
-    SpreadsheetDecimalSeparatorSymbolParserToken parseNotEmpty0(final TextCursor cursor,
+    DecimalSeparatorSymbolSpreadsheetParserToken parseNotEmpty0(final TextCursor cursor,
                                                                 final SpreadsheetParserContext context,
                                                                 final TextCursorSavePoint start) {
-        SpreadsheetDecimalSeparatorSymbolParserToken token = null;
+        DecimalSeparatorSymbolSpreadsheetParserToken token = null;
 
         final char decimal = context.decimalSeparator();
         if (cursor.at() == decimal) {

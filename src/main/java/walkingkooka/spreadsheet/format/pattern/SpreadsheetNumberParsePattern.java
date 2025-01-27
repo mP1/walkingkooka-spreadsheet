@@ -21,7 +21,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
-import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.NumberSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -66,7 +66,7 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
                 .parseText(
                         text,
                         context
-                ).cast(SpreadsheetNumberParserToken.class)
+                ).cast(NumberSpreadsheetParserToken.class)
                 .toNumber(context);
     }
 

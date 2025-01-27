@@ -61,12 +61,12 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.DateSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DateTimeSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.NumberSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
-import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
+import walkingkooka.spreadsheet.parser.TimeSpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -2370,7 +2370,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testSpreadsheetParserAndParseDate() {
         this.metadataSpreadsheetParserParseAndCheck(
                 "2000/12/31",
-                (t, c) -> t.cast(SpreadsheetDateParserToken.class).toLocalDate(c),
+                (t, c) -> t.cast(DateSpreadsheetParserToken.class).toLocalDate(c),
                 LocalDate.of(2000, 12, 31)
         );
     }
@@ -2379,7 +2379,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testSpreadsheetParserAndParseDateTime() {
         this.metadataSpreadsheetParserParseAndCheck(
                 "2000/12/31 15:58",
-                (t, c) -> t.cast(SpreadsheetDateTimeParserToken.class).toLocalDateTime(c),
+                (t, c) -> t.cast(DateTimeSpreadsheetParserToken.class).toLocalDateTime(c),
                 LocalDateTime.of(
                         LocalDate.of(2000, 12, 31),
                         LocalTime.of(15, 58)
@@ -2391,7 +2391,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testSpreadsheetParserAndParseNumber() {
         this.metadataSpreadsheetParserParseAndCheck(
                 "1" + DECIMAL_SEPARATOR + "5",
-                (t, c) -> t.cast(SpreadsheetNumberParserToken.class).toNumber(c),
+                (t, c) -> t.cast(NumberSpreadsheetParserToken.class).toNumber(c),
                 EXPRESSION_NUMBER_KIND.create(1.5)
         );
     }
@@ -2400,7 +2400,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testSpreadsheetParserAndParseTime() {
         this.metadataSpreadsheetParserParseAndCheck(
                 "15:58",
-                (t, c) -> t.cast(SpreadsheetTimeParserToken.class).toLocalTime(),
+                (t, c) -> t.cast(TimeSpreadsheetParserToken.class).toLocalTime(),
                 LocalTime.of(15, 58)
         );
     }

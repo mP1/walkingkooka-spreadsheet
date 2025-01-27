@@ -32,10 +32,10 @@ import java.util.Objects;
 final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParserTokenVisitor {
 
     /**
-     * Creates a {@link SpreadsheetParserTokenVisitorLocalDateTime}, visits the {@link SpreadsheetParentParserToken} and returns the visitor
+     * Creates a {@link SpreadsheetParserTokenVisitorLocalDateTime}, visits the {@link ParentSpreadsheetParserToken} and returns the visitor
      * which has methods to create one of {@link LocalDate}, {@link LocalDateTime} or {@link LocalTime}.
      */
-    static SpreadsheetParserTokenVisitorLocalDateTime acceptSpreadsheetParentParserToken(final SpreadsheetParentParserToken token,
+    static SpreadsheetParserTokenVisitorLocalDateTime acceptSpreadsheetParentParserToken(final ParentSpreadsheetParserToken token,
                                                                                          final int defaultYear) {
         final SpreadsheetParserTokenVisitorLocalDateTime visitor = new SpreadsheetParserTokenVisitorLocalDateTime(defaultYear);
         visitor.accept(token);
@@ -52,57 +52,57 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
     // ignore all SymbolParserTokens, dont bother to collect them.
 
     @Override
-    protected void visit(final SpreadsheetAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetParserToken token) {
         this.ampm = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNumberParserToken token) {
+    protected void visit(final DayNumberSpreadsheetParserToken token) {
         this.day = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetHourParserToken token) {
+    protected void visit(final HourSpreadsheetParserToken token) {
         this.hour = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetMillisecondParserToken token) {
+    protected void visit(final MillisecondSpreadsheetParserToken token) {
         this.millis = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetParserToken token) {
         this.minute = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNameParserToken token) {
+    protected void visit(final MonthNameSpreadsheetParserToken token) {
         this.month = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNameAbbreviationParserToken token) {
+    protected void visit(final MonthNameAbbreviationSpreadsheetParserToken token) {
         this.month = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNameInitialParserToken token) {
+    protected void visit(final MonthNameInitialSpreadsheetParserToken token) {
         this.month = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNumberParserToken token) {
+    protected void visit(final MonthNumberSpreadsheetParserToken token) {
         this.month = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetSecondsParserToken token) {
+    protected void visit(final SecondsSpreadsheetParserToken token) {
         this.seconds = token.value();
     }
 
     @Override
-    protected void visit(final SpreadsheetYearParserToken token) {
+    protected void visit(final YearSpreadsheetParserToken token) {
         this.year = token.value();
         this.twoDigitYear = token.text().length() <= 2;
     }
@@ -110,7 +110,7 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
     // toXXX ............................................................................................................
 
     /**
-     * Creates a {@link LocalDate} assuming defaults have been set and an entire {@link SpreadsheetDateParserToken} has
+     * Creates a {@link LocalDate} assuming defaults have been set and an entire {@link DateSpreadsheetParserToken} has
      * been visited.
      */
     LocalDate toLocalDate(final DateTimeContext context) {
@@ -126,7 +126,7 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
     }
 
     /**
-     * Creates a {@link LocalTime} assuming defaults have been set and an entire {@link SpreadsheetTimeParserToken} has
+     * Creates a {@link LocalTime} assuming defaults have been set and an entire {@link TimeSpreadsheetParserToken} has
      * been visited.
      */
     LocalTime toLocalTime() {
@@ -139,7 +139,7 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
     }
 
     /**
-     * Creates a {@link LocalDateTime} assuming defaults have been set and an entire {@link SpreadsheetDateTimeParserToken} has
+     * Creates a {@link LocalDateTime} assuming defaults have been set and an entire {@link DateTimeSpreadsheetParserToken} has
      * been visited.
      */
     LocalDateTime toLocalDateTime(final DateTimeContext context) {

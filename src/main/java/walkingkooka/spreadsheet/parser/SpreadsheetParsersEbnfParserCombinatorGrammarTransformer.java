@@ -121,7 +121,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
     /**
      * If the expression had a leading or trailing whitespace it will appear as a {@link SequenceParserToken},
      * otherwise the token will be a {@link SpreadsheetParserToken}. If the former, wrap all tokens in the
-     * {@link SequenceParserToken} in a {@link SpreadsheetGroupParserToken}.
+     * {@link SequenceParserToken} in a {@link GroupSpreadsheetParserToken}.
      */
     private static ParserToken expression(final ParserToken token,
                                           final SpreadsheetParserContext context) {

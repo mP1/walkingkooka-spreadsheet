@@ -17,7 +17,7 @@
 package walkingkooka.spreadsheet.parser;
 
 /**
- * Used to collect the column and row for a {@link SpreadsheetCellReferenceParserToken}.
+ * Used to collect the column and row for a {@link CellReferenceSpreadsheetParserToken}.
  */
 final class SpreadsheetCellReferenceParserTokenSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 
@@ -30,15 +30,15 @@ final class SpreadsheetCellReferenceParserTokenSpreadsheetParserTokenVisitor ext
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReferenceParserToken token) {
+    protected void visit(final ColumnReferenceSpreadsheetParserToken token) {
         this.column = token;
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReferenceParserToken token) {
+    protected void visit(final RowReferenceSpreadsheetParserToken token) {
         this.row = token;
     }
 
-    SpreadsheetColumnReferenceParserToken column;
-    SpreadsheetRowReferenceParserToken row;
+    ColumnReferenceSpreadsheetParserToken column;
+    RowReferenceSpreadsheetParserToken row;
 }

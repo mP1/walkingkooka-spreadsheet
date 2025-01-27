@@ -981,8 +981,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setToken(this.token()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText \"1+2\"\n" +
-                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\"\n"
+                        "    TextSpreadsheet \"1+2\"\n" +
+                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n"
         );
     }
 
@@ -994,8 +994,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setExpression(this.expression()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText \"1+2\"\n" +
-                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\"\n" +
+                        "    TextSpreadsheet \"1+2\"\n" +
+                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n"
         );
@@ -1010,8 +1010,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setValue(this.value()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText \"1+2\"\n" +
-                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\"\n" +
+                        "    TextSpreadsheet \"1+2\"\n" +
+                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
                         "  value: 3.0 (java.lang.Double)\n"
@@ -1027,8 +1027,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setValue(this.error()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText \"1+2\"\n" +
-                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\"\n" +
+                        "    TextSpreadsheet \"1+2\"\n" +
+                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
                         "  value: #VALUE!\n" +
@@ -1057,8 +1057,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         ),
                 "Formula\n" +
                         "  token:\n" +
-                        "    SpreadsheetText \"1+2\"\n" +
-                        "      SpreadsheetTextLiteral \"1+2\" \"1+2\"\n" +
+                        "    TextSpreadsheet \"1+2\"\n" +
+                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
                         "  value: 1111\n" +
@@ -1278,11 +1278,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 "{\n" +
                         "  \"text\": \"1+2\",\n" +
                         "  \"token\": {\n" +
-                        "    \"type\": \"spreadsheet-text-parser-token\",\n" +
+                        "    \"type\": \"text-spreadsheet-parser-token\",\n" +
                         "    \"value\": {\n" +
                         "      \"value\": [\n" +
                         "        {\n" +
-                        "          \"type\": \"spreadsheet-text-literal-parser-token\",\n" +
+                        "          \"type\": \"text-literal-spreadsheet-parser-token\",\n" +
                         "          \"value\": {\n" +
                         "            \"value\": \"1+2\",\n" +
                         "            \"text\": \"1+2\"\n" +
@@ -1305,11 +1305,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 "{\n" +
                         "  \"text\": \"1+2\",\n" +
                         "  \"token\": {\n" +
-                        "    \"type\": \"spreadsheet-text-parser-token\",\n" +
+                        "    \"type\": \"text-spreadsheet-parser-token\",\n" +
                         "    \"value\": {\n" +
                         "      \"value\": [\n" +
                         "        {\n" +
-                        "          \"type\": \"spreadsheet-text-literal-parser-token\",\n" +
+                        "          \"type\": \"text-literal-spreadsheet-parser-token\",\n" +
                         "          \"value\": {\n" +
                         "            \"value\": \"1+2\",\n" +
                         "            \"text\": \"1+2\"\n" +

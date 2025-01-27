@@ -26,16 +26,16 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * A {@link SpreadsheetParserTokenVisitor} that accepts a {@link SpreadsheetNumberParserToken} and creates a {@link ExpressionNumber}
+ * A {@link SpreadsheetParserTokenVisitor} that accepts a {@link NumberSpreadsheetParserToken} and creates a {@link ExpressionNumber}
  */
 final class SpreadsheetParserTokenVisitorExpressionNumber extends SpreadsheetParserTokenVisitor {
 
     /**
      * Creates a {@link SpreadsheetParserTokenVisitorExpressionNumber}, that collects and translates symbols into a {@link String}
      * which is then parsed by {@link ExpressionNumberKind#parse(String)}.
-     * If the token includes a {@link SpreadsheetPercentSymbolParserToken} then the value will be divided by 100.
+     * If the token includes a {@link PercentSymbolSpreadsheetParserToken} then the value will be divided by 100.
      */
-    static ExpressionNumber toExpressionNumber(final SpreadsheetNumberParserToken token,
+    static ExpressionNumber toExpressionNumber(final NumberSpreadsheetParserToken token,
                                                final ExpressionNumberContext context) {
         Objects.requireNonNull(context, "context");
 
@@ -58,32 +58,32 @@ final class SpreadsheetParserTokenVisitorExpressionNumber extends SpreadsheetPar
     // ignore all SymbolParserTokens, dont bother to collect them.
 
     @Override
-    protected void visit(final SpreadsheetDecimalSeparatorSymbolParserToken token) {
+    protected void visit(final DecimalSeparatorSymbolSpreadsheetParserToken token) {
         this.number.append('.');
     }
 
     @Override
-    protected void visit(final SpreadsheetDigitsParserToken token) {
+    protected void visit(final DigitsSpreadsheetParserToken token) {
         this.number.append(token.text());
     }
 
     @Override
-    protected void visit(final SpreadsheetExponentSymbolParserToken token) {
+    protected void visit(final ExponentSymbolSpreadsheetParserToken token) {
         this.number.append('E');
     }
 
     @Override
-    protected void visit(final SpreadsheetMinusSymbolParserToken token) {
+    protected void visit(final MinusSymbolSpreadsheetParserToken token) {
         this.number.append('-');
     }
 
     @Override
-    protected void visit(final SpreadsheetPlusSymbolParserToken token) {
+    protected void visit(final PlusSymbolSpreadsheetParserToken token) {
         this.number.append('+');
     }
 
     @Override
-    protected void visit(final SpreadsheetPercentSymbolParserToken token) {
+    protected void visit(final PercentSymbolSpreadsheetParserToken token) {
         this.percentage = true;
     }
 

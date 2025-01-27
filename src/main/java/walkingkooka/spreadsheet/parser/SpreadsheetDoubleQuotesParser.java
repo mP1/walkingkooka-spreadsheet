@@ -102,7 +102,7 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
     final static char DOUBLE_QUOTE = '"';
 
     /**
-     * Factory that creates a {@link SpreadsheetTextParserToken} with three text literals, the surrounding double quotes,
+     * Factory that creates a {@link TextSpreadsheetParserToken} with three text literals, the surrounding double quotes,
      * and the content.
      */
     private static SpreadsheetParserToken text(final StringBuilder content, final TextCursorSavePoint save) {
@@ -121,7 +121,7 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
         );
     }
 
-    final static SpreadsheetDoubleQuoteSymbolParserToken DOUBLE_QUOTE_TOKEN = SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"");
+    final static DoubleQuoteSymbolSpreadsheetParserToken DOUBLE_QUOTE_TOKEN = SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"");
 
     @Override
     public String toString() {

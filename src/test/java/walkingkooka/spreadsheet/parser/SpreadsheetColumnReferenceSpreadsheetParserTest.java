@@ -106,7 +106,7 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
     public void testParseMax() {
         this.parseAndCheck(
                 "XFD",
-                SpreadsheetColumnReferenceParserToken.columnReference(SpreadsheetReferenceKind.RELATIVE.lastColumn(), "XFD"),
+                ColumnReferenceSpreadsheetParserToken.columnReference(SpreadsheetReferenceKind.RELATIVE.lastColumn(), "XFD"),
                 "XFD"
         );
     }
@@ -135,7 +135,7 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
         this.parseAndCheck(text + textAfter, this.token(referenceKind, column, text), text, textAfter);
     }
 
-    private SpreadsheetColumnReferenceParserToken token(final SpreadsheetReferenceKind referenceKind, final int column, final String text) {
+    private ColumnReferenceSpreadsheetParserToken token(final SpreadsheetReferenceKind referenceKind, final int column, final String text) {
         return SpreadsheetParserToken.columnReference(referenceKind.column(column), text);
     }
 

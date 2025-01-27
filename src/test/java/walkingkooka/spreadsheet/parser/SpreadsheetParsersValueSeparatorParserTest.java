@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 
 public final class SpreadsheetParsersValueSeparatorParserTest extends SpreadsheetParserTestCase<SpreadsheetParsersValueSeparatorParser,
-        SpreadsheetValueSeparatorSymbolParserToken>
+        ValueSeparatorSymbolSpreadsheetParserToken>
         implements ToStringTesting<SpreadsheetParsersValueSeparatorParser> {
 
     @Test

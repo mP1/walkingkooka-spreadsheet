@@ -39,14 +39,14 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.parser.DateSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DateTimeSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.NumberSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
+import walkingkooka.spreadsheet.parser.TimeSpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.cursor.TextCursor;
@@ -293,7 +293,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.parsePatternAndCheck(
                 SpreadsheetPattern.dateParsePatternLocale(EN_AU),
                 text,
-                (t, c) -> t.cast(SpreadsheetDateParserToken.class).toLocalDate(c),
+                (t, c) -> t.cast(DateSpreadsheetParserToken.class).toLocalDate(c),
                 expected
         );
     }
@@ -401,7 +401,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.parsePatternAndCheck(
                 SpreadsheetPattern.dateTimeParsePatternLocale(EN_AU),
                 text,
-                (t, c) -> t.cast(SpreadsheetDateTimeParserToken.class).toLocalDateTime(c),
+                (t, c) -> t.cast(DateTimeSpreadsheetParserToken.class).toLocalDateTime(c),
                 expected
         );
     }
@@ -456,7 +456,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.parsePatternAndCheck(
                 SpreadsheetPattern.timeParsePatternLocale(EN_AU),
                 text,
-                (t, c) -> t.cast(SpreadsheetTimeParserToken.class).toLocalTime(),
+                (t, c) -> t.cast(TimeSpreadsheetParserToken.class).toLocalTime(),
                 expected
         );
     }
@@ -1527,7 +1527,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 .parser();
         final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
 
-        final SpreadsheetNumberParserToken token = parser.andEmptyTextCursor()
+        final NumberSpreadsheetParserToken token = parser.andEmptyTextCursor()
                 .parse(
                         TextCursors.charSequence(text),
                         SpreadsheetParserContexts.basic(
@@ -1539,7 +1539,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                 ','
                         )
                 ).get()
-                .cast(SpreadsheetNumberParserToken.class);
+                .cast(NumberSpreadsheetParserToken.class);
 
         this.checkEquals(
                 kind.create(expected),
