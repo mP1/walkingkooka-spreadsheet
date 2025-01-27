@@ -35,7 +35,7 @@ public final class GreaterThanSpreadsheetParserToken extends ConditionSpreadshee
     }
 
     @Override
-    ConditionRightGreaterThanSpreadsheetParserToken toSpreadsheetConditionRightParserToken0(final List<ParserToken> tokens,
+    ConditionRightGreaterThanSpreadsheetParserToken toConditionRightSpreadsheetParserToken0(final List<ParserToken> tokens,
                                                                                             final String text) {
 
         return SpreadsheetParserToken.conditionRightGreaterThan(
