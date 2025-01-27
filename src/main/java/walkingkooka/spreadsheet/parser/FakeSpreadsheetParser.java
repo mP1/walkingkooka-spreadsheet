@@ -21,7 +21,7 @@ import walkingkooka.text.cursor.parser.FakeParser;
 
 import java.util.List;
 
-public class FakeSpreadsheetParser extends FakeParser<SpreadsheetParserContext> implements SpreadsheetParser  {
+public class FakeSpreadsheetParser extends FakeParser<SpreadsheetParserContext> implements SpreadsheetParser {
 
     public FakeSpreadsheetParser() {
         super();

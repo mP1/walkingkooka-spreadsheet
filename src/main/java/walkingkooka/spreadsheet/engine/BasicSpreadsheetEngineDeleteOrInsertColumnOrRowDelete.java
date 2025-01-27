@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.parser.ColumnReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.RowReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 
 /**

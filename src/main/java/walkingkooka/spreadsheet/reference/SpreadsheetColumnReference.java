@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.parser.ColumnReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
 
 import java.util.Objects;
 import java.util.Optional;

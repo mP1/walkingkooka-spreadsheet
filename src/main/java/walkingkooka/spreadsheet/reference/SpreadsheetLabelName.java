@@ -24,8 +24,8 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
-import walkingkooka.spreadsheet.parser.LabelNameSpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.LabelNameSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
