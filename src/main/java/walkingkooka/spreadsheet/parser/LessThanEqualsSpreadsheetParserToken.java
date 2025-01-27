@@ -35,7 +35,7 @@ public final class LessThanEqualsSpreadsheetParserToken extends ConditionSpreads
     }
 
     @Override
-    ConditionRightLessThanEqualsSpreadsheetParserToken toSpreadsheetConditionRightParserToken0(final List<ParserToken> tokens,
+    ConditionRightLessThanEqualsSpreadsheetParserToken toConditionRightSpreadsheetParserToken0(final List<ParserToken> tokens,
                                                                                                final String text) {
 
         return SpreadsheetParserToken.conditionRightLessThanEquals(
