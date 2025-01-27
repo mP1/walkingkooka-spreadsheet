@@ -17,19 +17,19 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GeneralSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.visit.Visiting;
 
 import java.util.Optional;
 
 /**
- * Used to determine the color for a {@link walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken}.
+ * Used to determine the color for a {@link GeneralSpreadsheetFormatParserToken}.
  */
 final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    static Optional<SpreadsheetFormatColorParserToken> extractColor(final SpreadsheetFormatGeneralParserToken token) {
+    static Optional<ColorSpreadsheetFormatParserToken> extractColor(final GeneralSpreadsheetFormatParserToken token) {
         final SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         return Optional.ofNullable(
@@ -42,12 +42,12 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+    protected Visiting startVisit(final ColorSpreadsheetFormatParserToken token) {
         this.color = token;
         return Visiting.SKIP;
     }
 
-    private SpreadsheetFormatColorParserToken color;
+    private ColorSpreadsheetFormatParserToken color;
 
     @Override
     public String toString() {

@@ -89,7 +89,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             .setToString(COLOR_NAME_IDENTIFIER.toString())
             .cast();
 
-    private static SpreadsheetFormatColorNameParserToken colorName(final ParserToken string, final ParserContext context) {
+    private static ColorNameSpreadsheetFormatParserToken colorName(final ParserToken string, final ParserContext context) {
         return SpreadsheetFormatParserToken.colorName(
                 string.cast(StringParserToken.class).value(),
                 string.text()
@@ -115,7 +115,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             .setToString(COLOR_NUMBER_IDENTIFIER.toString())
             .cast();
 
-    private static SpreadsheetFormatColorLiteralSymbolParserToken transformColorLiteral(final ParserToken string, final ParserContext context) {
+    private static ColorLiteralSymbolSpreadsheetFormatParserToken transformColorLiteral(final ParserToken string, final ParserContext context) {
         return SpreadsheetFormatParserToken.colorLiteralSymbol(
                 string.cast(StringParserToken.class).value(),
                 string.text()
@@ -149,9 +149,9 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName CONDITION_NUMBER_LITERAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_NUMBER");
 
-    private static SpreadsheetFormatConditionNumberParserToken transformConditionNumber(final ParserToken token,
+    private static ConditionNumberSpreadsheetFormatParserToken transformConditionNumber(final ParserToken token,
                                                                                         final ParserContext context) {
-        return SpreadsheetFormatConditionNumberParserToken.with(
+        return ConditionNumberSpreadsheetFormatParserToken.with(
                 token.cast(BigDecimalParserToken.class).value(),
                 token.text()
         );

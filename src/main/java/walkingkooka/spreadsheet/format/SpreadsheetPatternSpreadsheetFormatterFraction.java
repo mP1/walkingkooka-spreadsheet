@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.FractionSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -35,9 +35,9 @@ import java.util.function.Function;
 final class SpreadsheetPatternSpreadsheetFormatterFraction implements SpreadsheetPatternSpreadsheetFormatter {
 
     /**
-     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterFraction} parse a {@link SpreadsheetFormatNumberParserToken}.
+     * Creates a {@link SpreadsheetPatternSpreadsheetFormatterFraction} parse a {@link NumberSpreadsheetFormatParserToken}.
      */
-    static SpreadsheetPatternSpreadsheetFormatterFraction with(final SpreadsheetFormatFractionParserToken token,
+    static SpreadsheetPatternSpreadsheetFormatterFraction with(final FractionSpreadsheetFormatParserToken token,
                                                                final Function<BigDecimal, Fraction> fractioner) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(fractioner, "fractioner");
@@ -48,7 +48,7 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     /**
      * Private ctor use static parse.
      */
-    private SpreadsheetPatternSpreadsheetFormatterFraction(final SpreadsheetFormatFractionParserToken token,
+    private SpreadsheetPatternSpreadsheetFormatterFraction(final FractionSpreadsheetFormatParserToken token,
                                                            final Function<BigDecimal, Fraction> fractioner) {
         super();
 
@@ -176,5 +176,5 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
         return this.token.text();
     }
 
-    private final SpreadsheetFormatFractionParserToken token;
+    private final FractionSpreadsheetFormatParserToken token;
 }

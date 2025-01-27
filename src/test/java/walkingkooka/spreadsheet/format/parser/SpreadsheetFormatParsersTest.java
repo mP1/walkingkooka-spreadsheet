@@ -478,7 +478,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testConditionOpenSquareBracketEqualsNumber() {
-        this.conditionParseAndCheck(SpreadsheetFormatParserToken::equalsParserToken,
+        this.conditionParseAndCheck(SpreadsheetFormatParserToken::equalsSpreadsheetFormatParserToken,
                 bracketOpenSymbol(), equalsSymbol(), conditionNumber(), bracketCloseSymbol());
     }
 

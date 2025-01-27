@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.text.CharSequences;
 
 import java.util.function.Consumer;
@@ -34,7 +34,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         super();
     }
 
-    SpreadsheetFormatConditionParserToken condition;
+    ConditionSpreadsheetFormatParserToken condition;
 
     SpreadsheetPatternSpreadsheetFormatter formatter;
 
@@ -52,7 +52,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
             );
         }
 
-        final SpreadsheetFormatConditionParserToken condition = this.condition;
+        final ConditionSpreadsheetFormatParserToken condition = this.condition;
         if (null != condition) {
             formatters.accept(
                     SpreadsheetFormatters.conditional(

@@ -90,7 +90,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 () -> "Unable to find a static public method that returns " + type.getName()
         );
 
-        // eg: SpreadsheetFormatSecondParserToken
+        // eg: SecondSpreadsheetFormatParserToken
         final Method method = possibleMethod.get();
         final String name = method.getName();
 
@@ -127,7 +127,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 () -> "Unable to find a static package private method that returns " + type.getName()
         );
 
-        // eg: SpreadsheetFormatSecondParserToken -> unmarshallSecond
+        // eg: SecondSpreadsheetFormatParserToken -> unmarshallSecond
         final Method method = possibleMethod.get();
         final String name = method.getName();
 

@@ -23,7 +23,7 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Optional;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterText, SpreadsheetFormatTextParserToken> {
+public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterText, TextSpreadsheetFormatParserToken> {
 
     private final static String TEXT = "Abc123";
 
@@ -152,7 +152,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     }
 
     @Override
-    SpreadsheetPatternSpreadsheetFormatterText createFormatter0(final SpreadsheetFormatTextParserToken token) {
+    SpreadsheetPatternSpreadsheetFormatterText createFormatter0(final TextSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterText.with(token);
     }
 

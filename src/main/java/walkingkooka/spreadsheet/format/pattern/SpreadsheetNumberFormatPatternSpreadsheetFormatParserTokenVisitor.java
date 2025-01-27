@@ -17,16 +17,16 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMinuteParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
+import walkingkooka.spreadsheet.format.parser.AmPmSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DaySpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.HourSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.MinuteSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.MonthSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SecondSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.YearSpreadsheetFormatParserToken;
 import walkingkooka.visit.Visiting;
 
 /**
@@ -44,52 +44,52 @@ final class SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor ex
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetFormatParserToken token) {
         return this.failInvalid();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected Visiting startVisit(final DateTimeSpreadsheetFormatParserToken token) {
         return this.failInvalid();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetFormatParserToken token) {
         return this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDayParserToken token) {
+    protected void visit(final DaySpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatHourParserToken token) {
+    protected void visit(final HourSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+    protected void visit(final MonthSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSecondParserToken token) {
+    protected void visit(final SecondSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatYearParserToken token) {
+    protected void visit(final YearSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 }

@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentParserToken;
+import walkingkooka.spreadsheet.format.parser.ExponentSpreadsheetFormatParserToken;
 
 /**
  * Keeps track of the three modes or phases of a number, the integer, fractionDigitSymbolCount and exponentDigitSymbolCount digits.
@@ -43,7 +43,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVis
         }
 
         @Override
-        void exponent(final SpreadsheetFormatExponentParserToken token,
+        void exponent(final ExponentSpreadsheetFormatParserToken token,
                       final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor) {
             visitor.exponent(token);
         }
@@ -69,7 +69,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVis
         }
 
         @Override
-        void exponent(final SpreadsheetFormatExponentParserToken token,
+        void exponent(final ExponentSpreadsheetFormatParserToken token,
                       final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor) {
             visitor.exponent(token);
         }
@@ -95,7 +95,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVis
         }
 
         @Override
-        void exponent(final SpreadsheetFormatExponentParserToken token,
+        void exponent(final ExponentSpreadsheetFormatParserToken token,
                       final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor) {
             // impossible parser doesnt support
         }
@@ -110,7 +110,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVis
 
     abstract int digitCounterAndIncrement(final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor);
 
-    abstract void exponent(final SpreadsheetFormatExponentParserToken token,
+    abstract void exponent(final ExponentSpreadsheetFormatParserToken token,
                            final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor);
 
     abstract void groupSeparator(final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor);

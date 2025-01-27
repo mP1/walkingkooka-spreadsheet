@@ -43,347 +43,347 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+    protected Visiting startVisit(final ColorSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatColorParserToken token) {
+    protected void endVisit(final ColorSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::color);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatDateParserToken token) {
+    protected void endVisit(final DateSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::date);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected Visiting startVisit(final DateTimeSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected void endVisit(final DateTimeSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::dateTime);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatEqualsParserToken token) {
+    protected Visiting startVisit(final EqualsSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatEqualsParserToken token) {
-        this.exit(SpreadsheetFormatParserToken::equalsParserToken);
+    protected void endVisit(final EqualsSpreadsheetFormatParserToken token) {
+        this.exit(SpreadsheetFormatParserToken::equalsSpreadsheetFormatParserToken);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatExponentParserToken token) {
+    protected Visiting startVisit(final ExponentSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatExponentParserToken token) {
+    protected void endVisit(final ExponentSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::exponent);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatExpressionParserToken token) {
+    protected Visiting startVisit(final ExpressionSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatExpressionParserToken token) {
+    protected void endVisit(final ExpressionSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::expression);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatFractionParserToken token) {
+    protected Visiting startVisit(final FractionSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatFractionParserToken token) {
+    protected void endVisit(final FractionSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::fraction);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatGeneralParserToken token) {
+    protected Visiting startVisit(final GeneralSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
+    protected void endVisit(final GeneralSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::general);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+    protected void endVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::greaterThanEquals);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+    protected Visiting startVisit(final GreaterThanSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+    protected void endVisit(final GreaterThanSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::greaterThan);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+    protected void endVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::lessThanEquals);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatLessThanParserToken token) {
+    protected Visiting startVisit(final LessThanSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatLessThanParserToken token) {
+    protected void endVisit(final LessThanSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::lessThan);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+    protected Visiting startVisit(final NotEqualsSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+    protected void endVisit(final NotEqualsSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::notEquals);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+    protected Visiting startVisit(final NumberSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
+    protected void endVisit(final NumberSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::number);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
+    protected Visiting startVisit(final TextSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatTextParserToken token) {
+    protected void endVisit(final TextSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::text);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetFormatParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected void endVisit(final TimeSpreadsheetFormatParserToken token) {
         this.exit(SpreadsheetFormatParserToken::time);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::amPm);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatBracketCloseSymbolParserToken token) {
+    protected void visit(final BracketCloseSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatBracketOpenSymbolParserToken token) {
+    protected void visit(final BracketOpenSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorLiteralSymbolParserToken token) {
+    protected void visit(final ColorLiteralSymbolSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::colorLiteralSymbol);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+    protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::colorName);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+    protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatConditionNumberParserToken token) {
+    protected void visit(final ConditionNumberSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
+    protected void visit(final CurrencySpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDayParserToken token) {
+    protected void visit(final DaySpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::day);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
+    protected void visit(final DecimalPointSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitParserToken token) {
+    protected void visit(final DigitSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
+    protected void visit(final DigitSpaceSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
+    protected void visit(final DigitZeroSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatEqualsSymbolParserToken token) {
+    protected void visit(final EqualsSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatEscapeParserToken token) {
+    protected void visit(final EscapeSpreadsheetFormatParserToken token) {
         this.addCharacter(token, SpreadsheetFormatParserToken::escape);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
+    protected void visit(final ExponentSymbolSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::exponentSymbol);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatFractionSymbolParserToken token) {
+    protected void visit(final FractionSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGeneralSymbolParserToken token) {
+    protected void visit(final GeneralSymbolSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::generalSymbol);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGreaterThanEqualsSymbolParserToken token) {
+    protected void visit(final GreaterThanEqualsSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGreaterThanSymbolParserToken token) {
+    protected void visit(final GreaterThanSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatHourParserToken token) {
+    protected void visit(final HourSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::hour);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatLessThanEqualsSymbolParserToken token) {
+    protected void visit(final LessThanEqualsSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatLessThanSymbolParserToken token) {
+    protected void visit(final LessThanSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::minute);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+    protected void visit(final MonthSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::month);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatNotEqualsSymbolParserToken token) {
+    protected void visit(final NotEqualsSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatPercentParserToken token) {
+    protected void visit(final PercentSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
+    protected void visit(final QuotedTextSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::quotedText);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSecondParserToken token) {
+    protected void visit(final SecondSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::second);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
+    protected void visit(final SeparatorSymbolSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatStarParserToken token) {
+    protected void visit(final StarSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::textLiteral);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
+    protected void visit(final TextPlaceholderSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
+    protected void visit(final GroupSeparatorSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatUnderscoreParserToken token) {
+    protected void visit(final UnderscoreSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+    protected void visit(final WhitespaceSpreadsheetFormatParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatYearParserToken token) {
+    protected void visit(final YearSpreadsheetFormatParserToken token) {
         this.addString(token, SpreadsheetFormatParserToken::year);
     }
 

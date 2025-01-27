@@ -22,11 +22,11 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetColors;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.Parser;
 
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterColor,
-        SpreadsheetFormatColorParserToken> {
+        ColorSpreadsheetFormatParserToken> {
 
     private final static String TEXT_PATTERN = "@@";
 
@@ -225,7 +225,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     }
 
     @Override
-    SpreadsheetPatternSpreadsheetFormatterColor createFormatter0(final SpreadsheetFormatColorParserToken token) {
+    SpreadsheetPatternSpreadsheetFormatterColor createFormatter0(final ColorSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterColor.with(
                 token,
                 this.textFormatter()
@@ -237,7 +237,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                 this.parsePatternOrFail(
                         SpreadsheetFormatParsers.textFormat(),
                         TEXT_PATTERN
-                ).cast(SpreadsheetFormatTextParserToken.class)
+                ).cast(TextSpreadsheetFormatParserToken.class)
         );
     }
 
@@ -380,7 +380,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
 
     @Test
     public void testEqualsDifferentFormatter() {
-        final SpreadsheetFormatColorParserToken token = this.parsePatternOrFail("[RED]");
+        final ColorSpreadsheetFormatParserToken token = this.parsePatternOrFail("[RED]");
 
         this.checkNotEquals(
                 SpreadsheetPatternSpreadsheetFormatterColor.with(

@@ -22,7 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetColors;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<
         SpreadsheetPatternSpreadsheetFormatterDateTime,
-        SpreadsheetFormatDateTimeParserToken> {
+        DateTimeSpreadsheetFormatParserToken> {
 
     private final static Color RED = Color.parse("#FF0000");
 
@@ -887,7 +887,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     }
 
     @Override
-    SpreadsheetPatternSpreadsheetFormatterDateTime createFormatter0(final SpreadsheetFormatDateTimeParserToken token) {
+    SpreadsheetPatternSpreadsheetFormatterDateTime createFormatter0(final DateTimeSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterDateTime.with(
                 token,
                 LocalDateTime.class
@@ -977,7 +977,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
 
     @Test
     public void testEqualsDifferentValueType() {
-        final SpreadsheetFormatDateTimeParserToken token = this.parsePatternOrFail("dd/mm/yyyy");
+        final DateTimeSpreadsheetFormatParserToken token = this.parsePatternOrFail("dd/mm/yyyy");
 
         this.checkNotEquals(
                 SpreadsheetPatternSpreadsheetFormatterDateTime.with(

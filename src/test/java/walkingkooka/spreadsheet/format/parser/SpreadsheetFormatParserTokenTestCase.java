@@ -23,7 +23,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.reflect.PublicStaticFactoryTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
@@ -46,10 +45,12 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
     @Test
     @Override
     public final void testPublicStaticFactoryMethod() {
-        PublicStaticFactoryTesting.checkFactoryMethods(SpreadsheetFormatParserToken.class,
-                "SpreadsheetFormat",
-                ParserToken.class.getSimpleName(),
-                this.type());
+        PublicStaticFactoryTesting.checkFactoryMethods(
+                SpreadsheetFormatParserToken.class,
+                "",
+                SpreadsheetFormatParserToken.class.getSimpleName(),
+                this.type()
+        );
     }
 
     @Test
@@ -67,19 +68,23 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
                 () -> "Unable to find a static public method that returns " + type.getName()
         );
 
-        // eg: SpreadsheetFormatSecondParserToken
+        // eg: SecondSpreadsheetFormatParserToken
         final Method method = possibleMethod.get();
         final String name = method.getName();
 
-        String expected = type == SpreadsheetFormatEqualsParserToken.class ?
-                "equalsParserToken" :
-                CharSequences.subSequence(type.getSimpleName(), PARENT_NAME.length(), -ParserToken.class.getSimpleName().length())
-                        .toString();
+        String expected = type == EqualsSpreadsheetFormatParserToken.class ?
+                "equalsSpreadsheetFormatParserToken" :
+                CharSequences.subSequence(type.getSimpleName(),
+                        0,
+                        -SpreadsheetFormatParserToken.class.getSimpleName().length()
+                ).toString();
         expected = Character.toLowerCase(expected.charAt(0)) + expected.substring(1);
 
-        this.checkEquals(expected,
+        this.checkEquals(
+                expected,
                 name,
-                () -> "Token public static factory method name incorrect: " + method.toGenericString());
+                () -> "Token public static factory method name incorrect: " + method.toGenericString()
+        );
     }
 
     @Test
@@ -97,13 +102,16 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
                 () -> "Unable to find a static package private method that returns " + type.getName()
         );
 
-        // eg: SpreadsheetFormatSecondParserToken -> unmarshallSecond
+        // eg: SecondSpreadsheetFormatParserToken -> unmarshallSecond
         final Method method = possibleMethod.get();
         final String name = method.getName();
 
         final String expected = "unmarshall" +
                 CharSequences.subSequence(
-                        type.getSimpleName(), PARENT_NAME.length(), -ParserToken.class.getSimpleName().length()
+                        type.getSimpleName(),
+                        0,
+                        -SpreadsheetFormatParserToken.class.getSimpleName()
+                                .length()
                 );
 
         this.checkEquals(expected,
@@ -112,9 +120,6 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
     }
 
     private final static Class<SpreadsheetFormatParserToken> PARENT = SpreadsheetFormatParserToken.class;
-    private final static String PARENT_NAME = CharSequences.subSequence(
-            PARENT.getSimpleName(), 0, -ParserToken.class.getSimpleName().length()
-    ).toString();
 
     @Test
     public void testWithEmptyTextFails() {
@@ -186,12 +191,12 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
 
     @Override
     public final String isMethodTypeNamePrefix() {
-        return "SpreadsheetFormat";
+        return "";
     }
 
     @Override
     public final String isMethodTypeNameSuffix() {
-        return ParserToken.class.getSimpleName();
+        return SpreadsheetFormatParserToken.class.getSimpleName();
     }
 
     @Override

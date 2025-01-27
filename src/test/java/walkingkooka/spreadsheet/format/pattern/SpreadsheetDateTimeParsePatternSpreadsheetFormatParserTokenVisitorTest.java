@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
 
 public final class SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor,
-        SpreadsheetFormatDateTimeParserToken> {
+        DateTimeSpreadsheetFormatParserToken> {
 
     @Override
     public SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor createVisitor() {

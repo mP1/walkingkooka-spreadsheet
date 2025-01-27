@@ -78,7 +78,7 @@ public abstract class SpreadsheetFormatParserTestCase {
                 conditionNumber(),
                 bracketCloseSymbol()
         );
-        return SpreadsheetFormatParserToken.equalsParserToken(
+        return SpreadsheetFormatParserToken.equalsSpreadsheetFormatParserToken(
                 list,
                 ParserToken.text(list)
         );
@@ -161,7 +161,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.currency("$", "$");
     }
 
-    static SpreadsheetFormatDateParserToken date(final SpreadsheetFormatParserToken... tokens) {
+    static DateSpreadsheetFormatParserToken date(final SpreadsheetFormatParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
 
         return SpreadsheetFormatParserToken.date(
@@ -170,7 +170,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         );
     }
 
-    static SpreadsheetFormatDateTimeParserToken dateTime(final SpreadsheetFormatParserToken... tokens) {
+    static DateTimeSpreadsheetFormatParserToken dateTime(final SpreadsheetFormatParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
 
         return SpreadsheetFormatParserToken.dateTime(
@@ -336,7 +336,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.notEqualsSymbol("<>", "<>");
     }
 
-    static SpreadsheetFormatNumberParserToken number(final SpreadsheetFormatParserToken... tokens) {
+    static NumberSpreadsheetFormatParserToken number(final SpreadsheetFormatParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
 
         return SpreadsheetFormatParserToken.number(
@@ -395,7 +395,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.star('#', "*#");
     }
 
-    static SpreadsheetFormatTextParserToken text(final SpreadsheetFormatParserToken... tokens) {
+    static TextSpreadsheetFormatParserToken text(final SpreadsheetFormatParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
 
         return SpreadsheetFormatParserToken.text(
@@ -491,7 +491,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         );
     }
 
-    static SpreadsheetFormatTimeParserToken time(final SpreadsheetFormatParserToken... tokens) {
+    static TimeSpreadsheetFormatParserToken time(final SpreadsheetFormatParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
 
         return SpreadsheetFormatParserToken.time(

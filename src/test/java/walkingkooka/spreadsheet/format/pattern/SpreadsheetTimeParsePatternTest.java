@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.TimeSpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
@@ -40,7 +40,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetTimeParsePattern,
-        SpreadsheetFormatTimeParserToken,
+        TimeSpreadsheetFormatParserToken,
         TimeSpreadsheetParserToken,
         LocalTime> {
 
@@ -702,7 +702,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Override
-    SpreadsheetFormatTimeParserToken createFormatParserToken(final List<ParserToken> tokens,
+    TimeSpreadsheetFormatParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                              final String text) {
         return SpreadsheetFormatParserToken.time(tokens, text);
     }

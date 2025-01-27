@@ -18,17 +18,17 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EscapeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.QuotedTextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatStarParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
+import walkingkooka.spreadsheet.format.parser.StarSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TextLiteralSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TextPlaceholderSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.UnderscoreSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.WhitespaceSpreadsheetFormatParserToken;
 import walkingkooka.text.CharSequences;
 
 import java.util.Optional;
@@ -62,31 +62,31 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+    protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.color = this.context.colorName(
                 token.colorName()
         );
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+    protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         this.color = this.context.colorNumber(
                 token.value()
         );
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatEscapeParserToken token) {
+    protected void visit(final EscapeSpreadsheetFormatParserToken token) {
         this.append(token.value());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
+    protected void visit(final QuotedTextSpreadsheetFormatParserToken token) {
         this.append(token.value());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatStarParserToken token) {
+    protected void visit(final StarSpreadsheetFormatParserToken token) {
         final int fill = this.context.cellCharacterWidth() - this.text.length();
         final char c = token.value();
 
@@ -96,24 +96,24 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetFormatParserToken token) {
         this.append(token.value());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
+    protected void visit(final TextPlaceholderSpreadsheetFormatParserToken token) {
         this.append(this.value);
     }
 
     private final String value;
 
     @Override
-    protected void visit(final SpreadsheetFormatUnderscoreParserToken token) {
+    protected void visit(final UnderscoreSpreadsheetFormatParserToken token) {
         this.append(token.value());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+    protected void visit(final WhitespaceSpreadsheetFormatParserToken token) {
         this.append(
                 CharSequences.repeating(
                         ' ',

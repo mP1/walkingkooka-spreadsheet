@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -56,7 +56,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatP
                 13);
     }
 
-    private void colorNameOrNumberOrFailAndCheck(final SpreadsheetFormatColorParserToken color,
+    private void colorNameOrNumberOrFailAndCheck(final ColorSpreadsheetFormatParserToken color,
                                                  final SpreadsheetPatternSpreadsheetFormatterColorColorSource source,
                                                  final Object nameOrNumber) {
         final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(color);
@@ -79,7 +79,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatP
                 SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
         );
 
-        final SpreadsheetFormatColorParserToken color = SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens));
+        final ColorSpreadsheetFormatParserToken color = SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens));
         visitor.accept(color);
 
         this.toStringAndCheck(visitor, "NAME RED");

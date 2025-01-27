@@ -22,15 +22,15 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SeparatorSymbolSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -137,47 +137,47 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
         );
     }
 
-    private SpreadsheetFormatDateParserToken dmyy() {
+    private DateSpreadsheetFormatParserToken dmyy() {
         return this.dateFormatParse("dmyy");
     }
 
-    private SpreadsheetFormatDateParserToken ddmmyyyy() {
+    private DateSpreadsheetFormatParserToken ddmmyyyy() {
         return this.dateFormatParse("ddmmyyyy");
     }
 
-    private SpreadsheetFormatDateParserToken dateFormatParse(final String text) {
+    private DateSpreadsheetFormatParserToken dateFormatParse(final String text) {
         return this.parseAndGet(
                 text,
                 SpreadsheetFormatParsers.dateFormat(),
-                SpreadsheetFormatDateParserToken.class
+                DateSpreadsheetFormatParserToken.class
         );
     }
 
-    private SpreadsheetFormatDateTimeParserToken hhmmyyyy() {
+    private DateTimeSpreadsheetFormatParserToken hhmmyyyy() {
         return this.dateTimeFormatParse("hhmmyyyy");
     }
 
-    private SpreadsheetFormatDateTimeParserToken yyyymmhh() {
+    private DateTimeSpreadsheetFormatParserToken yyyymmhh() {
         return this.dateTimeFormatParse("yyyymmhh");
     }
 
-    private SpreadsheetFormatDateTimeParserToken dateTimeFormatParse(final String text) {
+    private DateTimeSpreadsheetFormatParserToken dateTimeFormatParse(final String text) {
         return this.parseAndGet(
                 text,
                 SpreadsheetFormatParsers.dateTimeFormat(),
-                SpreadsheetFormatDateTimeParserToken.class
+                DateTimeSpreadsheetFormatParserToken.class
         );
     }
 
-    private SpreadsheetFormatNumberParserToken number() {
+    private NumberSpreadsheetFormatParserToken number() {
         return this.numberParseParse("#0.0");
     }
 
-    private SpreadsheetFormatNumberParserToken money() {
+    private NumberSpreadsheetFormatParserToken money() {
         return this.numberParseParse("$ #0.00");
     }
 
-    private SpreadsheetFormatNumberParserToken numberParseParse(final String text) {
+    private NumberSpreadsheetFormatParserToken numberParseParse(final String text) {
         return SpreadsheetFormatParsers.numberParse()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
@@ -185,22 +185,22 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
                 .cast(SequenceParserToken.class)
                 .value()
                 .get(0)
-                .cast(SpreadsheetFormatNumberParserToken.class);
+                .cast(NumberSpreadsheetFormatParserToken.class);
     }
 
-    private SpreadsheetFormatTimeParserToken hhmm() {
+    private TimeSpreadsheetFormatParserToken hhmm() {
         return this.timeFormatParse("hhmm");
     }
 
-    private SpreadsheetFormatTimeParserToken hhmmss() {
+    private TimeSpreadsheetFormatParserToken hhmmss() {
         return this.timeFormatParse("hhmmss");
     }
 
-    private SpreadsheetFormatTimeParserToken timeFormatParse(final String text) {
+    private TimeSpreadsheetFormatParserToken timeFormatParse(final String text) {
         return this.parseAndGet(
                 text,
                 SpreadsheetFormatParsers.timeFormat(),
-                SpreadsheetFormatTimeParserToken.class
+                TimeSpreadsheetFormatParserToken.class
         );
     }
 
@@ -215,7 +215,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
                 .cast(type);
     }
 
-    private SpreadsheetFormatSeparatorSymbolParserToken separator() {
+    private SeparatorSymbolSpreadsheetFormatParserToken separator() {
         return SpreadsheetFormatParserToken.separatorSymbol(
                 ";",
                 ";"

@@ -31,13 +31,13 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -918,7 +918,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
                         formatter(
                                 "#",
                                 SpreadsheetFormatParsers.numberParse(),
-                                SpreadsheetFormatNumberParserToken.class,
+                                NumberSpreadsheetFormatParserToken.class,
                                 SpreadsheetFormatters::number
                         ),
                         numberParser(),
@@ -1298,7 +1298,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         return formatter(
                 "\\N #.#",
                 SpreadsheetFormatParsers.numberParse(),
-                SpreadsheetFormatNumberParserToken.class,
+                NumberSpreadsheetFormatParserToken.class,
                 SpreadsheetFormatters::number
         );
     }
@@ -1312,7 +1312,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         return formatter(
                 "@\"" + TEXT_SUFFIX + "\"",
                 SpreadsheetFormatParsers.textFormat(),
-                SpreadsheetFormatTextParserToken.class,
+                TextSpreadsheetFormatParserToken.class,
                 SpreadsheetFormatters::text
         );
     }
@@ -1336,7 +1336,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
         return formatter(
                 pattern,
                 SpreadsheetFormatParsers.dateTimeFormat(),
-                SpreadsheetFormatDateTimeParserToken.class,
+                DateTimeSpreadsheetFormatParserToken.class,
                 (t) -> SpreadsheetFormatters.dateTime(
                         t,
                         type

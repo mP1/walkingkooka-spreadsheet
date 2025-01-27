@@ -22,7 +22,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
+import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern,
-        T extends SpreadsheetFormatParentParserToken> extends SpreadsheetPatternTestCase<P, T> {
+        T extends ParentSpreadsheetFormatParserToken> extends SpreadsheetPatternTestCase<P, T> {
 
     final static Color RED = Color.parse("#FF0000");
 

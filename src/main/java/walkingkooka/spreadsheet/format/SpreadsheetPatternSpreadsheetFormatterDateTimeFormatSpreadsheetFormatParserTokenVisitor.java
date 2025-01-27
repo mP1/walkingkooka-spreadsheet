@@ -18,22 +18,22 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMinuteParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthParserToken;
+import walkingkooka.spreadsheet.format.parser.AmPmSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DaySpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EscapeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.HourSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.MinuteSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.MonthSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.QuotedTextSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SecondSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
+import walkingkooka.spreadsheet.format.parser.TextLiteralSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.WhitespaceSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.YearSpreadsheetFormatParserToken;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -121,7 +121,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     private final SpreadsheetFormatterContext context;
 
     @Override
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetFormatParserToken token) {
         final String ampm = this.context.ampm(this.value.getHour());
 
         final SpreadsheetFormatParserTokenKind kind = token.kind()
@@ -151,14 +151,14 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+    protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.color = this.context.colorName(
                 token.colorName()
         );
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+    protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         this.color = this.context.colorNumber(
                 token.value()
         );
@@ -167,7 +167,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     private Optional<Color> color = SpreadsheetText.WITHOUT_COLOR;
 
     @Override
-    protected void visit(final SpreadsheetFormatDayParserToken token) {
+    protected void visit(final DaySpreadsheetFormatParserToken token) {
         final LocalDateTime value = this.value;
 
         final SpreadsheetFormatParserTokenKind kind = token.kind()
@@ -212,12 +212,12 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatEscapeParserToken token) {
+    protected void visit(final EscapeSpreadsheetFormatParserToken token) {
         this.append(token.value());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatHourParserToken token) {
+    protected void visit(final HourSpreadsheetFormatParserToken token) {
         int hour = this.value.getHour();
         if (this.twelveHourTime) {
             hour = hour % 12;
@@ -244,7 +244,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     private final boolean twelveHourTime;
 
     @Override
-    protected void visit(final SpreadsheetFormatMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetFormatParserToken token) {
         final SpreadsheetFormatParserTokenKind kind = token.kind()
                 .get();
         final LocalDateTime value = this.value;
@@ -266,7 +266,7 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatMonthParserToken token) {
+    protected void visit(final MonthSpreadsheetFormatParserToken token) {
         final SpreadsheetFormatParserTokenKind kind = token.kind()
                 .get();
         final LocalDateTime value = this.value;
@@ -314,12 +314,12 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     private final static int LOCALE_DATE_TIME_MONTH_BIAS = 1;
 
     @Override
-    protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
+    protected void visit(final QuotedTextSpreadsheetFormatParserToken token) {
         this.append(token.value());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSecondParserToken token) {
+    protected void visit(final SecondSpreadsheetFormatParserToken token) {
         final LocalDateTime value = this.value;
         final double secondsAndMills = value.getSecond() + 1.0 * value.getNano() / NANOS_IN_SECOND + this.secondRounding;
         final int seconds = (int) secondsAndMills;
@@ -364,17 +364,17 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetForma
     private final int millisecondDecimals;
 
     @Override
-    protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetFormatParserToken token) {
         this.append(token.value());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatWhitespaceParserToken token) {
+    protected void visit(final WhitespaceSpreadsheetFormatParserToken token) {
         this.append(token.value());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatYearParserToken token) {
+    protected void visit(final YearSpreadsheetFormatParserToken token) {
         final int year = this.value.getYear();
 
         final SpreadsheetFormatParserTokenKind kind = token.kind()

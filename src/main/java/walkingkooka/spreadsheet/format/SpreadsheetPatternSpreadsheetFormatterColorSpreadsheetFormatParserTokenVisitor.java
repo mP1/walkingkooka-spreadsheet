@@ -18,17 +18,17 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
- * Finds the color name or color number in the {@link SpreadsheetFormatColorParserToken}.
+ * Finds the color name or color number in the {@link ColorSpreadsheetFormatParserToken}.
  */
 final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
-    static SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor colorNameOrNumberOrFail(final SpreadsheetFormatColorParserToken token) {
+    static SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor colorNameOrNumberOrFail(final ColorSpreadsheetFormatParserToken token) {
         final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor();
         token.accept(visitor);
         return visitor;
@@ -40,12 +40,12 @@ final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTo
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNameParserToken token) {
+    protected void visit(final ColorNameSpreadsheetFormatParserToken token) {
         this.set(SpreadsheetPatternSpreadsheetFormatterColorColorSource.NAME, token.colorName());
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
+    protected void visit(final ColorNumberSpreadsheetFormatParserToken token) {
         this.set(SpreadsheetPatternSpreadsheetFormatterColorColorSource.NUMBER, token.value());
     }
 

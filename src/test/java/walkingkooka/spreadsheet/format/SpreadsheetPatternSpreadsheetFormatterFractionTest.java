@@ -22,7 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
+import walkingkooka.spreadsheet.format.parser.FractionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.CharSequences;
@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * In expectations all symbols are doubled, as a means to verify the context is supplying the values.
  */
 public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterFraction,
-        SpreadsheetFormatFractionParserToken> {
+        FractionSpreadsheetFormatParserToken> {
 
     //creation ..............................................................................................
 
@@ -61,7 +61,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterFraction.with(this.token(), null));
     }
 
-    private SpreadsheetFormatFractionParserToken token() {
+    private FractionSpreadsheetFormatParserToken token() {
         return this.parsePatternOrFail("#/#");
     }
 
@@ -429,7 +429,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     }
 
     @Override
-    SpreadsheetPatternSpreadsheetFormatterFraction createFormatter0(final SpreadsheetFormatFractionParserToken token) {
+    SpreadsheetPatternSpreadsheetFormatterFraction createFormatter0(final FractionSpreadsheetFormatParserToken token) {
         return SpreadsheetPatternSpreadsheetFormatterFraction.with(
                 token,
                 FRACTIONER
@@ -536,7 +536,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
 
     @Test
     public void testEqualsDifferentFractionerFunction() {
-        final SpreadsheetFormatFractionParserToken token = this.token();
+        final FractionSpreadsheetFormatParserToken token = this.token();
 
         this.checkNotEquals(
                 SpreadsheetPatternSpreadsheetFormatterFraction.with(token, (v) -> null),

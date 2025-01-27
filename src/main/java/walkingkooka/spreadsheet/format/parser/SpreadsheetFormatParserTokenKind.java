@@ -70,7 +70,7 @@ public enum SpreadsheetFormatParserTokenKind {
 
     // DATE.............................................................................................................
 
-    // @see SpreadsheetFormatDayParserToken for 'D' count'
+    // @see DaySpreadsheetFormatParserToken for 'D' count'
     DAY_WITH_LEADING_ZERO(
             SpreadsheetFormatParserTokenKind::isDay,
             "dd"
@@ -91,7 +91,7 @@ public enum SpreadsheetFormatParserTokenKind {
             "dddd"
     ),
 
-    // SpreadsheetFormatMonthParserToken for 'M' count
+    // MonthSpreadsheetFormatParserToken for 'M' count
     MONTH_WITH_LEADING_ZERO(
             SpreadsheetFormatParserTokenKind::isMonth,
             "mm"
@@ -117,7 +117,7 @@ public enum SpreadsheetFormatParserTokenKind {
             "mmmmm"
     ),
 
-    // @see SpreadsheetFormatYearParserToken for 'Y' count
+    // @see YearSpreadsheetFormatParserToken for 'Y' count
     YEAR_TWO_DIGIT(
             SpreadsheetFormatParserTokenKind::isYear,
             "yy"

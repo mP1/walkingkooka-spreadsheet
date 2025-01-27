@@ -30,7 +30,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -50,7 +50,7 @@ import java.math.MathContext;
 import java.util.List;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
-        SpreadsheetFormatNumberParserToken,
+        NumberSpreadsheetFormatParserToken,
         NumberSpreadsheetParserToken,
         ExpressionNumber> implements ConverterTesting {
 
@@ -1234,7 +1234,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     }
 
     @Override
-    SpreadsheetFormatNumberParserToken createFormatParserToken(final List<ParserToken> tokens,
+    NumberSpreadsheetFormatParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                                final String text) {
         return SpreadsheetFormatParserToken.number(tokens, text);
     }

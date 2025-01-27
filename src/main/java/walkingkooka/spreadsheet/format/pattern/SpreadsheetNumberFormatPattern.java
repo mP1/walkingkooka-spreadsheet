@@ -21,7 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
+import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -188,7 +188,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
             BigDecimal.ZERO, "0"
     );
 
-    private final static SpreadsheetFormatConditionParserToken ZERO = SpreadsheetFormatParserToken.equalsParserToken(
+    private final static ConditionSpreadsheetFormatParserToken ZERO = SpreadsheetFormatParserToken.equalsSpreadsheetFormatParserToken(
             Lists.of(
                     SpreadsheetFormatParserToken.equalsSymbol("=", "="),
                     NUMBER_ZERO
@@ -196,7 +196,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
             "=0"
     );
 
-    private final static SpreadsheetFormatConditionParserToken POSITIVE = SpreadsheetFormatParserToken.greaterThan(
+    private final static ConditionSpreadsheetFormatParserToken POSITIVE = SpreadsheetFormatParserToken.greaterThan(
             Lists.of(
                     SpreadsheetFormatParserToken.greaterThanSymbol(">", ">"),
                     NUMBER_ZERO
@@ -204,7 +204,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
             ">0"
     );
 
-    private final static SpreadsheetFormatConditionParserToken POSITIVE_OR_ZERO = SpreadsheetFormatParserToken.greaterThanEquals(
+    private final static ConditionSpreadsheetFormatParserToken POSITIVE_OR_ZERO = SpreadsheetFormatParserToken.greaterThanEquals(
             Lists.of(
                     SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">="),
                     NUMBER_ZERO
@@ -212,7 +212,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
             ">=0"
     );
 
-    private final static SpreadsheetFormatConditionParserToken NEGATIVE = SpreadsheetFormatParserToken.lessThan(
+    private final static ConditionSpreadsheetFormatParserToken NEGATIVE = SpreadsheetFormatParserToken.lessThan(
             Lists.of(
                     SpreadsheetFormatParserToken.lessThanSymbol("<", "<"),
                     NUMBER_ZERO

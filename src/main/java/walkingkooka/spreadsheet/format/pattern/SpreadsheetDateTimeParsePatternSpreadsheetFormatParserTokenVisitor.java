@@ -17,20 +17,20 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGroupSeparatorParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.CurrencySpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitSpaceSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DigitSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.ExponentSymbolSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GroupSeparatorSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.PercentSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
 import walkingkooka.visit.Visiting;
 
-final class SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatDateTimeParserToken> {
+final class SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<DateTimeSpreadsheetFormatParserToken> {
 
     static SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor with() {
         return new SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor();
@@ -41,57 +41,57 @@ final class SpreadsheetDateTimeParsePatternSpreadsheetFormatParserTokenVisitor e
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetFormatParserToken token) {
         return this.failInvalid();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected void endVisit(final DateTimeSpreadsheetFormatParserToken token) {
         // nop
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+    protected Visiting startVisit(final NumberSpreadsheetFormatParserToken token) {
         return this.failInvalid();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
+    protected Visiting startVisit(final TextSpreadsheetFormatParserToken token) {
         return this.failInvalid();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetFormatParserToken token) {
         return this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
+    protected void visit(final CurrencySpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitParserToken token) {
+    protected void visit(final DigitSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
+    protected void visit(final DigitSpaceSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
+    protected void visit(final ExponentSymbolSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatGroupSeparatorParserToken token) {
+    protected void visit(final GroupSeparatorSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatPercentParserToken token) {
+    protected void visit(final PercentSpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
 

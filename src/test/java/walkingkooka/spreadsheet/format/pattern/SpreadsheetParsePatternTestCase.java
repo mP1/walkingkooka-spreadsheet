@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
+import walkingkooka.spreadsheet.format.parser.ParentSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -72,7 +72,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParsePattern,
-        T extends SpreadsheetFormatParentParserToken,
+        T extends ParentSpreadsheetFormatParserToken,
         SPT extends ParentSpreadsheetParserToken,
         V> extends SpreadsheetPatternTestCase<P, List<T>>
         implements ConverterTesting {

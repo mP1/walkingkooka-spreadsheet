@@ -18,21 +18,21 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.EqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GeneralSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GreaterThanEqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.GreaterThanSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.LessThanEqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.LessThanSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NotEqualsSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SeparatorSymbolSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.visit.Visiting;
@@ -63,85 +63,85 @@ final class SpreadsheetPatternPatternsSpreadsheetFormatParserTokenVisitor<T exte
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
+    protected Visiting startVisit(final ColorSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected Visiting startVisit(final DateTimeSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatEqualsParserToken token) {
+    protected Visiting startVisit(final EqualsSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatGeneralParserToken token) {
+    protected Visiting startVisit(final GeneralSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final GreaterThanEqualsSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatGreaterThanParserToken token) {
+    protected Visiting startVisit(final GreaterThanSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final LessThanEqualsSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatLessThanParserToken token) {
+    protected Visiting startVisit(final LessThanSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+    protected Visiting startVisit(final NotEqualsSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+    protected Visiting startVisit(final NumberSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
+    protected Visiting startVisit(final TextSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetFormatParserToken token) {
         this.addToken(token);
         return Visiting.SKIP;
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
+    protected void visit(final SeparatorSymbolSpreadsheetFormatParserToken token) {
         this.createAndSavePatternIfNecessary();
     }
 

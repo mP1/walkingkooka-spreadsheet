@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
+import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -49,7 +49,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateFormatPattern,
-        SpreadsheetFormatDateParserToken> {
+        DateSpreadsheetFormatParserToken> {
 
     @Test
     public void testWithAmpmFails() {
@@ -670,7 +670,7 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Override
-    SpreadsheetFormatDateParserToken createFormatParserToken(final List<ParserToken> tokens,
+    DateSpreadsheetFormatParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                              final String text) {
         return SpreadsheetFormatParserToken.date(tokens, text);
     }
