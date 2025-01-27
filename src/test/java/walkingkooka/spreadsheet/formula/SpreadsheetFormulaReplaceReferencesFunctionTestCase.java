@@ -15,13 +15,19 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.Cast;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetFormulaReplaceReferencesFunctionTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunction<?>> {
+public abstract class SpreadsheetFormulaReplaceReferencesFunctionTestCase<T> implements ClassTesting<T> {
+
+    SpreadsheetFormulaReplaceReferencesFunctionTestCase() {
+        super();
+    }
+
     @Override
-    public Class<SpreadsheetFormulaReplaceReferencesFunction<?>> type() {
-        return Cast.to(SpreadsheetFormulaReplaceReferencesFunction.class);
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

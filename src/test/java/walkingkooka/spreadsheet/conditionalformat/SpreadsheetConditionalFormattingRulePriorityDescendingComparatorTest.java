@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.conditionalformat;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparatorTesting2;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 

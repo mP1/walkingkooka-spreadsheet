@@ -15,9 +15,8 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.ParserToken;
 

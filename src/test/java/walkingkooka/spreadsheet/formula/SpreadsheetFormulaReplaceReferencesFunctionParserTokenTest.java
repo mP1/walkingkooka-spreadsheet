@@ -16,11 +16,11 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.formula;
 
-public final class SpreadsheetFormulaReplaceReferencesFunctionExpressionTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunctionExpression> {
+public final class SpreadsheetFormulaReplaceReferencesFunctionParserTokenTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunctionParserToken> {
     @Override
-    public Class<SpreadsheetFormulaReplaceReferencesFunctionExpression> type() {
-        return SpreadsheetFormulaReplaceReferencesFunctionExpression.class;
+    public Class<SpreadsheetFormulaReplaceReferencesFunctionParserToken> type() {
+        return SpreadsheetFormulaReplaceReferencesFunctionParserToken.class;
     }
 }

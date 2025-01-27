@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;

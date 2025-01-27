@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -15,19 +16,11 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.JavaVisibility;
-
-public abstract class SpreadsheetFormulaReplaceReferencesFunctionTestCase<T> implements ClassTesting<T> {
-
-    SpreadsheetFormulaReplaceReferencesFunctionTestCase() {
-        super();
-    }
-
+public final class SpreadsheetFormulaReplaceReferencesFunctionExpressionTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunctionExpression> {
     @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    public Class<SpreadsheetFormulaReplaceReferencesFunctionExpression> type() {
+        return SpreadsheetFormulaReplaceReferencesFunctionExpression.class;
     }
 }

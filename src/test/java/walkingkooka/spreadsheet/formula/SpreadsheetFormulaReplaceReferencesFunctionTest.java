@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -16,11 +15,13 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.formula;
 
-public final class SpreadsheetFormulaReplaceReferencesFunctionParserTokenTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunctionParserToken> {
+import walkingkooka.Cast;
+
+public final class SpreadsheetFormulaReplaceReferencesFunctionTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunction<?>> {
     @Override
-    public Class<SpreadsheetFormulaReplaceReferencesFunctionParserToken> type() {
-        return SpreadsheetFormulaReplaceReferencesFunctionParserToken.class;
+    public Class<SpreadsheetFormulaReplaceReferencesFunction<?>> type() {
+        return Cast.to(SpreadsheetFormulaReplaceReferencesFunction.class);
     }
 }

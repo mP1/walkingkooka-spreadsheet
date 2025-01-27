@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.text.CaseKind;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;

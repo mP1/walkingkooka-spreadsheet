@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 
 import java.util.Optional;
 import java.util.function.Function;

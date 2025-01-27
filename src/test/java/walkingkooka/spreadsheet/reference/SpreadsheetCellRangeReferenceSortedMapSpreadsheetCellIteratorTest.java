@@ -25,7 +25,7 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 
 import java.util.Set;
 import java.util.SortedMap;
