@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class NotEqualsSpreadsheetFormulaParserTokenTest extends ConditionSpreadsheetFormulaParserTokenTestCase<NotEqualsSpreadsheetFormulaParserToken> {
 
-    // toConditionRightSpreadsheetParserToken...........................................................................
+    // toConditionRightSpreadsheetFormulaParserToken....................................................................
 
     @Test
     public void testToSpreadsheetConditionRightParserToken() {
@@ -39,7 +39,7 @@ public final class NotEqualsSpreadsheetFormulaParserTokenTest extends ConditionS
         final SpreadsheetFormulaParserToken symbol = this.operatorSymbol();
         final SpreadsheetFormulaParserToken right = this.number2();
 
-        this.toConditionRightSpreadsheetParserTokenAndCheck(
+        this.toConditionRightSpreadsheetFormulaParserTokenAndCheck(
                 SpreadsheetFormulaParserToken.notEquals(
                         Lists.of(
                                 left,
@@ -66,7 +66,7 @@ public final class NotEqualsSpreadsheetFormulaParserTokenTest extends ConditionS
         final SpreadsheetFormulaParserToken whitespace2 = this.whitespace();
         final SpreadsheetFormulaParserToken right = this.number2();
 
-        this.toConditionRightSpreadsheetParserTokenAndCheck(
+        this.toConditionRightSpreadsheetFormulaParserTokenAndCheck(
                 SpreadsheetFormulaParserToken.notEquals(
                         Lists.of(
                                 left,

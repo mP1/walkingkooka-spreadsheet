@@ -35,8 +35,8 @@ public final class GreaterThanSpreadsheetFormulaParserToken extends ConditionSpr
     }
 
     @Override
-    ConditionRightGreaterThanSpreadsheetFormulaParserToken toConditionRightSpreadsheetParserToken0(final List<ParserToken> tokens,
-                                                                                                   final String text) {
+    ConditionRightGreaterThanSpreadsheetFormulaParserToken toConditionRightSpreadsheetFormulaParserToken0(final List<ParserToken> tokens,
+                                                                                                          final String text) {
 
         return SpreadsheetFormulaParserToken.conditionRightGreaterThan(
                 tokens,

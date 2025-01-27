@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class GreaterThanSpreadsheetFormulaParserTokenTest extends ConditionSpreadsheetFormulaParserTokenTestCase<GreaterThanSpreadsheetFormulaParserToken> {
 
-    // toConditionRightSpreadsheetParserToken...........................................................................
+    // toConditionRightSpreadsheetFormulaParserToken....................................................................
 
     @Test
     public void testToSpreadsheetConditionRightParserToken() {
@@ -39,7 +39,7 @@ public final class GreaterThanSpreadsheetFormulaParserTokenTest extends Conditio
         final SpreadsheetFormulaParserToken symbol = this.operatorSymbol();
         final SpreadsheetFormulaParserToken right = this.number2();
 
-        this.toConditionRightSpreadsheetParserTokenAndCheck(
+        this.toConditionRightSpreadsheetFormulaParserTokenAndCheck(
                 SpreadsheetFormulaParserToken.greaterThan(
                         Lists.of(
                                 left,
@@ -66,7 +66,7 @@ public final class GreaterThanSpreadsheetFormulaParserTokenTest extends Conditio
         final SpreadsheetFormulaParserToken whitespace2 = this.whitespace();
         final SpreadsheetFormulaParserToken right = this.number2();
 
-        this.toConditionRightSpreadsheetParserTokenAndCheck(
+        this.toConditionRightSpreadsheetFormulaParserTokenAndCheck(
                 SpreadsheetFormulaParserToken.greaterThan(
                         Lists.of(
                                 left,
