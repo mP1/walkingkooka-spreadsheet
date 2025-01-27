@@ -1,0 +1,206 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.formula;
+
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class TextSpreadsheetParserTokenTest extends ValueSpreadsheetParserTokenTestCase<TextSpreadsheetParserToken> {
+
+    @Test
+    public void testWithZeroTokensFails() {
+        this.createToken(ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE + ParentSpreadsheetParserTokenTestCase.TEXT + ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE);
+    }
+
+    @Test
+    public void testWithExtraTextLiteralFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> TextSpreadsheetParserToken.with(
+                        Lists.of(
+                                textLiteral(),
+                                textLiteral()
+                        ),
+                        textLiteral().text() + textLiteral().text()
+                )
+        );
+
+        this.checkEquals(
+                "Extra text literal in \"abc123abc123\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testWithApostropheMissingTextLiteral() {
+        final String textValue = "";
+
+        this.textValueAndCheck(
+                this.createToken(
+                        ParentSpreadsheetParserTokenTestCase.APOSTROPHE + textValue,
+                        this.apostropheSymbol()
+                ),
+                textValue
+        );
+    }
+
+    @Test
+    public void testWithApostrophe() {
+        final String text = ParentSpreadsheetParserTokenTestCase.APOSTROPHE + ParentSpreadsheetParserTokenTestCase.TEXT;
+
+        final ApostropheSymbolSpreadsheetParserToken apostrophe = apostropheSymbol();
+        final SpreadsheetParserToken textLiteral = this.textLiteral();
+
+        final TextSpreadsheetParserToken token = this.createToken(text, apostrophe, textLiteral);
+        this.textAndCheck(token, text);
+        this.checkValue(token, apostrophe, textLiteral);
+
+        this.textValueAndCheck(
+                token,
+                ParentSpreadsheetParserTokenTestCase.TEXT
+        );
+    }
+
+    @Test
+    public void testWithDoubleQuote() {
+        final String text = ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE + ParentSpreadsheetParserTokenTestCase.TEXT + ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE;
+
+        final DoubleQuoteSymbolSpreadsheetParserToken open = doubleQuoteSymbol();
+        final SpreadsheetParserToken textLiteral = this.textLiteral();
+        final DoubleQuoteSymbolSpreadsheetParserToken close = doubleQuoteSymbol();
+
+        final TextSpreadsheetParserToken token = this.createToken(text, open, textLiteral, close);
+        this.textAndCheck(token, text);
+        this.checkValue(token, open, textLiteral, close);
+
+        this.textValueAndCheck(
+                token,
+                ParentSpreadsheetParserTokenTestCase.TEXT
+        );
+    }
+
+    @Test
+    public void testWithEmptyDoubleQuote() {
+        final String text = ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE + ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE;
+
+        final DoubleQuoteSymbolSpreadsheetParserToken open = doubleQuoteSymbol();
+        final DoubleQuoteSymbolSpreadsheetParserToken close = doubleQuoteSymbol();
+
+        final TextSpreadsheetParserToken token = this.createToken(
+                text,
+                open,
+                close
+        );
+        this.textAndCheck(token, text);
+        this.checkValue(
+                token,
+                open,
+                close
+        );
+
+        this.textValueAndCheck(
+                token,
+                ""
+        );
+    }
+
+    private void textValueAndCheck(final TextSpreadsheetParserToken token,
+                                   final String textValue) {
+        this.checkEquals(
+                textValue,
+                token.textValue()
+        );
+    }
+
+    @Test
+    public void testToExpressionApostrophe() {
+        this.toExpressionAndCheck(
+                TextSpreadsheetParserToken.with(
+                        Lists.of(
+                                apostropheSymbol(),
+                                textLiteral()
+                        ),
+                        ParentSpreadsheetParserTokenTestCase.APOSTROPHE + ParentSpreadsheetParserTokenTestCase.TEXT
+                ),
+                Expression.value(ParentSpreadsheetParserTokenTestCase.TEXT)
+        );
+    }
+
+    @Test
+    public void testToExpressionDoubleQuoted() {
+        this.toExpressionAndCheck(
+                TextSpreadsheetParserToken.with(
+                        Lists.of(
+                                doubleQuoteSymbol(),
+                                textLiteral(),
+                                doubleQuoteSymbol()
+                        ),
+                        ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE + ParentSpreadsheetParserTokenTestCase.TEXT + ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE
+                ),
+                Expression.value(ParentSpreadsheetParserTokenTestCase.TEXT)
+        );
+    }
+
+    @Override
+    TextSpreadsheetParserToken createToken(final String text, final List<ParserToken> tokens) {
+        return SpreadsheetParserToken.text(tokens, text);
+    }
+
+    @Override
+    public String text() {
+        return ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE + ParentSpreadsheetParserTokenTestCase.TEXT + ParentSpreadsheetParserTokenTestCase.DOUBLE_QUOTE;
+    }
+
+    @Override
+    List<ParserToken> tokens() {
+        return Lists.of(
+                doubleQuoteSymbol(),
+                textLiteral(),
+                doubleQuoteSymbol()
+        );
+    }
+
+    @Override
+    public TextSpreadsheetParserToken createDifferentToken() {
+        final String different = "different456";
+        return this.createToken(different,
+                doubleQuoteSymbol(),
+                SpreadsheetParserToken.textLiteral(different, different),
+                doubleQuoteSymbol()
+        );
+    }
+
+    @Override
+    public Class<TextSpreadsheetParserToken> type() {
+        return TextSpreadsheetParserToken.class;
+    }
+
+    @Override
+    public TextSpreadsheetParserToken unmarshall(final JsonNode from,
+                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallText(from, context);
+    }
+}

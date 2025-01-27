@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitor;
+import walkingkooka.spreadsheet.formula.SpreadsheetParserTokenVisitor;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.VisitorTesting;
 

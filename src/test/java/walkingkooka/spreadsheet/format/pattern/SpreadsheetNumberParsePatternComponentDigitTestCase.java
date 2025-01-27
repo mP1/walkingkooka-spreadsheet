@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
 
 public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C extends SpreadsheetNumberParsePatternComponentDigit> extends SpreadsheetNumberParsePatternComponentTestCase<C> {
 
