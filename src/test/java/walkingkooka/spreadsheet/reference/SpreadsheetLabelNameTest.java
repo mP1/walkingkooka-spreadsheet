@@ -23,7 +23,7 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -511,7 +511,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                         SpreadsheetSelection.labelName(text),
                         text
                 ),
-                SpreadsheetParsers.labelName()
+                SpreadsheetFormulaParsers.labelName()
         );
     }
 

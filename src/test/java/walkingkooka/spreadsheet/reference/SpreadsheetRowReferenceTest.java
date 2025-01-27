@@ -23,7 +23,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -1385,7 +1385,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                         SpreadsheetSelection.parseRow(text),
                         text
                 ),
-                SpreadsheetParsers.row()
+                SpreadsheetFormulaParsers.row()
         );
     }
 

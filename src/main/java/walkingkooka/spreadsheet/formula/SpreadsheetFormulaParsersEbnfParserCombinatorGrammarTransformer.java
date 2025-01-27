@@ -45,51 +45,51 @@ import java.util.function.BiFunction;
  * A {@link EbnfParserCombinatorGrammarTransformer} that only transforms terminal and ranges into their corresponding {@link SpreadsheetFormulaParserToken} equivalents.
  * Processing of other tokens will be done after this process completes.
  */
-final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements EbnfParserCombinatorGrammarTransformer<SpreadsheetParserContext> {
+final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer implements EbnfParserCombinatorGrammarTransformer<SpreadsheetParserContext> {
 
-    static SpreadsheetParsersEbnfParserCombinatorGrammarTransformer create() {
-        return new SpreadsheetParsersEbnfParserCombinatorGrammarTransformer();
+    static SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer create() {
+        return new SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer();
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetParsersEbnfParserCombinatorGrammarTransformer() {
+    private SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer() {
         super();
 
         final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetParserContext, ParserToken>> identifierToTransformer = Maps.sorted();
     
         identifierToTransformer.put(
                 EbnfIdentifierName.with("APOSTROPHE_STRING"),
-                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::apostropheString
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::apostropheString
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("EXPRESSION"),
-                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::expression
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::expression
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("FUNCTION_PARAMETERS"),
-                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::functionParameters
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::functionParameters
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("GROUP"),
-                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::group
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::group
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("LAMBDA_FUNCTION"),
-                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::lambdaFunction
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::lambdaFunction
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("NAMED_FUNCTION"),
-                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::namedFunction
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::namedFunction
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("NEGATIVE"),
-                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::negative
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::negative
         );
         identifierToTransformer.put(
                 EbnfIdentifierName.with("PERCENTAGE"),
-                SpreadsheetParsersEbnfParserCombinatorGrammarTransformer::percentage
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer::percentage
         );
 
         this.identifierToTransformer = identifierToTransformer;
@@ -220,7 +220,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
     private ParserToken concatenation(final ParserToken token,
                                       final SpreadsheetParserContext context) {
         return token.cast(SequenceParserToken.class)
-                .binaryOperator(SpreadsheetParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE);
+                .binaryOperator(SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE);
     }
 
     @Override

@@ -39,7 +39,7 @@ import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserT
 import walkingkooka.spreadsheet.formula.LeafSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.CaseKind;
@@ -146,7 +146,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
             // try and consume column letters
             if (MODE_COLUMN == mode) {
-                final int digit = SpreadsheetParsers.columnLetterValue(c);
+                final int digit = SpreadsheetFormulaParsers.columnLetterValue(c);
                 if (-1 != digit) {
                     column = column * SpreadsheetColumnReference.RADIX + digit;
                     if (column > 1 + SpreadsheetColumnReference.MAX_VALUE) {
@@ -335,7 +335,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 .cell();
     }
 
-    static final Parser<SpreadsheetParserContext> CELL_PARSER = SpreadsheetParsers.cell()
+    static final Parser<SpreadsheetParserContext> CELL_PARSER = SpreadsheetFormulaParsers.cell()
             .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
             .orReport(ParserReporters.invalidCharacterException());
 
@@ -383,7 +383,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseRange(
                 text,
                 ALL_CELLS,
-                SpreadsheetParsers.cell(),
+                SpreadsheetFormulaParsers.cell(),
                 (t) -> t.cast(CellReferenceSpreadsheetFormulaParserToken.class).cell(),
                 SpreadsheetCellRangeReference::with
         );
@@ -412,9 +412,9 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Leverages the {@link SpreadsheetParsers#column()} combined with an error reporter.
+     * Leverages the {@link SpreadsheetFormulaParsers#column()} combined with an error reporter.
      */
-    private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetParsers.column()
+    private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetFormulaParsers.column()
             .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
             .orReport(ParserReporters.invalidCharacterException());
 
@@ -432,9 +432,9 @@ public abstract class SpreadsheetSelection implements HasText,
         );
     }
 
-    private static final Parser<SpreadsheetParserContext> COLUMN_OR_ROW_PARSER = SpreadsheetParsers.column()
+    private static final Parser<SpreadsheetParserContext> COLUMN_OR_ROW_PARSER = SpreadsheetFormulaParsers.column()
             .or(
-                    SpreadsheetParsers.row()
+                    SpreadsheetFormulaParsers.row()
             ).orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
             .orReport(ParserReporters.invalidCharacterException());
 
@@ -456,7 +456,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseRange(
                 text,
                 ALL_COLUMNS,
-                SpreadsheetParsers.column(),
+                SpreadsheetFormulaParsers.column(),
                 (t) -> t.cast(ColumnReferenceSpreadsheetFormulaParserToken.class).value(),
                 SpreadsheetColumnRangeReference::with
         );
@@ -474,9 +474,9 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Leverages the {@link SpreadsheetParsers#row()} combined with an error reporter.
+     * Leverages the {@link SpreadsheetFormulaParsers#row()} combined with an error reporter.
      */
-    private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetParsers.row()
+    private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetFormulaParsers.row()
             .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
             .orReport(ParserReporters.invalidCharacterException());
 
@@ -525,7 +525,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseRange(
                 text,
                 ALL_ROWS,
-                SpreadsheetParsers.row(),
+                SpreadsheetFormulaParsers.row(),
                 (t) -> t.cast(RowReferenceSpreadsheetFormulaParserToken.class).value(),
                 SpreadsheetRowRangeReference::with
         );

@@ -53,7 +53,7 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
 
     @Test
     public void testWithSpreadsheetParser() {
-        final SpreadsheetParser wrapped = SpreadsheetParsers.fake();
+        final SpreadsheetParser wrapped = SpreadsheetFormulaParsers.fake();
         assertSame(
                 wrapped,
                 ParserSpreadsheetParser.with(wrapped)

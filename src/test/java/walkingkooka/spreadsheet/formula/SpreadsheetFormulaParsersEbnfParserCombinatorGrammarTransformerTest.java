@@ -24,15 +24,15 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformer;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorGrammarTransformerTesting;
 
-public final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformerTest implements ClassTesting2<SpreadsheetParsersEbnfParserCombinatorGrammarTransformer>,
-        EbnfParserCombinatorGrammarTransformerTesting<SpreadsheetParsersEbnfParserCombinatorGrammarTransformer, SpreadsheetParserContext>,
-        TypeNameTesting<SpreadsheetParsersEbnfParserCombinatorGrammarTransformer> {
+public final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerTest implements ClassTesting2<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer>,
+        EbnfParserCombinatorGrammarTransformerTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer, SpreadsheetParserContext>,
+        TypeNameTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer> {
 
     // Class............................................................................................................
 
     @Override
-    public Class<SpreadsheetParsersEbnfParserCombinatorGrammarTransformer> type() {
-        return SpreadsheetParsersEbnfParserCombinatorGrammarTransformer.class;
+    public Class<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer> type() {
+        return SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer.class;
     }
 
     @Override
@@ -44,7 +44,7 @@ public final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformerTest 
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetParsers.class.getSimpleName();
+        return SpreadsheetFormulaParsers.class.getSimpleName();
     }
 
     @Override

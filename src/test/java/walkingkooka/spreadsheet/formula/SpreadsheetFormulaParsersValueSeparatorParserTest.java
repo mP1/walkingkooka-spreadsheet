@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 
-public final class SpreadsheetParsersValueSeparatorParserTest extends SpreadsheetParserTestCase<SpreadsheetParsersValueSeparatorParser,
+public final class SpreadsheetFormulaParsersValueSeparatorParserTest extends SpreadsheetParserTestCase<SpreadsheetFormulaParsersValueSeparatorParser,
         ValueSeparatorSymbolSpreadsheetFormulaParserToken>
-        implements ToStringTesting<SpreadsheetParsersValueSeparatorParser> {
+        implements ToStringTesting<SpreadsheetFormulaParsersValueSeparatorParser> {
 
     @Test
     public void testIncorrectCharacterFails() {
@@ -76,7 +76,7 @@ public final class SpreadsheetParsersValueSeparatorParserTest extends Spreadshee
         final String text = c + "";
 
         this.parseAndCheck(
-                SpreadsheetParsersValueSeparatorParser.INSTANCE,
+                SpreadsheetFormulaParsersValueSeparatorParser.INSTANCE,
                 new FakeSpreadsheetParserContext() {
                     @Override
                     public char valueSeparator() {
@@ -95,12 +95,12 @@ public final class SpreadsheetParsersValueSeparatorParserTest extends Spreadshee
     }
 
     @Override
-    public SpreadsheetParsersValueSeparatorParser createParser() {
-        return SpreadsheetParsersValueSeparatorParser.INSTANCE;
+    public SpreadsheetFormulaParsersValueSeparatorParser createParser() {
+        return SpreadsheetFormulaParsersValueSeparatorParser.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetParsersValueSeparatorParser> type() {
-        return SpreadsheetParsersValueSeparatorParser.class;
+    public Class<SpreadsheetFormulaParsersValueSeparatorParser> type() {
+        return SpreadsheetFormulaParsersValueSeparatorParser.class;
     }
 }

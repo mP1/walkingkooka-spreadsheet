@@ -31,7 +31,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetCompara
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
@@ -841,7 +841,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                 context
                                         )
                                 ).orElseGet(
-                                        () -> SpreadsheetParsers.valueOrExpression(
+                                        () -> SpreadsheetFormulaParsers.valueOrExpression(
                                                 metadata.spreadsheetParser(
                                                         context, // SpreadsheetParserProvider
                                                         context // ProviderContext

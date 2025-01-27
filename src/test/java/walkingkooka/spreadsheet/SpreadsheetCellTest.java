@@ -31,7 +31,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
@@ -517,7 +517,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     private SpreadsheetFormula parseFormula(final String text) {
         return SpreadsheetFormula.parse(
                 TextCursors.charSequence(text),
-                SpreadsheetParsers.valueOrExpression(
+                SpreadsheetFormulaParsers.valueOrExpression(
                         Parsers.never()
                 ),
                 SPREADSHEET_PARSER_CONTEXT

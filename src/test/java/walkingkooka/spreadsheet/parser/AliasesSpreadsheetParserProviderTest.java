@@ -24,7 +24,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,13 +39,13 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
     private final static SpreadsheetParserName ALIAS2 = SpreadsheetParserName.with("alias2");
 
-    private final static SpreadsheetParser PARSER1 = SpreadsheetParsers.fake();
+    private final static SpreadsheetParser PARSER1 = SpreadsheetFormulaParsers.fake();
 
     private final static String NAME2_STRING = "parser2";
 
     private final static SpreadsheetParserName NAME2 = SpreadsheetParserName.with(NAME2_STRING);
 
-    private final static SpreadsheetParser PARSER2 = SpreadsheetParsers.fake();
+    private final static SpreadsheetParser PARSER2 = SpreadsheetFormulaParsers.fake();
 
     private final static SpreadsheetParserInfo INFO2 = SpreadsheetParserInfo.parse("https://example.com/parser2 " + NAME2);
 
@@ -53,7 +53,7 @@ public final class AliasesSpreadsheetParserProviderTest implements SpreadsheetPa
 
     private final static SpreadsheetParserName NAME3 = SpreadsheetParserName.with(NAME3_STRING);
 
-    private final static SpreadsheetParser PARSER3 = SpreadsheetParsers.fake();
+    private final static SpreadsheetParser PARSER3 = SpreadsheetFormulaParsers.fake();
 
     private final static SpreadsheetParserInfo INFO3 = SpreadsheetParserInfo.parse("https://example.com/parser3 " + NAME3);
 
