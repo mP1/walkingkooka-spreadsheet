@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.formula;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.text.cursor.parser.ParserException;
 
