@@ -103,17 +103,17 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
     final static char DOUBLE_QUOTE = '"';
 
     /**
-     * Factory that creates a {@link TextSpreadsheetParserToken} with three text literals, the surrounding double quotes,
+     * Factory that creates a {@link TextSpreadsheetFormulaParserToken} with three text literals, the surrounding double quotes,
      * and the content.
      */
-    private static SpreadsheetParserToken text(final StringBuilder content, final TextCursorSavePoint save) {
+    private static SpreadsheetFormulaParserToken text(final StringBuilder content, final TextCursorSavePoint save) {
         final String text = save.textBetween().toString();
         final String contentString = content.toString();
 
-        return SpreadsheetParserToken.text(
+        return SpreadsheetFormulaParserToken.text(
                 Lists.of(
                         DOUBLE_QUOTE_TOKEN,
-                        SpreadsheetParserToken.textLiteral(
+                        SpreadsheetFormulaParserToken.textLiteral(
                                 contentString, text.substring(1, text.length() - 1)
                         ),
                         DOUBLE_QUOTE_TOKEN
@@ -122,7 +122,7 @@ final class SpreadsheetDoubleQuotesParser implements Parser<SpreadsheetParserCon
         );
     }
 
-    final static DoubleQuoteSymbolSpreadsheetParserToken DOUBLE_QUOTE_TOKEN = SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"");
+    final static DoubleQuoteSymbolSpreadsheetFormulaParserToken DOUBLE_QUOTE_TOKEN = SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\"");
 
     @Override
     public String toString() {

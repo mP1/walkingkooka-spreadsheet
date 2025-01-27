@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.SpreadsheetStrings;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -34,7 +34,7 @@ import java.util.function.Function;
 final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonNumberParsePatternParser {
 
     static SpreadsheetNonNumberParsePatternParserString with(final Function<SpreadsheetParserContext, List<String>> values,
-                                                             final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                             final BiFunction<Integer, String, SpreadsheetFormulaParserToken> tokenFactory,
                                                              final String pattern) {
         return new SpreadsheetNonNumberParsePatternParserString(
                 values,
@@ -44,7 +44,7 @@ final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonN
     }
 
     private SpreadsheetNonNumberParsePatternParserString(final Function<SpreadsheetParserContext, List<String>> values,
-                                                         final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                         final BiFunction<Integer, String, SpreadsheetFormulaParserToken> tokenFactory,
                                                          final String pattern) {
         super();
         this.values = values;
@@ -53,10 +53,10 @@ final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonN
     }
 
     @Override
-    SpreadsheetParserToken parseNotEmpty0(final TextCursor cursor,
-                                          final SpreadsheetParserContext context,
-                                          final TextCursorSavePoint start) {
-        SpreadsheetParserToken token = null;
+    SpreadsheetFormulaParserToken parseNotEmpty0(final TextCursor cursor,
+                                                 final SpreadsheetParserContext context,
+                                                 final TextCursorSavePoint start) {
+        SpreadsheetFormulaParserToken token = null;
 
         final List<String> list = this.values.apply(context);
         int count = list.size();
@@ -133,8 +133,8 @@ final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonN
      */
     private final Function<SpreadsheetParserContext, List<String>> values;
 
-    private SpreadsheetParserToken token(final int choice,
-                                         final TextCursorSavePoint start) {
+    private SpreadsheetFormulaParserToken token(final int choice,
+                                                final TextCursorSavePoint start) {
         return this.tokenFactory.apply(
                 choice,
                 start.textBetween().toString()
@@ -142,10 +142,10 @@ final class SpreadsheetNonNumberParsePatternParserString extends SpreadsheetNonN
     }
 
     /**
-     * Factory that creates the {@link SpreadsheetParserToken}. This is typically a method-reference to a static
-     * {@link SpreadsheetParserToken} factory method.
+     * Factory that creates the {@link SpreadsheetFormulaParserToken}. This is typically a method-reference to a static
+     * {@link SpreadsheetFormulaParserToken} factory method.
      */
-    private final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory;
+    private final BiFunction<Integer, String, SpreadsheetFormulaParserToken> tokenFactory;
 
     // Object...........................................................................................................
 

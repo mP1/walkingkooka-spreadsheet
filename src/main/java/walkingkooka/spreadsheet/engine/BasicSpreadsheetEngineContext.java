@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -169,7 +169,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // parsing formula and executing.....................................................................................
 
     @Override
-    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         return SpreadsheetParsers.valueOrExpression(
                         this.metadata.spreadsheetParser(
                                 this, // SpreadsheetParserProvider
@@ -179,11 +179,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(formula, this.parserContext)
                 .get()
-                .cast(SpreadsheetParserToken.class);
+                .cast(SpreadsheetFormulaParserToken.class);
     }
 
     @Override
-    public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+    public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
         Objects.requireNonNull(token, "token");
 
         return token.toExpression(

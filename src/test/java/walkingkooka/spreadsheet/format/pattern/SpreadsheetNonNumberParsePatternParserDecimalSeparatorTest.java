@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 
@@ -38,7 +38,7 @@ public final class SpreadsheetNonNumberParsePatternParserDecimalSeparatorTest ex
     public void testParse() {
         this.parseAndCheck(
                 "d",
-                SpreadsheetParserToken.decimalSeparatorSymbol("d", "d"),
+                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("d", "d"),
                 "d"
         );
     }
@@ -48,7 +48,7 @@ public final class SpreadsheetNonNumberParsePatternParserDecimalSeparatorTest ex
         final String after = "123";
         this.parseAndCheck(
                 "d" + after,
-                SpreadsheetParserToken.decimalSeparatorSymbol("d", "d"),
+                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("d", "d"),
                 "d",
                 after
         );
@@ -64,7 +64,7 @@ public final class SpreadsheetNonNumberParsePatternParserDecimalSeparatorTest ex
                 this.createParser(),
                 context,
                 s,
-                SpreadsheetParserToken.decimalSeparatorSymbol(s, s),
+                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(s, s),
                 s
         );
     }

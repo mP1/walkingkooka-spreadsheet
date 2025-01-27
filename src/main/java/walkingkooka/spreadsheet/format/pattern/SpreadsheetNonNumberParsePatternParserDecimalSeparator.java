@@ -17,15 +17,15 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.formula.DecimalSeparatorSymbolSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.DecimalSeparatorSymbolSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
 
 /**
- * A {@link Parser} that matches the {@link SpreadsheetParserContext#decimalSeparator()} and returns a {@link DecimalSeparatorSymbolSpreadsheetParserToken}
+ * A {@link Parser} that matches the {@link SpreadsheetParserContext#decimalSeparator()} and returns a {@link DecimalSeparatorSymbolSpreadsheetFormulaParserToken}
  */
 final class SpreadsheetNonNumberParsePatternParserDecimalSeparator extends SpreadsheetNonNumberParsePatternParser {
 
@@ -39,17 +39,17 @@ final class SpreadsheetNonNumberParsePatternParserDecimalSeparator extends Sprea
     }
 
     @Override
-    DecimalSeparatorSymbolSpreadsheetParserToken parseNotEmpty0(final TextCursor cursor,
-                                                                final SpreadsheetParserContext context,
-                                                                final TextCursorSavePoint start) {
-        DecimalSeparatorSymbolSpreadsheetParserToken token = null;
+    DecimalSeparatorSymbolSpreadsheetFormulaParserToken parseNotEmpty0(final TextCursor cursor,
+                                                                       final SpreadsheetParserContext context,
+                                                                       final TextCursorSavePoint start) {
+        DecimalSeparatorSymbolSpreadsheetFormulaParserToken token = null;
 
         final char decimal = context.decimalSeparator();
         if (cursor.at() == decimal) {
             cursor.next();
 
             final String text = String.valueOf(decimal);
-            token = SpreadsheetParserToken.decimalSeparatorSymbol(text, text);
+            token = SpreadsheetFormulaParserToken.decimalSeparatorSymbol(text, text);
         }
 
         return token;

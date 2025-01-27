@@ -24,10 +24,10 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -367,7 +367,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                     parseSelection(
                             CELL_PARSER,
                             cursor,
-                            CellReferenceSpreadsheetParserToken.class
+                            CellReferenceSpreadsheetFormulaParserToken.class
                     ).reference()
             );
         } else {
@@ -378,7 +378,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                         parseSelection(
                                 COLUMN_PARSER,
                                 cursor,
-                                ColumnReferenceSpreadsheetParserToken.class
+                                ColumnReferenceSpreadsheetFormulaParserToken.class
                         ).reference()
                 );
             } else {
@@ -389,7 +389,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                             parseSelection(
                                     ROW_PARSER,
                                     cursor,
-                                    RowReferenceSpreadsheetParserToken.class
+                                    RowReferenceSpreadsheetFormulaParserToken.class
                             ).reference()
                     );
                 } else {
@@ -413,9 +413,9 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
             .orReport(ParserReporters.invalidCharacterException())
             .cast();
 
-    private static <T extends SpreadsheetParserToken> T parseSelection(final Parser<ParserContext> parser,
-                                                                       final TextCursor cursor,
-                                                                       final Class<T> parserToken) {
+    private static <T extends SpreadsheetFormulaParserToken> T parseSelection(final Parser<ParserContext> parser,
+                                                                              final TextCursor cursor,
+                                                                              final Class<T> parserToken) {
         return parser.parse(
                         cursor,
                         PARSER_CONTEXT

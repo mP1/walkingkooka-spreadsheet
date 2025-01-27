@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -61,16 +61,16 @@ public interface SpreadsheetEngineContext extends Context,
     // parseFormula.....................................................................................................
 
     /**
-     * Parses the formula into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
+     * Parses the formula into an {@link SpreadsheetFormulaParserToken} which can then be transformed into an {@link Expression}.
      */
-    SpreadsheetParserToken parseFormula(final TextCursor formula);
+    SpreadsheetFormulaParserToken parseFormula(final TextCursor formula);
 
     // toExpresssion....................................................................................................
 
     /**
-     * Helps by converting the given {@link SpreadsheetParserToken} into its {@link Expression} equivalent.
+     * Helps by converting the given {@link SpreadsheetFormulaParserToken} into its {@link Expression} equivalent.
      */
-    Optional<Expression> toExpression(final SpreadsheetParserToken token);
+    Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token);
 
     /**
      * Returns a {@link SpreadsheetEngineContext} which will use the {@link ExpressionFunctionAliasSet} when fetching functions.

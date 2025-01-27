@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -550,8 +550,8 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     // HasParserToken...................................................................................................
 
     @Override
-    public RowReferenceSpreadsheetParserToken toParserToken() {
-        return SpreadsheetParserToken.rowReference(
+    public RowReferenceSpreadsheetFormulaParserToken toParserToken() {
+        return SpreadsheetFormulaParserToken.rowReference(
                 this,
                 this.text()
         );

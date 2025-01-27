@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentCurrencyTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentCurrency> {
 
@@ -96,7 +96,7 @@ public final class SpreadsheetNumberParsePatternComponentCurrencyTest extends Sp
                 text,
                 textAfter,
                 NEXT_CALLED,
-                SpreadsheetParserToken.currencySymbol(text, text)
+                SpreadsheetFormulaParserToken.currencySymbol(text, text)
         );
     }
 

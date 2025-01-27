@@ -49,7 +49,7 @@ import walkingkooka.net.http.HttpTransport;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequests;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -83,9 +83,9 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
 
     @Test
     public void testWith() {
-        final SpreadsheetParserToken parserToken = SpreadsheetParserToken.text(
+        final SpreadsheetFormulaParserToken parserToken = SpreadsheetFormulaParserToken.text(
                 Lists.of(
-                        SpreadsheetParserToken.textLiteral("Hello", "\"Hello\"")
+                        SpreadsheetFormulaParserToken.textLiteral("Hello", "\"Hello\"")
                 ),
                 "\"Hello\""
         );
@@ -120,7 +120,7 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     @Test
     public void testSetParserTokenDifferent() {
         final SpreadsheetCellQuery query = new SpreadsheetCellQuery(textLiteral("Hello"));
-        final SpreadsheetParserToken different = textLiteral("Different");
+        final SpreadsheetFormulaParserToken different = textLiteral("Different");
 
         this.checkEquals(
                 new SpreadsheetCellQuery(different),
@@ -182,10 +182,10 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         this.parseStringAndCheck(
                 text,
                 new SpreadsheetCellQuery(
-                        SpreadsheetParserToken.addition(
+                        SpreadsheetFormulaParserToken.addition(
                                 Lists.of(
                                         numberLiteral("11"),
-                                        SpreadsheetParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
                                         numberLiteral("22")
                                 ),
                                 text
@@ -201,17 +201,17 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         this.parseStringAndCheck(
                 text,
                 new SpreadsheetCellQuery(
-                        SpreadsheetParserToken.namedFunction(
+                        SpreadsheetFormulaParserToken.namedFunction(
                                 Lists.of(
-                                        SpreadsheetParserToken.functionName(
+                                        SpreadsheetFormulaParserToken.functionName(
                                                 SpreadsheetFunctionName.with("abc"),
                                                 "abc"
                                         ),
-                                        SpreadsheetParserToken.functionParameters(
+                                        SpreadsheetFormulaParserToken.functionParameters(
                                                 Lists.of(
-                                                        SpreadsheetParserToken.parenthesisOpenSymbol("(", "("),
+                                                        SpreadsheetFormulaParserToken.parenthesisOpenSymbol("(", "("),
                                                         numberLiteral("111"),
-                                                        SpreadsheetParserToken.parenthesisCloseSymbol(")", ")")
+                                                        SpreadsheetFormulaParserToken.parenthesisCloseSymbol(")", ")")
                                                 ),
                                                 "(111)"
                                         )
@@ -376,10 +376,10 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
 
     // helpers..........................................................................................................
 
-    private static SpreadsheetParserToken numberLiteral(final String number) {
-        return SpreadsheetParserToken.number(
+    private static SpreadsheetFormulaParserToken numberLiteral(final String number) {
+        return SpreadsheetFormulaParserToken.number(
                 Lists.of(
-                        SpreadsheetParserToken.digits(
+                        SpreadsheetFormulaParserToken.digits(
                                 number,
                                 number
                         )
@@ -388,17 +388,17 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
         );
     }
 
-    private static SpreadsheetParserToken textLiteral(final String text) {
+    private static SpreadsheetFormulaParserToken textLiteral(final String text) {
         final String quoted = '"' + text + '"'; // not perfect but good enuff for here
 
-        return SpreadsheetParserToken.text(
+        return SpreadsheetFormulaParserToken.text(
                 Lists.of(
-                        SpreadsheetParserToken.doubleQuoteSymbol("\"", "\""),
-                        SpreadsheetParserToken.textLiteral(
+                        SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\""),
+                        SpreadsheetFormulaParserToken.textLiteral(
                                 text,
                                 text
                         ),
-                        SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"")
+                        SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\"")
                 ),
                 quoted
         );

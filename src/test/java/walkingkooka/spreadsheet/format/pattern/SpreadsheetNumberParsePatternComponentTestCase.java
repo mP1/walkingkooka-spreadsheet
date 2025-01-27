@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -118,7 +118,7 @@ public abstract class SpreadsheetNumberParsePatternComponentTestCase<C extends S
     final void parseAndCheck2(final String text,
                               final String textAfter,
                               final boolean next,
-                              final SpreadsheetParserToken... tokens) {
+                              final SpreadsheetFormulaParserToken... tokens) {
         this.parseAndCheck2(
                 text,
                 textAfter,
@@ -132,7 +132,7 @@ public abstract class SpreadsheetNumberParsePatternComponentTestCase<C extends S
                               final String textAfter,
                               final SpreadsheetNumberParsePatternRequest request,
                               final boolean next,
-                              final SpreadsheetParserToken... tokens) {
+                              final SpreadsheetFormulaParserToken... tokens) {
         this.parseAndCheck2(
                 this.createComponent(),
                 text,
@@ -147,7 +147,7 @@ public abstract class SpreadsheetNumberParsePatternComponentTestCase<C extends S
                               final String textAfter,
                               final SpreadsheetNumberParsePatternComponentDigitMode mode,
                               final boolean next,
-                              final SpreadsheetParserToken... tokens) {
+                              final SpreadsheetFormulaParserToken... tokens) {
         final SpreadsheetNumberParsePatternRequest request = this.createRequest(next);
         this.parseAndCheck2(
                 this.createComponent(),
@@ -169,7 +169,7 @@ public abstract class SpreadsheetNumberParsePatternComponentTestCase<C extends S
                               final String textAfter,
                               final SpreadsheetNumberParsePatternRequest request,
                               final boolean hasNext,
-                              final SpreadsheetParserToken... tokens) {
+                              final SpreadsheetFormulaParserToken... tokens) {
         final TextCursor cursor = TextCursors.charSequence(text + textAfter);
 
         this.checkEquals(

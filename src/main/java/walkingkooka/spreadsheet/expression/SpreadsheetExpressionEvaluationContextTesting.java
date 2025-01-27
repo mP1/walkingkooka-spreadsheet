@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
@@ -43,7 +43,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     }
 
     default void parseFormulaAndCheck(final String formula,
-                                      final SpreadsheetParserToken expected) {
+                                      final SpreadsheetFormulaParserToken expected) {
         this.parseFormulaAndCheck(
                 this.createContext(),
                 formula,
@@ -53,7 +53,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
 
     default void parseFormulaAndCheck(final SpreadsheetExpressionEvaluationContext context,
                                       final String formula,
-                                      final SpreadsheetParserToken expected) {
+                                      final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
                 expected,
                 context.parseFormula(

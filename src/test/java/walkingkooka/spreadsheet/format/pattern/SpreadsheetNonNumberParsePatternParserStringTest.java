@@ -22,7 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.CaseSensitivity;
@@ -153,7 +153,7 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
 
         this.parseAndCheck(
                 text + after,
-                SpreadsheetParserToken.monthName(
+                SpreadsheetFormulaParserToken.monthName(
                         index,
                         text
                 ),
@@ -171,7 +171,7 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     public SpreadsheetNonNumberParsePatternParserString createParser() {
         return SpreadsheetNonNumberParsePatternParserString.stringChoices(
                 DateTimeContext::monthNames,
-                SpreadsheetParserToken::monthName,
+                SpreadsheetFormulaParserToken::monthName,
                 PATTERN
         );
     }
@@ -203,7 +203,7 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
         this.checkNotEquals(
                 SpreadsheetNonNumberParsePatternParserString.with(
                         (c) -> Lists.of("AM/PM"),
-                        (i, s) -> SpreadsheetParserToken.amPm(i, s),
+                        (i, s) -> SpreadsheetFormulaParserToken.amPm(i, s),
                         "AM/PM"
                 )
         );
@@ -213,7 +213,7 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     public SpreadsheetNonNumberParsePatternParserString createObject() {
         return SpreadsheetNonNumberParsePatternParserString.with(
                 (c) -> Lists.of("am/pm"),
-                (i, s) -> SpreadsheetParserToken.amPm(i, s),
+                (i, s) -> SpreadsheetFormulaParserToken.amPm(i, s),
                 "am/pm"
         );
     }

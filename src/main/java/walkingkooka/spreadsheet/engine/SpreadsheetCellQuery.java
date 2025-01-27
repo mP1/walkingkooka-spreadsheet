@@ -41,7 +41,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.UrlQueryString;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -63,7 +63,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Holds a query as a {@link SpreadsheetParserToken}.
+ * Holds a query as a {@link SpreadsheetFormulaParserToken}.
  */
 public final class SpreadsheetCellQuery implements HasUrlFragment,
         HasText,
@@ -91,7 +91,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
                 PARSER.parseText(
                         text,
                         PARSER_CONTEXT
-                ).cast(SpreadsheetParserToken.class)
+                ).cast(SpreadsheetFormulaParserToken.class)
         );
     }
 
@@ -110,30 +110,30 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     );
 
     /**
-     * Factory that creates a new {@link SpreadsheetCellQuery} with the given {@link SpreadsheetParserToken}.
+     * Factory that creates a new {@link SpreadsheetCellQuery} with the given {@link SpreadsheetFormulaParserToken}.
      */
-    public static SpreadsheetCellQuery with(final SpreadsheetParserToken parserToken) {
+    public static SpreadsheetCellQuery with(final SpreadsheetFormulaParserToken parserToken) {
         return new SpreadsheetCellQuery(
                 Objects.requireNonNull(parserToken, "parserToken")
         );
     }
 
     // VisibleForTesting
-    SpreadsheetCellQuery(final SpreadsheetParserToken parserToken) {
+    SpreadsheetCellQuery(final SpreadsheetFormulaParserToken parserToken) {
         this.parserToken = parserToken;
     }
 
-    public SpreadsheetParserToken parserToken() {
+    public SpreadsheetFormulaParserToken parserToken() {
         return this.parserToken;
     }
 
-    public SpreadsheetCellQuery setParserToken(final SpreadsheetParserToken parserToken) {
+    public SpreadsheetCellQuery setParserToken(final SpreadsheetFormulaParserToken parserToken) {
         return this.parserToken.equals(parserToken) ?
                 this :
                 with(parserToken);
     }
 
-    private final SpreadsheetParserToken parserToken;
+    private final SpreadsheetFormulaParserToken parserToken;
 
     // HasUrlFragment...................................................................................................
 

@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.spreadsheet.formula.MillisecondSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.MillisecondSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 
@@ -132,7 +132,7 @@ public final class SpreadsheetNonNumberParsePatternParserMillisecondsTest extend
 
     private void parseAndCheck2(final String text,
                                 final int value) {
-        final MillisecondSpreadsheetParserToken token = SpreadsheetParserToken.millisecond(value, text);
+        final MillisecondSpreadsheetFormulaParserToken token = SpreadsheetFormulaParserToken.millisecond(value, text);
 
         this.parseAndCheck(
                 text,

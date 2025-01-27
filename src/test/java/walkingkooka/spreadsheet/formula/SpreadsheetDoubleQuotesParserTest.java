@@ -99,10 +99,10 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
 
         this.parseAndCheck(
                 withQuotes + after,
-                SpreadsheetParserToken.text(
+                SpreadsheetFormulaParserToken.text(
                         Lists.of(
                                 SpreadsheetDoubleQuotesParser.DOUBLE_QUOTE_TOKEN,
-                                SpreadsheetParserToken.textLiteral(
+                                SpreadsheetFormulaParserToken.textLiteral(
                                         content.replace(quotes + quotes, quotes),
                                         content
                                 ),

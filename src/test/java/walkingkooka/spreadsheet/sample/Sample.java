@@ -44,7 +44,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -215,7 +215,7 @@ public final class Sample {
             }
 
             @Override
-            public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+            public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
                 return Cast.to(
                         SpreadsheetParsers.expression()
                                 .orFailIfCursorNotEmpty(ParserReporters.basic())
@@ -272,7 +272,7 @@ public final class Sample {
             }
 
             @Override
-            public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+            public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
                 Objects.requireNonNull(token, "token");
 
                 return token.toExpression(

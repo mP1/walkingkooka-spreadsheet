@@ -27,7 +27,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -2874,7 +2874,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         this.toParserTokenAndCheck(
                 SpreadsheetSelection.parseCellRange(text),
-                SpreadsheetParserToken.cellRange(
+                SpreadsheetFormulaParserToken.cellRange(
                         Lists.of(
                                 SpreadsheetSelection.A1.toParserToken(),
                                 SpreadsheetSelection.parseCell("B2").toParserToken()

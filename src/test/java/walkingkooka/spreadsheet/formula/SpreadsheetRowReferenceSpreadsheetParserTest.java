@@ -128,10 +128,10 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
         );
     }
 
-    private RowReferenceSpreadsheetParserToken token(final SpreadsheetReferenceKind referenceKind,
-                                                     final int row,
-                                                     final String text) {
-        return SpreadsheetParserToken.rowReference(
+    private RowReferenceSpreadsheetFormulaParserToken token(final SpreadsheetReferenceKind referenceKind,
+                                                            final int row,
+                                                            final String text) {
+        return SpreadsheetFormulaParserToken.rowReference(
                 referenceKind.row(row),
                 text
         );

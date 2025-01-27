@@ -26,7 +26,7 @@ import walkingkooka.text.cursor.parser.RequiredParser;
 import java.util.Optional;
 
 /**
- * This {@link Parser} attempts to match the {@link SpreadsheetParserContext#valueSeparator()} and then creates a {@link ValueSeparatorSymbolSpreadsheetParserToken}.
+ * This {@link Parser} attempts to match the {@link SpreadsheetParserContext#valueSeparator()} and then creates a {@link ValueSeparatorSymbolSpreadsheetFormulaParserToken}.
  */
 final class SpreadsheetParsersValueSeparatorParser implements Parser<SpreadsheetParserContext>,
         RequiredParser<SpreadsheetParserContext> {
@@ -44,13 +44,13 @@ final class SpreadsheetParsersValueSeparatorParser implements Parser<Spreadsheet
     public Optional<ParserToken> parse(final TextCursor cursor,
                                        final SpreadsheetParserContext context) {
 
-        ValueSeparatorSymbolSpreadsheetParserToken token = null;
+        ValueSeparatorSymbolSpreadsheetFormulaParserToken token = null;
         if (cursor.isNotEmpty()) {
             final char valueSeparator = context.valueSeparator();
             final char c = cursor.at();
             if (c == valueSeparator) {
                 final String text = Character.toString(valueSeparator);
-                token = SpreadsheetParserToken.valueSeparatorSymbol(text, text);
+                token = SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text);
 
                 cursor.next();
             }

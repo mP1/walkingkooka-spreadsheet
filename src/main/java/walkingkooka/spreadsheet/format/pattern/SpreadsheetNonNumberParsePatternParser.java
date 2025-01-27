@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -54,7 +54,7 @@ abstract class SpreadsheetNonNumberParsePatternParser implements Parser<Spreadsh
      * @see SpreadsheetNonNumberParsePatternParserString
      */
     static SpreadsheetNonNumberParsePatternParserString stringChoices(final Function<SpreadsheetParserContext, List<String>> values,
-                                                                      final BiFunction<Integer, String, SpreadsheetParserToken> tokenFactory,
+                                                                      final BiFunction<Integer, String, SpreadsheetFormulaParserToken> tokenFactory,
                                                                       final String pattern) {
         return SpreadsheetNonNumberParsePatternParserString.with(
                 values,
@@ -79,7 +79,7 @@ abstract class SpreadsheetNonNumberParsePatternParser implements Parser<Spreadsh
                                                 final SpreadsheetParserContext context) {
         final TextCursorSavePoint save = cursor.save();
 
-        final SpreadsheetParserToken token = this.parseNotEmpty0(cursor, context, save);
+        final SpreadsheetFormulaParserToken token = this.parseNotEmpty0(cursor, context, save);
         if (null == token) {
             save.restore();
         }
@@ -90,9 +90,9 @@ abstract class SpreadsheetNonNumberParsePatternParser implements Parser<Spreadsh
     /**
      * This method is only called when the {@link TextCursor} is not empty, with at least one character.
      */
-    abstract SpreadsheetParserToken parseNotEmpty0(final TextCursor cursor,
-                                                   final SpreadsheetParserContext context,
-                                                   final TextCursorSavePoint start);
+    abstract SpreadsheetFormulaParserToken parseNotEmpty0(final TextCursor cursor,
+                                                          final SpreadsheetParserContext context,
+                                                          final TextCursorSavePoint start);
 
     @Override
     public abstract String toString();

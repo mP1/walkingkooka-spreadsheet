@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentTextLiteralTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentTextLiteral> {
 
@@ -45,7 +45,7 @@ public final class SpreadsheetNumberParsePatternComponentTextLiteralTest extends
                 text,
                 TOKEN,
                 NEXT_CALLED,
-                SpreadsheetParserToken.textLiteral(
+                SpreadsheetFormulaParserToken.textLiteral(
                         text,
                         text
                 )

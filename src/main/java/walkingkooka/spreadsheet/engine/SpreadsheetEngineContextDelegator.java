@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -50,13 +50,13 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
         SpreadsheetProviderDelegator {
 
     @Override
-    default SpreadsheetParserToken parseFormula(final TextCursor formula) {
+    default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         return this.spreadsheetEngineContext()
                 .parseFormula(formula);
     }
 
     @Override
-    default Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+    default Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
         return this.spreadsheetEngineContext()
                 .toExpression(token);
     }

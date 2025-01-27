@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.formula.NumberSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.NumberSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
@@ -56,7 +56,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
     @Override
     public Optional<ParserToken> parse(final TextCursor cursor,
                                        final SpreadsheetParserContext context) {
-        NumberSpreadsheetParserToken token = null;
+        NumberSpreadsheetFormulaParserToken token = null;
 
         final TextCursorSavePoint save = cursor.save();
 
@@ -69,7 +69,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
             if (request.nextComponent(cursor)) {
                 final List<ParserToken> tokens = request.tokens;
                 if (!tokens.isEmpty()) {
-                    token = NumberSpreadsheetParserToken.number(
+                    token = NumberSpreadsheetFormulaParserToken.number(
                             tokens,
                             save.textBetween().toString()
                     );

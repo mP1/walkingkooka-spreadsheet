@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -133,12 +133,12 @@ final class BasicSpreadsheetEngineFillCells {
         final SpreadsheetCell save2 = engine.parseFormulaIfNecessary(
                 updatedReference,
                 t -> t.replaceIf(
-                        p -> p instanceof CellReferenceSpreadsheetParserToken, // predicate
-                        m -> m.cast(CellReferenceSpreadsheetParserToken.class) // mapper
+                        p -> p instanceof CellReferenceSpreadsheetFormulaParserToken, // predicate
+                        m -> m.cast(CellReferenceSpreadsheetFormulaParserToken.class) // mapper
                                 .cell()
                                 .addIfRelative(xOffset, yOffset)
                                 .toParserToken()
-                ).cast(SpreadsheetParserToken.class),
+                ).cast(SpreadsheetFormulaParserToken.class),
 
                 context
         );

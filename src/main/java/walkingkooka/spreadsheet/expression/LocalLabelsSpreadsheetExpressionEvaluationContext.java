@@ -29,7 +29,7 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -118,7 +118,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     @Override
-    public SpreadsheetParserToken parseFormula(final TextCursor cursor) {
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor cursor) {
         return this.context.parseFormula(cursor);
     }
 

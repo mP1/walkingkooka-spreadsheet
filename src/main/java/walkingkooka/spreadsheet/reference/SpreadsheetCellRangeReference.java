@@ -25,8 +25,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.formula.CellRangeSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.CellRangeSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -900,8 +900,8 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     // HasParserToken...................................................................................................
 
     @Override
-    public CellRangeSpreadsheetParserToken toParserToken() {
-        return SpreadsheetParserToken.cellRange(
+    public CellRangeSpreadsheetFormulaParserToken toParserToken() {
+        return SpreadsheetFormulaParserToken.cellRange(
                 Lists.of(
                         this.begin()
                                 .toParserToken(),

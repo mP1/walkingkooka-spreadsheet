@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -143,7 +143,7 @@ abstract class SpreadsheetNumberParsePatternComponent {
     final boolean parseToken(final TextCursor cursor,
                              final String token,
                              final CaseSensitivity caseSensitivity,
-                             final BiFunction<String, String, SpreadsheetParserToken> factory,
+                             final BiFunction<String, String, SpreadsheetFormulaParserToken> factory,
                              final SpreadsheetNumberParsePatternComponentDigitMode mode,
                              final SpreadsheetNumberParsePatternRequest request) {
         final int length = token.length();

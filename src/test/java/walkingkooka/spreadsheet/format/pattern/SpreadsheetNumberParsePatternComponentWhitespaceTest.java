@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentWhitespace> {
 
@@ -42,7 +42,7 @@ public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends 
                 text,
                 "A",
                 NEXT_CALLED,
-                SpreadsheetParserToken.whitespace(
+                SpreadsheetFormulaParserToken.whitespace(
                         text,
                         text
                 )
@@ -59,7 +59,7 @@ public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends 
                 "A", // textAfter
                 this.createRequest(true),
                 NEXT_CALLED,
-                SpreadsheetParserToken.whitespace(
+                SpreadsheetFormulaParserToken.whitespace(
                         text,
                         text
                 )
@@ -74,7 +74,7 @@ public final class SpreadsheetNumberParsePatternComponentWhitespaceTest extends 
                 text,
                 "A",
                 NEXT_CALLED,
-                SpreadsheetParserToken.whitespace(
+                SpreadsheetFormulaParserToken.whitespace(
                         text,
                         text
                 )

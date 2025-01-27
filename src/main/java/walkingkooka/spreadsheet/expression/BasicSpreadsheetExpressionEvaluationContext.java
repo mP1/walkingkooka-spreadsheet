@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -137,7 +137,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private final SpreadsheetCellStore cellStore;
 
     @Override
-    public SpreadsheetParserToken parseFormula(final TextCursor expression) {
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
         final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
@@ -147,7 +147,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(expression, parserContext)
                 .get()
-                .cast(SpreadsheetParserToken.class);
+                .cast(SpreadsheetFormulaParserToken.class);
     }
 
     @Override

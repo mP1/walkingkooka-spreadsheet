@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
@@ -181,8 +181,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY
                 .setText(text)
                 .setToken(
-                        Optional.of(SpreadsheetParserToken.number(
-                                Lists.of(SpreadsheetParserToken.digits(text, text)),
+                        Optional.of(SpreadsheetFormulaParserToken.number(
+                                Lists.of(SpreadsheetFormulaParserToken.digits(text, text)),
                                 text
                         ))
                 )
@@ -223,8 +223,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetCell with = requires.setFormula(
                 formula.setToken(
                                 Optional.of(
-                                        SpreadsheetParserToken.number(
-                                                Lists.of(SpreadsheetParserToken.digits(text, text)),
+                                        SpreadsheetFormulaParserToken.number(
+                                                Lists.of(SpreadsheetFormulaParserToken.digits(text, text)),
                                                 text
                                         )
                                 )
@@ -279,13 +279,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         final SpreadsheetCell with = requires.setFormula(
                 formula.setToken(
                         Optional.of(
-                                SpreadsheetParserToken.date(
+                                SpreadsheetFormulaParserToken.date(
                                         Lists.of(
-                                                SpreadsheetParserToken.dayNumber(99, "99"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.year(0, "00")
+                                                SpreadsheetFormulaParserToken.dayNumber(99, "99"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.year(0, "00")
                                         ),
                                         text
                                 )
@@ -342,15 +342,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .setText(text)
                 .setToken(
                         Optional.of(
-                                SpreadsheetParserToken.date(
+                                SpreadsheetFormulaParserToken.date(
                                         Lists.of(
-                                                SpreadsheetParserToken.dayName(2, "Tuesday"),
-                                                SpreadsheetParserToken.whitespace(" ", " "),
-                                                SpreadsheetParserToken.dayNumber(9, "9"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.monthNumber(2, "2"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.year(2021, "2021")
+                                                SpreadsheetFormulaParserToken.dayName(2, "Tuesday"),
+                                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.monthNumber(2, "2"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.year(2021, "2021")
                                         ),
                                         text
                                 )
@@ -378,15 +378,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         formula.setText(text2)
                                 .setToken(
                                         Optional.of(
-                                                SpreadsheetParserToken.date(
+                                                SpreadsheetFormulaParserToken.date(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.dayName(2, "martes"),
-                                                                SpreadsheetParserToken.whitespace(" ", " "),
-                                                                SpreadsheetParserToken.dayNumber(9, "9"),
-                                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetParserToken.monthNumber(2, "2"),
-                                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetParserToken.year(2021, "2021")
+                                                                SpreadsheetFormulaParserToken.dayName(2, "martes"),
+                                                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetFormulaParserToken.monthNumber(2, "2"),
+                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetFormulaParserToken.year(2021, "2021")
                                                         ),
                                                         text2
                                                 )
@@ -417,15 +417,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .setText(text)
                 .setToken(
                         Optional.of(
-                                SpreadsheetParserToken.date(
+                                SpreadsheetFormulaParserToken.date(
                                         Lists.of(
-                                                SpreadsheetParserToken.dayNameAbbreviation(2, "Tuesday"),
-                                                SpreadsheetParserToken.whitespace(" ", " "),
-                                                SpreadsheetParserToken.dayNumber(9, "9"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.monthNumber(2, "2"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.year(2021, "2021")
+                                                SpreadsheetFormulaParserToken.dayNameAbbreviation(2, "Tuesday"),
+                                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.monthNumber(2, "2"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.year(2021, "2021")
                                         ),
                                         text
                                 )
@@ -453,15 +453,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         formula.setText(text2)
                                 .setToken(
                                         Optional.of(
-                                                SpreadsheetParserToken.date(
+                                                SpreadsheetFormulaParserToken.date(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.dayNameAbbreviation(2, "mar."),
-                                                                SpreadsheetParserToken.whitespace(" ", " "),
-                                                                SpreadsheetParserToken.dayNumber(9, "9"),
-                                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetParserToken.monthNumber(2, "2"),
-                                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetParserToken.year(2021, "2021")
+                                                                SpreadsheetFormulaParserToken.dayNameAbbreviation(2, "mar."),
+                                                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetFormulaParserToken.monthNumber(2, "2"),
+                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetFormulaParserToken.year(2021, "2021")
                                                         ),
                                                         text2
                                                 )
@@ -487,13 +487,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .setText(text)
                 .setToken(
                         Optional.of(
-                                SpreadsheetParserToken.date(
+                                SpreadsheetFormulaParserToken.date(
                                         Lists.of(
-                                                SpreadsheetParserToken.dayNumber(9, "9"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.monthName(2, "February"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.year(2021, "2021")
+                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.monthName(2, "February"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.year(2021, "2021")
                                         ),
                                         text
                                 )
@@ -521,13 +521,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         formula.setText(text2)
                                 .setToken(
                                         Optional.of(
-                                                SpreadsheetParserToken.date(
+                                                SpreadsheetFormulaParserToken.date(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.dayNumber(9, "9"),
-                                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetParserToken.monthName(2, "marzo"),
-                                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetParserToken.year(2021, "2021")
+                                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetFormulaParserToken.monthName(2, "marzo"),
+                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetFormulaParserToken.year(2021, "2021")
                                                         ),
                                                         text2
                                                 )
@@ -553,13 +553,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .setText(text)
                 .setToken(
                         Optional.of(
-                                SpreadsheetParserToken.date(
+                                SpreadsheetFormulaParserToken.date(
                                         Lists.of(
-                                                SpreadsheetParserToken.dayNumber(9, "9"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.monthNameAbbreviation(2, "Feb"),
-                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                SpreadsheetParserToken.year(2021, "2021")
+                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.monthNameAbbreviation(2, "Feb"),
+                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                SpreadsheetFormulaParserToken.year(2021, "2021")
                                         ),
                                         text
                                 )
@@ -587,13 +587,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         formula.setText(text2)
                                 .setToken(
                                         Optional.of(
-                                                SpreadsheetParserToken.date(
+                                                SpreadsheetFormulaParserToken.date(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.dayNumber(9, "9"),
-                                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetParserToken.monthNameAbbreviation(2, "mar."),
-                                                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                                                SpreadsheetParserToken.year(2021, "2021")
+                                                                SpreadsheetFormulaParserToken.dayNumber(9, "9"),
+                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetFormulaParserToken.monthNameAbbreviation(2, "mar."),
+                                                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                                                SpreadsheetFormulaParserToken.year(2021, "2021")
                                                         ),
                                                         text2
                                                 )
@@ -702,14 +702,14 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
     }
 
-    private SpreadsheetParserToken expressionNumberWithPercentParserToken(final char percentSymbol) {
-        return SpreadsheetParserToken.expression(
+    private SpreadsheetFormulaParserToken expressionNumberWithPercentParserToken(final char percentSymbol) {
+        return SpreadsheetFormulaParserToken.expression(
                 Lists.of(
-                        SpreadsheetParserToken.equalsSymbol("=", "="),
-                        SpreadsheetParserToken.number(
+                        SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                        SpreadsheetFormulaParserToken.number(
                                 Lists.of(
-                                        SpreadsheetParserToken.digits("150", "150"),
-                                        SpreadsheetParserToken.percentSymbol("" + percentSymbol, "" + percentSymbol)
+                                        SpreadsheetFormulaParserToken.digits("150", "150"),
+                                        SpreadsheetFormulaParserToken.percentSymbol("" + percentSymbol, "" + percentSymbol)
                                 ),
                                 "150" + percentSymbol
                         )
@@ -774,9 +774,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .setText(text)
                 .setToken(
                         Optional.of(
-                                SpreadsheetParserToken.expression(
+                                SpreadsheetFormulaParserToken.expression(
                                         Lists.of(
-                                                SpreadsheetParserToken.equalsSymbol("=", "="),
+                                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
                                                 this.numberParserToken(DECIMAL_SEPARATOR)
                                         ),
                                         text
@@ -810,9 +810,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         formula.setText(text2)
                                 .setToken(
                                         Optional.of(
-                                                SpreadsheetParserToken.expression(
+                                                SpreadsheetFormulaParserToken.expression(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.equalsSymbol("=", "="),
+                                                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
                                                                 this.numberParserToken(decimalSeparator2)
                                                         ),
                                                         text2
@@ -829,12 +829,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
         );
     }
 
-    private SpreadsheetParserToken numberParserToken(final char decimalSeparator) {
-        return SpreadsheetParserToken.number(
+    private SpreadsheetFormulaParserToken numberParserToken(final char decimalSeparator) {
+        return SpreadsheetFormulaParserToken.number(
                 Lists.of(
-                        SpreadsheetParserToken.digits("3", "3"),
-                        SpreadsheetParserToken.decimalSeparatorSymbol("" + decimalSeparator, "" + decimalSeparator),
-                        SpreadsheetParserToken.digits("5", "5")
+                        SpreadsheetFormulaParserToken.digits("3", "3"),
+                        SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + decimalSeparator, "" + decimalSeparator),
+                        SpreadsheetFormulaParserToken.digits("5", "5")
                 ),
                 "3" + decimalSeparator + "5"
         );
@@ -854,13 +854,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .setText(text)
                 .setToken(
                         Optional.of(
-                                SpreadsheetParserToken.time(
+                                SpreadsheetFormulaParserToken.time(
                                         Lists.of(
-                                                SpreadsheetParserToken.hour(9, "9"),
-                                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                                SpreadsheetParserToken.minute(59, "59"),
-                                                SpreadsheetParserToken.textLiteral(" ", " "),
-                                                SpreadsheetParserToken.amPm(12, "PM")
+                                                SpreadsheetFormulaParserToken.hour(9, "9"),
+                                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                                                SpreadsheetFormulaParserToken.minute(59, "59"),
+                                                SpreadsheetFormulaParserToken.textLiteral(" ", " "),
+                                                SpreadsheetFormulaParserToken.amPm(12, "PM")
                                         ),
                                         text
                                 )
@@ -888,13 +888,13 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                         formula.setText(text2)
                                 .setToken(
                                         Optional.of(
-                                                SpreadsheetParserToken.time(
+                                                SpreadsheetFormulaParserToken.time(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.hour(9, "9"),
-                                                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                                                SpreadsheetParserToken.minute(59, "59"),
-                                                                SpreadsheetParserToken.textLiteral(" ", " "),
-                                                                SpreadsheetParserToken.amPm(12, "p. m.")
+                                                                SpreadsheetFormulaParserToken.hour(9, "9"),
+                                                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                                                                SpreadsheetFormulaParserToken.minute(59, "59"),
+                                                                SpreadsheetFormulaParserToken.textLiteral(" ", " "),
+                                                                SpreadsheetFormulaParserToken.amPm(12, "p. m.")
                                                         ),
                                                         text2
                                                 )

@@ -39,11 +39,11 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
-import walkingkooka.spreadsheet.formula.DateSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.DateTimeSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.NumberSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.TimeSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.DateSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.DateTimeSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.NumberSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.TimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -293,7 +293,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.parsePatternAndCheck(
                 SpreadsheetPattern.dateParsePatternLocale(EN_AU),
                 text,
-                (t, c) -> t.cast(DateSpreadsheetParserToken.class).toLocalDate(c),
+                (t, c) -> t.cast(DateSpreadsheetFormulaParserToken.class).toLocalDate(c),
                 expected
         );
     }
@@ -401,7 +401,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.parsePatternAndCheck(
                 SpreadsheetPattern.dateTimeParsePatternLocale(EN_AU),
                 text,
-                (t, c) -> t.cast(DateTimeSpreadsheetParserToken.class).toLocalDateTime(c),
+                (t, c) -> t.cast(DateTimeSpreadsheetFormulaParserToken.class).toLocalDateTime(c),
                 expected
         );
     }
@@ -456,7 +456,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         this.parsePatternAndCheck(
                 SpreadsheetPattern.timeParsePatternLocale(EN_AU),
                 text,
-                (t, c) -> t.cast(TimeSpreadsheetParserToken.class).toLocalTime(),
+                (t, c) -> t.cast(TimeSpreadsheetFormulaParserToken.class).toLocalTime(),
                 expected
         );
     }
@@ -541,13 +541,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 dateParsePattern.parser(),
                 new FakeSpreadsheetParserContext(),
                 "1999/12/31",
-                SpreadsheetParserToken.date(
+                SpreadsheetFormulaParserToken.date(
                         Lists.of(
-                                SpreadsheetParserToken.year(1999, "1999"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.dayNumber(31, "31")
+                                SpreadsheetFormulaParserToken.year(1999, "1999"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.dayNumber(31, "31")
                         ),
                         "1999/12/31"
                 ),
@@ -704,13 +704,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser(),
                 new FakeSpreadsheetParserContext(),
                 "1999/12/31",
-                SpreadsheetParserToken.date(
+                SpreadsheetFormulaParserToken.date(
                         Lists.of(
-                                SpreadsheetParserToken.year(1999, "1999"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.dayNumber(31, "31")
+                                SpreadsheetFormulaParserToken.year(1999, "1999"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.dayNumber(31, "31")
                         ),
                         "1999/12/31"
                 ),
@@ -738,17 +738,17 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 dateTimeParsePattern.parser(),
                 new FakeSpreadsheetParserContext(),
                 "1999/12/31 12:58",
-                SpreadsheetParserToken.dateTime(
+                SpreadsheetFormulaParserToken.dateTime(
                         Lists.of(
-                                SpreadsheetParserToken.year(1999, "1999"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.dayNumber(31, "31"),
-                                SpreadsheetParserToken.whitespace(" ", " "),
-                                SpreadsheetParserToken.hour(12, "12"),
-                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                SpreadsheetParserToken.minute(58, "58")
+                                SpreadsheetFormulaParserToken.year(1999, "1999"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.dayNumber(31, "31"),
+                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                SpreadsheetFormulaParserToken.hour(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                                SpreadsheetFormulaParserToken.minute(58, "58")
                         ),
                         "1999/12/31 12:58"
                 ),
@@ -913,17 +913,17 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm").parser(),
                 new FakeSpreadsheetParserContext(),
                 "1999/12/31 12:58",
-                SpreadsheetParserToken.dateTime(
+                SpreadsheetFormulaParserToken.dateTime(
                         Lists.of(
-                                SpreadsheetParserToken.year(1999, "1999"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.dayNumber(31, "31"),
-                                SpreadsheetParserToken.whitespace(" ", " "),
-                                SpreadsheetParserToken.hour(12, "12"),
-                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                SpreadsheetParserToken.minute(58, "58")
+                                SpreadsheetFormulaParserToken.year(1999, "1999"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.dayNumber(31, "31"),
+                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                SpreadsheetFormulaParserToken.hour(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                                SpreadsheetFormulaParserToken.minute(58, "58")
                         ),
                         "1999/12/31 12:58"
                 ),
@@ -1391,11 +1391,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
                 },
                 "1.5",
-                SpreadsheetParserToken.number(
+                SpreadsheetFormulaParserToken.number(
                         Lists.of(
-                                SpreadsheetParserToken.digits("1", "1"),
-                                SpreadsheetParserToken.decimalSeparatorSymbol(".", "."),
-                                SpreadsheetParserToken.digits("5", "5")
+                                SpreadsheetFormulaParserToken.digits("1", "1"),
+                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(".", "."),
+                                SpreadsheetFormulaParserToken.digits("5", "5")
                         ),
                         "1.5"
                 ),
@@ -1434,12 +1434,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
                 },
                 "1.5*",
-                SpreadsheetParserToken.number(
+                SpreadsheetFormulaParserToken.number(
                         Lists.of(
-                                SpreadsheetParserToken.digits("1", "1"),
-                                SpreadsheetParserToken.decimalSeparatorSymbol(".", "."),
-                                SpreadsheetParserToken.digits("5", "5"),
-                                SpreadsheetParserToken.percentSymbol("*", "*")
+                                SpreadsheetFormulaParserToken.digits("1", "1"),
+                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(".", "."),
+                                SpreadsheetFormulaParserToken.digits("5", "5"),
+                                SpreadsheetFormulaParserToken.percentSymbol("*", "*")
                         ),
                         "1.5*"
                 ),
@@ -1527,7 +1527,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 .parser();
         final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
 
-        final NumberSpreadsheetParserToken token = parser.andEmptyTextCursor()
+        final NumberSpreadsheetFormulaParserToken token = parser.andEmptyTextCursor()
                 .parse(
                         TextCursors.charSequence(text),
                         SpreadsheetParserContexts.basic(
@@ -1539,7 +1539,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                                 ','
                         )
                 ).get()
-                .cast(NumberSpreadsheetParserToken.class);
+                .cast(NumberSpreadsheetFormulaParserToken.class);
 
         this.checkEquals(
                 kind.create(expected),
@@ -1844,13 +1844,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 timeParsePattern.parser(),
                 new FakeSpreadsheetParserContext(),
                 "12/58/59",
-                SpreadsheetParserToken.time(
+                SpreadsheetFormulaParserToken.time(
                         Lists.of(
-                                SpreadsheetParserToken.hour(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.minute(58, "58"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.seconds(59, "59")
+                                SpreadsheetFormulaParserToken.hour(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.minute(58, "58"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.seconds(59, "59")
                         ),
                         "12/58/59"
                 ),
@@ -2023,11 +2023,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser(),
                 new FakeSpreadsheetParserContext(),
                 "12:58",
-                SpreadsheetParserToken.time(
+                SpreadsheetFormulaParserToken.time(
                         Lists.of(
-                                SpreadsheetParserToken.hour(12, "12"),
-                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                SpreadsheetParserToken.minute(58, "58")
+                                SpreadsheetFormulaParserToken.hour(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                                SpreadsheetFormulaParserToken.minute(58, "58")
                         ),
                         "12:58"
                 ),

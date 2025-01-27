@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
@@ -96,7 +96,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
 
                 final String groupingText = Character.toString(c);
                 request.add(
-                        SpreadsheetParserToken.groupSeparatorSymbol(
+                        SpreadsheetFormulaParserToken.groupSeparatorSymbol(
                                 groupingText,
                                 groupingText
                         )
@@ -111,7 +111,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
 
                 final String whitespaceText = Character.toString(c);
                 request.add(
-                        SpreadsheetParserToken.whitespace(
+                        SpreadsheetFormulaParserToken.whitespace(
                                 whitespaceText,
                                 whitespaceText
                         )

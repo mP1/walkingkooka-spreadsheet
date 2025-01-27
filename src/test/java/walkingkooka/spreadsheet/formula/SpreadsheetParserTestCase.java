@@ -28,7 +28,7 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetParserContext>,
-        T extends SpreadsheetParserToken>
+        T extends SpreadsheetFormulaParserToken>
         implements ClassTesting2<P>,
         ParserTesting2<P, SpreadsheetParserContext>,
         TypeNameTesting<P> {

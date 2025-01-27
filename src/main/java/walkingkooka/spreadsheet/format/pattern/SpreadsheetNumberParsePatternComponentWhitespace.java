@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
@@ -68,7 +68,7 @@ final class SpreadsheetNumberParsePatternComponentWhitespace extends Spreadsheet
             final String whitespace = maybeWhitespace.get()
                     .text();
             request.add(
-                    SpreadsheetParserToken.whitespace(
+                    SpreadsheetFormulaParserToken.whitespace(
                             whitespace,
                             whitespace
                     )

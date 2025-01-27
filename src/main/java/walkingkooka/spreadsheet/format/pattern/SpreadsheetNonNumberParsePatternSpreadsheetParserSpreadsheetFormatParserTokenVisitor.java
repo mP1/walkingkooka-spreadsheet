@@ -43,21 +43,21 @@ import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.UnderscoreSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.WhitespaceSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.YearSpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.formula.AmPmSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.DateSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.DateTimeSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.DayNumberSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.HourSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.MinuteSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.MonthNameAbbreviationSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.MonthNameSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.MonthNumberSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SecondsSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.TextLiteralSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.TimeSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.WhitespaceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.YearSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.AmPmSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.DateSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.DateTimeSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.DayNumberSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.HourSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.MinuteSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.MonthNameAbbreviationSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.MonthNameSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.MonthNumberSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SecondsSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.TextLiteralSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.TimeSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.WhitespaceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.YearSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.CaseSensitivity;
@@ -137,11 +137,11 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         );
     }
 
-    private static DateSpreadsheetParserToken transformDate(final ParserToken token,
-                                                            final SpreadsheetParserContext context) {
+    private static DateSpreadsheetFormulaParserToken transformDate(final ParserToken token,
+                                                                   final SpreadsheetParserContext context) {
         return transform(
                 token,
-                SpreadsheetParserToken::date
+                SpreadsheetFormulaParserToken::date
         );
     }
 
@@ -153,11 +153,11 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         );
     }
 
-    private static DateTimeSpreadsheetParserToken transformDateTime(final ParserToken token,
-                                                                    final SpreadsheetParserContext context) {
+    private static DateTimeSpreadsheetFormulaParserToken transformDateTime(final ParserToken token,
+                                                                           final SpreadsheetParserContext context) {
         return transform(
                 token,
-                SpreadsheetParserToken::dateTime
+                SpreadsheetFormulaParserToken::dateTime
         );
     }
 
@@ -177,16 +177,16 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         );
     }
 
-    private static TimeSpreadsheetParserToken transformTime(final ParserToken token,
-                                                            final SpreadsheetParserContext context) {
+    private static TimeSpreadsheetFormulaParserToken transformTime(final ParserToken token,
+                                                                   final SpreadsheetParserContext context) {
         return transform(
                 token,
-                SpreadsheetParserToken::time
+                SpreadsheetFormulaParserToken::time
         );
     }
 
-    private static <T extends SpreadsheetParserToken> T transform(final ParserToken token,
-                                                                  final BiFunction<List<ParserToken>, String, T> factory) {
+    private static <T extends SpreadsheetFormulaParserToken> T transform(final ParserToken token,
+                                                                         final BiFunction<List<ParserToken>, String, T> factory) {
         return factory.apply(
                 token instanceof SequenceParserToken ?
                         token.cast(SequenceParserToken.class)
@@ -233,9 +233,9 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         return context.ampms();
     }
 
-    private static AmPmSpreadsheetParserToken spreadsheetAmPmParserToken(final int choice,
-                                                                         final String text) {
-        return SpreadsheetParserToken.amPm(choice * 12, text);
+    private static AmPmSpreadsheetFormulaParserToken spreadsheetAmPmParserToken(final int choice,
+                                                                                final String text) {
+        return SpreadsheetFormulaParserToken.amPm(choice * 12, text);
     }
 
     @Override
@@ -248,13 +248,13 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     }
 
     /**
-     * Transforms the {@link SpreadsheetParserToken} into a {@link DayNumberSpreadsheetParserToken}.
+     * Transforms the {@link SpreadsheetFormulaParserToken} into a {@link DayNumberSpreadsheetFormulaParserToken}.
      */
-    private static DayNumberSpreadsheetParserToken day(final ParserToken token,
-                                                       final SpreadsheetParserContext context) {
+    private static DayNumberSpreadsheetFormulaParserToken day(final ParserToken token,
+                                                              final SpreadsheetParserContext context) {
         return token(
                 token,
-                SpreadsheetParserToken::dayNumber
+                SpreadsheetFormulaParserToken::dayNumber
         );
     }
 
@@ -287,13 +287,13 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     }
 
     /**
-     * Transforms the {@link SpreadsheetParserToken} into a {@link HourSpreadsheetParserToken}.
+     * Transforms the {@link SpreadsheetFormulaParserToken} into a {@link HourSpreadsheetFormulaParserToken}.
      */
-    private static HourSpreadsheetParserToken hour(final ParserToken token,
-                                                   final SpreadsheetParserContext context) {
+    private static HourSpreadsheetFormulaParserToken hour(final ParserToken token,
+                                                          final SpreadsheetParserContext context) {
         return token(
                 token,
-                SpreadsheetParserToken::hour
+                SpreadsheetFormulaParserToken::hour
         );
     }
 
@@ -307,13 +307,13 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     }
 
     /**
-     * Transforms the {@link SpreadsheetParserToken} into a {@link MinuteSpreadsheetParserToken}.
+     * Transforms the {@link SpreadsheetFormulaParserToken} into a {@link MinuteSpreadsheetFormulaParserToken}.
      */
-    private static MinuteSpreadsheetParserToken minute(final ParserToken token,
-                                                       final SpreadsheetParserContext context) {
+    private static MinuteSpreadsheetFormulaParserToken minute(final ParserToken token,
+                                                              final SpreadsheetParserContext context) {
         return token(
                 token,
-                SpreadsheetParserToken::minute
+                SpreadsheetFormulaParserToken::minute
         );
     }
 
@@ -355,9 +355,9 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         return context.monthNames();
     }
 
-    private static MonthNameSpreadsheetParserToken monthNameParserToken(final int value,
-                                                                        final String text) {
-        return SpreadsheetParserToken.monthName(
+    private static MonthNameSpreadsheetFormulaParserToken monthNameParserToken(final int value,
+                                                                               final String text) {
+        return SpreadsheetFormulaParserToken.monthName(
                 value + 1,
                 text
         ); // JAN=1 but SpreadsheetNonNumberParsePatternParser.stringChoices 1st = 0.
@@ -367,22 +367,22 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         return context.monthNameAbbreviations();
     }
 
-    private static MonthNameAbbreviationSpreadsheetParserToken monthNameAbbreviationParserToken(final int value,
-                                                                                                final String text) {
-        return SpreadsheetParserToken.monthNameAbbreviation(
+    private static MonthNameAbbreviationSpreadsheetFormulaParserToken monthNameAbbreviationParserToken(final int value,
+                                                                                                       final String text) {
+        return SpreadsheetFormulaParserToken.monthNameAbbreviation(
                 value + 1,
                 text
         ); // JAN=1 but SpreadsheetNonNumberParsePatternParser.stringChoices 1st = 0.
     }
 
     /**
-     * Transforms the {@link SpreadsheetParserToken} into a {@link MonthNumberSpreadsheetParserToken}.
+     * Transforms the {@link SpreadsheetFormulaParserToken} into a {@link MonthNumberSpreadsheetFormulaParserToken}.
      */
-    private static MonthNumberSpreadsheetParserToken month(final ParserToken token,
-                                                           final SpreadsheetParserContext context) {
+    private static MonthNumberSpreadsheetFormulaParserToken month(final ParserToken token,
+                                                                  final SpreadsheetParserContext context) {
         return token(
                 token,
-                SpreadsheetParserToken::monthNumber
+                SpreadsheetFormulaParserToken::monthNumber
         );
     }
 
@@ -401,13 +401,13 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     }
 
     /**
-     * Transforms the {@link SpreadsheetParserToken} into a {@link SecondsSpreadsheetParserToken}.
+     * Transforms the {@link SpreadsheetFormulaParserToken} into a {@link SecondsSpreadsheetFormulaParserToken}.
      */
-    private static SecondsSpreadsheetParserToken seconds(final ParserToken token,
-                                                         final SpreadsheetParserContext context) {
+    private static SecondsSpreadsheetFormulaParserToken seconds(final ParserToken token,
+                                                                final SpreadsheetParserContext context) {
         return token(
                 token,
-                SpreadsheetParserToken::seconds
+                SpreadsheetFormulaParserToken::seconds
         );
     }
 
@@ -471,20 +471,20 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     }
 
     /**
-     * Transforms the {@link SpreadsheetParserToken} into a {@link YearSpreadsheetParserToken}.
+     * Transforms the {@link SpreadsheetFormulaParserToken} into a {@link YearSpreadsheetFormulaParserToken}.
      */
-    private static YearSpreadsheetParserToken year(final ParserToken token,
-                                                   final SpreadsheetParserContext context) {
+    private static YearSpreadsheetFormulaParserToken year(final ParserToken token,
+                                                          final SpreadsheetParserContext context) {
         return token(
                 token,
-                SpreadsheetParserToken::year
+                SpreadsheetFormulaParserToken::year
         );
     }
 
     // helpers.........................................................................................................
 
     /**
-     * Creates a {@link SpreadsheetParserToken} that has an Integer, String factory.
+     * Creates a {@link SpreadsheetFormulaParserToken} that has an Integer, String factory.
      */
     private static <T> T token(final ParserToken token,
                                final BiFunction<Integer, String, T> factory) {
@@ -552,21 +552,21 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
     }
 
     /**
-     * Transforms a {@link StringParserToken} into a {@link TextLiteralSpreadsheetParserToken} or
-     * {@link WhitespaceSpreadsheetParserToken}
+     * Transforms a {@link StringParserToken} into a {@link TextLiteralSpreadsheetFormulaParserToken} or
+     * {@link WhitespaceSpreadsheetFormulaParserToken}
      */
-    private static SpreadsheetParserToken textLiteralOrWhitespace(final ParserToken token,
-                                                                  final ParserContext context) {
+    private static SpreadsheetFormulaParserToken textLiteralOrWhitespace(final ParserToken token,
+                                                                         final ParserContext context) {
         final StringParserToken stringParserToken = token.cast(StringParserToken.class);
         final String text = stringParserToken.text();
         final String value = stringParserToken.value();
 
         return text.equals(" ") ?
-                SpreadsheetParserToken.whitespace(
+                SpreadsheetFormulaParserToken.whitespace(
                         text,
                         value
                 ) :
-                SpreadsheetParserToken.textLiteral(
+                SpreadsheetFormulaParserToken.textLiteral(
                         value,
                         text
                 );
@@ -603,7 +603,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
 
     /**
      * Adds a required parser to the sequence. This sequence wil eventually be transformed into either a
-     * {@link SpreadsheetParserToken} sub class like {@link DateSpreadsheetParserToken}.
+     * {@link SpreadsheetFormulaParserToken} sub class like {@link DateSpreadsheetFormulaParserToken}.
      */
     private void addParser(final Parser<SpreadsheetParserContext> parser) {
         if (null == this.parser) {

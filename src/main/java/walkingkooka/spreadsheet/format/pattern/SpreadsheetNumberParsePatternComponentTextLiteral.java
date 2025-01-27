@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
@@ -47,7 +47,7 @@ final class SpreadsheetNumberParsePatternComponentTextLiteral extends Spreadshee
                 cursor,
                 this.text,
                 CaseSensitivity.SENSITIVE,
-                SpreadsheetParserToken::textLiteral,
+                SpreadsheetFormulaParserToken::textLiteral,
                 null, // dont update mode
                 request
         );

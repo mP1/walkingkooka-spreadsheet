@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
@@ -71,13 +71,13 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     // formula..........................................................................................................
 
     @Override
-    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         Objects.requireNonNull(formula, "formula");
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+    public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
         Objects.requireNonNull(token, "token");
         throw new UnsupportedOperationException();
     }

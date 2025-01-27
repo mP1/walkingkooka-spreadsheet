@@ -22,7 +22,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -49,7 +49,7 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
     }
 
     @Override
-    public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         throw new UnsupportedOperationException();
     }
 

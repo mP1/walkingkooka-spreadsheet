@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
@@ -461,7 +461,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+            public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
                 final TextCursorSavePoint beginning = formula.save();
                 formula.end();
 
@@ -470,17 +470,17 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                         beginning.textBetween(),
                         "formula text"
                 );
-                return SpreadsheetParserToken.text(
+                return SpreadsheetFormulaParserToken.text(
                         Lists.of(
-                                SpreadsheetParserToken.apostropheSymbol("'", "'"),
-                                SpreadsheetParserToken.textLiteral(FORMULA_VALUE, FORMULA_VALUE)
+                                SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
+                                SpreadsheetFormulaParserToken.textLiteral(FORMULA_VALUE, FORMULA_VALUE)
                         ),
                         FORMULA_TEXT
                 );
             }
 
             @Override
-            public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+            public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
                 return Optional.of(
                         Expression.value("Hello")
                 );

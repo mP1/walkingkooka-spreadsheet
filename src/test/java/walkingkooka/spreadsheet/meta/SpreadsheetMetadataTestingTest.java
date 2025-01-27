@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.time.LocalDateTime;
@@ -66,15 +66,15 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         this.checkEquals(
                 SpreadsheetFormula.EMPTY.setToken(
                         Optional.of(
-                                SpreadsheetParserToken.expression(
+                                SpreadsheetFormulaParserToken.expression(
                                         Lists.of(
-                                                SpreadsheetParserToken.equalsSymbol(
+                                                SpreadsheetFormulaParserToken.equalsSymbol(
                                                         "=",
                                                         "="
                                                 ),
-                                                SpreadsheetParserToken.number(
+                                                SpreadsheetFormulaParserToken.number(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.digits(
+                                                                SpreadsheetFormulaParserToken.digits(
                                                                         "1",
                                                                         "1"
                                                                 )

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentPercentTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentPercent> {
 
@@ -53,7 +53,7 @@ public final class SpreadsheetNumberParsePatternComponentPercentTest extends Spr
                 textString,
                 textAfter,
                 NEXT_CALLED,
-                SpreadsheetParserToken.percentSymbol(textString, textString)
+                SpreadsheetFormulaParserToken.percentSymbol(textString, textString)
         );
     }
 
