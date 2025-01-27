@@ -299,7 +299,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 "=abc() ",
                 conditionRightEquals(
                         equalsSymbol(),
-                        group(
+                        expression(
                                 namedFunction(
                                         functionName("abc"),
                                         functionParameters(
