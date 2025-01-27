@@ -518,6 +518,11 @@ public class FakeSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormula
     }
 
     @Override
+    protected void visit(final TemplateValueNameSpreadsheetFormulaParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visit(final TextLiteralSpreadsheetFormulaParserToken token) {
         throw new UnsupportedOperationException();
     }

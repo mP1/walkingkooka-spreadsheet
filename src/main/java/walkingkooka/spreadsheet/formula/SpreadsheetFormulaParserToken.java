@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
@@ -533,6 +534,17 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
      */
     public static SubtractionSpreadsheetFormulaParserToken subtraction(final List<ParserToken> value, final String text) {
         return SubtractionSpreadsheetFormulaParserToken.with(value, text);
+    }
+
+    /**
+     * {@see TemplateValueNameSpreadsheetFormulaParserToken}
+     */
+    public static TemplateValueNameSpreadsheetFormulaParserToken templateValueName(final TemplateValueName value,
+                                                                                   final String text) {
+        return TemplateValueNameSpreadsheetFormulaParserToken.with(
+                value,
+                text
+        );
     }
 
     /**
@@ -1143,6 +1155,13 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link TemplateValueNameSpreadsheetFormulaParserToken} return true
+     */
+    public final boolean isTemplateValueName() {
+        return this instanceof TemplateValueNameSpreadsheetFormulaParserToken;
+    }
+
+    /**
      * Only {@link TextSpreadsheetFormulaParserToken} return true
      */
     public final boolean isText() {
@@ -1361,6 +1380,12 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
                 SpreadsheetFormulaParserToken::unmarshallSeconds
         );
 
+        register(
+                TemplateValueNameSpreadsheetFormulaParserToken.class,
+                SpreadsheetFormulaParserToken::unmarshallTemplateValueName,
+                SpreadsheetFormulaParserToken::marshallLeaf
+        );
+
         registerLeaf(
                 TextLiteralSpreadsheetFormulaParserToken.class,
                 SpreadsheetFormulaParserToken::unmarshallTextLiteral
@@ -1549,6 +1574,16 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetFormulaParserToken::seconds
+        );
+    }
+
+    static TemplateValueNameSpreadsheetFormulaParserToken unmarshallTemplateValueName(final JsonNode node,
+                                                                                      final JsonNodeUnmarshallContext context) {
+        return unmarshallLeaf(
+                node,
+                TemplateValueName.class,
+                context,
+                SpreadsheetFormulaParserToken::templateValueName
         );
     }
 
