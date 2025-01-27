@@ -60,7 +60,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -13532,7 +13532,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
-                return SpreadsheetParsers.valueOrExpression(
+                return SpreadsheetFormulaParsers.valueOrExpression(
                                 BasicSpreadsheetEngineTest.this.metadata()
                                         .spreadsheetParser(
                                                 SPREADSHEET_PARSER_PROVIDER,
@@ -14024,7 +14024,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetFormulaParserToken token =
                 text.isEmpty() ?
                         null :
-                        SpreadsheetParsers.valueOrExpression(
+                        SpreadsheetFormulaParsers.valueOrExpression(
                                         BasicSpreadsheetEngineTest.this.metadata()
                                                 .spreadsheetParser(
                                                         SPREADSHEET_PARSER_PROVIDER,

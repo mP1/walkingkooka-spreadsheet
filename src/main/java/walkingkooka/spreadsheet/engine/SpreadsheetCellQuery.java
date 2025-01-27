@@ -42,7 +42,7 @@ import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.UrlQueryString;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.HasText;
@@ -95,7 +95,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
         );
     }
 
-    private final static Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.expression()
+    private final static Parser<SpreadsheetParserContext> PARSER = SpreadsheetFormulaParsers.expression()
             .orFailIfCursorNotEmpty(ParserReporters.basic());
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;

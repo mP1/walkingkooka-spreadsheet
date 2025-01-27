@@ -514,7 +514,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
         this.parseAndCheck(
                 text,
-                SpreadsheetParsers.valueOrExpression(
+                SpreadsheetFormulaParsers.valueOrExpression(
                         SpreadsheetMetadataTesting.METADATA_EN_AU.spreadsheetParser(
                                 SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER,
                                 SpreadsheetMetadataTesting.PROVIDER_CONTEXT
@@ -576,7 +576,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
         this.parseAndCheck(
                 text,
-                SpreadsheetParsers.valueOrExpression(
+                SpreadsheetFormulaParsers.valueOrExpression(
                         Parsers.never()
                 ),
                 SpreadsheetFormula.EMPTY.setText(text)
@@ -809,7 +809,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.consumeSpreadsheetExpressionReferencesAndCheck(
                 SpreadsheetFormula.parse(
                         TextCursors.charSequence(formula),
-                        SpreadsheetParsers.valueOrExpression(
+                        SpreadsheetFormulaParsers.valueOrExpression(
                                 SpreadsheetPattern.parseNumberParsePattern("#")
                                         .parser()
                         ),
@@ -937,7 +937,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private SpreadsheetFormula parseFormula(final String text) {
         final SpreadsheetFormula formula = SpreadsheetFormula.parse(
                 TextCursors.charSequence(text),
-                SpreadsheetParsers.valueOrExpression(
+                SpreadsheetFormulaParsers.valueOrExpression(
                         Parsers.never()
                 ),
                 this.parserContext()

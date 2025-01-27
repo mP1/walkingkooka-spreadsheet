@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -143,7 +143,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
                 .spreadsheetParserContext(this.spreadsheetConverterContext);
 
-        return SpreadsheetParsers.expression()
+        return SpreadsheetFormulaParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(expression, parserContext)
                 .get()

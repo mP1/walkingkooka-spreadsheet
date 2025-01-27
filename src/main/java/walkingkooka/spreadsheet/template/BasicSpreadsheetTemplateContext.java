@@ -100,7 +100,7 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
 
         Optional<Optional<Object>> value;
 
-        // TemplateValueName gets passed into a SpreadsheetLabelName by SpreadsheetParsers#expression
+        // TemplateValueName gets passed into a SpreadsheetLabelName by SpreadsheetFormulaParsers#expression
         if (reference instanceof TemplateValueName) {
             final TemplateValueName templateValueName = (TemplateValueName) reference;
 

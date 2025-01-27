@@ -87,7 +87,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
+public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTesting<SpreadsheetFormulaParsers>,
         ParserTesting2<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
 
     private final static int TWO_DIGIT_YEAR = 20;
@@ -125,7 +125,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void conditionRightParserParseFails(final String text) {
         this.parseFailAndCheck(
-                SpreadsheetParsers.conditionRight(
+                SpreadsheetFormulaParsers.conditionRight(
                         valueOrExpressionParser()
                 ),
                 text
@@ -143,7 +143,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void conditionRightParserParseThrows(final String text,
                                                  final String message) {
         this.parseThrows(
-                SpreadsheetParsers.conditionRight(
+                SpreadsheetFormulaParsers.conditionRight(
                         valueOrExpressionParser()
                 ),
                 text,
@@ -380,7 +380,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                                    final String textConsumed,
                                                    final String textAfter) {
         this.parseAndCheck(
-                SpreadsheetParsers.conditionRight(
+                SpreadsheetFormulaParsers.conditionRight(
                         valueOrExpressionParser()
                 ),
                 text,
@@ -437,7 +437,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testValueOrExpressionParserWithDateParsePatternParserWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser()),
+                SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser()),
                 "2000/12/31 Extra"
         );
     }
@@ -497,7 +497,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testValueOrExpressionParserWithDateTimeParsePatternParserWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:m").parser()),
+                SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:m").parser()),
                 "2000/12/31 12:58 Extra"
         );
     }
@@ -541,7 +541,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testValueOrExpressionParserWithTimeParsePatternParserWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser()),
+                SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseTimeParsePattern("hh:mm").parser()),
                 "12:58 Extra"
         );
     }
@@ -602,7 +602,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                     final SpreadsheetFormulaParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
         this.parseAndCheck(
-                SpreadsheetParsers.valueOrExpression(parser),
+                SpreadsheetFormulaParsers.valueOrExpression(parser),
                 text,
                 factory.apply(
                         list,
@@ -656,7 +656,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testValueOrExpressionParserParseNumberWithExtraTextFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseNumberParsePattern("#").parser().andEmptyTextCursor()),
+                SpreadsheetFormulaParsers.valueOrExpression(SpreadsheetPattern.parseNumberParsePattern("#").parser().andEmptyTextCursor()),
                 "12 Extra"
         );
     }
@@ -771,7 +771,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testCellParserParseColumnFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.cell(),
+                SpreadsheetFormulaParsers.cell(),
                 "A"
         );
     }
@@ -779,7 +779,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testCellParserParseLabelFails() {
         this.parseThrows(
-                SpreadsheetParsers.cell(),
+                SpreadsheetFormulaParsers.cell(),
                 "LABEL123",
                 "Invalid column \"LABEL\" not between \"A\" and \"XFE\""
         );
@@ -802,14 +802,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     /**
-     * First parseCellReference the range using {@link SpreadsheetParsers#cell()}} and then repeat again with
-     * {@link SpreadsheetParsers#expression()}.
+     * First parseCellReference the range using {@link SpreadsheetFormulaParsers#cell()}} and then repeat again with
+     * {@link SpreadsheetFormulaParsers#expression()}.
      */
     private void cellParserParseAndCheck(final String from,
                                          final SpreadsheetFormulaParserToken expected,
                                          final String text) {
         this.parseAndCheck(
-                SpreadsheetParsers.cellOrCellRangeOrLabel(),
+                SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
                 from,
                 expected,
                 text
@@ -827,7 +827,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testCellOrCellRangeOrLabelParserWithExpressionFails() {
         this.parseFailAndCheck(
-                SpreadsheetParsers.cellOrCellRangeOrLabel(),
+                SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
                 "1+2"
         );
     }
@@ -878,14 +878,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     /**
-     * First parseCellReference the range using {@link SpreadsheetParsers#cellOrCellRangeOrLabel()}} and then repeat again with
-     * {@link SpreadsheetParsers#expression()}.
+     * First parseCellReference the range using {@link SpreadsheetFormulaParsers#cellOrCellRangeOrLabel()}} and then repeat again with
+     * {@link SpreadsheetFormulaParsers#expression()}.
      */
     private void cellOrCellRangeOrLabelParseAndCheck(final String from,
                                                      final SpreadsheetFormulaParserToken expected,
                                                      final String text) {
         this.parseAndCheck(
-                SpreadsheetParsers.cellOrCellRangeOrLabel(),
+                SpreadsheetFormulaParsers.cellOrCellRangeOrLabel(),
                 from,
                 expected,
                 text
@@ -897,7 +897,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     @Test
     public void testCellRangeParserParseNumberExpressionFails() {
-        this.parseFailAndCheck(SpreadsheetParsers.cellRange(), "1+2");
+        this.parseFailAndCheck(SpreadsheetFormulaParsers.cellRange(), "1+2");
     }
 
     @Test
@@ -973,7 +973,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     /**
-     * First parseCellReference the range using {@link SpreadsheetParsers#cellRange()} and then repeat again with {@link SpreadsheetParsers#expression()}.
+     * First parseCellReference the range using {@link SpreadsheetFormulaParsers#cellRange()} and then repeat again with {@link SpreadsheetFormulaParsers#expression()}.
      */
     private void cellRangeParserParseAndCheck(final String from,
                                               final CellRangeSpreadsheetFormulaParserToken expected,
@@ -991,7 +991,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                               final String text,
                                               final String expressionToString) {
         this.parseAndCheck(
-                SpreadsheetParsers.cellRange(),
+                SpreadsheetFormulaParsers.cellRange(),
                 from,
                 expected,
                 text
@@ -1034,7 +1034,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void errorParserParseAndCheck(final String from,
                                           final ErrorSpreadsheetFormulaParserToken expected) {
         this.parseAndCheck(
-                SpreadsheetParsers.error(),
+                SpreadsheetFormulaParsers.error(),
                 from,
                 expected,
                 from
@@ -2526,8 +2526,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     /**
-     * First parseCellReference the range using {@link SpreadsheetParsers#lambdaFunction()} and then repeat again with
-     * {@link SpreadsheetParsers#expression()}. Both should give the same results.
+     * First parseCellReference the range using {@link SpreadsheetFormulaParsers#lambdaFunction()} and then repeat again with
+     * {@link SpreadsheetFormulaParsers#expression()}. Both should give the same results.
      */
     private void lambdaFunctionParserParseAndCheck(final String from,
                                                    final LambdaFunctionSpreadsheetFormulaParserToken expected,
@@ -2559,7 +2559,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private Parser<SpreadsheetParserContext> lambdaFunctionParser() {
-        return SpreadsheetParsers.lambdaFunction();
+        return SpreadsheetFormulaParsers.lambdaFunction();
     }
 
     // NamedFunction....................................................................................................
@@ -2932,8 +2932,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     /**
-     * First parseCellReference the range using {@link SpreadsheetParsers#namedFunction()} and then repeat again with
-     * {@link SpreadsheetParsers#expression()}. Both should give the same results.
+     * First parseCellReference the range using {@link SpreadsheetFormulaParsers#namedFunction()} and then repeat again with
+     * {@link SpreadsheetFormulaParsers#expression()}. Both should give the same results.
      */
     private void namedFunctionParseAndCheck(final String from,
                                             final NamedFunctionSpreadsheetFormulaParserToken expected,
@@ -2965,7 +2965,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private Parser<SpreadsheetParserContext> namedFunctionParser() {
-        return SpreadsheetParsers.namedFunction();
+        return SpreadsheetFormulaParsers.namedFunction();
     }
 
     // Group ...........................................................................................................
@@ -3503,7 +3503,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void valueOrExpressionParserParseFails(final String text,
                                                    final String message) {
         this.parseThrows(
-                SpreadsheetParsers.expression(),
+                SpreadsheetFormulaParsers.expression(),
                 text,
                 message
         );
@@ -3589,7 +3589,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     /**
      * Accepts a formula with an expression. Note the expression is assumed to NOT having the leading equals sign.
-     * The second part of the test will prefix an equals sign and attempt to parse using the {@link SpreadsheetParsers#valueOrExpression} parser.
+     * The second part of the test will prefix an equals sign and attempt to parse using the {@link SpreadsheetFormulaParsers#valueOrExpression} parser.
      */
     private void parseEvaluateAndCheck(final String formulaText,
                                        final String expectedText) {
@@ -3660,15 +3660,15 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private static Parser<SpreadsheetParserContext> expressionParser() {
-        return SpreadsheetParsers.expression();
+        return SpreadsheetFormulaParsers.expression();
     }
 
     private static Parser<SpreadsheetParserContext> functionParametersParser() {
-        return SpreadsheetParsers.functionParameters();
+        return SpreadsheetFormulaParsers.functionParameters();
     }
 
     private static Parser<SpreadsheetParserContext> valueOrExpressionParser() {
-        return SpreadsheetParsers.valueOrExpression(
+        return SpreadsheetFormulaParsers.valueOrExpression(
                 Parsers.alternatives(
                         Lists.of(
                                 SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd").parser(),
@@ -4360,8 +4360,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     // PublicStaticHelperTesting........................................................................................
 
     @Override
-    public Class<SpreadsheetParsers> type() {
-        return SpreadsheetParsers.class;
+    public Class<SpreadsheetFormulaParsers> type() {
+        return SpreadsheetFormulaParsers.class;
     }
 
     @Override

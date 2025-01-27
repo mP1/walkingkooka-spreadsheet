@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet.formula;
 
 import walkingkooka.resource.TextResourceAware;
 
@@ -23,5 +23,5 @@ import walkingkooka.resource.TextResourceAware;
  * Holds the spreadsheet-parser grammar.
  */
 @TextResourceAware(normalizeSpace = false)
-public interface SpreadsheetParsersGrammar {
+public interface SpreadsheetFormulaParsersGrammar {
 }

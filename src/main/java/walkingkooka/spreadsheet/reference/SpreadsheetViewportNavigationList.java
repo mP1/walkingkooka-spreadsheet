@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserTok
 import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.CaseSensitivity;
@@ -401,15 +401,15 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         return navigation;
     }
 
-    private final static Parser<ParserContext> CELL_PARSER = SpreadsheetParsers.cell()
+    private final static Parser<ParserContext> CELL_PARSER = SpreadsheetFormulaParsers.cell()
             .orReport(ParserReporters.invalidCharacterException())
             .cast();
 
-    private final static Parser<ParserContext> COLUMN_PARSER = SpreadsheetParsers.column()
+    private final static Parser<ParserContext> COLUMN_PARSER = SpreadsheetFormulaParsers.column()
             .orReport(ParserReporters.invalidCharacterException())
             .cast();
 
-    private final static Parser<ParserContext> ROW_PARSER = SpreadsheetParsers.row()
+    private final static Parser<ParserContext> ROW_PARSER = SpreadsheetFormulaParsers.row()
             .orReport(ParserReporters.invalidCharacterException())
             .cast();
 

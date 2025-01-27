@@ -31,7 +31,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -2092,7 +2092,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                         ),
                         text
                 ),
-                SpreadsheetParsers.cell()
+                SpreadsheetFormulaParsers.cell()
         );
     }
 
@@ -2111,7 +2111,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
                         ),
                         text
                 ),
-                SpreadsheetParsers.cell()
+                SpreadsheetFormulaParsers.cell()
         );
     }
 

@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.template;
 
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.template.Template;
@@ -40,7 +40,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link TemplateContext} that uses {@link SpreadsheetParsers#expression()} to parse expressions within a template.
+ * A {@link TemplateContext} that uses {@link SpreadsheetFormulaParsers#expression()} to parse expressions within a template.
  * Expression {@link SpreadsheetLabelName} are then converted into {@link TemplateValueName} for value lookups.
  */
 final class SpreadsheetTemplateContextTemplateContext implements TemplateContext {
@@ -61,7 +61,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
     }
 
     /**
-     * Uses the {@link SpreadsheetParsers#expression()} to parse the expression text into a {@link Expression}.
+     * Uses the {@link SpreadsheetFormulaParsers#expression()} to parse the expression text into a {@link Expression}.
      */
     @Override
     public Template expression(final TextCursor text) {
@@ -86,7 +86,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
     }
 
     /**
-     * Consumes the expression text, ready to be parsed by {@link SpreadsheetParsers#expression()}.
+     * Consumes the expression text, ready to be parsed by {@link SpreadsheetFormulaParsers#expression()}.
      */
     private CharSequence parseExpressionText(final TextCursor text) {
         final TextCursorSavePoint save = text.save();
@@ -136,7 +136,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
                 .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"));
     }
 
-    private final static Parser<SpreadsheetParserContext> EXPRESSION_PARSER = SpreadsheetParsers.expression()
+    private final static Parser<SpreadsheetParserContext> EXPRESSION_PARSER = SpreadsheetFormulaParsers.expression()
             .orFailIfCursorNotEmpty(
                     ParserReporters.basic()
             ).cast();

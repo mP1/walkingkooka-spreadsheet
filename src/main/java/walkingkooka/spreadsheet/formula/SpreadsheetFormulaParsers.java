@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParsersGrammarProvider;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -52,7 +51,7 @@ import java.util.stream.Collectors;
 /**
  * Numerous {@link Parser parsers} that parse individual tokens of a formula or an entire formula.
  */
-public final class SpreadsheetParsers implements PublicStaticHelper {
+public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
 
     /**
      * Range separator character used to separate the lower and upper bounds.
@@ -73,7 +72,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final SpreadsheetParser CELL = parser(
                     column()
                             .and(row())
-                            .transform(SpreadsheetParsers::transformCell)
+                            .transform(SpreadsheetFormulaParsers::transformCell)
                             .setToString(CELL_IDENTIFIER.value())
             );
 
@@ -136,7 +135,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return parser(
                 resolveParsers(value)
                         .apply(CONDITION_RIGHT_PARSER_IDENTIFIER)
-                        .transform(SpreadsheetParsers::transformConditionRight)
+                        .transform(SpreadsheetFormulaParsers::transformConditionRight)
         );
     }
 
@@ -230,10 +229,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final SpreadsheetParser ERROR_PARSER = errorParser();
 
     private static SpreadsheetParser errorParser() {
-        return SpreadsheetParsers.parser(
+        return SpreadsheetFormulaParsers.parser(
                 Parsers.alternatives(
                         Arrays.stream(SpreadsheetErrorKind.values())
-                                .map(SpreadsheetParsers::errorParser0)
+                                .map(SpreadsheetFormulaParsers::errorParser0)
                                 .collect(Collectors.toList())
                 )
         );
@@ -265,7 +264,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static void functions(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
         predefined.put(FUNCTION_NAME_IDENTIFIER, functionName());
-        predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, SpreadsheetParsersValueSeparatorParser.INSTANCE);
+        predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, SpreadsheetFormulaParsersValueSeparatorParser.INSTANCE);
     }
 
     private static final EbnfIdentifierName FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("FUNCTION_NAME");
@@ -285,13 +284,13 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return FUNCTION_NAME;
     }
 
-    private final static SpreadsheetParser FUNCTION_NAME = SpreadsheetParsers.parser(
+    private final static SpreadsheetParser FUNCTION_NAME = SpreadsheetFormulaParsers.parser(
             Parsers.<SpreadsheetParserContext>initialAndPartCharPredicateString(
                             SpreadsheetFunctionName.INITIAL,
                             SpreadsheetFunctionName.PART,
                             SpreadsheetFunctionName.MIN_LENGTH,
                             SpreadsheetFunctionName.MAX_LENGTH)
-                    .transform(SpreadsheetParsers::transformFunctionName)
+                    .transform(SpreadsheetFormulaParsers::transformFunctionName)
                     .setToString(FUNCTION_NAME_IDENTIFIER.value())
     );
 
@@ -473,7 +472,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                     CharPredicates.always(),
                     1,
                     65536
-            ).transform(SpreadsheetParsers::transformString)
+            ).transform(SpreadsheetFormulaParsers::transformString)
             .setToString(STRING_IDENTIFIER.value());
 
     private static ParserToken transformString(final ParserToken token,
@@ -494,7 +493,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName LAMBDA_FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("LAMBDA_FUNCTION_NAME");
     private static final Parser<SpreadsheetParserContext> LAMBDA_FUNCTION_NAME = Parsers.<SpreadsheetParserContext>string("lambda", CaseSensitivity.INSENSITIVE)
-            .transform(SpreadsheetParsers::transformFunctionName)
+            .transform(SpreadsheetFormulaParsers::transformFunctionName)
             .setToString(LAMBDA_FUNCTION_NAME_IDENTIFIER.value())
             .cast();
 
@@ -542,7 +541,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return parser(
                 resolveParsers(value)
                         .apply(VALUE_OR_EXPRESSION_IDENTIFIER)
-                        .transform(SpreadsheetParsers::transformValueOrExpression)
+                        .transform(SpreadsheetFormulaParsers::transformValueOrExpression)
         );
     }
 
@@ -572,7 +571,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                             CharPredicates.whitespace(),
                             1,
                             Integer.MAX_VALUE
-                    ).transform(SpreadsheetParsers::transformWhitespace)
+                    ).transform(SpreadsheetFormulaParsers::transformWhitespace)
                     .setToString(WHITESPACE_IDENTIFIER.value())
     );
 
@@ -586,10 +585,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     // helpers .........................................................................................................
 
-    private final static String FILENAME = SpreadsheetParsers.class.getSimpleName() + "Grammar.txt";
+    private final static String FILENAME = SpreadsheetFormulaParsers.class.getSimpleName() + "Grammar.txt";
 
     private final static GrammarEbnfParserToken GRAMMAR_PARSER_TOKEN = GrammarEbnfParserToken.parseFile(
-            new SpreadsheetParsersGrammarProvider().text(),
+            new SpreadsheetFormulaParsersGrammarProvider().text(),
             FILENAME
     );
 
@@ -616,7 +615,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                         (n) -> Optional.ofNullable(
                                 predefined.get(n)
                         ),
-                        SpreadsheetParsersEbnfParserCombinatorGrammarTransformer.create(),
+                        SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer.create(),
                         FILENAME
                 );
     }
@@ -683,7 +682,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     /**
      * Stop construction
      */
-    private SpreadsheetParsers() {
+    private SpreadsheetFormulaParsers() {
         throw new UnsupportedOperationException();
     }
 }
