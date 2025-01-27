@@ -477,6 +477,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         );
     }
 
+    @Test
+    public void testExpressionToString() {
+        this.checkEquals(
+                "EXPRESSION",
+                SpreadsheetFormulaParsers.expression()
+                        .toString()
+        );
+    }
+
     // apostrophe string values.........................................................................................
 
     @Test
@@ -909,6 +918,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         );
     }
 
+    @Test
+    public void testCellParserToString() {
+        this.checkEquals(
+                "CELL",
+                SpreadsheetFormulaParsers.cell()
+                        .toString()
+        );
+    }
+
     // CELL, CELL RANGE & LABEL ........................................................................................
 
     @Test
@@ -978,6 +996,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 text
         );
         this.valueOrExpressionParserParseAndCheck(from, expected, text);
+    }
+
+    @Test
+    public void testCellOrCellRangeOrLabelParserToString() {
+        this.checkEquals(
+                "CELL_OR_CELL_RANGE_OR_LABEL",
+                SpreadsheetFormulaParsers.cellOrCellRangeOrLabel()
+                        .toString()
+        );
     }
 
     // RANGE............................................................................................................
@@ -1088,6 +1115,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 expected,
                 text,
                 expressionToString
+        );
+    }
+
+    @Test
+    public void testCellRangeParserToString() {
+        this.checkEquals(
+                "CELL_RANGE",
+                SpreadsheetFormulaParsers.cellRange()
+                        .toString()
         );
     }
 
@@ -2534,6 +2570,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         );
     }
 
+    @Test
+    public void testFunctionParametersParserToString() {
+        this.checkEquals(
+                "FUNCTION_PARAMETERS",
+                SpreadsheetFormulaParsers.functionParameters()
+                        .toString()
+        );
+    }
+
     // LambdaFunction....................................................................................................
 
     @Test
@@ -2642,6 +2687,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 expected,
                 text,
                 expressionToString
+        );
+    }
+
+    @Test
+    public void testLambdaFunctionParserToString() {
+        this.checkEquals(
+                "LAMBDA_FUNCTION",
+                lambdaFunctionParser()
+                        .toString()
         );
     }
 
@@ -3048,6 +3102,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 expected,
                 text,
                 expressionToString
+        );
+    }
+
+    @Test
+    public void testNamedFunctionParserToString() {
+        this.checkEquals(
+                "NAMED_FUNCTION",
+                namedFunctionParser()
+                        .toString()
         );
     }
 
