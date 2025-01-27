@@ -33,7 +33,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunction;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindowsFunctions;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.test.ParseStringTesting;
@@ -1914,7 +1914,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // HasParserToken...................................................................................................
 
     final void toParserTokenAndCheck(final SpreadsheetSelection selection,
-                                     final SpreadsheetParserToken expected) {
+                                     final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
                 expected,
                 selection.toParserToken(),
@@ -1923,7 +1923,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     final void toParserTokenAndCheck(final SpreadsheetSelection selection,
-                                     final SpreadsheetParserToken expected,
+                                     final SpreadsheetFormulaParserToken expected,
                                      final Parser<SpreadsheetParserContext> parser) {
         this.toParserTokenAndCheck(
                 selection,

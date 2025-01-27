@@ -22,7 +22,7 @@ import walkingkooka.collect.Range;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -1452,7 +1452,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
         this.toParserTokenAndCheck(
                 SpreadsheetSelection.parseColumn(text),
-                SpreadsheetParserToken.columnReference(
+                SpreadsheetFormulaParserToken.columnReference(
                         SpreadsheetSelection.parseColumn(text),
                         text
                 ),

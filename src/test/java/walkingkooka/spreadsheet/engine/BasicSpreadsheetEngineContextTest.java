@@ -48,7 +48,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -474,10 +474,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final String formula = "'" + text;
         this.parseFormulaAndCheck(
                 formula,
-                SpreadsheetParserToken.text(
+                SpreadsheetFormulaParserToken.text(
                         Lists.of(
-                                SpreadsheetParserToken.apostropheSymbol("'", "'"),
-                                SpreadsheetParserToken.textLiteral(text, text)
+                                SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
+                                SpreadsheetFormulaParserToken.textLiteral(text, text)
                         ),
                         formula
                 )
@@ -489,13 +489,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final String text = "31/12/2000";
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.date(
+                SpreadsheetFormulaParserToken.date(
                         Lists.of(
-                                SpreadsheetParserToken.dayNumber(31, "31"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.year(2000, "2000")
+                                SpreadsheetFormulaParserToken.dayNumber(31, "31"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.year(2000, "2000")
                         ),
                         text
                 )
@@ -507,17 +507,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final String text = "31/12/2000 12:58";
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.dateTime(
+                SpreadsheetFormulaParserToken.dateTime(
                         Lists.of(
-                                SpreadsheetParserToken.dayNumber(31, "31"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.monthNumber(12, "12"),
-                                SpreadsheetParserToken.textLiteral("/", "/"),
-                                SpreadsheetParserToken.year(2000, "2000"),
-                                SpreadsheetParserToken.whitespace(" ", " "),
-                                SpreadsheetParserToken.hour(12, "12"),
-                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                SpreadsheetParserToken.minute(58, "58")
+                                SpreadsheetFormulaParserToken.dayNumber(31, "31"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                                SpreadsheetFormulaParserToken.year(2000, "2000"),
+                                SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                                SpreadsheetFormulaParserToken.hour(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                                SpreadsheetFormulaParserToken.minute(58, "58")
                         ),
                         text
                 )
@@ -529,9 +529,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final String text = "123";
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.number(
+                SpreadsheetFormulaParserToken.number(
                         Lists.of(
-                                SpreadsheetParserToken.digits(text, text)
+                                SpreadsheetFormulaParserToken.digits(text, text)
                         ),
                         text
                 )
@@ -543,11 +543,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final String text = "1" + DECIMAL + "5";
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.number(
+                SpreadsheetFormulaParserToken.number(
                         Lists.of(
-                                SpreadsheetParserToken.digits("1", "1"),
-                                SpreadsheetParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
-                                SpreadsheetParserToken.digits("5", "5")
+                                SpreadsheetFormulaParserToken.digits("1", "1"),
+                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
+                                SpreadsheetFormulaParserToken.digits("5", "5")
                         ),
                         text
                 )
@@ -559,11 +559,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final String text = "12:58";
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.time(
+                SpreadsheetFormulaParserToken.time(
                         Lists.of(
-                                SpreadsheetParserToken.hour(12, "12"),
-                                SpreadsheetParserToken.textLiteral(":", ":"),
-                                SpreadsheetParserToken.minute(58, "58")
+                                SpreadsheetFormulaParserToken.hour(12, "12"),
+                                SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                                SpreadsheetFormulaParserToken.minute(58, "58")
                         ),
                         text
                 )
@@ -575,21 +575,21 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final String text = "=1+2";
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.expression(
+                SpreadsheetFormulaParserToken.expression(
                         Lists.of(
-                                SpreadsheetParserToken.equalsSymbol("=", "="),
-                                SpreadsheetParserToken.addition(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.addition(
                                         Lists.of(
-                                                SpreadsheetParserToken.number(
+                                                SpreadsheetFormulaParserToken.number(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.digits("1", "1")
+                                                                SpreadsheetFormulaParserToken.digits("1", "1")
                                                         ),
                                                         "1"
                                                 ),
-                                                SpreadsheetParserToken.plusSymbol("+", "+"),
-                                                SpreadsheetParserToken.number(
+                                                SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                                SpreadsheetFormulaParserToken.number(
                                                         Lists.of(
-                                                                SpreadsheetParserToken.digits("2", "2")
+                                                                SpreadsheetFormulaParserToken.digits("2", "2")
                                                         ),
                                                         "2"
                                                 )

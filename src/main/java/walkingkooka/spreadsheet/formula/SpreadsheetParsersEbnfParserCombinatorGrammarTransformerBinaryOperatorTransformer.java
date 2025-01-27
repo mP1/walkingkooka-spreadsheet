@@ -38,17 +38,17 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformerBinaryOperat
 
     @Override
     public int highestPriority() {
-        return SpreadsheetParserToken.HIGHEST_PRIORITY;
+        return SpreadsheetFormulaParserToken.HIGHEST_PRIORITY;
     }
 
     @Override
     public int lowestPriority() {
-        return SpreadsheetParserToken.LOWEST_PRIORITY;
+        return SpreadsheetFormulaParserToken.LOWEST_PRIORITY;
     }
 
     @Override
     public int priority(final ParserToken token) {
-        return token.cast(SpreadsheetParserToken.class)
+        return token.cast(SpreadsheetFormulaParserToken.class)
                 .operatorPriority();
     }
 
@@ -56,7 +56,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformerBinaryOperat
     public ParserToken binaryOperand(final List<ParserToken> tokens,
                                      final String text,
                                      final ParserToken parent) {
-        return parent.cast(SpreadsheetParserToken.class)
+        return parent.cast(SpreadsheetFormulaParserToken.class)
                 .binaryOperand(tokens, text);
     }
 

@@ -22,7 +22,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -507,7 +507,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
         this.toParserTokenAndCheck(
                 SpreadsheetSelection.labelName(text),
-                SpreadsheetParserToken.labelName(
+                SpreadsheetFormulaParserToken.labelName(
                         SpreadsheetSelection.labelName(text),
                         text
                 ),

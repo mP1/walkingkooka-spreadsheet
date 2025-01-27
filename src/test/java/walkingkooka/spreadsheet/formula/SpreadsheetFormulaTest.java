@@ -234,7 +234,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula formula = this.createObject();
 
         final String differentText = "different!";
-        final Optional<SpreadsheetParserToken> differentToken = this.token(differentText);
+        final Optional<SpreadsheetFormulaParserToken> differentToken = this.token(differentText);
         final SpreadsheetFormula different = formula.setToken(differentToken);
         assertNotSame(formula, different);
 
@@ -540,25 +540,25 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText(text)
                         .setToken(
                                 Optional.of(
-                                        SpreadsheetParserToken.date(
+                                        SpreadsheetFormulaParserToken.date(
                                                 Lists.of(
-                                                        SpreadsheetParserToken.dayNumber(
+                                                        SpreadsheetFormulaParserToken.dayNumber(
                                                                 31,
                                                                 "31"
                                                         ),
-                                                        SpreadsheetParserToken.textLiteral(
+                                                        SpreadsheetFormulaParserToken.textLiteral(
                                                                 "/",
                                                                 "/"
                                                         ),
-                                                        SpreadsheetParserToken.monthNumber(
+                                                        SpreadsheetFormulaParserToken.monthNumber(
                                                                 12,
                                                                 "12"
                                                         ),
-                                                        SpreadsheetParserToken.textLiteral(
+                                                        SpreadsheetFormulaParserToken.textLiteral(
                                                                 "/",
                                                                 "/"
                                                         ),
-                                                        SpreadsheetParserToken.year(
+                                                        SpreadsheetFormulaParserToken.year(
                                                                 1999,
                                                                 "1999"
                                                         )
@@ -582,13 +582,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 SpreadsheetFormula.EMPTY.setText(text)
                         .setToken(
                                 Optional.of(
-                                        SpreadsheetParserToken.text(
+                                        SpreadsheetFormulaParserToken.text(
                                                 Lists.of(
-                                                        SpreadsheetParserToken.apostropheSymbol(
+                                                        SpreadsheetFormulaParserToken.apostropheSymbol(
                                                                 "'",
                                                                 "'"
                                                         ),
-                                                        SpreadsheetParserToken.textLiteral(
+                                                        SpreadsheetFormulaParserToken.textLiteral(
                                                                 "Hello",
                                                                 "Hello"
                                                         )
@@ -981,8 +981,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setToken(this.token()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    TextSpreadsheet \"1+2\"\n" +
-                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n"
+                        "    TextSpreadsheetFormula \"1+2\"\n" +
+                        "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n"
         );
     }
 
@@ -994,8 +994,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setExpression(this.expression()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    TextSpreadsheet \"1+2\"\n" +
-                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n" +
+                        "    TextSpreadsheetFormula \"1+2\"\n" +
+                        "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n"
         );
@@ -1010,8 +1010,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setValue(this.value()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    TextSpreadsheet \"1+2\"\n" +
-                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n" +
+                        "    TextSpreadsheetFormula \"1+2\"\n" +
+                        "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
                         "  value: 3.0 (java.lang.Double)\n"
@@ -1027,8 +1027,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setValue(this.error()),
                 "Formula\n" +
                         "  token:\n" +
-                        "    TextSpreadsheet \"1+2\"\n" +
-                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n" +
+                        "    TextSpreadsheetFormula \"1+2\"\n" +
+                        "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
                         "  value: #VALUE!\n" +
@@ -1057,8 +1057,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         ),
                 "Formula\n" +
                         "  token:\n" +
-                        "    TextSpreadsheet \"1+2\"\n" +
-                        "      TextLiteralSpreadsheet \"1+2\" \"1+2\"\n" +
+                        "    TextSpreadsheetFormula \"1+2\"\n" +
+                        "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
                         "  value: 1111\n" +
@@ -1158,7 +1158,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private SpreadsheetFormula createFormula(final String formula,
-                                             final Optional<SpreadsheetParserToken> token,
+                                             final Optional<SpreadsheetFormulaParserToken> token,
                                              final Optional<Expression> expression,
                                              final Optional<Object> value) {
         return formula(formula)
@@ -1203,7 +1203,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testUnmarshallTextAndToken() {
-        final Optional<SpreadsheetParserToken> token = this.token();
+        final Optional<SpreadsheetFormulaParserToken> token = this.token();
 
         this.unmarshallAndCheck(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
@@ -1215,7 +1215,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testUnmarshallTextAndTokenAndDifferentTextIgnored() {
-        final Optional<SpreadsheetParserToken> token = this.token();
+        final Optional<SpreadsheetFormulaParserToken> token = this.token();
 
         this.unmarshallAndCheck(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string("Different text parse token"))
@@ -1239,7 +1239,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testUnmarshallTextTokenAndExpression() {
-        final Optional<SpreadsheetParserToken> token = this.token();
+        final Optional<SpreadsheetFormulaParserToken> token = this.token();
         final Optional<Expression> expression = this.expression();
 
         this.unmarshallAndCheck(JsonNode.object()
@@ -1278,11 +1278,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 "{\n" +
                         "  \"text\": \"1+2\",\n" +
                         "  \"token\": {\n" +
-                        "    \"type\": \"text-spreadsheet-parser-token\",\n" +
+                        "    \"type\": \"text-spreadsheet-formula-parser-token\",\n" +
                         "    \"value\": {\n" +
                         "      \"value\": [\n" +
                         "        {\n" +
-                        "          \"type\": \"text-literal-spreadsheet-parser-token\",\n" +
+                        "          \"type\": \"text-literal-spreadsheet-formula-parser-token\",\n" +
                         "          \"value\": {\n" +
                         "            \"value\": \"1+2\",\n" +
                         "            \"text\": \"1+2\"\n" +
@@ -1305,11 +1305,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 "{\n" +
                         "  \"text\": \"1+2\",\n" +
                         "  \"token\": {\n" +
-                        "    \"type\": \"text-spreadsheet-parser-token\",\n" +
+                        "    \"type\": \"text-spreadsheet-formula-parser-token\",\n" +
                         "    \"value\": {\n" +
                         "      \"value\": [\n" +
                         "        {\n" +
-                        "          \"type\": \"text-literal-spreadsheet-parser-token\",\n" +
+                        "          \"type\": \"text-literal-spreadsheet-formula-parser-token\",\n" +
                         "          \"value\": {\n" +
                         "            \"value\": \"1+2\",\n" +
                         "            \"text\": \"1+2\"\n" +
@@ -1478,15 +1478,15 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkEquals(text, formula.text(), "text(Expression)");
     }
 
-    private Optional<SpreadsheetParserToken> token() {
+    private Optional<SpreadsheetFormulaParserToken> token() {
         return this.token(EXPRESSION);
     }
 
-    private Optional<SpreadsheetParserToken> token(final String text) {
+    private Optional<SpreadsheetFormulaParserToken> token(final String text) {
         return Optional.of(
-                SpreadsheetParserToken.text(
+                SpreadsheetFormulaParserToken.text(
                         Lists.of(
-                                SpreadsheetParserToken.textLiteral(text, text)
+                                SpreadsheetFormulaParserToken.textLiteral(text, text)
                         ),
                         text
                 )
@@ -1501,7 +1501,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkToken(formula, SpreadsheetFormula.NO_TOKEN);
     }
 
-    private void checkToken(final SpreadsheetFormula formula, final Optional<SpreadsheetParserToken> token) {
+    private void checkToken(final SpreadsheetFormula formula, final Optional<SpreadsheetFormulaParserToken> token) {
         this.checkEquals(token, formula.token(), "token");
     }
 

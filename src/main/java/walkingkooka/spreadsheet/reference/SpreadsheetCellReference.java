@@ -22,9 +22,9 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
-import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.Comparator;
@@ -672,12 +672,12 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     // HasParserToken...................................................................................................
 
     @Override
-    public CellReferenceSpreadsheetParserToken toParserToken() {
+    public CellReferenceSpreadsheetFormulaParserToken toParserToken() {
         // GWTC fails if type parameter missing
         //
         // [INFO]       [ERROR] Errors in 'walkingkooka/spreadsheet/reference/SpreadsheetCellReference.java'
         // [INFO]          [ERROR] Line 644: The method of(T...) of type Lists is not applicable as the formal varargs element type T is not accessible here
-        return SpreadsheetParserToken.cellReference(
+        return SpreadsheetFormulaParserToken.cellReference(
                 Lists.<ParserToken>of(
                         this.column()
                                 .toParserToken(),

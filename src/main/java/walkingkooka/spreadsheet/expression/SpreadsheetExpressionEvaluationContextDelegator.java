@@ -21,7 +21,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -66,7 +66,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default SpreadsheetParserToken parseFormula(final TextCursor formula) {
+    default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         return this.spreadsheetExpressionEvaluationContext()
                 .parseFormula(formula);
     }

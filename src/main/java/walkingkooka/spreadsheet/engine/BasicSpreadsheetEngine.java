@@ -30,7 +30,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -818,14 +818,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
      */
     SpreadsheetCell parseFormulaIfNecessary(final SpreadsheetCell cell,
-                                            final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
+                                            final Function<SpreadsheetFormulaParserToken, SpreadsheetFormulaParserToken> parsed,
                                             final SpreadsheetEngineContext context) {
         SpreadsheetCell result;
         SpreadsheetFormula formula = cell.formula();
 
         try {
             // if a token is NOT present parse the formula text
-            SpreadsheetParserToken token = formula.token()
+            SpreadsheetFormulaParserToken token = formula.token()
                     .orElse(null);
             if (null == token) {
                 final SpreadsheetMetadata metadata = context.spreadsheetMetadata();

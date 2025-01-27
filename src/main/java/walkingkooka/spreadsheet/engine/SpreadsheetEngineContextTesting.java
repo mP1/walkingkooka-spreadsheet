@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetCompara
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
@@ -68,7 +68,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void parseFormulaAndCheck(final String expression,
-                                      final SpreadsheetParserToken expected) {
+                                      final SpreadsheetFormulaParserToken expected) {
         this.parseFormulaAndCheck(this.createContext(),
                 expression,
                 expected);
@@ -76,7 +76,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void parseFormulaAndCheck(final SpreadsheetEngineContext context,
                                       final String formula,
-                                      final SpreadsheetParserToken expected) {
+                                      final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
                 expected,
                 context.parseFormula(
@@ -97,7 +97,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void toExpressionAndCheck(final SpreadsheetEngineContext context,
-                                      final SpreadsheetParserToken token) {
+                                      final SpreadsheetFormulaParserToken token) {
         this.toExpressionAndCheck(
                 context,
                 token,
@@ -106,7 +106,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void toExpressionAndCheck(final SpreadsheetEngineContext context,
-                                      final SpreadsheetParserToken token,
+                                      final SpreadsheetFormulaParserToken token,
                                       final Expression expected) {
         this.toExpressionAndCheck(
                 context,
@@ -116,7 +116,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void toExpressionAndCheck(final SpreadsheetEngineContext context,
-                                      final SpreadsheetParserToken token,
+                                      final SpreadsheetFormulaParserToken token,
                                       final Optional<Expression> expected) {
         this.checkEquals(
                 expected,

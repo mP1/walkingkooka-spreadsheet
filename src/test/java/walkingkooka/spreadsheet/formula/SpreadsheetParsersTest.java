@@ -246,7 +246,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 "=\"Hello\"",
                 conditionRightEquals(
                         equalsSymbol(),
-                        SpreadsheetParserToken.text(
+                        SpreadsheetFormulaParserToken.text(
                                 Lists.of(
                                         doubleQuotesSymbol(),
                                         textLiteral("Hello"),
@@ -313,50 +313,50 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private ConditionRightSpreadsheetParserToken conditionRightEquals(final SpreadsheetParserToken... tokens) {
+    private ConditionRightSpreadsheetFormulaParserToken conditionRightEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::conditionRightEquals,
+                SpreadsheetFormulaParserToken::conditionRightEquals,
                 tokens
         );
     }
 
-    private ConditionRightSpreadsheetParserToken conditionRightGreaterThan(final SpreadsheetParserToken... tokens) {
+    private ConditionRightSpreadsheetFormulaParserToken conditionRightGreaterThan(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::conditionRightGreaterThan,
+                SpreadsheetFormulaParserToken::conditionRightGreaterThan,
                 tokens
         );
     }
 
-    private ConditionRightSpreadsheetParserToken conditionRightGreaterThanEquals(final SpreadsheetParserToken... tokens) {
+    private ConditionRightSpreadsheetFormulaParserToken conditionRightGreaterThanEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::conditionRightGreaterThanEquals,
+                SpreadsheetFormulaParserToken::conditionRightGreaterThanEquals,
                 tokens
         );
     }
 
-    private ConditionRightSpreadsheetParserToken conditionRightLessThan(final SpreadsheetParserToken... tokens) {
+    private ConditionRightSpreadsheetFormulaParserToken conditionRightLessThan(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::conditionRightLessThan,
+                SpreadsheetFormulaParserToken::conditionRightLessThan,
                 tokens
         );
     }
 
-    private ConditionRightSpreadsheetParserToken conditionRightLessThanEquals(final SpreadsheetParserToken... tokens) {
+    private ConditionRightSpreadsheetFormulaParserToken conditionRightLessThanEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::conditionRightLessThanEquals,
+                SpreadsheetFormulaParserToken::conditionRightLessThanEquals,
                 tokens
         );
     }
 
-    private ConditionRightSpreadsheetParserToken conditionRightNotEquals(final SpreadsheetParserToken... tokens) {
+    private ConditionRightSpreadsheetFormulaParserToken conditionRightNotEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::conditionRightNotEquals,
+                SpreadsheetFormulaParserToken::conditionRightNotEquals,
                 tokens
         );
     }
 
     private void conditionRightParserParseAndCheck(final String text,
-                                                   final SpreadsheetParserToken expected) {
+                                                   final SpreadsheetFormulaParserToken expected) {
         this.conditionRightParserParseAndCheck(
                 text,
                 expected,
@@ -365,7 +365,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void conditionRightParserParseAndCheck(final String text,
-                                                   final SpreadsheetParserToken expected,
+                                                   final SpreadsheetFormulaParserToken expected,
                                                    final String consumed) {
         this.conditionRightParserParseAndCheck(
                 text,
@@ -376,7 +376,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void conditionRightParserParseAndCheck(final String text,
-                                                   final SpreadsheetParserToken expected,
+                                                   final SpreadsheetFormulaParserToken expected,
                                                    final String textConsumed,
                                                    final String textAfter) {
         this.parseAndCheck(
@@ -419,10 +419,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.parseAndCheck(
                 valueOrExpressionParser(),
                 apostropheText,
-                TextSpreadsheetParserToken.text(
+                TextSpreadsheetFormulaParserToken.text(
                         Lists.of(
-                                        SpreadsheetParserToken.apostropheSymbol("'", "'"),
-                                        SpreadsheetParserToken.textLiteral(text, text)
+                                        SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
+                                        SpreadsheetFormulaParserToken.textLiteral(text, text)
                                 ).stream()
                                 .filter(t -> !t.text().isEmpty())
                                 .collect(Collectors.toList()),
@@ -483,11 +483,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void dateParserPatternPatternParseParseAndCheck(final String text,
                                                             final String pattern,
-                                                            final SpreadsheetParserToken... tokens) {
+                                                            final SpreadsheetFormulaParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
                 SpreadsheetPattern.parseDateParsePattern(pattern).parser(),
-                SpreadsheetParserToken::date,
+                SpreadsheetFormulaParserToken::date,
                 tokens
         );
     }
@@ -527,11 +527,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void parseDateTimeAndCheck(final String text,
                                        final String pattern,
-                                       final SpreadsheetParserToken... tokens) {
+                                       final SpreadsheetFormulaParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
                 SpreadsheetPattern.parseDateTimeParsePattern(pattern).parser(),
-                SpreadsheetParserToken::dateTime,
+                SpreadsheetFormulaParserToken::dateTime,
                 tokens
         );
     }
@@ -587,19 +587,19 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void parseTimeAndCheck(final String text,
                                    final String pattern,
-                                   final SpreadsheetParserToken... tokens) {
+                                   final SpreadsheetFormulaParserToken... tokens) {
         this.parseValueAndCheck(
                 text,
                 SpreadsheetPattern.parseTimeParsePattern(pattern).parser(),
-                SpreadsheetParserToken::time,
+                SpreadsheetFormulaParserToken::time,
                 tokens
         );
     }
 
     private void parseValueAndCheck(final String text,
                                     final Parser<SpreadsheetParserContext> parser,
-                                    final BiFunction<List<ParserToken>, String, ParentSpreadsheetParserToken> factory,
-                                    final SpreadsheetParserToken... tokens) {
+                                    final BiFunction<List<ParserToken>, String, ParentSpreadsheetFormulaParserToken> factory,
+                                    final SpreadsheetFormulaParserToken... tokens) {
         final List<ParserToken> list = Lists.of(tokens);
         this.parseAndCheck(
                 SpreadsheetParsers.valueOrExpression(parser),
@@ -620,7 +620,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String text = "\"abc-123\"";
 
         this.valueOrExpressionParserParseAndCheck(text,
-                SpreadsheetParserToken.text(
+                SpreadsheetFormulaParserToken.text(
                         Lists.of(
                                 doubleQuotesSymbol(),
                                 textLiteral("abc-123"),
@@ -638,10 +638,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                SpreadsheetParserToken.text(
+                SpreadsheetFormulaParserToken.text(
                         Lists.of(
                                 doubleQuotesSymbol(),
-                                SpreadsheetParserToken.textLiteral("abc-\"-123", "abc-\"\"-123"),
+                                SpreadsheetFormulaParserToken.textLiteral("abc-\"-123", "abc-\"\"-123"),
                                 doubleQuotesSymbol()
                         ),
                         text
@@ -788,7 +788,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testCellParserParseCell() {
         final String text = "A1";
-        final CellReferenceSpreadsheetParserToken cell = cellReference(0, "A", 0);
+        final CellReferenceSpreadsheetFormulaParserToken cell = cellReference(0, "A", 0);
 
         this.cellParserParseAndCheck(text, cell, text);
     }
@@ -796,7 +796,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testCellParserParseCell2() {
         final String text = "AA678";
-        final CellReferenceSpreadsheetParserToken cell = this.cellReference(26, "AA", 678 - 1);
+        final CellReferenceSpreadsheetFormulaParserToken cell = this.cellReference(26, "AA", 678 - 1);
 
         this.cellParserParseAndCheck(text, cell, text);
     }
@@ -806,7 +806,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
      * {@link SpreadsheetParsers#expression()}.
      */
     private void cellParserParseAndCheck(final String from,
-                                         final SpreadsheetParserToken expected,
+                                         final SpreadsheetFormulaParserToken expected,
                                          final String text) {
         this.parseAndCheck(
                 SpreadsheetParsers.cellOrCellRangeOrLabel(),
@@ -835,7 +835,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testCellOrCellRangeOrLabelParserWithCell() {
         final String text = "A1";
-        final CellReferenceSpreadsheetParserToken cell = cellReference(0, "A", 0);
+        final CellReferenceSpreadsheetFormulaParserToken cell = cellReference(0, "A", 0);
 
         this.cellOrCellRangeOrLabelParseAndCheck(text, cell, text);
     }
@@ -843,7 +843,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testCellOrCellRangeOrLabelParserWithCell2() {
         final String text = "AA678";
-        final CellReferenceSpreadsheetParserToken cell = this.cellReference(26, "AA", 678 - 1);
+        final CellReferenceSpreadsheetFormulaParserToken cell = this.cellReference(26, "AA", 678 - 1);
 
         this.cellOrCellRangeOrLabelParseAndCheck(text, cell, text);
     }
@@ -852,7 +852,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     public void testCellOrCellRangeOrLabelParserWithCellRange() {
         final String text = "A1:B2";
 
-        final CellRangeSpreadsheetParserToken range = SpreadsheetParserToken.cellRange(
+        final CellRangeSpreadsheetFormulaParserToken range = SpreadsheetFormulaParserToken.cellRange(
                 Lists.of(
                         this.cellReference(0, "A", 0),
                         betweenSymbol(),
@@ -873,7 +873,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String text = "Hello";
 
         this.cellOrCellRangeOrLabelParseAndCheck(text,
-                SpreadsheetParserToken.labelName(SpreadsheetSelection.labelName(text), text),
+                SpreadsheetFormulaParserToken.labelName(SpreadsheetSelection.labelName(text), text),
                 text);
     }
 
@@ -882,7 +882,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
      * {@link SpreadsheetParsers#expression()}.
      */
     private void cellOrCellRangeOrLabelParseAndCheck(final String from,
-                                                     final SpreadsheetParserToken expected,
+                                                     final SpreadsheetFormulaParserToken expected,
                                                      final String text) {
         this.parseAndCheck(
                 SpreadsheetParsers.cellOrCellRangeOrLabel(),
@@ -902,10 +902,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     @Test
     public void testCellRangeParserParseCellToCell() {
-        final CellReferenceSpreadsheetParserToken from = this.cellReference(0, "A", 0);
-        final CellReferenceSpreadsheetParserToken to = this.cellReference(1, "B", 1);
+        final CellReferenceSpreadsheetFormulaParserToken from = this.cellReference(0, "A", 0);
+        final CellReferenceSpreadsheetFormulaParserToken to = this.cellReference(1, "B", 1);
 
-        final CellRangeSpreadsheetParserToken range = range(from, to);
+        final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String text = range.text();
 
         this.cellRangeParserParseAndCheck(text, range, text);
@@ -914,10 +914,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testCellRangeParserParseLabelToLabel() {
-        final LabelNameSpreadsheetParserToken from = this.label("parse");
-        final LabelNameSpreadsheetParserToken to = this.label("to");
+        final LabelNameSpreadsheetFormulaParserToken from = this.label("parse");
+        final LabelNameSpreadsheetFormulaParserToken to = this.label("to");
 
-        final CellRangeSpreadsheetParserToken range = range(from, to);
+        final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String text = range.text();
 
         this.cellRangeParserParseAndCheck(text, range, text);
@@ -926,10 +926,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testCellRangeParserParseCellToLabel() {
-        final CellReferenceSpreadsheetParserToken from = this.cellReference(0, "A", 0);
-        final LabelNameSpreadsheetParserToken to = this.label("to");
+        final CellReferenceSpreadsheetFormulaParserToken from = this.cellReference(0, "A", 0);
+        final LabelNameSpreadsheetFormulaParserToken to = this.label("to");
 
-        final CellRangeSpreadsheetParserToken range = range(from, to);
+        final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String text = range.text();
 
         this.cellRangeParserParseAndCheck(text, range, text);
@@ -938,10 +938,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testCellRangeParserParseLabelToCell() {
-        final LabelNameSpreadsheetParserToken from = this.label("to");
-        final CellReferenceSpreadsheetParserToken to = this.cellReference(0, "A", 0);
+        final LabelNameSpreadsheetFormulaParserToken from = this.label("to");
+        final CellReferenceSpreadsheetFormulaParserToken to = this.cellReference(0, "A", 0);
 
-        final CellRangeSpreadsheetParserToken range = range(from, to);
+        final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String text = range.text();
 
         this.cellRangeParserParseAndCheck(text, range, text);
@@ -949,11 +949,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     @Test
     public void testCellRangeParserParseWhitespace() {
-        final CellReferenceSpreadsheetParserToken from = this.cellReference(0, "A", 0);
-        final CellReferenceSpreadsheetParserToken to = this.cellReference(1, "B", 1);
+        final CellReferenceSpreadsheetFormulaParserToken from = this.cellReference(0, "A", 0);
+        final CellReferenceSpreadsheetFormulaParserToken to = this.cellReference(1, "B", 1);
 
         final String text = from.text() + "  " + betweenSymbol() + "  " + to.text();
-        final CellRangeSpreadsheetParserToken range = SpreadsheetParserToken.cellRange(
+        final CellRangeSpreadsheetFormulaParserToken range = SpreadsheetFormulaParserToken.cellRange(
                 Lists.of(
                         from,
                         whitespace2(),
@@ -976,7 +976,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
      * First parseCellReference the range using {@link SpreadsheetParsers#cellRange()} and then repeat again with {@link SpreadsheetParsers#expression()}.
      */
     private void cellRangeParserParseAndCheck(final String from,
-                                              final CellRangeSpreadsheetParserToken expected,
+                                              final CellRangeSpreadsheetFormulaParserToken expected,
                                               final String text) {
         this.cellRangeParserParseAndCheck(
                 from,
@@ -987,7 +987,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void cellRangeParserParseAndCheck(final String from,
-                                              final CellRangeSpreadsheetParserToken expected,
+                                              final CellRangeSpreadsheetFormulaParserToken expected,
                                               final String text,
                                               final String expressionToString) {
         this.parseAndCheck(
@@ -1024,7 +1024,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void errorParserParseAndCheck(final SpreadsheetErrorKind kind) {
         this.errorParserParseAndCheck(
                 kind.text(),
-                SpreadsheetParserToken.error(
+                SpreadsheetFormulaParserToken.error(
                         kind.toError(),
                         kind.text()
                 )
@@ -1032,7 +1032,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void errorParserParseAndCheck(final String from,
-                                          final ErrorSpreadsheetParserToken expected) {
+                                          final ErrorSpreadsheetFormulaParserToken expected) {
         this.parseAndCheck(
                 SpreadsheetParsers.error(),
                 from,
@@ -1115,15 +1115,15 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                SpreadsheetParserToken.cellRange(
+                SpreadsheetFormulaParserToken.cellRange(
                         Lists.of(
-                                SpreadsheetParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cellReference(
                                         Lists.of(
-                                                SpreadsheetParserToken.columnReference(
+                                                SpreadsheetFormulaParserToken.columnReference(
                                                         SpreadsheetSelection.parseColumn("A"),
                                                         "A"
                                                 ),
-                                                SpreadsheetParserToken.rowReference(
+                                                SpreadsheetFormulaParserToken.rowReference(
                                                         SpreadsheetSelection.parseRow("1"),
                                                         "1"
                                                 )
@@ -1131,13 +1131,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                         "A1"
                                 ),
                                 betweenSymbol(),
-                                SpreadsheetParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cellReference(
                                         Lists.of(
-                                                SpreadsheetParserToken.columnReference(
+                                                SpreadsheetFormulaParserToken.columnReference(
                                                         SpreadsheetSelection.parseColumn("B"),
                                                         "B"
                                                 ),
-                                                SpreadsheetParserToken.rowReference(
+                                                SpreadsheetFormulaParserToken.rowReference(
                                                         SpreadsheetSelection.parseRow("2"),
                                                         "2"
                                                 )
@@ -1157,15 +1157,15 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                SpreadsheetParserToken.cellRange(
+                SpreadsheetFormulaParserToken.cellRange(
                         Lists.of(
-                                SpreadsheetParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cellReference(
                                         Lists.of(
-                                                SpreadsheetParserToken.columnReference(
+                                                SpreadsheetFormulaParserToken.columnReference(
                                                         SpreadsheetSelection.parseColumn("$A"),
                                                         "$A"
                                                 ),
-                                                SpreadsheetParserToken.rowReference(
+                                                SpreadsheetFormulaParserToken.rowReference(
                                                         SpreadsheetSelection.parseRow("$1"),
                                                         "$1"
                                                 )
@@ -1173,7 +1173,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                         "$A$1"
                                 ),
                                 betweenSymbol(),
-                                SpreadsheetParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cellReference(
                                         Lists.of(
                                                 columnReference("$B"),
                                                 rowReference("$2")
@@ -1195,7 +1195,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                SpreadsheetParserToken.error(
+                SpreadsheetFormulaParserToken.error(
                         SpreadsheetErrorKind.DIV0.toError(),
                         text
                 ),
@@ -1209,7 +1209,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                SpreadsheetParserToken.error(
+                SpreadsheetFormulaParserToken.error(
                         SpreadsheetErrorKind.REF.toError(),
                         text
                 ),
@@ -1224,7 +1224,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.valueOrExpressionParserParseAndCheck(
                 text,
                 addition(
-                        SpreadsheetParserToken.error(
+                        SpreadsheetFormulaParserToken.error(
                                 SpreadsheetErrorKind.REF.toError(),
                                 "#REF!"
                         ),
@@ -1449,7 +1449,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String labelText = "Hello";
         final String groupText = "(  " + labelText + "  )";
 
-        final GroupSpreadsheetParserToken group = group(
+        final GroupSpreadsheetFormulaParserToken group = group(
                 parenthesisOpen(),
                 whitespace2(),
                 label(labelText),
@@ -1958,9 +1958,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         number(111),
                         multiplySymbol(),
                         power(
-                                (SpreadsheetParserToken) number(222),
+                                (SpreadsheetFormulaParserToken) number(222),
                                 powerSymbol(),
-                                (SpreadsheetParserToken) number(333)
+                                (SpreadsheetFormulaParserToken) number(333)
                         )
                 ),
                 text,
@@ -2057,14 +2057,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void valueOrExpressionParserParseNotEqualsAdd() {
         final String addText = "456+789";
-        final AdditionSpreadsheetParserToken add = addition(
+        final AdditionSpreadsheetFormulaParserToken add = addition(
                 number(456),
                 plusSymbol(),
                 number(789)
         );
 
         final String text = "123<>" + addText;
-        final NotEqualsSpreadsheetParserToken ne = notEquals(
+        final NotEqualsSpreadsheetFormulaParserToken ne = notEquals(
                 number(123),
                 notEqualsSymbol(),
                 add
@@ -2299,13 +2299,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void valueOrExpressionParserParseComplexExpression() {
         //111+222+(-333)-444*555
         final String addText = "111+222";
-        final AdditionSpreadsheetParserToken add = addition(
+        final AdditionSpreadsheetFormulaParserToken add = addition(
                 number(111),
                 plusSymbol(),
                 number(222)
         );
 
-        final GroupSpreadsheetParserToken group = group(
+        final GroupSpreadsheetFormulaParserToken group = group(
                 parenthesisOpen(),
                 negative(
                         minusSymbol(),
@@ -2315,21 +2315,21 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
 
         final String addText2 = add + "+" + group.text();
-        final AdditionSpreadsheetParserToken add2 = addition(
+        final AdditionSpreadsheetFormulaParserToken add2 = addition(
                 add,
                 plusSymbol(),
                 group
         );
 
         final String multiplyText = "444*555";
-        final MultiplicationSpreadsheetParserToken multiply = multiplication(
+        final MultiplicationSpreadsheetFormulaParserToken multiply = multiplication(
                 number(444),
                 multiplySymbol(),
                 number(555)
         );
 
         final String subText = addText2 + "-" + multiplyText;
-        final SubtractionSpreadsheetParserToken sub = subtraction(
+        final SubtractionSpreadsheetFormulaParserToken sub = subtraction(
                 add2,
                 minusSymbol(),
                 multiply
@@ -2460,9 +2460,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testLambdaFunctionParserParseLambdaFunctionNameWithNumberParameter() {
         final String text = "lambda(x;x+x)(1)";
-        final LabelNameSpreadsheetParserToken x = this.label("x");
+        final LabelNameSpreadsheetFormulaParserToken x = this.label("x");
 
-        final LambdaFunctionSpreadsheetParserToken lambda = lambdaFunction(
+        final LambdaFunctionSpreadsheetFormulaParserToken lambda = lambdaFunction(
                 functionName("lambda"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2492,9 +2492,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testLambdaFunctionParserParseLambdaFunctionNameWithStringParameter() {
         final String text = "lambda(x;x+x)(\"Hello\")";
-        final LabelNameSpreadsheetParserToken x = this.label("x");
+        final LabelNameSpreadsheetFormulaParserToken x = this.label("x");
 
-        final LambdaFunctionSpreadsheetParserToken lambda = lambdaFunction(
+        final LambdaFunctionSpreadsheetFormulaParserToken lambda = lambdaFunction(
                 functionName("lambda"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2530,7 +2530,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
      * {@link SpreadsheetParsers#expression()}. Both should give the same results.
      */
     private void lambdaFunctionParserParseAndCheck(final String from,
-                                                   final LambdaFunctionSpreadsheetParserToken expected,
+                                                   final LambdaFunctionSpreadsheetFormulaParserToken expected,
                                                    final String text) {
         this.lambdaFunctionParserParseAndCheck(
                 from,
@@ -2541,7 +2541,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void lambdaFunctionParserParseAndCheck(final String from,
-                                                   final LambdaFunctionSpreadsheetParserToken expected,
+                                                   final LambdaFunctionSpreadsheetFormulaParserToken expected,
                                                    final String text,
                                                    final String expressionToString) {
         this.parseAndCheck(
@@ -2575,7 +2575,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testNamedFunctionParserParseWithoutArguments() {
         final String text = "xyz()";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2593,7 +2593,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testNamedFunctionNameWithDotWithoutArguments() {
         final String text = "Error.Type()";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("Error.Type"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2611,7 +2611,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     @Test
     public void testNamedFunctionParserParseWithoutArgumentsWhitespace() {
         final String text = "xyz(  )";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2640,7 +2640,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void namedFunctionParserParseWithOneArgument() {
         final String text = "xyz(123)";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2668,7 +2668,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void namedFunctionParserParseWithOneArgument2() {
         final String text = "xyz(  123)";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2698,7 +2698,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void namedFunctionParserParseWithOneArgument3() {
         final String text = "xyz(123  )";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2728,7 +2728,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void namedFunctionParserParseWithOneArgument4() {
         final String text = "xyz(  123  )";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2759,7 +2759,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void namedFunctionParserParseTwoArguments() {
         final String text = "xyz(123;456)";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2790,7 +2790,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void namedFunctionParserParseFourArguments() {
         final String text = "xyz(1;2;3;4)";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2825,7 +2825,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void namedFunctionParserParseFunction() {
         final String yText = "y(123)";
-        final NamedFunctionSpreadsheetParserToken y = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken y = namedFunction(
                 functionName("y"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2835,7 +2835,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
 
         final String xText = "x(" + yText + ")";
-        final NamedFunctionSpreadsheetParserToken x = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken x = namedFunction(
                 functionName("x"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2863,7 +2863,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void namedFunctionParserParseFunctionWithFunction() {
         final String zText = "z(123)";
-        final NamedFunctionSpreadsheetParserToken z = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken z = namedFunction(
                 functionName("z"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2873,7 +2873,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
 
         final String yText = "y(" + zText + ")";
-        final NamedFunctionSpreadsheetParserToken y = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken y = namedFunction(
 
                 functionName("y"),
                 functionParameters(
@@ -2884,7 +2884,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
 
         final String xText = "x(" + yText + ")";
-        final NamedFunctionSpreadsheetParserToken x = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken x = namedFunction(
 
                 functionName("x"),
                 functionParameters(
@@ -2912,14 +2912,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void namedFunctionParserParseWithRangeArgument() {
-        final CellReferenceSpreadsheetParserToken from = this.cellReference(0, "A", 0);
-        final CellReferenceSpreadsheetParserToken to = this.cellReference(1, "B", 1);
+        final CellReferenceSpreadsheetFormulaParserToken from = this.cellReference(0, "A", 0);
+        final CellReferenceSpreadsheetFormulaParserToken to = this.cellReference(1, "B", 1);
 
-        final CellRangeSpreadsheetParserToken range = range(from, to);
+        final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String rangeText = range.text();
 
         final String text = "xyz(" + rangeText + ")";
-        final NamedFunctionSpreadsheetParserToken f = namedFunction(
+        final NamedFunctionSpreadsheetFormulaParserToken f = namedFunction(
                 functionName("xyz"),
                 functionParameters(
                         parenthesisOpen(),
@@ -2936,7 +2936,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
      * {@link SpreadsheetParsers#expression()}. Both should give the same results.
      */
     private void namedFunctionParseAndCheck(final String from,
-                                            final NamedFunctionSpreadsheetParserToken expected,
+                                            final NamedFunctionSpreadsheetFormulaParserToken expected,
                                             final String text) {
         this.namedFunctionParseAndCheck(
                 from,
@@ -2947,7 +2947,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void namedFunctionParseAndCheck(final String from,
-                                            final NamedFunctionSpreadsheetParserToken expected,
+                                            final NamedFunctionSpreadsheetFormulaParserToken expected,
                                             final String text,
                                             final String expressionToString) {
         this.parseAndCheck(
@@ -2981,21 +2981,21 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void valueOrExpressionParserParseGroupAndFurtherExpressions() {
-        final SpreadsheetParserToken left = number(1);
-        final SpreadsheetParserToken right = number(2);
-        final AdditionSpreadsheetParserToken add = addition(
+        final SpreadsheetFormulaParserToken left = number(1);
+        final SpreadsheetFormulaParserToken right = number(2);
+        final AdditionSpreadsheetFormulaParserToken add = addition(
                 left,
                 plusSymbol(),
                 right
         );
-        final GroupSpreadsheetParserToken group = group(
+        final GroupSpreadsheetFormulaParserToken group = group(
                 this.parenthesisOpen(),
                 add,
                 this.parenthesisClose()
         );
 
-        final SpreadsheetParserToken last = number(3);
-        final MultiplicationSpreadsheetParserToken mul = multiplication(
+        final SpreadsheetFormulaParserToken last = number(3);
+        final MultiplicationSpreadsheetFormulaParserToken mul = multiplication(
                 group,
                 multiplySymbol(),
                 last
@@ -3020,33 +3020,33 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void valueOrExpressionParserParseNestedGroupAddition() {
-        final SpreadsheetParserToken left1 = number(1);
-        final SpreadsheetParserToken right1 = number(2);
-        final AdditionSpreadsheetParserToken add1 = addition(
+        final SpreadsheetFormulaParserToken left1 = number(1);
+        final SpreadsheetFormulaParserToken right1 = number(2);
+        final AdditionSpreadsheetFormulaParserToken add1 = addition(
                 left1,
                 plusSymbol(),
                 right1
         );
-        final GroupSpreadsheetParserToken group1 = group(
+        final GroupSpreadsheetFormulaParserToken group1 = group(
                 this.parenthesisOpen(),
                 add1,
                 this.parenthesisClose()
         );
 
-        final SpreadsheetParserToken left2 = number(3);
-        final SpreadsheetParserToken right2 = number(4);
-        final AdditionSpreadsheetParserToken add2 = addition(
+        final SpreadsheetFormulaParserToken left2 = number(3);
+        final SpreadsheetFormulaParserToken right2 = number(4);
+        final AdditionSpreadsheetFormulaParserToken add2 = addition(
                 left2,
                 plusSymbol(),
                 right2
         );
-        final GroupSpreadsheetParserToken group2 = group(
+        final GroupSpreadsheetFormulaParserToken group2 = group(
                 this.parenthesisOpen(),
                 add2,
                 this.parenthesisClose()
         );
 
-        final MultiplicationSpreadsheetParserToken mul = multiplication(
+        final MultiplicationSpreadsheetFormulaParserToken mul = multiplication(
                 group1,
                 multiplySymbol(),
                 group2
@@ -3555,11 +3555,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 ""
         );
 
-        final SpreadsheetParserToken spreadsheetParserToken = token.cast(SpreadsheetParserToken.class);
+        final SpreadsheetFormulaParserToken spreadsheetFormulaParserToken = token.cast(SpreadsheetFormulaParserToken.class);
 
         this.checkEquals(
                 expressionToString.replace(';', ','),
-                spreadsheetParserToken.toExpression(
+                spreadsheetFormulaParserToken.toExpression(
                                 ExpressionEvaluationContexts.basic(
                                         ExpressionNumberKind.DEFAULT,
                                         (n) -> {
@@ -3636,7 +3636,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                                   final ExpressionNumberKind kind,
                                                   final int twoDigitYear,
                                                   final String expectedText) {
-        final SpreadsheetParserToken formula = this.parse(parser, formulaText);
+        final SpreadsheetFormulaParserToken formula = this.parse(parser, formulaText);
         final Optional<Expression> maybeExpression = formula.toExpression(
                 new FakeExpressionEvaluationContext() {
 
@@ -3680,8 +3680,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private SpreadsheetParserToken parse(final Parser<SpreadsheetParserContext> parser,
-                                         final String parse) {
+    private SpreadsheetFormulaParserToken parse(final Parser<SpreadsheetParserContext> parser,
+                                                final String parse) {
         final TextCursor cursor = TextCursors.charSequence(parse);
         final Optional<ParserToken> spreadsheetFormula = parser.parse(cursor, this.createContext());
         if (!spreadsheetFormula.isPresent()) {
@@ -3695,7 +3695,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             fail("Parser left " + CharSequences.quoteAndEscape(leftOver) + " parse " + CharSequences.quoteAndEscape(parse));
         }
         return spreadsheetFormula.get()
-                .cast(SpreadsheetParserToken.class);
+                .cast(SpreadsheetFormulaParserToken.class);
     }
 
     private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
@@ -3959,36 +3959,36 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         };
     }
 
-    private AdditionSpreadsheetParserToken addition(final SpreadsheetParserToken... tokens) {
+    private AdditionSpreadsheetFormulaParserToken addition(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::addition,
+                SpreadsheetFormulaParserToken::addition,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken betweenSymbol() {
-        return SpreadsheetParserToken.betweenSymbol(":", ":");
+    private SpreadsheetFormulaParserToken betweenSymbol() {
+        return SpreadsheetFormulaParserToken.betweenSymbol(":", ":");
     }
 
-    private CellReferenceSpreadsheetParserToken cellReference(final ParserToken... tokens) {
+    private CellReferenceSpreadsheetFormulaParserToken cellReference(final ParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::cellReference,
+                SpreadsheetFormulaParserToken::cellReference,
                 tokens
         );
     }
 
-    private CellReferenceSpreadsheetParserToken cellReference(final int column,
-                                                              final String columnText,
-                                                              final int row) {
+    private CellReferenceSpreadsheetFormulaParserToken cellReference(final int column,
+                                                                     final String columnText,
+                                                                     final int row) {
         return cellReference(
-                SpreadsheetParserToken.columnReference(
+                SpreadsheetFormulaParserToken.columnReference(
                         SpreadsheetColumnOrRowReference.column(
                                 column,
                                 SpreadsheetReferenceKind.RELATIVE
                         ),
                         columnText
                 ),
-                SpreadsheetParserToken.rowReference(
+                SpreadsheetFormulaParserToken.rowReference(
                         SpreadsheetColumnOrRowReference.row(
                                 row,
                                 SpreadsheetReferenceKind.RELATIVE
@@ -3998,357 +3998,357 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private ColumnReferenceSpreadsheetParserToken columnReference(final String text) {
-        return SpreadsheetParserToken.columnReference(
+    private ColumnReferenceSpreadsheetFormulaParserToken columnReference(final String text) {
+        return SpreadsheetFormulaParserToken.columnReference(
                 SpreadsheetSelection.parseColumn(text),
                 text
         );
     }
 
-    private TextLiteralSpreadsheetParserToken colon() {
+    private TextLiteralSpreadsheetFormulaParserToken colon() {
         return textLiteral(":");
     }
 
-    private DayNumberSpreadsheetParserToken day31() {
-        return SpreadsheetParserToken.dayNumber(31, "31");
+    private DayNumberSpreadsheetFormulaParserToken day31() {
+        return SpreadsheetFormulaParserToken.dayNumber(31, "31");
     }
 
-    private DecimalSeparatorSymbolSpreadsheetParserToken decimal() {
-        return SpreadsheetParserToken.decimalSeparatorSymbol(".", ".");
+    private DecimalSeparatorSymbolSpreadsheetFormulaParserToken decimal() {
+        return SpreadsheetFormulaParserToken.decimalSeparatorSymbol(".", ".");
     }
 
-    private SpreadsheetParserToken decimalSymbols() {
-        return SpreadsheetParserToken.decimalSeparatorSymbol(".", ".");
+    private SpreadsheetFormulaParserToken decimalSymbols() {
+        return SpreadsheetFormulaParserToken.decimalSeparatorSymbol(".", ".");
     }
 
-    private SpreadsheetParserToken digits(final Number number) {
-        return SpreadsheetParserToken.digits(
+    private SpreadsheetFormulaParserToken digits(final Number number) {
+        return SpreadsheetFormulaParserToken.digits(
                 "" + number,
                 "" + number
         );
     }
 
-    private DivisionSpreadsheetParserToken division(final ParserToken... tokens) {
+    private DivisionSpreadsheetFormulaParserToken division(final ParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::division,
+                SpreadsheetFormulaParserToken::division,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken divideSymbol() {
-        return SpreadsheetParserToken.divideSymbol(
+    private SpreadsheetFormulaParserToken divideSymbol() {
+        return SpreadsheetFormulaParserToken.divideSymbol(
                 "/",
                 "/"
         );
     }
 
-    private SpreadsheetParserToken doubleQuotesSymbol() {
-        return SpreadsheetParserToken.doubleQuoteSymbol(
+    private SpreadsheetFormulaParserToken doubleQuotesSymbol() {
+        return SpreadsheetFormulaParserToken.doubleQuoteSymbol(
                 "\"",
                 "\""
         );
     }
 
-    private EqualsSpreadsheetParserToken equals(final SpreadsheetParserToken... tokens) {
+    private EqualsSpreadsheetFormulaParserToken equals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::equalsSpreadsheetParserToken,
+                SpreadsheetFormulaParserToken::equalsSpreadsheetFormulaParserToken,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken equalsSymbol() {
-        return SpreadsheetParserToken.equalsSymbol("=", "=");
+    private SpreadsheetFormulaParserToken equalsSymbol() {
+        return SpreadsheetFormulaParserToken.equalsSymbol("=", "=");
     }
 
-    private ExpressionSpreadsheetParserToken expression(final ParserToken... tokens) {
+    private ExpressionSpreadsheetFormulaParserToken expression(final ParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::expression,
+                SpreadsheetFormulaParserToken::expression,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken functionName(final String name) {
-        return SpreadsheetParserToken.functionName(
+    private SpreadsheetFormulaParserToken functionName(final String name) {
+        return SpreadsheetFormulaParserToken.functionName(
                 SpreadsheetFunctionName.with(name),
                 name
         );
     }
 
-    private FunctionParametersSpreadsheetParserToken functionParameters(final SpreadsheetParserToken... tokens) {
+    private FunctionParametersSpreadsheetFormulaParserToken functionParameters(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::functionParameters,
+                SpreadsheetFormulaParserToken::functionParameters,
                 tokens
         );
     }
 
-    private GreaterThanSpreadsheetParserToken greaterThan(final SpreadsheetParserToken... tokens) {
+    private GreaterThanSpreadsheetFormulaParserToken greaterThan(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::greaterThan,
+                SpreadsheetFormulaParserToken::greaterThan,
                 tokens
         );
     }
 
-    private GreaterThanEqualsSpreadsheetParserToken greaterThanEquals(final SpreadsheetParserToken... tokens) {
+    private GreaterThanEqualsSpreadsheetFormulaParserToken greaterThanEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::greaterThanEquals,
+                SpreadsheetFormulaParserToken::greaterThanEquals,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken greaterThanSymbol() {
-        return SpreadsheetParserToken.greaterThanSymbol(
+    private SpreadsheetFormulaParserToken greaterThanSymbol() {
+        return SpreadsheetFormulaParserToken.greaterThanSymbol(
                 ">",
                 ">"
         );
     }
 
-    private SpreadsheetParserToken greaterThanEqualsSymbol() {
-        return SpreadsheetParserToken.greaterThanEqualsSymbol(
+    private SpreadsheetFormulaParserToken greaterThanEqualsSymbol() {
+        return SpreadsheetFormulaParserToken.greaterThanEqualsSymbol(
                 ">=",
                 ">="
         );
     }
 
-    private GroupSpreadsheetParserToken group(final SpreadsheetParserToken... tokens) {
+    private GroupSpreadsheetFormulaParserToken group(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::group,
+                SpreadsheetFormulaParserToken::group,
                 tokens
         );
     }
 
-    private HourSpreadsheetParserToken hour11() {
-        return SpreadsheetParserToken.hour(11, "11");
+    private HourSpreadsheetFormulaParserToken hour11() {
+        return SpreadsheetFormulaParserToken.hour(11, "11");
     }
 
-    private MillisecondSpreadsheetParserToken millis123() {
-        return SpreadsheetParserToken.millisecond(123_000_000, "123");
+    private MillisecondSpreadsheetFormulaParserToken millis123() {
+        return SpreadsheetFormulaParserToken.millisecond(123_000_000, "123");
     }
 
-    private MinuteSpreadsheetParserToken minute58() {
-        return SpreadsheetParserToken.minute(58, "58");
+    private MinuteSpreadsheetFormulaParserToken minute58() {
+        return SpreadsheetFormulaParserToken.minute(58, "58");
     }
 
-    private LabelNameSpreadsheetParserToken label(final String label) {
-        return SpreadsheetParserToken.labelName(SpreadsheetSelection.labelName(label), label);
+    private LabelNameSpreadsheetFormulaParserToken label(final String label) {
+        return SpreadsheetFormulaParserToken.labelName(SpreadsheetSelection.labelName(label), label);
     }
 
-    private LambdaFunctionSpreadsheetParserToken lambdaFunction(final SpreadsheetParserToken... tokens) {
+    private LambdaFunctionSpreadsheetFormulaParserToken lambdaFunction(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::lambdaFunction,
+                SpreadsheetFormulaParserToken::lambdaFunction,
                 tokens
         );
     }
 
-    private LessThanSpreadsheetParserToken lessThan(final SpreadsheetParserToken... tokens) {
+    private LessThanSpreadsheetFormulaParserToken lessThan(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::lessThan,
+                SpreadsheetFormulaParserToken::lessThan,
                 tokens
         );
     }
 
-    private LessThanEqualsSpreadsheetParserToken lessThanEquals(final SpreadsheetParserToken... tokens) {
+    private LessThanEqualsSpreadsheetFormulaParserToken lessThanEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::lessThanEquals,
+                SpreadsheetFormulaParserToken::lessThanEquals,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken lessThanSymbol() {
-        return SpreadsheetParserToken.lessThanSymbol(
+    private SpreadsheetFormulaParserToken lessThanSymbol() {
+        return SpreadsheetFormulaParserToken.lessThanSymbol(
                 "<",
                 "<"
         );
     }
 
-    private SpreadsheetParserToken lessThanEqualsSymbol() {
-        return SpreadsheetParserToken.lessThanEqualsSymbol(
+    private SpreadsheetFormulaParserToken lessThanEqualsSymbol() {
+        return SpreadsheetFormulaParserToken.lessThanEqualsSymbol(
                 "<=",
                 "<="
         );
     }
 
 
-    private SpreadsheetParserToken multiplySymbol() {
-        return SpreadsheetParserToken.multiplySymbol(
+    private SpreadsheetFormulaParserToken multiplySymbol() {
+        return SpreadsheetFormulaParserToken.multiplySymbol(
                 "*",
                 "*"
         );
     }
 
-    private MultiplicationSpreadsheetParserToken multiplication(final SpreadsheetParserToken... tokens) {
+    private MultiplicationSpreadsheetFormulaParserToken multiplication(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::multiplication,
+                SpreadsheetFormulaParserToken::multiplication,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken minusSymbol() {
-        return SpreadsheetParserToken.minusSymbol(
+    private SpreadsheetFormulaParserToken minusSymbol() {
+        return SpreadsheetFormulaParserToken.minusSymbol(
                 "-",
                 "-"
         );
     }
 
-    private MonthNumberSpreadsheetParserToken month12() {
-        return SpreadsheetParserToken.monthNumber(12, "12");
+    private MonthNumberSpreadsheetFormulaParserToken month12() {
+        return SpreadsheetFormulaParserToken.monthNumber(12, "12");
     }
 
-    private NamedFunctionSpreadsheetParserToken namedFunction(final SpreadsheetParserToken... tokens) {
+    private NamedFunctionSpreadsheetFormulaParserToken namedFunction(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::namedFunction,
+                SpreadsheetFormulaParserToken::namedFunction,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken negative(final SpreadsheetParserToken... tokens) {
+    private SpreadsheetFormulaParserToken negative(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::negative,
+                SpreadsheetFormulaParserToken::negative,
                 tokens
         );
     }
 
-    private NotEqualsSpreadsheetParserToken notEquals(final SpreadsheetParserToken... tokens) {
+    private NotEqualsSpreadsheetFormulaParserToken notEquals(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::notEquals,
+                SpreadsheetFormulaParserToken::notEquals,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken notEqualsSymbol() {
-        return SpreadsheetParserToken.notEqualsSymbol(
+    private SpreadsheetFormulaParserToken notEqualsSymbol() {
+        return SpreadsheetFormulaParserToken.notEqualsSymbol(
                 "<>",
                 "<>"
         );
     }
 
-    private NumberSpreadsheetParserToken number(final Number number) {
+    private NumberSpreadsheetFormulaParserToken number(final Number number) {
         return number(
                 digits(number)
         );
     }
 
-    private NumberSpreadsheetParserToken number(final SpreadsheetParserToken... tokens) {
+    private NumberSpreadsheetFormulaParserToken number(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::number,
+                SpreadsheetFormulaParserToken::number,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken parenthesisOpen() {
-        return SpreadsheetParserToken.parenthesisOpenSymbol("(", "(");
+    private SpreadsheetFormulaParserToken parenthesisOpen() {
+        return SpreadsheetFormulaParserToken.parenthesisOpenSymbol("(", "(");
     }
 
-    private SpreadsheetParserToken parenthesisClose() {
-        return SpreadsheetParserToken.parenthesisCloseSymbol(")", ")");
+    private SpreadsheetFormulaParserToken parenthesisClose() {
+        return SpreadsheetFormulaParserToken.parenthesisCloseSymbol(")", ")");
     }
 
-    private SpreadsheetParserToken percentSymbol() {
-        return SpreadsheetParserToken.percentSymbol(
+    private SpreadsheetFormulaParserToken percentSymbol() {
+        return SpreadsheetFormulaParserToken.percentSymbol(
                 "%",
                 "%"
         );
     }
 
-    private SpreadsheetParserToken plusSymbol() {
-        return SpreadsheetParserToken.plusSymbol(
+    private SpreadsheetFormulaParserToken plusSymbol() {
+        return SpreadsheetFormulaParserToken.plusSymbol(
                 "+",
                 "+"
         );
     }
 
-    private AmPmSpreadsheetParserToken pm() {
-        return SpreadsheetParserToken.amPm(12, "pm");
+    private AmPmSpreadsheetFormulaParserToken pm() {
+        return SpreadsheetFormulaParserToken.amPm(12, "pm");
     }
 
-    private PowerSpreadsheetParserToken power(final SpreadsheetParserToken... tokens) {
+    private PowerSpreadsheetFormulaParserToken power(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::power,
+                SpreadsheetFormulaParserToken::power,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken powerSymbol() {
-        return SpreadsheetParserToken.powerSymbol(
+    private SpreadsheetFormulaParserToken powerSymbol() {
+        return SpreadsheetFormulaParserToken.powerSymbol(
                 "^",
                 "^"
         );
     }
 
-    private CellRangeSpreadsheetParserToken range(final SpreadsheetParserToken from,
-                                                  final SpreadsheetParserToken to) {
+    private CellRangeSpreadsheetFormulaParserToken range(final SpreadsheetFormulaParserToken from,
+                                                         final SpreadsheetFormulaParserToken to) {
         return parentToken(
-                SpreadsheetParserToken::cellRange,
+                SpreadsheetFormulaParserToken::cellRange,
                 from,
                 betweenSymbol(),
                 to
         );
     }
 
-    private RowReferenceSpreadsheetParserToken rowReference(final String text) {
-        return SpreadsheetParserToken.rowReference(
+    private RowReferenceSpreadsheetFormulaParserToken rowReference(final String text) {
+        return SpreadsheetFormulaParserToken.rowReference(
                 SpreadsheetSelection.parseRow(text),
                 text
         );
     }
 
-    private SecondsSpreadsheetParserToken seconds59() {
-        return SpreadsheetParserToken.seconds(59, "59");
+    private SecondsSpreadsheetFormulaParserToken seconds59() {
+        return SpreadsheetFormulaParserToken.seconds(59, "59");
     }
 
-    private TextLiteralSpreadsheetParserToken slash() {
+    private TextLiteralSpreadsheetFormulaParserToken slash() {
         return textLiteral("/");
     }
 
-    private SubtractionSpreadsheetParserToken subtraction(final SpreadsheetParserToken... tokens) {
+    private SubtractionSpreadsheetFormulaParserToken subtraction(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::subtraction,
+                SpreadsheetFormulaParserToken::subtraction,
                 tokens
         );
     }
 
-    private SpreadsheetParserToken text(final SpreadsheetParserToken... tokens) {
+    private SpreadsheetFormulaParserToken text(final SpreadsheetFormulaParserToken... tokens) {
         return parentToken(
-                SpreadsheetParserToken::text,
+                SpreadsheetFormulaParserToken::text,
                 tokens
         );
     }
 
-    private TextLiteralSpreadsheetParserToken textLiteral(final String text) {
-        return SpreadsheetParserToken.textLiteral(text, text);
+    private TextLiteralSpreadsheetFormulaParserToken textLiteral(final String text) {
+        return SpreadsheetFormulaParserToken.textLiteral(text, text);
     }
 
-    private SpreadsheetParserToken valueSeparatorSymbol() {
-        return SpreadsheetParserToken.valueSeparatorSymbol(
+    private SpreadsheetFormulaParserToken valueSeparatorSymbol() {
+        return SpreadsheetFormulaParserToken.valueSeparatorSymbol(
                 "" + VALUE_SEPARATOR,
                 "" + VALUE_SEPARATOR
         );
     }
 
-    private SpreadsheetParserToken whitespace1() {
+    private SpreadsheetFormulaParserToken whitespace1() {
         return whitespace(" ");
     }
 
-    private SpreadsheetParserToken whitespace2() {
+    private SpreadsheetFormulaParserToken whitespace2() {
         return whitespace("  ");
     }
 
-    private SpreadsheetParserToken whitespace(final String text) {
-        return SpreadsheetParserToken.whitespace(
+    private SpreadsheetFormulaParserToken whitespace(final String text) {
+        return SpreadsheetFormulaParserToken.whitespace(
                 text,
                 text
         );
     }
 
-    private YearSpreadsheetParserToken year99() {
-        return SpreadsheetParserToken.year(99, "99");
+    private YearSpreadsheetFormulaParserToken year99() {
+        return SpreadsheetFormulaParserToken.year(99, "99");
     }
 
-    private YearSpreadsheetParserToken year2000() {
-        return SpreadsheetParserToken.year(2000, "2000");
+    private YearSpreadsheetFormulaParserToken year2000() {
+        return SpreadsheetFormulaParserToken.year(2000, "2000");
     }
 
-    private <T extends SpreadsheetParserToken> T parentToken(final BiFunction<List<ParserToken>, String, T> factory,
-                                                             final ParserToken... tokens) {
+    private <T extends SpreadsheetFormulaParserToken> T parentToken(final BiFunction<List<ParserToken>, String, T> factory,
+                                                                    final ParserToken... tokens) {
         return factory.apply(
                 Lists.of(tokens),
                 ParserToken.text(

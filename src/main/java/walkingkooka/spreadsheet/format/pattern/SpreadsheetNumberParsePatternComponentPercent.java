@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
@@ -49,7 +49,7 @@ final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNum
                 cursor,
                 Character.toString(percentSymbol),
                 CaseSensitivity.SENSITIVE,
-                SpreadsheetParserToken::percentSymbol,
+                SpreadsheetFormulaParserToken::percentSymbol,
                 null, // dont update mode
                 request
         );

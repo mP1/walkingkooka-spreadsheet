@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -164,25 +164,25 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     /**
-     * Updates any column/row references within any {@link CellReferenceSpreadsheetParserToken} in the given {@link SpreadsheetParserToken}.
+     * Updates any column/row references within any {@link CellReferenceSpreadsheetFormulaParserToken} in the given {@link SpreadsheetFormulaParserToken}.
      */
-    private SpreadsheetParserToken fixExpressionReferences0(final SpreadsheetParserToken token) {
+    private SpreadsheetFormulaParserToken fixExpressionReferences0(final SpreadsheetFormulaParserToken token) {
         return token.replaceIf(
-                (t) -> t instanceof CellReferenceSpreadsheetParserToken,// predicate
+                (t) -> t instanceof CellReferenceSpreadsheetFormulaParserToken,// predicate
                 (c) -> {
                     boolean invalid = false;
 
                     List<ParserToken> newChildren = Lists.array();
                     for (final ParserToken parserToken : c.children()) {
                         ParserToken add = parserToken;
-                        if (parserToken instanceof ColumnReferenceSpreadsheetParserToken) {
+                        if (parserToken instanceof ColumnReferenceSpreadsheetFormulaParserToken) {
                             add = this.fixColumnReferenceParserToken(
-                                    parserToken.cast(ColumnReferenceSpreadsheetParserToken.class)
+                                    parserToken.cast(ColumnReferenceSpreadsheetFormulaParserToken.class)
                             ).orElse(null);
                         } else {
-                            if (parserToken instanceof RowReferenceSpreadsheetParserToken) {
+                            if (parserToken instanceof RowReferenceSpreadsheetFormulaParserToken) {
                                 add = this.fixRowReferenceParserToken(
-                                        parserToken.cast(RowReferenceSpreadsheetParserToken.class)
+                                        parserToken.cast(RowReferenceSpreadsheetFormulaParserToken.class)
                                 ).orElse(null);
                             }
                         }
@@ -197,25 +197,25 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
                             REF_ERROR :
                             c.setChildren(newChildren);
                 }// mapper
-        ).cast(SpreadsheetParserToken.class);
+        ).cast(SpreadsheetFormulaParserToken.class);
     }
 
     /**
-     * Handles a column {@link ColumnReferenceSpreadsheetParserToken} within an expression.
+     * Handles a column {@link ColumnReferenceSpreadsheetFormulaParserToken} within an expression.
      * It may be returned unmodified, replaced by a expression if the reference was deleted or simply have the reference adjusted.
      */
-    abstract Optional<ColumnReferenceSpreadsheetParserToken> fixColumnReferenceParserToken(final ColumnReferenceSpreadsheetParserToken token);
+    abstract Optional<ColumnReferenceSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnReferenceSpreadsheetFormulaParserToken token);
 
     /**
-     * Handles a column {@link RowReferenceSpreadsheetParserToken} within an expression.
+     * Handles a column {@link RowReferenceSpreadsheetFormulaParserToken} within an expression.
      * It may be returned unmodified, replaced by a expression if the reference was deleted or simply have the reference adjusted.
      */
-    abstract Optional<RowReferenceSpreadsheetParserToken> fixRowReferenceParserToken(final RowReferenceSpreadsheetParserToken token);
+    abstract Optional<RowReferenceSpreadsheetFormulaParserToken> fixRowReferenceParserToken(final RowReferenceSpreadsheetFormulaParserToken token);
 
     /**
      * This token will replace any {@link SpreadsheetCellReference} that become invalid such as a reference to a deleted cell.
      */
-    private final static SpreadsheetParserToken REF_ERROR = SpreadsheetParserToken.error(
+    private final static SpreadsheetFormulaParserToken REF_ERROR = SpreadsheetFormulaParserToken.error(
             SpreadsheetError.selectionDeleted(),
             SpreadsheetError.selectionDeleted()
                     .kind()

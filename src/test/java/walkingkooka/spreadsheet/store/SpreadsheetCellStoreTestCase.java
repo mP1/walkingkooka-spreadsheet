@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -398,18 +398,18 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         return SpreadsheetFormula.EMPTY
                 .setText(text)
                 .setToken(Optional.of(
-                        SpreadsheetParserToken.addition(
+                        SpreadsheetFormulaParserToken.addition(
                                 List.of(
-                                        SpreadsheetParserToken.number(
+                                        SpreadsheetFormulaParserToken.number(
                                                 Lists.of(
-                                                        SpreadsheetParserToken.digits("1", "1")
+                                                        SpreadsheetFormulaParserToken.digits("1", "1")
                                                 ),
                                                 "1"
                                         ),
-                                        SpreadsheetParserToken.plusSymbol("+", "+"),
-                                        SpreadsheetParserToken.number(
+                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetFormulaParserToken.number(
                                                 Lists.of(
-                                                        SpreadsheetParserToken.digits("2", "2")
+                                                        SpreadsheetFormulaParserToken.digits("2", "2")
                                                 ),
                                                 "2"
                                         )

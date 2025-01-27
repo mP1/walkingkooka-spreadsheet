@@ -34,8 +34,8 @@ import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.formula.NumberSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.NumberSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -51,7 +51,7 @@ import java.util.List;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
         NumberSpreadsheetFormatParserToken,
-        NumberSpreadsheetParserToken,
+        NumberSpreadsheetFormulaParserToken,
         ExpressionNumber> implements ConverterTesting {
 
     @Test
@@ -414,7 +414,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         this.parseAndCheck2(
                 "\"Number\"#",
                 "Number5",
-                SpreadsheetParserToken.textLiteral("Number", "Number"),
+                SpreadsheetFormulaParserToken.textLiteral("Number", "Number"),
                 digit5()
         );
     }
@@ -424,7 +424,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
         this.parseAndCheck2(
                 " #",
                 " 5",
-                SpreadsheetParserToken.textLiteral(" ", " "),
+                SpreadsheetFormulaParserToken.textLiteral(" ", " "),
                 digit5()
         );
     }
@@ -1240,9 +1240,9 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     }
 
     @Override
-    NumberSpreadsheetParserToken parent(final List<ParserToken> tokens,
-                                        final String text) {
-        return SpreadsheetParserToken.number(tokens, text);
+    NumberSpreadsheetFormulaParserToken parent(final List<ParserToken> tokens,
+                                               final String text) {
+        return SpreadsheetFormulaParserToken.number(tokens, text);
     }
 
     @Override

@@ -26,7 +26,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -237,11 +237,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.parseFormulaAndCheck(
                 expression,
-                SpreadsheetParserToken.text(
+                SpreadsheetFormulaParserToken.text(
                         Lists.of(
-                                SpreadsheetParserToken.doubleQuoteSymbol("\"", "\""),
-                                SpreadsheetParserToken.textLiteral(text, text),
-                                SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"")
+                                SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\""),
+                                SpreadsheetFormulaParserToken.textLiteral(text, text),
+                                SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\"")
                         ),
                         expression
                 )
@@ -254,9 +254,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.number(
+                SpreadsheetFormulaParserToken.number(
                         Lists.of(
-                                SpreadsheetParserToken.digits(text, text)
+                                SpreadsheetFormulaParserToken.digits(text, text)
                         ),
                         text
                 )
@@ -271,11 +271,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.number(
+                SpreadsheetFormulaParserToken.number(
                         Lists.of(
-                                SpreadsheetParserToken.digits("1", "1"),
-                                SpreadsheetParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
-                                SpreadsheetParserToken.digits("5", "5")
+                                SpreadsheetFormulaParserToken.digits("1", "1"),
+                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
+                                SpreadsheetFormulaParserToken.digits("5", "5")
                         ),
                         text
                 )
@@ -288,18 +288,18 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.parseFormulaAndCheck(
                 text,
-                SpreadsheetParserToken.addition(
+                SpreadsheetFormulaParserToken.addition(
                         Lists.of(
-                                SpreadsheetParserToken.number(
+                                SpreadsheetFormulaParserToken.number(
                                         Lists.of(
-                                                SpreadsheetParserToken.digits("1", "1")
+                                                SpreadsheetFormulaParserToken.digits("1", "1")
                                         ),
                                         "1"
                                 ),
-                                SpreadsheetParserToken.plusSymbol("+", "+"),
-                                SpreadsheetParserToken.number(
+                                SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                SpreadsheetFormulaParserToken.number(
                                         Lists.of(
-                                                SpreadsheetParserToken.digits("2", "2")
+                                                SpreadsheetFormulaParserToken.digits("2", "2")
                                         ),
                                         "2"
                                 )

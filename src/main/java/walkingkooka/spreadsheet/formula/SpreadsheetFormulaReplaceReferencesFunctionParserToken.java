@@ -36,7 +36,7 @@ final class SpreadsheetFormulaReplaceReferencesFunctionParserToken extends Sprea
     @Override
     public ParserToken apply(final ParserToken token) {
         return this.mapper.apply(
-                        token.cast(CellReferenceSpreadsheetParserToken.class).cell()
+                        token.cast(CellReferenceSpreadsheetFormulaParserToken.class).cell()
                 ).map(t -> (ParserToken) t.toParserToken())
                 .orElse(token);
     }

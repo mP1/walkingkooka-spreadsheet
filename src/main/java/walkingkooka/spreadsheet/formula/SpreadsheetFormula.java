@@ -71,9 +71,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         HasUrlFragment {
 
     /**
-     * No {@link SpreadsheetParserToken} constant.
+     * No {@link SpreadsheetFormulaParserToken} constant.
      */
-    public final static Optional<SpreadsheetParserToken> NO_TOKEN = Optional.empty();
+    public final static Optional<SpreadsheetFormulaParserToken> NO_TOKEN = Optional.empty();
 
     /**
      * No expression constant.
@@ -102,7 +102,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
 
     /**
-     * Uses the provided {@link Parser} to create a {@link SpreadsheetFormula} with the text and parsed {@link SpreadsheetParserToken}.
+     * Uses the provided {@link Parser} to create a {@link SpreadsheetFormula} with the text and parsed {@link SpreadsheetFormulaParserToken}.
      * If the formula expression is invalid, a {@link SpreadsheetFormula} will be created with its value set to {@link SpreadsheetError}.
      */
     public static SpreadsheetFormula parse(final TextCursor text,
@@ -126,7 +126,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                     begin.textBetween()
                             .toString()
             ).setToken(
-                    token.map(t -> t.cast(SpreadsheetParserToken.class))
+                    token.map(t -> t.cast(SpreadsheetFormulaParserToken.class))
             );
         } catch (final Exception cause) {
             text.end();
@@ -145,7 +145,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     private SpreadsheetFormula(final String text,
-                               final Optional<SpreadsheetParserToken> token,
+                               final Optional<SpreadsheetFormulaParserToken> token,
                                final Optional<Expression> expression,
                                final Optional<Object> value) {
         super();
@@ -200,11 +200,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
     // token .............................................................................................
 
-    public Optional<SpreadsheetParserToken> token() {
+    public Optional<SpreadsheetFormulaParserToken> token() {
         return this.token;
     }
 
-    public SpreadsheetFormula setToken(final Optional<SpreadsheetParserToken> token) {
+    public SpreadsheetFormula setToken(final Optional<SpreadsheetFormulaParserToken> token) {
         checkToken(token);
 
         return this.token.equals(token) ?
@@ -221,9 +221,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * The token parsed parse the text form of this formula. When loading a stored/persisted formula this should be
      * used to reconstruct the text form.
      */
-    private final Optional<SpreadsheetParserToken> token;
+    private final Optional<SpreadsheetFormulaParserToken> token;
 
-    private static void checkToken(final Optional<SpreadsheetParserToken> token) {
+    private static void checkToken(final Optional<SpreadsheetFormulaParserToken> token) {
         Objects.requireNonNull(token, "token");
     }
 
@@ -332,7 +332,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // internal factory .............................................................................................
 
     private SpreadsheetFormula replace(final String text,
-                                       final Optional<SpreadsheetParserToken> token,
+                                       final Optional<SpreadsheetFormulaParserToken> token,
                                        final Optional<Expression> expression,
                                        final Optional<Object> value) {
         return new SpreadsheetFormula(
@@ -358,9 +358,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.setToken(
                 this.token.map(
                         t -> t.replaceIf(
-                                (tt) -> tt instanceof CellReferenceSpreadsheetParserToken,
+                                (tt) -> tt instanceof CellReferenceSpreadsheetFormulaParserToken,
                                 SpreadsheetFormulaReplaceReferencesFunction.parserToken(mapper)
-                        ).cast(SpreadsheetParserToken.class)
+                        ).cast(SpreadsheetFormulaParserToken.class)
                 )
         ).setExpression(
                 this.expression.map(
@@ -463,7 +463,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // consumeSpreadsheetExpressionReferences............................................................................
 
     /**
-     * Useful method that walks the {@link SpreadsheetParserToken} if one is present, passing
+     * Useful method that walks the {@link SpreadsheetFormulaParserToken} if one is present, passing
      * each and every {@link SpreadsheetExpressionReference} to the provided {@link Consumer}.
      */
     public void consumeSpreadsheetExpressionReferences(final Consumer<SpreadsheetExpressionReference> consumer) {
@@ -472,7 +472,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         this.token()
                 .ifPresent(
                         t -> t.findIf(
-                                tt -> tt instanceof SpreadsheetParserToken && tt instanceof HasSpreadsheetReference,
+                                tt -> tt instanceof SpreadsheetFormulaParserToken && tt instanceof HasSpreadsheetReference,
                                 ttt -> {
                                     final HasSpreadsheetReference<?> has = (HasSpreadsheetReference<?>) ttt;
                                     final Object reference = has.reference();
@@ -494,7 +494,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     static SpreadsheetFormula unmarshall(final JsonNode node,
                                          final JsonNodeUnmarshallContext context) {
         String text = null;
-        SpreadsheetParserToken token = null;
+        SpreadsheetFormulaParserToken token = null;
         Expression expression = null;
         Object value = null;
 
@@ -549,7 +549,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         JsonNode.string(this.text())
                 );
 
-        final Optional<SpreadsheetParserToken> token = this.token;
+        final Optional<SpreadsheetFormulaParserToken> token = this.token;
         if (token.isPresent()) {
             object = object.set(TOKEN_PROPERTY, context.marshallWithType(token.get()));
         }

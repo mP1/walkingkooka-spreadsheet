@@ -34,11 +34,11 @@ import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
-import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.LeafSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.LeafSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -331,7 +331,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseTextOrFail(
                 text,
                 CELL_PARSER
-        ).cast(CellReferenceSpreadsheetParserToken.class)
+        ).cast(CellReferenceSpreadsheetFormulaParserToken.class)
                 .cell();
     }
 
@@ -384,7 +384,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 text,
                 ALL_CELLS,
                 SpreadsheetParsers.cell(),
-                (t) -> t.cast(CellReferenceSpreadsheetParserToken.class).cell(),
+                (t) -> t.cast(CellReferenceSpreadsheetFormulaParserToken.class).cell(),
                 SpreadsheetCellRangeReference::with
         );
     }
@@ -407,7 +407,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseTextOrFail(
                 text,
                 COLUMN_PARSER
-        ).cast(ColumnReferenceSpreadsheetParserToken.class)
+        ).cast(ColumnReferenceSpreadsheetFormulaParserToken.class)
                 .value();
     }
 
@@ -427,7 +427,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 parseTextOrFail(
                         text,
                         COLUMN_OR_ROW_PARSER
-                ).cast(LeafSpreadsheetParserToken.class)
+                ).cast(LeafSpreadsheetFormulaParserToken.class)
                         .value()
         );
     }
@@ -457,7 +457,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 text,
                 ALL_COLUMNS,
                 SpreadsheetParsers.column(),
-                (t) -> t.cast(ColumnReferenceSpreadsheetParserToken.class).value(),
+                (t) -> t.cast(ColumnReferenceSpreadsheetFormulaParserToken.class).value(),
                 SpreadsheetColumnRangeReference::with
         );
     }
@@ -469,7 +469,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseTextOrFail(
                 text,
                 ROW_PARSER
-        ).cast(RowReferenceSpreadsheetParserToken.class)
+        ).cast(RowReferenceSpreadsheetFormulaParserToken.class)
                 .value();
     }
 
@@ -526,7 +526,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 text,
                 ALL_ROWS,
                 SpreadsheetParsers.row(),
-                (t) -> t.cast(RowReferenceSpreadsheetParserToken.class).value(),
+                (t) -> t.cast(RowReferenceSpreadsheetFormulaParserToken.class).value(),
                 SpreadsheetRowRangeReference::with
         );
     }
@@ -1388,10 +1388,10 @@ public abstract class SpreadsheetSelection implements HasText,
     // HasParserToken...................................................................................................
 
     /**
-     * Returns the {@link SpreadsheetParserToken} equivalent of this {@link SpreadsheetSelection}.
+     * Returns the {@link SpreadsheetFormulaParserToken} equivalent of this {@link SpreadsheetSelection}.
      * Note {@link SpreadsheetColumnRangeReference} and {@link SpreadsheetRowRangeReference} will throw {@link UnsupportedOperationException}.
      */
-    public abstract SpreadsheetParserToken toParserToken();
+    public abstract SpreadsheetFormulaParserToken toParserToken();
 
     // Object...........................................................................................................
 

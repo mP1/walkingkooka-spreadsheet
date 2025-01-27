@@ -22,7 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 
 public final class SpreadsheetParsersValueSeparatorParserTest extends SpreadsheetParserTestCase<SpreadsheetParsersValueSeparatorParser,
-        ValueSeparatorSymbolSpreadsheetParserToken>
+        ValueSeparatorSymbolSpreadsheetFormulaParserToken>
         implements ToStringTesting<SpreadsheetParsersValueSeparatorParser> {
 
     @Test
@@ -38,7 +38,7 @@ public final class SpreadsheetParsersValueSeparatorParserTest extends Spreadshee
 
         this.parseAndCheck(
                 text,
-                SpreadsheetParserToken.valueSeparatorSymbol(text, text),
+                SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
                 text
         );
     }
@@ -50,7 +50,7 @@ public final class SpreadsheetParsersValueSeparatorParserTest extends Spreadshee
 
         this.parseAndCheck(
                 text + after,
-                SpreadsheetParserToken.valueSeparatorSymbol(text, text),
+                SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
                 text,
                 after
         );
@@ -63,7 +63,7 @@ public final class SpreadsheetParsersValueSeparatorParserTest extends Spreadshee
 
         this.parseAndCheck(
                 text + text,
-                SpreadsheetParserToken.valueSeparatorSymbol(text, text),
+                SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
                 text,
                 text
         );
@@ -84,7 +84,7 @@ public final class SpreadsheetParsersValueSeparatorParserTest extends Spreadshee
                     }
                 },
                 text,
-                SpreadsheetParserToken.valueSeparatorSymbol(text, text),
+                SpreadsheetFormulaParserToken.valueSeparatorSymbol(text, text),
                 text
         );
     }

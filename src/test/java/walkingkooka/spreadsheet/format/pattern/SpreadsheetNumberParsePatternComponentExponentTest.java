@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentExponentTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentExponent> {
 
@@ -96,7 +96,7 @@ public final class SpreadsheetNumberParsePatternComponentExponentTest extends Sp
                 text,
                 textAfter,
                 NEXT_CALLED,
-                SpreadsheetParserToken.exponentSymbol(text, text)
+                SpreadsheetFormulaParserToken.exponentSymbol(text, text)
         );
     }
 

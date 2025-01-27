@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentDigitSpaceTest extends SpreadsheetNumberParsePatternComponentDigitTestCase<SpreadsheetNumberParsePatternComponentDigitSpace> {
 
@@ -75,7 +75,7 @@ public final class SpreadsheetNumberParsePatternComponentDigitSpaceTest extends 
                 "",
                 mode,
                 NEXT_SKIPPED,
-                SpreadsheetParserToken.whitespace(" ", " ")
+                SpreadsheetFormulaParserToken.whitespace(" ", " ")
         );
     }
 

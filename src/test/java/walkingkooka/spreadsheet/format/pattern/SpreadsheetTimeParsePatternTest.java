@@ -28,8 +28,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.TimeSpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.TimeSpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
@@ -41,7 +41,7 @@ import java.util.List;
 
 public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetTimeParsePattern,
         TimeSpreadsheetFormatParserToken,
-        TimeSpreadsheetParserToken,
+        TimeSpreadsheetFormulaParserToken,
         LocalTime> {
 
     @Test
@@ -251,7 +251,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond(120_000_000, "12")
+                SpreadsheetFormulaParserToken.millisecond(120_000_000, "12")
         );
     }
 
@@ -266,7 +266,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond(123_000_000, "123")
+                SpreadsheetFormulaParserToken.millisecond(123_000_000, "123")
         );
     }
 
@@ -281,7 +281,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond(120_000_000, "12")
+                SpreadsheetFormulaParserToken.millisecond(120_000_000, "12")
         );
     }
 
@@ -296,7 +296,7 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond(100_000_000, "1")
+                SpreadsheetFormulaParserToken.millisecond(100_000_000, "1")
         );
     }
 
@@ -708,9 +708,9 @@ public final class SpreadsheetTimeParsePatternTest extends SpreadsheetParsePatte
     }
 
     @Override
-    TimeSpreadsheetParserToken parent(final List<ParserToken> tokens,
-                                      final String text) {
-        return SpreadsheetParserToken.time(tokens, text);
+    TimeSpreadsheetFormulaParserToken parent(final List<ParserToken> tokens,
+                                             final String text) {
+        return SpreadsheetFormulaParserToken.time(tokens, text);
     }
 
     @Override

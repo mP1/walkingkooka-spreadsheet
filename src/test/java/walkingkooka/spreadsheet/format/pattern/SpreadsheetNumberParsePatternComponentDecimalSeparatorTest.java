@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 public final class SpreadsheetNumberParsePatternComponentDecimalSeparatorTest extends SpreadsheetNumberParsePatternComponentTestCase2<SpreadsheetNumberParsePatternComponentDecimalSeparator> {
 
@@ -64,7 +64,7 @@ public final class SpreadsheetNumberParsePatternComponentDecimalSeparatorTest ex
                 textAfter,
                 SpreadsheetNumberParsePatternComponentDigitMode.DECIMAL_FIRST,
                 NEXT_CALLED,
-                SpreadsheetParserToken.decimalSeparatorSymbol(text, text));
+                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(text, text));
     }
 
     @Test

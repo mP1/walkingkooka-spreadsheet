@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
@@ -117,13 +117,13 @@ enum SpreadsheetNumberParsePatternComponentDigitMode {
             final char c = cursor.at();
             if (context.positiveSign() == c) {
                 final String plusSign = Character.toString(c);
-                request.add(SpreadsheetParserToken.plusSymbol(plusSign, plusSign));
+                request.add(SpreadsheetFormulaParserToken.plusSymbol(plusSign, plusSign));
                 request.setDigitMode(this.next());
                 cursor.next();
             } else {
                 if (context.negativeSign() == c) {
                     final String minusSign = Character.toString(c);
-                    request.add(SpreadsheetParserToken.minusSymbol(minusSign, minusSign));
+                    request.add(SpreadsheetFormulaParserToken.minusSymbol(minusSign, minusSign));
                     request.setDigitMode(this.next());
                     cursor.next();
                 }

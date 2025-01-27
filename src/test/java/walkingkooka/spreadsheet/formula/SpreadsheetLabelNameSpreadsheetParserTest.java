@@ -111,7 +111,7 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
                                 final String textAfter) {
         this.parseAndCheck(
                 text + textAfter,
-                LabelNameSpreadsheetParserToken.with(
+                LabelNameSpreadsheetFormulaParserToken.with(
                         SpreadsheetSelection.labelName(text),
                         text
                 ),

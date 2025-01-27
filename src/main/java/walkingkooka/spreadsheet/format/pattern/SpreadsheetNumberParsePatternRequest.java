@@ -21,8 +21,8 @@ import walkingkooka.Context;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.spreadsheet.formula.DigitsSpreadsheetParserToken;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.DigitsSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -67,12 +67,12 @@ final class SpreadsheetNumberParsePatternRequest {
      */
     final DecimalNumberContext context;
 
-    void add(final SpreadsheetParserToken token) {
+    void add(final SpreadsheetFormulaParserToken token) {
         this.addNumberIfNecessary();
         this.add0(token);
     }
 
-    private void add0(final SpreadsheetParserToken token) {
+    private void add0(final SpreadsheetFormulaParserToken token) {
         this.tokens.add(token);
 
         this.digits.setLength(0); // StringBuilder is not shared, ok to reuse
@@ -89,7 +89,7 @@ final class SpreadsheetNumberParsePatternRequest {
         if (added) {
             final String text = digits.toString();
             this.add0(
-                    SpreadsheetParserToken.digits(
+                    SpreadsheetFormulaParserToken.digits(
                             text,
                             text
                     )
@@ -100,7 +100,7 @@ final class SpreadsheetNumberParsePatternRequest {
 
     /**
      * Aggregates the digit characters, which may include group separator separators.
-     * This will become the text of any created {@link DigitsSpreadsheetParserToken}.
+     * This will become the text of any created {@link DigitsSpreadsheetFormulaParserToken}.
      */
     final StringBuilder digits = new StringBuilder();
     //

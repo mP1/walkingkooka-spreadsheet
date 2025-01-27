@@ -59,7 +59,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -13531,7 +13531,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetParserToken parseFormula(final TextCursor formula) {
+            public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
                 return SpreadsheetParsers.valueOrExpression(
                                 BasicSpreadsheetEngineTest.this.metadata()
                                         .spreadsheetParser(
@@ -13551,11 +13551,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         )
                         .get()
-                        .cast(SpreadsheetParserToken.class);
+                        .cast(SpreadsheetFormulaParserToken.class);
             }
 
             @Override
-            public Optional<Expression> toExpression(final SpreadsheetParserToken token) {
+            public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
                 final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
                 return token.toExpression(
@@ -14021,7 +14021,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String text = formula.text();
         final ExpressionNumberKind expressionNumberKind = this.expressionNumberKind();
 
-        final SpreadsheetParserToken token =
+        final SpreadsheetFormulaParserToken token =
                 text.isEmpty() ?
                         null :
                         SpreadsheetParsers.valueOrExpression(
@@ -14041,7 +14041,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 VALUE_SEPARATOR
                                         )
                                 ).orElseThrow(() -> new AssertionError("Failed to parseFormula " + CharSequences.quote(text)))
-                                .cast(SpreadsheetParserToken.class);
+                                .cast(SpreadsheetFormulaParserToken.class);
         SpreadsheetFormula parsedFormula = formula;
         if (null != token) {
             parsedFormula = parsedFormula.setToken(Optional.of(token));

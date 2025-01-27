@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 
 public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C extends SpreadsheetNumberParsePatternComponentDigit> extends SpreadsheetNumberParsePatternComponentTestCase<C> {
 
@@ -54,7 +54,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                 "",
                 mode,
                 NEXT_SKIPPED,
-                SpreadsheetParserToken.groupSeparatorSymbol("" + GROUP, "" + GROUP)
+                SpreadsheetFormulaParserToken.groupSeparatorSymbol("" + GROUP, "" + GROUP)
         );
     }
 
@@ -152,7 +152,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                     "",
                     mode.next(),
                     NEXT_SKIPPED,
-                    SpreadsheetParserToken.plusSymbol(text, text)
+                    SpreadsheetFormulaParserToken.plusSymbol(text, text)
             );
         } else {
             this.parseAndCheck3(
@@ -221,7 +221,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                     "",
                     mode.next(),
                     NEXT_SKIPPED,
-                    SpreadsheetParserToken.minusSymbol(text, text)
+                    SpreadsheetFormulaParserToken.minusSymbol(text, text)
             );
         } else {
             this.parseAndCheck3(
@@ -296,7 +296,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                 "",
                 expectedMode,
                 NEXT_CALLED,
-                SpreadsheetParserToken.digits(VALUE5, TEXT5)
+                SpreadsheetFormulaParserToken.digits(VALUE5, TEXT5)
         );
     }
 
@@ -361,7 +361,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                 "a",
                 expectedMode,
                 NEXT_CALLED,
-                SpreadsheetParserToken.digits(VALUE5, TEXT5)
+                SpreadsheetFormulaParserToken.digits(VALUE5, TEXT5)
         );
     }
 
@@ -426,7 +426,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                 "a",
                 expectedMode,
                 NEXT_CALLED,
-                SpreadsheetParserToken.digits(VALUE5, TEXT5)
+                SpreadsheetFormulaParserToken.digits(VALUE5, TEXT5)
         );
     }
 
@@ -492,7 +492,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                 "",
                 expectedMode,
                 NEXT_CALLED,
-                SpreadsheetParserToken.digits(text, text)
+                SpreadsheetFormulaParserToken.digits(text, text)
         );
     }
 
@@ -558,7 +558,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                 "!",
                 expectedMode,
                 NEXT_CALLED,
-                SpreadsheetParserToken.digits(text, text)
+                SpreadsheetFormulaParserToken.digits(text, text)
         );
     }
 
@@ -627,8 +627,8 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                     "",
                     expectedMode,
                     NEXT_CALLED,
-                    SpreadsheetParserToken.plusSymbol("" + PLUS, "" + PLUS),
-                    SpreadsheetParserToken.digits(text, text)
+                    SpreadsheetFormulaParserToken.plusSymbol("" + PLUS, "" + PLUS),
+                    SpreadsheetFormulaParserToken.digits(text, text)
             );
         } else {
             this.parseAndCheck3(
@@ -708,8 +708,8 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                     "",
                     expectedMode,
                     NEXT_CALLED,
-                    SpreadsheetParserToken.minusSymbol("" + MINUS, "" + MINUS),
-                    SpreadsheetParserToken.digits(text, text)
+                    SpreadsheetFormulaParserToken.minusSymbol("" + MINUS, "" + MINUS),
+                    SpreadsheetFormulaParserToken.digits(text, text)
             );
         } else {
             this.parseAndCheck3(
@@ -731,7 +731,7 @@ public abstract class SpreadsheetNumberParsePatternComponentDigitTestCase<C exte
                               final String textAfter,
                               final SpreadsheetNumberParsePatternComponentDigitMode expectedMode,
                               final boolean hasNext,
-                              final SpreadsheetParserToken... tokens) {
+                              final SpreadsheetFormulaParserToken... tokens) {
         final SpreadsheetNumberParsePatternRequest request = this.createRequest(hasNext);
         request.digitMode = mode;
 

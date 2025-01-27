@@ -42,7 +42,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 /**
- * A {@link EbnfParserCombinatorGrammarTransformer} that only transforms terminal and ranges into their corresponding {@link SpreadsheetParserToken} equivalents.
+ * A {@link EbnfParserCombinatorGrammarTransformer} that only transforms terminal and ranges into their corresponding {@link SpreadsheetFormulaParserToken} equivalents.
  * Processing of other tokens will be done after this process completes.
  */
 final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements EbnfParserCombinatorGrammarTransformer<SpreadsheetParserContext> {
@@ -115,20 +115,20 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
                                                 final SpreadsheetParserContext context) {
         return flat(
                 token,
-                SpreadsheetParserToken::text
+                SpreadsheetFormulaParserToken::text
         );
     }
 
     /**
      * If the expression had a leading or trailing whitespace it will appear as a {@link SequenceParserToken},
-     * otherwise the token will be a {@link SpreadsheetParserToken}. If the former, wrap all tokens in the
-     * {@link SequenceParserToken} in a {@link GroupSpreadsheetParserToken}.
+     * otherwise the token will be a {@link SpreadsheetFormulaParserToken}. If the former, wrap all tokens in the
+     * {@link SequenceParserToken} in a {@link GroupSpreadsheetFormulaParserToken}.
      */
     private static ParserToken expression(final ParserToken token,
                                           final SpreadsheetParserContext context) {
-        return token instanceof SpreadsheetParserToken ?
+        return token instanceof SpreadsheetFormulaParserToken ?
                 token :
-                SpreadsheetParserToken.group(
+                SpreadsheetFormulaParserToken.group(
                         token.cast(SequenceParserToken.class).value(),
                         token.text()
                 );
@@ -138,7 +138,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
                                                   final SpreadsheetParserContext context) {
         return flat(
                 token,
-                SpreadsheetParserToken::functionParameters
+                SpreadsheetFormulaParserToken::functionParameters
         );
     }
 
@@ -146,7 +146,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
                                      final SpreadsheetParserContext context) {
         return flat(
                 token,
-                SpreadsheetParserToken::group
+                SpreadsheetFormulaParserToken::group
         );
     }
 
@@ -154,7 +154,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
                                               final SpreadsheetParserContext context) {
         return flat(
                 token,
-                SpreadsheetParserToken::lambdaFunction
+                SpreadsheetFormulaParserToken::lambdaFunction
         );
     }
 
@@ -162,7 +162,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
                                              final SpreadsheetParserContext context) {
         return flat(
                 token,
-                SpreadsheetParserToken::namedFunction
+                SpreadsheetFormulaParserToken::namedFunction
         );
     }
 
@@ -170,7 +170,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
                                         final SpreadsheetParserContext context) {
         return flat(
                 token,
-                SpreadsheetParserToken::negative
+                SpreadsheetFormulaParserToken::negative
         );
     }
 
@@ -178,7 +178,7 @@ final class SpreadsheetParsersEbnfParserCombinatorGrammarTransformer implements 
                                           final SpreadsheetParserContext context) {
         return flat(
                 token,
-                SpreadsheetParserToken::number
+                SpreadsheetFormulaParserToken::number
         );
     }
 

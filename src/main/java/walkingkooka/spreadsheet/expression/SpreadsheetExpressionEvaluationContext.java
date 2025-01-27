@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -52,12 +52,12 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     }
 
     /**
-     * Parses the {@link TextCursor formula} into an {@link SpreadsheetParserToken} which can then be transformed into an {@link Expression}.
+     * Parses the {@link TextCursor formula} into an {@link SpreadsheetFormulaParserToken} which can then be transformed into an {@link Expression}.
      * Note a formula here is an expression without the leading equals sign. Value literals such as date like 1/2/2000 will actually probably
      * be parsed into a series of division operations and not an actual date. Apostrophe string literals will fail,
      * date/times and times will not actually return date/time or time values.
      */
-    SpreadsheetParserToken parseFormula(final TextCursor formula);
+    SpreadsheetFormulaParserToken parseFormula(final TextCursor formula);
 
     @Override
     default boolean isText(final Object value) {

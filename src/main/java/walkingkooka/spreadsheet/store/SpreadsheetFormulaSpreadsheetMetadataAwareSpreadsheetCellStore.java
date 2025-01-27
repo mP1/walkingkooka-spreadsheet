@@ -23,7 +23,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -133,7 +133,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         SpreadsheetCell result = cell;
         if (!text.isEmpty()) {
             // any value or error will be lost if token/expression is updated
-            SpreadsheetParserToken token = formula.token()
+            SpreadsheetFormulaParserToken token = formula.token()
                     .orElse(null);
             try {
                 if (null == token) {
@@ -161,9 +161,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     /**
-     * Parses the formula text into an {@link SpreadsheetParserToken}.
+     * Parses the formula text into an {@link SpreadsheetFormulaParserToken}.
      */
-    private SpreadsheetParserToken parseFormulaTextExpression(final String text) {
+    private SpreadsheetFormulaParserToken parseFormulaTextExpression(final String text) {
         final SpreadsheetMetadata metadata = this.metadata;
         final ProviderContext providerContext = this.providerContext;
 
@@ -175,7 +175,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                         TextCursors.charSequence(text),
                         metadata.spreadsheetParserContext(providerContext)
                 ).orElse(null)
-                .cast(SpreadsheetParserToken.class);
+                .cast(SpreadsheetFormulaParserToken.class);
     }
 
     // batch............................................................................................................
@@ -319,10 +319,10 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
         SpreadsheetFormula formula = cell.formula();
 
-        SpreadsheetParserToken token = formula.token()
+        SpreadsheetFormulaParserToken token = formula.token()
                 .orElse(null);
         if (null != token) {
-            token = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetParserTokenVisitor.update(
+            token = SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetFormulaParserTokenVisitor.update(
                     token,
                     this.metadata,
                     this.providerContext // HasNow
