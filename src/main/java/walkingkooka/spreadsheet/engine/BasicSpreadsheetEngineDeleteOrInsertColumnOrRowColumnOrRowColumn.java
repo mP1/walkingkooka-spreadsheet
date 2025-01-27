@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.ColumnReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.RowReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -77,17 +77,17 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     }
 
     @Override
-    Optional<SpreadsheetColumnReferenceParserToken> fixColumnReferenceParserToken(final SpreadsheetColumnReferenceParserToken token) {
+    Optional<ColumnReferenceSpreadsheetParserToken> fixColumnReferenceParserToken(final ColumnReferenceSpreadsheetParserToken token) {
         return this.deleteOrInsert.isColumnDeleted(token) ?
                 Optional.empty() :
                 this.fixColumnReferenceParserToken0(token);
     }
 
-    private Optional<SpreadsheetColumnReferenceParserToken> fixColumnReferenceParserToken0(final SpreadsheetColumnReferenceParserToken token) {
+    private Optional<ColumnReferenceSpreadsheetParserToken> fixColumnReferenceParserToken0(final ColumnReferenceSpreadsheetParserToken token) {
         final SpreadsheetColumnReference old = token.value();
         final int value = old.value();
 
-        SpreadsheetColumnReferenceParserToken result = token;
+        ColumnReferenceSpreadsheetParserToken result = token;
 
         if (value > this.value) {
             final SpreadsheetColumnReference reference = old.setValue(value + this.deleteOrInsert.fixColumnOrRowReference(this.count));
@@ -98,7 +98,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     }
 
     @Override
-    Optional<SpreadsheetRowReferenceParserToken> fixRowReferenceParserToken(final SpreadsheetRowReferenceParserToken token) {
+    Optional<RowReferenceSpreadsheetParserToken> fixRowReferenceParserToken(final RowReferenceSpreadsheetParserToken token) {
         // only fixing cols refs not rows
         return Optional.of(token);
     }

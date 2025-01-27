@@ -25,7 +25,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 /**
- * A {@link Parser} that consumes a {@link SpreadsheetColumnReferenceParserToken}
+ * A {@link Parser} that consumes a {@link ColumnReferenceSpreadsheetParserToken}
  */
 final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColumnOrRowReferenceSpreadsheetParser {
 
@@ -58,7 +58,7 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
                        final int value,
                        final String text) {
         try {
-            return SpreadsheetColumnReferenceParserToken.columnReference(
+            return ColumnReferenceSpreadsheetParserToken.columnReference(
                     absoluteOrRelative.column(value),
                     text
             );

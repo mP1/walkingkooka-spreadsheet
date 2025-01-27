@@ -24,12 +24,12 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.DateSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DateTimeSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.NumberSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
+import walkingkooka.spreadsheet.parser.TimeSpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -175,7 +175,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetDateParserToken} and converting
+     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link DateSpreadsheetParserToken} and converting
      * that into a {@link LocalDate}.
      */
     public static Converter<SpreadsheetConverterContext> stringToDate(final Parser<SpreadsheetParserContext> parser) {
@@ -183,13 +183,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 LocalDate.class, // parserValueType
                 parser,
                 (final ParserToken t,
-                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetDateParserToken.class)
+                 final SpreadsheetConverterContext scc) -> t.cast(DateSpreadsheetParserToken.class)
                         .toLocalDate(scc)
         );
     }
 
     /**
-     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetDateTimeParserToken} and converting
+     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link DateTimeSpreadsheetParserToken} and converting
      * that into a {@link LocalDateTime}.
      */
     public static Converter<SpreadsheetConverterContext> stringToDateTime(final Parser<SpreadsheetParserContext> parser) {
@@ -197,13 +197,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 LocalDateTime.class, // parserValueType
                 parser,
                 (final ParserToken t,
-                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetDateTimeParserToken.class)
+                 final SpreadsheetConverterContext scc) -> t.cast(DateTimeSpreadsheetParserToken.class)
                         .toLocalDateTime(scc)
         );
     }
 
     /**
-     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetNumberParserToken} and converting
+     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link NumberSpreadsheetParserToken} and converting
      * that into a {@link ExpressionNumber}. Note the {@link Converter} does not support converting to other {@link Number} types and attempts will fail.
      */
     public static Converter<SpreadsheetConverterContext> stringToExpressionNumber(final Parser<SpreadsheetParserContext> parser) {
@@ -211,7 +211,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 ExpressionNumber.class, // parserValueType
                 parser,
                 (final ParserToken t,
-                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetNumberParserToken.class)
+                 final SpreadsheetConverterContext scc) -> t.cast(NumberSpreadsheetParserToken.class)
                         .toNumber(scc)
         );
     }
@@ -224,7 +224,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link SpreadsheetTimeParserToken} and converting
+     * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link TimeSpreadsheetParserToken} and converting
      * that into a {@link LocalTime}.
      */
     public static Converter<SpreadsheetConverterContext> stringToTime(final Parser<SpreadsheetParserContext> parser) {
@@ -232,7 +232,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 LocalTime.class, // parserValueType
                 parser,
                 (final ParserToken t,
-                 final SpreadsheetConverterContext scc) -> t.cast(SpreadsheetTimeParserToken.class)
+                 final SpreadsheetConverterContext scc) -> t.cast(TimeSpreadsheetParserToken.class)
                         .toLocalTime()
         );
     }

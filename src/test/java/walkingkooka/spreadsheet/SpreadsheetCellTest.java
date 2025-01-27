@@ -1394,13 +1394,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n"
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n"
         );
     }
 
@@ -1417,13 +1417,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n" +
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1445,13 +1445,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n" +
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1478,13 +1478,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n" +
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1507,13 +1507,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n" +
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1541,13 +1541,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n" +
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1579,13 +1579,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n" +
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1617,13 +1617,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n" +
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +
@@ -1653,13 +1653,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "Cell A1\n" +
                         "  Formula\n" +
                         "    token:\n" +
-                        "      SpreadsheetExpression \"=1+2\"\n" +
-                        "        SpreadsheetEqualsSymbol \"=\" \"=\"\n" +
-                        "        SpreadsheetAddition \"1+2\"\n" +
-                        "          SpreadsheetNumber \"1\"\n" +
-                        "            SpreadsheetDigits \"1\" \"1\"\n" +
-                        "          SpreadsheetNumber \"2\"\n" +
-                        "            SpreadsheetDigits \"2\" \"2\"\n" +
+                        "      ExpressionSpreadsheet \"=1+2\"\n" +
+                        "        EqualsSymbolSpreadsheet \"=\" \"=\"\n" +
+                        "        AdditionSpreadsheet \"1+2\"\n" +
+                        "          NumberSpreadsheet \"1\"\n" +
+                        "            DigitsSpreadsheet \"1\" \"1\"\n" +
+                        "          NumberSpreadsheet \"2\"\n" +
+                        "            DigitsSpreadsheet \"2\" \"2\"\n" +
                         "    expression:\n" +
                         "      AddExpression\n" +
                         "        ValueExpression 1 (walkingkooka.tree.expression.ExpressionNumberDouble)\n" +

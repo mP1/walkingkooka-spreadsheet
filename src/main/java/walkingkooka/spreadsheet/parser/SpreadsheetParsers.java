@@ -139,7 +139,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName CONDITION_RIGHT_PARSER_IDENTIFIER = EbnfIdentifierName.with("CONDITION_RIGHT");
 
     /**
-     * Expects a {@link SequenceParserToken} then tests the symbol and creates the matching sub-classes of {@link SpreadsheetConditionRightParserToken}.
+     * Expects a {@link SequenceParserToken} then tests the symbol and creates the matching sub-classes of {@link ConditionRightSpreadsheetParserToken}.
      */
     private static ParserToken transformConditionRight(final ParserToken conditionRight, final SpreadsheetParserContext context) {
         final SequenceParserToken sequenceParserToken = conditionRight.cast(SequenceParserToken.class)
@@ -545,7 +545,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName VALUE_OR_EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("VALUE_OR_EXPRESSION");
 
     /**
-     * If the token is a {@link SequenceParserToken} then it needs to be wrapped inside an {@link SpreadsheetExpressionParserToken}.
+     * If the token is a {@link SequenceParserToken} then it needs to be wrapped inside an {@link ExpressionSpreadsheetParserToken}.
      */
     private static ParserToken transformValueOrExpression(final ParserToken token, final SpreadsheetParserContext context) {
         final String text = token.text();

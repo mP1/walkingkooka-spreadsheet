@@ -23,7 +23,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * Used to collect the begin and end tokens for a {@link SpreadsheetCellRangeParserToken}.
+ * Used to collect the begin and end tokens for a {@link CellRangeSpreadsheetParserToken}.
  */
 final class SpreadsheetCellRangeParserTokenSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 
@@ -36,14 +36,14 @@ final class SpreadsheetCellRangeParserTokenSpreadsheetParserTokenVisitor extends
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected Visiting startVisit(final CellReferenceSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
     @Override
-    protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected void endVisit(final CellReferenceSpreadsheetParserToken token) {
         this.components.add(token);
     }
 
-    final List<SpreadsheetCellReferenceParserToken> components = Lists.array();
+    final List<CellReferenceSpreadsheetParserToken> components = Lists.array();
 }

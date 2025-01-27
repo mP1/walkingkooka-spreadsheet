@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
+import walkingkooka.spreadsheet.parser.DateTimeSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -41,7 +41,7 @@ import java.util.List;
 
 public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetDateTimeParsePattern,
         SpreadsheetFormatDateTimeParserToken,
-        SpreadsheetDateTimeParserToken,
+        DateTimeSpreadsheetParserToken,
         LocalDateTime> {
 
     @Test
@@ -612,7 +612,7 @@ public final class SpreadsheetDateTimeParsePatternTest extends SpreadsheetParseP
     }
 
     @Override
-    SpreadsheetDateTimeParserToken parent(final List<ParserToken> tokens,
+    DateTimeSpreadsheetParserToken parent(final List<ParserToken> tokens,
                                           final String text) {
         return SpreadsheetParserToken.dateTime(tokens, text);
     }

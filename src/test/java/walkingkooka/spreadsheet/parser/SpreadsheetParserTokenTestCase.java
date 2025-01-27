@@ -23,7 +23,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.reflect.PublicStaticFactoryTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -70,9 +69,10 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     @Override
     public final void testPublicStaticFactoryMethod() {
         PublicStaticFactoryTesting.checkFactoryMethods(SpreadsheetParserToken.class,
-                "Spreadsheet",
-                ParserToken.class.getSimpleName(),
-                this.type());
+                "",
+                SpreadsheetParserToken.class.getSimpleName(),
+                this.type()
+        );
     }
 
     @Test
@@ -94,15 +94,22 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
         final Method method = possibleMethod.get();
         final String name = method.getName();
 
-        String expected = type == SpreadsheetEqualsParserToken.class ?
-                "equalsParserToken" :
-                CharSequences.subSequence(type.getSimpleName(), PARENT_NAME.length(), -ParserToken.class.getSimpleName().length())
-                        .toString();
-        expected = Character.toLowerCase(expected.charAt(0)) + expected.substring(1);
+        String expected = type == EqualsSpreadsheetParserToken.class ?
+                "equalsSpreadsheetParserToken" :
+                CharSequences.subSequence(
+                        type.getSimpleName(),
+                                0,
+                                -SpreadsheetParserToken.class.getSimpleName().length()
+                        ).toString();
+        expected = Character.toLowerCase(
+                expected.charAt(0)
+        ) + expected.substring(1);
 
-        this.checkEquals(expected,
+        this.checkEquals(
+                expected,
                 name,
-                () -> "Token public static factory method name incorrect: " + method.toGenericString());
+                () -> "Token public static factory method name incorrect: " + method.toGenericString()
+        );
     }
 
     @Test
@@ -126,18 +133,20 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
 
         final String expected = "unmarshall" +
                 CharSequences.subSequence(
-                        type.getSimpleName(), PARENT_NAME.length(), -ParserToken.class.getSimpleName().length()
+                        type.getSimpleName(),
+                        0,
+                        -SpreadsheetParserToken.class.getSimpleName()
+                                .length()
                 );
 
-        this.checkEquals(expected,
+        this.checkEquals(
+                expected,
                 name,
-                () -> "Token package private unmarshall method name incorrect: " + method.toGenericString());
+                () -> "Token package private unmarshall method name incorrect: " + method.toGenericString()
+        );
     }
 
     private final static Class<SpreadsheetParserToken> PARENT = SpreadsheetParserToken.class;
-    private final static String PARENT_NAME = CharSequences.subSequence(
-            PARENT.getSimpleName(), 0, -ParserToken.class.getSimpleName().length()
-    ).toString();
 
     @Test
     public final void testAccept2() {
@@ -186,12 +195,12 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
 
     @Override
     public final String isMethodTypeNamePrefix() {
-        return "Spreadsheet";
+        return "";
     }
 
     @Override
     public final String isMethodTypeNameSuffix() {
-        return ParserToken.class.getSimpleName();
+        return SpreadsheetParserToken.class.getSimpleName();
     }
 
     @Override

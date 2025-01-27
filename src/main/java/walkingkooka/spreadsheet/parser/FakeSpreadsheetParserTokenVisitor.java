@@ -28,512 +28,512 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetAdditionParserToken token) {
+    protected Visiting startVisit(final AdditionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetAdditionParserToken token) {
+    protected void endVisit(final AdditionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected Visiting startVisit(final CellReferenceSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected void endVisit(final CellReferenceSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+    protected void endVisit(final ConditionRightEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+    protected Visiting startVisit(final ConditionRightGreaterThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+    protected void endVisit(final ConditionRightGreaterThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightGreaterThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+    protected void endVisit(final ConditionRightGreaterThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+    protected Visiting startVisit(final ConditionRightLessThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+    protected void endVisit(final ConditionRightLessThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightLessThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+    protected void endVisit(final ConditionRightLessThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightNotEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+    protected void endVisit(final ConditionRightNotEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDateParserToken token) {
+    protected void endVisit(final DateSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
+    protected Visiting startVisit(final DateTimeSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDateTimeParserToken token) {
+    protected void endVisit(final DateTimeSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
+    protected Visiting startVisit(final DivisionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDivisionParserToken token) {
+    protected void endVisit(final DivisionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetEqualsParserToken token) {
+    protected Visiting startVisit(final EqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetEqualsParserToken token) {
+    protected void endVisit(final EqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetExpressionParserToken token) {
+    protected Visiting startVisit(final ExpressionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetExpressionParserToken token) {
+    protected void endVisit(final ExpressionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFunctionParametersParserToken token) {
+    protected Visiting startVisit(final FunctionParametersSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFunctionParametersParserToken token) {
+    protected void endVisit(final FunctionParametersSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected Visiting startVisit(final GreaterThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected void endVisit(final GreaterThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final GreaterThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected void endVisit(final GreaterThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGroupParserToken token) {
+    protected Visiting startVisit(final GroupSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGroupParserToken token) {
+    protected void endVisit(final GroupSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLambdaFunctionParserToken token) {
+    protected Visiting startVisit(final LambdaFunctionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetLambdaFunctionParserToken token) {
+    protected void endVisit(final LambdaFunctionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLessThanParserToken token) {
+    protected Visiting startVisit(final LessThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetLessThanParserToken token) {
+    protected void endVisit(final LessThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final LessThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected void endVisit(final LessThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected Visiting startVisit(final MultiplicationSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected void endVisit(final MultiplicationSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNamedFunctionParserToken token) {
+    protected Visiting startVisit(final NamedFunctionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNamedFunctionParserToken token) {
+    protected void endVisit(final NamedFunctionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNegativeParserToken token) {
+    protected Visiting startVisit(final NegativeSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNegativeParserToken token) {
+    protected void endVisit(final NegativeSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected Visiting startVisit(final NotEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected void endVisit(final NotEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNumberParserToken token) {
+    protected Visiting startVisit(final NumberSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNumberParserToken token) {
+    protected void endVisit(final NumberSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
+    protected Visiting startVisit(final PowerSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetPowerParserToken token) {
+    protected void endVisit(final PowerSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetCellRangeParserToken token) {
+    protected Visiting startVisit(final CellRangeSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetCellRangeParserToken token) {
+    protected void endVisit(final CellRangeSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
+    protected Visiting startVisit(final SubtractionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetSubtractionParserToken token) {
+    protected void endVisit(final SubtractionSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetTextParserToken token) {
+    protected Visiting startVisit(final TextSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetTextParserToken token) {
+    protected void endVisit(final TextSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetTimeParserToken token) {
+    protected void endVisit(final TimeSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetApostropheSymbolParserToken token) {
+    protected void visit(final ApostropheSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetBetweenSymbolParserToken token) {
+    protected void visit(final BetweenSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReferenceParserToken token) {
+    protected void visit(final ColumnReferenceSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetCurrencySymbolParserToken token) {
+    protected void visit(final CurrencySymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNameParserToken token) {
+    protected void visit(final DayNameSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNameAbbreviationParserToken token) {
+    protected void visit(final DayNameAbbreviationSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetDecimalSeparatorSymbolParserToken token) {
+    protected void visit(final DecimalSeparatorSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetDigitsParserToken token) {
+    protected void visit(final DigitsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetDivideSymbolParserToken token) {
+    protected void visit(final DivideSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetDoubleQuoteSymbolParserToken token) {
+    protected void visit(final DoubleQuoteSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetEqualsSymbolParserToken token) {
+    protected void visit(final EqualsSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetErrorParserToken token) {
+    protected void visit(final ErrorSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetExponentSymbolParserToken token) {
+    protected void visit(final ExponentSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetFunctionNameParserToken token) {
+    protected void visit(final FunctionNameSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetGreaterThanSymbolParserToken token) {
+    protected void visit(final GreaterThanSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetGreaterThanEqualsSymbolParserToken token) {
+    protected void visit(final GreaterThanEqualsSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetGroupSeparatorSymbolParserToken token) {
+    protected void visit(final GroupSeparatorSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetHourParserToken token) {
+    protected void visit(final HourSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetLabelNameParserToken token) {
+    protected void visit(final LabelNameSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetLessThanSymbolParserToken token) {
+    protected void visit(final LessThanSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetLessThanEqualsSymbolParserToken token) {
+    protected void visit(final LessThanEqualsSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetMillisecondParserToken token) {
+    protected void visit(final MillisecondSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetMinusSymbolParserToken token) {
+    protected void visit(final MinusSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNameParserToken token) {
+    protected void visit(final MonthNameSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNameAbbreviationParserToken token) {
+    protected void visit(final MonthNameAbbreviationSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNumberParserToken token) {
+    protected void visit(final MonthNumberSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetMultiplySymbolParserToken token) {
+    protected void visit(final MultiplySymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
+    protected void visit(final NotEqualsSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNumberParserToken token) {
+    protected void visit(final DayNumberSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetParenthesisCloseSymbolParserToken token) {
+    protected void visit(final ParenthesisCloseSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetParenthesisOpenSymbolParserToken token) {
+    protected void visit(final ParenthesisOpenSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetPercentSymbolParserToken token) {
+    protected void visit(final PercentSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetPlusSymbolParserToken token) {
+    protected void visit(final PlusSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetPowerSymbolParserToken token) {
+    protected void visit(final PowerSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReferenceParserToken token) {
+    protected void visit(final RowReferenceSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetSecondsParserToken token) {
+    protected void visit(final SecondsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetValueSeparatorSymbolParserToken token) {
+    protected void visit(final ValueSeparatorSymbolSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetWhitespaceParserToken token) {
+    protected void visit(final WhitespaceSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetYearParserToken token) {
+    protected void visit(final YearSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 

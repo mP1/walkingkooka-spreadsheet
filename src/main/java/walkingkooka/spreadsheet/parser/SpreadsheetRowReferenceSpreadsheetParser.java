@@ -23,7 +23,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 /**
- * A {@link Parser} that consumes a {@link SpreadsheetRowReferenceParserToken}
+ * A {@link Parser} that consumes a {@link RowReferenceSpreadsheetParserToken}
  */
 final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOrRowReferenceSpreadsheetParser {
 

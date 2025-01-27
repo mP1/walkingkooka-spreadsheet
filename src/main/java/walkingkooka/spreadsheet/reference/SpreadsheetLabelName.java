@@ -24,7 +24,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelNameParserToken;
+import walkingkooka.spreadsheet.parser.LabelNameSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -412,7 +412,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     // HasParserToken...................................................................................................
 
     @Override
-    public SpreadsheetLabelNameParserToken toParserToken() {
+    public LabelNameSpreadsheetParserToken toParserToken() {
         return SpreadsheetParserToken.labelName(
                 this,
                 this.text()

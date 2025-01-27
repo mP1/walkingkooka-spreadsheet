@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken;
+import walkingkooka.spreadsheet.parser.MillisecondSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
@@ -27,7 +27,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import java.time.LocalTime;
 
 /**
- * A {@link Parser} that matches the milliseconds and returns a {@link walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken}
+ * A {@link Parser} that matches the milliseconds and returns a {@link MillisecondSpreadsheetParserToken}
  */
 final class SpreadsheetNonNumberParsePatternParserMilliseconds extends SpreadsheetNonNumberParsePatternParser {
 
@@ -44,10 +44,10 @@ final class SpreadsheetNonNumberParsePatternParserMilliseconds extends Spreadshe
     }
 
     @Override
-    SpreadsheetMillisecondParserToken parseNotEmpty0(final TextCursor cursor,
+    MillisecondSpreadsheetParserToken parseNotEmpty0(final TextCursor cursor,
                                                      final SpreadsheetParserContext context,
                                                      final TextCursorSavePoint start) {
-        SpreadsheetMillisecondParserToken token = null;
+        MillisecondSpreadsheetParserToken token = null;
         double digitValue = FIRST_DIGIT;
         double value = 0;
 
@@ -77,7 +77,7 @@ final class SpreadsheetNonNumberParsePatternParserMilliseconds extends Spreadshe
 
     private final static long FIRST_DIGIT = LocalTime.of(0, 0, 1).toNanoOfDay() / 10;
 
-    private static SpreadsheetMillisecondParserToken token(final double value,
+    private static MillisecondSpreadsheetParserToken token(final double value,
                                                            final TextCursorSavePoint start) {
         return SpreadsheetParserToken.millisecond(
                 (int) Math.round(value), // shouldnt overload

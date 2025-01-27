@@ -23,477 +23,477 @@ import walkingkooka.visit.Visiting;
 
 public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
 
-    // SpreadsheetAdditionParserToken....................................................................................
+    // AdditionSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetAdditionParserToken token) {
+    protected Visiting startVisit(final AdditionSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetAdditionParserToken token) {
+    protected void endVisit(final AdditionSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetCellRangeParserToken....................................................................................
+    // CellRangeSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetCellRangeParserToken token) {
+    protected Visiting startVisit(final CellRangeSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetCellRangeParserToken token) {
+    protected void endVisit(final CellRangeSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetCellReferenceParserToken....................................................................................
+    // CellReferenceSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected Visiting startVisit(final CellReferenceSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected void endVisit(final CellReferenceSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetConditionRightEqualsParserToken.......................................................................
+    // ConditionRightEqualsSpreadsheetParserToken.......................................................................
 
-    protected Visiting startVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightEqualsSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+    protected void endVisit(final ConditionRightEqualsSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetConditionRightGreaterThanParserToken..................................................................
+    // ConditionRightGreaterThanSpreadsheetParserToken..................................................................
 
-    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+    protected Visiting startVisit(final ConditionRightGreaterThanSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+    protected void endVisit(final ConditionRightGreaterThanSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetConditionRightGreaterThanEqualsParserToken............................................................
+    // ConditionRightGreaterThanEqualsSpreadsheetParserToken............................................................
 
-    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightGreaterThanEqualsSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+    protected void endVisit(final ConditionRightGreaterThanEqualsSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetConditionRightLessThanParserToken.....................................................................
+    // ConditionRightLessThanSpreadsheetParserToken.....................................................................
 
-    protected Visiting startVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+    protected Visiting startVisit(final ConditionRightLessThanSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+    protected void endVisit(final ConditionRightLessThanSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetConditionRightLessThanEqualsParserToken................................................................
+    // ConditionRightLessThanEqualsSpreadsheetParserToken................................................................
 
-    protected Visiting startVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightLessThanEqualsSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+    protected void endVisit(final ConditionRightLessThanEqualsSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetConditionRightNotEqualsParserToken.....................................................................
+    // ConditionRightNotEqualsSpreadsheetParserToken.....................................................................
 
-    protected Visiting startVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightNotEqualsSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+    protected void endVisit(final ConditionRightNotEqualsSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetDateParserToken.......................................................................................
+    // DateSpreadsheetParserToken.......................................................................................
 
-    protected Visiting startVisit(final SpreadsheetDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetDateParserToken token) {
+    protected void endVisit(final DateSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetDateTimeParserToken....................................................................................
+    // DateTimeSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
+    protected Visiting startVisit(final DateTimeSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetDateTimeParserToken token) {
+    protected void endVisit(final DateTimeSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetDivisionParserToken....................................................................................
+    // DivisionSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
+    protected Visiting startVisit(final DivisionSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetDivisionParserToken token) {
+    protected void endVisit(final DivisionSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetEqualsParserToken....................................................................................
+    // EqualsSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetEqualsParserToken token) {
+    protected Visiting startVisit(final EqualsSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetEqualsParserToken token) {
+    protected void endVisit(final EqualsSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetExpressionParserToken....................................................................................
+    // ExpressionSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetExpressionParserToken token) {
+    protected Visiting startVisit(final ExpressionSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetExpressionParserToken token) {
+    protected void endVisit(final ExpressionSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetFunctionParametersParserToken.........................................................................
+    // FunctionParametersSpreadsheetParserToken.........................................................................
 
-    protected Visiting startVisit(final SpreadsheetFunctionParametersParserToken token) {
+    protected Visiting startVisit(final FunctionParametersSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetFunctionParametersParserToken token) {
+    protected void endVisit(final FunctionParametersSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetGreaterThanParserToken....................................................................................
+    // GreaterThanSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected Visiting startVisit(final GreaterThanSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected void endVisit(final GreaterThanSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetGreaterThanEqualsParserToken....................................................................................
+    // GreaterThanEqualsSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final GreaterThanEqualsSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected void endVisit(final GreaterThanEqualsSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetGroupParserToken....................................................................................
+    // GroupSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetGroupParserToken token) {
+    protected Visiting startVisit(final GroupSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetGroupParserToken token) {
+    protected void endVisit(final GroupSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetLambdaFunctionParserToken....................................................................................
+    // LambdaFunctionSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetLambdaFunctionParserToken token) {
+    protected Visiting startVisit(final LambdaFunctionSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetLambdaFunctionParserToken token) {
+    protected void endVisit(final LambdaFunctionSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetLessThanParserToken....................................................................................
+    // LessThanSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetLessThanParserToken token) {
+    protected Visiting startVisit(final LessThanSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetLessThanParserToken token) {
+    protected void endVisit(final LessThanSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetLessThanEqualsParserToken....................................................................................
+    // LessThanEqualsSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final LessThanEqualsSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected void endVisit(final LessThanEqualsSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetMultiplicationParserToken....................................................................................
+    // MultiplicationSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected Visiting startVisit(final MultiplicationSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected void endVisit(final MultiplicationSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetNamedFunctionParserToken....................................................................................
+    // NamedFunctionSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetNamedFunctionParserToken token) {
+    protected Visiting startVisit(final NamedFunctionSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetNamedFunctionParserToken token) {
+    protected void endVisit(final NamedFunctionSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetNegativeParserToken....................................................................................
+    // NegativeSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetNegativeParserToken token) {
+    protected Visiting startVisit(final NegativeSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetNegativeParserToken token) {
+    protected void endVisit(final NegativeSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetNotEqualsParserToken....................................................................................
+    // NotEqualsSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected Visiting startVisit(final NotEqualsSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected void endVisit(final NotEqualsSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetNumberParserToken.....................................................................................
+    // NumberSpreadsheetParserToken.....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetNumberParserToken token) {
+    protected Visiting startVisit(final NumberSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetNumberParserToken token) {
+    protected void endVisit(final NumberSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetPowerParserToken....................................................................................
+    // PowerSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
+    protected Visiting startVisit(final PowerSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetPowerParserToken token) {
+    protected void endVisit(final PowerSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetSubtractionParserToken....................................................................................
+    // SubtractionSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
+    protected Visiting startVisit(final SubtractionSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetSubtractionParserToken token) {
+    protected void endVisit(final SubtractionSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetTextParserToken....................................................................................
+    // TextSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetTextParserToken token) {
+    protected Visiting startVisit(final TextSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetTextParserToken token) {
+    protected void endVisit(final TextSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetTimeParserToken....................................................................................
+    // TimeSpreadsheetParserToken....................................................................................
 
-    protected Visiting startVisit(final SpreadsheetTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetTimeParserToken token) {
+    protected void endVisit(final TimeSpreadsheetParserToken token) {
         // nop
     }
 
-    // SpreadsheetLeafParserToken ....................................................................................
+    // LeafSpreadsheetParserToken ....................................................................................
 
-    protected void visit(final SpreadsheetAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetApostropheSymbolParserToken token) {
+    protected void visit(final ApostropheSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetBetweenSymbolParserToken token) {
+    protected void visit(final BetweenSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetColumnReferenceParserToken token) {
+    protected void visit(final ColumnReferenceSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetCurrencySymbolParserToken token) {
+    protected void visit(final CurrencySymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetDayNameParserToken token) {
+    protected void visit(final DayNameSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetDayNameAbbreviationParserToken token) {
+    protected void visit(final DayNameAbbreviationSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetDayNumberParserToken token) {
+    protected void visit(final DayNumberSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetDecimalSeparatorSymbolParserToken token) {
+    protected void visit(final DecimalSeparatorSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetDigitsParserToken token) {
+    protected void visit(final DigitsSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetDivideSymbolParserToken token) {
+    protected void visit(final DivideSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetDoubleQuoteSymbolParserToken token) {
+    protected void visit(final DoubleQuoteSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetEqualsSymbolParserToken token) {
+    protected void visit(final EqualsSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetErrorParserToken token) {
+    protected void visit(final ErrorSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetExponentSymbolParserToken token) {
+    protected void visit(final ExponentSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFunctionNameParserToken token) {
+    protected void visit(final FunctionNameSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetGreaterThanSymbolParserToken token) {
+    protected void visit(final GreaterThanSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetGreaterThanEqualsSymbolParserToken token) {
+    protected void visit(final GreaterThanEqualsSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetGroupSeparatorSymbolParserToken token) {
+    protected void visit(final GroupSeparatorSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetHourParserToken token) {
+    protected void visit(final HourSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetLabelNameParserToken token) {
+    protected void visit(final LabelNameSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetLessThanSymbolParserToken token) {
+    protected void visit(final LessThanSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetLessThanEqualsSymbolParserToken token) {
+    protected void visit(final LessThanEqualsSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetMillisecondParserToken token) {
+    protected void visit(final MillisecondSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetMinusSymbolParserToken token) {
+    protected void visit(final MinusSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetMonthNameParserToken token) {
+    protected void visit(final MonthNameSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetMonthNameAbbreviationParserToken token) {
+    protected void visit(final MonthNameAbbreviationSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetMonthNameInitialParserToken token) {
+    protected void visit(final MonthNameInitialSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetMonthNumberParserToken token) {
+    protected void visit(final MonthNumberSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetMultiplySymbolParserToken token) {
+    protected void visit(final MultiplySymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
+    protected void visit(final NotEqualsSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetParenthesisCloseSymbolParserToken token) {
+    protected void visit(final ParenthesisCloseSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetParenthesisOpenSymbolParserToken token) {
+    protected void visit(final ParenthesisOpenSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetPercentSymbolParserToken token) {
+    protected void visit(final PercentSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetPlusSymbolParserToken token) {
+    protected void visit(final PlusSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetPowerSymbolParserToken token) {
+    protected void visit(final PowerSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetRowReferenceParserToken token) {
+    protected void visit(final RowReferenceSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetSecondsParserToken token) {
+    protected void visit(final SecondsSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetValueSeparatorSymbolParserToken token) {
+    protected void visit(final ValueSeparatorSymbolSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetWhitespaceParserToken token) {
+    protected void visit(final WhitespaceSpreadsheetParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetYearParserToken token) {
+    protected void visit(final YearSpreadsheetParserToken token) {
         // nop
     }
 

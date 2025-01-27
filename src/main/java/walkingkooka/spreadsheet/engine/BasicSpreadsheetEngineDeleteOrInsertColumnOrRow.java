@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
+import walkingkooka.spreadsheet.parser.ColumnReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.RowReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 
 /**
@@ -33,9 +33,9 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRow {
         columnOrRow.deleteOrInsert = this;
     }
 
-    abstract boolean isColumnDeleted(final SpreadsheetColumnReferenceParserToken column);
+    abstract boolean isColumnDeleted(final ColumnReferenceSpreadsheetParserToken column);
 
-    abstract boolean isRowDeleted(final SpreadsheetRowReferenceParserToken row);
+    abstract boolean isRowDeleted(final RowReferenceSpreadsheetParserToken row);
 
     abstract int fixColumnOrRowReference(final int count);
 

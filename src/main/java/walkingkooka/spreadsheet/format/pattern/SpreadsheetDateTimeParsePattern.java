@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
+import walkingkooka.spreadsheet.parser.DateTimeSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -72,7 +72,7 @@ public final class SpreadsheetDateTimeParsePattern extends SpreadsheetNonNumberP
                 .parseText(
                         text,
                         context
-                ).cast(SpreadsheetDateTimeParserToken.class)
+                ).cast(DateTimeSpreadsheetParserToken.class)
                 .toLocalDateTime(context);
     }
 

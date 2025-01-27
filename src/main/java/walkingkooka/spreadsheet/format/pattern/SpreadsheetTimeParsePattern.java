@@ -21,7 +21,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
+import walkingkooka.spreadsheet.parser.TimeSpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.time.LocalTime;
@@ -72,7 +72,7 @@ public final class SpreadsheetTimeParsePattern extends SpreadsheetNonNumberParse
                 .parseText(
                         text,
                         context
-                ).cast(SpreadsheetTimeParserToken.class)
+                ).cast(TimeSpreadsheetParserToken.class)
                 .toLocalTime();
     }
 

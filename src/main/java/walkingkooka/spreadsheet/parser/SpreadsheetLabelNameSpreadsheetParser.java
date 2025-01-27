@@ -33,7 +33,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetParser} that consumes a {@link SpreadsheetLabelNameParserToken} matching a label.
+ * A {@link SpreadsheetParser} that consumes a {@link LabelNameSpreadsheetParserToken} matching a label.
  * Note {@link #tokens(SpreadsheetParserContext)} has no pattern representation and always returns {@link #NO_TOKENS}.
  */
 final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,

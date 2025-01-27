@@ -25,7 +25,7 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.CellReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.CanReplaceReferences;
@@ -358,7 +358,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.setToken(
                 this.token.map(
                         t -> t.replaceIf(
-                                (tt) -> tt instanceof SpreadsheetCellReferenceParserToken,
+                                (tt) -> tt instanceof CellReferenceSpreadsheetParserToken,
                                 SpreadsheetFormulaReplaceReferencesFunction.parserToken(mapper)
                         ).cast(SpreadsheetParserToken.class)
                 )

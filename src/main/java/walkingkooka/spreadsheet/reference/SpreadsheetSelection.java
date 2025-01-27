@@ -34,14 +34,14 @@ import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLeafParserToken;
+import walkingkooka.spreadsheet.parser.CellReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ColumnReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.LeafSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.RowReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -331,7 +331,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseTextOrFail(
                 text,
                 CELL_PARSER
-        ).cast(SpreadsheetCellReferenceParserToken.class)
+        ).cast(CellReferenceSpreadsheetParserToken.class)
                 .cell();
     }
 
@@ -384,7 +384,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 text,
                 ALL_CELLS,
                 SpreadsheetParsers.cell(),
-                (t) -> t.cast(SpreadsheetCellReferenceParserToken.class).cell(),
+                (t) -> t.cast(CellReferenceSpreadsheetParserToken.class).cell(),
                 SpreadsheetCellRangeReference::with
         );
     }
@@ -407,7 +407,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseTextOrFail(
                 text,
                 COLUMN_PARSER
-        ).cast(SpreadsheetColumnReferenceParserToken.class)
+        ).cast(ColumnReferenceSpreadsheetParserToken.class)
                 .value();
     }
 
@@ -427,7 +427,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 parseTextOrFail(
                         text,
                         COLUMN_OR_ROW_PARSER
-                ).cast(SpreadsheetLeafParserToken.class)
+                ).cast(LeafSpreadsheetParserToken.class)
                         .value()
         );
     }
@@ -457,7 +457,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 text,
                 ALL_COLUMNS,
                 SpreadsheetParsers.column(),
-                (t) -> t.cast(SpreadsheetColumnReferenceParserToken.class).value(),
+                (t) -> t.cast(ColumnReferenceSpreadsheetParserToken.class).value(),
                 SpreadsheetColumnRangeReference::with
         );
     }
@@ -469,7 +469,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseTextOrFail(
                 text,
                 ROW_PARSER
-        ).cast(SpreadsheetRowReferenceParserToken.class)
+        ).cast(RowReferenceSpreadsheetParserToken.class)
                 .value();
     }
 
@@ -526,7 +526,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 text,
                 ALL_ROWS,
                 SpreadsheetParsers.row(),
-                (t) -> t.cast(SpreadsheetRowReferenceParserToken.class).value(),
+                (t) -> t.cast(RowReferenceSpreadsheetParserToken.class).value(),
                 SpreadsheetRowRangeReference::with
         );
     }

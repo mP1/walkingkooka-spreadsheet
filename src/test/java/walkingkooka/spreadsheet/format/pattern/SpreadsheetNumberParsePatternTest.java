@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.NumberSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.text.cursor.parser.Parser;
@@ -51,7 +51,7 @@ import java.util.List;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
         SpreadsheetFormatNumberParserToken,
-        SpreadsheetNumberParserToken,
+        NumberSpreadsheetParserToken,
         ExpressionNumber> implements ConverterTesting {
 
     @Test
@@ -1240,7 +1240,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
     }
 
     @Override
-    SpreadsheetNumberParserToken parent(final List<ParserToken> tokens,
+    NumberSpreadsheetParserToken parent(final List<ParserToken> tokens,
                                         final String text) {
         return SpreadsheetParserToken.number(tokens, text);
     }

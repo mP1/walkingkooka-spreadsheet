@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.ColumnReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.RowReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -75,23 +75,23 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
     }
 
     @Override
-    Optional<SpreadsheetColumnReferenceParserToken> fixColumnReferenceParserToken(final SpreadsheetColumnReferenceParserToken token) {
+    Optional<ColumnReferenceSpreadsheetParserToken> fixColumnReferenceParserToken(final ColumnReferenceSpreadsheetParserToken token) {
         // only fixing rows refs not cols
         return Optional.of(token);
     }
 
     @Override
-    Optional<SpreadsheetRowReferenceParserToken> fixRowReferenceParserToken(final SpreadsheetRowReferenceParserToken token) {
+    Optional<RowReferenceSpreadsheetParserToken> fixRowReferenceParserToken(final RowReferenceSpreadsheetParserToken token) {
         return this.deleteOrInsert.isRowDeleted(token) ?
                 Optional.empty() :
                 this.fixRowReferenceParserToken0(token);
     }
 
-    private Optional<SpreadsheetRowReferenceParserToken> fixRowReferenceParserToken0(final SpreadsheetRowReferenceParserToken token) {
+    private Optional<RowReferenceSpreadsheetParserToken> fixRowReferenceParserToken0(final RowReferenceSpreadsheetParserToken token) {
         final SpreadsheetRowReference old = token.value();
         final int value = old.value();
 
-        SpreadsheetRowReferenceParserToken result = token;
+        RowReferenceSpreadsheetParserToken result = token;
 
         if (value > this.value) {
             final SpreadsheetRowReference reference = old.setValue(value + this.deleteOrInsert.fixColumnOrRowReference(this.count));

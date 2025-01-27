@@ -48,533 +48,533 @@ import java.util.function.BiFunction;
 public abstract class SpreadsheetParserToken implements ParserToken {
 
     /**
-     * {@see SpreadsheetAdditionParserToken}
+     * {@see AdditionSpreadsheetParserToken}
      */
-    public static SpreadsheetAdditionParserToken addition(final List<ParserToken> value, final String text) {
-        return SpreadsheetAdditionParserToken.with(value, text);
+    public static AdditionSpreadsheetParserToken addition(final List<ParserToken> value, final String text) {
+        return AdditionSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetAmPmParserToken}
+     * {@see AmPmSpreadsheetParserToken}
      */
-    public static SpreadsheetAmPmParserToken amPm(final int value, final String text) {
-        return SpreadsheetAmPmParserToken.with(value, text);
+    public static AmPmSpreadsheetParserToken amPm(final int value, final String text) {
+        return AmPmSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetApostropheSymbolParserToken}
+     * {@see ApostropheSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetApostropheSymbolParserToken apostropheSymbol(final String value, final String text) {
-        return SpreadsheetApostropheSymbolParserToken.with(value, text);
+    public static ApostropheSymbolSpreadsheetParserToken apostropheSymbol(final String value, final String text) {
+        return ApostropheSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetBetweenSymbolParserToken}
+     * {@see BetweenSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetBetweenSymbolParserToken betweenSymbol(final String value, final String text) {
-        return SpreadsheetBetweenSymbolParserToken.with(value, text);
+    public static BetweenSymbolSpreadsheetParserToken betweenSymbol(final String value, final String text) {
+        return BetweenSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetCellRangeParserToken}
+     * {@see CellRangeSpreadsheetParserToken}
      */
-    public static SpreadsheetCellRangeParserToken cellRange(final List<ParserToken> value, final String text) {
-        return SpreadsheetCellRangeParserToken.with(value, text);
+    public static CellRangeSpreadsheetParserToken cellRange(final List<ParserToken> value, final String text) {
+        return CellRangeSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetCellReferenceParserToken}
+     * {@see CellReferenceSpreadsheetParserToken}
      */
-    public static SpreadsheetCellReferenceParserToken cellReference(final List<ParserToken> value, final String text) {
-        return SpreadsheetCellReferenceParserToken.with(value, text);
+    public static CellReferenceSpreadsheetParserToken cellReference(final List<ParserToken> value, final String text) {
+        return CellReferenceSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetColumnReferenceParserToken}
+     * {@see ColumnReferenceSpreadsheetParserToken}
      */
-    public static SpreadsheetColumnReferenceParserToken columnReference(final SpreadsheetColumnReference value, final String text) {
-        return SpreadsheetColumnReferenceParserToken.with(value, text);
+    public static ColumnReferenceSpreadsheetParserToken columnReference(final SpreadsheetColumnReference value, final String text) {
+        return ColumnReferenceSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetConditionRightEqualsParserToken}
+     * {@see ConditionRightEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetConditionRightEqualsParserToken conditionRightEquals(final List<ParserToken> value,
+    public static ConditionRightEqualsSpreadsheetParserToken conditionRightEquals(final List<ParserToken> value,
                                                                                   final String text) {
-        return SpreadsheetConditionRightEqualsParserToken.with(value, text);
+        return ConditionRightEqualsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetConditionRightGreaterThanParserToken}
+     * {@see ConditionRightGreaterThanSpreadsheetParserToken}
      */
-    public static SpreadsheetConditionRightGreaterThanParserToken conditionRightGreaterThan(final List<ParserToken> value,
+    public static ConditionRightGreaterThanSpreadsheetParserToken conditionRightGreaterThan(final List<ParserToken> value,
                                                                                             final String text) {
-        return SpreadsheetConditionRightGreaterThanParserToken.with(value, text);
+        return ConditionRightGreaterThanSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetConditionRightGreaterThanEqualsParserToken}
+     * {@see ConditionRightGreaterThanEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetConditionRightGreaterThanEqualsParserToken conditionRightGreaterThanEquals(final List<ParserToken> value,
+    public static ConditionRightGreaterThanEqualsSpreadsheetParserToken conditionRightGreaterThanEquals(final List<ParserToken> value,
                                                                                                         final String text) {
-        return SpreadsheetConditionRightGreaterThanEqualsParserToken.with(value, text);
+        return ConditionRightGreaterThanEqualsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetConditionRightLessThanParserToken}
+     * {@see ConditionRightLessThanSpreadsheetParserToken}
      */
-    public static SpreadsheetConditionRightLessThanParserToken conditionRightLessThan(final List<ParserToken> value,
+    public static ConditionRightLessThanSpreadsheetParserToken conditionRightLessThan(final List<ParserToken> value,
                                                                                       final String text) {
-        return SpreadsheetConditionRightLessThanParserToken.with(value, text);
+        return ConditionRightLessThanSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetConditionRightLessThanEqualsParserToken}
+     * {@see ConditionRightLessThanEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetConditionRightLessThanEqualsParserToken conditionRightLessThanEquals(final List<ParserToken> value,
+    public static ConditionRightLessThanEqualsSpreadsheetParserToken conditionRightLessThanEquals(final List<ParserToken> value,
                                                                                                   final String text) {
-        return SpreadsheetConditionRightLessThanEqualsParserToken.with(value, text);
+        return ConditionRightLessThanEqualsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetConditionRightNotEqualsParserToken}
+     * {@see ConditionRightNotEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetConditionRightNotEqualsParserToken conditionRightNotEquals(final List<ParserToken> value,
+    public static ConditionRightNotEqualsSpreadsheetParserToken conditionRightNotEquals(final List<ParserToken> value,
                                                                                         final String text) {
-        return SpreadsheetConditionRightNotEqualsParserToken.with(value, text);
+        return ConditionRightNotEqualsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetCurrencySymbolParserToken}
+     * {@see CurrencySymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetCurrencySymbolParserToken currencySymbol(final String value, final String text) {
-        return SpreadsheetCurrencySymbolParserToken.with(value, text);
+    public static CurrencySymbolSpreadsheetParserToken currencySymbol(final String value, final String text) {
+        return CurrencySymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDateParserToken}
+     * {@see DateSpreadsheetParserToken}
      */
-    public static SpreadsheetDateParserToken date(final List<ParserToken> value, final String text) {
-        return SpreadsheetDateParserToken.with(value, text);
+    public static DateSpreadsheetParserToken date(final List<ParserToken> value, final String text) {
+        return DateSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDateTimeParserToken}
+     * {@see DateTimeSpreadsheetParserToken}
      */
-    public static SpreadsheetDateTimeParserToken dateTime(final List<ParserToken> value, final String text) {
-        return SpreadsheetDateTimeParserToken.with(value, text);
+    public static DateTimeSpreadsheetParserToken dateTime(final List<ParserToken> value, final String text) {
+        return DateTimeSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDayNameParserToken}
+     * {@see DayNameSpreadsheetParserToken}
      */
-    public static SpreadsheetDayNameParserToken dayName(final int value, final String text) {
-        return SpreadsheetDayNameParserToken.with(value, text);
+    public static DayNameSpreadsheetParserToken dayName(final int value, final String text) {
+        return DayNameSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDayNameAbbreviationParserToken}
+     * {@see DayNameAbbreviationSpreadsheetParserToken}
      */
-    public static SpreadsheetDayNameAbbreviationParserToken dayNameAbbreviation(final int value, final String text) {
-        return SpreadsheetDayNameAbbreviationParserToken.with(value, text);
+    public static DayNameAbbreviationSpreadsheetParserToken dayNameAbbreviation(final int value, final String text) {
+        return DayNameAbbreviationSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDayNumberParserToken}
+     * {@see DayNumberSpreadsheetParserToken}
      */
-    public static SpreadsheetDayNumberParserToken dayNumber(final int value, final String text) {
-        return SpreadsheetDayNumberParserToken.with(value, text);
+    public static DayNumberSpreadsheetParserToken dayNumber(final int value, final String text) {
+        return DayNumberSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDecimalSeparatorSymbolParserToken}
+     * {@see DecimalSeparatorSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetDecimalSeparatorSymbolParserToken decimalSeparatorSymbol(final String value, final String text) {
-        return SpreadsheetDecimalSeparatorSymbolParserToken.with(value, text);
+    public static DecimalSeparatorSymbolSpreadsheetParserToken decimalSeparatorSymbol(final String value, final String text) {
+        return DecimalSeparatorSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDigitsParserToken}
+     * {@see DigitsSpreadsheetParserToken}
      */
-    public static SpreadsheetDigitsParserToken digits(final String value, final String text) {
-        return SpreadsheetDigitsParserToken.with(value, text);
+    public static DigitsSpreadsheetParserToken digits(final String value, final String text) {
+        return DigitsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDivideSymbolParserToken}
+     * {@see DivideSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetDivideSymbolParserToken divideSymbol(final String value, final String text) {
-        return SpreadsheetDivideSymbolParserToken.with(value, text);
+    public static DivideSymbolSpreadsheetParserToken divideSymbol(final String value, final String text) {
+        return DivideSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDivisionParserToken}
+     * {@see DivisionSpreadsheetParserToken}
      */
-    public static SpreadsheetDivisionParserToken division(final List<ParserToken> value, final String text) {
-        return SpreadsheetDivisionParserToken.with(value, text);
+    public static DivisionSpreadsheetParserToken division(final List<ParserToken> value, final String text) {
+        return DivisionSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetDoubleQuoteSymbolParserToken}
+     * {@see DoubleQuoteSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetDoubleQuoteSymbolParserToken doubleQuoteSymbol(final String value, final String text) {
-        return SpreadsheetDoubleQuoteSymbolParserToken.with(value, text);
+    public static DoubleQuoteSymbolSpreadsheetParserToken doubleQuoteSymbol(final String value, final String text) {
+        return DoubleQuoteSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetEqualsParserToken}
+     * {@see EqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetEqualsParserToken equalsParserToken(final List<ParserToken> value, final String text) {
-        return SpreadsheetEqualsParserToken.with(value, text);
+    public static EqualsSpreadsheetParserToken equalsSpreadsheetParserToken(final List<ParserToken> value, final String text) {
+        return EqualsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetEqualsSymbolParserToken}
+     * {@see EqualsSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetEqualsSymbolParserToken equalsSymbol(final String value, final String text) {
-        return SpreadsheetEqualsSymbolParserToken.with(value, text);
+    public static EqualsSymbolSpreadsheetParserToken equalsSymbol(final String value, final String text) {
+        return EqualsSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetErrorParserToken}
+     * {@see ErrorSpreadsheetParserToken}
      */
-    public static SpreadsheetErrorParserToken error(final SpreadsheetError value,
+    public static ErrorSpreadsheetParserToken error(final SpreadsheetError value,
                                                     final String text) {
-        return SpreadsheetErrorParserToken.with(value, text);
+        return ErrorSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetExponentSymbolParserToken}
+     * {@see ExponentSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetExponentSymbolParserToken exponentSymbol(final String value, final String text) {
-        return SpreadsheetExponentSymbolParserToken.with(value, text);
+    public static ExponentSymbolSpreadsheetParserToken exponentSymbol(final String value, final String text) {
+        return ExponentSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetExpressionParserToken}
+     * {@see ExpressionSpreadsheetParserToken}
      */
-    public static SpreadsheetExpressionParserToken expression(final List<ParserToken> value, final String text) {
-        return SpreadsheetExpressionParserToken.with(value, text);
+    public static ExpressionSpreadsheetParserToken expression(final List<ParserToken> value, final String text) {
+        return ExpressionSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetFunctionNameParserToken}
+     * {@see FunctionNameSpreadsheetParserToken}
      */
-    public static SpreadsheetFunctionNameParserToken functionName(final SpreadsheetFunctionName value, final String text) {
-        return SpreadsheetFunctionNameParserToken.with(value, text);
+    public static FunctionNameSpreadsheetParserToken functionName(final SpreadsheetFunctionName value, final String text) {
+        return FunctionNameSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetFunctionParametersParserToken}
+     * {@see FunctionParametersSpreadsheetParserToken}
      */
-    public static SpreadsheetFunctionParametersParserToken functionParameters(final List<ParserToken> value,
+    public static FunctionParametersSpreadsheetParserToken functionParameters(final List<ParserToken> value,
                                                                               final String text) {
-        return SpreadsheetFunctionParametersParserToken.with(
+        return FunctionParametersSpreadsheetParserToken.with(
                 value,
                 text
         );
     }
 
     /**
-     * {@see SpreadsheetGreaterThanParserToken}
+     * {@see GreaterThanSpreadsheetParserToken}
      */
-    public static SpreadsheetGreaterThanParserToken greaterThan(final List<ParserToken> value, final String text) {
-        return SpreadsheetGreaterThanParserToken.with(value, text);
+    public static GreaterThanSpreadsheetParserToken greaterThan(final List<ParserToken> value, final String text) {
+        return GreaterThanSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetGreaterThanSymbolParserToken}
+     * {@see GreaterThanSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetGreaterThanSymbolParserToken greaterThanSymbol(final String value, final String text) {
-        return SpreadsheetGreaterThanSymbolParserToken.with(value, text);
+    public static GreaterThanSymbolSpreadsheetParserToken greaterThanSymbol(final String value, final String text) {
+        return GreaterThanSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetGreaterThanEqualsParserToken}
+     * {@see GreaterThanEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetGreaterThanEqualsParserToken greaterThanEquals(final List<ParserToken> value, final String text) {
-        return SpreadsheetGreaterThanEqualsParserToken.with(value, text);
+    public static GreaterThanEqualsSpreadsheetParserToken greaterThanEquals(final List<ParserToken> value, final String text) {
+        return GreaterThanEqualsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetGreaterThanEqualsParserToken}
+     * {@see GreaterThanEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetGreaterThanEqualsSymbolParserToken greaterThanEqualsSymbol(final String value, final String text) {
-        return SpreadsheetGreaterThanEqualsSymbolParserToken.with(value, text);
+    public static GreaterThanEqualsSymbolSpreadsheetParserToken greaterThanEqualsSymbol(final String value, final String text) {
+        return GreaterThanEqualsSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetGroupParserToken}
+     * {@see GroupSpreadsheetParserToken}
      */
-    public static SpreadsheetGroupParserToken group(final List<ParserToken> value, final String text) {
-        return SpreadsheetGroupParserToken.with(value, text);
+    public static GroupSpreadsheetParserToken group(final List<ParserToken> value, final String text) {
+        return GroupSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetGroupSeparatorSymbolParserToken}
+     * {@see GroupSeparatorSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetGroupSeparatorSymbolParserToken groupSeparatorSymbol(final String value, final String text) {
-        return SpreadsheetGroupSeparatorSymbolParserToken.with(value, text);
+    public static GroupSeparatorSymbolSpreadsheetParserToken groupSeparatorSymbol(final String value, final String text) {
+        return GroupSeparatorSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetHourParserToken}
+     * {@see HourSpreadsheetParserToken}
      */
-    public static SpreadsheetHourParserToken hour(final int value, final String text) {
-        return SpreadsheetHourParserToken.with(value, text);
+    public static HourSpreadsheetParserToken hour(final int value, final String text) {
+        return HourSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetLabelNameParserToken}
+     * {@see LabelNameSpreadsheetParserToken}
      */
-    public static SpreadsheetLabelNameParserToken labelName(final SpreadsheetLabelName value, final String text) {
-        return SpreadsheetLabelNameParserToken.with(value, text);
+    public static LabelNameSpreadsheetParserToken labelName(final SpreadsheetLabelName value, final String text) {
+        return LabelNameSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetLambdaFunctionParserToken}
+     * {@see LambdaFunctionSpreadsheetParserToken}
      */
-    public static SpreadsheetLambdaFunctionParserToken lambdaFunction(final List<ParserToken> value,
+    public static LambdaFunctionSpreadsheetParserToken lambdaFunction(final List<ParserToken> value,
                                                                       final String text) {
-        return SpreadsheetLambdaFunctionParserToken.with(
+        return LambdaFunctionSpreadsheetParserToken.with(
                 value,
                 text
         );
     }
 
     /**
-     * {@see SpreadsheetLessThanParserToken}
+     * {@see LessThanSpreadsheetParserToken}
      */
-    public static SpreadsheetLessThanParserToken lessThan(final List<ParserToken> value, final String text) {
-        return SpreadsheetLessThanParserToken.with(value, text);
+    public static LessThanSpreadsheetParserToken lessThan(final List<ParserToken> value, final String text) {
+        return LessThanSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetLessThanSymbolParserToken}
+     * {@see LessThanSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetLessThanSymbolParserToken lessThanSymbol(final String value, final String text) {
-        return SpreadsheetLessThanSymbolParserToken.with(value, text);
+    public static LessThanSymbolSpreadsheetParserToken lessThanSymbol(final String value, final String text) {
+        return LessThanSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetLessThanEqualsParserToken}
+     * {@see LessThanEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetLessThanEqualsParserToken lessThanEquals(final List<ParserToken> value, final String text) {
-        return SpreadsheetLessThanEqualsParserToken.with(value, text);
+    public static LessThanEqualsSpreadsheetParserToken lessThanEquals(final List<ParserToken> value, final String text) {
+        return LessThanEqualsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetLessThanEqualsParserToken}
+     * {@see LessThanEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetLessThanEqualsSymbolParserToken lessThanEqualsSymbol(final String value, final String text) {
-        return SpreadsheetLessThanEqualsSymbolParserToken.with(value, text);
+    public static LessThanEqualsSymbolSpreadsheetParserToken lessThanEqualsSymbol(final String value, final String text) {
+        return LessThanEqualsSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMinusSymbolParserToken}
+     * {@see MinusSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetMinusSymbolParserToken minusSymbol(final String value, final String text) {
-        return SpreadsheetMinusSymbolParserToken.with(value, text);
+    public static MinusSymbolSpreadsheetParserToken minusSymbol(final String value, final String text) {
+        return MinusSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMillisecondParserToken}
+     * {@see MillisecondSpreadsheetParserToken}
      */
-    public static SpreadsheetMillisecondParserToken millisecond(final int value, final String text) {
-        return SpreadsheetMillisecondParserToken.with(value, text);
+    public static MillisecondSpreadsheetParserToken millisecond(final int value, final String text) {
+        return MillisecondSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMinuteParserToken}
+     * {@see MinuteSpreadsheetParserToken}
      */
-    public static SpreadsheetMinuteParserToken minute(final int value, final String text) {
-        return SpreadsheetMinuteParserToken.with(value, text);
+    public static MinuteSpreadsheetParserToken minute(final int value, final String text) {
+        return MinuteSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMonthNameParserToken}
+     * {@see MonthNameSpreadsheetParserToken}
      */
-    public static SpreadsheetMonthNameParserToken monthName(final int value, final String text) {
-        return SpreadsheetMonthNameParserToken.with(value, text);
+    public static MonthNameSpreadsheetParserToken monthName(final int value, final String text) {
+        return MonthNameSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMonthNameAbbreviationParserToken}
+     * {@see MonthNameAbbreviationSpreadsheetParserToken}
      */
-    public static SpreadsheetMonthNameAbbreviationParserToken monthNameAbbreviation(final int value, final String text) {
-        return SpreadsheetMonthNameAbbreviationParserToken.with(value, text);
+    public static MonthNameAbbreviationSpreadsheetParserToken monthNameAbbreviation(final int value, final String text) {
+        return MonthNameAbbreviationSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMonthNameInitialParserToken}
+     * {@see MonthNameInitialSpreadsheetParserToken}
      */
-    public static SpreadsheetMonthNameInitialParserToken monthNameInitial(final int value, final String text) {
-        return SpreadsheetMonthNameInitialParserToken.with(value, text);
+    public static MonthNameInitialSpreadsheetParserToken monthNameInitial(final int value, final String text) {
+        return MonthNameInitialSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMonthNumberParserToken}
+     * {@see MonthNumberSpreadsheetParserToken}
      */
-    public static SpreadsheetMonthNumberParserToken monthNumber(final int value, final String text) {
-        return SpreadsheetMonthNumberParserToken.with(value, text);
+    public static MonthNumberSpreadsheetParserToken monthNumber(final int value, final String text) {
+        return MonthNumberSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMultiplicationParserToken}
+     * {@see MultiplicationSpreadsheetParserToken}
      */
-    public static SpreadsheetMultiplicationParserToken multiplication(final List<ParserToken> value, final String text) {
-        return SpreadsheetMultiplicationParserToken.with(value, text);
+    public static MultiplicationSpreadsheetParserToken multiplication(final List<ParserToken> value, final String text) {
+        return MultiplicationSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetMultiplySymbolParserToken}
+     * {@see MultiplySymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetMultiplySymbolParserToken multiplySymbol(final String value, final String text) {
-        return SpreadsheetMultiplySymbolParserToken.with(value, text);
+    public static MultiplySymbolSpreadsheetParserToken multiplySymbol(final String value, final String text) {
+        return MultiplySymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetNamedFunctionParserToken}
+     * {@see NamedFunctionSpreadsheetParserToken}
      */
-    public static SpreadsheetNamedFunctionParserToken namedFunction(final List<ParserToken> value,
+    public static NamedFunctionSpreadsheetParserToken namedFunction(final List<ParserToken> value,
                                                                     final String text) {
-        return SpreadsheetNamedFunctionParserToken.with(
+        return NamedFunctionSpreadsheetParserToken.with(
                 value,
                 text
         );
     }
 
     /**
-     * {@see SpreadsheetNegativeParserToken}
+     * {@see NegativeSpreadsheetParserToken}
      */
-    public static SpreadsheetNegativeParserToken negative(final List<ParserToken> value, final String text) {
-        return SpreadsheetNegativeParserToken.with(value, text);
+    public static NegativeSpreadsheetParserToken negative(final List<ParserToken> value, final String text) {
+        return NegativeSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetNotEqualsParserToken}
+     * {@see NotEqualsSpreadsheetParserToken}
      */
-    public static SpreadsheetNotEqualsParserToken notEquals(final List<ParserToken> value, final String text) {
-        return SpreadsheetNotEqualsParserToken.with(value, text);
+    public static NotEqualsSpreadsheetParserToken notEquals(final List<ParserToken> value, final String text) {
+        return NotEqualsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetNotEqualsSymbolParserToken}
+     * {@see NotEqualsSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetNotEqualsSymbolParserToken notEqualsSymbol(final String value, final String text) {
-        return SpreadsheetNotEqualsSymbolParserToken.with(value, text);
+    public static NotEqualsSymbolSpreadsheetParserToken notEqualsSymbol(final String value, final String text) {
+        return NotEqualsSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetNumberParserToken}
+     * {@see NumberSpreadsheetParserToken}
      */
-    public static SpreadsheetNumberParserToken number(final List<ParserToken> value, final String text) {
-        return SpreadsheetNumberParserToken.with(value, text);
+    public static NumberSpreadsheetParserToken number(final List<ParserToken> value, final String text) {
+        return NumberSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetParenthesisCloseSymbolParserToken}
+     * {@see ParenthesisCloseSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetParenthesisCloseSymbolParserToken parenthesisCloseSymbol(final String value, final String text) {
-        return SpreadsheetParenthesisCloseSymbolParserToken.with(value, text);
+    public static ParenthesisCloseSymbolSpreadsheetParserToken parenthesisCloseSymbol(final String value, final String text) {
+        return ParenthesisCloseSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetParenthesisOpenSymbolParserToken}
+     * {@see ParenthesisOpenSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetParenthesisOpenSymbolParserToken parenthesisOpenSymbol(final String value, final String text) {
-        return SpreadsheetParenthesisOpenSymbolParserToken.with(value, text);
+    public static ParenthesisOpenSymbolSpreadsheetParserToken parenthesisOpenSymbol(final String value, final String text) {
+        return ParenthesisOpenSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetPercentSymbolParserToken}
+     * {@see PercentSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetPercentSymbolParserToken percentSymbol(final String value, final String text) {
-        return SpreadsheetPercentSymbolParserToken.with(value, text);
+    public static PercentSymbolSpreadsheetParserToken percentSymbol(final String value, final String text) {
+        return PercentSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetPlusSymbolParserToken}
+     * {@see PlusSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetPlusSymbolParserToken plusSymbol(final String value, final String text) {
-        return SpreadsheetPlusSymbolParserToken.with(value, text);
+    public static PlusSymbolSpreadsheetParserToken plusSymbol(final String value, final String text) {
+        return PlusSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetPowerParserToken}
+     * {@see PowerSpreadsheetParserToken}
      */
-    public static SpreadsheetPowerParserToken power(final List<ParserToken> value, final String text) {
-        return SpreadsheetPowerParserToken.with(value, text);
+    public static PowerSpreadsheetParserToken power(final List<ParserToken> value, final String text) {
+        return PowerSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetPowerSymbolParserToken}
+     * {@see PowerSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetPowerSymbolParserToken powerSymbol(final String value, final String text) {
-        return SpreadsheetPowerSymbolParserToken.with(value, text);
+    public static PowerSymbolSpreadsheetParserToken powerSymbol(final String value, final String text) {
+        return PowerSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetRowReferenceParserToken}
+     * {@see RowReferenceSpreadsheetParserToken}
      */
-    public static SpreadsheetRowReferenceParserToken rowReference(final SpreadsheetRowReference value, final String text) {
-        return SpreadsheetRowReferenceParserToken.with(value, text);
+    public static RowReferenceSpreadsheetParserToken rowReference(final SpreadsheetRowReference value, final String text) {
+        return RowReferenceSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetSecondsParserToken}
+     * {@see SecondsSpreadsheetParserToken}
      */
-    public static SpreadsheetSecondsParserToken seconds(final int value, final String text) {
-        return SpreadsheetSecondsParserToken.with(value, text);
+    public static SecondsSpreadsheetParserToken seconds(final int value, final String text) {
+        return SecondsSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetSubtractionParserToken}
+     * {@see SubtractionSpreadsheetParserToken}
      */
-    public static SpreadsheetSubtractionParserToken subtraction(final List<ParserToken> value, final String text) {
-        return SpreadsheetSubtractionParserToken.with(value, text);
+    public static SubtractionSpreadsheetParserToken subtraction(final List<ParserToken> value, final String text) {
+        return SubtractionSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetTextParserToken}
+     * {@see TextSpreadsheetParserToken}
      */
-    public static SpreadsheetTextParserToken text(final List<ParserToken> value, final String text) {
-        return SpreadsheetTextParserToken.with(value, text);
+    public static TextSpreadsheetParserToken text(final List<ParserToken> value, final String text) {
+        return TextSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetTextLiteralParserToken}
+     * {@see TextLiteralSpreadsheetParserToken}
      */
-    public static SpreadsheetTextLiteralParserToken textLiteral(final String value, final String text) {
-        return SpreadsheetTextLiteralParserToken.with(value, text);
+    public static TextLiteralSpreadsheetParserToken textLiteral(final String value, final String text) {
+        return TextLiteralSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetTimeParserToken}
+     * {@see TimeSpreadsheetParserToken}
      */
-    public static SpreadsheetTimeParserToken time(final List<ParserToken> value, final String text) {
-        return SpreadsheetTimeParserToken.with(value, text);
+    public static TimeSpreadsheetParserToken time(final List<ParserToken> value, final String text) {
+        return TimeSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetValueSeparatorSymbolParserToken}
+     * {@see ValueSeparatorSymbolSpreadsheetParserToken}
      */
-    public static SpreadsheetValueSeparatorSymbolParserToken valueSeparatorSymbol(final String value, final String text) {
-        return SpreadsheetValueSeparatorSymbolParserToken.with(value, text);
+    public static ValueSeparatorSymbolSpreadsheetParserToken valueSeparatorSymbol(final String value, final String text) {
+        return ValueSeparatorSymbolSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetWhitespaceParserToken}
+     * {@see WhitespaceSpreadsheetParserToken}
      */
-    public static SpreadsheetWhitespaceParserToken whitespace(final String value, final String text) {
-        return SpreadsheetWhitespaceParserToken.with(value, text);
+    public static WhitespaceSpreadsheetParserToken whitespace(final String value, final String text) {
+        return WhitespaceSpreadsheetParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetYearParserToken}
+     * {@see YearSpreadsheetParserToken}
      */
-    public static SpreadsheetYearParserToken year(final int value, final String text) {
-        return SpreadsheetYearParserToken.with(value, text);
+    public static YearSpreadsheetParserToken year(final int value, final String text) {
+        return YearSpreadsheetParserToken.with(value, text);
     }
 
     static List<ParserToken> copyAndCheckTokens(final List<ParserToken> tokens) {
@@ -614,582 +614,582 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     // isXXX............................................................................................................
 
     /**
-     * Only {@link SpreadsheetAdditionParserToken} return true
+     * Only {@link AdditionSpreadsheetParserToken} return true
      */
     public final boolean isAddition() {
-        return this instanceof SpreadsheetAdditionParserToken;
+        return this instanceof AdditionSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetAmPmParserToken} returns true
+     * Only {@link AmPmSpreadsheetParserToken} returns true
      */
     public final boolean isAmPm() {
-        return this instanceof SpreadsheetAmPmParserToken;
+        return this instanceof AmPmSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetApostropheSymbolParserToken} returns true
+     * Only {@link ApostropheSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isApostropheSymbol() {
-        return this instanceof SpreadsheetApostropheSymbolParserToken;
+        return this instanceof ApostropheSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetArithmeticParserToken} return true
+     * Only {@link ArithmeticSpreadsheetParserToken} return true
      */
     public final boolean isArithmetic() {
-        return this instanceof SpreadsheetArithmeticParserToken;
+        return this instanceof ArithmeticSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetBetweenSymbolParserToken} returns true
+     * Only {@link BetweenSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isBetweenSymbol() {
-        return this instanceof SpreadsheetBetweenSymbolParserToken;
+        return this instanceof BetweenSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetCellRangeParserToken} return true
+     * Only {@link CellRangeSpreadsheetParserToken} return true
      */
     public final boolean isCellRange() {
-        return this instanceof SpreadsheetCellRangeParserToken;
+        return this instanceof CellRangeSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetCellReferenceParserToken} return true
+     * Only {@link CellReferenceSpreadsheetParserToken} return true
      */
     public final boolean isCellReference() {
-        return this instanceof SpreadsheetCellReferenceParserToken;
+        return this instanceof CellReferenceSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetColumnReferenceParserToken} return true
+     * Only {@link ColumnReferenceSpreadsheetParserToken} return true
      */
     public final boolean isColumnReference() {
-        return this instanceof SpreadsheetColumnReferenceParserToken;
+        return this instanceof ColumnReferenceSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetConditionParserToken} return true
+     * Only {@link ConditionSpreadsheetParserToken} return true
      */
     public final boolean isCondition() {
-        return this instanceof SpreadsheetConditionParserToken;
+        return this instanceof ConditionSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetConditionRightParserToken} return true
+     * Only {@link ConditionRightSpreadsheetParserToken} return true
      */
     public final boolean isConditionRight() {
-        return this instanceof SpreadsheetConditionRightParserToken;
+        return this instanceof ConditionRightSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetConditionRightEqualsParserToken} return true
+     * Only {@link ConditionRightEqualsSpreadsheetParserToken} return true
      */
     public final boolean isConditionRightEquals() {
-        return this instanceof SpreadsheetConditionRightEqualsParserToken;
+        return this instanceof ConditionRightEqualsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetConditionRightGreaterThanParserToken} return true
+     * Only {@link ConditionRightGreaterThanSpreadsheetParserToken} return true
      */
     public final boolean isConditionRightGreaterThan() {
-        return this instanceof SpreadsheetConditionRightGreaterThanParserToken;
+        return this instanceof ConditionRightGreaterThanSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetConditionRightGreaterThanEqualsParserToken} return true
+     * Only {@link ConditionRightGreaterThanEqualsSpreadsheetParserToken} return true
      */
     public final boolean isConditionRightGreaterThanEquals() {
-        return this instanceof SpreadsheetConditionRightGreaterThanEqualsParserToken;
+        return this instanceof ConditionRightGreaterThanEqualsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetConditionRightLessThanParserToken} return true
+     * Only {@link ConditionRightLessThanSpreadsheetParserToken} return true
      */
     public final boolean isConditionRightLessThan() {
-        return this instanceof SpreadsheetConditionRightLessThanParserToken;
+        return this instanceof ConditionRightLessThanSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetConditionRightLessThanEqualsParserToken} return true
+     * Only {@link ConditionRightLessThanEqualsSpreadsheetParserToken} return true
      */
     public final boolean isConditionRightLessThanEquals() {
-        return this instanceof SpreadsheetConditionRightLessThanEqualsParserToken;
+        return this instanceof ConditionRightLessThanEqualsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetConditionRightNotEqualsParserToken} return true
+     * Only {@link ConditionRightNotEqualsSpreadsheetParserToken} return true
      */
     public final boolean isConditionRightNotEquals() {
-        return this instanceof SpreadsheetConditionRightNotEqualsParserToken;
+        return this instanceof ConditionRightNotEqualsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetCurrencySymbolParserToken} returns true
+     * Only {@link CurrencySymbolSpreadsheetParserToken} returns true
      */
     public final boolean isCurrencySymbol() {
-        return this instanceof SpreadsheetCurrencySymbolParserToken;
+        return this instanceof CurrencySymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDateParserToken} return true
+     * Only {@link DateSpreadsheetParserToken} return true
      */
     public final boolean isDate() {
-        return this instanceof SpreadsheetDateParserToken;
+        return this instanceof DateSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDateTimeParserToken} return true
+     * Only {@link DateTimeSpreadsheetParserToken} return true
      */
     public final boolean isDateTime() {
-        return this instanceof SpreadsheetDateTimeParserToken;
+        return this instanceof DateTimeSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDayNameParserToken} returns true
+     * Only {@link DayNameSpreadsheetParserToken} returns true
      */
     public final boolean isDayName() {
-        return this instanceof SpreadsheetDayNameParserToken;
+        return this instanceof DayNameSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDayNameAbbreviationParserToken} returns true
+     * Only {@link DayNameAbbreviationSpreadsheetParserToken} returns true
      */
     public final boolean isDayNameAbbreviation() {
-        return this instanceof SpreadsheetDayNameAbbreviationParserToken;
+        return this instanceof DayNameAbbreviationSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDayNumberParserToken} returns true
+     * Only {@link DayNumberSpreadsheetParserToken} returns true
      */
     public final boolean isDayNumber() {
-        return this instanceof SpreadsheetDayNumberParserToken;
+        return this instanceof DayNumberSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDecimalSeparatorSymbolParserToken} returns true
+     * Only {@link DecimalSeparatorSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isDecimalSeparatorSymbol() {
-        return this instanceof SpreadsheetDecimalSeparatorSymbolParserToken;
+        return this instanceof DecimalSeparatorSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDigitsParserToken} returns true
+     * Only {@link DigitsSpreadsheetParserToken} returns true
      */
     public final boolean isDigits() {
-        return this instanceof SpreadsheetDigitsParserToken;
+        return this instanceof DigitsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDivideSymbolParserToken} returns true
+     * Only {@link DivideSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isDivideSymbol() {
-        return this instanceof SpreadsheetDivideSymbolParserToken;
+        return this instanceof DivideSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDivisionParserToken} return true
+     * Only {@link DivisionSpreadsheetParserToken} return true
      */
     public final boolean isDivision() {
-        return this instanceof SpreadsheetDivisionParserToken;
+        return this instanceof DivisionSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetDoubleQuoteSymbolParserToken} returns true
+     * Only {@link DoubleQuoteSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isDoubleQuoteSymbol() {
-        return this instanceof SpreadsheetDoubleQuoteSymbolParserToken;
+        return this instanceof DoubleQuoteSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetEqualsParserToken} returns true
+     * Only {@link EqualsSpreadsheetParserToken} returns true
      */
     public final boolean isEquals() {
-        return this instanceof SpreadsheetEqualsParserToken;
+        return this instanceof EqualsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetEqualsSymbolParserToken} returns true
+     * Only {@link EqualsSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isEqualsSymbol() {
-        return this instanceof SpreadsheetEqualsSymbolParserToken;
+        return this instanceof EqualsSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetEqualsSymbolParserToken} returns true
+     * Only {@link EqualsSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isError() {
-        return this instanceof SpreadsheetErrorParserToken;
+        return this instanceof ErrorSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetExponentSymbolParserToken} returns true
+     * Only {@link ExponentSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isExponentSymbol() {
-        return this instanceof SpreadsheetExponentSymbolParserToken;
+        return this instanceof ExponentSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetExpressionParserToken} return true
+     * Only {@link ExpressionSpreadsheetParserToken} return true
      */
     public final boolean isExpression() {
-        return this instanceof SpreadsheetExpressionParserToken;
+        return this instanceof ExpressionSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetFunctionParserToken} returns true
+     * Only {@link FunctionSpreadsheetParserToken} returns true
      */
     public final boolean isFunction() {
-        return this instanceof SpreadsheetFunctionParserToken;
+        return this instanceof FunctionSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetFunctionNameParserToken} returns true
+     * Only {@link FunctionNameSpreadsheetParserToken} returns true
      */
     public final boolean isFunctionName() {
-        return this instanceof SpreadsheetFunctionNameParserToken;
+        return this instanceof FunctionNameSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetFunctionParametersParserToken} returns true
+     * Only {@link FunctionParametersSpreadsheetParserToken} returns true
      */
     public final boolean isFunctionParameters() {
-        return this instanceof SpreadsheetFunctionParametersParserToken;
+        return this instanceof FunctionParametersSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetGreaterThanParserToken} returns true
+     * Only {@link GreaterThanSpreadsheetParserToken} returns true
      */
     public final boolean isGreaterThan() {
-        return this instanceof SpreadsheetGreaterThanParserToken;
+        return this instanceof GreaterThanSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetGreaterThanSymbolParserToken} returns true
+     * Only {@link GreaterThanSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isGreaterThanSymbol() {
-        return this instanceof SpreadsheetGreaterThanSymbolParserToken;
+        return this instanceof GreaterThanSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetGreaterThanEqualsParserToken} returns true
+     * Only {@link GreaterThanEqualsSpreadsheetParserToken} returns true
      */
     public final boolean isGreaterThanEquals() {
-        return this instanceof SpreadsheetGreaterThanEqualsParserToken;
+        return this instanceof GreaterThanEqualsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetGreaterThanEqualsSymbolParserToken} returns true
+     * Only {@link GreaterThanEqualsSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isGreaterThanEqualsSymbol() {
-        return this instanceof SpreadsheetGreaterThanEqualsSymbolParserToken;
+        return this instanceof GreaterThanEqualsSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetGroupParserToken} return true
+     * Only {@link GroupSpreadsheetParserToken} return true
      */
     public final boolean isGroup() {
-        return this instanceof SpreadsheetGroupParserToken;
+        return this instanceof GroupSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetGroupSeparatorSymbolParserToken} return true
+     * Only {@link GroupSeparatorSymbolSpreadsheetParserToken} return true
      */
     public final boolean isGroupSeparatorSymbol() {
-        return this instanceof SpreadsheetGroupSeparatorSymbolParserToken;
+        return this instanceof GroupSeparatorSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetHourParserToken} returns true
+     * Only {@link HourSpreadsheetParserToken} returns true
      */
     public final boolean isHour() {
-        return this instanceof SpreadsheetHourParserToken;
+        return this instanceof HourSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetLabelNameParserToken} return true
+     * Only {@link LabelNameSpreadsheetParserToken} return true
      */
     public final boolean isLabelName() {
-        return this instanceof SpreadsheetLabelNameParserToken;
+        return this instanceof LabelNameSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetLambdaFunctionParserToken} returns true
+     * Only {@link LambdaFunctionSpreadsheetParserToken} returns true
      */
     public final boolean isLambdaFunction() {
-        return this instanceof SpreadsheetLambdaFunctionParserToken;
+        return this instanceof LambdaFunctionSpreadsheetParserToken;
     }
 
     /**
-     * Returns true for sub-classes of {@link SpreadsheetLeafParserToken}.
+     * Returns true for sub-classes of {@link LeafSpreadsheetParserToken}.
      */
     @Override
     public final boolean isLeaf() {
-        return this instanceof SpreadsheetLeafParserToken;
+        return this instanceof LeafSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetLessThanParserToken} returns true
+     * Only {@link LessThanSpreadsheetParserToken} returns true
      */
     public final boolean isLessThan() {
-        return this instanceof SpreadsheetLessThanParserToken;
+        return this instanceof LessThanSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetLessThanSymbolParserToken} returns true
+     * Only {@link LessThanSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isLessThanSymbol() {
-        return this instanceof SpreadsheetLessThanSymbolParserToken;
+        return this instanceof LessThanSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetLessThanEqualsParserToken} returns true
+     * Only {@link LessThanEqualsSpreadsheetParserToken} returns true
      */
     public final boolean isLessThanEquals() {
-        return this instanceof SpreadsheetLessThanEqualsParserToken;
+        return this instanceof LessThanEqualsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetLessThanEqualsSymbolParserToken} returns true
+     * Only {@link LessThanEqualsSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isLessThanEqualsSymbol() {
-        return this instanceof SpreadsheetLessThanEqualsSymbolParserToken;
+        return this instanceof LessThanEqualsSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMinusSymbolParserToken} returns true
+     * Only {@link MinusSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isMinusSymbol() {
-        return this instanceof SpreadsheetMinusSymbolParserToken;
+        return this instanceof MinusSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMillisecondParserToken} returns true
+     * Only {@link MillisecondSpreadsheetParserToken} returns true
      */
     public final boolean isMillisecond() {
-        return this instanceof SpreadsheetMillisecondParserToken;
+        return this instanceof MillisecondSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMinuteParserToken} returns true
+     * Only {@link MinuteSpreadsheetParserToken} returns true
      */
     public final boolean isMinute() {
-        return this instanceof SpreadsheetMinuteParserToken;
+        return this instanceof MinuteSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMonthNameParserToken} returns true
+     * Only {@link MonthNameSpreadsheetParserToken} returns true
      */
     public final boolean isMonthName() {
-        return this instanceof SpreadsheetMonthNameParserToken;
+        return this instanceof MonthNameSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMonthNameAbbreviationParserToken} returns true
+     * Only {@link MonthNameAbbreviationSpreadsheetParserToken} returns true
      */
     public final boolean isMonthNameAbbreviation() {
-        return this instanceof SpreadsheetMonthNameAbbreviationParserToken;
+        return this instanceof MonthNameAbbreviationSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMonthNameInitialParserToken} returns true
+     * Only {@link MonthNameInitialSpreadsheetParserToken} returns true
      */
     public final boolean isMonthNameInitial() {
-        return this instanceof SpreadsheetMonthNameInitialParserToken;
+        return this instanceof MonthNameInitialSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMonthNumberParserToken} returns true
+     * Only {@link MonthNumberSpreadsheetParserToken} returns true
      */
     public final boolean isMonthNumber() {
-        return this instanceof SpreadsheetMonthNumberParserToken;
+        return this instanceof MonthNumberSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMultiplicationParserToken} return true
+     * Only {@link MultiplicationSpreadsheetParserToken} return true
      */
     public final boolean isMultiplication() {
-        return this instanceof SpreadsheetMultiplicationParserToken;
+        return this instanceof MultiplicationSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetMultiplySymbolParserToken} returns true
+     * Only {@link MultiplySymbolSpreadsheetParserToken} returns true
      */
     public final boolean isMultiplySymbol() {
-        return this instanceof SpreadsheetMultiplySymbolParserToken;
+        return this instanceof MultiplySymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetNamedFunctionParserToken} returns true
+     * Only {@link NamedFunctionSpreadsheetParserToken} returns true
      */
     public final boolean isNamedFunction() {
-        return this instanceof SpreadsheetNamedFunctionParserToken;
+        return this instanceof NamedFunctionSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetNegativeParserToken} return true
+     * Only {@link NegativeSpreadsheetParserToken} return true
      */
     public final boolean isNegative() {
-        return this instanceof SpreadsheetNegativeParserToken;
+        return this instanceof NegativeSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetSymbolParserToken} return true
+     * Only {@link SymbolSpreadsheetParserToken} return true
      */
     @Override
     public final boolean isNoise() {
-        return this instanceof SpreadsheetSymbolParserToken;
+        return this instanceof SymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetNotEqualsParserToken} returns true
+     * Only {@link NotEqualsSpreadsheetParserToken} returns true
      */
     public final boolean isNotEquals() {
-        return this instanceof SpreadsheetNotEqualsParserToken;
+        return this instanceof NotEqualsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetNotEqualsSymbolParserToken} returns true
+     * Only {@link NotEqualsSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isNotEqualsSymbol() {
-        return this instanceof SpreadsheetNotEqualsSymbolParserToken;
+        return this instanceof NotEqualsSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetNumberParserToken} return true
+     * Only {@link NumberSpreadsheetParserToken} return true
      */
     public final boolean isNumber() {
-        return this instanceof SpreadsheetNumberParserToken;
+        return this instanceof NumberSpreadsheetParserToken;
     }
 
     /**
-     * Returns true for sub-classes of {@link SpreadsheetParentParserToken}.
+     * Returns true for sub-classes of {@link ParentSpreadsheetParserToken}.
      */
     @Override
     public final boolean isParent() {
-        return this instanceof SpreadsheetParentParserToken;
+        return this instanceof ParentSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetParenthesisCloseSymbolParserToken} return true
+     * Only {@link ParenthesisCloseSymbolSpreadsheetParserToken} return true
      */
     public final boolean isParenthesisCloseSymbol() {
-        return this instanceof SpreadsheetParenthesisCloseSymbolParserToken;
+        return this instanceof ParenthesisCloseSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetParenthesisOpenSymbolParserToken} return true
+     * Only {@link ParenthesisOpenSymbolSpreadsheetParserToken} return true
      */
     public final boolean isParenthesisOpenSymbol() {
-        return this instanceof SpreadsheetParenthesisOpenSymbolParserToken;
+        return this instanceof ParenthesisOpenSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetPercentSymbolParserToken} return true
+     * Only {@link PercentSymbolSpreadsheetParserToken} return true
      */
     public final boolean isPercentSymbol() {
-        return this instanceof SpreadsheetPercentSymbolParserToken;
+        return this instanceof PercentSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetPlusSymbolParserToken} returns true
+     * Only {@link PlusSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isPlusSymbol() {
-        return this instanceof SpreadsheetPlusSymbolParserToken;
+        return this instanceof PlusSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetPowerParserToken} return true
+     * Only {@link PowerSpreadsheetParserToken} return true
      */
     public final boolean isPower() {
-        return this instanceof SpreadsheetPowerParserToken;
+        return this instanceof PowerSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetPowerSymbolParserToken} return true
+     * Only {@link PowerSymbolSpreadsheetParserToken} return true
      */
     public final boolean isPowerSymbol() {
-        return this instanceof SpreadsheetPowerSymbolParserToken;
+        return this instanceof PowerSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetRowReferenceParserToken} return true
+     * Only {@link RowReferenceSpreadsheetParserToken} return true
      */
     public final boolean isRowReference() {
-        return this instanceof SpreadsheetRowReferenceParserToken;
+        return this instanceof RowReferenceSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetSecondsParserToken} returns true
+     * Only {@link SecondsSpreadsheetParserToken} returns true
      */
     public final boolean isSeconds() {
-        return this instanceof SpreadsheetSecondsParserToken;
+        return this instanceof SecondsSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetSubtractionParserToken} return true
+     * Only {@link SubtractionSpreadsheetParserToken} return true
      */
     public final boolean isSubtraction() {
-        return this instanceof SpreadsheetSubtractionParserToken;
+        return this instanceof SubtractionSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetSymbolParserToken} return true
+     * Only {@link SymbolSpreadsheetParserToken} return true
      */
     @Override
     public final boolean isSymbol() {
-        return this instanceof SpreadsheetSymbolParserToken;
+        return this instanceof SymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetTextParserToken} return true
+     * Only {@link TextSpreadsheetParserToken} return true
      */
     public final boolean isText() {
-        return this instanceof SpreadsheetTextParserToken;
+        return this instanceof TextSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetTextLiteralParserToken} return true
+     * Only {@link TextLiteralSpreadsheetParserToken} return true
      */
     public final boolean isTextLiteral() {
-        return this instanceof SpreadsheetTextLiteralParserToken;
+        return this instanceof TextLiteralSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetTimeParserToken} return true
+     * Only {@link TimeSpreadsheetParserToken} return true
      */
     public final boolean isTime() {
-        return this instanceof SpreadsheetTimeParserToken;
+        return this instanceof TimeSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetValueParserToken} return true
+     * Only {@link ValueSpreadsheetParserToken} return true
      */
     public final boolean isValue() {
-        return this instanceof SpreadsheetValueParserToken;
+        return this instanceof ValueSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetValueSeparatorSymbolParserToken} returns true
+     * Only {@link ValueSeparatorSymbolSpreadsheetParserToken} returns true
      */
     public final boolean isValueSeparatorSymbol() {
-        return this instanceof SpreadsheetValueSeparatorSymbolParserToken;
+        return this instanceof ValueSeparatorSymbolSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetWhitespaceParserToken} return true
+     * Only {@link WhitespaceSpreadsheetParserToken} return true
      */
     @Override
     public final boolean isWhitespace() {
-        return this instanceof SpreadsheetWhitespaceParserToken;
+        return this instanceof WhitespaceSpreadsheetParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetYearParserToken} returns true
+     * Only {@link YearSpreadsheetParserToken} returns true
      */
     public final boolean isYear() {
-        return this instanceof SpreadsheetYearParserToken;
+        return this instanceof YearSpreadsheetParserToken;
     }
 
     /**
@@ -1209,7 +1209,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     final static int HIGHEST_PRIORITY = RANGE_BETWEEN_PRIORITY;
 
     /**
-     * Factory that creates the {@link SpreadsheetBinaryParserToken} sub class using the provided tokens and text.
+     * Factory that creates the {@link BinarySpreadsheetParserToken} sub class using the provided tokens and text.
      */
     abstract SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text);
 
@@ -1268,113 +1268,113 @@ public abstract class SpreadsheetParserToken implements ParserToken {
 
     // json. ...........................................................................................................
 
-    // SpreadsheetNonSymbolParserToken..................................................................................
+    // NonSymbolSpreadsheetParserToken..................................................................................
 
     static {
-        registerLeafParserToken(
-                SpreadsheetAmPmParserToken.class,
+        registerLeaf(
+                AmPmSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallAmPm
         );
 
-        registerLeafParserToken(
-                SpreadsheetColumnReferenceParserToken.class,
+        registerLeaf(
+                ColumnReferenceSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallColumnReference
         );
 
-        registerLeafParserToken(
-                SpreadsheetDayNameParserToken.class,
+        registerLeaf(
+                DayNameSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDayName
         );
 
-        registerLeafParserToken(
-                SpreadsheetDayNameAbbreviationParserToken.class,
+        registerLeaf(
+                DayNameAbbreviationSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDayNameAbbreviation
         );
 
-        registerLeafParserToken(
-                SpreadsheetDayNumberParserToken.class,
+        registerLeaf(
+                DayNumberSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDayNumber
         );
 
-        registerLeafParserToken(
-                SpreadsheetDigitsParserToken.class,
+        registerLeaf(
+                DigitsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDigits
         );
 
-        registerLeafParserToken(
-                SpreadsheetErrorParserToken.class,
+        registerLeaf(
+                ErrorSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallError
         );
 
-        registerLeafParserToken(
-                SpreadsheetFunctionNameParserToken.class,
+        registerLeaf(
+                FunctionNameSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallFunctionName
         );
 
-        registerLeafParserToken(
-                SpreadsheetHourParserToken.class,
+        registerLeaf(
+                HourSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallHour
         );
 
-        registerLeafParserToken(
-                SpreadsheetLabelNameParserToken.class,
+        registerLeaf(
+                LabelNameSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallLabelName
         );
 
-        registerLeafParserToken(
-                SpreadsheetMillisecondParserToken.class,
+        registerLeaf(
+                MillisecondSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMillisecond
         );
 
-        registerLeafParserToken(
-                SpreadsheetMinuteParserToken.class,
+        registerLeaf(
+                MinuteSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMinute
         );
 
-        registerLeafParserToken(
-                SpreadsheetMonthNameParserToken.class,
+        registerLeaf(
+                MonthNameSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMonthName
         );
 
-        registerLeafParserToken(
-                SpreadsheetMonthNameAbbreviationParserToken.class,
+        registerLeaf(
+                MonthNameAbbreviationSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMonthNameAbbreviation
         );
 
-        registerLeafParserToken(
-                SpreadsheetMonthNameInitialParserToken.class,
+        registerLeaf(
+                MonthNameInitialSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMonthNameInitial
         );
 
-        registerLeafParserToken(
-                SpreadsheetMonthNumberParserToken.class,
+        registerLeaf(
+                MonthNumberSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMonthNumber
         );
 
-        registerLeafParserToken(
-                SpreadsheetRowReferenceParserToken.class,
+        registerLeaf(
+                RowReferenceSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallRowReference
         );
 
-        registerLeafParserToken(
-                SpreadsheetSecondsParserToken.class,
+        registerLeaf(
+                SecondsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallSeconds
         );
 
-        registerLeafParserToken(
-                SpreadsheetTextLiteralParserToken.class,
+        registerLeaf(
+                TextLiteralSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallTextLiteral
         );
 
-        registerLeafParserToken(
-                SpreadsheetYearParserToken.class,
+        registerLeaf(
+                YearSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallYear
         );
     }
 
-    static SpreadsheetAmPmParserToken unmarshallAmPm(final JsonNode node,
+    static AmPmSpreadsheetParserToken unmarshallAmPm(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1382,9 +1382,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetColumnReferenceParserToken unmarshallColumnReference(final JsonNode node,
+    static ColumnReferenceSpreadsheetParserToken unmarshallColumnReference(final JsonNode node,
                                                                            final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 SpreadsheetColumnReference.class,
                 context,
@@ -1392,9 +1392,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetDayNameParserToken unmarshallDayName(final JsonNode node,
+    static DayNameSpreadsheetParserToken unmarshallDayName(final JsonNode node,
                                                            final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1402,9 +1402,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetDayNameAbbreviationParserToken unmarshallDayNameAbbreviation(final JsonNode node,
+    static DayNameAbbreviationSpreadsheetParserToken unmarshallDayNameAbbreviation(final JsonNode node,
                                                                                    final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1412,9 +1412,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetDayNumberParserToken unmarshallDayNumber(final JsonNode node,
+    static DayNumberSpreadsheetParserToken unmarshallDayNumber(final JsonNode node,
                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1422,9 +1422,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetDigitsParserToken unmarshallDigits(final JsonNode node,
+    static DigitsSpreadsheetParserToken unmarshallDigits(final JsonNode node,
                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 String.class,
                 context,
@@ -1432,9 +1432,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetErrorParserToken unmarshallError(final JsonNode node,
+    static ErrorSpreadsheetParserToken unmarshallError(final JsonNode node,
                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 SpreadsheetError.class,
                 context,
@@ -1442,9 +1442,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetFunctionNameParserToken unmarshallFunctionName(final JsonNode node,
+    static FunctionNameSpreadsheetParserToken unmarshallFunctionName(final JsonNode node,
                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 SpreadsheetFunctionName.class,
                 context,
@@ -1452,9 +1452,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetHourParserToken unmarshallHour(final JsonNode node,
+    static HourSpreadsheetParserToken unmarshallHour(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1462,9 +1462,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetLabelNameParserToken unmarshallLabelName(final JsonNode node,
+    static LabelNameSpreadsheetParserToken unmarshallLabelName(final JsonNode node,
                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 SpreadsheetLabelName.class,
                 context,
@@ -1472,9 +1472,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetMillisecondParserToken unmarshallMillisecond(final JsonNode node,
+    static MillisecondSpreadsheetParserToken unmarshallMillisecond(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1482,9 +1482,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetMinuteParserToken unmarshallMinute(final JsonNode node,
+    static MinuteSpreadsheetParserToken unmarshallMinute(final JsonNode node,
                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1492,9 +1492,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetMonthNameParserToken unmarshallMonthName(final JsonNode node,
+    static MonthNameSpreadsheetParserToken unmarshallMonthName(final JsonNode node,
                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1502,9 +1502,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetMonthNameAbbreviationParserToken unmarshallMonthNameAbbreviation(final JsonNode node,
+    static MonthNameAbbreviationSpreadsheetParserToken unmarshallMonthNameAbbreviation(final JsonNode node,
                                                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1512,9 +1512,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetMonthNameInitialParserToken unmarshallMonthNameInitial(final JsonNode node,
+    static MonthNameInitialSpreadsheetParserToken unmarshallMonthNameInitial(final JsonNode node,
                                                                              final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1522,9 +1522,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetMonthNumberParserToken unmarshallMonthNumber(final JsonNode node,
+    static MonthNumberSpreadsheetParserToken unmarshallMonthNumber(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1532,9 +1532,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetRowReferenceParserToken unmarshallRowReference(final JsonNode node,
+    static RowReferenceSpreadsheetParserToken unmarshallRowReference(final JsonNode node,
                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 SpreadsheetRowReference.class,
                 context,
@@ -1542,9 +1542,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetSecondsParserToken unmarshallSeconds(final JsonNode node,
+    static SecondsSpreadsheetParserToken unmarshallSeconds(final JsonNode node,
                                                            final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1552,9 +1552,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetTextLiteralParserToken unmarshallTextLiteral(final JsonNode node,
+    static TextLiteralSpreadsheetParserToken unmarshallTextLiteral(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 String.class,
                 context,
@@ -1562,9 +1562,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetYearParserToken unmarshallYear(final JsonNode node,
+    static YearSpreadsheetParserToken unmarshallYear(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
+        return unmarshallLeaf(
                 node,
                 Integer.class,
                 context,
@@ -1572,200 +1572,200 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    // SpreadsheetSymbolParserToken sub-classes.........................................................................
+    // SymbolSpreadsheetParserToken sub-classes.........................................................................
 
     static {
-        registerLeafParserToken(
-                SpreadsheetApostropheSymbolParserToken.class,
+        registerLeaf(
+                ApostropheSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallApostropheSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetBetweenSymbolParserToken.class,
+        registerLeaf(
+                BetweenSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallBetweenSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetCurrencySymbolParserToken.class,
+        registerLeaf(
+                CurrencySymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallCurrencySymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetDecimalSeparatorSymbolParserToken.class,
+        registerLeaf(
+                DecimalSeparatorSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDecimalSeparatorSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetDivideSymbolParserToken.class,
+        registerLeaf(
+                DivideSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDivideSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetDoubleQuoteSymbolParserToken.class,
+        registerLeaf(
+                DoubleQuoteSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDoubleQuoteSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetEqualsSymbolParserToken.class,
+        registerLeaf(
+                EqualsSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallEqualsSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetExponentSymbolParserToken.class,
+        registerLeaf(
+                ExponentSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallExponentSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetGreaterThanEqualsSymbolParserToken.class,
+        registerLeaf(
+                GreaterThanEqualsSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallGreaterThanEqualsSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetGreaterThanSymbolParserToken.class,
+        registerLeaf(
+                GreaterThanSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallGreaterThanSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetGroupSeparatorSymbolParserToken.class,
+        registerLeaf(
+                GroupSeparatorSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallGroupSeparatorSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetLessThanEqualsSymbolParserToken.class,
+        registerLeaf(
+                LessThanEqualsSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallLessThanEqualsSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetLessThanSymbolParserToken.class,
+        registerLeaf(
+                LessThanSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallLessThanSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetMinusSymbolParserToken.class,
+        registerLeaf(
+                MinusSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMinusSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetMultiplySymbolParserToken.class,
+        registerLeaf(
+                MultiplySymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMultiplySymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetNotEqualsSymbolParserToken.class,
+        registerLeaf(
+                NotEqualsSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallNotEqualsSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetParenthesisCloseSymbolParserToken.class,
+        registerLeaf(
+                ParenthesisCloseSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallParenthesisCloseSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetParenthesisOpenSymbolParserToken.class,
+        registerLeaf(
+                ParenthesisOpenSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallParenthesisOpenSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetPercentSymbolParserToken.class,
+        registerLeaf(
+                PercentSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallPercentSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetPlusSymbolParserToken.class,
+        registerLeaf(
+                PlusSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallPlusSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetPowerSymbolParserToken.class,
+        registerLeaf(
+                PowerSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallPowerSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetValueSeparatorSymbolParserToken.class,
+        registerLeaf(
+                ValueSeparatorSymbolSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallValueSeparatorSymbol
         );
 
-        registerLeafParserToken(
-                SpreadsheetWhitespaceParserToken.class,
+        registerLeaf(
+                WhitespaceSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallWhitespace
         );
     }
 
-    static SpreadsheetApostropheSymbolParserToken unmarshallApostropheSymbol(final JsonNode node,
+    static ApostropheSymbolSpreadsheetParserToken unmarshallApostropheSymbol(final JsonNode node,
                                                                              final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::apostropheSymbol
         );
     }
 
-    static SpreadsheetBetweenSymbolParserToken unmarshallBetweenSymbol(final JsonNode node,
+    static BetweenSymbolSpreadsheetParserToken unmarshallBetweenSymbol(final JsonNode node,
                                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::betweenSymbol
         );
     }
 
-    static SpreadsheetCurrencySymbolParserToken unmarshallCurrencySymbol(final JsonNode node,
+    static CurrencySymbolSpreadsheetParserToken unmarshallCurrencySymbol(final JsonNode node,
                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::currencySymbol
         );
     }
 
-    static SpreadsheetDecimalSeparatorSymbolParserToken unmarshallDecimalSeparatorSymbol(final JsonNode node,
+    static DecimalSeparatorSymbolSpreadsheetParserToken unmarshallDecimalSeparatorSymbol(final JsonNode node,
                                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::decimalSeparatorSymbol
         );
     }
 
-    static SpreadsheetDivideSymbolParserToken unmarshallDivideSymbol(final JsonNode node,
+    static DivideSymbolSpreadsheetParserToken unmarshallDivideSymbol(final JsonNode node,
                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::divideSymbol
         );
     }
 
-    static SpreadsheetDoubleQuoteSymbolParserToken unmarshallDoubleQuoteSymbol(final JsonNode node,
+    static DoubleQuoteSymbolSpreadsheetParserToken unmarshallDoubleQuoteSymbol(final JsonNode node,
                                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::doubleQuoteSymbol
         );
     }
 
-    static SpreadsheetEqualsSymbolParserToken unmarshallEqualsSymbol(final JsonNode node,
+    static EqualsSymbolSpreadsheetParserToken unmarshallEqualsSymbol(final JsonNode node,
                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::equalsSymbol
         );
     }
 
-    static SpreadsheetExponentSymbolParserToken unmarshallExponentSymbol(final JsonNode node,
+    static ExponentSymbolSpreadsheetParserToken unmarshallExponentSymbol(final JsonNode node,
                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::exponentSymbol
         );
     }
 
-    static SpreadsheetGreaterThanEqualsSymbolParserToken unmarshallGreaterThanEqualsSymbol(final JsonNode node,
+    static GreaterThanEqualsSymbolSpreadsheetParserToken unmarshallGreaterThanEqualsSymbol(final JsonNode node,
                                                                                            final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::greaterThanEqualsSymbol
@@ -1773,126 +1773,126 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
 
-    static SpreadsheetGreaterThanSymbolParserToken unmarshallGreaterThanSymbol(final JsonNode node,
+    static GreaterThanSymbolSpreadsheetParserToken unmarshallGreaterThanSymbol(final JsonNode node,
                                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::greaterThanSymbol
         );
     }
 
-    static SpreadsheetGroupSeparatorSymbolParserToken unmarshallGroupSeparatorSymbol(final JsonNode node,
+    static GroupSeparatorSymbolSpreadsheetParserToken unmarshallGroupSeparatorSymbol(final JsonNode node,
                                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::groupSeparatorSymbol
         );
     }
 
-    static SpreadsheetLessThanEqualsSymbolParserToken unmarshallLessThanEqualsSymbol(final JsonNode node,
+    static LessThanEqualsSymbolSpreadsheetParserToken unmarshallLessThanEqualsSymbol(final JsonNode node,
                                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::lessThanEqualsSymbol
         );
     }
 
-    static SpreadsheetLessThanSymbolParserToken unmarshallLessThanSymbol(final JsonNode node,
+    static LessThanSymbolSpreadsheetParserToken unmarshallLessThanSymbol(final JsonNode node,
                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::lessThanSymbol
         );
     }
 
-    static SpreadsheetMinusSymbolParserToken unmarshallMinusSymbol(final JsonNode node,
+    static MinusSymbolSpreadsheetParserToken unmarshallMinusSymbol(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::minusSymbol
         );
     }
 
-    static SpreadsheetMultiplySymbolParserToken unmarshallMultiplySymbol(final JsonNode node,
+    static MultiplySymbolSpreadsheetParserToken unmarshallMultiplySymbol(final JsonNode node,
                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::multiplySymbol
         );
     }
 
-    static SpreadsheetNotEqualsSymbolParserToken unmarshallNotEqualsSymbol(final JsonNode node,
+    static NotEqualsSymbolSpreadsheetParserToken unmarshallNotEqualsSymbol(final JsonNode node,
                                                                            final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::notEqualsSymbol
         );
     }
 
-    static SpreadsheetParenthesisCloseSymbolParserToken unmarshallParenthesisCloseSymbol(final JsonNode node,
+    static ParenthesisCloseSymbolSpreadsheetParserToken unmarshallParenthesisCloseSymbol(final JsonNode node,
                                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::parenthesisCloseSymbol
         );
     }
 
-    static SpreadsheetParenthesisOpenSymbolParserToken unmarshallParenthesisOpenSymbol(final JsonNode node,
+    static ParenthesisOpenSymbolSpreadsheetParserToken unmarshallParenthesisOpenSymbol(final JsonNode node,
                                                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::parenthesisOpenSymbol
         );
     }
 
-    static SpreadsheetPercentSymbolParserToken unmarshallPercentSymbol(final JsonNode node,
+    static PercentSymbolSpreadsheetParserToken unmarshallPercentSymbol(final JsonNode node,
                                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::percentSymbol
         );
     }
 
-    static SpreadsheetPlusSymbolParserToken unmarshallPlusSymbol(final JsonNode node,
+    static PlusSymbolSpreadsheetParserToken unmarshallPlusSymbol(final JsonNode node,
                                                                  final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::plusSymbol
         );
     }
 
-    static SpreadsheetPowerSymbolParserToken unmarshallPowerSymbol(final JsonNode node,
+    static PowerSymbolSpreadsheetParserToken unmarshallPowerSymbol(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::powerSymbol
         );
     }
 
-    static SpreadsheetValueSeparatorSymbolParserToken unmarshallValueSeparatorSymbol(final JsonNode node,
+    static ValueSeparatorSymbolSpreadsheetParserToken unmarshallValueSeparatorSymbol(final JsonNode node,
                                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::valueSeparatorSymbol
         );
     }
 
-    static SpreadsheetWhitespaceParserToken unmarshallWhitespace(final JsonNode node,
+    static WhitespaceSpreadsheetParserToken unmarshallWhitespace(final JsonNode node,
                                                                  final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
+        return unmarshallSymbol(
                 node,
                 context,
                 SpreadsheetParserToken::whitespace
@@ -1900,12 +1900,12 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetLeafParserToken}
+     * Helper that knows how to unmarshall a sub class of {@link LeafSpreadsheetParserToken}
      */
-    static <T extends SpreadsheetSymbolParserToken> T unmarshallSymbolParserToken(final JsonNode node,
-                                                                                  final JsonNodeUnmarshallContext context,
-                                                                                  final BiFunction<String, String, T> factory) {
-        return unmarshallLeafParserToken(
+    static <T extends SymbolSpreadsheetParserToken> T unmarshallSymbol(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context,
+                                                                       final BiFunction<String, String, T> factory) {
+        return unmarshallLeaf(
                 node,
                 String.class,
                 context,
@@ -1916,10 +1916,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * Helper that knows how to unmarshall a sub class of {@link SpreadsheetParserToken}
      */
-    private static <V, T extends SpreadsheetLeafParserToken<V>> T unmarshallLeafParserToken(final JsonNode node,
-                                                                                            final Class<V> valueType,
-                                                                                            final JsonNodeUnmarshallContext context,
-                                                                                            final BiFunction<V, String, T> factory) {
+    private static <V, T extends LeafSpreadsheetParserToken<V>> T unmarshallLeaf(final JsonNode node,
+                                                                                 final Class<V> valueType,
+                                                                                 final JsonNodeUnmarshallContext context,
+                                                                                 final BiFunction<V, String, T> factory) {
         V value = null;
         String text = null;
 
@@ -1953,433 +1953,433 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         return factory.apply(value, text);
     }
 
-    private static <T extends SpreadsheetLeafParserToken<?>> void registerLeafParserToken(final Class<T> type,
-                                                                                          final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from) {
+    private static <T extends LeafSpreadsheetParserToken<?>> void registerLeaf(final Class<T> type,
+                                                                               final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from) {
         register(
                 type,
                 from,
-                SpreadsheetParserToken::marshallLeafParserToken
+                SpreadsheetParserToken::marshallLeaf
         );
     }
 
-    // SpreadsheetParentParserToken.....................................................................................
+    // ParentSpreadsheetParserToken.....................................................................................
 
     static {
-        registerParentParserToken(
-                SpreadsheetAdditionParserToken.class,
+        registerParent(
+                AdditionSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallAddition
         );
 
-        registerParentParserToken(
-                SpreadsheetCellReferenceParserToken.class,
+        registerParent(
+                CellReferenceSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallCellReference
         );
 
-        registerParentParserToken(
-                SpreadsheetConditionRightEqualsParserToken.class,
+        registerParent(
+                ConditionRightEqualsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallConditionRightEquals
         );
 
-        registerParentParserToken(
-                SpreadsheetConditionRightGreaterThanParserToken.class,
+        registerParent(
+                ConditionRightGreaterThanSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallConditionRightGreaterThan
         );
 
-        registerParentParserToken(
-                SpreadsheetConditionRightGreaterThanEqualsParserToken.class,
+        registerParent(
+                ConditionRightGreaterThanEqualsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallConditionRightGreaterThanEquals
         );
 
-        registerParentParserToken(
-                SpreadsheetConditionRightLessThanParserToken.class,
+        registerParent(
+                ConditionRightLessThanSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallConditionRightLessThan
         );
 
-        registerParentParserToken(
-                SpreadsheetConditionRightLessThanEqualsParserToken.class,
+        registerParent(
+                ConditionRightLessThanEqualsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallConditionRightLessThanEquals
         );
 
-        registerParentParserToken(
-                SpreadsheetConditionRightNotEqualsParserToken.class,
+        registerParent(
+                ConditionRightNotEqualsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallConditionRightNotEquals
         );
 
-        registerParentParserToken(
-                SpreadsheetDateParserToken.class,
+        registerParent(
+                DateSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDate
         );
 
-        registerParentParserToken(
-                SpreadsheetDateTimeParserToken.class,
+        registerParent(
+                DateTimeSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDateTime
         );
 
-        registerParentParserToken(
-                SpreadsheetDivisionParserToken.class,
+        registerParent(
+                DivisionSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallDivision
         );
 
-        registerParentParserToken(
-                SpreadsheetEqualsParserToken.class,
+        registerParent(
+                EqualsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallEquals
         );
 
-        registerParentParserToken(
-                SpreadsheetExpressionParserToken.class,
+        registerParent(
+                ExpressionSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallExpression
         );
 
-        registerParentParserToken(
-                SpreadsheetFunctionParametersParserToken.class,
+        registerParent(
+                FunctionParametersSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallFunctionParameters
         );
 
-        registerParentParserToken(
-                SpreadsheetGreaterThanEqualsParserToken.class,
+        registerParent(
+                GreaterThanEqualsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallGreaterThanEquals
         );
 
-        registerParentParserToken(
-                SpreadsheetGreaterThanParserToken.class,
+        registerParent(
+                GreaterThanSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallGreaterThan
         );
 
-        registerParentParserToken(
-                SpreadsheetGroupParserToken.class,
+        registerParent(
+                GroupSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallGroup
         );
 
-        registerParentParserToken(
-                SpreadsheetLambdaFunctionParserToken.class,
+        registerParent(
+                LambdaFunctionSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallLambdaFunction
         );
 
-        registerParentParserToken(
-                SpreadsheetLessThanEqualsParserToken.class,
+        registerParent(
+                LessThanEqualsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallLessThanEquals
         );
 
-        registerParentParserToken(
-                SpreadsheetLessThanParserToken.class,
+        registerParent(
+                LessThanSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallLessThan
         );
 
-        registerParentParserToken(
-                SpreadsheetMultiplicationParserToken.class,
+        registerParent(
+                MultiplicationSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallMultiplication
         );
 
-        registerParentParserToken(
-                SpreadsheetNamedFunctionParserToken.class,
+        registerParent(
+                NamedFunctionSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallNamedFunction
         );
 
-        registerParentParserToken(
-                SpreadsheetNegativeParserToken.class,
+        registerParent(
+                NegativeSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallNegative
         );
 
-        registerParentParserToken(
-                SpreadsheetNotEqualsParserToken.class,
+        registerParent(
+                NotEqualsSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallNotEquals
         );
 
-        registerParentParserToken(
-                SpreadsheetNumberParserToken.class,
+        registerParent(
+                NumberSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallNumber
         );
 
-        registerParentParserToken(
-                SpreadsheetPowerParserToken.class,
+        registerParent(
+                PowerSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallPower
         );
 
-        registerParentParserToken(
-                SpreadsheetCellRangeParserToken.class,
+        registerParent(
+                CellRangeSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallCellRange
         );
 
-        registerParentParserToken(
-                SpreadsheetSubtractionParserToken.class,
+        registerParent(
+                SubtractionSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallSubtraction
         );
 
-        registerParentParserToken(
-                SpreadsheetTimeParserToken.class,
+        registerParent(
+                TimeSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallTime
         );
 
-        registerParentParserToken(
-                SpreadsheetTextParserToken.class,
+        registerParent(
+                TextSpreadsheetParserToken.class,
                 SpreadsheetParserToken::unmarshallText
         );
     }
 
-    static SpreadsheetAdditionParserToken unmarshallAddition(final JsonNode node,
+    static AdditionSpreadsheetParserToken unmarshallAddition(final JsonNode node,
                                                              final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::addition
         );
     }
 
-    static SpreadsheetCellReferenceParserToken unmarshallCellReference(final JsonNode node,
+    static CellReferenceSpreadsheetParserToken unmarshallCellReference(final JsonNode node,
                                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::cellReference
         );
     }
 
-    static SpreadsheetCellRangeParserToken unmarshallCellRange(final JsonNode node,
+    static CellRangeSpreadsheetParserToken unmarshallCellRange(final JsonNode node,
                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::cellRange
         );
     }
 
-    static SpreadsheetConditionRightEqualsParserToken unmarshallConditionRightEquals(final JsonNode node,
+    static ConditionRightEqualsSpreadsheetParserToken unmarshallConditionRightEquals(final JsonNode node,
                                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::conditionRightEquals
         );
     }
 
-    static SpreadsheetConditionRightGreaterThanParserToken unmarshallConditionRightGreaterThan(final JsonNode node,
+    static ConditionRightGreaterThanSpreadsheetParserToken unmarshallConditionRightGreaterThan(final JsonNode node,
                                                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::conditionRightGreaterThan
         );
     }
 
-    static SpreadsheetConditionRightGreaterThanEqualsParserToken unmarshallConditionRightGreaterThanEquals(final JsonNode node,
+    static ConditionRightGreaterThanEqualsSpreadsheetParserToken unmarshallConditionRightGreaterThanEquals(final JsonNode node,
                                                                                                            final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::conditionRightGreaterThanEquals
         );
     }
 
-    static SpreadsheetConditionRightLessThanParserToken unmarshallConditionRightLessThan(final JsonNode node,
+    static ConditionRightLessThanSpreadsheetParserToken unmarshallConditionRightLessThan(final JsonNode node,
                                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::conditionRightLessThan
         );
     }
 
-    static SpreadsheetConditionRightLessThanEqualsParserToken unmarshallConditionRightLessThanEquals(final JsonNode node,
+    static ConditionRightLessThanEqualsSpreadsheetParserToken unmarshallConditionRightLessThanEquals(final JsonNode node,
                                                                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::conditionRightLessThanEquals
         );
     }
 
-    static SpreadsheetConditionRightNotEqualsParserToken unmarshallConditionRightNotEquals(final JsonNode node,
+    static ConditionRightNotEqualsSpreadsheetParserToken unmarshallConditionRightNotEquals(final JsonNode node,
                                                                                            final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::conditionRightNotEquals
         );
     }
 
-    static SpreadsheetDateParserToken unmarshallDate(final JsonNode node,
+    static DateSpreadsheetParserToken unmarshallDate(final JsonNode node,
                                                      final JsonNodeUnmarshallContext condate) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 condate,
                 SpreadsheetParserToken::date
         );
     }
 
-    static SpreadsheetDateTimeParserToken unmarshallDateTime(final JsonNode node,
+    static DateTimeSpreadsheetParserToken unmarshallDateTime(final JsonNode node,
                                                              final JsonNodeUnmarshallContext condateTime) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 condateTime,
                 SpreadsheetParserToken::dateTime
         );
     }
 
-    static SpreadsheetDivisionParserToken unmarshallDivision(final JsonNode node,
+    static DivisionSpreadsheetParserToken unmarshallDivision(final JsonNode node,
                                                              final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::division
         );
     }
 
-    static SpreadsheetEqualsParserToken unmarshallEquals(final JsonNode node,
+    static EqualsSpreadsheetParserToken unmarshallEquals(final JsonNode node,
                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
-                SpreadsheetParserToken::equalsParserToken
+                SpreadsheetParserToken::equalsSpreadsheetParserToken
         );
     }
 
-    static SpreadsheetExpressionParserToken unmarshallExpression(final JsonNode node,
+    static ExpressionSpreadsheetParserToken unmarshallExpression(final JsonNode node,
                                                                  final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::expression
         );
     }
 
-    static SpreadsheetFunctionParametersParserToken unmarshallFunctionParameters(final JsonNode node,
+    static FunctionParametersSpreadsheetParserToken unmarshallFunctionParameters(final JsonNode node,
                                                                                  final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::functionParameters
         );
     }
 
-    static SpreadsheetGreaterThanEqualsParserToken unmarshallGreaterThanEquals(final JsonNode node,
+    static GreaterThanEqualsSpreadsheetParserToken unmarshallGreaterThanEquals(final JsonNode node,
                                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::greaterThanEquals
         );
     }
 
-    static SpreadsheetGreaterThanParserToken unmarshallGreaterThan(final JsonNode node,
+    static GreaterThanSpreadsheetParserToken unmarshallGreaterThan(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::greaterThan
         );
     }
 
-    static SpreadsheetGroupParserToken unmarshallGroup(final JsonNode node,
+    static GroupSpreadsheetParserToken unmarshallGroup(final JsonNode node,
                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::group
         );
     }
 
-    static SpreadsheetLambdaFunctionParserToken unmarshallLambdaFunction(final JsonNode node,
+    static LambdaFunctionSpreadsheetParserToken unmarshallLambdaFunction(final JsonNode node,
                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::lambdaFunction
         );
     }
 
-    static SpreadsheetLessThanEqualsParserToken unmarshallLessThanEquals(final JsonNode node,
+    static LessThanEqualsSpreadsheetParserToken unmarshallLessThanEquals(final JsonNode node,
                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::lessThanEquals
         );
     }
 
-    static SpreadsheetLessThanParserToken unmarshallLessThan(final JsonNode node,
+    static LessThanSpreadsheetParserToken unmarshallLessThan(final JsonNode node,
                                                              final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::lessThan
         );
     }
 
-    static SpreadsheetMultiplicationParserToken unmarshallMultiplication(final JsonNode node,
+    static MultiplicationSpreadsheetParserToken unmarshallMultiplication(final JsonNode node,
                                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::multiplication
         );
     }
 
-    static SpreadsheetNamedFunctionParserToken unmarshallNamedFunction(final JsonNode node,
+    static NamedFunctionSpreadsheetParserToken unmarshallNamedFunction(final JsonNode node,
                                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::namedFunction
         );
     }
 
-    static SpreadsheetNegativeParserToken unmarshallNegative(final JsonNode node,
+    static NegativeSpreadsheetParserToken unmarshallNegative(final JsonNode node,
                                                              final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::negative
         );
     }
 
-    static SpreadsheetNotEqualsParserToken unmarshallNotEquals(final JsonNode node,
+    static NotEqualsSpreadsheetParserToken unmarshallNotEquals(final JsonNode node,
                                                                final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::notEquals
         );
     }
 
-    static SpreadsheetNumberParserToken unmarshallNumber(final JsonNode node,
+    static NumberSpreadsheetParserToken unmarshallNumber(final JsonNode node,
                                                          final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::number
         );
     }
 
-    static SpreadsheetPowerParserToken unmarshallPower(final JsonNode node,
+    static PowerSpreadsheetParserToken unmarshallPower(final JsonNode node,
                                                        final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::power
         );
     }
 
-    static SpreadsheetSubtractionParserToken unmarshallSubtraction(final JsonNode node,
+    static SubtractionSpreadsheetParserToken unmarshallSubtraction(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::subtraction
         );
     }
 
-    static SpreadsheetTextParserToken unmarshallText(final JsonNode node,
+    static TextSpreadsheetParserToken unmarshallText(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::text
         );
     }
 
-    static SpreadsheetTimeParserToken unmarshallTime(final JsonNode node,
+    static TimeSpreadsheetParserToken unmarshallTime(final JsonNode node,
                                                      final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
+        return unmarshallParent(
                 node,
                 context,
                 SpreadsheetParserToken::time
@@ -2387,11 +2387,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetParentParserToken}
+     * Helper that knows how to unmarshall a sub class of {@link ParentSpreadsheetParserToken}
      */
-    private static <T extends SpreadsheetParentParserToken> T unmarshallParentParserToken(final JsonNode node,
-                                                                                          final JsonNodeUnmarshallContext context,
-                                                                                          final BiFunction<List<ParserToken>, String, T> factory) {
+    private static <T extends ParentSpreadsheetParserToken> T unmarshallParent(final JsonNode node,
+                                                                               final JsonNodeUnmarshallContext context,
+                                                                               final BiFunction<List<ParserToken>, String, T> factory) {
         List<ParserToken> value = null;
         String text = null;
 
@@ -2426,20 +2426,20 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Handles marshalling any {@link SpreadsheetLeafParserToken}
+     * Handles marshalling any {@link LeafSpreadsheetParserToken}
      */
-    private JsonNode marshallParentParserToken(final JsonNodeMarshallContext context) {
+    private JsonNode marshallParent(final JsonNodeMarshallContext context) {
         return JsonNode.object()
                 .set(VALUE_PROPERTY, context.marshallWithTypeCollection(Cast.to(this.value()))) // unnecessary to include type.
                 .set(TEXT_PROPERTY, JsonNode.string(this.text()));
     }
 
-    private static <T extends SpreadsheetParentParserToken> void registerParentParserToken(final Class<T> type,
-                                                                                           final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from) {
+    private static <T extends ParentSpreadsheetParserToken> void registerParent(final Class<T> type,
+                                                                                final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from) {
         register(
                 type,
                 from,
-                SpreadsheetParserToken::marshallParentParserToken
+                SpreadsheetParserToken::marshallParent
         );
     }
 
@@ -2464,9 +2464,9 @@ public abstract class SpreadsheetParserToken implements ParserToken {
 
 
     /**
-     * Handles marshalling any {@link SpreadsheetLeafParserToken}
+     * Handles marshalling any {@link LeafSpreadsheetParserToken}
      */
-    private JsonNode marshallLeafParserToken(final JsonNodeMarshallContext context) {
+    private JsonNode marshallLeaf(final JsonNodeMarshallContext context) {
         return JsonNode.object()
                 .set(VALUE_PROPERTY, context.marshall(this.value())) // unnecessary to include type.
                 .set(TEXT_PROPERTY, JsonNode.string(this.text()));

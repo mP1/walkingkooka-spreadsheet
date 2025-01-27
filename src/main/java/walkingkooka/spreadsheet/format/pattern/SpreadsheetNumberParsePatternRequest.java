@@ -21,6 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.parser.DigitsSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -99,7 +100,7 @@ final class SpreadsheetNumberParsePatternRequest {
 
     /**
      * Aggregates the digit characters, which may include group separator separators.
-     * This will become the text of any created {@link walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken}.
+     * This will become the text of any created {@link DigitsSpreadsheetParserToken}.
      */
     final StringBuilder digits = new StringBuilder();
     //

@@ -24,13 +24,13 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.CellReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ColumnReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.RowReferenceSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
@@ -367,7 +367,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                     parseSelection(
                             CELL_PARSER,
                             cursor,
-                            SpreadsheetCellReferenceParserToken.class
+                            CellReferenceSpreadsheetParserToken.class
                     ).reference()
             );
         } else {
@@ -378,7 +378,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                         parseSelection(
                                 COLUMN_PARSER,
                                 cursor,
-                                SpreadsheetColumnReferenceParserToken.class
+                                ColumnReferenceSpreadsheetParserToken.class
                         ).reference()
                 );
             } else {
@@ -389,7 +389,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                             parseSelection(
                                     ROW_PARSER,
                                     cursor,
-                                    SpreadsheetRowReferenceParserToken.class
+                                    RowReferenceSpreadsheetParserToken.class
                             ).reference()
                     );
                 } else {

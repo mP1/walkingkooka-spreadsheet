@@ -24,81 +24,81 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.parser.SpreadsheetAdditionParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetAmPmParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetApostropheSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellRangeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightEqualsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightGreaterThanEqualsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightGreaterThanParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightLessThanEqualsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightLessThanParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetConditionRightNotEqualsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDayNameAbbreviationParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDayNameParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDayNumberParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDivideSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDivisionParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDoubleQuoteSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetEqualsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetErrorParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetExpressionParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetFunctionNameParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetFunctionParametersParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGroupParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetGroupSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetHourParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelNameParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLessThanEqualsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLessThanEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLessThanParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLessThanSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMinuteParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameAbbreviationParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameInitialParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMonthNumberParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMultiplicationParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMultiplySymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetNamedFunctionParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetNegativeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisCloseSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisOpenSymbolParserToken;
+import walkingkooka.spreadsheet.parser.AdditionSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.AmPmSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ApostropheSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.BetweenSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.CellRangeSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.CellReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ColumnReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ConditionRightEqualsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ConditionRightGreaterThanEqualsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ConditionRightGreaterThanSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ConditionRightLessThanEqualsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ConditionRightLessThanSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ConditionRightNotEqualsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.CurrencySymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DateSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DateTimeSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DayNameAbbreviationSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DayNameSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DayNumberSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DecimalSeparatorSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DigitsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DivideSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DivisionSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DoubleQuoteSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.EqualsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.EqualsSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ErrorSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ExponentSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ExpressionSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.FunctionNameSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.FunctionParametersSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.GreaterThanEqualsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.GreaterThanEqualsSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.GreaterThanSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.GreaterThanSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.GroupSeparatorSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.GroupSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.HourSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.LabelNameSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.LessThanEqualsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.LessThanEqualsSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.LessThanSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.LessThanSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MillisecondSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MinusSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MinuteSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MonthNameAbbreviationSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MonthNameInitialSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MonthNameSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MonthNumberSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MultiplicationSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MultiplySymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.NamedFunctionSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.NegativeSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.NotEqualsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.NotEqualsSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.NumberSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ParentSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ParenthesisCloseSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ParenthesisOpenSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.PercentSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.PlusSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.PowerSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.PowerSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.RowReferenceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SecondsSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitor;
-import walkingkooka.spreadsheet.parser.SpreadsheetPercentSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetPowerParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetPowerSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetSubtractionParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetTextParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetValueSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
+import walkingkooka.spreadsheet.parser.SubtractionSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.TextLiteralSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.TextSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.TimeSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ValueSeparatorSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.WhitespaceSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.YearSpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -131,299 +131,299 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetAdditionParserToken token) {
+    protected Visiting startVisit(final AdditionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetAdditionParserToken token) {
+    protected void endVisit(final AdditionSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::addition);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetCellRangeParserToken token) {
+    protected Visiting startVisit(final CellRangeSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetCellRangeParserToken token) {
+    protected void endVisit(final CellRangeSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::cellRange);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected Visiting startVisit(final CellReferenceSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected void endVisit(final CellReferenceSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::cellReference);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightEqualsParserToken token) {
+    protected void endVisit(final ConditionRightEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+    protected Visiting startVisit(final ConditionRightGreaterThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightGreaterThanParserToken token) {
+    protected void endVisit(final ConditionRightGreaterThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightGreaterThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightGreaterThanEqualsParserToken token) {
+    protected void endVisit(final ConditionRightGreaterThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+    protected Visiting startVisit(final ConditionRightLessThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightLessThanParserToken token) {
+    protected void endVisit(final ConditionRightLessThanSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightLessThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightLessThanEqualsParserToken token) {
+    protected void endVisit(final ConditionRightLessThanEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+    protected Visiting startVisit(final ConditionRightNotEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetConditionRightNotEqualsParserToken token) {
+    protected void endVisit(final ConditionRightNotEqualsSpreadsheetParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDateParserToken token) {
+    protected Visiting startVisit(final DateSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDateParserToken token) {
+    protected void endVisit(final DateSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::date);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
+    protected Visiting startVisit(final DateTimeSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDateTimeParserToken token) {
+    protected void endVisit(final DateTimeSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::dateTime);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
+    protected Visiting startVisit(final DivisionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetDivisionParserToken token) {
+    protected void endVisit(final DivisionSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::division);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetEqualsParserToken token) {
+    protected Visiting startVisit(final EqualsSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetEqualsParserToken token) {
-        this.exit(token, SpreadsheetParserToken::equalsParserToken);
+    protected void endVisit(final EqualsSpreadsheetParserToken token) {
+        this.exit(token, SpreadsheetParserToken::equalsSpreadsheetParserToken);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetExpressionParserToken token) {
+    protected Visiting startVisit(final ExpressionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetExpressionParserToken token) {
+    protected void endVisit(final ExpressionSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::expression);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFunctionParametersParserToken token) {
+    protected Visiting startVisit(final FunctionParametersSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFunctionParametersParserToken token) {
+    protected void endVisit(final FunctionParametersSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::functionParameters);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected Visiting startVisit(final GreaterThanSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected void endVisit(final GreaterThanSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::greaterThan);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final GreaterThanEqualsSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected void endVisit(final GreaterThanEqualsSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::greaterThanEquals);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGroupParserToken token) {
+    protected Visiting startVisit(final GroupSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetGroupParserToken token) {
+    protected void endVisit(final GroupSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::group);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLessThanParserToken token) {
+    protected Visiting startVisit(final LessThanSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetLessThanParserToken token) {
+    protected void endVisit(final LessThanSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::lessThan);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final LessThanEqualsSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected void endVisit(final LessThanEqualsSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::lessThanEquals);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected Visiting startVisit(final MultiplicationSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected void endVisit(final MultiplicationSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::multiplication);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNamedFunctionParserToken token) {
+    protected Visiting startVisit(final NamedFunctionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNamedFunctionParserToken token) {
+    protected void endVisit(final NamedFunctionSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::namedFunction);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNegativeParserToken token) {
+    protected Visiting startVisit(final NegativeSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNegativeParserToken token) {
+    protected void endVisit(final NegativeSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::negative);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected Visiting startVisit(final NotEqualsSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected void endVisit(final NotEqualsSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::notEquals);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNumberParserToken token) {
+    protected Visiting startVisit(final NumberSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetNumberParserToken token) {
+    protected void endVisit(final NumberSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::number);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
+    protected Visiting startVisit(final PowerSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetPowerParserToken token) {
+    protected void endVisit(final PowerSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::power);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
+    protected Visiting startVisit(final SubtractionSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetSubtractionParserToken token) {
+    protected void endVisit(final SubtractionSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::subtraction);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetTextParserToken token) {
+    protected Visiting startVisit(final TextSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetTextParserToken token) {
+    protected void endVisit(final TextSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::text);
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetTimeParserToken token) {
+    protected Visiting startVisit(final TimeSpreadsheetParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetTimeParserToken token) {
+    protected void endVisit(final TimeSpreadsheetParserToken token) {
         this.exit(token, SpreadsheetParserToken::time);
     }
 
     // leaf ......................................................................................................
 
     @Override
-    protected void visit(final SpreadsheetAmPmParserToken token) {
+    protected void visit(final AmPmSpreadsheetParserToken token) {
         final int value = token.value();
 
         this.leaf(
@@ -436,22 +436,22 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetApostropheSymbolParserToken token) {
+    protected void visit(final ApostropheSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetBetweenSymbolParserToken token) {
+    protected void visit(final BetweenSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReferenceParserToken token) {
+    protected void visit(final ColumnReferenceSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetCurrencySymbolParserToken token) {
+    protected void visit(final CurrencySymbolSpreadsheetParserToken token) {
         this.leafString(
                 SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
                 SpreadsheetParserToken::currencySymbol
@@ -459,7 +459,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNameParserToken token) {
+    protected void visit(final DayNameSpreadsheetParserToken token) {
         final int value = token.value();
 
         this.leaf(
@@ -472,7 +472,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNameAbbreviationParserToken token) {
+    protected void visit(final DayNameAbbreviationSpreadsheetParserToken token) {
         final int value = token.value();
 
         this.leaf(
@@ -485,12 +485,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNumberParserToken token) {
+    protected void visit(final DayNumberSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetDecimalSeparatorSymbolParserToken token) {
+    protected void visit(final DecimalSeparatorSymbolSpreadsheetParserToken token) {
         this.leafCharacter(
                 SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
                 SpreadsheetParserToken::decimalSeparatorSymbol
@@ -498,32 +498,32 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetDigitsParserToken token) {
+    protected void visit(final DigitsSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetDivideSymbolParserToken token) {
+    protected void visit(final DivideSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetDoubleQuoteSymbolParserToken token) {
+    protected void visit(final DoubleQuoteSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetEqualsSymbolParserToken token) {
+    protected void visit(final EqualsSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetErrorParserToken token) {
+    protected void visit(final ErrorSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetExponentSymbolParserToken token) {
+    protected void visit(final ExponentSymbolSpreadsheetParserToken token) {
         this.leafString(
                 SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL,
                 SpreadsheetParserToken::exponentSymbol
@@ -531,22 +531,22 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetFunctionNameParserToken token) {
+    protected void visit(final FunctionNameSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetGreaterThanSymbolParserToken token) {
+    protected void visit(final GreaterThanSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetGreaterThanEqualsSymbolParserToken token) {
+    protected void visit(final GreaterThanEqualsSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetGroupSeparatorSymbolParserToken token) {
+    protected void visit(final GroupSeparatorSymbolSpreadsheetParserToken token) {
         this.leafCharacter(
                 SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
                 SpreadsheetParserToken::groupSeparatorSymbol
@@ -554,32 +554,32 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetHourParserToken token) {
+    protected void visit(final HourSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetLabelNameParserToken token) {
+    protected void visit(final LabelNameSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetLessThanSymbolParserToken token) {
+    protected void visit(final LessThanSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetLessThanEqualsSymbolParserToken token) {
+    protected void visit(final LessThanEqualsSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetMillisecondParserToken token) {
+    protected void visit(final MillisecondSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetMinusSymbolParserToken token) {
+    protected void visit(final MinusSymbolSpreadsheetParserToken token) {
         this.leafCharacter(
                 SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
                 SpreadsheetParserToken::minusSymbol
@@ -587,12 +587,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetMinuteParserToken token) {
+    protected void visit(final MinuteSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNameParserToken token) {
+    protected void visit(final MonthNameSpreadsheetParserToken token) {
         final int value = token.value();
 
         this.leaf(
@@ -605,7 +605,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNameAbbreviationParserToken token) {
+    protected void visit(final MonthNameAbbreviationSpreadsheetParserToken token) {
         final int value = token.value();
 
         this.leaf(
@@ -618,7 +618,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNameInitialParserToken token) {
+    protected void visit(final MonthNameInitialSpreadsheetParserToken token) {
         final int value = token.value();
 
         this.leaf(
@@ -631,32 +631,32 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetMonthNumberParserToken token) {
+    protected void visit(final MonthNumberSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetMultiplySymbolParserToken token) {
+    protected void visit(final MultiplySymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
+    protected void visit(final NotEqualsSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetParenthesisCloseSymbolParserToken token) {
+    protected void visit(final ParenthesisCloseSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetParenthesisOpenSymbolParserToken token) {
+    protected void visit(final ParenthesisOpenSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetPercentSymbolParserToken token) {
+    protected void visit(final PercentSymbolSpreadsheetParserToken token) {
         this.leafCharacter(
                 SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
                 SpreadsheetParserToken::percentSymbol
@@ -664,7 +664,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetPlusSymbolParserToken token) {
+    protected void visit(final PlusSymbolSpreadsheetParserToken token) {
         this.leafCharacter(
                 SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
                 SpreadsheetParserToken::plusSymbol
@@ -672,27 +672,27 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetPowerSymbolParserToken token) {
+    protected void visit(final PowerSymbolSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReferenceParserToken token) {
+    protected void visit(final RowReferenceSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetSecondsParserToken token) {
+    protected void visit(final SecondsSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetTextLiteralParserToken token) {
+    protected void visit(final TextLiteralSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetValueSeparatorSymbolParserToken token) {
+    protected void visit(final ValueSeparatorSymbolSpreadsheetParserToken token) {
         this.leafCharacter(
                 SpreadsheetMetadataPropertyName.VALUE_SEPARATOR,
                 SpreadsheetParserToken::valueSeparatorSymbol
@@ -700,12 +700,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final SpreadsheetWhitespaceParserToken token) {
+    protected void visit(final WhitespaceSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetYearParserToken token) {
+    protected void visit(final YearSpreadsheetParserToken token) {
         this.leaf(token);
     }
 
@@ -719,7 +719,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
         return Visiting.CONTINUE;
     }
 
-    private <PP extends SpreadsheetParentParserToken> void exit(final PP parent,
+    private <PP extends ParentSpreadsheetParserToken> void exit(final PP parent,
                                                                 final BiFunction<List<ParserToken>, String, PP> factory) {
         final List<ParserToken> children = this.children;
         this.children = this.previousChildren.peek();

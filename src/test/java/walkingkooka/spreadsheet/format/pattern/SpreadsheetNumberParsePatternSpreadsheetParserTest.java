@@ -21,19 +21,19 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
+import walkingkooka.spreadsheet.parser.CurrencySymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DecimalSeparatorSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.DigitsSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.ExponentSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.MinusSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.PercentSymbolSpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.PlusSymbolSpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetPercentSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
+import walkingkooka.spreadsheet.parser.WhitespaceSpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -606,39 +606,39 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
         );
     }
 
-    private SpreadsheetCurrencySymbolParserToken currency() {
+    private CurrencySymbolSpreadsheetParserToken currency() {
         return SpreadsheetParserToken.currencySymbol(CURRENCY, CURRENCY);
     }
 
-    private SpreadsheetDecimalSeparatorSymbolParserToken decimal() {
+    private DecimalSeparatorSymbolSpreadsheetParserToken decimal() {
         return SpreadsheetParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL);
     }
 
-    private SpreadsheetDigitsParserToken digits(final int value) {
+    private DigitsSpreadsheetParserToken digits(final int value) {
         return digits("" + value);
     }
 
-    private SpreadsheetDigitsParserToken digits(final String text) {
+    private DigitsSpreadsheetParserToken digits(final String text) {
         return SpreadsheetParserToken.digits(text, text);
     }
 
-    private SpreadsheetExponentSymbolParserToken exponent() {
+    private ExponentSymbolSpreadsheetParserToken exponent() {
         return SpreadsheetParserToken.exponentSymbol(EXPONENT, EXPONENT);
     }
 
-    private SpreadsheetMinusSymbolParserToken minus() {
+    private MinusSymbolSpreadsheetParserToken minus() {
         return SpreadsheetParserToken.minusSymbol("" + MINUS, "" + MINUS);
     }
 
-    private SpreadsheetPercentSymbolParserToken percent() {
+    private PercentSymbolSpreadsheetParserToken percent() {
         return SpreadsheetParserToken.percentSymbol("" + PERCENT, "" + PERCENT);
     }
 
-    private SpreadsheetPlusSymbolParserToken plus() {
+    private PlusSymbolSpreadsheetParserToken plus() {
         return SpreadsheetParserToken.plusSymbol("" + PLUS, "" + PLUS);
     }
 
-    private SpreadsheetWhitespaceParserToken whitespace() {
+    private WhitespaceSpreadsheetParserToken whitespace() {
         return SpreadsheetParserToken.whitespace(" ", " ");
     }
 
