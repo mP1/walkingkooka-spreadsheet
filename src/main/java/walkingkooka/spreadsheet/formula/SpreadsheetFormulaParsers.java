@@ -63,9 +63,59 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
      */
     public static final CharacterConstant RANGE_SEPARATOR = CharacterConstant.with(':');
 
-    private static final EbnfIdentifierName CELL_IDENTIFIER = EbnfIdentifierName.with("CELL");
-    private static final EbnfIdentifierName LABEL_NAME_IDENTIFIER = EbnfIdentifierName.with("LABEL_NAME");
-    private static final EbnfIdentifierName BETWEEN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("BETWEEN_SYMBOL");
+    // cell, cell-range, label, cell-or-cell-range-or-label.............................................................
+
+    private final static EbnfIdentifierName REFERENCE = EbnfIdentifierName.with("REFERENCE");
+
+    static {
+        final EbnfIdentifierName whitespaceIdentifier = EbnfIdentifierName.with("WHITESPACE");
+        WHITESPACE_IDENTIFIER = whitespaceIdentifier;
+
+        final SpreadsheetParser whitespace = SpreadsheetParsers.parser(
+                Parsers.<SpreadsheetParserContext>charPredicateString(
+                                CharPredicates.whitespace(),
+                                1,
+                                Integer.MAX_VALUE
+                        ).transform(SpreadsheetFormulaParsers::transformWhitespace)
+                        .setToString(whitespaceIdentifier.value())
+        );
+        WHITESPACE = whitespace;
+
+        final SpreadsheetParser cell = SpreadsheetParsers.parser(
+                column()
+                        .and(row())
+                        .transform(SpreadsheetFormulaParsers::transformCell)
+                        .setToString("CELL")
+        );
+        CELL = cell;
+
+        final Parser<SpreadsheetParserContext> betweenSymbol = symbol(
+                RANGE_SEPARATOR.character(),
+                SpreadsheetFormulaParserToken::betweenSymbol
+        );
+
+        // CELL_RANGE = CELL, [ WHITESPACE ], BETWEEN_SYMBOL, [ WHITESPACE ], CELL;
+        final SpreadsheetParser cellRange = SpreadsheetParsers.parser(
+                cell.and(whitespace.optional())
+                        .and(betweenSymbol)
+                        .and(whitespace.optional())
+                        .and(cell)
+                        .transform(SpreadsheetFormulaParsers::transformCellRange)
+                        .setToString("CELL_RANGE")
+        );
+
+        CELL_RANGE = cellRange;
+
+        // CELL_OR_CELL_RANGE_OR_LABEL = LABEL_NAME | CELL_RANGE | CELL;
+        CELL_OR_CELL_RANGE_OR_LABEL = SpreadsheetParsers.parser(
+                labelName()
+                        .or(cellRange)
+                        .or(cell)
+                        //.setToString("CELL_OR_CELL_RANGE_OR_LABEL")
+        );
+    }
+
+    // cell.............................................................................................................
 
     /**
      * A {@link SpreadsheetParser} that knows how to parse a cell reference, but not cell-range or label.
@@ -74,12 +124,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         return CELL;
     }
 
-    private static final SpreadsheetParser CELL = SpreadsheetParsers.parser(
-                    column()
-                            .and(row())
-                            .transform(SpreadsheetFormulaParsers::transformCell)
-                            .setToString(CELL_IDENTIFIER.value())
-            );
+    private static final SpreadsheetParser CELL;
 
     private static ParserToken transformCell(final ParserToken token,
                                              final SpreadsheetParserContext context) {
@@ -90,34 +135,38 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         );
     }
 
+    // cellOrCellRangeOrLabel...........................................................................................
+
     /**
-     * A {@link SpreadsheetParser} that returns a cell reference token of some sort.
+     * A {@link SpreadsheetParser} that returns a cell reference token of some sort, such as a label/cell-range or cell.
      */
     public static SpreadsheetParser cellOrCellRangeOrLabel() {
-        return CELL_OR_CELL_RANGE_OR_LABEL_PARSER;
+        return CELL_OR_CELL_RANGE_OR_LABEL;
     }
 
-    private final static SpreadsheetParser CELL_OR_CELL_RANGE_OR_LABEL_PARSER;
+    private final static SpreadsheetParser CELL_OR_CELL_RANGE_OR_LABEL;
 
-    private static void cellOrCellRangeOrLabel(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
-        predefined.put(CELL_IDENTIFIER, CELL);
-        predefined.put(LABEL_NAME_IDENTIFIER, labelName());
-        predefined.put(BETWEEN_SYMBOL_IDENTIFIER, BETWEEN_SYMBOL);
-    }
-
-    private static final Parser<SpreadsheetParserContext> BETWEEN_SYMBOL = symbol(
-            RANGE_SEPARATOR.character(),
-            SpreadsheetFormulaParserToken::betweenSymbol
-    );
+    // cellRange........................................................................................................
 
     /**
      * A {@link SpreadsheetParser} that returns a range but not cell reference or labels.
      */
     public static SpreadsheetParser cellRange() {
-        return CELL_RANGE_PARSER;
+        return CELL_RANGE;
     }
 
-    private final static SpreadsheetParser CELL_RANGE_PARSER;
+    private final static SpreadsheetParser CELL_RANGE;
+
+    private static ParserToken transformCellRange(final ParserToken token,
+                                                  final SpreadsheetParserContext context) {
+        return SpreadsheetFormulaParserToken.cellRange(
+                token.cast(SequenceParserToken.class)
+                        .value(),
+                token.text()
+        );
+    }
+
+    // column...........................................................................................................
 
     /**
      * {@see SpreadsheetColumnReferenceSpreadsheetParser}
@@ -125,6 +174,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     public static SpreadsheetParser column() {
         return SpreadsheetColumnReferenceSpreadsheetParser.INSTANCE;
     }
+
+    // conditionRight...................................................................................................
 
     /**
      * Returns a {@link SpreadsheetParser} that matches any of the condition operators including the RHS value or expression.
@@ -492,7 +543,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName PARENTHESIS_OPEN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PARENTHESIS_OPEN_SYMBOL");
     private static final EbnfIdentifierName PARENTHESIS_CLOSE_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PARENTHESIS_CLOSE_SYMBOL");
     private static final EbnfIdentifierName TEXT_IDENTIFIER = EbnfIdentifierName.with("TEXT");
-    private static final EbnfIdentifierName WHITESPACE_IDENTIFIER = EbnfIdentifierName.with("WHITESPACE");
+    private static final EbnfIdentifierName WHITESPACE_IDENTIFIER; // must be set very early
 
     private static final Parser<SpreadsheetParserContext> PERCENT_SYMBOL = symbol(
             '%',
@@ -557,14 +608,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         return WHITESPACE;
     }
 
-    private final static SpreadsheetParser WHITESPACE = SpreadsheetParsers.parser(
-            Parsers.<SpreadsheetParserContext>charPredicateString(
-                            CharPredicates.whitespace(),
-                            1,
-                            Integer.MAX_VALUE
-                    ).transform(SpreadsheetFormulaParsers::transformWhitespace)
-                    .setToString(WHITESPACE_IDENTIFIER.value())
-    );
+    private final static SpreadsheetParser WHITESPACE;
 
     private static ParserToken transformWhitespace(final ParserToken token,
                                                    final SpreadsheetParserContext context) {
@@ -589,17 +633,26 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private static Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> resolveParsers(final Parser<SpreadsheetParserContext> value) {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined = Maps.sorted();
 
-        cellOrCellRangeOrLabel(predefined);
         conditions(predefined);
         functions(predefined);
         math(predefined);
         misc(predefined);
 
         predefined.put(
+                REFERENCE,
+                CELL_OR_CELL_RANGE_OR_LABEL // TODO will be a parameter to support supplying a TemplateValueName parser
+        );
+
+        predefined.put(
                 NUMBER_IDENTIFIER,
                 SpreadsheetPattern.parseNumberParsePattern("#.#E+#;#.#%;#.#;#%;#").expressionParser() //
         );
-        predefined.put(VALUE_IDENTIFIER, value.setToString(VALUE_IDENTIFIER.toString()));
+        predefined.put(
+                VALUE_IDENTIFIER,
+                value.setToString(
+                        VALUE_IDENTIFIER.toString()
+                )
+        );
 
         return GRAMMAR_PARSER_TOKEN
                 .combinatorForFile(
@@ -626,8 +679,6 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                         ).setToString(name)
                 );
 
-        CELL_OR_CELL_RANGE_OR_LABEL_PARSER = getSpreadsheetParser.apply("CELL_OR_CELL_RANGE_OR_LABEL");
-        CELL_RANGE_PARSER = getSpreadsheetParser.apply("CELL_RANGE");
         EXPRESSION_PARSER = getSpreadsheetParser.apply("EXPRESSION");
         FUNCTION_PARAMETERS_PARSER = getSpreadsheetParser.apply("FUNCTION_PARAMETERS");
         LAMBDA_FUNCTION = getSpreadsheetParser.apply("LAMBDA_FUNCTION");
