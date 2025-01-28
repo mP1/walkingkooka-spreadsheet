@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -479,6 +480,115 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     @Test
     public void testExpressionToString() {
+        this.checkEquals(
+                "EXPRESSION",
+                SpreadsheetFormulaParsers.expression()
+                        .toString()
+        );
+    }
+
+    // templateExpression...............................................................................................
+
+    @Test
+    public void testTemplateExpressionApostropheStringFails() {
+        this.templateExpressionParserParseFails(
+                "'Apostrophe String",
+                "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | TEMPLATE_VALUE_NAME | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+        );
+    }
+
+    @Test
+    public void testTemplateExpressionFunction() {
+        final String text = "z(123)";
+
+        this.templateExpressionParserParseStringAndCheck(
+                text,
+                namedFunction(
+                        functionName("z"),
+                        functionParameters(
+                                parenthesisOpen(),
+                                number(123),
+                                parenthesisClose()
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testTemplateExpressionNumber() {
+        final String text = "123";
+
+        this.templateExpressionParserParseStringAndCheck(
+                text,
+                number(123)
+        );
+    }
+
+    @Test
+    public void testTemplateExpressionWithTemplateValueName() {
+        final String text = "Template-value-name-123";
+
+        this.templateExpressionParserParseStringAndCheck(
+                text,
+                SpreadsheetFormulaParserToken.templateValueName(
+                        TemplateValueName.with(text),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testTemplateExpressionAdditionNegativeNumberPlusNumber() {
+        final String text = "-1+2";
+
+        this.templateExpressionParserParseStringAndCheck(
+                text,
+                addition(
+                        negative(
+                                minusSymbol(),
+                                number(1)
+                        ),
+                        plusSymbol(),
+                        number(2)
+                )
+        );
+    }
+
+    @Test
+    public void testTemplateExpressionAdditionNumberPlusNumber() {
+        final String text = "1+2";
+
+        this.templateExpressionParserParseStringAndCheck(
+                text,
+                addition(
+                        number(1),
+                        plusSymbol(),
+                        number(2)
+                )
+        );
+    }
+
+    private void templateExpressionParserParseFails(final String text,
+                                            final String expected) {
+        this.parseThrows(
+                SpreadsheetFormulaParsers.templateExpression(),
+                text,
+                expected
+        );
+    }
+
+    private void templateExpressionParserParseStringAndCheck(final String text,
+                                                             final SpreadsheetFormulaParserToken expected) {
+        this.parseAndCheck(
+                SpreadsheetFormulaParsers.templateExpression(),
+                text,
+                expected,
+                text
+        );
+    }
+
+    @Test
+    public void testTemplateExpressionToString() {
         this.checkEquals(
                 "EXPRESSION",
                 SpreadsheetFormulaParsers.expression()

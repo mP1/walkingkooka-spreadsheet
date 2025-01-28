@@ -391,6 +391,15 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         return SpreadsheetRowReferenceSpreadsheetParser.INSTANCE;
     }
 
+    /**
+     * Returns a {@link SpreadsheetParser} that parses expressions.
+     */
+    public static SpreadsheetParser templateExpression() {
+        return TEMPLATE_EXPRESSION_PARSER;
+    }
+
+    private static final SpreadsheetParser TEMPLATE_EXPRESSION_PARSER;
+
     // conditions.............................................................................................................
 
     private static void conditions(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
@@ -631,6 +640,16 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
      * Returns a {@link Map} of all parsers.
      */
     private static Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> resolveParsers(final Parser<SpreadsheetParserContext> value) {
+        return resolveParsers(
+                CELL_OR_CELL_RANGE_OR_LABEL,
+                value
+        );
+    }
+    /**
+     * Returns a {@link Map} of all parsers.
+     */
+    private static Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> resolveParsers(final Parser<SpreadsheetParserContext> references,
+                                                                                                 final Parser<SpreadsheetParserContext> value) {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined = Maps.sorted();
 
         conditions(predefined);
@@ -640,7 +659,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
 
         predefined.put(
                 REFERENCE,
-                CELL_OR_CELL_RANGE_OR_LABEL // TODO will be a parameter to support supplying a TemplateValueName parser
+                references
         );
 
         predefined.put(
@@ -683,6 +702,29 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         FUNCTION_PARAMETERS_PARSER = getSpreadsheetParser.apply("FUNCTION_PARAMETERS");
         LAMBDA_FUNCTION = getSpreadsheetParser.apply("LAMBDA_FUNCTION");
         NAMED_FUNCTION_PARSER = getSpreadsheetParser.apply("NAMED_FUNCTION");
+    }
+
+    static {
+        final Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(
+                SpreadsheetParsers.parser(
+                        TemplateValueName.PARSER.setToString("TEMPLATE_VALUE_NAME")
+                                .cast()
+                ).transform(
+                        (t, x) -> SpreadsheetFormulaParserToken.templateValueName(
+                                TemplateValueName.with(t.text()),
+                                t.text()
+                        )
+                ),
+                Parsers.fake() // value ignored
+        );
+        final Function<String, SpreadsheetParser> getSpreadsheetParser = (name) ->
+                SpreadsheetParsers.parser(
+                        parsers.apply(
+                                EbnfIdentifierName.with(name)
+                        ).setToString(name)
+                );
+
+        TEMPLATE_EXPRESSION_PARSER = getSpreadsheetParser.apply("EXPRESSION");
     }
 
     private static Parser<SpreadsheetParserContext> symbol(final char c,
