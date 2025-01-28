@@ -396,7 +396,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testExpressionApostropheStringFails() {
         this.expressionParserParseFails(
                 "'Apostrophe String",
-                "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL, [WHITESPACE], \":\", [WHITESPACE], CELL | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -1001,7 +1001,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testCellOrCellRangeOrLabelParserToString() {
         this.checkEquals(
-                "CELL_OR_CELL_RANGE_OR_LABEL",
+                "LABEL | CELL_RANGE | CELL",
                 SpreadsheetFormulaParsers.cellOrCellRangeOrLabel()
                         .toString()
         );
@@ -1170,7 +1170,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testValueOrExpressionParserParseStarFails() {
         this.valueOrExpressionParserParseFails(
                 "1+*",
-                "Invalid character '*' at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL, [WHITESPACE], \":\", [WHITESPACE], CELL | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '*' at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3215,7 +3215,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testValueOrExpressionParserParseInvalidTokenFails() {
         this.valueOrExpressionParserParseFails(
                 "!",
-                "Invalid character '!' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL, [WHITESPACE], \":\", [WHITESPACE], CELL | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '!' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3223,7 +3223,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testValueOrExpressionParserParseInvalidTokenFails2() {
         this.valueOrExpressionParserParseFails(
                 "  !",
-                "Invalid character '!' at (3,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL, [WHITESPACE], \":\", [WHITESPACE], CELL | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '!' at (3,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3240,7 +3240,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void valueOrExpressionParserParseFails() {
         this.valueOrExpressionParserParseFails(
                 "1+!",
-                "Invalid character '!' at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL, [WHITESPACE], \":\", [WHITESPACE], CELL | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '!' at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3248,7 +3248,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testParseInvalidGroupTokenFails() {
         this.valueOrExpressionParserParseFails(
                 "( !",
-                "Invalid character '!' at (3,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL, [WHITESPACE], \":\", [WHITESPACE], CELL | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '!' at (3,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
