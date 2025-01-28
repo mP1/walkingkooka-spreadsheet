@@ -403,7 +403,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
 
     private static void math(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
         predefined.put(PLUS_SYMBOL_IDENTIFIER, PLUS_SYMBOL);
-        predefined.put(NEGATIVE_SYMBOL_IDENTIFIER, NEGATIVE_SYMBOL);
+        predefined.put(MINUS_SYMBOL_IDENTIFIER, MINUS_SYMBOL);
 
         predefined.put(MULTIPLY_SYMBOL_IDENTIFIER, MULTIPLY_SYMBOL);
         predefined.put(DIVIDE_SYMBOL_IDENTIFIER, DIVIDE_SYMBOL);
@@ -412,7 +412,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     }
 
     private static final EbnfIdentifierName PLUS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PLUS_SYMBOL");
-    private static final EbnfIdentifierName NEGATIVE_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("NEGATIVE_SYMBOL");
+    private static final EbnfIdentifierName MINUS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("MINUS_SYMBOL");
     private static final EbnfIdentifierName MULTIPLY_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("MULTIPLY_SYMBOL");
     private static final EbnfIdentifierName DIVIDE_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("DIVIDE_SYMBOL");
     private static final EbnfIdentifierName POWER_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("POWER_SYMBOL");
@@ -421,7 +421,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
             '+',
             SpreadsheetFormulaParserToken::plusSymbol
     );
-    private static final Parser<SpreadsheetParserContext> NEGATIVE_SYMBOL = symbol(
+    private static final Parser<SpreadsheetParserContext> MINUS_SYMBOL = symbol(
             '-',
             SpreadsheetFormulaParserToken::minusSymbol
     );
