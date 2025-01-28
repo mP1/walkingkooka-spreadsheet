@@ -24,7 +24,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +33,7 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
 
     private final static String SELECTOR = "date-parse-pattern dd/mm/yyyy";
 
-    private final static SpreadsheetParser PARSER = SpreadsheetFormulaParsers.fake();
+    private final static SpreadsheetParser PARSER = SpreadsheetParsers.fake();
 
     private final static SpreadsheetParserInfo INFO = SpreadsheetParserInfo.with(
             Url.parseAbsolute("https://example.com/123"),

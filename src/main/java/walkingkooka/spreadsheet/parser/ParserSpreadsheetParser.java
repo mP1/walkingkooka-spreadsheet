@@ -15,12 +15,9 @@
  *
  */
 
-package walkingkooka.spreadsheet.formula;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.parser.SpreadsheetParser;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;

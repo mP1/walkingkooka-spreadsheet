@@ -15,15 +15,11 @@
  *
  */
 
-package walkingkooka.spreadsheet.formula;
+package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.spreadsheet.parser.SpreadsheetParser;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTokens;
@@ -53,7 +49,7 @@ public final class ParserSpreadsheetParserTest implements SpreadsheetParserTesti
 
     @Test
     public void testWithSpreadsheetParser() {
-        final SpreadsheetParser wrapped = SpreadsheetFormulaParsers.fake();
+        final SpreadsheetParser wrapped = SpreadsheetParsers.fake();
         assertSame(
                 wrapped,
                 ParserSpreadsheetParser.with(wrapped)
