@@ -34,7 +34,6 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.ReferenceExpression;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -73,16 +72,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
                 )
         );
 
-        return Templates.expression(
-                expression.replaceIf(
-                        e -> e.isReference() && ((ReferenceExpression) e).value() instanceof SpreadsheetLabelName,
-                        e -> Expression.reference(
-                                TemplateValueName.with(
-                                        ((ReferenceExpression) e).value().toString()
-                                )
-                        )
-                )
-        );
+        return Templates.expression(expression);
     }
 
     /**
@@ -136,7 +126,7 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
                 .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"));
     }
 
-    private final static Parser<SpreadsheetParserContext> EXPRESSION_PARSER = SpreadsheetFormulaParsers.expression()
+    private final static Parser<SpreadsheetParserContext> EXPRESSION_PARSER = SpreadsheetFormulaParsers.templateExpression()
             .orFailIfCursorNotEmpty(
                     ParserReporters.basic()
             ).cast();
