@@ -1,10 +1,12 @@
+(* references .........................................................................................................*)
 CELL_OR_CELL_RANGE_OR_LABEL     = LABEL_NAME | CELL_RANGE | CELL;
 
 CELL_RANGE                      = CELL, [ WHITESPACE ], BETWEEN_SYMBOL, [ WHITESPACE ], CELL;
 
 
 
-(* expressions after the equals sign *)
+(* expressions after the equals sign ..................................................................................*)
+
 EXPRESSION                      = [ WHITESPACE ], EXPRESSION_REQUIRED, [ WHITESPACE ];
 EXPRESSION_OPT                  = BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | CELL_OR_CELL_RANGE_OR_LABEL | GROUP | NEGATIVE | NUMBER | TEXT | ERROR;
 EXPRESSION_REQUIRED             = EXPRESSION_OPT;
@@ -21,7 +23,8 @@ BINARY_SUB_EXPRESSION_REQUIRED  = BINARY_SUB_EXPRESSION;
 
 
 
-(* function aka function( 123, 456 ) *)
+(* function aka function( 123, 456 ) .................................................................................*)
+
 NAMED_FUNCTION                  = FUNCTION_NAME, FUNCTION_PARAMETERS;
 
 LAMBDA_FUNCTION_DEFINITION      = LAMBDA_FUNCTION_NAME, FUNCTION_PARAMETERS;
@@ -32,20 +35,25 @@ FUNCTION_PARAMETERS             = PARENTHESIS_OPEN_SYMBOL, [ WHITESPACE ], [ FUN
 FUNCTION_PARAMETER_VALUES       = EXPRESSION_OPT, {FUNCTION_PARAMETER_SEPARATOR};
 FUNCTION_PARAMETER_SEPARATOR    = [ WHITESPACE ], VALUE_SEPARATOR_SYMBOL, [ WHITESPACE ], EXPRESSION_REQUIRED;
 
+
+
 GROUP                           = PARENTHESIS_OPEN_SYMBOL, [ WHITESPACE ], EXPRESSION_REQUIRED, [ WHITESPACE ], PARENTHESIS_CLOSE_SYMBOL;
 
-(* NEGATIVE_EXPRESSION ... NUMBER must not have BINARY_EXPRESSION to avoid incorrect tokens. *)
+
+
+(* NEGATIVE_EXPRESSION ... NUMBER must not have BINARY_EXPRESSION to avoid incorrect tokens...........................*)
+
 NEGATIVE_EXPRESSION_REQUIRED    = LAMBDA_FUNCTION | NAMED_FUNCTION | CELL_OR_CELL_RANGE_OR_LABEL | GROUP | NUMBER;
 NEGATIVE                        = MINUS_SYMBOL, [ WHITESPACE ], NEGATIVE_EXPRESSION_REQUIRED;
 
 
 
-(* apostrophe string literal *)
+(* apostrophe string literal .........................................................................................*)
 APOSTROPHE_STRING               = APOSTROPHE_SYMBOL, [ STRING ];
 
 
 
-(* equals-sign then expression *)
+(* equals-sign then expression .......................................................................................*)
 EQUALS_EXPRESSION               = FORMULA_EQUALS_SYMBOL, EXPRESSION;
 
 
