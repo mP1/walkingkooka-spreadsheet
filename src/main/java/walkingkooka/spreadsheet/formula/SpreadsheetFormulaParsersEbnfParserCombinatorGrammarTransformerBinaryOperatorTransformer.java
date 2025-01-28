@@ -62,6 +62,6 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinar
 
     @Override
     public String toString() {
-        return SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer.class.getSimpleName();
+        return SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.class.getSimpleName();
     }
 }
