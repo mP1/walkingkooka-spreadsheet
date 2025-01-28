@@ -22,16 +22,22 @@ import walkingkooka.text.cursor.parser.BinaryOperatorTransformerTesting;
 
 public final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformerTest implements BinaryOperatorTransformerTesting<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer> {
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE,
-                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer.class.getSimpleName());
-    }
-
     @Override
     public SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer createBinaryOperatorTransformer() {
         return SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE;
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.INSTANCE,
+                SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer.class.getSimpleName()
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformerBinaryOperatorTransformer> type() {
