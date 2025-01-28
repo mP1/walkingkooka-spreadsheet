@@ -24,9 +24,9 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.spreadsheet.parser.FakeSpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -74,7 +74,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         return CELL;
     }
 
-    private static final SpreadsheetParser CELL = parser(
+    private static final SpreadsheetParser CELL = SpreadsheetParsers.parser(
                     column()
                             .and(row())
                             .transform(SpreadsheetFormulaParsers::transformCell)
@@ -137,7 +137,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     public static SpreadsheetParser conditionRight(final Parser<SpreadsheetParserContext> value) {
         Objects.requireNonNull(value, "value");
 
-        return parser(
+        return SpreadsheetParsers.parser(
                 resolveParsers(value)
                         .apply(CONDITION_RIGHT_PARSER_IDENTIFIER)
                         .transform(SpreadsheetFormulaParsers::transformConditionRight)
@@ -234,7 +234,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private static final SpreadsheetParser ERROR_PARSER = errorParser();
 
     private static SpreadsheetParser errorParser() {
-        return SpreadsheetFormulaParsers.parser(
+        return SpreadsheetParsers.parser(
                 Parsers.alternatives(
                         Arrays.stream(SpreadsheetErrorKind.values())
                                 .map(SpreadsheetFormulaParsers::errorParser0)
@@ -276,20 +276,13 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName VALUE_SEPARATOR_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("VALUE_SEPARATOR_SYMBOL");
 
     /**
-     * {@see FakeSpreadsheetParser}
-     */
-    public static SpreadsheetParser fake() {
-        return new FakeSpreadsheetParser();
-    }
-
-    /**
      * A {@link SpreadsheetParser} that matches {@see SpreadsheetFunctionName}
      */
     public static SpreadsheetParser functionName() {
         return FUNCTION_NAME;
     }
 
-    private final static SpreadsheetParser FUNCTION_NAME = SpreadsheetFormulaParsers.parser(
+    private final static SpreadsheetParser FUNCTION_NAME = SpreadsheetParsers.parser(
             Parsers.<SpreadsheetParserContext>initialAndPartCharPredicateString(
                             SpreadsheetFunctionName.INITIAL,
                             SpreadsheetFunctionName.PART,
@@ -339,13 +332,6 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     }
 
     private static final SpreadsheetParser NAMED_FUNCTION_PARSER;
-
-    /**
-     * {@see ParserSpreadsheetParser}
-     */
-    public static SpreadsheetParser parser(final Parser<SpreadsheetParserContext> parser) {
-        return ParserSpreadsheetParser.with(parser);
-    }
 
     /**
      * {@see SpreadsheetRowReferenceSpreadsheetParser}
@@ -543,7 +529,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     public static SpreadsheetParser valueOrExpression(final Parser<SpreadsheetParserContext> value) {
         Objects.requireNonNull(value, "value");
 
-        return parser(
+        return SpreadsheetParsers.parser(
                 resolveParsers(value)
                         .apply(VALUE_OR_EXPRESSION_IDENTIFIER)
                         .transform(SpreadsheetFormulaParsers::transformValueOrExpression)
@@ -571,7 +557,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         return WHITESPACE;
     }
 
-    private final static SpreadsheetParser WHITESPACE = parser(
+    private final static SpreadsheetParser WHITESPACE = SpreadsheetParsers.parser(
             Parsers.<SpreadsheetParserContext>charPredicateString(
                             CharPredicates.whitespace(),
                             1,
@@ -634,7 +620,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     static {
         final Function<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.fake());
         final Function<String, SpreadsheetParser> getSpreadsheetParser = (name) ->
-                parser(
+                SpreadsheetParsers.parser(
                         parsers.apply(
                                 EbnfIdentifierName.with(name)
                         ).setToString(name)
