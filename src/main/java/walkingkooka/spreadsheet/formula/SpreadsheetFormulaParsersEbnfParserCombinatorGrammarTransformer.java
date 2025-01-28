@@ -209,13 +209,7 @@ final class SpreadsheetFormulaParsersEbnfParserCombinatorGrammarTransformer impl
     }
 
     /**
-     * Special case for binary operators and operator priorities.
-     *
-     * <pre></pre>
-     * (* addition, subtraction, multiplication, division, power, range *)
-     * BINARY_OPERATOR         = "+" | "-" | "*" | "/" | "^" | ":";
-     * BINARY_EXPRESSION       = EXPRESSION2, [ WHITESPACE ], BINARY_OPERATOR, [ WHITESPACE ], EXPRESSION2;
-     * </pre>
+     * Special case for binary operators including handling of operator priorities.
      */
     private ParserToken concatenation(final ParserToken token,
                                       final SpreadsheetParserContext context) {
