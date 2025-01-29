@@ -509,6 +509,71 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // loadReferences...................................................................................................
+
+    @Override
+    public SpreadsheetDelta loadFormulaReferences(final SpreadsheetCellReference cell,
+                                                  final int offset,
+                                                  final int count,
+                                                  final Set<SpreadsheetDeltaProperties> properties,
+                                                  final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        if (offset < 0) {
+            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Invalid count " + count + " < 0");
+        }
+        Objects.requireNonNull(properties, "properties");
+        Objects.requireNonNull(context, "context");
+
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, properties, context)) {
+            final SpreadsheetStoreRepository repository = context.storeRepository();
+            final SpreadsheetCellStore cellStore = repository.cells();
+
+            int skipCount = 0;
+            int loadedCount = 0;
+
+
+            // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferenceStore.loadReferences(SpreadsheetCellReference, int offset, int count)
+            for (final SpreadsheetCellReference reference : repository.cellReferences()
+                    .load(cell).orElse(Sets.empty())) {
+                if(skipCount < offset) {
+                    skipCount++;
+                    continue;
+                }
+
+                if(loadedCount >= count) {
+                    break;
+                }
+
+                final SpreadsheetCellReference cellReference = reference.toCell();
+
+                final SpreadsheetCell loadedCellForCellReference = cellStore.load(cellReference)
+                        .orElse(null);
+                final SpreadsheetCell target;
+                if(null != loadedCellForCellReference) {
+                    // include an SpreadsheetFormula without any formula text if the cell does not exist
+                    target = this.parseFormulaEvaluateFormatStyleAndSave(
+                            loadedCellForCellReference,
+                            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                            context
+                    );
+                } else {
+                    target = cellReference.setFormula(SpreadsheetFormula.EMPTY);
+                }
+                changes.onLoad(target);
+
+                loadedCount++;
+            }
+
+            return this.prepareResponse(
+                    changes,
+                    context
+            );
+        }
+    }
+
     // COLUMNS..........................................................................................................
 
     @Override

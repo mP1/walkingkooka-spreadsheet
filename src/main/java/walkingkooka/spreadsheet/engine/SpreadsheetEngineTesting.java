@@ -1804,6 +1804,103 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // loadFormulaReferences............................................................................................
+
+    @Test
+    default void testLoadFormulaReferencesWithNullCellRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadFormulaReferences(
+                                null, // cell
+                                0, // offset
+                                1, // count
+                                SpreadsheetDeltaProperties.ALL,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadFormulaReferencesWithInvalidOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadFormulaReferences(
+                                SpreadsheetSelection.A1, // cell
+                                -1, // offset
+                                1, // count
+                                SpreadsheetDeltaProperties.ALL,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadFormulaReferencesWithInvalidCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadFormulaReferences(
+                                SpreadsheetSelection.A1, // cell
+                                0, // offset
+                                -1, // count
+                                SpreadsheetDeltaProperties.ALL,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadFormulaReferencesWithNullPropertiesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadFormulaReferences(
+                                SpreadsheetSelection.A1, // cell
+                                0, // offset
+                                1, // count
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadFormulaReferencesWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadFormulaReferences(
+                                SpreadsheetSelection.A1, // cell
+                                0, // offset
+                                1, // count
+                                SpreadsheetDeltaProperties.ALL,
+                                null
+                        )
+        );
+    }
+
+    default void loadFormulaReferencesAndCheck(final SpreadsheetEngine engine,
+                                               final SpreadsheetCellReference cell,
+                                               final int offset,
+                                               final int count,
+                                               final Set<SpreadsheetDeltaProperties> properties,
+                                               final SpreadsheetEngineContext context,
+                                               final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.loadFormulaReferences(
+                        cell,
+                        offset,
+                        count,
+                        properties,
+                        context
+                ),
+                () -> "loadFormulaReferences cell=" + cell + ", offset=" + offset + ", count=" + count + ", properties=" + properties
+        );
+    }
+
     // columnWidth......................................................................................................
 
     @Test
