@@ -150,7 +150,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
     @Override
     Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection moveTo) {
-        if (moveTo.isColumnReference() || moveTo.isColumnRangeReference()) {
+        if (moveTo.isColumn() || moveTo.isColumnRange()) {
             throw new IllegalArgumentException("Expected rows(s) or cell(s) but got " + moveTo);
         }
 

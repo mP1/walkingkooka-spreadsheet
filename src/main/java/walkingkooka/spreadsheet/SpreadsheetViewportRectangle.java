@@ -66,7 +66,7 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
             throw new IllegalArgumentException("Invalid home in " + CharSequences.quoteAndEscape(text));
         }
 
-        if (!(home.isCellReference() || home.isLabelName())) {
+        if (!(home.isCell() || home.isLabelName())) {
             throw new IllegalArgumentException("home must be cell or label got " + home);
         }
 

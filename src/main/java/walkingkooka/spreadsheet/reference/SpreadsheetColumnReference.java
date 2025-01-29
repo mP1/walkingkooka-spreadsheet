@@ -160,7 +160,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     @Override
     Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection moveTo) {
-        if (moveTo.isRowReference() || moveTo.isRowRangeReference()) {
+        if (moveTo.isRow() || moveTo.isRowRange()) {
             throw new IllegalArgumentException("Expected column(s) or cell(s) but got " + moveTo);
         }
         final int delta = moveTo.toColumn()

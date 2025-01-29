@@ -46,7 +46,7 @@ final class SpreadsheetFormulaReplaceReferencesFunctionExpression extends Spread
 
         final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper = this.mapper;
 
-        if (cellOrRange.isCellReference()) {
+        if (cellOrRange.isCell()) {
             result = mapper.apply(
                     cellOrRange.toCell()
             ).map(
@@ -54,7 +54,7 @@ final class SpreadsheetFormulaReplaceReferencesFunctionExpression extends Spread
 
             ).orElse(SELECTION_DELETED);
         } else {
-            if (cellOrRange.isCellRangeReference()) {
+            if (cellOrRange.isCellRange()) {
                 final SpreadsheetCellRangeReference range = cellOrRange.toCellRange();
                 final Optional<SpreadsheetCellReference> begin = mapper.apply(
                         range.begin()

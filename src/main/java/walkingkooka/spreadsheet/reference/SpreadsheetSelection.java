@@ -855,48 +855,48 @@ public abstract class SpreadsheetSelection implements HasText,
             throw new UnsupportedOperationException(this.toString());
         }
 
-        return (this.isCellReference() || this.isCellRangeReference()) &&
+        return (this.isCell() || this.isCellRange()) &&
                 this.toCellRange().containsAll0(windows);
     }
     // isXXX............................................................................................................
 
-    public final boolean isCellRangeReference() {
+    public final boolean isCellRange() {
         return this instanceof SpreadsheetCellRangeReference;
     }
 
-    public final boolean isCellReference() {
+    public final boolean isCell() {
         return this instanceof SpreadsheetCellReference;
     }
 
-    public final boolean isCellReferenceOrCellRangeReference() {
-        return this.isCellReference() || this.isCellRangeReference();
+    public final boolean isCellOrCellRange() {
+        return this.isCell() || this.isCellRange();
     }
 
-    public final boolean isColumnReference() {
+    public final boolean isColumn() {
         return this instanceof SpreadsheetColumnReference;
     }
 
-    public final boolean isColumnRangeReference() {
+    public final boolean isColumnRange() {
         return this instanceof SpreadsheetColumnRangeReference;
     }
 
-    public final boolean isColumnReferenceOrColumnRangeReference() {
-        return this.isColumnReference() || this.isColumnRangeReference();
+    public final boolean isColumnOrColumnRange() {
+        return this.isColumn() || this.isColumnRange();
     }
 
     public final boolean isLabelName() {
         return this instanceof SpreadsheetLabelName;
     }
 
-    public final boolean isRowReference() {
+    public final boolean isRow() {
         return this instanceof SpreadsheetRowReference;
     }
 
-    public final boolean isRowReferenceOrRowRangeReference() {
-        return this.isRowReference() || this.isRowRangeReference();
+    public final boolean isRowOrRowRange() {
+        return this.isRow() || this.isRowRange();
     }
 
-    public final boolean isRowRangeReference() {
+    public final boolean isRowRange() {
         return this instanceof SpreadsheetRowRangeReference;
     }
 
@@ -905,7 +905,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * a single cell.
      */
     public final boolean isScalar() {
-        return this.isCellReference() || this.isColumnReference() || this.isRowReference();
+        return this.isCell() || this.isColumn() || this.isRow();
     }
 
     /**
@@ -943,7 +943,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * A cell or cell ranges will return this otherwise a {@link UnsupportedOperationException} will be thrown.
      */
     public final SpreadsheetSelection toCellOrCellRange() {
-        if (false == this.isCellReference() && false == this.isCellRangeReference()) {
+        if (false == this.isCell() && false == this.isCellRange()) {
             throw new UnsupportedOperationException(this.toString());
         }
         return this;
@@ -977,10 +977,10 @@ public abstract class SpreadsheetSelection implements HasText,
     public final SpreadsheetSelection toColumnOrColumnRange() {
         final SpreadsheetSelection selection;
 
-        if (this.isCellReference() || this.isColumnReference()) {
+        if (this.isCell() || this.isColumn()) {
             selection = this.toColumn();
         } else {
-            if (this.isCellRangeReference() || this.isColumnRangeReference()) {
+            if (this.isCellRange() || this.isColumnRange()) {
                 selection = this.toColumnRange();
             } else {
                 throw new UnsupportedOperationException(this.toString());
@@ -995,7 +995,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * {@link UnsupportedOperationException} will be thrown.
      */
     public final SpreadsheetExpressionReference toExpressionReference() {
-        if (false == this.isCellReference() && false == this.isCellRangeReference() && false == this.isLabelName()) {
+        if (false == this.isCell() && false == this.isCellRange() && false == this.isLabelName()) {
             throw new UnsupportedOperationException(this.toString());
         }
         return (SpreadsheetExpressionReference) this;
@@ -1030,10 +1030,10 @@ public abstract class SpreadsheetSelection implements HasText,
     public final SpreadsheetSelection toRowOrRowRange() {
         final SpreadsheetSelection selection;
 
-        if (this.isCellReference() || this.isRowReference()) {
+        if (this.isCell() || this.isRow()) {
             selection = this.toRow();
         } else {
-            if (this.isCellRangeReference() || this.isRowRangeReference()) {
+            if (this.isCellRange() || this.isRowRange()) {
                 selection = this.toRowRange();
             } else {
                 throw new UnsupportedOperationException(this.toString());
@@ -1280,8 +1280,8 @@ public abstract class SpreadsheetSelection implements HasText,
      * Returns either cell for cell/cell-range/label, column for column/column-range and row for row/row-range.
      */
     public final String cellColumnOrRowText() {
-        return this.isColumnReference() || this.isColumnRangeReference() ? "column" :
-                this.isRowReference() || this.isRowRangeReference() ? "row" :
+        return this.isColumn() || this.isColumnRange() ? "column" :
+                this.isRow() || this.isRowRange() ? "row" :
                         "cell";
     }
 
@@ -1326,7 +1326,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * Returns the value when a {@link SpreadsheetSelection} is not found.
      */
     public final Object notFound(final ExpressionNumberKind expressionNumberKind) {
-        return this.isCellReference() || this.isCellRangeReference() ?
+        return this.isCell() || this.isCellRange() ?
                 expressionNumberKind.zero() :
                 this.isLabelName() ?
                         SpreadsheetError.selectionNotFound(
@@ -1463,13 +1463,13 @@ public abstract class SpreadsheetSelection implements HasText,
     public final UrlFragment urlFragment() {
         UrlFragment urlFragment;
 
-        if (this.isCellReference() || this.isCellRangeReference() || this.isLabelName()) {
+        if (this.isCell() || this.isCellRange() || this.isLabelName()) {
             urlFragment = SpreadsheetUrlFragments.CELL;
         } else {
-            if (this.isColumnReference() || this.isColumnRangeReference()) {
+            if (this.isColumn() || this.isColumnRange()) {
                 urlFragment = SpreadsheetUrlFragments.COLUMN;
             } else {
-                if (this.isRowReference() || this.isRowRangeReference()) {
+                if (this.isRow() || this.isRowRange()) {
                     urlFragment = SpreadsheetUrlFragments.ROW;
                 } else {
                     throw new IllegalStateException("Unknown selection " + this);

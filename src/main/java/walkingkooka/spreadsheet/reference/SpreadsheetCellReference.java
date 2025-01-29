@@ -269,12 +269,12 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         final SpreadsheetSelection moveToScalar = moveTo.toScalar();
 
         int deltaX = 0;
-        if (moveToScalar.isColumnReference() || moveToScalar.isCellReference()) {
+        if (moveToScalar.isColumn() || moveToScalar.isCell()) {
             deltaX = moveTo.toColumn().value() - this.column().value();
         }
 
         int deltaY = 0;
-        if (moveToScalar.isRowReference() || moveToScalar.isCellReference()) {
+        if (moveToScalar.isRow() || moveToScalar.isCell()) {
             deltaY = moveTo.toRow().value() - this.row().value();
         }
 

@@ -137,11 +137,11 @@ public enum SpreadsheetViewportAnchor implements HasUrlFragment {
 
         return this == NONE ?
                 selection :
-                selection.isCellRangeReference() ?
+                selection.isCellRange() ?
                         this.cell(selection.toCellRange()) :
-                        selection.isColumnRangeReference() ?
+                        selection.isColumnRange() ?
                                 this.column(selection.toColumnRange()) :
-                                selection.isRowRangeReference() ?
+                                selection.isRowRange() ?
                                         this.row(selection.toRowRange()) :
                                         this.selectionFail(selection);
     }
