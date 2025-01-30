@@ -1945,6 +1945,34 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     // navigate.........................................................................................................
 
+    @Test
+    default void testNavigateWithNullViewportFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine().navigate(
+                        null,
+                        SpreadsheetEngineContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    default void testNavigateWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine().navigate(
+                        SpreadsheetViewport.with(
+                                SpreadsheetViewportRectangle.with(
+                                        SpreadsheetSelection.A1,
+                                        1,
+                                        2
+                                )
+                        ),
+                        null
+                )
+        );
+    }
+
     default void navigateAndCheck(final SpreadsheetEngine engine,
                                   final SpreadsheetViewport viewport,
                                   final SpreadsheetEngineContext context,
