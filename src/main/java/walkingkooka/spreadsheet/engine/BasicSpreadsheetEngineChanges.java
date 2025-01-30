@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
@@ -25,10 +26,10 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
@@ -410,70 +411,28 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
      * Returns a {@link SpreadsheetCellRangeReference} that includes all deleted and updated cells.
      */
     Optional<SpreadsheetCellRangeReference> deletedAndUpdatedCellRange() {
-        SpreadsheetColumnReference left = null;
-        SpreadsheetColumnReference right = null;
+        final Set<SpreadsheetCellReference> cells = SortedSets.tree();
 
-        SpreadsheetRowReference top = null;
-        SpreadsheetRowReference bottom = null;
-
-        for (final SpreadsheetCellReference cell : this.updatedAndDeletedCells.keySet()) {
-            final SpreadsheetColumnReference column = cell.column();
-            final SpreadsheetRowReference row = cell.row();
-
-            if (null == left) {
-                left = column;
-                right = column;
-                top = row;
-                bottom = row;
-            } else {
-                left = left.min(column);
-                right = right.max(column);
-                top = top.min(row);
-                bottom = bottom.max(row);
-            }
-        }
+        cells.addAll(this.updatedAndDeletedCells.keySet());
 
         for (final SpreadsheetLabelMapping labelMapping : this.updatedAndDeletedLabels.values()) {
             if (null != labelMapping) {
-                SpreadsheetExpressionReference target;
-                do {
-                    target = labelMapping.target();
-                    if (target instanceof SpreadsheetLabelName) {
-                        target = this.context.storeRepository().labels().load(
-                                        target.toLabelName()
-                                ).map(SpreadsheetLabelMapping::target)
-                                .orElse(null);
-                    }
-                } while (target instanceof SpreadsheetLabelName);
-
-                if (target instanceof SpreadsheetCellReference) {
-                    final SpreadsheetCellReference cell = target.toCell();
-                    final SpreadsheetColumnReference column = cell.column();
-                    final SpreadsheetRowReference row = cell.row();
-
-                    if (null == left) {
-                        left = column;
-                        right = column;
-                        top = row;
-                        bottom = row;
-                    } else {
-                        left = left.min(column);
-                        right = right.max(column);
-                        top = top.min(row);
-                        bottom = bottom.max(row);
-                    }
+                final SpreadsheetCellRangeReference range = labelMapping.target()
+                        .toCellRangeResolvingLabels(
+                                l -> this.context.storeRepository()
+                                        .labels()
+                                        .load(l)
+                                        .map(m -> m.target()
+                                                .toCellRange()
+                                        )
+                        ).orElse(null);
+                if (null != range) {
+                    cells.add(range.toCell());
                 }
             }
         }
 
-        return null != left ?
-                Optional.of(
-                        left.columnRange(right)
-                                .setRowRange(
-                                        top.rowRange(bottom)
-                                )
-                ) :
-                Optional.empty();
+        return SpreadsheetSelection.boundingRange(cells);
     }
 
     // batch...........................................................................................................
