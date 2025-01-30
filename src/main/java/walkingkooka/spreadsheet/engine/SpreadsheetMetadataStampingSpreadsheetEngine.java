@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetCompara
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -183,6 +184,21 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                         deltaProperties,
                         context
                 ),
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetDelta loadFormulaReferences(final SpreadsheetCellReference reference,
+                                                  final int offset,
+                                                  final int count,
+                                                  final Set<SpreadsheetDeltaProperties> properties,
+                                                  final SpreadsheetEngineContext context) {
+        return this.engine.loadFormulaReferences(
+                reference,
+                offset,
+                count,
+                properties,
                 context
         );
     }

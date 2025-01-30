@@ -9471,6 +9471,510 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // loadFormulaReferences............................................................................................
+
+    @Test
+    public void testLoadFormulaReferencesWheCellAbsent() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        // note the cell reference is not included in the response
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(OptionalInt.of(0))
+                        .setRowCount(OptionalInt.of(0))
+        );
+    }
+
+    @Test
+    public void testLoadFormulaReferencesWhenWithoutFormulaReferences() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=111"
+        );
+
+        engine.saveCells(
+                Sets.of(a1),
+                context
+        );
+
+        // note the cell reference is not included in the response
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                a1.reference(),
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(OptionalInt.of(1))
+                        .setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadFormulaReferencesWithReferenceToMissingCell() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=111+b2"
+        );
+
+        engine.saveCells(
+                Sets.of(a1),
+                context
+        );
+
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        SpreadsheetSelection.parseCell("B2")
+                                                .setFormula(SpreadsheetFormula.EMPTY)
+                                )
+                        ).setColumnWidths(columnWidths("B"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(1))
+                        .setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadFormulaReferencesWithReferenceToExistingCell() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=111+b2"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "B2",
+                "=222"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2
+                ),
+                context
+        );
+
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        this.formattedCell(
+                                                "B2",
+                                                "=222",
+                                                number(222)
+                                        )
+                                )
+                        ).setColumnWidths(columnWidths("B")) // B2 not included in output cells
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(2))
+                        .setRowCount(OptionalInt.of(2))
+        );
+    }
+
+    @Test
+    public void testLoadFormulaReferencesWithFormulaIncludingLabel() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        // points to cell
+        final SpreadsheetLabelMapping mappingLabel123 = LABEL.setLabelMappingTarget(
+                SpreadsheetSelection.parseCell("B2")
+        );
+
+        engine.saveLabel(
+                mappingLabel123,
+                context
+        );
+
+        final SpreadsheetCell a1 = this.cell(
+                "a1",
+                "=" + LABEL
+        );
+
+        engine.saveCells(
+                Sets.of(a1),
+                context
+        );
+
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(OptionalInt.of(1))
+                        .setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadFormulaReferencesWithExternalFormulaLabel() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        // points to cell
+        final SpreadsheetLabelMapping mappingLabel123 = LABEL.setLabelMappingTarget(SpreadsheetSelection.A1);
+
+        engine.saveLabel(
+                mappingLabel123,
+                context
+        );
+
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=111"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1
+                ),
+                context
+        );
+
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(OptionalInt.of(1))
+                        .setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadFormulaReferencesWithExternalFormulaReferencesWithLabel() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        // points to cell
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=B2+111"
+        );
+
+        final SpreadsheetCell b2 = this.cell(
+                "B2",
+                "=222"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2
+                ),
+                context
+        );
+
+
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingTarget(
+                b2.reference()
+        );
+
+        engine.saveLabel(
+                mapping,
+                context
+        );
+
+
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        this.formattedCell(
+                                                "B2",
+                                                "=222",
+                                                number(222)
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(mapping)
+                        ).setColumnWidths(columnWidths("B"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(2))
+                        .setRowCount(OptionalInt.of(2))
+        );
+    }
+
+    @Test
+    public void testLoadReferencesWithCellReferenceAndLabels() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=111"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "B2",
+                "=222+A1"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2
+                ),
+                context
+        );
+
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingTarget(
+                SpreadsheetSelection.A1
+        );
+
+        engine.saveLabel(
+                mapping,
+                context
+        );
+
+        // because the cells were not moved the result should have no cells.
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                b2.reference(),
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        this.formattedCell(
+                                                "A1",
+                                                "=111",
+                                                number(111)
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(mapping)
+                        ).setColumnWidths(columnWidths("A")) // B2 not included in output cells
+                        .setRowHeights(rowHeights("1"))
+                        .setColumnCount(OptionalInt.of(2))
+                        .setRowCount(OptionalInt.of(2))
+        );
+    }
+
+    @Test
+    public void testLoadReferencesWithManyFormulaCellReferences() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=111+B2+C3+D4"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "B2",
+                "=222"
+        );
+        final SpreadsheetCell c3 = this.cell(
+                "c3",
+                "=333"
+        );
+        final SpreadsheetCell d4 = this.cell(
+                "D4",
+                "=444"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2,
+                        c3,
+                        d4
+                ),
+                context
+        );
+
+        // because the cells were not moved the result should have no cells.
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        this.formattedCell(
+                                                "B2",
+                                                "=222",
+                                                number(222)
+                                        ),
+                                        this.formattedCell(
+                                                "C3",
+                                                "=333",
+                                                number(333)
+                                        ),
+                                        this.formattedCell(
+                                                "D4",
+                                                "=444",
+                                                number(444)
+                                        )
+                                )
+                        ).setColumnWidths(columnWidths("B,C,D")) // B2 not included in output cells
+                        .setRowHeights(rowHeights("2,3,4"))
+                        .setColumnCount(OptionalInt.of(4))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
+    @Test
+    public void testLoadReferencesWithManyFormulaCellReferencesAndOffset() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=111+B2+C3+D4"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "B2",
+                "=222"
+        );
+        final SpreadsheetCell c3 = this.cell(
+                "c3",
+                "=333"
+        );
+        final SpreadsheetCell d4 = this.cell(
+                "D4",
+                "=444"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2,
+                        c3,
+                        d4
+                ),
+                context
+        );
+
+        // because the cells were not moved the result should have no cells.
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                1, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        this.formattedCell(
+                                                "C3",
+                                                "=333",
+                                                number(333)
+                                        ),
+                                        this.formattedCell(
+                                                "D4",
+                                                "=444",
+                                                number(444)
+                                        )
+                                )
+                        ).setColumnWidths(columnWidths("C,D")) // B2 not included in output cells
+                        .setRowHeights(rowHeights("3,4"))
+                        .setColumnCount(OptionalInt.of(4))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
+    @Test
+    public void testLoadReferencesWithManyFormulaCellReferencesAndOffsetAndCount() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell(
+                "A1",
+                "=111+B2+C3+D4+E5"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "B2",
+                "=222"
+        );
+        final SpreadsheetCell c3 = this.cell(
+                "c3",
+                "=333"
+        );
+        final SpreadsheetCell d4 = this.cell(
+                "D4",
+                "=444"
+        );
+        final SpreadsheetCell e5 = this.cell(
+                "E5",
+                "=555"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2,
+                        c3,
+                        d4,
+                        e5
+                ),
+                context
+        );
+
+        // because the cells were not moved the result should have no cells.
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                1, // offset skips B2
+                2, // count includes C3, D4, stops before E5
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        this.formattedCell(
+                                                "C3",
+                                                "=333",
+                                                number(333)
+                                        ),
+                                        this.formattedCell(
+                                                "D4",
+                                                "=444",
+                                                number(444)
+                                        )
+                                )
+                        ).setColumnWidths(columnWidths("C,D")) // B2 not included in output cells
+                        .setRowHeights(rowHeights("3,4"))
+                        .setColumnCount(OptionalInt.of(5))
+                        .setRowCount(OptionalInt.of(5))
+        );
+    }
 
     //  loadLabel.......................................................................................................
 

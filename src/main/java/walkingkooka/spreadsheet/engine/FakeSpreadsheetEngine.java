@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -108,6 +109,15 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
                                       final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta loadFormulaReferences(final SpreadsheetCellReference cell,
+                                                  final int offset,
+                                                  final int count,
+                                                  final Set<SpreadsheetDeltaProperties> properties,
+                                                  final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
