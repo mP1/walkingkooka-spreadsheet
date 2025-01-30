@@ -13218,16 +13218,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 10, // count
                 SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(a2).get(),
-                saved.cell(b2).get(),
-                saved.cell(c2).get(),
-                saved.cell(a3).get(),
-                saved.cell(b3).get(),
-                saved.cell(c3).get(),
-                saved.cell(a4).get(),
-                saved.cell(b4).get(),
-                saved.cell(c4).get()
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get(),
+                                        saved.cell(a3).get(),
+                                        saved.cell(b3).get(),
+                                        saved.cell(c3).get(),
+                                        saved.cell(a4).get(),
+                                        saved.cell(b4).get(),
+                                        saved.cell(c4).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2,3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
     }
 
@@ -13263,10 +13271,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 20, // count
                 SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(a2).get(),
-                saved.cell(b2).get(),
-                saved.cell(c2).get()
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(a2).get(),
+                                saved.cell(b2).get(),
+                                saved.cell(c2).get()
+                        )
+                ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(2))
         );
     }
 
@@ -13302,9 +13318,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 20, // count
                 SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(b2).get(),
-                saved.cell(c2).get()
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(b2).get(),
+                                saved.cell(c2).get()
+                        )
+                ).setColumnWidths(columnWidths("B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(2))
         );
     }
 
@@ -13370,10 +13394,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 3, // count
                 SpreadsheetValueType.ANY,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(a2).get(),
-                saved.cell(b2).get(),
-                saved.cell(c2).get()
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
     }
 
@@ -13469,14 +13501,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 10, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(a2).get(),
-                saved.cell(a3).get(),
-                saved.cell(b3).get(),
-                saved.cell(c3).get(),
-                saved.cell(a4).get(),
-                saved.cell(b4).get(),
-                saved.cell(c4).get()
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(a2).get(),
+                                saved.cell(a3).get(),
+                                saved.cell(b3).get(),
+                                saved.cell(c3).get(),
+                                saved.cell(a4).get(),
+                                saved.cell(b4).get(),
+                                saved.cell(c4).get()
+                        )
+                ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2,3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
     }
 
@@ -13572,10 +13612,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 3, //count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(a2).get(),
-                saved.cell(a3).get(),
-                saved.cell(b3).get()
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(a2).get(),
+                                saved.cell(a3).get(),
+                                saved.cell(b3).get()
+                        )
+                ).setColumnWidths(columnWidths("A,B"))
+                        .setRowHeights(rowHeights("2,3"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
     }
 
@@ -13671,10 +13719,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 3, // max
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(a3).get(),
-                saved.cell(b3).get(),
-                saved.cell(c3).get()
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(a3).get(),
+                                saved.cell(b3).get(),
+                                saved.cell(c3).get()
+                        )
+                ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("3"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
     }
 
@@ -13751,10 +13807,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 3, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(c4).get(),
-                saved.cell(a4).get(),
-                saved.cell(b3).get()
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(c4).get(),
+                                saved.cell(a4).get(),
+                                saved.cell(b3).get()
+                        )
+                ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
     }
 
@@ -13831,10 +13895,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 3, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(c4).get(), // 0
-                saved.cell(a4).get(), // 1
-                saved.cell(b3).get() // 2
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(c4).get(), // 0
+                                saved.cell(a4).get(), // 1
+                                saved.cell(b3).get() // 2
+                        )
+                ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
 
         this.findCellsAndCheck(
@@ -13845,9 +13917,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 2, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(a4).get(), // 1
-                saved.cell(b3).get() // 2
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(a4).get(), // 1
+                                saved.cell(b3).get() // 2
+                        )
+                ).setColumnWidths(columnWidths("A,B"))
+                        .setRowHeights(rowHeights("3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
 
         this.findCellsAndCheck(
@@ -13858,8 +13938,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                saved.cell(b3).get() // 2
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                saved.cell(b3).get() // 2
+                        )
+                ).setColumnWidths(columnWidths("B"))
+                        .setRowHeights(rowHeights("3"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
 
         this.findCellsAndCheck(
@@ -13870,7 +13958,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0, // count
                 SpreadsheetValueType.NUMBER,
                 Expression.value(true), // match everything
-                context
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
         );
     }
 

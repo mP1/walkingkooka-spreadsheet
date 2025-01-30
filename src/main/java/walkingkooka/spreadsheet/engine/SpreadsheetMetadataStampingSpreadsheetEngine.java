@@ -154,13 +154,14 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
 
 
     @Override
-    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
-                                          final SpreadsheetCellRangeReferencePath path,
-                                          final int offset,
-                                          final int count,
-                                          final String valueType,
-                                          final Expression expression,
-                                          final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta findCells(final SpreadsheetCellRangeReference cellRange,
+                                      final SpreadsheetCellRangeReferencePath path,
+                                      final int offset,
+                                      final int count,
+                                      final String valueType,
+                                      final Expression expression,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
         return this.engine.findCells(
                 cellRange,
                 path,
@@ -168,6 +169,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                 count,
                 valueType,
                 expression,
+                deltaProperties,
                 context
         );
     }
