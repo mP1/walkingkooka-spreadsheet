@@ -720,7 +720,11 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     // IsMethodTesting..................................................................................................
 
     @Override
-    public final String isMethodTypeNameSuffix() {
-        return "ParsePattern";
+    public final String toIsMethodName(final String typeName) {
+        return this.toIsMethodNameWithPrefixSuffix(
+                typeName,
+                "Spreadsheet",
+                "ParsePattern"
+        );
     }
 }

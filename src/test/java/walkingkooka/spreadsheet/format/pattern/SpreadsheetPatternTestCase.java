@@ -401,11 +401,6 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V
     }
 
     @Override
-    public final String isMethodTypeNamePrefix() {
-        return "Spreadsheet";
-    }
-
-    @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return Predicates.never();
     }

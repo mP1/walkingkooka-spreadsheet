@@ -186,21 +186,11 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
         this.checkEquals(Optional.of(expected), node, "toExpression");
     }
 
-    // IsMethodTesting.................................................................................................
+    // IsMethodTesting..................................................................................................
 
     @Override
     public final T createIsMethodObject() {
         return this.createToken();
-    }
-
-    @Override
-    public final String isMethodTypeNamePrefix() {
-        return "";
-    }
-
-    @Override
-    public final String isMethodTypeNameSuffix() {
-        return SpreadsheetFormulaParserToken.class.getSimpleName();
     }
 
     @Override
@@ -216,6 +206,15 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
                 m.equals("isConditionRight") ||
                 m.equals("isFunction") ||
                 m.equals("isValue");
+    }
+
+    @Override
+    public final String toIsMethodName(final String typeName) {
+        return this.toIsMethodNameWithPrefixSuffix(
+                typeName,
+                "",  // drop-prefix
+                SpreadsheetFormulaParserToken.class.getSimpleName() // drop-suffix
+        );
     }
 
     // JsonNodeMarshallTesting..........................................................................................
