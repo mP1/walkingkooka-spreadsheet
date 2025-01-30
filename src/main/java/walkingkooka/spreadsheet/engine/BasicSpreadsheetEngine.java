@@ -999,6 +999,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public double rowHeight(final SpreadsheetRowReference rowReference,
                             final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(rowReference, "rowReference");
+        Objects.requireNonNull(context, "context");
+
         double rowHeight = 0;
 
         final SpreadsheetStoreRepository repo = context.storeRepository();
