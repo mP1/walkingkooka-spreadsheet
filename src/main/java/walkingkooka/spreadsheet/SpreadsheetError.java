@@ -137,6 +137,21 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         return this.value;
     }
 
+    /**
+     * Would be setter that returns a {@link SpreadsheetError} with the given value, creating a new instance if necessary.
+     */
+    public SpreadsheetError setValue(final Optional<?> value) {
+        Objects.requireNonNull(value, "value");
+
+        return this.value.equals(value) ?
+                this :
+                new SpreadsheetError(
+                        this.kind,
+                        this.message,
+                        value
+                );
+    }
+
     private final Optional<?> value;
 
     /**

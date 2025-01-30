@@ -223,6 +223,42 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         );
     }
 
+    // setValue.........................................................................................................
+
+    @Test
+    public void testSetValueWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetError.with(KIND, MESSAGE, VALUE)
+                        .setValue(null)
+        );
+    }
+
+    @Test
+    public void testSetValueWithSame() {
+        final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE, VALUE);
+        assertSame(
+                error,
+                error.setValue(VALUE)
+        );
+    }
+
+    @Test
+    public void testSetValueWithDifferent() {
+        final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE, VALUE);
+
+        final Optional<?> differentValue = Optional.of("different");
+        final SpreadsheetError different = error.setValue(differentValue);
+
+        this.checkKind(different, KIND);
+        this.checkMessage(different, MESSAGE);
+        this.checkValue(different, differentValue);
+
+        this.checkKind(error, KIND);
+        this.checkMessage(error, MESSAGE);
+        this.checkValue(error, VALUE);
+    }
+
     // TreePrintable...................................................................................................
 
     @Test
