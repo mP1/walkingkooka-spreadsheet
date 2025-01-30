@@ -970,11 +970,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    // max..............................................................................................................
+    // columnWidth......................................................................................................
 
     @Override
     public double columnWidth(final SpreadsheetColumnReference columnReference,
                               final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(columnReference, "columnReference");
+        Objects.requireNonNull(context, "context");
+
         double columnWidth = 0;
 
         final SpreadsheetStoreRepository repo = context.storeRepository();

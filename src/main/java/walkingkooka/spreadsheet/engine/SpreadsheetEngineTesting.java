@@ -1804,6 +1804,32 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // columnWidth......................................................................................................
+
+    @Test
+    default void testColumnWidthWithNullColumnFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .columnWidth(
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testColumnWidthWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .columnWidth(
+                                SpreadsheetSelection.parseColumn("Z"),
+                                null
+                        )
+        );
+    }
+    
     default void columnWidthAndCheck(final SpreadsheetColumnReference column,
                                      final SpreadsheetEngineContext context,
                                      final double expected) {
