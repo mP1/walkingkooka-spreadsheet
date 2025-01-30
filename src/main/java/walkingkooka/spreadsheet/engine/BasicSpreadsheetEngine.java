@@ -362,13 +362,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // FIND CELLS.......................................................................................................
 
     @Override
-    public Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
-                                          final SpreadsheetCellRangeReferencePath path,
-                                          final int offset,
-                                          final int count,
-                                          final String valueType,
-                                          final Expression expression,
-                                          final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta findCells(final SpreadsheetCellRangeReference cellRange,
+                                      final SpreadsheetCellRangeReferencePath path,
+                                      final int offset,
+                                      final int count,
+                                      final String valueType,
+                                      final Expression expression,
+                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                      final SpreadsheetEngineContext context) {
         checkCellRange(cellRange);
         Objects.requireNonNull(path, "path");
         if (offset < 0) {
@@ -379,6 +380,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
         checkValueType(valueType);
         checkExpression(expression);
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
         checkContext(context);
 
         // this will be used to filter individual cells matching the find range and type.
@@ -401,41 +403,49 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         int loadOffset = 0;
         int skipOffset = 0;
 
-        for (; ; ) {
-            final int maxLeft = count - found.size();
-            if (maxLeft <= 0) {
-                break;
-            }
+        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
+            for (; ; ) {
+                final int maxLeft = count - found.size();
+                if (maxLeft <= 0) {
+                    break;
+                }
 
-            final Collection<SpreadsheetCell> loaded = store.loadCells(
-                    cellRange,
-                    path,
-                    loadOffset,
-                    maxLeft
-            );
-            if (loaded.isEmpty()) {
-                break;
-            }
-
-            for (final SpreadsheetCell possible : loaded) {
-                loadOffset++;
-
-                final SpreadsheetCell loadedAndEval = this.evaluateFormatAndStyle(
-                        possible,
-                        SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                        context
+                final Collection<SpreadsheetCell> loaded = store.loadCells(
+                        cellRange,
+                        path,
+                        loadOffset,
+                        maxLeft
                 );
+                if (loaded.isEmpty()) {
+                    break;
+                }
 
-                if (filterPredicate.test(loadedAndEval)) {
-                    if (skipOffset >= offset) {
-                        found.add(loadedAndEval);
+                for (final SpreadsheetCell possible : loaded) {
+                    loadOffset++;
+
+                    final SpreadsheetCell loadedAndEval = this.evaluateFormatAndStyle(
+                            possible,
+                            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                            context
+                    );
+
+                    if (filterPredicate.test(loadedAndEval)) {
+                        if (skipOffset >= offset) {
+                            found.add(loadedAndEval);
+                            changes.onLoad(loadedAndEval);
+                        }
+                        skipOffset++;
                     }
-                    skipOffset++;
                 }
             }
+
+            return this.prepareResponse(
+                    changes,
+                    context
+            );
         }
 
-        return Sets.readOnly(found);
+        //return Sets.readOnly(found);
     }
 
     @Override

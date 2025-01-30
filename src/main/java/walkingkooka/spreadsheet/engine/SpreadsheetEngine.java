@@ -115,13 +115,14 @@ public interface SpreadsheetEngine {
      * <br>
      * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
      */
-    Set<SpreadsheetCell> findCells(final SpreadsheetCellRangeReference cellRange,
-                                   final SpreadsheetCellRangeReferencePath path,
-                                   final int offset,
-                                   final int count,
-                                   final String valueType,
-                                   final Expression expression,
-                                   final SpreadsheetEngineContext context);
+    SpreadsheetDelta findCells(final SpreadsheetCellRangeReference cellRange,
+                               final SpreadsheetCellRangeReferencePath path,
+                               final int offset,
+                               final int count,
+                               final String valueType,
+                               final Expression expression,
+                               final Set<SpreadsheetDeltaProperties> deltaProperties,
+                               final SpreadsheetEngineContext context);
 
     /**
      * Sorts the selection of cells using the provided {@link walkingkooka.spreadsheet.compare.SpreadsheetComparator comparators}.

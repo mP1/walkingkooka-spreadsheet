@@ -1555,6 +1555,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 100, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
+                                SpreadsheetDeltaProperties.ALL,
                                 SpreadsheetEngineContexts.fake() // context
                         )
         );
@@ -1572,6 +1573,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 100, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
+                                SpreadsheetDeltaProperties.ALL,
                                 SpreadsheetEngineContexts.fake() // context
                         )
         );
@@ -1589,6 +1591,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 0,  // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
+                                SpreadsheetDeltaProperties.ALL,
                                 SpreadsheetEngineContexts.fake() // context
                         )
         );
@@ -1606,6 +1609,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 -1, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
+                                SpreadsheetDeltaProperties.ALL,
                                 SpreadsheetEngineContexts.fake() // context
                         )
         );
@@ -1623,6 +1627,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 100, // count
                                 null, // valueType
                                 Expression.value(true), // expression
+                                SpreadsheetDeltaProperties.ALL,
                                 SpreadsheetEngineContexts.fake() // context
                         )
         );
@@ -1640,6 +1645,25 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 100, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 null, // expression
+                                SpreadsheetDeltaProperties.ALL,
+                                SpreadsheetEngineContexts.fake() // context
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithNullDeltaPropertiesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findCells(
+                                SpreadsheetSelection.ALL_CELLS, // range
+                                SpreadsheetCellRangeReferencePath.LRTD, // path
+                                0, // offset
+                                100, // count
+                                SpreadsheetValueType.ANY, // valueType
+                                Expression.value(true), // expression
+                                null,
                                 SpreadsheetEngineContexts.fake() // context
                         )
         );
@@ -1657,6 +1681,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 100, // count
                                 SpreadsheetValueType.ANY, // valueType
                                 Expression.value(true), // expression
+                                SpreadsheetDeltaProperties.ALL,
                                 null // context
                         )
         );
@@ -1670,33 +1695,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             final int count,
             final String valueType,
             final Expression expression,
+            final Set<SpreadsheetDeltaProperties> deltaProperties,
             final SpreadsheetEngineContext context,
-            final SpreadsheetCell... expected) {
-        this.findCellsAndCheck(
-                engine,
-                range,
-                path,
-                offset,
-                count,
-                valueType,
-                expression,
-                context,
-                Sets.of(
-                        expected
-                )
-        );
-    }
-
-    default void findCellsAndCheck(
-            final SpreadsheetEngine engine,
-            final SpreadsheetCellRangeReference range,
-            final SpreadsheetCellRangeReferencePath path,
-            final int offset,
-            final int count,
-            final String valueType,
-            final Expression expression,
-            final SpreadsheetEngineContext context,
-            final Set<SpreadsheetCell> expected) {
+            final SpreadsheetDelta expected) {
         this.checkEquals(
                 expected,
                 engine.findCells(
@@ -1706,9 +1707,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         count,
                         valueType,
                         expression,
+                        deltaProperties,
                         context
                 ),
-                () -> "findCells " + range + " " + path + " " + offset + " " + count + " " + valueType + " " + expression
+                () -> "findCells range=" + range + " path=" + path + " offset=" + offset + " count=" + count + " valueType=" + valueType + " expression=" + expression + " deltaProperties=" + deltaProperties
         );
     }
 
