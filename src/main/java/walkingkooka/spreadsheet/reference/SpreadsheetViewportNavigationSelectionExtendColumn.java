@@ -44,7 +44,7 @@ final class SpreadsheetViewportNavigationSelectionExtendColumn extends Spreadshe
         final SpreadsheetColumnReference newColumn = this.selection;
 
         return Optional.of(
-                selection.isColumnReference() || selection.isColumnRangeReference() ?
+                selection.isColumn() || selection.isColumnRange() ?
                         columnToAnchored(
                                 selection,
                                 anchor,

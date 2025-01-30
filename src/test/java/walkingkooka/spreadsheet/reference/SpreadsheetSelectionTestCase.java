@@ -1844,7 +1844,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                 final SpreadsheetSelection expected) {
         final SpreadsheetSelection scalar = selection.toScalar();
 
-        if (scalar.isCellRangeReference() || scalar.isColumnRangeReference() || scalar.isRowRangeReference()) {
+        if (scalar.isCellRange() || scalar.isColumnRange() || scalar.isRowRange()) {
             throw new IllegalStateException("Scalar " + scalar + " of " + selection + " must not be a range");
         }
 
@@ -1882,7 +1882,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                                final SpreadsheetSelection expected) {
         final SpreadsheetSelection range = selection.toRange();
 
-        if (range.isCellReference() || range.isColumnReference() || range.isRowReference()) {
+        if (range.isCell() || range.isColumn() || range.isRow()) {
             throw new IllegalStateException("Range " + range + " of " + selection + " must not be a scalar");
         }
 
@@ -2023,29 +2023,32 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // IsMethodTesting...................................................................................................
 
     @Test
-    public void testIsCellReferenceOrCellRangeReference() {
+    public void testIsCellOrCellRange() {
         this.checkEquals(
                 this instanceof SpreadsheetCellReferenceTest ||
                         this instanceof SpreadsheetCellRangeReferenceTest,
-                this.createSelection().isCellReferenceOrCellRangeReference()
+                this.createSelection()
+                        .isCellOrCellRange()
         );
     }
 
     @Test
-    public void testIsColumnReferenceOrColumnRangeReference() {
+    public void testIsColumnOrColumnRange() {
         this.checkEquals(
                 this instanceof SpreadsheetColumnReferenceTest ||
                         this instanceof SpreadsheetColumnRangeReferenceTest,
-                this.createSelection().isColumnReferenceOrColumnRangeReference()
+                this.createSelection()
+                        .isColumnOrColumnRange()
         );
     }
 
     @Test
-    public void testIsRowReferenceOrRowRangeReference() {
+    public void testIsRowOrRowRange() {
         this.checkEquals(
                 this instanceof SpreadsheetRowReferenceTest ||
                         this instanceof SpreadsheetRowRangeReferenceTest,
-                this.createSelection().isRowReferenceOrRowRangeReference()
+                this.createSelection()
+                        .isRowOrRowRange()
         );
     }
 
@@ -2063,20 +2066,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         "isLast",
                         "isHidden",
                         "isScalar",
-                        "isCellReferenceOrCellRangeReference",
-                        "isColumnReferenceOrColumnRangeReference",
-                        "isRowReferenceOrRowRangeReference"
+                        "isCellOrCellRange",
+                        "isColumnOrColumnRange",
+                        "isRowOrRowRange"
                 )
         );
     }
 
     @Override
-    public String toIsMethodName(final String typeName) {
-        return this.toIsMethodNameWithPrefixSuffix(
-                typeName,
-                "Spreadsheet",
-                ""
-        );
+    public final String toIsMethodName(final String typeName) {
+        final String clean = typeName.replace("Spreadsheet", "")
+                .replace("Reference", "");
+        return "is" +
+                clean.subSequence(0, 1)
+                        .toString()
+                        .toUpperCase() +
+                clean.subSequence(
+                        1,
+                        clean.length()
+                );
     }
 
     // JsonNodeTesting..................................................................................................

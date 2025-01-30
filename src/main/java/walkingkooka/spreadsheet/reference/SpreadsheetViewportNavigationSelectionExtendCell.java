@@ -42,8 +42,8 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.isCellReference() ||
-                selection.isCellRangeReference() ?
+        return selection.isCell() ||
+                selection.isCellRange() ?
                 this.updateCellOrCellRange(
                         selection,
                         anchor
@@ -95,9 +95,9 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
         }
 
         final AnchoredSpreadsheetSelection anchoredColumn = columnToAnchored(
-                selection.isCellReference() ?
+                selection.isCell() ?
                         selection.toColumn() :
-                        selection.isCellRangeReference() ?
+                        selection.isCellRange() ?
                                 selection.toColumnRange() :
                                 selection,
                 columnAnchor,
@@ -105,9 +105,9 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
         );
 
         final AnchoredSpreadsheetSelection anchoredRow = rowToAnchored(
-                selection.isCellReference() ?
+                selection.isCell() ?
                         selection.toRow() :
-                        selection.isCellRangeReference() ?
+                        selection.isCellRange() ?
                                 selection.toRowRange() :
                                 selection,
                 rowAnchor,

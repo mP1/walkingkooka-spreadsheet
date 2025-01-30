@@ -44,7 +44,7 @@ final class SpreadsheetViewportNavigationSelectionExtendRow extends SpreadsheetV
         final SpreadsheetRowReference newRow = this.selection;
 
         return Optional.of(
-                selection.isRowReference() || selection.isRowRangeReference() ?
+                selection.isRow() || selection.isRowRange() ?
                         rowToAnchored(
                                 selection,
                                 anchor,
