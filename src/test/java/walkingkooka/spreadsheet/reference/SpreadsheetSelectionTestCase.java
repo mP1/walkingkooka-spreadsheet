@@ -2055,16 +2055,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     }
 
     @Override
-    public final String isMethodTypeNamePrefix() {
-        return "Spreadsheet";
-    }
-
-    @Override
-    public final String isMethodTypeNameSuffix() {
-        return "";//ExpressionReference.class.getSimpleName();
-    }
-
-    @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return Predicates.setContains(
                 Sets.of(
@@ -2077,6 +2067,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         "isColumnReferenceOrColumnRangeReference",
                         "isRowReferenceOrRowRangeReference"
                 )
+        );
+    }
+
+    @Override
+    public String toIsMethodName(final String typeName) {
+        return this.toIsMethodNameWithPrefixSuffix(
+                typeName,
+                "Spreadsheet",
+                ""
         );
     }
 

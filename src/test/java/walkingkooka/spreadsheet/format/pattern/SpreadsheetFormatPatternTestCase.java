@@ -186,7 +186,11 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     // IsMethodTesting..................................................................................................
 
     @Override
-    public final String isMethodTypeNameSuffix() {
-        return "FormatPattern";
+    public final String toIsMethodName(final String typeName) {
+        return this.toIsMethodNameWithPrefixSuffix(
+                typeName,
+                "Spreadsheet",
+                "FormatPattern"
+        );
     }
 }
