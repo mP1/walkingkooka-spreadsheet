@@ -1819,6 +1819,32 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "columnWidth " + column + " of " + engine);
     }
 
+    // rowHeight........................................................................................................
+
+    @Test
+    default void testRowHeightWithNullRowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .rowHeight(
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testRowHeightWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .rowHeight(
+                                SpreadsheetSelection.parseRow("1"),
+                                null
+                        )
+        );
+    }
+
     default void rowHeightAndCheck(final SpreadsheetRowReference row,
                                    final SpreadsheetEngineContext context,
                                    final double expected) {
