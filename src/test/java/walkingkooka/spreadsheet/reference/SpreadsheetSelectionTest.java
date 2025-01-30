@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -28,8 +29,11 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -243,6 +247,107 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 expected,
                 SpreadsheetSelection.isLabelText(text),
                 () -> "isLabelText(" + CharSequences.quoteAndEscape(text) + ")"
+        );
+    }
+
+    // boundingRange....................................................................................................
+
+    @Test
+    public void testBoundingRangeWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.boundingRange(null)
+        );
+    }
+
+    @Test
+    public void testBoundRangeWithEmpty() {
+        this.boundingRangeAndCheck(
+                Lists.empty(),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testBoundRangeWithOne() {
+        this.boundingRangeAndCheck(
+                "A1",
+                "A1"
+        );
+    }
+
+    @Test
+    public void testBoundRangeWithSeveral() {
+        this.boundingRangeAndCheck(
+                "A1,D4",
+                "A1:D4"
+        );
+    }
+
+    @Test
+    public void testBoundRangeWithSeveral2() {
+        this.boundingRangeAndCheck(
+                "A1,B2,C3,D4",
+                "A1:D4"
+        );
+    }
+
+    @Test
+    public void testBoundRangeWithSeveral3() {
+        this.boundingRangeAndCheck(
+                "D4,C3,B2,A1",
+                "A1:D4"
+        );
+    }
+
+    @Test
+    public void testBoundRangeWithSeveral4() {
+        this.boundingRangeAndCheck(
+                "C3,D4,M2,K9",
+                "C2:M9"
+        );
+    }
+
+    @Test
+    public void testBoundRangeWithSeveralSomeAbsolute() {
+        this.boundingRangeAndCheck(
+                "C3,D4,$M$2,$K$9",
+                "C$2:$M$9"
+        );
+    }
+
+    @Test
+    public void testBoundRangeWithSeveralSomeAbsolute2() {
+        this.boundingRangeAndCheck(
+                "$C$3,D4,M2,K9",
+                "$C2:M9"
+        );
+    }
+
+    private void boundingRangeAndCheck(final String cells,
+                                       final String expected) {
+        this.boundingRangeAndCheck(
+                Arrays.stream(cells.split(","))
+                        .map(SpreadsheetSelection::parseCell)
+                        .collect(Collectors.toList()),
+                SpreadsheetSelection.parseCellRange(expected)
+        );
+    }
+
+    private void boundingRangeAndCheck(final Collection<SpreadsheetCellReference> cells,
+                                       final SpreadsheetCellRangeReference expected) {
+        this.boundingRangeAndCheck(
+                cells,
+                Optional.of(expected)
+        );
+    }
+
+    private void boundingRangeAndCheck(final Collection<SpreadsheetCellReference> cells,
+                                       final Optional<SpreadsheetCellRangeReference> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetSelection.boundingRange(cells),
+                cells::toString
         );
     }
 

@@ -62,6 +62,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -250,6 +251,47 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetRowRangeReference rowRange(final Range<SpreadsheetRowReference> range) {
         return SpreadsheetRowRangeReference.with(range);
+    }
+
+    /**
+     * Computes a {@link SpreadsheetCellRangeReference} from the given {@link SpreadsheetCell cells}, only
+     * returning {@link Optional#empty()} if no cells are given.
+     * Note the range may include absolute references if the extreme input reference was also absolute.
+     */
+    public static Optional<SpreadsheetCellRangeReference> boundingRange(final Collection<SpreadsheetCellReference> cells) {
+        Objects.requireNonNull(cells, "cells");
+
+        SpreadsheetColumnReference left = null;
+        SpreadsheetColumnReference right = null;
+
+        SpreadsheetRowReference top = null;
+        SpreadsheetRowReference bottom = null;
+
+        for (final SpreadsheetCellReference cell : cells) {
+            final SpreadsheetColumnReference column = cell.column();
+            final SpreadsheetRowReference row = cell.row();
+
+            if (null == left) {
+                left = column;
+                right = column;
+                top = row;
+                bottom = row;
+            } else {
+                left = left.min(column);
+                right = right.max(column);
+                top = top.min(row);
+                bottom = bottom.max(row);
+            }
+        }
+
+        return Optional.ofNullable(
+                null != left ?
+                        left.columnRange(right)
+                                .setRowRange(
+                                        top.rowRange(bottom)
+                                ) :
+                        null
+        );
     }
 
     // parse............................................................................................................
