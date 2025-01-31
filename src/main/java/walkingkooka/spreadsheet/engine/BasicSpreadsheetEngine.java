@@ -826,11 +826,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     SpreadsheetCell parseFormulaEvaluateFormatStyleAndSave(final SpreadsheetCell cell,
                                                            final SpreadsheetEngineEvaluation evaluation,
                                                            final SpreadsheetEngineContext context) {
-        final SpreadsheetCell result = evaluation.parseFormulaEvaluateAndStyle(cell, this, context);
+        SpreadsheetCell styled = evaluation.parseFormulaEvaluateAndStyle(
+                cell,
+                this,
+                context
+        );
+        if(cell.equals(styled)) {
+            styled = cell; // identity could have changed if evaluation=FORCE_RECOMPUTE returning an equal cell
+        }
+
         context.storeRepository()
                 .cells()
-                .save(result); // update cells enabling caching of parsing and value and errors.
-        return result;
+                .save(styled); // update cells enabling caching of parsing and value and errors.
+        return styled;
     }
 
     // Visible for SpreadsheetEngineEvaluation only called by COMPUTE_IF_NECESSARY & FORCE_RECOMPUTE
