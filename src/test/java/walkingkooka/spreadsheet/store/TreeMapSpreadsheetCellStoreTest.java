@@ -121,6 +121,81 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
+    public void testLoadCellsMixedReferenceKind() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b2 = store.save(
+                SpreadsheetSelection.parseCell("B2")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c3 = store.save(
+                SpreadsheetSelection.parseCell("$C3")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d4 = store.save(
+                SpreadsheetSelection.parseCell("$D$4")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("A1:$D$4"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                4, // count
+                a1,
+                b2,
+                c3,
+                d4
+        );
+    }
+
+
+    @Test
+    public void testLoadCellsOppositeReferenceKind() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        final SpreadsheetCell a1 = store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell b2 = store.save(
+                SpreadsheetSelection.parseCell("B2")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell c3 = store.save(
+                SpreadsheetSelection.parseCell("C3")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        final SpreadsheetCell d4 = store.save(
+                SpreadsheetSelection.parseCell("D4")
+                        .setFormula(SpreadsheetFormula.EMPTY)
+        );
+
+        this.loadCellsAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("$A$1:$D$4"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                4, // count
+                a1,
+                b2,
+                c3,
+                d4
+        );
+    }
+
+    @Test
     public void testLoadCellsCountZero() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
