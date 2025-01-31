@@ -80,22 +80,23 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public SpreadsheetCell save(final SpreadsheetCell spreadsheetCell) {
-        final SpreadsheetCell saved = this.store.save(spreadsheetCell);
+    public SpreadsheetCell save(final SpreadsheetCell cell) {
+        Objects.requireNonNull(cell, "cell");
 
-        this.lrtd.addOrReplace(saved);
-        this.rltd.addOrReplace(saved);
+        this.lrtd.addOrReplace(cell);
+        this.rltd.addOrReplace(cell);
 
-        this.lrbu.addOrReplace(saved);
-        this.rlbu.addOrReplace(saved);
+        this.lrbu.addOrReplace(cell);
+        this.rlbu.addOrReplace(cell);
 
-        this.tdlr.addOrReplace(saved);
-        this.tdrl.addOrReplace(saved);
+        this.tdlr.addOrReplace(cell);
+        this.tdrl.addOrReplace(cell);
 
-        this.bulr.addOrReplace(saved);
-        this.burl.addOrReplace(saved);
+        this.bulr.addOrReplace(cell);
+        this.burl.addOrReplace(cell);
 
-        return saved;
+        // must be last so any SaveWatchers that try and loadCells after the #maps like #lrtd have already saved $cell
+        return this.store.save(cell);
     }
 
     @Override
@@ -105,7 +106,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public void delete(final SpreadsheetCellReference id) {
-        this.store.delete(id);
+        Objects.requireNonNull(id, "id");
 
         this.lrtd.remove(id);
         this.rltd.remove(id);
@@ -118,6 +119,9 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
         this.bulr.remove(id);
         this.burl.remove(id);
+
+        // must be last so any DeleteWatchers that try and loadCells after the #maps like #lrtd have already deleted $id
+        this.store.delete(id);
     }
 
     @Override
