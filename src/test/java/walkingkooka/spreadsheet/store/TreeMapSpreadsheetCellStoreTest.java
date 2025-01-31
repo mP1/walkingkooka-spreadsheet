@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
@@ -527,6 +528,32 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
     }
 
+    // save.............................................................................................................
+
+    @Test
+    public void testLoadCellsWithinSaveCellWithSaveWatcher() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("'Hello")
+        );
+
+        final Set<SpreadsheetCell> loaded = SortedSets.tree();
+
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+
+        store.addSaveWatcher(
+                (s) -> loaded.addAll(
+                            store.loadCells(
+                                    SpreadsheetSelection.A1.toCellRange()
+                            )
+                    )
+        );
+        store.save(a1);
+
+        this.checkEquals(
+                Sets.of(a1),
+                loaded
+        );
+    }
 
     // deleteCells.....................................................................................................
 
@@ -565,6 +592,33 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         this.loadFailCheck(store, b2);
         this.loadFailCheck(store, c3);
+    }
+
+    @Test
+    public void testLoadCellsWithinDeleteCellWithDeleteWatcher() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("'Hello")
+        );
+
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+        store.save(a1);
+
+        final Set<SpreadsheetCell> loaded = SortedSets.tree();
+
+        store.addDeleteWatcher(
+                (s) -> loaded.addAll(
+                        store.loadCells(
+                                SpreadsheetSelection.A1.toCellRange()
+                        )
+                )
+        );
+
+        store.delete(a1.reference());
+
+        this.checkEquals(
+                Sets.empty(),
+                loaded
+        );
     }
 
     // clearParsedFormulaExpressions..............................................................................................
