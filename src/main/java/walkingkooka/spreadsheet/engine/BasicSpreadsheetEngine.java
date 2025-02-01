@@ -140,7 +140,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         evaluation,
                         context
                 );
-                changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                changes.onCellLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
 
                 loaded.add(evaluated);
             }
@@ -208,7 +208,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         final Optional<SpreadsheetCell> loaded = store.load(reference);
                                         if (loaded.isPresent()) {
                                             final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(loaded.get(), evaluation, context);
-                                            changes.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                                            changes.onCellLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
                                         }
                                     }
                                 }
@@ -432,7 +432,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     if (filterPredicate.test(loadedAndEval)) {
                         if (skipOffset >= offset) {
                             found.add(loadedAndEval);
-                            changes.onLoad(loadedAndEval);
+                            changes.onCellLoad(loadedAndEval);
                         }
                         skipOffset++;
                     }
@@ -572,7 +572,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 } else {
                     target = cellReference.setFormula(SpreadsheetFormula.EMPTY);
                 }
-                changes.onLoad(target);
+                changes.onCellLoad(target);
 
                 loadedCount++;
             }
@@ -865,15 +865,16 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
                                              final SpreadsheetEngineContext context) {
-        changes.refreshUpdated();
+        changes.commit();
 
         return this.prepareResponse(
                 changes,
-                changes.deletedAndUpdatedCellRange().map(
-                        r -> SpreadsheetViewportWindows.with(
-                                Sets.of(r)
-                        )
-                ).orElse(SpreadsheetViewportWindows.EMPTY),
+                changes.changesCellRange()
+                        .map(
+                                r -> SpreadsheetViewportWindows.with(
+                                        Sets.of(r)
+                                )
+                        ).orElse(SpreadsheetViewportWindows.EMPTY),
                 context
         );
     }
