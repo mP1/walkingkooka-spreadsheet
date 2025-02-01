@@ -53,6 +53,16 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
         assertSame(upper, selection.end(), "end");
     }
 
+    // notFound.........................................................................................................
+
+    @Test
+    public void testNotFound() {
+        this.notFoundTextAndCheck(
+                SpreadsheetSelection.parseRowRange("1:2"),
+                "Row Range not found: 1:2"
+        );
+    }
+
     // text............................................................................................................
 
     @Test

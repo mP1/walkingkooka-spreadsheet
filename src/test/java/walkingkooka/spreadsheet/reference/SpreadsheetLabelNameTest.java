@@ -258,6 +258,16 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         // test ignored because short generated names will clash with valid cell references and fail the test.
     }
 
+    // notFound.........................................................................................................
+
+    @Test
+    public void testNotFound() {
+        this.notFoundTextAndCheck(
+                SpreadsheetSelection.labelName("Hello"),
+                "Label not found: Hello"
+        );
+    }
+
     // text............................................................................................................
 
     @Test

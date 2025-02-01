@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetCompara
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.store.HasNotFoundTextTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -61,6 +62,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         HashCodeEqualsDefinedTesting2<S>,
         HasUrlFragmentTesting,
         HasTextTesting,
+        HasNotFoundTextTesting,
         JsonNodeMarshallingTesting<S>,
         IsMethodTesting<S>,
         ParseStringTesting<S>,

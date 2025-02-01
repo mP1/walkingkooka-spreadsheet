@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -75,6 +76,7 @@ import java.util.stream.Collectors;
  */
 public abstract class SpreadsheetSelection implements HasText,
         HasUrlFragment,
+        HasNotFoundText,
         Predicate<SpreadsheetSelection>,
         TreePrintable,
         UsesToStringBuilder {
@@ -1358,6 +1360,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * Constructs a human pretty message that a {@link SpreadsheetSelection} could not be found.
      * This can then be used to report load failures etc.
      */
+    @Override
     public final String notFoundText() {
         return this.textLabel() + " not found: " + this;
     }
