@@ -56,6 +56,37 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
                 )
         );
     }
+
+    @Test
+    public void testCellReferenceOrRangeWithCycleFails() {
+        final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+        final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label333");
+
+        store.save(
+                label3.setLabelMappingTarget(label1)
+        );
+        store.save(
+                label2.setLabelMappingTarget(label3)
+        );
+        store.save(
+                label1.setLabelMappingTarget(label2)
+        );
+
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
+                        label1,
+                        store
+                )
+        );
+        this.checkEquals(
+                "Cycle detected for \"Label111\" -> \"Label222\" -> \"Label333\" -> \"Label111\"",
+                thrown.getMessage()
+        );
+    }
     
     @Test
     public void testCellReferenceOrRangeUnknownLabel() {

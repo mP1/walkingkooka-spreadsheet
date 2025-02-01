@@ -17,16 +17,22 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
+import walkingkooka.text.CharSequences;
+import walkingkooka.visit.Visiting;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Accepts a {@link SpreadsheetLabelName} and returns a {@link SpreadsheetCellReferenceOrRange} or {@link Optional#empty()},
@@ -50,6 +56,33 @@ final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor
         super();
         this.store = store;
     }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetSelection selection) {
+        final Set<SpreadsheetSelection> visited = this.visited;
+        if (false == visited.add(selection)) {
+            throw new IllegalStateException(
+                    "Cycle detected for " + visited.stream()
+                            .map(SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor::quote)
+                            .collect(Collectors.joining(
+                                            " -> ",
+                                            "",
+                                            " -> " + quote(selection)
+                                    )
+                            )
+            );
+        }
+
+        return Visiting.CONTINUE;
+    }
+
+    private static CharSequence quote(final SpreadsheetSelection selection) {
+        return CharSequences.quoteAndEscape(
+                selection.toString()
+        );
+    }
+
+    private final Set<SpreadsheetSelection> visited = Sets.ordered();
 
     @Override
     protected void visit(final SpreadsheetCellReference reference) {
