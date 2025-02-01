@@ -19,10 +19,13 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.http.HttpStatusCode;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+
+import java.util.Optional;
 
 public final class SpreadsheetExpressionReferenceMissingStoreExceptionTest implements ClassTesting<SpreadsheetExpressionReferenceMissingStoreException> {
 
@@ -34,6 +37,19 @@ public final class SpreadsheetExpressionReferenceMissingStoreExceptionTest imple
                 reference.notFoundText(),
                 new SpreadsheetExpressionReferenceMissingStoreException(reference)
                         .getMessage()
+        );
+    }
+
+    @Test
+    public void testStatus() {
+        final SpreadsheetExpressionReference reference = SpreadsheetSelection.A1;
+
+        this.checkEquals(
+                Optional.of(
+                        HttpStatusCode.NOT_FOUND.setMessage("Cell not found: A1")
+                ),
+                new SpreadsheetExpressionReferenceMissingStoreException(reference)
+                        .status()
         );
     }
 
