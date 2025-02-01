@@ -42,7 +42,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
         implements SpreadsheetSelectionVisitorTesting<SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor> {
 
     @Test
-    public void testCellNonNullValue() {
+    public void testValuesWithCellNonNullValue() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
         final String value = "B2Value";
 
@@ -84,7 +84,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
     }
 
     @Test
-    public void testCellNullValue() {
+    public void testValuesWithCellNullValue() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
         this.valuesAndCheck(
@@ -120,7 +120,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
     }
 
     @Test
-    public void testCellNotFound() {
+    public void testValuesWithCellNotFound() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
         this.valuesAndCheck(
@@ -146,7 +146,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
     }
 
     @Test
-    public void testLabelToCell() {
+    public void testValuesWithLabelToCell() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
         final String value = "B2Value";
@@ -208,7 +208,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
     }
 
     @Test
-    public void testCellRange() {
+    public void testValuesWithCellRange() {
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:B3");
         final String b2Value = "B2Value";
         final Integer b3Value = 123;
@@ -264,7 +264,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
     }
 
     @Test
-    public void testCellRangeMissingCells() {
+    public void testValuesWithCellRangeMissingCells() {
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("B2:C3");
         final String b2Value = "B2Value";
         final Integer c3Value = 123;
@@ -350,6 +350,8 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
                 null
         );
     }
+
+    // class ...........................................................................................................
 
     @Override
     public String typeNamePrefix() {
