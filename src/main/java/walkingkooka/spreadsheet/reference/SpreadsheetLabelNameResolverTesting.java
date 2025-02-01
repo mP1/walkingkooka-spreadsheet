@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceMissingStoreException;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -186,7 +187,7 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
     default void resolveLabelFails(final SpreadsheetLabelNameResolver resolver,
                                    final SpreadsheetLabelName labelName) {
         assertThrows(
-                IllegalArgumentException.class,
+                SpreadsheetExpressionReferenceMissingStoreException.class,
                 () -> resolver.resolveLabel(labelName),
                 () -> "resolveLabel " + labelName
         );
