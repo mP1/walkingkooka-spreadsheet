@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
+import walkingkooka.text.CharSequences;
 
 import java.util.Objects;
 
@@ -33,7 +34,25 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverSpreadsheetSelectio
 
         final SpreadsheetLabelStoreSpreadsheetLabelNameResolverSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreSpreadsheetLabelNameResolverSpreadsheetSelectionVisitor(store);
         visitor.accept(labelName);
-        return visitor.nonLabel;
+
+        final SpreadsheetSelection nonLabel = visitor.nonLabel;
+        if (null == nonLabel) {
+            // Missing non label for "Hello"
+            throw new IllegalStateException(
+                    "Missing non label for " + quote(labelName)
+            );
+        }
+        if (nonLabel.isLabelName()) {
+            // Invalid non label label "Hello" for "Yellow"
+            throw new IllegalStateException(
+                    "Invalid non label label " +
+                            quote(nonLabel.toLabelName()) +
+                            " for " +
+                            quote(labelName)
+            );
+        }
+
+        return nonLabel;
     }
 
     // @VisibleForTesting
@@ -91,5 +110,13 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverSpreadsheetSelectio
     @Override
     public String toString() {
         return this.store.toString();
+    }
+
+    // helper...........................................................................................................
+
+    static CharSequence quote(final SpreadsheetLabelName labelName) {
+        return CharSequences.quote(
+                labelName.text()
+        );
     }
 }
