@@ -23,6 +23,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.store.HasNotFoundTextTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
@@ -37,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetSelectionTest implements ClassTesting2<SpreadsheetSelection>,
         HasTextTesting,
+        HasNotFoundTextTesting,
         ParseStringTesting<SpreadsheetExpressionReference> {
 
     @Test
@@ -1711,9 +1714,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testNotFoundText() {
-        this.checkEquals(
-                "Cell not found: Z99",
-                SpreadsheetSelection.parseCell("Z99").notFoundText()
+        this.notFoundTextAndCheck(
+                SpreadsheetSelection.parseCell("Z99"),
+                "Cell not found: Z99"
         );
     }
 

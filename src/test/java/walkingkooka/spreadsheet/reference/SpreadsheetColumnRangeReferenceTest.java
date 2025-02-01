@@ -51,6 +51,16 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         assertSame(upper, selection.end(), "end");
     }
 
+    // notFound.........................................................................................................
+
+    @Test
+    public void testNotFound() {
+        this.notFoundTextAndCheck(
+                SpreadsheetSelection.parseColumnRange("C:D"),
+                "Column Range not found: C:D"
+        );
+    }
+
     // text............................................................................................................
 
     @Test

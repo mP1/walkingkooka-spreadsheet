@@ -138,7 +138,17 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         this.isSingleCellAndCheck(range, false);
     }
 
-    // isSingleCell...........................................................
+    // notFound.........................................................................................................
+
+    @Test
+    public void testNotFound() {
+        this.notFoundTextAndCheck(
+                SpreadsheetSelection.parseCellRange("B2:C3"),
+                "Cell Range not found: B2:C3"
+        );
+    }
+
+    // isSingleCell.....................................................................................................
 
     @SuppressWarnings("UnnecessaryLocalVariable")
     @Test

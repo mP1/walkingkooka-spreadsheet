@@ -58,6 +58,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.checkEquals(row, cell.row(), "row");
     }
 
+    // notFound.........................................................................................................
+
+    @Test
+    public void testNotFound() {
+        this.notFoundTextAndCheck(
+                SpreadsheetSelection.parseColumn("Z"),
+                "Column not found: Z"
+        );
+    }
+
     // text............................................................................................................
 
     @Test
