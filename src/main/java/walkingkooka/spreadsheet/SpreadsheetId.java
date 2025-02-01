@@ -22,6 +22,7 @@ import walkingkooka.HasId;
 import walkingkooka.Value;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -34,7 +35,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         HasId<Long>,
         Value<Long>,
-        HasUrlFragment {
+        HasUrlFragment,
+        HasNotFoundText {
 
     /**
      * Parses some text into a {@link SpreadsheetId}. This is the inverse of {@link SpreadsheetId#toString()}.
@@ -82,6 +84,13 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     }
 
     private final Long value;
+
+    // HasNotFoundText..................................................................................................
+
+    @Override
+    public String notFoundText() {
+        return "Spreadsheet " + CharSequences.quoteIfChars(this.toString()) + " not found";
+    }
 
     // HasUrlFragment...................................................................................................
 
