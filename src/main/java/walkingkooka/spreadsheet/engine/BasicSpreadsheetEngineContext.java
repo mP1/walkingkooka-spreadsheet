@@ -158,7 +158,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         } catch (final IllegalArgumentException notFound) {
             // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/5180
             throw new SpreadsheetExpressionReferenceMissingStoreException(
-                    notFound.getMessage(),
                     labelName
             );
         }

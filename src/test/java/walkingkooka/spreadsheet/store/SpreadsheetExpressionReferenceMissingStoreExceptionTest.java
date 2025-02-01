@@ -18,25 +18,26 @@
 
 package walkingkooka.spreadsheet.store;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.StandardThrowableTesting;
-import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FakeExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetExpressionReferenceMissingStoreExceptionTest implements StandardThrowableTesting<SpreadsheetExpressionReferenceMissingStoreException> {
+public final class SpreadsheetExpressionReferenceMissingStoreExceptionTest implements ClassTesting<SpreadsheetExpressionReferenceMissingStoreException> {
 
-    private final static ExpressionReference EXPRESSION_REFERENCE = new FakeExpressionReference() {
-    };
+    @Test
+    public void testGetMessage() {
+        final SpreadsheetExpressionReference reference = SpreadsheetSelection.A1;
 
-    @Override
-    public SpreadsheetExpressionReferenceMissingStoreException createThrowable(final String message) {
-        return new SpreadsheetExpressionReferenceMissingStoreException(message, EXPRESSION_REFERENCE);
+        this.checkEquals(
+                reference.notFoundText(),
+                new SpreadsheetExpressionReferenceMissingStoreException(reference)
+                        .getMessage()
+        );
     }
 
-    @Override
-    public SpreadsheetExpressionReferenceMissingStoreException createThrowable(final String message, final Throwable cause) {
-        return new SpreadsheetExpressionReferenceMissingStoreException(message, EXPRESSION_REFERENCE, cause);
-    }
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetExpressionReferenceMissingStoreException> type() {

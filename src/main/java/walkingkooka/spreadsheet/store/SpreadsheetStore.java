@@ -39,9 +39,6 @@ public interface SpreadsheetStore<K, V> extends Store<K, V> {
      * <pre>#REF!</pre> error.
      */
     default MissingStoreException notFound(final SpreadsheetExpressionReference reference) {
-        return new SpreadsheetExpressionReferenceMissingStoreException(
-                reference.notFoundText(),
-                reference
-        );
+        return new SpreadsheetExpressionReferenceMissingStoreException(reference);
     }
 }
