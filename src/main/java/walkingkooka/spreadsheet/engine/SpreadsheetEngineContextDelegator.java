@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
@@ -42,7 +43,7 @@ import java.util.function.BiConsumer;
 
 /**
  * A delegator for {@link SpreadsheetEngineContext}.
- * Note {@link #resolveLabel()} is not implemented
+ * Note {@link #resolveLabel(SpreadsheetLabelName)} is not implemented
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
         ProviderContextDelegator,
