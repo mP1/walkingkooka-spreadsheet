@@ -41,10 +41,7 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolver implements Spreads
     public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
         return this.labelStore.cellReferenceOrRange(labelName)
                 .orElseThrow(
-                        () -> new SpreadsheetExpressionReferenceMissingStoreException(
-                                "Missing label \"" + labelName + "\"",
-                                labelName
-                        )
+                        () -> new SpreadsheetExpressionReferenceMissingStoreException(labelName)
                 );
     }
 

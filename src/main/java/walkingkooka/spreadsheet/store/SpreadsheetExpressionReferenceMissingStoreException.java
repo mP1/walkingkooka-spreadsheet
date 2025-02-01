@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.MissingStoreException;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.HasExpressionReference;
 
 import java.util.Objects;
@@ -32,26 +32,33 @@ public class SpreadsheetExpressionReferenceMissingStoreException extends Missing
 
     protected SpreadsheetExpressionReferenceMissingStoreException() {
         super();
-        this.expressionReference = null;
+        this.reference = null;
     }
 
-    public SpreadsheetExpressionReferenceMissingStoreException(final String message,
-                                                               final ExpressionReference expressionReference) {
-        super(message);
-        this.expressionReference = Objects.requireNonNull(expressionReference, "experienceReference");
+    public SpreadsheetExpressionReferenceMissingStoreException(final SpreadsheetExpressionReference reference) {
+        super(computeMessage(reference));
+        this.reference = reference;
     }
 
-    public SpreadsheetExpressionReferenceMissingStoreException(final String message,
-                                                               final ExpressionReference expressionReference,
+    public SpreadsheetExpressionReferenceMissingStoreException(final SpreadsheetExpressionReference reference,
                                                                final Throwable cause) {
-        super(message, cause);
-        this.expressionReference = Objects.requireNonNull(expressionReference, "experienceReference");
+        super(
+                computeMessage(reference),
+                cause
+        );
+        this.reference = reference;
+    }
+
+    private static String computeMessage(final SpreadsheetExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return reference.notFoundText();
     }
 
     @Override
-    public ExpressionReference expressionReference() {
-        return this.expressionReference;
+    public SpreadsheetExpressionReference expressionReference() {
+        return this.reference;
     }
 
-    private final ExpressionReference expressionReference;
+    private final SpreadsheetExpressionReference reference;
 }
