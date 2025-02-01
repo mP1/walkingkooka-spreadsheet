@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting<SpreadsheetEngineContextDelegator> {
 
@@ -31,6 +33,11 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
 
         @Override
         public PluginStore pluginStore() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
             throw new UnsupportedOperationException();
         }
     }

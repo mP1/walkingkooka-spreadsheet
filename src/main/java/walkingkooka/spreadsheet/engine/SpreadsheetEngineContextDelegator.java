@@ -28,8 +28,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
@@ -44,6 +42,7 @@ import java.util.function.BiConsumer;
 
 /**
  * A delegator for {@link SpreadsheetEngineContext}.
+ * Note {@link #resolveLabel()} is not implemented
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
         ProviderContextDelegator,
@@ -120,12 +119,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.spreadsheetEngineContext()
-                .resolveLabel(labelName);
-    }
-
-    @Override
     default SpreadsheetCellRange sortCells(final SpreadsheetCellRange cells,
                                            final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
                                            final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedFromTo) {
@@ -149,9 +142,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
                 .storeRepository();
     }
 
-
-    SpreadsheetEngineContext spreadsheetEngineContext();
-
     @Override
     default SpreadsheetProvider spreadsheetProvider() {
         return this.spreadsheetEngineContext();
@@ -161,4 +151,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     default ProviderContext providerContext() {
         return this.spreadsheetEngineContext();
     }
+
+    SpreadsheetEngineContext spreadsheetEngineContext();
 }
