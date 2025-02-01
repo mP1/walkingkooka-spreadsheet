@@ -17,16 +17,21 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.net.header.HasStatus;
+import walkingkooka.net.http.HttpStatus;
+import walkingkooka.net.http.HttpStatusCode;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.MissingStoreException;
 import walkingkooka.tree.expression.HasExpressionReference;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * This exception is thrown whenever a reference load fails.
  */
-public class SpreadsheetExpressionReferenceMissingStoreException extends MissingStoreException implements HasExpressionReference {
+public class SpreadsheetExpressionReferenceMissingStoreException extends MissingStoreException implements HasExpressionReference,
+        HasStatus {
 
     private static final long serialVersionUID = 1;
 
@@ -49,6 +54,8 @@ public class SpreadsheetExpressionReferenceMissingStoreException extends Missing
         this.reference = reference;
     }
 
+    // HasExpressionReference...........................................................................................
+
     private static String computeMessage(final SpreadsheetExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
@@ -61,4 +68,13 @@ public class SpreadsheetExpressionReferenceMissingStoreException extends Missing
     }
 
     private final SpreadsheetExpressionReference reference;
+
+    // HasStatus........................................................................................................
+
+    @Override
+    public Optional<HttpStatus> status() {
+        return Optional.of(
+                HttpStatusCode.NOT_FOUND.setMessage(this.getMessage())
+        );
+    }
 }
