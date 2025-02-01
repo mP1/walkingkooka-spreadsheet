@@ -33,8 +33,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor> {
 
+    // cellReferenceOrRange.............................................................................................
+
     @Test
-    public void testNullCellReferenceOrRangeFails() {
+    public void testCellReferenceOrRangeWithNullCellReferenceOrRangeFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
@@ -45,7 +47,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testNullLabelStoreFails() {
+    public void testCellReferenceOrRangeWithNullLabelStoreFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
@@ -54,9 +56,9 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
                 )
         );
     }
-
+    
     @Test
-    public void testUnknownLabel() {
+    public void testCellReferenceOrRangeUnknownLabel() {
         final SpreadsheetLabelName label = this.label();
         this.cellReferenceOrRangeAndCheck(
                 label,
@@ -66,7 +68,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testCellReference() {
+    public void testCellReferenceOrRangeCellReference() {
         final SpreadsheetCellReference cell = this.cell();
         this.cellReferenceOrRangeAndCheck(
                 cell,
@@ -76,7 +78,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testLabelToCellReference() {
+    public void testCellReferenceOrRangeLabelToCellReference() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference cell = this.cell();
 
@@ -91,7 +93,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testLabelToLabelToCellReference() {
+    public void testCellReferenceOrRangeLabelToLabelToCellReference() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label22222");
         final SpreadsheetCellReference cell = this.cell();
@@ -108,7 +110,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testCellRange() {
+    public void testCellReferenceOrRangeCellRange() {
         final SpreadsheetCellRangeReference range = this.range();
         final SpreadsheetLabelName label = this.label();
 
@@ -123,7 +125,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testLabelToCellRange() {
+    public void testCellReferenceOrRangeLabelToCellRange() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellRangeReference range = this.range();
 
@@ -166,6 +168,8 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     public SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor createVisitor() {
         return new SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor(null);
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor> type() {
