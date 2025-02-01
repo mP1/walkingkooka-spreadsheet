@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContextDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -119,6 +121,13 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
         }
 
         return value;
+    }
+
+    @Override
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        // just delegate
+        return this.spreadsheetExpressionEvaluationContext()
+                .resolveLabel(labelName);
     }
 
     @Override

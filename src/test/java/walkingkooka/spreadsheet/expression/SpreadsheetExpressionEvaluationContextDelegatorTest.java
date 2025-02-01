@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -143,6 +145,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                     EXPRESSION_FUNCTION_PROVIDER,
                     PROVIDER_CONTEXT
             );
+        }
+
+        @Override
+        public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+            throw new UnsupportedOperationException();
         }
 
         @Override
