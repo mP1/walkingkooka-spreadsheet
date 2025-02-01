@@ -69,6 +69,7 @@ final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor
         this.cellReferenceOrRange = range;
     }
 
+    @Override
     public String toString() {
         return String.valueOf(this.cellReferenceOrRange);
     }
