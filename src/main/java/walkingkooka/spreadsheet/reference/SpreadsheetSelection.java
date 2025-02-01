@@ -29,7 +29,6 @@ import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
@@ -55,7 +54,6 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -1362,23 +1360,6 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final String notFoundText() {
         return this.textLabel() + " not found: " + this;
-    }
-
-    /**
-     * Returns the value when a {@link SpreadsheetSelection} is not found.
-     */
-    public final Object notFound(final ExpressionNumberKind expressionNumberKind) {
-        return this.isCell() || this.isCellRange() ?
-                expressionNumberKind.zero() :
-                this.isLabelName() ?
-                        SpreadsheetError.selectionNotFound(
-                                this.toLabelName()
-                        ) :
-                        this.unsupportedOperationException();
-    }
-
-    private Object unsupportedOperationException() {
-        throw new UnsupportedOperationException(this.toString());
     }
 
     // SpreadsheetSelectionVisitor......................................................................................

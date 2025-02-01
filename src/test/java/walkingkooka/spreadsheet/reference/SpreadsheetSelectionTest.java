@@ -23,11 +23,9 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -1716,47 +1714,6 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.checkEquals(
                 "Cell not found: Z99",
                 SpreadsheetSelection.parseCell("Z99").notFoundText()
-        );
-    }
-
-    // notFound.........................................................................................................
-
-    @Test
-    public void testNotFoundCell() {
-        this.notFound(
-                SpreadsheetSelection.A1,
-                ExpressionNumberKind.BIG_DECIMAL,
-                ExpressionNumberKind.BIG_DECIMAL.zero()
-        );
-    }
-
-    @Test
-    public void testNotFoundCellRange() {
-        this.notFound(
-                SpreadsheetSelection.parseCellRange("B2:C3"),
-                ExpressionNumberKind.BIG_DECIMAL,
-                ExpressionNumberKind.BIG_DECIMAL.zero()
-        );
-    }
-
-    @Test
-    public void testNotFoundLabel() {
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
-
-        this.notFound(
-                label,
-                ExpressionNumberKind.BIG_DECIMAL,
-                SpreadsheetError.selectionNotFound(label)
-        );
-    }
-
-    private void notFound(final SpreadsheetSelection selection,
-                          final ExpressionNumberKind kind,
-                          final Object expected) {
-        this.checkEquals(
-                expected,
-                selection.notFound(kind),
-                selection::toString
         );
     }
 
