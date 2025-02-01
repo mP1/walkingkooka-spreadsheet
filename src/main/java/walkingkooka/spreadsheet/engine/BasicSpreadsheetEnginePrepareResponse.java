@@ -84,25 +84,25 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     SpreadsheetDelta go() {
-        this.changes.refreshUpdated();
+        this.changes.commit();
 
         // columns......................................................................................................
         if (this.shouldSaveUpdateColumns || this.shouldDeleteColumns) {
-            for (final Map.Entry<SpreadsheetColumnReference, SpreadsheetColumn> referenceToColumn : this.changes.updatedAndDeletedColumns.entrySet()) {
-                final SpreadsheetColumnReference reference = referenceToColumn.getKey();
-                final SpreadsheetColumn column = referenceToColumn.getValue();
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetColumnReference, SpreadsheetColumn> referenceAndColumn : this.changes.columns.values()) {
+                final SpreadsheetColumnReference columnReference = referenceAndColumn.reference;
+                final SpreadsheetColumn column = referenceAndColumn.value;
 
                 if (null != column) {
                     if (this.shouldSaveUpdateColumns) {
                         this.columns.put(
-                                reference,
+                                columnReference,
                                 column
                         );
                     }
                 } else {
                     if (this.shouldDeleteColumns) {
                         this.columns.put(
-                                reference,
+                                columnReference,
                                 null
                         );
                     }
@@ -113,21 +113,21 @@ final class BasicSpreadsheetEnginePrepareResponse {
         // rows.........................................................................................................
 
         if (this.shouldSaveUpdateRows || this.shouldDeleteRows) {
-            for (final Map.Entry<SpreadsheetRowReference, SpreadsheetRow> referenceToRow : this.changes.updatedAndDeletedRows.entrySet()) {
-                final SpreadsheetRowReference reference = referenceToRow.getKey();
-                final SpreadsheetRow row = referenceToRow.getValue();
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetRowReference, SpreadsheetRow> referenceAndRow : this.changes.rows.values()) {
+                final SpreadsheetRowReference rowReference = referenceAndRow.reference;
+                final SpreadsheetRow row = referenceAndRow.value;
 
                 if (null != row) {
                     if (this.shouldSaveUpdateRows) {
                         this.rows.put(
-                                reference,
+                                rowReference,
                                 row
                         );
                     }
                 } else {
                     if (this.shouldDeleteRows) {
                         this.rows.put(
-                                reference,
+                                rowReference,
                                 null
                         );
                     }
@@ -138,10 +138,10 @@ final class BasicSpreadsheetEnginePrepareResponse {
         // labels.......................................................................................................
 
         if (this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateCells) {
-            for (final Map.Entry<SpreadsheetLabelName, SpreadsheetLabelMapping> labelNameAndMapping : this.changes.updatedAndDeletedLabels.entrySet()) {
-                final SpreadsheetLabelName labelName = labelNameAndMapping.getKey();
-                final SpreadsheetLabelMapping labelMapping = labelNameAndMapping.getValue();
-
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> nameAndMapping : this.changes.labels.values()) {
+                final SpreadsheetLabelName labelName = nameAndMapping.reference;
+                final SpreadsheetLabelMapping labelMapping = nameAndMapping.value;
+                
                 if (null != labelMapping) {
                     if (this.shouldSaveUpdateLabels) {
                         this.labels.put(
@@ -164,9 +164,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
         // cells........................................................................................................
 
         if (this.shouldSaveUpdateCells || this.shouldDeleteCells || this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateColumns || this.shouldDeleteColumns || this.shouldSaveUpdateRows || this.shouldDeleteRows) {
-            for (final Map.Entry<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell : this.changes.updatedAndDeletedCells.entrySet()) {
-                final SpreadsheetCellReference cellReference = cellReferenceToCell.getKey();
-                final SpreadsheetCell cell = cellReferenceToCell.getValue();
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> referenceAndCell : this.changes.cells.values()) {
+                final SpreadsheetCellReference cellReference = referenceAndCell.reference;
+                final SpreadsheetCell cell = referenceAndCell.value;
 
                 if (null != cell) {
                     if (this.shouldSaveUpdateCells) {
