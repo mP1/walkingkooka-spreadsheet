@@ -27,12 +27,12 @@ import java.util.Objects;
  */
 final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static SpreadsheetSelection resolveLabel(final SpreadsheetSelection selection,
+    static SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName,
                                              final SpreadsheetLabelStore store) {
-        Objects.requireNonNull(selection, "selection");
+        Objects.requireNonNull(labelName, "labelName");
 
         final SpreadsheetLabelStoreSpreadsheetLabelNameResolverSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreSpreadsheetLabelNameResolverSpreadsheetSelectionVisitor(store);
-        visitor.accept(selection);
+        visitor.accept(labelName);
         return visitor.nonLabel;
     }
 
