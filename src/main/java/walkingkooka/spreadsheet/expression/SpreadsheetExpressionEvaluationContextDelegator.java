@@ -24,8 +24,6 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
@@ -69,12 +67,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         return this.spreadsheetExpressionEvaluationContext()
                 .parseFormula(formula);
-    }
-
-    @Override
-    default SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.spreadsheetExpressionEvaluationContext()
-                .resolveLabel(labelName);
     }
 
     @Override
