@@ -2593,10 +2593,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellStoreAndCheck(context.storeRepository().cells(), a1Formatted);
     }
 
-    // saveCells......................................................................................................
+    // saveCells........................................................................................................
 
     @Test
-    public void testSaveCellWithNoCells() {
+    public void testSaveCellsWithNoCells() {
         this.saveCellsAndCheck(
                 this.createSpreadsheetEngine(),
                 SpreadsheetDelta.NO_CELLS,
@@ -2606,7 +2606,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithOnlyValues() {
+    public void testSaveCellsWithOnlyValues() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2660,7 +2660,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithOnlyWithCrossReferences() {
+    public void testSaveCellsWithOnlyWithCrossReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2714,7 +2714,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithOnlyWithCrossReferences2() {
+    public void testSaveCellsWithOnlyWithCrossReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2768,7 +2768,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithOnlyWithCrossReferences3() {
+    public void testSaveCellsWithOnlyWithCrossReferences3() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
