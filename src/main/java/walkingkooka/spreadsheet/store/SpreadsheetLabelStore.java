@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
 import java.util.Set;
@@ -39,9 +38,9 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     Set<SpreadsheetLabelMapping> findSimilar(final String text, final int max);
 
     /**
-     * Resolves the given {@link SpreadsheetLabelName} to non label references.
+     * Resolves the given {@link SpreadsheetLabelName} to non label {@link SpreadsheetCellReferenceOrRange}.
      */
-    Set<? super ExpressionReference> loadCellOrRanges(final SpreadsheetLabelName label);
+    Set<? super SpreadsheetCellReferenceOrRange> loadCellOrRanges(final SpreadsheetLabelName label);
 
     /**
      * Returns all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetExpressionReference}.

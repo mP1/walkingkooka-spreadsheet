@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
 import java.util.Objects;
@@ -103,7 +103,7 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<? super ExpressionReference> loadCellOrRanges(final SpreadsheetLabelName label) {
+    public Set<? super SpreadsheetCellReferenceOrRange> loadCellOrRanges(final SpreadsheetLabelName label) {
         return this.store.loadCellOrRanges(label);
     }
 

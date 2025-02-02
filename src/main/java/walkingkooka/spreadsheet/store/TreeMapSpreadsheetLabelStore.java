@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.Store;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.watch.Watchers;
 
 import java.util.List;
@@ -205,7 +205,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<? super ExpressionReference> loadCellOrRanges(final SpreadsheetLabelName label) {
+    public Set<? super SpreadsheetCellReferenceOrRange> loadCellOrRanges(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "label");
 
         return Sets.readOnly(TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor.gather(label, this.mappings));

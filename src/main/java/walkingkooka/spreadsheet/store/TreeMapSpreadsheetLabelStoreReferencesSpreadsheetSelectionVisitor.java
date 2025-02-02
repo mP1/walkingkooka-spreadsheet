@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
@@ -33,8 +34,8 @@ import java.util.Set;
  */
 final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Set<? super ExpressionReference> gather(final SpreadsheetLabelName label,
-                                                   final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
+    static Set<? super SpreadsheetCellReferenceOrRange> gather(final SpreadsheetLabelName label,
+                                                               final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
         final TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor(mappings);
         visitor.accept(label);
         return visitor.references;
@@ -70,7 +71,7 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor ex
 
     private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings;
     private final Set<ExpressionReference> seen = Sets.hash();
-    private final Set<? super ExpressionReference> references = Sets.ordered();
+    private final Set<? super SpreadsheetCellReferenceOrRange> references = Sets.ordered();
 
     @Override
     public String toString() {
