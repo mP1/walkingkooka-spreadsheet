@@ -109,7 +109,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRangeResolvingLabels(
                 l -> context.storeRepository()
                         .labels()
-                        .cellOrRange(l)
+                        .resolveLabel(l)
                         .map(SpreadsheetSelection::toCellRange)
         );
 
@@ -304,7 +304,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetStoreRepository repository = context.storeRepository();
             final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRangeResolvingLabels(
                     l -> repository.labels()
-                            .cellOrRange(l)
+                            .resolveLabel(l)
                             .map(SpreadsheetSelection::toCellRange)
             );
             if (cells.isPresent()) {

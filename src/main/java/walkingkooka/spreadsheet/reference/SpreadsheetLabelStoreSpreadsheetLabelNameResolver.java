@@ -38,7 +38,7 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolver implements Spreads
 
     @Override
     public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.labelStore.cellOrRangeOrFail(labelName);
+        return this.labelStore.resolveLabelOrFail(labelName);
     }
 
     private final SpreadsheetLabelStore labelStore;

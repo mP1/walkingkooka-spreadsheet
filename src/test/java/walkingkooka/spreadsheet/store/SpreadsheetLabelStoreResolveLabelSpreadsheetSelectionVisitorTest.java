@@ -22,7 +22,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
@@ -31,15 +30,15 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor> {
+public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor> {
 
-    // cellOrRange.............................................................................................
+    // resolveLabel.............................................................................................
 
     @Test
-    public void testCellOrRangeWithNullCellOrRangeFails() {
+    public void testResolveLabelWithNullLabelFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
+                () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
                         null,
                         SpreadsheetLabelStores.fake()
                 )
@@ -47,10 +46,10 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
     }
 
     @Test
-    public void testCellOrRangeWithNullLabelStoreFails() {
+    public void testResolveLabelWithNullLabelStoreFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
+                () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
                         cell(),
                         null
                 )
@@ -58,7 +57,7 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
     }
 
     @Test
-    public void testCellOrRangeWithCycleFails() {
+    public void testResolveLabelWithCycleFails() {
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
@@ -77,7 +76,7 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
 
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
+                () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
                         label1,
                         store
                 )
@@ -89,9 +88,9 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
     }
     
     @Test
-    public void testCellOrRangeUnknownLabel() {
+    public void testResolveLabelUnknownLabel() {
         final SpreadsheetLabelName label = this.label();
-        this.cellOrRangeAndCheck(
+        this.resolveLabelAndCheck(
                 label,
                 SpreadsheetLabelStores.treeMap(),
                 null
@@ -99,24 +98,14 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
     }
 
     @Test
-    public void testCellOrRangeCell() {
-        final SpreadsheetCellReference cell = this.cell();
-        this.cellOrRangeAndCheck(
-                cell,
-                SpreadsheetLabelStores.fake(),
-                cell
-        );
-    }
-
-    @Test
-    public void testCellOrRangeLabelToCell() {
+    public void testResolveLabelGivesCell() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference cell = this.cell();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(label.setLabelMappingTarget(cell));
 
-        this.cellOrRangeAndCheck(
+        this.resolveLabelAndCheck(
                 label,
                 store,
                 cell
@@ -124,7 +113,7 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
     }
 
     @Test
-    public void testCellOrRangeLabelToLabelToCell() {
+    public void testResolveLabelToCell() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label22222");
         final SpreadsheetCellReference cell = this.cell();
@@ -133,7 +122,7 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
         store.save(label.setLabelMappingTarget(label2));
         store.save(label2.setLabelMappingTarget(cell));
 
-        this.cellOrRangeAndCheck(
+        this.resolveLabelAndCheck(
                 label,
                 store,
                 cell
@@ -141,29 +130,14 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
     }
 
     @Test
-    public void testCellReferenceOrRangeCellRange() {
-        final SpreadsheetCellRangeReference range = this.range();
-        final SpreadsheetLabelName label = this.label();
-
-        final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.setLabelMappingTarget(range));
-
-        this.cellOrRangeAndCheck(
-                range,
-                SpreadsheetLabelStores.fake(),
-                range
-        );
-    }
-
-    @Test
-    public void testCellReferenceOrRangeLabelToCellRange() {
+    public void testResolveLabelToCellRange() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellRangeReference range = this.range();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(label.setLabelMappingTarget(range));
 
-        this.cellOrRangeAndCheck(
+        this.resolveLabelAndCheck(
                 label,
                 store,
                 range
@@ -182,29 +156,29 @@ public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTe
         return SpreadsheetSelection.parseCellRange("B2:C3");
     }
 
-    private void cellOrRangeAndCheck(final SpreadsheetExpressionReference reference,
-                                     final SpreadsheetLabelStore store,
-                                     final SpreadsheetCellReferenceOrRange expected) {
+    private void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
+                                      final SpreadsheetLabelStore store,
+                                      final SpreadsheetCellReferenceOrRange expected) {
         this.checkEquals(
                 Optional.ofNullable(expected),
-                SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
-                        reference,
+                SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
+                        labelName,
                         store
                 ),
-                () -> "cellOrRange " + reference + " store=" + store
+                () -> "resolveLabel " + labelName + " store=" + store
         );
     }
 
     @Override
-    public SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor createVisitor() {
-        return new SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor(null);
+    public SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor createVisitor() {
+        return new SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor(null);
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor> type() {
-        return SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.class;
+    public Class<SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor> type() {
+        return SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.class;
     }
 
     @Override

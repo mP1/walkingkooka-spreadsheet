@@ -38,21 +38,21 @@ import java.util.stream.Collectors;
  * Accepts a {@link SpreadsheetLabelName} and returns a {@link SpreadsheetCellReferenceOrRange} or {@link Optional#empty()},
  * using a {@link SpreadsheetLabelStore} to resolve labels.
  */
-final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Optional<SpreadsheetCellReferenceOrRange> cellOrRange(final SpreadsheetExpressionReference reference,
-                                                                 final SpreadsheetLabelStore store) {
+    static Optional<SpreadsheetCellReferenceOrRange> resolveLabel(final SpreadsheetExpressionReference reference,
+                                                                  final SpreadsheetLabelStore store) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(store, "store");
 
-        final SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor(store);
+        final SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor(store);
         visitor.accept(reference);
         return Optional.ofNullable(
                 visitor.cellReferenceOrRange
         );
     }
 
-    SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
+    SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
         super();
         this.store = store;
     }
@@ -63,7 +63,7 @@ final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor extends 
         if (false == visited.add(selection)) {
             throw new IllegalStateException(
                     "Cycle detected for " + visited.stream()
-                            .map(SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor::quote)
+                            .map(SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor::quote)
                             .collect(Collectors.joining(
                                             " -> ",
                                             "",
