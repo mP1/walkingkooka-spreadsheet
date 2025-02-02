@@ -60,7 +60,7 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
 
     /**
      * Attempts to resolve any labels to a {@link SpreadsheetCellReferenceOrRange} throwing an {@link #notFound(Object)}
-     * if the label was not tounf.
+     * if the label was not found.
      */
     default SpreadsheetCellReferenceOrRange cellOrRangeOrFail(final SpreadsheetExpressionReference reference) {
         return this.cellOrRange(reference)
