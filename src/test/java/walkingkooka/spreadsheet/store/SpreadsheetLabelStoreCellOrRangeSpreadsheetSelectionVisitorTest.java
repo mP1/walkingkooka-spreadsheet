@@ -31,7 +31,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor> {
+public final class SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor> {
 
     // cellOrRange.............................................................................................
 
@@ -39,7 +39,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     public void testCellOrRangeWithNullCellOrRangeFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
+                () -> SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
                         null,
                         SpreadsheetLabelStores.fake()
                 )
@@ -50,7 +50,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     public void testCellOrRangeWithNullLabelStoreFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
+                () -> SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
                         cell(),
                         null
                 )
@@ -77,7 +77,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
 
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
-                () -> SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
+                () -> SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
                         label1,
                         store
                 )
@@ -187,7 +187,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
                                      final SpreadsheetCellReferenceOrRange expected) {
         this.checkEquals(
                 Optional.ofNullable(expected),
-                SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
+                SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
                         reference,
                         store
                 ),
@@ -196,15 +196,15 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Override
-    public SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor createVisitor() {
-        return new SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor(null);
+    public SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor createVisitor() {
+        return new SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor(null);
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor> type() {
-        return SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.class;
+    public Class<SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor> type() {
+        return SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.class;
     }
 
     @Override
