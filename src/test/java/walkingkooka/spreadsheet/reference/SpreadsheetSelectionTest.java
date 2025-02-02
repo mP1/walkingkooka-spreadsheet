@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.store.HasNotFoundTextTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
@@ -1465,7 +1464,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // toCellRangeResolvingLabels.......................................................................................................
+    // toCellRange......................................................................................................
 
     @Test
     public void testToCellRangeCell() {
@@ -1564,10 +1563,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // toCellRangeResolvingLabels(Label->CellRange.....................................................................................
+    // toCellRangeResolvingLabels(Label->CellRange......................................................................
 
     @Test
-    public void testToCellRangeLabelsCell() {
+    public void testToCellRangeResolvingLabelsCell() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.A1,
                 "A1:A1"
@@ -1575,7 +1574,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsCellB2() {
+    public void testToCellRangeResolvingLabelsCellB2() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseCell("B2"),
                 "B2:B2"
@@ -1583,7 +1582,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsColumn() {
+    public void testToCellRangeResolvingLabelsColumn() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseColumn("A"),
                 "A1:A1048576"
@@ -1591,7 +1590,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsColumn2() {
+    public void testToCellRangeResolvingLabelsColumn2() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseColumn("B"),
                 "B1:B1048576"
@@ -1599,7 +1598,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsColumnRange() {
+    public void testToCellRangeResolvingLabelsColumnRange() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseColumnRange("A:B"),
                 "A1:B1048576"
@@ -1607,7 +1606,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsColumnRange2() {
+    public void testToCellRangeResolvingLabelsColumnRange2() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseColumnRange("B:C"),
                 "B1:C1048576"
@@ -1615,7 +1614,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsRow() {
+    public void testToCellRangeResolvingLabelsRow() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseRow("1"),
                 "A1:XFD1"
@@ -1623,7 +1622,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsRow2() {
+    public void testToCellRangeResolvingLabelsRow2() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseRow("2"),
                 "A2:XFD2"
@@ -1631,7 +1630,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsRowRange() {
+    public void testToCellRangeResolvingLabelsRowRange() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseRowRange("1:2"),
                 "A1:XFD2"
@@ -1639,7 +1638,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
-    public void testToCellRangeLabelsRowRange2() {
+    public void testToCellRangeResolvingLabelsRowRange2() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.parseRowRange("2:3"),
                 "A2:XFD3"
@@ -1653,10 +1652,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 (l) -> {
                     throw new UnsupportedOperationException();
                 },
-                SpreadsheetSelection.parseCellRange(expected)
+                expected
         );
     }
-
 
     private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
                                            final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRangeLabels,
