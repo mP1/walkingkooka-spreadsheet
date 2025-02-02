@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -40,10 +39,9 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     Set<SpreadsheetLabelMapping> findSimilar(final String text, final int max);
 
     /**
-     * Returns all {@link SpreadsheetCellReference} for the given {@link SpreadsheetLabelName}, including resolving
-     * label to label references until they resolve to cells.
+     * Resolves the given {@link SpreadsheetLabelName} to non label references.
      */
-    Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label);
+    Set<? super ExpressionReference> loadCellOrRanges(final SpreadsheetLabelName label);
 
     /**
      * Returns all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetExpressionReference}.
@@ -52,9 +50,9 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     Set<SpreadsheetLabelMapping> labels(final SpreadsheetExpressionReference reference);
 
     /**
-     * Attempts to resolve the given {@link SpreadsheetExpressionReference} which may be a label to a {@link SpreadsheetCellReferenceOrRange}.
+     * Attempts to resolve the given {@link SpreadsheetExpressionReference} when it is a label to a {@link SpreadsheetCellReferenceOrRange}.
      */
-    default Optional<SpreadsheetCellReferenceOrRange> cellReferenceOrRange(final SpreadsheetExpressionReference reference) {
+    default Optional<SpreadsheetCellReferenceOrRange> cellOrRange(final SpreadsheetExpressionReference reference) {
         return SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
                 reference,
                 this
@@ -62,20 +60,20 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     }
 
     /**
+     * Attempts to resolve any labels to a {@link SpreadsheetCellReferenceOrRange} throwing an {@link #notFound(Object)}
+     * if the label was not tounf.
+     */
+    default SpreadsheetCellReferenceOrRange cellOrRangeOrFail(final SpreadsheetExpressionReference reference) {
+        return this.cellOrRange(reference)
+                .orElseThrow(() -> this.notFound(reference));
+    }
+
+    /**
      * Attempts to resolve the given {@link SpreadsheetExpressionReference} which may be a label to a {@link SpreadsheetCellRangeReference}.
      * This exists primarily so this can be passed as a method reference to {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection#toCellRangeResolvingLabels(Function)}.
      */
     default Optional<SpreadsheetCellRangeReference> cellRange(final SpreadsheetExpressionReference reference) {
-        return this.cellReferenceOrRange(reference)
+        return this.cellOrRange(reference)
                 .map(SpreadsheetCellReferenceOrRange::toCellRange);
-    }
-
-    /**
-     * Attempts to resolve any labels to a {@link SpreadsheetCellReference} throwing an {@link IllegalArgumentException}
-     * if any label resolution fails.
-     */
-    default SpreadsheetCellReferenceOrRange cellReferenceOrRangeOrFail(final SpreadsheetExpressionReference reference) {
-        return this.cellReferenceOrRange(reference)
-                .orElseThrow(() -> this.notFound(reference));
     }
 }

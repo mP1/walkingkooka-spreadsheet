@@ -14470,7 +14470,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
                 return this.storeRepository()
                         .labels()
-                        .cellReferenceOrRangeOrFail(labelName);
+                        .cellOrRangeOrFail(labelName);
             }
 
             @Override

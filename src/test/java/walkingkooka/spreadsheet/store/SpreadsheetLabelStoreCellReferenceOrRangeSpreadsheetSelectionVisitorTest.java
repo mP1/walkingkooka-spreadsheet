@@ -33,10 +33,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor> {
 
-    // cellReferenceOrRange.............................................................................................
+    // cellOrRange.............................................................................................
 
     @Test
-    public void testCellReferenceOrRangeWithNullCellReferenceOrRangeFails() {
+    public void testCellOrRangeWithNullCellOrRangeFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
@@ -47,7 +47,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testCellReferenceOrRangeWithNullLabelStoreFails() {
+    public void testCellOrRangeWithNullLabelStoreFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
@@ -58,7 +58,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testCellReferenceOrRangeWithCycleFails() {
+    public void testCellOrRangeWithCycleFails() {
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
@@ -89,9 +89,9 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
     
     @Test
-    public void testCellReferenceOrRangeUnknownLabel() {
+    public void testCellOrRangeUnknownLabel() {
         final SpreadsheetLabelName label = this.label();
-        this.cellReferenceOrRangeAndCheck(
+        this.cellOrRangeAndCheck(
                 label,
                 SpreadsheetLabelStores.treeMap(),
                 null
@@ -99,9 +99,9 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testCellReferenceOrRangeCellReference() {
+    public void testCellOrRangeCell() {
         final SpreadsheetCellReference cell = this.cell();
-        this.cellReferenceOrRangeAndCheck(
+        this.cellOrRangeAndCheck(
                 cell,
                 SpreadsheetLabelStores.fake(),
                 cell
@@ -109,14 +109,14 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testCellReferenceOrRangeLabelToCellReference() {
+    public void testCellOrRangeLabelToCell() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference cell = this.cell();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(label.setLabelMappingTarget(cell));
 
-        this.cellReferenceOrRangeAndCheck(
+        this.cellOrRangeAndCheck(
                 label,
                 store,
                 cell
@@ -124,7 +124,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
     }
 
     @Test
-    public void testCellReferenceOrRangeLabelToLabelToCellReference() {
+    public void testCellOrRangeLabelToLabelToCell() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label22222");
         final SpreadsheetCellReference cell = this.cell();
@@ -133,7 +133,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         store.save(label.setLabelMappingTarget(label2));
         store.save(label2.setLabelMappingTarget(cell));
 
-        this.cellReferenceOrRangeAndCheck(
+        this.cellOrRangeAndCheck(
                 label,
                 store,
                 cell
@@ -148,7 +148,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(label.setLabelMappingTarget(range));
 
-        this.cellReferenceOrRangeAndCheck(
+        this.cellOrRangeAndCheck(
                 range,
                 SpreadsheetLabelStores.fake(),
                 range
@@ -163,7 +163,7 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
         store.save(label.setLabelMappingTarget(range));
 
-        this.cellReferenceOrRangeAndCheck(
+        this.cellOrRangeAndCheck(
                 label,
                 store,
                 range
@@ -182,16 +182,16 @@ public final class SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelection
         return SpreadsheetSelection.parseCellRange("B2:C3");
     }
 
-    private void cellReferenceOrRangeAndCheck(final SpreadsheetExpressionReference reference,
-                                              final SpreadsheetLabelStore store,
-                                              final SpreadsheetCellReferenceOrRange expected) {
+    private void cellOrRangeAndCheck(final SpreadsheetExpressionReference reference,
+                                     final SpreadsheetLabelStore store,
+                                     final SpreadsheetCellReferenceOrRange expected) {
         this.checkEquals(
                 Optional.ofNullable(expected),
                 SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
                         reference,
                         store
                 ),
-                () -> "cellReferenceOrRange " + reference + " store=" + store
+                () -> "cellOrRange " + reference + " store=" + store
         );
     }
 
