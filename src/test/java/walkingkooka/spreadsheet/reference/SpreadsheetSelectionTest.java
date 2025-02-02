@@ -1566,6 +1566,14 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     // toCellRangeResolvingLabels(Label->CellRange......................................................................
 
     @Test
+    public void testToCellRangeResolvingLabelsWithNullFunctionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetSelection.A1.toCellRangeResolvingLabels(null)
+        );
+    }
+
+    @Test
     public void testToCellRangeResolvingLabelsCell() {
         this.toCellRangeLabelsAndCheck(
                 SpreadsheetSelection.A1,
