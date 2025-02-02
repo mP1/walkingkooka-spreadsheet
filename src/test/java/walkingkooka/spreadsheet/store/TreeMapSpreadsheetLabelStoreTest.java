@@ -311,7 +311,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         );
     }
 
-    // loadCellReferencesOrRanges.......................................................................................
+    // loadCellOrRanges.................................................................................................
 
     @Test
     public void testLoadCellReferencesOrRangesNotFound() {

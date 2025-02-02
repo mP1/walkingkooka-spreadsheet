@@ -35,7 +35,7 @@ public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, S
     }
 
     @Override
-    public Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label) {
+    public Set<? super ExpressionReference> loadCellOrRanges(final SpreadsheetLabelName label) {
         throw new UnsupportedOperationException();
     }
 

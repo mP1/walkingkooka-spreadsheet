@@ -82,8 +82,11 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     }
 
     @Test
-    default void testLoadCellReferencesOrRangesNullLabelFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().loadCellReferencesOrRanges(null));
+    default void testLoadCellOrRangesNullLabelFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore().loadCellOrRanges(null)
+        );
     }
 
     @Test
@@ -160,8 +163,8 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                                     final SpreadsheetLabelName label,
                                                     final Set<? super ExpressionReference> referencesOrRanges) {
         this.checkEquals(referencesOrRanges,
-                store.loadCellReferencesOrRanges(label),
-                () -> "loadCellReferencesOrRanges for " + label);
+                store.loadCellOrRanges(label),
+                () -> "loadCellOrRanges for " + label);
     }
 
     default void labelsAndCheck(final SpreadsheetLabelStore store,
@@ -185,7 +188,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     }
 
     @Test
-    default void testCellReferenceOrRangeOrFail() {
+    default void testCellOrRangeOrFail() {
         final S store = this.createStore();
         boolean tested = false;
 
@@ -194,7 +197,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
             if (!store.load(label).isPresent()) {
                 assertThrows(
                         MissingStoreException.class,
-                        () -> store.cellReferenceOrRangeOrFail(label),
+                        () -> store.cellOrRangeOrFail(label),
                         () -> "Unknown Label: " + label + " should have failed"
                 );
                 tested = true;
