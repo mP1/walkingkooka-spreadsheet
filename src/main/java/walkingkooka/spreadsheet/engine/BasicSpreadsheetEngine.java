@@ -107,8 +107,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRangeResolvingLabels(
-                context.storeRepository()
-                        .labels()::cellRange
+                l -> context.storeRepository()
+                        .labels()
+                        .cellOrRange(l)
+                        .map(SpreadsheetSelection::toCellRange)
         );
 
         return cells.isPresent() ?
@@ -301,7 +303,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
             final SpreadsheetStoreRepository repository = context.storeRepository();
             final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRangeResolvingLabels(
-                    repository.labels()::cellRange
+                    l -> repository.labels()
+                            .cellOrRange(l)
+                            .map(SpreadsheetSelection::toCellRange)
             );
             if (cells.isPresent()) {
                 repository.cells().deleteCells(cells.get());
