@@ -87,7 +87,9 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
                 INITIAL,
                 PART
         ) &&
-                !SpreadsheetSelection.isCellText(text);
+                false == CASE_SENSITIVITY.equals("true", text) &&
+                false == CASE_SENSITIVITY.equals("false", text) &&
+                false == SpreadsheetSelection.isCellText(text);
     }
 
     /**
@@ -95,6 +97,10 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
      */
     static SpreadsheetLabelName with(final String name) {
         CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, "Label", INITIAL, PART);
+
+        if (CASE_SENSITIVITY.equals("true", name) || CASE_SENSITIVITY.equals("false", name)) {
+            throw new IllegalArgumentException("Invalid label with " + CharSequences.quoteAndEscape(name));
+        }
 
         if (name.length() >= MAX_LENGTH) {
             throw new InvalidTextLengthException("Label", name, 0, MAX_LENGTH);
