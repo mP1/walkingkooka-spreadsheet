@@ -10396,6 +10396,50 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //  saveLabel.......................................................................................................
 
     @Test
+    public void testSaveLabelWithCycleFails() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingTarget(label2);
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingTarget(label1);
+
+        engine.saveLabel(
+                mapping1,
+                context
+        );
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> engine.saveLabel(
+                        mapping2,
+                        context
+                )
+        );
+
+        this.checkEquals(
+                "Cycle detected for \"Label222\" -> \"Label111\" -> \"Label222\"",
+                thrown.getMessage()
+        );
+
+        // mapping2 should not have been saved
+        this.countAndCheck(
+                context.storeRepository()
+                        .labels(),
+                1
+        );
+
+        this.loadLabelAndCheck(
+                engine,
+                label2,
+                context,
+                SpreadsheetDelta.EMPTY
+        );
+    }
+
+    @Test
     public void testSaveLabelAndLoadFromLabelStore() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
