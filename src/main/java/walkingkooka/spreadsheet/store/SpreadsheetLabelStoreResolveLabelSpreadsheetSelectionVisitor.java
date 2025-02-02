@@ -21,7 +21,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -40,13 +39,13 @@ import java.util.stream.Collectors;
  */
 final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Optional<SpreadsheetCellReferenceOrRange> resolveLabel(final SpreadsheetExpressionReference reference,
+    static Optional<SpreadsheetCellReferenceOrRange> resolveLabel(final SpreadsheetLabelName labelName,
                                                                   final SpreadsheetLabelStore store) {
-        Objects.requireNonNull(reference, "reference");
+        Objects.requireNonNull(labelName, "labelName");
         Objects.requireNonNull(store, "store");
 
         final SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor(store);
-        visitor.accept(reference);
+        visitor.accept(labelName);
         return Optional.ofNullable(
                 visitor.cellReferenceOrRange
         );

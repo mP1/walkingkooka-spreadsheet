@@ -50,7 +50,7 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
-                        cell(),
+                        label(),
                         null
                 )
         );
