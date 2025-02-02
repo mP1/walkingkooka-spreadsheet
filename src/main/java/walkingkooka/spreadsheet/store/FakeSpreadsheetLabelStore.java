@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Set;
 
@@ -35,7 +35,7 @@ public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, S
     }
 
     @Override
-    public Set<? super ExpressionReference> loadCellOrRanges(final SpreadsheetLabelName label) {
+    public Set<? super SpreadsheetCellReferenceOrRange> loadCellOrRanges(final SpreadsheetLabelName label) {
         throw new UnsupportedOperationException();
     }
 
