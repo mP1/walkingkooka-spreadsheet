@@ -218,6 +218,38 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     @Test
+    public void testIsLabelTextWithTrue() {
+        this.isLabelTextAndCheck(
+                "true",
+                false
+        );
+    }
+
+    @Test
+    public void testIsLabelTextWithTrueCaseInsensitive() {
+        this.isLabelTextAndCheck(
+                "TRue",
+                false
+        );
+    }
+
+    @Test
+    public void testIsLabelTextWithFalse() {
+        this.isLabelTextAndCheck(
+                "false",
+                false
+        );
+    }
+
+    @Test
+    public void testIsLabelTextWithFalseCaseInsensitive() {
+        this.isLabelTextAndCheck(
+                "FalsE",
+                false
+        );
+    }
+
+    @Test
     public void testIsLabelTextWithLabel() {
         this.isLabelTextAndCheck(
                 "Label123",

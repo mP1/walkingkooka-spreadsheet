@@ -40,6 +40,33 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
 
     @Test
+    public void testWithTrueFails() {
+        withFails(
+                "true",
+                IllegalArgumentException.class,
+                "Invalid label with \"true\""
+        );
+    }
+
+    @Test
+    public void testWithTrueFails2() {
+        withFails(
+                "TRue",
+                IllegalArgumentException.class,
+                "Invalid label with \"TRue\""
+        );
+    }
+
+    @Test
+    public void testWithFalseFails() {
+        withFails(
+                "false",
+                IllegalArgumentException.class,
+                "Invalid label with \"false\""
+        );
+    }
+
+    @Test
     public void testWithInvalidInitialFails() {
         this.withFails(
                 "1abc",
