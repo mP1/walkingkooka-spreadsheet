@@ -264,59 +264,32 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // toCellRangeResolvingLabels.......................................................................................
-
-    @Test
-    public final void testToCellRangeResolvingLabelsWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection()
-                        .toCellRangeResolvingLabels(null)
-        );
-    }
-
-    final void toCellRangeResolvingLabelsAndCheck(final String selection,
-                                                  final String expected) {
-        this.toCellRangeResolvingLabelsAndCheck(
-                this.parseString(selection),
-                SpreadsheetSelection.parseCellRange(expected)
-        );
-    }
-
-    final void toCellRangeResolvingLabelsAndCheck(final SpreadsheetSelection selection,
-                                                  final SpreadsheetCellRangeReference expected) {
-        this.toCellRangeResolvingLabelsAndCheck(
-                selection,
-                (l) -> {
-                    throw new UnsupportedOperationException(l.toString());
-                },
-                expected
-        );
-    }
-
-    final void toCellRangeResolvingLabelsAndCheck(final SpreadsheetSelection selection,
-                                                  final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange,
-                                                  final SpreadsheetCellRangeReference expected) {
-        this.toCellRangeResolvingLabelsAndCheck(
-                selection,
-                labelToCellRange,
-                Optional.of(expected)
-        );
-    }
-
-    final void toCellRangeResolvingLabelsAndCheck(final SpreadsheetSelection selection,
-                                                  final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange,
-                                                  final Optional<SpreadsheetCellRangeReference> expected) {
-        this.checkEquals(
-                expected,
-                selection.toCellRangeResolvingLabels(labelToCellRange),
-                () -> selection + " toCellRangeResolvingLabels"
-        );
-    }
-
     // toCellOrCellRange................................................................................................
 
-    final void toCellOrCellRangeAndCheck() {
+    @Test
+    public final void testToCellOrCellRange() {
+        final SpreadsheetSelection selection = this.createSelection();
+
+        if (selection.isCell() || selection.isCellRange()) {
+            assertSame(
+                    selection,
+                    selection.toCellOrCellRange()
+            );
+        } else {
+            final UnsupportedOperationException thrown = assertThrows(
+                    UnsupportedOperationException.class,
+                    () -> selection.toCellOrCellRange()
+            );
+            this.checkEquals(
+                    selection.toString(),
+                    thrown.getMessage()
+            );
+        }
+    }
+
+    // toCellRange......................................................................................................
+
+    final void toCellRangeAndCheck() {
         final S selection = this.createSelection();
         assertSame(
                 selection,
@@ -329,6 +302,23 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 UnsupportedOperationException.class,
                 () -> this.createSelection()
                         .toCellOrCellRange()
+        );
+    }
+
+    final void toCellRangeAndCheck(final String selection,
+                                   final String expected) {
+        this.toCellRangeAndCheck(
+                this.parseString(selection),
+                SpreadsheetSelection.parseCellRange(expected)
+        );
+    }
+
+    final void toCellRangeAndCheck(final SpreadsheetSelection selection,
+                                   final SpreadsheetCellRangeReference expected) {
+        this.checkEquals(
+                expected,
+                selection.toCellRange(),
+                selection::toString
         );
     }
 

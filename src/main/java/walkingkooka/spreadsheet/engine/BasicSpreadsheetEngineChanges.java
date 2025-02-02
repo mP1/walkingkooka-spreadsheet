@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -435,17 +436,15 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
             if (cache.save) {
                 final SpreadsheetLabelMapping labelMapping = cache.value;
                 if (null != labelMapping) {
-                    final SpreadsheetCellRangeReference range = labelMapping.target()
-                            .toCellRangeResolvingLabels(
-                                    l -> this.context.storeRepository()
-                                            .labels()
-                                            .load(l)
-                                            .map(m -> m.target()
-                                                    .toCellRange()
-                                            )
-                            ).orElse(null);
-                    if (null != range) {
-                        cells.add(range.toCell());
+                    final SpreadsheetCellReferenceOrRange cellOrRange = this.context.storeRepository()
+                            .labels()
+                            .resolveLabel(labelMapping.label())
+                            .orElse(null);
+
+                    if (null != cellOrRange) {
+                        cells.add(
+                                cellOrRange.toCell()
+                        );
                     }
                 }
             }

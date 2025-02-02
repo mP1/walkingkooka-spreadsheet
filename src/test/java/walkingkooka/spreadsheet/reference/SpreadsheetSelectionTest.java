@@ -1467,6 +1467,19 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     // toCellRange......................................................................................................
 
     @Test
+    public void testToCellRangeWhenLabelFails() {
+        final UnsupportedOperationException thrown = assertThrows(
+                UnsupportedOperationException.class,
+                () -> SpreadsheetSelection.labelName("Label123").toCellRange()
+        );
+
+        this.checkEquals(
+                "Selection is a label \"Label123\"",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
     public void testToCellRangeCell() {
         this.toCellRangeAndCheck(
                 SpreadsheetSelection.A1,
@@ -1559,141 +1572,6 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.checkEquals(
                 expected,
                 selection.toCellRange(),
-                selection::toString
-        );
-    }
-
-    // toCellRangeResolvingLabels(Label->CellRange......................................................................
-
-    @Test
-    public void testToCellRangeResolvingLabelsWithNullFunctionFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> SpreadsheetSelection.A1.toCellRangeResolvingLabels(null)
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsCell() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.A1,
-                "A1:A1"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsCellB2() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseCell("B2"),
-                "B2:B2"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsColumn() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseColumn("A"),
-                "A1:A1048576"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsColumn2() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseColumn("B"),
-                "B1:B1048576"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsColumnRange() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseColumnRange("A:B"),
-                "A1:B1048576"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsColumnRange2() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseColumnRange("B:C"),
-                "B1:C1048576"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsRow() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseRow("1"),
-                "A1:XFD1"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsRow2() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseRow("2"),
-                "A2:XFD2"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsRowRange() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseRowRange("1:2"),
-                "A1:XFD2"
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabelsRowRange2() {
-        this.toCellRangeLabelsAndCheck(
-                SpreadsheetSelection.parseRowRange("2:3"),
-                "A2:XFD3"
-        );
-    }
-
-    private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
-                                           final String expected) {
-        this.toCellRangeLabelsAndCheck(
-                selection,
-                (l) -> {
-                    throw new UnsupportedOperationException();
-                },
-                expected
-        );
-    }
-
-    private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
-                                           final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRangeLabels,
-                                           final String expected) {
-        this.toCellRangeLabelsAndCheck(
-                selection,
-                labelToCellRangeLabels,
-                SpreadsheetSelection.parseCellRange(expected)
-        );
-    }
-
-    private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
-                                           final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRangeLabels,
-                                           final SpreadsheetCellRangeReference expected) {
-        this.toCellRangeLabelsAndCheck(
-                selection,
-                labelToCellRangeLabels,
-                Optional.of(
-                        expected
-                )
-        );
-    }
-
-    private void toCellRangeLabelsAndCheck(final SpreadsheetSelection selection,
-                                           final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRangeLabels,
-                                           final Optional<SpreadsheetCellRangeReference> expected) {
-        this.checkEquals(
-                expected,
-                selection.toCellRangeResolvingLabels(
-                        labelToCellRangeLabels
-                ),
                 selection::toString
         );
     }

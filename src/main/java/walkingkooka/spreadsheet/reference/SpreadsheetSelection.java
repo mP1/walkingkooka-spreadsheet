@@ -957,27 +957,12 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetCellReference toCell();
 
     /**
-     * Attempts to conver this selection to a {@link SpreadsheetCellRangeReference}.
-     * This only returns for cell and cell-range, other selections will throw a {@link UnsupportedOperationException}.
+     * Attempts to convert this selection to a {@link SpreadsheetCellRangeReference} throwing a {@link UnsupportedOperationException}
+     * if the selection is a label.
      */
     public final SpreadsheetCellRangeReference toCellRange() {
-        return this.toCellRangeResolvingLabels(LABEL_TO_CELL_RANGE_UOE)
-                .get(); // always works because Labels will throw UOE.
-    }
-
-    private static final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> LABEL_TO_CELL_RANGE_UOE = (l) -> {
-        throw new UnsupportedOperationException("Unexpected label " + l);
-    };
-
-    /**
-     * A helper that converts any {@link SpreadsheetSelection} including labels to a {@link SpreadsheetCellRangeReference}.
-     * <br>
-     * A {@link SpreadsheetCellReference} will become a range with a single cell, a column will become a range that includes all cells etc.
-     */
-    public final Optional<SpreadsheetCellRangeReference> toCellRangeResolvingLabels(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
-        return SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor.toCellRange(
-                this,
-                labelToCellRange
+        return SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor.toCellRange(
+                this
         );
     }
 

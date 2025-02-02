@@ -534,55 +534,6 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                 false);
     }
 
-    // toCellRangeResolvingLabels.......................................................................................
-
-    @Test
-    public void testToCellRangeResolvingLabelsUnknownLabel() {
-        final SpreadsheetLabelName name = SpreadsheetLabelName.with("Label123");
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
-
-        this.toCellRangeResolvingLabelsAndCheck(
-                name,
-                (l) -> {
-                    this.checkEquals(name, l);
-                    return Optional.empty();
-                },
-                Optional.empty()
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabels() {
-        final SpreadsheetLabelName name = SpreadsheetLabelName.with("Label123");
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
-
-        this.toCellRangeResolvingLabelsAndCheck(
-                name,
-                (l) -> {
-                    this.checkEquals(name, l);
-                    return Optional.of(
-                            cell.toCellRange()
-                    );
-                },
-                cell.toCellRange()
-        );
-    }
-
-    @Test
-    public void testToCellRangeResolvingLabels2() {
-        final SpreadsheetLabelName name = SpreadsheetLabelName.with("Label123");
-        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("C3:D4");
-
-        this.toCellRangeResolvingLabelsAndCheck(
-                name,
-                (l) -> {
-                    this.checkEquals(name, l);
-                    return Optional.of(range);
-                },
-                range
-        );
-    }
-
     // toRelative.......................................................................................................
 
     @Test
