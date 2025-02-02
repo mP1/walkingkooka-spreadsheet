@@ -18,14 +18,17 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -58,7 +61,27 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
 
     @Test
     public void testResolveLabelWithCycleFails() {
-        final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
+        // LabelStores#tree#save would fail when duplicate "saved".
+        final SpreadsheetLabelStore store = new FakeSpreadsheetLabelStore() {
+
+            @Override
+            public Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName label) {
+                return Optional.ofNullable(
+                        this.mappings.get(label)
+                );
+            }
+
+            @Override
+            public SpreadsheetLabelMapping save(SpreadsheetLabelMapping mapping) {
+                this.mappings.put(
+                        mapping.label(),
+                        mapping
+                );
+                return mapping;
+            }
+
+            private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.sorted();
+        };
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
