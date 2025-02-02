@@ -353,7 +353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithCellFormulaEqMissingCellReference() {
+    public void testLoadCellsFormulaWithMissingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -376,7 +376,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithCellFormulaWithMissingCellReference() {
+    public void testLoadCellsFormulaWithMissingCellReference2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -399,7 +399,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithCellFormulaEqUnknownLabel() {
+    public void testLoadCellsFormulaWithUnknownLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -431,7 +431,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithCellFormulaWithFunctionMissingCellReferenceNumberParameter() {
+    public void testLoadCellsFormulaWithFunctionMissingCellNumberParameter() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -457,7 +457,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithCellFormulaWithFunctionMissingCellReferenceStringParameter() {
+    public void testLoadCellsFormulaWithFunctionMissingCellStringParameter() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -485,7 +485,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithLabelToMissingCell() {
+    public void testLoadCellsFormulaWithLabelToMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -542,7 +542,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithoutFormatter() {
+    public void testLoadCellsCellWithoutFormatter() {
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1+2",
                 number(1 + 2),
@@ -552,7 +552,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithFormatter() {
+    public void testLoadCellsCellWithFormatter() {
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1+2",
                 number(1 + 2),
@@ -939,7 +939,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsComputeThenSkipEvaluate() {
+    public void testLoadCellsWithComputeThenSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -961,7 +961,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsManyWithoutCrossCellReferences() {
+    public void testLoadCellsManyCellsFormulasWithoutCrossCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -996,7 +996,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithCrossCellReferences() {
+    public void testLoadCellsFormulaWithCrossCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1052,7 +1052,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithCrossCellReferences2() {
+    public void testLoadCellsFormulaWithCrossCellReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1117,7 +1117,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsValueLabelInvalidFails() {
+    public void testLoadCellsWhereValueLabelInvalidFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1134,7 +1134,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsValueIsCellReference() {
+    public void testLoadCellsWhereValueIsCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1164,7 +1164,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsValueIsLabel() {
+    public void testLoadCellsWhereValueIsLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1198,14 +1198,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesCells() {
+    public void testLoadCellWithSpreadsheetDeltaPropertiesCells() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS
         );
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesCellsLabel() {
+    public void testLoadCellWithSpreadsheetDeltaPropertiesCellsLabel() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.LABELS
@@ -1213,7 +1213,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesCellsColumnWidths() {
+    public void testLoadCellWithSpreadsheetDeltaPropertiesCellsColumnWidths() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.COLUMN_WIDTHS
@@ -1221,7 +1221,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesCellsRowHeights() {
+    public void testLoadCellWithSpreadsheetDeltaPropertiesCellsRowHeights() {
         this.loadCellAndCheck(
                 SpreadsheetDeltaProperties.CELLS,
                 SpreadsheetDeltaProperties.ROW_HEIGHTS
@@ -1229,7 +1229,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellSpreadsheetDeltaPropertiesAll() {
+    public void testLoadCellWithSpreadsheetDeltaPropertiesAll() {
         this.loadCellAndCheck(SpreadsheetDeltaProperties.ALL);
     }
 
@@ -1379,10 +1379,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // saveCell....................................................................................................
+    // saveCell.........................................................................................................
 
     @Test
-    public void testSaveCellEmptyFormula() {
+    public void testSaveCellWithEmptyFormula() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1417,7 +1417,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellEmptyFormulaTwice() {
+    public void testSaveCellWithEmptyFormulaTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1470,7 +1470,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellInvalidDate() {
+    public void testSaveCellWithFormulaWithInvalidDate() {
         this.saveCellWithErrorAndCheck(
                 "1999/99/31",
                 SpreadsheetErrorKind.VALUE.setMessage(
@@ -1480,7 +1480,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellInvalidDateTime() {
+    public void testSaveCellWithFormulaWithInvalidDateTime() {
         this.saveCellWithErrorAndCheck(
                 "1999/99/31 12:58",
                 SpreadsheetErrorKind.VALUE.setMessage("Invalid value for MonthOfYear (valid values 1 - 12): 99")
@@ -1488,7 +1488,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellInvalidTime() {
+    public void testSaveCellWithFormulaWithInvalidTime() {
         this.saveCellWithErrorAndCheck(
                 "12:99",
                 SpreadsheetErrorKind.VALUE.setMessage("Invalid value for MinuteOfHour (valid values 0 - 59): 99")
@@ -1537,7 +1537,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithoutCellReferences() {
+    public void testSaveCellWithFormulaOnlyMathExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1574,7 +1574,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithUnknownCellReference() {
+    public void testSaveCellWithFormulaWithUnknownCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1623,7 +1623,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellIgnoresPreviousErrorComputesValue() {
+    public void testSaveCellWithIgnoresPreviousErrorComputesValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1662,7 +1662,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSecondTimeWithDifferentStyle() {
+    public void testSaveCellWithSecondTimeWithDifferentStyle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1731,7 +1731,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellMultipleIndependentUnreferenced() {
+    public void testSaveCellWithMultipleIndependentUnreferenced() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1820,7 +1820,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaLabelCycleToSelf() {
+    public void testSaveCellWithFormulaLabelCycleToSelf() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1866,7 +1866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellsWithLabelToSelf() {
+    public void testSaveCellWithLabelToSelf() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1958,7 +1958,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellTwiceLaterCellReferencesPrevious() {
+    public void testSaveCellWithTwiceLaterCellReferencesPrevious() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1999,7 +1999,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellTwiceLaterCellReferencesPrevious2() {
+    public void testSaveCellWithTwiceLaterCellReferencesPrevious2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2035,7 +2035,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellTwiceLaterReferencesPreviousAgain() {
+    public void testSaveCellWithTwiceLaterReferencesPreviousAgain() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2087,7 +2087,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellReferencesUpdated() {
+    public void testSaveCellWithReferencesUpdated() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2103,7 +2103,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell b2 = this.cell("$B$2", "=1+2");
         this.saveCellAndCheck(
-
                 engine,
                 b2,
                 context,
@@ -2141,7 +2140,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaLabelReference() {
+    public void testSaveCellWithFormulaLabelReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2175,7 +2174,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaLabelReference2() {
+    public void testSaveCellWithFormulaLabelReference2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2226,7 +2225,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellReplacesCellReferences() {
+    public void testSaveCellWithReplacesCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2271,7 +2270,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellReplacesLabelReferences() {
+    public void testSaveCellWithReplacesLabelReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2323,7 +2322,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellReplacesCellAndLabelReferences() {
+    public void testSaveCellWithReplacesCellAndLabelReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2383,7 +2382,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // saveCell tests with non expression formula's only value literals.................................................
 
     @Test
-    public void testSaveCellFormulaApostropheString() {
+    public void testSaveCellWithFormulaApostropheString() {
         this.saveCellAndLoadAndFormattedCheck(
                 "'Hello",
                 "Hello"
@@ -2391,7 +2390,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaDateLiteral() {
+    public void testSaveCellWithFormulaDateLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31",
                 LocalDate.of(1999, 12, 31)
@@ -2399,7 +2398,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaDateTimeLiteral() {
+    public void testSaveCellWithFormulaDateTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31 12:34",
                 LocalDateTime.of(
@@ -2410,7 +2409,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumberLiteral() {
+    public void testSaveCellWithFormulaNumberLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "123",
                 this.expressionNumberKind().create(123)
@@ -2418,7 +2417,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumber() {
+    public void testSaveCellWithFormulaNumber() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123",
                 this.expressionNumberKind().create(123)
@@ -2426,7 +2425,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumberMath() {
+    public void testSaveCellWithFormulaNumberMath() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123+456.75",
                 this.expressionNumberKind()
@@ -2435,7 +2434,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumberGreaterThan() {
+    public void testSaveCellWithFormulaNumberGreaterThan() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123>45",
                 true
@@ -2443,7 +2442,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumberLessThanEquals() {
+    public void testSaveCellWithFormulaNumberLessThanEquals() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123<=45",
                 false
@@ -2451,7 +2450,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringEqualsSameCase() {
+    public void testSaveCellWithFormulaStringEqualsSameCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"hello\"",
                 true
@@ -2459,7 +2458,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringEqualsDifferentCase() {
+    public void testSaveCellWithFormulaStringEqualsDifferentCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"HELLO\"",
                 true
@@ -2467,7 +2466,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringEqualsDifferent() {
+    public void testSaveCellWithFormulaStringEqualsDifferent() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"different\"",
                 false
@@ -2475,7 +2474,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringNotEqualsSameCase() {
+    public void testSaveCellWithFormulaStringNotEqualsSameCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"hello\"",
                 false
@@ -2483,7 +2482,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringNotEqualsDifferentCase() {
+    public void testSaveCellWithFormulaStringNotEqualsDifferentCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"HELLO\"",
                 false
@@ -2491,7 +2490,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringNotEqualsDifferent() {
+    public void testSaveCellWithFormulaStringNotEqualsDifferent() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"different\"",
                 true
@@ -2499,7 +2498,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaTimeLiteral() {
+    public void testSaveCellWithFormulaTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "12:34",
                 LocalTime.of(12, 34)
@@ -2552,7 +2551,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellTwice() {
+    public void testSaveCellWithTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2597,7 +2596,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // saveCells......................................................................................................
 
     @Test
-    public void testSaveCellsNoCells() {
+    public void testSaveCellWithNoCells() {
         this.saveCellsAndCheck(
                 this.createSpreadsheetEngine(),
                 SpreadsheetDelta.NO_CELLS,
@@ -2607,7 +2606,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellsOnlyValues() {
+    public void testSaveCellWithOnlyValues() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2661,7 +2660,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellsOnlyWithCrossReferences() {
+    public void testSaveCellWithOnlyWithCrossReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2715,7 +2714,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellsOnlyWithCrossReferences2() {
+    public void testSaveCellWithOnlyWithCrossReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2769,7 +2768,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellsOnlyWithCrossReferences3() {
+    public void testSaveCellWithOnlyWithCrossReferences3() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2830,7 +2829,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellReferenceStore, 2);
     }
 
-    // deleteCell....................................................................................................
+    // deleteCell.......................................................................................................
 
     @Test
     public void testDeleteCellsMatchingCellReference() {
@@ -3392,7 +3391,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // deleteColumn....................................................................................................
 
     @Test
-    public void testDeleteColumnZeroNothingDeleted() {
+    public void testDeleteColumnWithZeroNothingDeleted() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -3413,7 +3412,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteColumnNoCellsRefreshed() {
+    public void testDeleteColumnWithNoCellsRefreshed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -3448,7 +3447,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshed() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -3487,122 +3486,122 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedAddition() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedAddition() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=5+6", number(5 + 6));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedExpressionNumber() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedExpressionNumber() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=55.5", number(55.5));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedExpressionNumber2() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedExpressionNumber2() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=55", number(55));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedDivision() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedDivision() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=9/3", number(9 / 3));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedEqualsTrue() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedEqualsTrue() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8=8", true);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedEqualsFalse() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedEqualsFalse() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8=7", false);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedFunction() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedFunction() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=BasicSpreadsheetEngineTestSum(1,99)", number(1 + 99));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanTrue() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedGreaterThanTrue() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8>7", true);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanFalse() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedGreaterThanFalse() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=7>8", false);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanEqualsTrue() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedGreaterThanEqualsTrue() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8>=7", true);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanEqualsFalse() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedGreaterThanEqualsFalse() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=7>=8", false);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedGroup() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedGroup() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=(99)", number(99));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedLessThanTrue() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedLessThanTrue() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<9", true);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedLessThanFalse() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedLessThanFalse() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=7<6", false);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedLessThanEqualsTrue() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedLessThanEqualsTrue() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<=8", true);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedLessThanEqualsFalse() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedLessThanEqualsFalse() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<=7", false);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedMultiplication() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedMultiplication() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=9*3", number(9 * 3));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedNegative() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedNegative() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=-99", number(-99));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedNotEqualsTrue() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedNotEqualsTrue() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<>7", true);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedNotEqualsFalse() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedNotEqualsFalse() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<>8", false);
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedPercentage() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedPercentage() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=120%", number(1.2));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedSubtraction() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedSubtraction() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=9-7", number(9 - 7));
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedText() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedText() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=\"ABC123\"", "ABC123");
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshedAdditionWithWhitespace() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshedAdditionWithWhitespace() {
         this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=1 + 2", number(1 + 2));
     }
 
@@ -3646,7 +3645,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteColumnColumnsAfterCellsRefreshed2() {
+    public void testDeleteColumnWithColumnsAfterCellsRefreshed2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -3976,7 +3975,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteColumnSeveral() {
+    public void testDeleteColumnWithSeveral() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -4026,7 +4025,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // loadRow......................................................................................................
 
     @Test
-    public void testLoadRowMissingRow() {
+    public void testLoadRowWithMissingRow() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -4064,7 +4063,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // saveRow......................................................................................................
+    // saveRow..........................................................................................................
 
     @Test
     public void testSaveRowWithoutCells() {
@@ -4191,7 +4190,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // deleteRow....................................................................................................
 
     @Test
-    public void testDeleteRowsNone() {
+    public void testDeleteRowsWithNone() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -4210,7 +4209,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteRowsOne() {
+    public void testDeleteRowsWithOne() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -4255,7 +4254,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteRowsOne2() {
+    public void testDeleteRowsWithOne2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -4305,7 +4304,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteRowsMany() {
+    public void testDeleteRowsWithMany() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -5168,7 +5167,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // deleteColumn....................................................................................................
 
     @Test
-    public void testDeleteColumnsNone() {
+    public void testDeleteColumnsWithNone() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -5191,7 +5190,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteColumnsOne() {
+    public void testDeleteColumnsWithOne() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -5244,7 +5243,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteColumnsOne2() {
+    public void testDeleteColumnsWithOne2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -5309,7 +5308,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteColumnsMany() {
+    public void testDeleteColumnsWithMany() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -6177,7 +6176,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // insertColumn....................................................................................................
 
     @Test
-    public void testInsertColumnsZero() {
+    public void testInsertColumnsWithZero() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -6204,7 +6203,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testInsertColumns() {
+    public void testInsertColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -6252,7 +6251,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testInsertColumns2() {
+    public void testInsertColumn2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -6732,7 +6731,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testInsertColumnsSeveral() {
+    public void testInsertColumnsWithSeveral() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -6921,7 +6920,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // insertRow....................................................................................................
 
     @Test
-    public void testInsertRowsZero() {
+    public void testInsertRowsWithZero() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -7500,7 +7499,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testInsertRowsSeveral() {
+    public void testInsertRowsWithSeveral() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9638,7 +9637,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // sortCells........................................................................................................
 
     @Test
-    public void testSortColumnsNothingChanged() {
+    public void testSortWithColumnsNothingChanged() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9669,7 +9668,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSortColumnsRowsSwapped() {
+    public void testSortWithColumnsRowsSwapped() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9705,7 +9704,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSortRowsColumnsSwapped() {
+    public void testSortWithRowsColumnsSwapped() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9741,7 +9740,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSortColumnsRowsSwappedIncludesSortedCellReferences() {
+    public void testSortWithColumnsRowsSwappedIncludesSortedCellReferences() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9781,7 +9780,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSortColumnsRowsSwappedReferencedByCellsOutsideSortRange() {
+    public void testSortWithColumnsRowsSwappedReferencedByCellsOutsideSortRange() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -9821,7 +9820,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSortColumnsRowsSwappedLabelNotUpdated() {
+    public void testSortWithColumnsRowsSwappedLabelNotUpdated() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -10374,7 +10373,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //  loadLabel.......................................................................................................
 
     @Test
-    public void testLoadLabelUnknownFails() {
+    public void testLoadLabelWithUnknownLabelFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -11274,7 +11273,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // widths top left .................................................................................................
 
     @Test
-    public void testWindowLeft() {
+    public void testWindowWithLeft() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH,
@@ -11284,7 +11283,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowLeft2() {
+    public void testWindowWithLeft2() {
         this.windowAndCheck(
                 "A1",
                 3 * COLUMN_WIDTH,
@@ -11294,7 +11293,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowLeft3() {
+    public void testWindowWithLeft3() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH - 1,
@@ -11304,7 +11303,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowLeft4() {
+    public void testWindowWithLeft4() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH + 1,
@@ -11314,7 +11313,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowLeft5() {
+    public void testWindowWithLeft5() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH * 4 - 1,
@@ -11324,7 +11323,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowLeft6() {
+    public void testWindowWithLeft6() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH * 4 + 1,
@@ -11334,7 +11333,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidX() {
+    public void testWindowWithMidX() {
         this.windowAndCheck(
                 "M1",
                 COLUMN_WIDTH,
@@ -11344,7 +11343,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidX2() {
+    public void testWindowWithMidX2() {
         this.windowAndCheck(
                 "M1",
                 3 * COLUMN_WIDTH,
@@ -11354,7 +11353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidX3() {
+    public void testWindowWithMidX3() {
         this.windowAndCheck(
                 "M1",
                 COLUMN_WIDTH - 1,
@@ -11364,7 +11363,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidX4() {
+    public void testWindowWithMidX4() {
         this.windowAndCheck(
                 "M1",
                 COLUMN_WIDTH + 1,
@@ -11374,7 +11373,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidX5() {
+    public void testWindowWithMidX5() {
         this.windowAndCheck(
                 "M1",
                 COLUMN_WIDTH * 4 - 1,
@@ -11384,7 +11383,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidX6() {
+    public void testWindowWithMidX6() {
         this.windowAndCheck(
                 "M1",
                 COLUMN_WIDTH * 4 + 1,
@@ -11396,7 +11395,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // widths top right .................................................................................................
 
     @Test
-    public void testWindowRight() {
+    public void testWindowWithRight() {
         this.windowAndCheck(
                 "XFD1",
                 COLUMN_WIDTH,
@@ -11406,7 +11405,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowRight2() {
+    public void testWindowWithRight2() {
         this.windowAndCheck(
                 "XFD1",
                 3 * COLUMN_WIDTH,
@@ -11416,7 +11415,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowRight3() {
+    public void testWindowWithRight3() {
         this.windowAndCheck(
                 "XFD1",
                 COLUMN_WIDTH - 1,
@@ -11426,7 +11425,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowRight4() {
+    public void testWindowWithRight4() {
         this.windowAndCheck(
                 "XFD1",
                 COLUMN_WIDTH + 1,
@@ -11436,7 +11435,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowRight5() {
+    public void testWindowWithRight5() {
         this.windowAndCheck(
                 "XFD1",
                 COLUMN_WIDTH * 4 - 1,
@@ -11446,7 +11445,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowRight6() {
+    public void testWindowWithRight6() {
         this.windowAndCheck(
                 "XFD1",
                 COLUMN_WIDTH * 4 + 1,
@@ -11458,7 +11457,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // heights top left .................................................................................................
 
     @Test
-    public void testWindowTop() {
+    public void testWindowWithTop() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH,
@@ -11468,7 +11467,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowTop2() {
+    public void testWindowWithTop2() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH,
@@ -11478,7 +11477,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowTop3() {
+    public void testWindowWithTop3() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH,
@@ -11488,7 +11487,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowTop4() {
+    public void testWindowWithTop4() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH,
@@ -11498,7 +11497,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowTop5() {
+    public void testWindowWithTop5() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH,
@@ -11508,7 +11507,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowTop6() {
+    public void testWindowWithTop6() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH,
@@ -11518,7 +11517,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidY() {
+    public void testWindowWithMidY() {
         this.windowAndCheck(
                 "A10",
                 COLUMN_WIDTH,
@@ -11528,7 +11527,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidY2() {
+    public void testWindowWithMidY2() {
         this.windowAndCheck(
                 "A10",
                 COLUMN_WIDTH,
@@ -11538,7 +11537,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidY3() {
+    public void testWindowWithMidY3() {
         this.windowAndCheck(
                 "A10",
                 COLUMN_WIDTH,
@@ -11548,7 +11547,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidY4() {
+    public void testWindowWithMidY4() {
         this.windowAndCheck(
                 "A10",
                 COLUMN_WIDTH,
@@ -11558,7 +11557,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidY5() {
+    public void testWindowWithMidY5() {
         this.windowAndCheck(
                 "A10",
                 COLUMN_WIDTH,
@@ -11568,7 +11567,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowMidY6() {
+    public void testWindowWithMidY6() {
         this.windowAndCheck(
                 "A10",
                 COLUMN_WIDTH,
@@ -11580,7 +11579,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // heights top right .................................................................................................
 
     @Test
-    public void testWindowBottom() {
+    public void testWindowWithBottom() {
         this.windowAndCheck(
                 "A1048576",
                 COLUMN_WIDTH,
@@ -11590,7 +11589,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowBottom2() {
+    public void testWindowWithBottom2() {
         this.windowAndCheck(
                 "A1048576",
                 COLUMN_WIDTH,
@@ -11600,7 +11599,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowBottom3() {
+    public void testWindowWithBottom3() {
         this.windowAndCheck(
                 "A1048576",
                 COLUMN_WIDTH,
@@ -11610,7 +11609,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowBottom4() {
+    public void testWindowWithBottom4() {
         this.windowAndCheck(
                 "A1048576",
                 COLUMN_WIDTH,
@@ -11620,7 +11619,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowBottom5() {
+    public void testWindowWithBottom5() {
         this.windowAndCheck(
                 "A1048576",
                 COLUMN_WIDTH,
@@ -11630,7 +11629,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowBottom6() {
+    public void testWindowWithBottom6() {
         this.windowAndCheck(
                 "A1048576",
                 COLUMN_WIDTH,
@@ -11642,7 +11641,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // window with selection within.....................................................................................
 
     @Test
-    public void testWindowSelectionCellWithin() {
+    public void testWindowWithSelectionCellWithin() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11653,7 +11652,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellWithin2() {
+    public void testWindowWithSelectionCellWithin2() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11664,7 +11663,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellWithin3() {
+    public void testWindowWithSelectionCellWithin3() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11675,7 +11674,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnWithin() {
+    public void testWindowWithSelectionColumnWithin() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11686,7 +11685,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnWithin2() {
+    public void testWindowWithSelectionColumnWithin2() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11697,7 +11696,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnWithin3() {
+    public void testWindowWithSelectionColumnWithin3() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11708,7 +11707,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionRowWithin() {
+    public void testWindowWithSelectionRowWithin() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11719,7 +11718,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionRowWithin2() {
+    public void testWindowWithSelectionRowWithin2() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11730,7 +11729,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionRowWithin3() {
+    public void testWindowWithSelectionRowWithin3() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11743,7 +11742,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // window Selection Outside..........................................................................................
 
     @Test
-    public void testWindowSelectionCellLeft() {
+    public void testWindowWithSelectionCellLeft() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11754,7 +11753,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellLeft2() {
+    public void testWindowWithSelectionCellLeft2() {
         this.windowAndCheck(
                 "C3",
                 COLUMN_WIDTH * 3,
@@ -11765,7 +11764,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRight() {
+    public void testWindowWithSelectionCellRight() {
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
@@ -11777,7 +11776,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRight2() {
+    public void testWindowWithSelectionCellRight2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -11790,7 +11789,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellTop() {
+    public void testWindowWithSelectionCellTop() {
         // BCD:234
         this.windowAndCheck(
                 "B2",
@@ -11802,7 +11801,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellTop2() {
+    public void testWindowWithSelectionCellTop2() {
         this.windowAndCheck(
                 "C3",
                 COLUMN_WIDTH * 3,
@@ -11813,7 +11812,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellBottom() {
+    public void testWindowWithSelectionCellBottom() {
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
@@ -11825,7 +11824,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellBottom2() {
+    public void testWindowWithSelectionCellBottom2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -11838,7 +11837,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellTopLeft() {
+    public void testWindowWithSelectionCellTopLeft() {
         // C3:E5
         this.windowAndCheck(
                 "C3",
@@ -11850,7 +11849,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellBottomRight() {
+    public void testWindowWithSelectionCellBottomRight() {
         // C3:E5
         this.windowAndCheck(
                 "C3",
@@ -11862,7 +11861,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnLeft() {
+    public void testWindowWithSelectionColumnLeft() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11873,7 +11872,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnLeft2() {
+    public void testWindowWithSelectionColumnLeft2() {
         this.windowAndCheck(
                 "C3",
                 COLUMN_WIDTH * 3,
@@ -11884,7 +11883,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnRight() {
+    public void testWindowWithSelectionColumnRight() {
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
@@ -11896,7 +11895,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnRight2() {
+    public void testWindowWithSelectionColumnRight2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -11909,7 +11908,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionRowTop() {
+    public void testWindowWithSelectionRowTop() {
         // BCD:234
         this.windowAndCheck(
                 "B2",
@@ -11921,7 +11920,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionRowTop2() {
+    public void testWindowWithSelectionRowTop2() {
         this.windowAndCheck(
                 "C3",
                 COLUMN_WIDTH * 3,
@@ -11932,7 +11931,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionRowBottom() {
+    public void testWindowWithSelectionRowBottom() {
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
@@ -11944,7 +11943,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionRowBottom2() {
+    public void testWindowWithSelectionRowBottom2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -11957,7 +11956,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnReferenceLeft() {
+    public void testWindowWithSelectionColumnReferenceLeft() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -11968,7 +11967,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnReferenceLeft2() {
+    public void testWindowWithSelectionColumnReferenceLeft2() {
         this.windowAndCheck(
                 "C3",
                 COLUMN_WIDTH * 3,
@@ -11979,7 +11978,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnReferenceLeft3() {
+    public void testWindowWithSelectionColumnReferenceLeft3() {
         this.windowAndCheck(
                 "C3",
                 COLUMN_WIDTH * 3,
@@ -11990,7 +11989,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnReferenceReferenceRight() {
+    public void testWindowWithSelectionColumnReferenceReferenceRight() {
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
@@ -12002,7 +12001,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnReferenceReferenceRight2() {
+    public void testWindowWithSelectionColumnReferenceReferenceRight2() {
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
@@ -12014,7 +12013,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnReferenceReferenceRight3() {
+    public void testWindowWithSelectionColumnReferenceReferenceRight3() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -12027,7 +12026,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionColumnReferenceReferenceRight4() {
+    public void testWindowWithSelectionColumnReferenceReferenceRight4() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -12040,7 +12039,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeLeft() {
+    public void testWindowWithSelectionCellRangeLeft() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 3,
@@ -12051,7 +12050,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeLeft2() {
+    public void testWindowWithSelectionCellRangeLeft2() {
         this.windowAndCheck(
                 "C3",
                 COLUMN_WIDTH * 3,
@@ -12062,7 +12061,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeRight() {
+    public void testWindowWithSelectionCellRangeRight() {
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
@@ -12074,7 +12073,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeRight2() {
+    public void testWindowWithSelectionCellRangeRight2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -12087,7 +12086,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeTop() {
+    public void testWindowWithSelectionCellRangeTop() {
         // BCD:234
         this.windowAndCheck(
                 "B2",
@@ -12099,7 +12098,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeTop2() {
+    public void testWindowWithSelectionCellRangeTop2() {
         this.windowAndCheck(
                 "C3",
                 COLUMN_WIDTH * 3,
@@ -12110,7 +12109,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeBottom() {
+    public void testWindowWithSelectionCellRangeBottom() {
         // B2:D4 -> 1
         this.windowAndCheck(
                 "B2",
@@ -12122,7 +12121,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeBottom2() {
+    public void testWindowWithSelectionCellRangeBottom2() {
         // B2:D4 -> 2
         // BCD:234
         this.windowAndCheck(
@@ -12135,7 +12134,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeTopLeft() {
+    public void testWindowWithSelectionCellRangeTopLeft() {
         // C3:E5
         this.windowAndCheck(
                 "C3",
@@ -12147,7 +12146,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionCellRangeBottomRight() {
+    public void testWindowWithSelectionCellRangeBottomRight() {
         // C3:E5
         this.windowAndCheck(
                 "C3",
@@ -12161,7 +12160,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // window column/row hidden.........................................................................................
 
     @Test
-    public void testWindowColumnHidden() {
+    public void testWindowWithColumnHidden() {
         final SpreadsheetViewportRectangle viewportRectangle = SpreadsheetViewportRectangle.with(
                 SpreadsheetSelection.A1,
                 COLUMN_WIDTH * 4,
@@ -12206,7 +12205,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowRowHidden() {
+    public void testWindowWithRowHidden() {
         final SpreadsheetViewportRectangle viewportRectangle = SpreadsheetViewportRectangle.with(
                 SpreadsheetSelection.A1,
                 COLUMN_WIDTH * 4,
@@ -12301,7 +12300,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // window with frozen columns / rows.................................................................................
 
     @Test
-    public void testWindowIgnoreFrozenColumnsFrozenRows() {
+    public void testWindowWithIgnoreFrozenColumnsFrozenRows() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH * 4,
@@ -12314,7 +12313,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowIgnoreFrozenColumnsFrozenRows2() {
+    public void testWindowWithIgnoreFrozenColumnsFrozenRows2() {
         this.windowAndCheck(
                 "B2",
                 COLUMN_WIDTH * 4,
@@ -12329,7 +12328,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // window with frozen columns / rows.................................................................................
 
     @Test
-    public void testWindowFrozenColumnsFrozenRows() {
+    public void testWindowWithFrozenColumnsFrozenRows() {
         this.windowAndCheck(
                 "Z99",
                 COLUMN_WIDTH * 2,
@@ -12341,7 +12340,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRows2() {
+    public void testWindowWithFrozenColumnsFrozenRows2() {
         this.windowAndCheck(
                 "Z99",
                 COLUMN_WIDTH * 3,
@@ -12353,7 +12352,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsOnly() {
+    public void testWindowWithFrozenColumnsFrozenRowsOnly() {
         this.windowAndCheck(
                 "Z99",
                 COLUMN_WIDTH * 2,
@@ -12365,7 +12364,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsOnly2() {
+    public void testWindowWithFrozenColumnsFrozenRowsOnly2() {
         this.windowAndCheck(
                 "Z99",
                 COLUMN_WIDTH * 3,
@@ -12380,7 +12379,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2
     // A3
     @Test
-    public void testWindowFrozenColumnsOnlyInvalidOverlappingHome() {
+    public void testWindowWithFrozenColumnsOnlyInvalidOverlappingHome() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH * 1,
@@ -12395,7 +12394,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2
     // A3
     @Test
-    public void testWindowFrozenColumnsOnly() {
+    public void testWindowWithFrozenColumnsOnly() {
         this.windowAndCheck(
                 "B1",
                 COLUMN_WIDTH * 1,
@@ -12410,7 +12409,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2
     // A3 B3
     @Test
-    public void testWindowFrozenColumnsOnly2() {
+    public void testWindowWithFrozenColumnsOnly2() {
         this.windowAndCheck(
                 "B1",
                 COLUMN_WIDTH * 2,
@@ -12425,7 +12424,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2 C2
     // A3 B3 C3
     @Test
-    public void testWindowFrozenColumnsOnly3() {
+    public void testWindowWithFrozenColumnsOnly3() {
         this.windowAndCheck(
                 "B1",
                 COLUMN_WIDTH * 3,
@@ -12440,7 +12439,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2 C2
     // A3 B3 C3
     @Test
-    public void testWindowFrozenColumnsOnly4() {
+    public void testWindowWithFrozenColumnsOnly4() {
         this.windowAndCheck(
                 "B1",
                 COLUMN_WIDTH * 3,
@@ -12455,7 +12454,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2  b2 c2 d2
     // A3  b3 c3 d3
     @Test
-    public void testWindowFrozenColumns() {
+    public void testWindowWithFrozenColumns() {
         this.windowAndCheck(
                 "B1",
                 COLUMN_WIDTH * 4,
@@ -12470,7 +12469,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2  c2 d2
     // A3 B3  c3 d3
     @Test
-    public void testWindowFrozenColumns2() {
+    public void testWindowWithFrozenColumns2() {
         this.windowAndCheck(
                 "c1",
                 COLUMN_WIDTH * 4,
@@ -12485,7 +12484,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A2 B2  f2 g2
     // A3 B3  f3 g3
     @Test
-    public void testWindowFrozenColumnsNonFrozenGap() {
+    public void testWindowWithFrozenColumnsNonFrozenGap() {
         this.windowAndCheck(
                 "f1",
                 COLUMN_WIDTH * 4,
@@ -12498,7 +12497,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     // A1 B1 C1 D1
     @Test
-    public void testWindowFrozenRowsOnlyInvalidOverlappingHome() {
+    public void testWindowWithFrozenRowsOnlyInvalidOverlappingHome() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH * 4,
@@ -12511,7 +12510,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     // A1 B1 C1 D1
     @Test
-    public void testWindowFrozenRowsOnly() {
+    public void testWindowWithFrozenRowsOnly() {
         this.windowAndCheck(
                 "A2",
                 COLUMN_WIDTH * 4,
@@ -12525,7 +12524,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A1 B1 C1 D1
     // A2 B2 C2 D2
     @Test
-    public void testWindowFrozenRowsOnly2() {
+    public void testWindowWithFrozenRowsOnly2() {
         this.windowAndCheck(
                 "A2",
                 COLUMN_WIDTH * 4,
@@ -12539,7 +12538,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A1 B1 C1 D1
     // A2 B2 C2 D2
     @Test
-    public void testWindowFrozenRowsOnly3() {
+    public void testWindowWithFrozenRowsOnly3() {
         this.windowAndCheck(
                 "A2",
                 COLUMN_WIDTH * 4,
@@ -12555,7 +12554,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // a2 b2 c2 d2
     // a3 b3 c3 d3
     @Test
-    public void testWindowFrozenRows() {
+    public void testWindowWithFrozenRows() {
         this.windowAndCheck(
                 "A2",
                 COLUMN_WIDTH * 4,
@@ -12572,7 +12571,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //
     // a3 b3 c3 d3
     @Test
-    public void testWindowFrozenRows2() {
+    public void testWindowWithFrozenRows2() {
         this.windowAndCheck(
                 "a3",
                 COLUMN_WIDTH * 4,
@@ -12591,7 +12590,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // a4 b4 c4 d4
     // a5 b5 c5 d5
     @Test
-    public void testWindowFrozenRowsNonFrozenGap() {
+    public void testWindowWithFrozenRowsNonFrozenGap() {
         this.windowAndCheck(
                 "a3",
                 COLUMN_WIDTH * 4,
@@ -12609,7 +12608,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // a7 b7 c7 d7
     // a8 b8 c8 d8
     @Test
-    public void testWindowFrozenRowsNonFrozenGap2() {
+    public void testWindowWithFrozenRowsNonFrozenGap2() {
         this.windowAndCheck(
                 "a6",
                 COLUMN_WIDTH * 4,
@@ -12627,7 +12626,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // a4 b4 c4 d4
     // a5 b5 c5 d5
     @Test
-    public void testWindowOnlyFrozenRowsInvalidHome() {
+    public void testWindowWithOnlyFrozenRowsInvalidHome() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH * 4,
@@ -12644,7 +12643,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3   b3 c3 d3
     // A4   b4 c4 d4
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozen() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozen() {
         this.windowAndCheck(
                 "b2",
                 COLUMN_WIDTH * 4,
@@ -12661,7 +12660,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3   b3 c3 d3
     // A4   b4 c4 d4
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozen2() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozen2() {
         this.windowAndCheck(
                 "b3",
                 COLUMN_WIDTH * 4,
@@ -12678,7 +12677,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3 B3   c3 d3
     // A4 B4   c4 d4
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozen3() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozen3() {
         this.windowAndCheck(
                 "c2",
                 COLUMN_WIDTH * 4,
@@ -12695,7 +12694,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3 B3   c3 d3
     // A4 B4   c4 d4
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozen4() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozen4() {
         this.windowAndCheck(
                 "c3",
                 COLUMN_WIDTH * 4,
@@ -12712,7 +12711,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A3 B3   c3 d3
     // A4 B4   c4 d4
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenInvalidHome() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenInvalidHome() {
         this.windowAndCheck(
                 "A1",
                 COLUMN_WIDTH * 4,
@@ -12730,7 +12729,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A8 B8   c8 d8
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenGap() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenGap() {
         this.windowAndCheck(
                 "c8",
                 COLUMN_WIDTH * 4,
@@ -12749,7 +12748,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A9 B9   c9 d9
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenGap2() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenGap2() {
         this.windowAndCheck(
                 "c8",
                 COLUMN_WIDTH * 4,
@@ -12787,7 +12786,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A4 B4 C4   D4 E4
     // A5 B5 C5   D5 E5
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenColumn() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenFrozenColumn() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12800,7 +12799,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenColumn() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenNonFrozenColumn() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12813,7 +12812,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenRow() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenFrozenRow() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12826,7 +12825,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenRow() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenNonFrozenRow() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12839,7 +12838,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenFrozenCell() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenFrozenCell() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12852,7 +12851,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenCell() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenNonFrozenCell() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12865,7 +12864,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenNonFrozenCell2() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenNonFrozenCell2() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12887,7 +12886,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A5 B5 C5   D5 E5
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12900,7 +12899,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell2() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCell2() {
         this.windowAndCheck(
                 "D4",
                 COLUMN_WIDTH * 5,
@@ -12920,7 +12919,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A4 B4   C4  D4 E4
     // A5 B5   C5  D5 E5
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialWidth() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialWidth() {
         this.windowAndCheck(
                 "C4",
                 COLUMN_WIDTH * 4 - 2,
@@ -12933,7 +12932,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialWidth2() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialWidth2() {
         this.windowAndCheck(
                 "C4",
                 COLUMN_WIDTH * 4 - 1,
@@ -12953,7 +12952,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // A4 B4   C4  D4 E4
     // A5 B5   C5  D5 E5
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialHeight() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialHeight() {
         this.windowAndCheck(
                 "D3",
                 COLUMN_WIDTH * 4,
@@ -12966,7 +12965,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialHeight2() {
+    public void testWindowWithFrozenColumnsFrozenRowsNonFrozenPanNonFrozenCellPartialHeight2() {
         this.windowAndCheck(
                 "D3",
                 COLUMN_WIDTH * 4,
@@ -13031,7 +13030,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionLabel() {
+    public void testWindowWithSelectionLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13057,7 +13056,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionLabelToCellRange() {
+    public void testWindowWithSelectionLabelToCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13083,7 +13082,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testWindowSelectionLabelToCellRangeManyCells() {
+    public void testWindowWithSelectionLabelToCellRangeManyCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13111,7 +13110,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //  navigate........................................................................................................
 
     @Test
-    public void testNavigateSelectionHiddenAndMissingNavigation() {
+    public void testNavigateWithSelectionHiddenAndMissingNavigation() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13144,7 +13143,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateSelectionMissingNavigation() {
+    public void testNavigateWithSelectionMissingNavigation() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13167,7 +13166,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateSelectionLabelEmptyNavigations() {
+    public void testNavigateWithSelectionLabelEmptyNavigations() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13193,7 +13192,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateCellRightColumn() {
+    public void testNavigateWithCellRightColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13226,7 +13225,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateRightPixels() {
+    public void testNavigateWithRightPixels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13252,7 +13251,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateCellRightPixels() {
+    public void testNavigateWithCellRightPixels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13284,7 +13283,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateLabelUnchanged() {
+    public void testNavigateWithLabelUnchanged() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13316,7 +13315,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateLabelToCell() {
+    public void testNavigateWithLabelToCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13354,7 +13353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateLabelToRange() {
+    public void testNavigateWithLabelToRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13392,7 +13391,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateHiddenColumns() {
+    public void testNavigateWithHiddenColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13434,7 +13433,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateSkipsHiddenColumn() {
+    public void testNavigateWithSkipsHiddenColumn() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -13476,7 +13475,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateSkipsHiddenRow() {
+    public void testNavigateWithSkipsHiddenRow() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
