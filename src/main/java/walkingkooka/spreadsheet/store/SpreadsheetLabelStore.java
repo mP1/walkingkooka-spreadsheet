@@ -49,9 +49,9 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     /**
      * Attempts to resolve the given {@link SpreadsheetExpressionReference} when it is a label to a {@link SpreadsheetCellReferenceOrRange}.
      */
-    default Optional<SpreadsheetCellReferenceOrRange> cellOrRange(final SpreadsheetExpressionReference reference) {
-        return SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
-                reference,
+    default Optional<SpreadsheetCellReferenceOrRange> resolveLabel(final SpreadsheetLabelName labelName) {
+        return SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor.resolveLabel(
+                labelName,
                 this
         );
     }
@@ -60,8 +60,8 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
      * Attempts to resolve any labels to a {@link SpreadsheetCellReferenceOrRange} throwing an {@link #notFound(Object)}
      * if the label was not found.
      */
-    default SpreadsheetCellReferenceOrRange cellOrRangeOrFail(final SpreadsheetExpressionReference reference) {
-        return this.cellOrRange(reference)
-                .orElseThrow(() -> this.notFound(reference));
+    default SpreadsheetCellReferenceOrRange resolveLabelOrFail(final SpreadsheetLabelName labelName) {
+        return this.resolveLabel(labelName)
+                .orElseThrow(() -> this.notFound(labelName));
     }
 }
