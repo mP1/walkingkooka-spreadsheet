@@ -37,14 +37,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping>,
         TypeNameTesting<S> {
 
+    // findSimilar......................................................................................................
+
     @Test
     default void testFindSimilarNullTextFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().findSimilar(null, 1));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .findSimilar(
+                                null,
+                                1
+                        )
+        );
     }
 
     @Test
     default void testFindSimilarInvalidCountFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createStore().findSimilar("text", -1));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findSimilar(
+                                "text",
+                                -1
+                        )
+        );
     }
 
     @Test
@@ -60,14 +76,24 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     default void findSimilarAndCheck(final String text,
                                      final int count,
                                      final SpreadsheetLabelMapping... mappings) {
-        this.findSimilarAndCheck(this.createStore(), text, count, mappings);
+        this.findSimilarAndCheck(
+                this.createStore(),
+                text,
+                count,
+                mappings
+        );
     }
 
     default void findSimilarAndCheck(final SpreadsheetLabelStore store,
                                      final String text,
                                      final int count,
                                      final SpreadsheetLabelMapping... mappings) {
-        this.findSimilarAndCheck(store, text, count, Sets.of(mappings));
+        this.findSimilarAndCheck(
+                store,
+                text,
+                count,
+                Sets.of(mappings)
+        );
     }
 
     default void findSimilarAndCheck(final SpreadsheetLabelStore store,
@@ -76,22 +102,42 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                      final Set<SpreadsheetLabelMapping> mappings) {
         this.checkEquals(
                 mappings,
-                store.findSimilar(text, count),
+                store.findSimilar(
+                        text,
+                        count
+                ),
                 () -> "findSimilar " + CharSequences.quoteAndEscape(text) + " count=" + count
         );
     }
+
+    // loadCellOrRanges.................................................................................................
 
     @Test
     default void testLoadCellOrRangesNullLabelFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createStore().loadCellOrRanges(null)
+                () -> this.createStore()
+                        .loadCellOrRanges(null)
         );
     }
 
+    default void loadCellReferencesOrRangesAndCheck(final SpreadsheetLabelStore store,
+                                                    final SpreadsheetLabelName label,
+                                                    final Set<? super ExpressionReference> referencesOrRanges) {
+        this.checkEquals(referencesOrRanges,
+                store.loadCellOrRanges(label),
+                () -> "loadCellOrRanges for " + label);
+    }
+
+    // labels...........................................................................................................
+
     @Test
     default void testLabelsNullSpreadsheetCellReferenceFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().labels(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .labels(null)
+        );
     }
 
     @Test
@@ -159,14 +205,6 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         );
     }
 
-    default void loadCellReferencesOrRangesAndCheck(final SpreadsheetLabelStore store,
-                                                    final SpreadsheetLabelName label,
-                                                    final Set<? super ExpressionReference> referencesOrRanges) {
-        this.checkEquals(referencesOrRanges,
-                store.loadCellOrRanges(label),
-                () -> "loadCellOrRanges for " + label);
-    }
-
     default void labelsAndCheck(final SpreadsheetLabelStore store,
                                 final SpreadsheetExpressionReference reference,
                                 final SpreadsheetLabelMapping... labels) {
@@ -186,6 +224,8 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                 () -> "labels for " + reference
         );
     }
+
+    // resolveLabel.....................................................................................................
 
     @Test
     default void testResolveLabelOrFail() {
@@ -218,7 +258,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         return SpreadsheetLabelMapping.with(this.id(), SpreadsheetSelection.A1);
     }
 
-    // TypeNameTesting..................................................................
+    // TypeNameTesting..................................................................................................
 
     @Override
     default String typeNameSuffix() {
