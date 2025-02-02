@@ -26,11 +26,13 @@ package walkingkooka.spreadsheet;
 // #NUM
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.Value;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.HasExpressionReference;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
@@ -185,7 +187,7 @@ public enum SpreadsheetErrorKind implements HasText {
     }
 
     private static SpreadsheetError translate1(final Throwable cause) {
-        final SpreadsheetErrorKind kind;
+        SpreadsheetErrorKind kind = null;
         String message = cause.getMessage();
         Object value = null;
 
@@ -210,6 +212,22 @@ public enum SpreadsheetErrorKind implements HasText {
                 final HasExpressionReference has = (HasExpressionReference) cause;
                 value = has.expressionReference();
                 break;
+            }
+
+
+            if (cause instanceof Value) {
+                final Value<?> hasValue = (Value<?>) cause;
+                value = hasValue.value();
+
+                if (value instanceof Optional) {
+                    final Optional<?> optional = (Optional<?>) value;
+                    value = optional.orElse(null);
+                }
+
+                if (value instanceof ExpressionReference) {
+                    kind = NAME;
+                    break;
+                }
             }
 
             // Trying to divide by 0
