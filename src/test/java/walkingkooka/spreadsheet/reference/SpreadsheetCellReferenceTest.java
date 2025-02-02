@@ -258,16 +258,16 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // toCellRangeResolvingLabels........................................................................................
 
     @Test
-    public void testToCellRangeResolvingLabels() {
-        this.toCellRangeResolvingLabelsAndCheck(
+    public void testToCellRange() {
+        this.toCellRangeAndCheck(
                 "A1",
                 "A1"
         );
     }
 
     @Test
-    public void testToCellRangeResolvingLabels2() {
-        this.toCellRangeResolvingLabelsAndCheck(
+    public void testToCellRange2() {
+        this.toCellRangeAndCheck(
                 "B2",
                 "B2"
         );

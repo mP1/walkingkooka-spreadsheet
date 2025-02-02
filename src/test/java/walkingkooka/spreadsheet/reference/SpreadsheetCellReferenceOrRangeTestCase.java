@@ -26,13 +26,6 @@ public abstract class SpreadsheetCellReferenceOrRangeTestCase<R extends Spreadsh
         super();
     }
 
-    // toCellOrCellRange................................................................................................
-
-    @Test
-    public final void testToCellOrCellRange() {
-        this.toCellOrCellRangeAndCheck();
-    }
-
     // toRange.........................................................................................................
 
     @Test

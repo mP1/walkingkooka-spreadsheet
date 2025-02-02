@@ -17,9 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Function;
+import walkingkooka.text.CharSequences;
 
 /**
  * This visitor is used to turn any {@link SpreadsheetSelection} into a {@link SpreadsheetCellRangeReference}.
@@ -27,22 +25,21 @@ import java.util.function.Function;
  * Labels will be resolved until the final destination cell or cell-range is found. A single column wll be made into
  * a {@link SpreadsheetCellRangeReference} that includes all cells for that column.
  */
-final class SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Optional<SpreadsheetCellRangeReference> toCellRange(final SpreadsheetSelection selection,
-                                                               final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
-        Objects.requireNonNull(labelToCellRange, "labelToCellRange");
-
-        final SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor visitor = new SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor(labelToCellRange);
+    static SpreadsheetCellRangeReference toCellRange(final SpreadsheetSelection selection) {
+        final SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor visitor = new SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor();
         visitor.accept(selection);
 
-        return Optional.ofNullable(
-                visitor.cellRange
-        );
+        final SpreadsheetCellRangeReference cellRange = visitor.cellRange;
+        if(null == cellRange) {
+            throw new IllegalStateException("Missing cell range for " + CharSequences.quoteAndEscape(selection.toString()));
+        }
+        return cellRange;
     }
 
-    private SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVisitor(final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange) {
-        this.labelToCellRange = labelToCellRange;
+    // @VisibleForTesting
+    SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor() {
     }
 
     @Override
@@ -67,13 +64,8 @@ final class SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVi
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
-        final Optional<SpreadsheetCellRangeReference> maybeCellRange = this.labelToCellRange.apply(label);
-        if (maybeCellRange.isPresent()) {
-            this.accept(maybeCellRange.get());
-        }
+        throw new UnsupportedOperationException("Selection is a label " + CharSequences.quoteAndEscape(label.text()));
     }
-
-    private final Function<SpreadsheetLabelName, Optional<SpreadsheetCellRangeReference>> labelToCellRange;
 
     @Override
     protected void visit(final SpreadsheetRowReference row) {
@@ -86,9 +78,11 @@ final class SpreadsheetSelectionToCellRangeResolvingLabelsSpreadsheetSelectionVi
     }
 
     /**
-     * The final result or null if an unknown label was encountered.
+     * The final result which must not be null.
      */
     private SpreadsheetCellRangeReference cellRange;
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {

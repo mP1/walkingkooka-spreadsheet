@@ -106,16 +106,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkDeltaProperties(deltaProperties);
         checkContext(context);
 
-        final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRangeResolvingLabels(
-                l -> context.storeRepository()
-                        .labels()
-                        .resolveLabel(l)
-                        .map(SpreadsheetSelection::toCellRange)
-        );
+        final SpreadsheetCellRangeReference cellRange;
+        if(selection.isLabelName()) {
+            cellRange = context.resolveLabel(selection.toLabelName())
+                    .toCellRange();
+        } else {
+            cellRange = selection.toCellRange();
+        }
 
-        return cells.isPresent() ?
+        return null != cellRange ?
                 this.loadCells0(
-                        cells.get(),
+                        cellRange,
                         evaluation,
                         deltaProperties,
                         context
@@ -301,15 +302,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+
             final SpreadsheetStoreRepository repository = context.storeRepository();
-            final Optional<SpreadsheetCellRangeReference> cells = selection.toCellRangeResolvingLabels(
-                    l -> repository.labels()
-                            .resolveLabel(l)
-                            .map(SpreadsheetSelection::toCellRange)
-            );
-            if (cells.isPresent()) {
-                repository.cells().deleteCells(cells.get());
+
+            final SpreadsheetCellRangeReference cellRange;
+            if(selection.isLabelName()) {
+                cellRange = context.resolveLabel(selection.toLabelName())
+                        .toCellRange();
+            } else {
+                cellRange = selection.toCellRange();
             }
+
+            // only skip deletion if the label was not resolved.
+            if(null != cellRange) {
+                repository.cells()
+                        .deleteCells(cellRange);
+            }
+
             return this.prepareResponse(changes, context);
         }
     }
