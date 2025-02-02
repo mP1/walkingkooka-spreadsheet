@@ -65,6 +65,11 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     public SpreadsheetLabelMapping save(final SpreadsheetLabelMapping mapping) {
         Objects.requireNonNull(mapping, "mapping");
 
+        TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor.cycleFreeTest(
+                mapping,
+                this
+        );
+
         final SpreadsheetLabelName key = mapping.label();
         if (false == mapping.equals(this.mappings.put(key, mapping))) {
             this.saveWatchers.accept(mapping);

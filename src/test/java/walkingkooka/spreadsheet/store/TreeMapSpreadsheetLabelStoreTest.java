@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -28,7 +29,76 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore> {
+
+    // save.............................................................................................................
+
+    @Test
+    public void testSaveCycleFails() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetLabelName label2= SpreadsheetSelection.labelName("Label222");
+
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingTarget(label2);
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingTarget(label1);
+
+        store.save(mapping1);
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> store.save(mapping2)
+        );
+
+        this.checkEquals(
+                "Cycle detected for \"Label222\" -> \"Label111\" -> \"Label222\"",
+                thrown.getMessage()
+        );
+
+        this.checkEquals(
+                Lists.of(
+                        mapping1
+                ),
+                store.all()
+        );
+    }
+
+    @Test
+    public void testSaveCycleFails2() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetLabelName label2= SpreadsheetSelection.labelName("Label222");
+        final SpreadsheetLabelName label3= SpreadsheetSelection.labelName("Label333");
+
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingTarget(label2);
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingTarget(label3);
+        final SpreadsheetLabelMapping mapping3 = label3.setLabelMappingTarget(label1);
+
+        store.save(mapping1);
+        store.save(mapping2);
+
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> store.save(mapping3)
+        );
+
+        this.checkEquals(
+                "Cycle detected for \"Label333\" -> \"Label111\" -> \"Label222\" -> \"Label333\"",
+                thrown.getMessage()
+        );
+
+        // mapping3 must not have been saved
+        this.checkEquals(
+                Lists.of(
+                        mapping1,
+                        mapping2
+                ),
+                store.all()
+        );
+    }
 
     // between..........................................................................................................
 
@@ -355,17 +425,6 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         this.loadCellReferencesOrRangesAndCheck(store,
                 this.label2(),
                 Sets.of(this.a1()));
-    }
-
-    @Test
-    public void testLoadCellReferencesOrRangesLabelToSelf() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.label2()));
-        store.save(SpreadsheetLabelMapping.with(this.label2(), this.label1()));
-
-        this.loadCellReferencesOrRangesAndCheck(store,
-                this.label1(),
-                Sets.empty());
     }
 
     @Test
