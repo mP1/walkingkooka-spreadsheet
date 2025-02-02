@@ -53,7 +53,7 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
      * Attempts to resolve the given {@link SpreadsheetExpressionReference} when it is a label to a {@link SpreadsheetCellReferenceOrRange}.
      */
     default Optional<SpreadsheetCellReferenceOrRange> cellOrRange(final SpreadsheetExpressionReference reference) {
-        return SpreadsheetLabelStoreCellReferenceOrRangeSpreadsheetSelectionVisitor.cellReferenceOrRange(
+        return SpreadsheetLabelStoreCellOrRangeSpreadsheetSelectionVisitor.cellOrRange(
                 reference,
                 this
         );
