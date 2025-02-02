@@ -17,28 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.store.MissingStoreException;
 import walkingkooka.store.Store;
 
 public interface SpreadsheetStore<K, V> extends Store<K, V> {
-
-    /**
-     * Used to report that a label was not found.
-     */
-    @Override
-    default MissingStoreException notFound(final Object reference) {
-        return reference instanceof SpreadsheetExpressionReference ?
-                this.notFound((SpreadsheetExpressionReference) reference) :
-                Store.super.notFound(reference);
-    }
-
-    /**
-     * Used to report a {@link SpreadsheetExpressionReferenceStore} was not found.
-     * The {@link SpreadsheetExpressionReferenceMissingStoreException} if caught should result in the cell holding a
-     * <pre>#REF!</pre> error.
-     */
-    default MissingStoreException notFound(final SpreadsheetExpressionReference reference) {
-        return new SpreadsheetExpressionReferenceMissingStoreException(reference);
-    }
 }

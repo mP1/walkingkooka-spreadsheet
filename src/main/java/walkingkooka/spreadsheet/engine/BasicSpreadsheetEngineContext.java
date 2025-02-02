@@ -48,8 +48,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceMissingStoreException;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.store.MissingStoreException;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -157,7 +157,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             return this.labelNameResolver.resolveLabel(labelName);
         } catch (final IllegalArgumentException notFound) {
             // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/5180
-            throw new SpreadsheetExpressionReferenceMissingStoreException(
+            throw new MissingStoreException(
                     labelName
             );
         }

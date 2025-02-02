@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceMissingStoreException;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
+import walkingkooka.store.MissingStoreException;
 
 import java.util.Objects;
 
@@ -41,7 +41,7 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolver implements Spreads
     public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
         return this.labelStore.cellReferenceOrRange(labelName)
                 .orElseThrow(
-                        () -> new SpreadsheetExpressionReferenceMissingStoreException(labelName)
+                        () -> new MissingStoreException(labelName)
                 );
     }
 
