@@ -58,7 +58,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
 
-    private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
+    private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCE_TO_VALUE = (r) -> {
         throw new UnsupportedOperationException();
     };
 
@@ -70,7 +70,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 CELL_STORE,
                 SERVER_URL,
-                REFERENCES,
+                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -84,7 +84,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 null,
                 SERVER_URL,
-                REFERENCES,
+                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -98,7 +98,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 null,
-                REFERENCES,
+                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -107,7 +107,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testWithNullReferencesFails() {
+    public void testWithNullReferenceToValueFails() {
         this.withFails(
                 CELL,
                 CELL_STORE,
@@ -126,7 +126,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 SERVER_URL,
-                REFERENCES,
+                REFERENCE_TO_VALUE,
                 null,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -140,7 +140,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 SERVER_URL,
-                REFERENCES,
+                REFERENCE_TO_VALUE,
                 METADATA,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -155,7 +155,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 SERVER_URL,
-                REFERENCES,
+                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 null,
@@ -169,7 +169,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 CELL_STORE,
                 SERVER_URL,
-                REFERENCES,
+                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -180,7 +180,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private void withFails(final Optional<SpreadsheetCell> cell,
                            final SpreadsheetCellStore cellStore,
                            final AbsoluteUrl serverUrl,
-                           final Function<ExpressionReference, Optional<Optional<Object>>> references,
+                           final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                            final SpreadsheetMetadata spreadsheetMetadata,
                            final SpreadsheetConverterContext spreadsheetConverterContext,
                            final ExpressionFunctionProvider expressionFunctionProvider,
@@ -191,7 +191,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         cell,
                         cellStore,
                         serverUrl,
-                        references,
+                        referenceToValue,
                         spreadsheetMetadata,
                         spreadsheetConverterContext,
                         expressionFunctionProvider,
@@ -331,7 +331,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 CELL,
                 cellStore,
                 SERVER_URL,
-                REFERENCES,
+                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
