@@ -54,7 +54,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                             final SpreadsheetCellStore cellStore,
                                                             final AbsoluteUrl serverUrl,
-                                                            final Function<ExpressionReference, Optional<Optional<Object>>> references,
+                                                            final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
@@ -62,7 +62,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(serverUrl, "serverUrl");
-        Objects.requireNonNull(references, "references");
+        Objects.requireNonNull(referenceToValue, "referenceToValue");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
@@ -72,7 +72,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 cell,
                 cellStore,
                 serverUrl,
-                references,
+                referenceToValue,
                 spreadsheetMetadata,
                 spreadsheetConverterContext,
                 expressionFunctionProvider,
@@ -83,7 +83,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private BasicSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                         final SpreadsheetCellStore cellStore,
                                                         final AbsoluteUrl serverUrl,
-                                                        final Function<ExpressionReference, Optional<Optional<Object>>> references,
+                                                        final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
@@ -92,7 +92,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.cell = cell;
         this.cellStore = cellStore;
         this.serverUrl = serverUrl;
-        this.references = references;
+        this.referenceToValue = referenceToValue;
 
         this.spreadsheetMetadata = spreadsheetMetadata;
 
@@ -226,10 +226,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        return this.references.apply(reference);
+        return this.referenceToValue.apply(reference);
     }
 
-    private final Function<ExpressionReference, Optional<Optional<Object>>> references;
+    private final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue;
 
     // SpreadsheetConverterContextDelegator.............................................................................
 
