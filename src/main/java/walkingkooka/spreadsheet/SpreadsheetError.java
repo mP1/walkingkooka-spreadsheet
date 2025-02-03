@@ -49,6 +49,18 @@ public final class SpreadsheetError implements Value<Optional<?>>,
     public static final Optional<?> NO_VALUE = Optional.empty();
 
     /**
+     * Creates a {@link SpreadsheetError} indicating a cycle involving the provided {@link SpreadsheetExpressionReference}.
+     */
+    public static SpreadsheetError cycle(final SpreadsheetExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return SpreadsheetErrorKind.REF.setMessageAndValue(
+                "Cycle involving " + CharSequences.quoteAndEscape(reference.text()),
+                reference
+        );
+    }
+
+    /**
      * Creates a {@link SpreadsheetError} reporting that a cell was deleted.
      */
     public static SpreadsheetError selectionDeleted() {

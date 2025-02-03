@@ -80,6 +80,42 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkValue(error, VALUE);
     }
 
+    // cycle............................................................................................................
+
+    @Test
+    public void testCycle() {
+        final SpreadsheetError error = SpreadsheetError.cycle(SpreadsheetSelection.A1);
+        this.checkKind(error, SpreadsheetErrorKind.REF);
+        this.checkMessage(error, "Cycle involving \"A1\"");
+        this.checkValue(
+                error,
+                Optional.of(
+                        SpreadsheetSelection.A1
+                )
+        );
+    }
+
+    @Test
+    public void testCycle2() {
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
+
+        final SpreadsheetError error = SpreadsheetError.cycle(b2);
+        this.checkKind(
+                error,
+                SpreadsheetErrorKind.REF
+        );
+        this.checkMessage(
+                error,
+                "Cycle involving \"$B$2\""
+        );
+        this.checkValue(
+                error,
+                Optional.of(
+                        b2
+                )
+        );
+    }
+
     // selectionDeleted................................................................................................
 
     @Test
