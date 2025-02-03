@@ -196,9 +196,9 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     @Override
     public void addReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        checkTargetAndReference(targetAndReference);
-
-        this.addReference0(targetAndReference);
+        this.addReference0(
+                checkTargetAndReference(targetAndReference)
+        );
     }
 
     private void addReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
@@ -234,9 +234,9 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     @Override
     public void removeReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        checkTargetAndReference(targetAndReference);
-
-        this.removeReference0(targetAndReference);
+        this.removeReference0(
+                checkTargetAndReference(targetAndReference)
+        );
     }
 
     private void removeReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
@@ -285,8 +285,8 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     // helpers..........................................................................................................
 
-    private static void checkTargetAndReference(final TargetAndSpreadsheetCellReference<?> targetAndReference) {
-        Objects.requireNonNull(targetAndReference, "targetAndReference");
+    private TargetAndSpreadsheetCellReference<T> checkTargetAndReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
+        return Objects.requireNonNull(targetAndReference, "targetAndReference");
     }
 
     /**
