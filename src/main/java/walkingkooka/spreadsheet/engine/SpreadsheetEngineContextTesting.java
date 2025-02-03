@@ -186,6 +186,20 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void evaluateAndCheck(final SpreadsheetEngineContext context,
+                                  final SpreadsheetCell cell,
+                                  final Object expected) {
+        final Expression expression = cell.formula()
+                .expression()
+                .orElse(null);
+        this.evaluateAndCheck(
+                context,
+                expression,
+                Optional.of(cell),
+                expected
+        );
+    }
+
+    default void evaluateAndCheck(final SpreadsheetEngineContext context,
                                   final Expression expression,
                                   final Optional<SpreadsheetCell> cell,
                                   final Object expected) {
