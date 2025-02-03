@@ -322,6 +322,24 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     // ExpressionEvaluationContextTesting................................................................................
 
     @Override
+    public BasicSpreadsheetExpressionEvaluationContext createContext() {
+        return this.createContext(CELL_STORE);
+    }
+
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetCellStore cellStore) {
+        return BasicSpreadsheetExpressionEvaluationContext.with(
+                CELL,
+                cellStore,
+                SERVER_URL,
+                REFERENCES,
+                METADATA,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
+        );
+    }
+
+    @Override
     public void testEvaluateExpressionUnknownFunctionNameFails() {
         throw new UnsupportedOperationException();
     }
@@ -401,31 +419,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA.decimalNumberContext();
 
-    // ClassTesting......................................................................................................
-
-    @Override
-    public Class<BasicSpreadsheetExpressionEvaluationContext> type() {
-        return BasicSpreadsheetExpressionEvaluationContext.class;
-    }
-
-    @Override
-    public BasicSpreadsheetExpressionEvaluationContext createContext() {
-        return this.createContext(CELL_STORE);
-    }
-
-    public BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetCellStore cellStore) {
-        return BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                cellStore,
-                SERVER_URL,
-                REFERENCES,
-                METADATA,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
-        );
-    }
-
     @Override
     public void testExpressionFunctionWithNullFunctionNameFails() {
         throw new UnsupportedOperationException();
@@ -434,5 +427,12 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Override
     public void testIsPureNullNameFails() {
         throw new UnsupportedOperationException();
+    }
+
+    // ClassTesting......................................................................................................
+
+    @Override
+    public Class<BasicSpreadsheetExpressionEvaluationContext> type() {
+        return BasicSpreadsheetExpressionEvaluationContext.class;
     }
 }
