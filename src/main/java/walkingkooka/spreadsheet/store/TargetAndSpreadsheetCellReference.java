@@ -40,7 +40,8 @@ public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpres
         );
     }
 
-    private TargetAndSpreadsheetCellReference(final T target, final SpreadsheetCellReference reference) {
+    private TargetAndSpreadsheetCellReference(final T target,
+                                              final SpreadsheetCellReference reference) {
         this.target = target;
         this.reference = reference;
     }
@@ -58,9 +59,14 @@ public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpres
 
     private final SpreadsheetCellReference reference;
 
+    // Object...........................................................................................................
+
     @Override
     public int hashCode() {
-        return Objects.hash(this.target, this.reference);
+        return Objects.hash(
+                this.target,
+                this.reference
+        );
     }
 
     @Override
