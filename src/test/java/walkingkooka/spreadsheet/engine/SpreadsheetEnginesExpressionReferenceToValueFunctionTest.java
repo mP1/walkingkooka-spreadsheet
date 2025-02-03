@@ -25,14 +25,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetEnginesExpressionReferenceFunctionTest
-        implements FunctionTesting<SpreadsheetEnginesExpressionReferenceFunction, ExpressionReference, Optional<Optional<Object>>> {
+public final class SpreadsheetEnginesExpressionReferenceToValueFunctionTest
+        implements FunctionTesting<SpreadsheetEnginesExpressionReferenceToValueFunction, ExpressionReference, Optional<Optional<Object>>> {
 
     @Test
     public void testWithNullEngineFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetEnginesExpressionReferenceFunction.with(null,
+                () -> SpreadsheetEnginesExpressionReferenceToValueFunction.with(null,
                         this.spreadsheetEngineContext())
         );
     }
@@ -41,7 +41,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionTest
     public void testWithNullLabelSpreadsheetEngineContextFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetEnginesExpressionReferenceFunction.with(
+                () -> SpreadsheetEnginesExpressionReferenceToValueFunction.with(
                         this.engine(),
                         null
                 )
@@ -49,8 +49,8 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionTest
     }
 
     @Override
-    public SpreadsheetEnginesExpressionReferenceFunction createFunction() {
-        return SpreadsheetEnginesExpressionReferenceFunction.with(
+    public SpreadsheetEnginesExpressionReferenceToValueFunction createFunction() {
+        return SpreadsheetEnginesExpressionReferenceToValueFunction.with(
                 this.engine(),
                 this.spreadsheetEngineContext()
         );
@@ -64,8 +64,10 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionTest
         return SpreadsheetEngineContexts.fake();
     }
 
+    // class............................................................................................................
+
     @Override
-    public Class<SpreadsheetEnginesExpressionReferenceFunction> type() {
-        return SpreadsheetEnginesExpressionReferenceFunction.class;
+    public Class<SpreadsheetEnginesExpressionReferenceToValueFunction> type() {
+        return SpreadsheetEnginesExpressionReferenceToValueFunction.class;
     }
 }

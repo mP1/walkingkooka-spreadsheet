@@ -49,11 +49,11 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetEnginesExpressionReferenceFunction}
+     * {@see SpreadsheetEnginesExpressionReferenceToValueFunction}
      */
     public static Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceFunction(final SpreadsheetEngine engine,
                                                                                                         final SpreadsheetEngineContext context) {
-        return SpreadsheetEnginesExpressionReferenceFunction.with(
+        return SpreadsheetEnginesExpressionReferenceToValueFunction.with(
                 engine,
                 context
         );
