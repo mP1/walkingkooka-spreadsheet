@@ -40,45 +40,105 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
     }
 
+    // save.............................................................................................................
+
     @Test
     public void testSave() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
 
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1)
+                )
+        );
     }
 
     @Test
     public void testSave2() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1, c1)
+        );
 
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1, c1)));
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1), c1, Sets.of(a1)));
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(
+                                b1,
+                                c1
+                        )
+                )
+        );
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1),
+                        c1,
+                        Sets.of(a1)
+                )
+        );
     }
 
     @Test
     public void testSave3() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(
+                a1,
+                Sets.of(
+                        b1,
+                        c1
+                )
+        );
 
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1, c1)));
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1), c1, Sets.of(a1)));
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(
+                                b1,
+                                c1
+                        )
+                )
+        );
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1),
+                        c1,
+                        Sets.of(a1)
+                )
+        );
     }
 
     @Test
@@ -112,175 +172,363 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testSave3Absolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1().toAbsolute();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store.saveReferences(a1, Sets.of(b1.toAbsolute(), c1.toAbsolute()));
+        store.saveReferences(
+                a1,
+                Sets.of(
+                        b1.toAbsolute(),
+                        c1.toAbsolute()
+                )
+        );
 
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1, c1)));
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1), c1, Sets.of(a1)));
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(
+                                b1,
+                                c1
+                        )
+                )
+        );
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1),
+                        c1,
+                        Sets.of(a1)
+                )
+        );
     }
 
     @Test
     public void testSaveAndLoad() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
 
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
-        this.loadAndCheck(store, a1, b1); // a1 --> b1
-        this.loadTargetsAndCheck(store, b1, a1); // b1 --> a1
+        this.loadAndCheck(
+                store,
+                a1,
+                b1
+        ); // a1 --> b1
+        this.loadTargetsAndCheck(
+                store,
+                b1,
+                a1
+        ); // b1 --> a1
 
-        this.loadAndCheck(store, b1); // b1 -> nothing
-        this.loadTargetsAndCheck(store, a1); // a1 --> nothing
+        this.loadAndCheck(
+                store,
+                b1
+        ); // b1 -> nothing
+        this.loadTargetsAndCheck(
+                store,
+                a1
+        ); // a1 --> nothing
     }
 
     @Test
     public void testSaveAndLoad2() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveReferences(b1, Sets.of(c1));
+        store.saveReferences(
+                b1,
+                Sets.of(c1)
+        );
 
-        this.loadAndCheck(store, a1, b1);
-        this.loadAndCheck(store, b1, c1);
-        this.loadFailCheck(store, c1);
+        this.loadAndCheck(
+                store,
+                a1,
+                b1
+        );
+        this.loadAndCheck(
+                store,
+                b1,
+                c1
+        );
+        this.loadFailCheck(
+                store,
+                c1
+        );
 
-        this.loadTargetsAndCheck(store, b1, a1);
-        this.loadTargetsAndCheck(store, c1, b1);
+        this.loadTargetsAndCheck(
+                store,
+                b1,
+                a1
+        );
+        this.loadTargetsAndCheck(
+                store,
+                c1,
+                b1
+        );
     }
 
     @Test
     public void testSaveAndLoad3() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store.saveReferences(a1, Sets.of(b1, c1));
-        store.saveReferences(b1, Sets.of(c1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1, c1)
+        );
+        store.saveReferences(
+                b1,
+                Sets.of(c1)
+        );
 
-        this.loadAndCheck(store, a1, b1, c1);
-        this.loadAndCheck(store, b1, c1);
-        this.loadFailCheck(store, c1);
+        this.loadAndCheck(
+                store,
+                a1, b1, c1
+        );
+        this.loadAndCheck(
+                store,
+                b1, c1
+        );
+        this.loadFailCheck(
+                store,
+                c1
+        );
 
-        this.loadTargetsAndCheck(store, b1, a1);
-        this.loadTargetsAndCheck(store, c1, a1, b1);
+        this.loadTargetsAndCheck(
+                store,
+                b1, a1
+        );
+        this.loadTargetsAndCheck(
+                store,
+                c1, a1, b1
+        );
     }
 
     @Test
     public void testSaveAndLoadDifferentReferenceKind() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store.saveReferences(a1, Sets.of(b1, c1));
-        store.saveReferences(b1, Sets.of(c1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1, c1)
+        );
+        store.saveReferences(
+                b1,
+                Sets.of(c1)
+        );
 
         final SpreadsheetCellReference absoluteB1 = b1.toAbsolute();
         this.checkNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
-        this.checkEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
+        this.checkEquals(
+                true,
+                absoluteB1.equalsIgnoreReferenceKind(b1),
+                () -> absoluteB1 + " " + b1
+        );
 
-        this.loadAndCheck(store, a1, b1, c1);
-        this.loadAndCheck(store, b1, c1);
-        this.loadFailCheck(store, c1);
+        this.loadAndCheck(
+                store,
+                a1, b1, c1
+        );
+        this.loadAndCheck(
+                store,
+                b1, c1
+        );
+        this.loadFailCheck(
+                store,
+                c1
+        );
 
-        this.loadTargetsAndCheck(store, b1, a1);
-        this.loadTargetsAndCheck(store, absoluteB1, a1);
-        this.loadTargetsAndCheck(store, c1, a1, b1);
+        this.loadTargetsAndCheck(
+                store,
+                b1, a1
+        );
+        this.loadTargetsAndCheck(
+                store,
+                absoluteB1,
+                a1
+        );
+        this.loadTargetsAndCheck(
+                store,
+                c1,
+                a1, b1
+        );
     }
 
     @Test
     public void testSaveAndLoadDifferentReferenceKind2() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store.saveReferences(a1, Sets.of(b1, c1));
-        store.saveReferences(b1, Sets.of(c1));
+        store.saveReferences(
+                a1,
+                Sets.of(
+                        b1,
+                        c1
+                )
+        );
+        store.saveReferences(
+                b1,
+                Sets.of(c1)
+        );
 
         final SpreadsheetCellReference absoluteB1 = b1.toAbsolute();
         this.checkNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
-        this.checkEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
+        this.checkEquals(
+                true,
+                absoluteB1.equalsIgnoreReferenceKind(b1),
+                () -> absoluteB1 + " " + b1
+        );
 
-        this.loadAndCheck(store, a1.toAbsolute(), b1, c1);
-        this.loadAndCheck(store, b1.toAbsolute(), c1);
-        this.loadFailCheck(store, c1.toAbsolute());
+        this.loadAndCheck(
+                store,
+                a1.toAbsolute(),
+                b1, c1
+        );
+        this.loadAndCheck(
+                store,
+                b1.toAbsolute(),
+                c1
+        );
+        this.loadFailCheck(
+                store,
+                c1.toAbsolute()
+        );
 
-        this.loadTargetsAndCheck(store, b1, a1);
-        this.loadTargetsAndCheck(store, absoluteB1, a1);
-        this.loadTargetsAndCheck(store, c1, a1, b1);
+        this.loadTargetsAndCheck(
+                store,
+                b1,
+                a1
+        );
+        this.loadTargetsAndCheck(
+                store,
+                absoluteB1,
+                a1
+        );
+        this.loadTargetsAndCheck(
+                store,
+                c1,
+                a1, b1
+        );
     }
 
-    // delete.........................................................................................
+    // delete...........................................................................................................
 
     @Test
     public void testDeleteAfterSaveReferences() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
 
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
         store.delete(a1);
 
-        this.checkReferenceToTargets(store, Maps.empty());
-        this.checkTargetToReferences(store, Maps.empty());
+        this.checkReferenceToTargets(
+                store,
+                Maps.empty()
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.empty()
+        );
     }
 
     @Test
     public void testDeleteAfterSaveReferences2() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
         final SpreadsheetCellReference d1 = this.d1();
 
-        store.saveReferences(a1, Sets.of(b1));
-        store.saveReferences(c1, Sets.of(d1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
+        store.saveReferences(
+                c1,
+                Sets.of(d1)
+        );
 
         store.delete(a1);
 
-        this.checkReferenceToTargets(store, Maps.of(d1, Sets.of(c1)));
-        this.checkTargetToReferences(store, Maps.of(c1, Sets.of(d1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        d1,
+                        Sets.of(c1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        c1,
+                        Sets.of(d1)
+                )
+        );
     }
 
     @Test
     public void testDeleteAfterSaveReferencesAbsolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
 
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
         store.delete(a1.toAbsolute());
 
-        this.checkReferenceToTargets(store, Maps.empty());
-        this.checkTargetToReferences(store, Maps.empty());
+        this.checkReferenceToTargets(
+                store,
+                Maps.empty()
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.empty()
+        );
     }
 
-    // ids.................................................................................
+    // ids..............................................................................................................
 
     @Test
     public final void testIds() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a = this.a1();
+        final SpreadsheetCellReference a = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b = this.b1();
         final SpreadsheetCellReference c = this.c1();
         final SpreadsheetCellReference f = this.f99();
@@ -289,14 +537,19 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(b, Sets.of(f));
         store.saveReferences(c, Sets.of(f));
 
-        this.idsAndCheck(store, 0, 3, a, b, c);
+        this.idsAndCheck(
+                store,
+                0, // from
+                3, // to
+                a, b, c // expected
+        );
     }
 
     @Test
     public final void testIdsAbsolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a = this.a1().toAbsolute();
+        final SpreadsheetCellReference a = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b = this.b1().toAbsolute();
         final SpreadsheetCellReference c = this.c1().toAbsolute();
         final SpreadsheetCellReference f = this.f99().toAbsolute();
@@ -305,14 +558,19 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(b, Sets.of(f));
         store.saveReferences(c, Sets.of(f));
 
-        this.idsAndCheck(store, 0, 3, a, b, c);
+        this.idsAndCheck(
+                store,
+                0, // from
+                3, // to
+                a, b, c // expected
+        );
     }
 
     @Test
     public final void testIdsWindow() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a = this.a1();
+        final SpreadsheetCellReference a = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b = this.b1();
         final SpreadsheetCellReference c = this.c1();
         final SpreadsheetCellReference d = this.d1();
@@ -327,14 +585,19 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveReferences(c, Sets.of(h));
         store.saveReferences(d, Sets.of(i));
 
-        this.idsAndCheck(store, 1, 2, b, c);
+        this.idsAndCheck(
+                store,
+                1, // from
+                2, // to
+                b, c // expected
+        );
     }
 
     @Test
     public void testIdsWithoutReferences() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
 
         store.saveReferences(a1, Sets.of(b1));
@@ -348,13 +611,13 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.idsAndCheck(store, 0, 2, a1); // b1 doesnt exist because it has 0 references to it
     }
 
-    // values.................................................................................
+    // values...........................................................................................................
 
     @Test
     public final void testValues() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a = this.a1();
+        final SpreadsheetCellReference a = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b = this.b1();
         final SpreadsheetCellReference c = this.c1();
 
@@ -381,7 +644,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public final void testValuesAbsolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a = this.a1().toAbsolute();
+        final SpreadsheetCellReference a = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b = this.b1().toAbsolute();
         final SpreadsheetCellReference c = this.c1().toAbsolute();
 
@@ -408,7 +671,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public final void testValuesWindow() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a = this.a1();
+        final SpreadsheetCellReference a = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b = this.b1();
         final SpreadsheetCellReference c = this.c1();
         final SpreadsheetCellReference d = this.d1();
@@ -437,7 +700,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testValuesWithoutReferences() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
 
         store.saveReferences(a1, Sets.of(b1));
@@ -457,76 +720,149 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         );
     }
 
-    // saveReference ......................................................................................
+    // saveReference ...................................................................................................
 
     @Test
     @Override
     public void testSaveReferences() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
     }
 
     @Test
     public void testSaveReferencesAbsolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1().toAbsolute();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b1 = this.b1();
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
     }
 
     @Test
     public void testSaveReferencesReplaceSome() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         store.saveReferences(a1, Sets.of(b1));
 
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveReferences(a1, Sets.of(c1));
+        store.saveReferences(
+                a1,
+                Sets.of(c1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(c1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(c1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        c1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(c1)
+                )
+        );
     }
 
     @Test
     public void testSaveReferencesReplaceAll() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         store.saveReferences(a1, Sets.of(b1));
 
         final SpreadsheetCellReference c1 = this.c1();
         final SpreadsheetCellReference d1 = this.d1();
-        store.saveReferences(c1, Sets.of(d1));
+        store.saveReferences(
+                c1,
+                Sets.of(d1)
+        );
 
         final SpreadsheetCellReference e1 = this.b1();
-        store.saveReferences(a1, Sets.of(e1));
+        store.saveReferences(
+                a1,
+                Sets.of(e1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(d1, Sets.of(c1), e1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(e1), c1, Sets.of(d1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        d1,
+                        Sets.of(c1),
+                        e1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(e1),
+                        c1,
+                        Sets.of(d1)
+                )
+        );
     }
 
     @Test
     public void testSaveReferencesReplaceSomeAddReferenceWatcherRemoveReferenceWatcher() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(
+                a1,
+                Sets.of(
+                        b1,
+                        c1
+                )
+        );
 
         final SpreadsheetCellReference d1 = this.d1();
 
@@ -538,22 +874,43 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
 
         store.saveReferences(a1, Sets.of(c1, d1));
 
-        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, d1)),
+        this.checkEquals(
+                Lists.of(TargetAndSpreadsheetCellReference.with(a1, d1)),
                 add,
-                "add");
-        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, b1)),
+                "add"
+        );
+        this.checkEquals(
+                Lists.of(TargetAndSpreadsheetCellReference.with(a1, b1)),
                 remove,
-                "remove");
+                "remove"
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(c1, Sets.of(a1), d1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(c1, d1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        c1,
+                        Sets.of(a1),
+                        d1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(
+                                c1,
+                                d1
+                        )
+                )
+        );
     }
 
     @Test
     public void testSaveReferencesReplaceAllAddReferenceWatcherRemoveReferenceWatcher() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         store.saveReferences(a1, Sets.of(b1));
 
@@ -566,82 +923,193 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         final SpreadsheetCellReference c1 = this.c1();
         store.saveReferences(a1, Sets.of(c1));
 
-        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, c1)), add, "add");
-        this.checkEquals(Lists.of(TargetAndSpreadsheetCellReference.with(a1, b1)), remove, "remove");
+        this.checkEquals(
+                Lists.of(
+                        TargetAndSpreadsheetCellReference.with(
+                                a1,
+                                c1
+                        )
+                ),
+                add,
+                "add"
+        );
+        this.checkEquals(
+                Lists.of(
+                        TargetAndSpreadsheetCellReference.with(
+                                a1,
+                                b1
+                        )
+                ),
+                remove,
+                "remove"
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(c1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(c1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        c1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(c1)
+                )
+        );
     }
 
-    // addReference ......................................................................................
+    // addReference.....................................................................................................
 
     @Test
     public void testAddReference() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, b1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(
+                        a1,
+                        b1
+                )
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
     }
 
     @Test
     public void testAddReference2() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, b1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(a1, b1)
+        );
 
         final SpreadsheetCellReference c1 = this.c1();
         final SpreadsheetCellReference d1 = this.d1();
-        store.addReference(TargetAndSpreadsheetCellReference.with(c1, d1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(c1, d1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1), d1, Sets.of(c1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1), c1, Sets.of(d1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1),
+                        d1,
+                        Sets.of(c1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1),
+                        c1,
+                        Sets.of(d1)
+                )
+        );
     }
 
     @Test
     public void testAddReferenceAbsolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1().toAbsolute();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference b1 = this.b1();
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, b1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(a1, b1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
     }
 
     @Test
     public void testAddReferenceSameTarget() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, b1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(a1, b1)
+        );
 
         final SpreadsheetCellReference c1 = this.c1();
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, c1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(a1, c1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1), c1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1, c1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1),
+                        c1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(
+                                b1,
+                                c1
+                        )
+                )
+        );
     }
 
     @Test
     public void testSaveReferencesAddReferenceAndLoad() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
         final SpreadsheetCellReference c1 = this.c1();
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, c1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(a1, c1)
+        );
 
-        this.loadAndCheck(store, a1, b1, c1);
+        this.loadAndCheck(
+                store,
+                a1,
+                b1, c1
+        );
         this.loadFailCheck(store, b1);
         this.loadFailCheck(store, c1);
 
@@ -654,7 +1122,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testSaveReferencesAddReferenceAndLoad2() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         store.saveReferences(a1, Sets.of(b1));
 
@@ -674,15 +1142,18 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadTargetsAndCheck(store, e1, d1);
     }
 
-    // removeReference.................................................................................
+    // removeReference..................................................................................................
 
     @Test
     public void testRemoveReference() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
         store.removeReference(TargetAndSpreadsheetCellReference.with(a1, b1));
 
@@ -694,76 +1165,162 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testRemoveReference2() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
         final SpreadsheetCellReference d1 = this.d1();
 
-        store.saveReferences(a1, Sets.of(b1));
-        store.saveReferences(c1, Sets.of(d1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
+        store.saveReferences(
+                c1,
+                Sets.of(d1)
+        );
 
-        store.removeReference(TargetAndSpreadsheetCellReference.with(c1, d1));
+        store.removeReference(
+                TargetAndSpreadsheetCellReference.with(c1, d1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
     }
 
     @Test
     public void testRemoveReferenceAbsolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
-        store.removeReference(TargetAndSpreadsheetCellReference.with(a1.toAbsolute(), b1));
+        store.removeReference(
+                TargetAndSpreadsheetCellReference.with(
+                        a1.toAbsolute(),
+                        b1
+                )
+        );
 
-        this.checkReferenceToTargets(store, Maps.empty());
-        this.checkTargetToReferences(store, Maps.empty());
+        this.checkReferenceToTargets(
+                store,
+                Maps.empty()
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.empty()
+        );
     }
 
     @Test
     public void testRemoveReferenceManyValues() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(
+                a1,
+                Sets.of(
+                        b1,
+                        c1
+                )
+        );
 
-        store.removeReference(TargetAndSpreadsheetCellReference.with(a1, c1));
+        store.removeReference(
+                TargetAndSpreadsheetCellReference.with(a1, c1)
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
     }
 
     @Test
     public void testRemoveReferenceManyValuesAbsolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(
+                a1,
+                Sets.of(
+                        b1,
+                        c1
+                )
+        );
 
-        store.removeReference(TargetAndSpreadsheetCellReference.with(a1.toAbsolute(), c1));
+        store.removeReference(
+                TargetAndSpreadsheetCellReference.with(
+                        a1.toAbsolute(),
+                        c1
+                )
+        );
 
-        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
-        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        b1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
     }
 
     @Test
     public void testRemoveReferenceUnknownAndLoad() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveReferences(a1, Sets.of(b1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1)
+        );
 
-        store.removeReference(TargetAndSpreadsheetCellReference.with(a1, c1));
+        store.removeReference(
+                TargetAndSpreadsheetCellReference.with(a1, c1)
+        );
 
-        this.loadAndCheck(store, a1, b1);
+        this.loadAndCheck(
+                store,
+                a1,
+                b1
+        );
         this.loadFailCheck(store, b1);
         this.loadFailCheck(store, c1);
 
@@ -776,12 +1333,17 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testSaveReferencesRemoveReferenceAndLoad() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1, c1)
+        );
 
-        store.removeReference(TargetAndSpreadsheetCellReference.with(a1, c1));
+        store.removeReference(
+                TargetAndSpreadsheetCellReference.with(a1, c1)
+        );
 
         this.loadAndCheck(store, a1, b1);
         this.loadFailCheck(store, b1);
@@ -798,16 +1360,23 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testSaveReferencesAndAddReferenceAndRemoveReference() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
         final SpreadsheetCellReference d1 = this.d1();
         final SpreadsheetCellReference e1 = this.e1();
 
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, b1));
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, c1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(a1, b1)
+        );
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(a1, c1)
+        );
 
-        store.saveReferences(a1, Sets.of(c1, d1, e1));
+        store.saveReferences(
+                a1,
+                Sets.of(c1, d1, e1)
+        );
 
         this.loadAndCheck(store, a1, c1, d1, e1);
         this.loadFailCheck(store, b1);
@@ -826,7 +1395,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testSaveReferencesAndAddReferenceAndRemoveReference2() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
         final SpreadsheetCellReference d1 = this.d1();
@@ -857,7 +1426,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testSaveReferencesAndAddReferenceAndRemoveReference3() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
         final SpreadsheetCellReference d1 = this.d1();
@@ -884,12 +1453,16 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testLoadTargets() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store.addReference(TargetAndSpreadsheetCellReference.with(b1, a1));
-        store.addReference(TargetAndSpreadsheetCellReference.with(c1, a1));
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(b1, a1)
+        );
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(c1, a1)
+        );
 
         this.loadTargetsAndCheck(
                 store,
@@ -900,45 +1473,57 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.removeReference(TargetAndSpreadsheetCellReference.with(b1, a1));
     }
 
-    // count.................................................................................
+    // count............................................................................................................
 
     @Test
     public void testSaveReferencesAddReferenceRemoveReferenceAndCount() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(
+                a1,
+                Sets.of(b1, c1)
+        );
 
-        store.removeReference(TargetAndSpreadsheetCellReference.with(a1, c1));
-        store.addReference(TargetAndSpreadsheetCellReference.with(a1, c1));
+        store.removeReference(
+                TargetAndSpreadsheetCellReference.with(a1, c1)
+        );
+        store.addReference(
+                TargetAndSpreadsheetCellReference.with(a1, c1)
+        );
 
         this.countAndCheck(store, 1);
     }
 
-    // ToStringTesting.............................................................
+    // ToStringTesting..................................................................................................
 
     @Test
     public void testToString() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(
+                a1,
+                Sets.of(
+                        b1,
+                        c1
+                )
+        );
 
-        this.toStringAndCheck(store, "{A1=[B1, C1]}");
+        this.toStringAndCheck(
+                store,
+                "{A1=[B1, C1]}"
+        );
     }
 
-    // SpreadsheetExpressionReferenceStoreTesting.............................................................
+    // SpreadsheetExpressionReferenceStoreTesting.......................................................................
 
     @Override
     public SpreadsheetCellReference id() {
-        return this.a1();
-    }
-
-    private SpreadsheetCellReference a1() {
         return SpreadsheetSelection.A1;
     }
 
@@ -993,19 +1578,21 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.checkEquals(referenceToTargets, map.referenceToTargets, "referenceToTargets");
     }
 
-    // StoreTesting.................................................................................
+    // StoreTesting.....................................................................................................
 
     @Override
     public TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createStore() {
         return TreeMapSpreadsheetExpressionReferenceStore.create();
     }
 
+    // class............................................................................................................
+
     @Override
     public Class<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> type() {
         return Cast.to(TreeMapSpreadsheetExpressionReferenceStore.class);
     }
 
-    // TypeNameTesting.................................................................................
+    // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNamePrefix() {
