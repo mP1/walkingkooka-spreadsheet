@@ -384,65 +384,134 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     // loadCellOrRanges.................................................................................................
 
     @Test
-    public void testLoadCellReferencesOrRangesNotFound() {
+    public void testLoadCellOrRangesNotFound() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.a1()));
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label1(),
+                        this.a1()
+                )
+        );
 
-        this.loadCellReferencesOrRangesAndCheck(store,
+        this.loadCellOrRangesAndCheck(
+                store,
                 SpreadsheetSelection.labelName("unknown"),
                 Sets.empty());
     }
 
     @Test
-    public void testLoadCellReferencesOrRangesLabelToCell() {
+    public void testLoadCellOrRangesLabelToCell() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.a1()));
-        store.save(SpreadsheetLabelMapping.with(this.label2(), this.a2()));
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label1(),
+                        this.a1()
+                )
+        );
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label2(),
+                        this.a2()
+                )
+        );
 
-        this.loadCellReferencesOrRangesAndCheck(store,
+        this.loadCellOrRangesAndCheck(
+                store,
                 this.label1(),
-                Sets.of(this.a1()));
+                Sets.of(this.a1())
+        );
     }
 
     @Test
-    public void testLoadCellReferencesOrRangesLabelToLabelToCell() {
+    public void testLoadCellOrRangesLabelToLabelToCell() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.a1()));
-        store.save(SpreadsheetLabelMapping.with(this.label2(), this.label1()));
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label1(),
+                        this.a1()
+                )
+        );
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label2(),
+                        this.label1()
+                )
+        );
 
-        this.loadCellReferencesOrRangesAndCheck(store,
+        this.loadCellOrRangesAndCheck(
+                store,
                 this.label2(),
-                Sets.of(this.a1()));
+                Sets.of(this.a1())
+        );
     }
 
     @Test
-    public void testLoadCellReferencesOrRangesLabelToLabelToLabelToCell() {
+    public void testLoadCellOrRangesLabelToLabelToLabelToCell() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.a1()));
-        store.save(SpreadsheetLabelMapping.with(this.label2(), this.label1()));
-        store.save(SpreadsheetLabelMapping.with(this.label3(), this.label2()));
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label1(),
+                        this.a1()
+                )
+        );
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label2(),
+                        this.label1()
+                )
+        );
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label3(),
+                        this.label2()
+                )
+        );
 
-        this.loadCellReferencesOrRangesAndCheck(store,
+        this.loadCellOrRangesAndCheck(
+                store,
                 this.label2(),
-                Sets.of(this.a1()));
+                Sets.of(this.a1())
+        );
     }
 
     @Test
-    public void testLoadCellReferencesOrRangesLabelToRange() {
+    public void testLoadCellOrRangesLabelToRange() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.range1()));
-        store.save(SpreadsheetLabelMapping.with(this.label2(), this.a2()));
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label1(),
+                        this.range1()
+                )
+        );
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label2(),
+                        this.a2()
+                )
+        );
 
-        this.loadCellReferencesOrRangesAndCheck(store,
+        this.loadCellOrRangesAndCheck(
+                store,
                 this.label1(),
-                Sets.of(this.range1()));
+                Sets.of(this.range1())
+        );
     }
 
     @Test
     public void testToString() {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(SpreadsheetLabelMapping.with(this.label1(), this.range1()));
-        store.save(SpreadsheetLabelMapping.with(this.label2(), this.a2()));
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label1(),
+                        this.range1()
+                )
+        );
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label2(),
+                        this.a2()
+                )
+        );
 
         this.toStringAndCheck(store, "[label1=A1:A3, label2=A2]");
     }

@@ -121,9 +121,9 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         );
     }
 
-    default void loadCellReferencesOrRangesAndCheck(final SpreadsheetLabelStore store,
-                                                    final SpreadsheetLabelName label,
-                                                    final Set<? super ExpressionReference> referencesOrRanges) {
+    default void loadCellOrRangesAndCheck(final SpreadsheetLabelStore store,
+                                          final SpreadsheetLabelName label,
+                                          final Set<? super ExpressionReference> referencesOrRanges) {
         this.checkEquals(referencesOrRanges,
                 store.loadCellOrRanges(label),
                 () -> "loadCellOrRanges for " + label);
