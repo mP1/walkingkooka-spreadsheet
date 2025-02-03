@@ -31,17 +31,17 @@ import java.util.function.Function;
  * and acts as a bridge resolving {@link ExpressionReference} to a {@link Expression}.
  * Note a {@link SpreadsheetCellRangeReference} will have missing cells given a {@link walkingkooka.spreadsheet.SpreadsheetErrorKind#NAME}.
  */
-final class SpreadsheetEnginesExpressionReferenceFunction implements Function<ExpressionReference, Optional<Optional<Object>>> {
+final class SpreadsheetEnginesExpressionReferenceToValueFunction implements Function<ExpressionReference, Optional<Optional<Object>>> {
 
     /**
-     * Factory that creates a new {@link SpreadsheetEnginesExpressionReferenceFunction}
+     * Factory that creates a new {@link SpreadsheetEnginesExpressionReferenceToValueFunction}
      */
-    static SpreadsheetEnginesExpressionReferenceFunction with(final SpreadsheetEngine engine,
-                                                              final SpreadsheetEngineContext context) {
+    static SpreadsheetEnginesExpressionReferenceToValueFunction with(final SpreadsheetEngine engine,
+                                                                     final SpreadsheetEngineContext context) {
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(context, "context");
 
-        return new SpreadsheetEnginesExpressionReferenceFunction(
+        return new SpreadsheetEnginesExpressionReferenceToValueFunction(
                 engine,
                 context
         );
@@ -50,8 +50,8 @@ final class SpreadsheetEnginesExpressionReferenceFunction implements Function<Ex
     /**
      * Private ctor.
      */
-    private SpreadsheetEnginesExpressionReferenceFunction(final SpreadsheetEngine engine,
-                                                          final SpreadsheetEngineContext context) {
+    private SpreadsheetEnginesExpressionReferenceToValueFunction(final SpreadsheetEngine engine,
+                                                                 final SpreadsheetEngineContext context) {
         this.engine = engine;
         this.context = context;
     }
@@ -60,7 +60,7 @@ final class SpreadsheetEnginesExpressionReferenceFunction implements Function<Ex
     public Optional<Optional<Object>> apply(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "values");
 
-        return SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor.values(
+        return SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor.values(
                 (SpreadsheetExpressionReference) reference,
                 this.engine,
                 this.context

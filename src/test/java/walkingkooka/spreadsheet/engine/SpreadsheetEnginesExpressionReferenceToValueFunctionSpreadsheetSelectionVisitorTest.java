@@ -38,8 +38,8 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitorTest
-        implements SpreadsheetSelectionVisitorTesting<SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor> {
+public final class SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitorTest
+        implements SpreadsheetSelectionVisitorTesting<SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor> {
 
     @Test
     public void testValuesWithCellNonNullValue() {
@@ -334,7 +334,7 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
                                 final Optional<Optional<Object>> value) {
         this.checkEquals(
                 value,
-                SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor.values(
+                SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor.values(
                         reference,
                         engine,
                         context
@@ -344,8 +344,8 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
     }
 
     @Override
-    public SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor createVisitor() {
-        return new SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor(
+    public SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor createVisitor() {
+        return new SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor(
                 null,
                 null
         );
@@ -355,12 +355,12 @@ public final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelec
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetEnginesExpressionReferenceFunction.class.getSimpleName();
+        return SpreadsheetEnginesExpressionReferenceToValueFunction.class.getSimpleName();
     }
 
     @Override
-    public Class<SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor> type() {
-        return SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor.class;
+    public Class<SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor> type() {
+        return SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor.class;
     }
 
     @Override

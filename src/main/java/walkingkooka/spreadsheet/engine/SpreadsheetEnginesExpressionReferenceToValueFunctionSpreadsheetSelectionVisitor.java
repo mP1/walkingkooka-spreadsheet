@@ -37,13 +37,13 @@ import java.util.stream.Collectors;
  * A visitor which resolves any {@link ExpressionReference} down to values. A range may match many cells, resulting in
  * a {@link List} while a single cell might return a value.
  */
-final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Optional<Optional<Object>> values(final SpreadsheetExpressionReference reference,
                                              final SpreadsheetEngine engine,
                                              final SpreadsheetEngineContext context) {
-        final SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor visitor =
-                new SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor(engine, context);
+        final SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor visitor =
+                new SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor(engine, context);
         visitor.accept(reference);
         return Optional.ofNullable(visitor.value);
     }
@@ -54,8 +54,8 @@ final class SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVis
     private final static Set<SpreadsheetDeltaProperties> SPREADSHEET_DELTA_PROPERTIES = EnumSet.of(SpreadsheetDeltaProperties.CELLS);
 
     // @VisibleForTesting
-    SpreadsheetEnginesExpressionReferenceFunctionSpreadsheetSelectionVisitor(final SpreadsheetEngine engine,
-                                                                             final SpreadsheetEngineContext context) {
+    SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelectionVisitor(final SpreadsheetEngine engine,
+                                                                                    final SpreadsheetEngineContext context) {
         super();
         this.engine = engine;
         this.context = context;
