@@ -305,6 +305,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTION_ALIASES = SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS;
 
+    // with.............................................................................................................
+
     @Test
     public void testWithNullServerUrlFails() {
         assertThrows(
@@ -628,8 +630,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testEvaluate() {
-        this.evaluateAndCheck(Expression.add(this.expression(1), this.expression(2)),
-                this.number(1 + 2));
+        this.evaluateAndCheck(
+                Expression.add(
+                        this.expression(1),
+                        this.expression(2)
+                ),
+                this.number(1 + 2)
+        );
     }
 
     @Test
@@ -754,6 +761,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
 
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = SpreadsheetCellRangeStores.treeMap();
+
         rangeToConditionalFormattingRules.addValue(
                 SpreadsheetSelection.A1.toCellRange(),
                 SpreadsheetConditionalFormattingRule.with(
