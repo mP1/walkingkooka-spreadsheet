@@ -120,7 +120,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         this.metadata = metadata;
 
-        this.referenceFunction = SpreadsheetEnginesExpressionReferenceFunction.with(
+        this.referenceToValue = SpreadsheetEnginesExpressionReferenceFunction.with(
                 engine,
                 this
         );
@@ -287,7 +287,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 cell,
                 this.storeRepository.cells(),
                 this.serverUrl,
-                this.referenceFunction,
+                this.referenceToValue,
                 metadata,
                 metadata.spreadsheetConverterContext(
                         converterSelector,
@@ -307,7 +307,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final AbsoluteUrl serverUrl;
 
-    private final SpreadsheetEnginesExpressionReferenceFunction referenceFunction;
+    private final SpreadsheetEnginesExpressionReferenceFunction referenceToValue;
 
     // HasNow...........................................................................................................
 
