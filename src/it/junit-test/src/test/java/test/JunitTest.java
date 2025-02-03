@@ -261,7 +261,7 @@ public class JunitTest {
                                 (r) -> {
                                     throw new UnsupportedOperationException();
                                 },
-                                this.references(),
+                                this.expressionReferenceToValue(),
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.spreadsheetConverterContext(
@@ -274,8 +274,8 @@ public class JunitTest {
                 );
             }
 
-            private Function<ExpressionReference, Optional<Optional<Object>>> references() {
-                return SpreadsheetEngines.expressionReferenceFunction(
+            private Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceToValue() {
+                return SpreadsheetEngines.expressionReferenceToValue(
                         engine,
                         this
                 );

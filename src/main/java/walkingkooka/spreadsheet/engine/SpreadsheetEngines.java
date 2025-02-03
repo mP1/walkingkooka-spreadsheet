@@ -51,8 +51,8 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     /**
      * {@see SpreadsheetEnginesExpressionReferenceToValueFunction}
      */
-    public static Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceFunction(final SpreadsheetEngine engine,
-                                                                                                        final SpreadsheetEngineContext context) {
+    public static Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceToValue(final SpreadsheetEngine engine,
+                                                                                                       final SpreadsheetEngineContext context) {
         return SpreadsheetEnginesExpressionReferenceToValueFunction.with(
                 engine,
                 context

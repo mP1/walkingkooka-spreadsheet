@@ -251,7 +251,7 @@ public final class Sample {
                                 (r) -> {
                                     throw new UnsupportedOperationException();
                                 },
-                                this.references(),
+                                this.expressionReferenceToValue(),
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.spreadsheetConverterContext(
@@ -264,8 +264,8 @@ public final class Sample {
                 );
             }
 
-            private Function<ExpressionReference, Optional<Optional<Object>>> references() {
-                return SpreadsheetEngines.expressionReferenceFunction(
+            private Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceToValue() {
+                return SpreadsheetEngines.expressionReferenceToValue(
                         engine,
                         this
                 );
