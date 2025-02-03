@@ -32,21 +32,45 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
 
     @Test
     public void testWithNullTarget() {
-        assertThrows(NullPointerException.class, () -> TargetAndSpreadsheetCellReference.with(null, this.reference()));
+        assertThrows(
+                NullPointerException.class,
+                () -> TargetAndSpreadsheetCellReference.with(
+                        null,
+                        this.reference()
+                )
+        );
     }
 
     @Test
     public void testWithNullCellReference() {
-        assertThrows(NullPointerException.class, () -> TargetAndSpreadsheetCellReference.with(this.label(), null));
+        assertThrows(
+                NullPointerException.class,
+                () -> TargetAndSpreadsheetCellReference.with(
+                        this.label(),
+                        null
+                )
+        );
     }
 
     @Test
     public void testWith() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference reference = this.reference();
-        final TargetAndSpreadsheetCellReference<?> and = TargetAndSpreadsheetCellReference.with(label, reference);
-        this.checkEquals(label, and.target(), "target");
-        this.checkEquals(reference, and.reference(), "reference");
+        final TargetAndSpreadsheetCellReference<?> and = TargetAndSpreadsheetCellReference.with(
+                label,
+                reference
+        );
+
+        this.checkEquals(
+                label,
+                and.target(),
+                "target"
+        );
+        this.checkEquals(
+                reference,
+                and.reference(),
+                "reference"
+        );
     }
 
     @Test
@@ -69,25 +93,47 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
         );
     }
 
+    // equals............................................................................................................
+
     @Test
     public void testEqualsDifferentTarget() {
-        this.checkNotEquals(TargetAndSpreadsheetCellReference.with(SpreadsheetSelection.labelName("Different"), this.reference()));
+        this.checkNotEquals(
+                TargetAndSpreadsheetCellReference.with(
+                        SpreadsheetSelection.labelName("Different"),
+                        this.reference()
+                )
+        );
     }
 
     @Test
     public void testEqualsDifferentCellReference() {
-        this.checkNotEquals(TargetAndSpreadsheetCellReference.with(this.label(), SpreadsheetSelection.parseCell("Z99")));
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createObject(), this.label() + "->" + this.reference());
+        this.checkNotEquals(
+                TargetAndSpreadsheetCellReference.with(
+                        this.label(),
+                        SpreadsheetSelection.parseCell("Z99")
+                )
+        );
     }
 
     @Override
     public TargetAndSpreadsheetCellReference<SpreadsheetLabelName> createObject() {
-        return TargetAndSpreadsheetCellReference.with(this.label(), this.reference());
+        return TargetAndSpreadsheetCellReference.with(
+                this.label(),
+                this.reference()
+        );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createObject(),
+                this.label() + "->" + this.reference()
+        );
+    }
+
+    // helpers..........................................................................................................
 
     private SpreadsheetLabelName label() {
         return SpreadsheetSelection.labelName("Label123");
@@ -96,6 +142,8 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     private SpreadsheetCellReference reference() {
         return SpreadsheetSelection.A1;
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>> type() {
