@@ -82,6 +82,33 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     }
 
     @Test
+    public void testSaveCellSelfReference() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        store.saveReferences(
+                a1,
+                Sets.of(a1)
+        );
+
+        this.checkTargetToReferences(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(a1)
+                )
+        );
+        this.checkReferenceToTargets(
+                store,
+                Maps.of(
+                        a1,
+                        Sets.of(a1)
+                )
+        );
+    }
+
+    @Test
     public void testSave3Absolute() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 

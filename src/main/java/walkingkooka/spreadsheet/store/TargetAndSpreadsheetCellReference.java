@@ -33,11 +33,11 @@ public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpres
                                                                                                        final SpreadsheetCellReference reference) {
         Objects.requireNonNull(target, "target");
         Objects.requireNonNull(reference, "reference");
-        if (target.equals(reference)) {
-            throw new IllegalArgumentException("Target equals reference=" + target);
-        }
 
-        return new TargetAndSpreadsheetCellReference<>(target, reference);
+        return new TargetAndSpreadsheetCellReference<>(
+                target,
+                reference
+        );
     }
 
     private TargetAndSpreadsheetCellReference(final T target, final SpreadsheetCellReference reference) {
