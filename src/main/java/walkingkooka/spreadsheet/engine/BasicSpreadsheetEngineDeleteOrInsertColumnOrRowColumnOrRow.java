@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.CellSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
@@ -164,11 +164,11 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     /**
-     * Updates any column/row references within any {@link CellReferenceSpreadsheetFormulaParserToken} in the given {@link SpreadsheetFormulaParserToken}.
+     * Updates any column/row references within any {@link CellSpreadsheetFormulaParserToken} in the given {@link SpreadsheetFormulaParserToken}.
      */
     private SpreadsheetFormulaParserToken fixExpressionReferences0(final SpreadsheetFormulaParserToken token) {
         return token.replaceIf(
-                (t) -> t instanceof CellReferenceSpreadsheetFormulaParserToken,// predicate
+                (t) -> t instanceof CellSpreadsheetFormulaParserToken,// predicate
                 (c) -> {
                     boolean invalid = false;
 

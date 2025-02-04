@@ -48,12 +48,12 @@ public class FakeSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormula
     }
 
     @Override
-    protected Visiting startVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
+    protected Visiting startVisit(final CellSpreadsheetFormulaParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
+    protected void endVisit(final CellSpreadsheetFormulaParserToken token) {
         throw new UnsupportedOperationException();
     }
 

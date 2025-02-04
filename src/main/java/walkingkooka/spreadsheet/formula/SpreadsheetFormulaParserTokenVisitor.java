@@ -53,13 +53,13 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // CellReferenceSpreadsheetFormulaParserToken.......................................................................
+    // CellSpreadsheetFormulaParserToken.......................................................................
 
-    protected Visiting startVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
+    protected Visiting startVisit(final CellSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
+    protected void endVisit(final CellSpreadsheetFormulaParserToken token) {
         // nop
     }
 

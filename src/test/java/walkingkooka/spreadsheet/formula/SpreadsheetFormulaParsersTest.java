@@ -1052,7 +1052,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testCellParserParseCell() {
         final String text = "A1";
-        final CellReferenceSpreadsheetFormulaParserToken cell = cellReference(0, "A", 0);
+        final CellSpreadsheetFormulaParserToken cell = cell(0, "A", 0);
 
         this.cellParserParseAndCheck(text, cell, text);
     }
@@ -1060,7 +1060,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testCellParserParseCell2() {
         final String text = "AA678";
-        final CellReferenceSpreadsheetFormulaParserToken cell = this.cellReference(26, "AA", 678 - 1);
+        final CellSpreadsheetFormulaParserToken cell = this.cell(26, "AA", 678 - 1);
 
         this.cellParserParseAndCheck(text, cell, text);
     }
@@ -1108,7 +1108,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testCellOrCellRangeOrLabelParserWithCell() {
         final String text = "A1";
-        final CellReferenceSpreadsheetFormulaParserToken cell = cellReference(0, "A", 0);
+        final CellSpreadsheetFormulaParserToken cell = cell(0, "A", 0);
 
         this.cellOrCellRangeOrLabelParseAndCheck(text, cell, text);
     }
@@ -1116,7 +1116,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testCellOrCellRangeOrLabelParserWithCell2() {
         final String text = "AA678";
-        final CellReferenceSpreadsheetFormulaParserToken cell = this.cellReference(26, "AA", 678 - 1);
+        final CellSpreadsheetFormulaParserToken cell = this.cell(26, "AA", 678 - 1);
 
         this.cellOrCellRangeOrLabelParseAndCheck(text, cell, text);
     }
@@ -1127,9 +1127,9 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
         final CellRangeSpreadsheetFormulaParserToken range = SpreadsheetFormulaParserToken.cellRange(
                 Lists.of(
-                        this.cellReference(0, "A", 0),
+                        this.cell(0, "A", 0),
                         betweenSymbol(),
-                        this.cellReference(1, "B", 1)
+                        this.cell(1, "B", 1)
                 ),
                 text
         );
@@ -1184,8 +1184,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     @Test
     public void testCellRangeParserParseCellToCell() {
-        final CellReferenceSpreadsheetFormulaParserToken from = this.cellReference(0, "A", 0);
-        final CellReferenceSpreadsheetFormulaParserToken to = this.cellReference(1, "B", 1);
+        final CellSpreadsheetFormulaParserToken from = this.cell(0, "A", 0);
+        final CellSpreadsheetFormulaParserToken to = this.cell(1, "B", 1);
 
         final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String text = range.text();
@@ -1208,7 +1208,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testCellRangeParserParseCellToLabel() {
-        final CellReferenceSpreadsheetFormulaParserToken from = this.cellReference(0, "A", 0);
+        final CellSpreadsheetFormulaParserToken from = this.cell(0, "A", 0);
         final LabelNameSpreadsheetFormulaParserToken to = this.label("to");
 
         final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
@@ -1221,7 +1221,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testCellRangeParserParseLabelToCell() {
         final LabelNameSpreadsheetFormulaParserToken from = this.label("to");
-        final CellReferenceSpreadsheetFormulaParserToken to = this.cellReference(0, "A", 0);
+        final CellSpreadsheetFormulaParserToken to = this.cell(0, "A", 0);
 
         final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String text = range.text();
@@ -1231,8 +1231,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     @Test
     public void testCellRangeParserParseWhitespace() {
-        final CellReferenceSpreadsheetFormulaParserToken from = this.cellReference(0, "A", 0);
-        final CellReferenceSpreadsheetFormulaParserToken to = this.cellReference(1, "B", 1);
+        final CellSpreadsheetFormulaParserToken from = this.cell(0, "A", 0);
+        final CellSpreadsheetFormulaParserToken to = this.cell(1, "B", 1);
 
         final String text = from.text() + "  " + betweenSymbol() + "  " + to.text();
         final CellRangeSpreadsheetFormulaParserToken range = SpreadsheetFormulaParserToken.cellRange(
@@ -1348,7 +1348,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                cellReference(
+                cell(
                         columnReference("A"),
                         rowReference("1")
                 ),
@@ -1362,7 +1362,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                cellReference(
+                cell(
                         columnReference("$A"),
                         rowReference("$1")
                 ),
@@ -1376,7 +1376,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                cellReference(
+                cell(
                         columnReference("$A"),
                         rowReference("1")
                 ),
@@ -1390,7 +1390,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
         this.valueOrExpressionParserParseAndCheck(
                 text,
-                cellReference(
+                cell(
                         columnReference("A"),
                         rowReference("$1")
                 ),
@@ -1408,7 +1408,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 text,
                 SpreadsheetFormulaParserToken.cellRange(
                         Lists.of(
-                                SpreadsheetFormulaParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
                                                 SpreadsheetFormulaParserToken.columnReference(
                                                         SpreadsheetSelection.parseColumn("A"),
@@ -1422,7 +1422,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                         "A1"
                                 ),
                                 betweenSymbol(),
-                                SpreadsheetFormulaParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
                                                 SpreadsheetFormulaParserToken.columnReference(
                                                         SpreadsheetSelection.parseColumn("B"),
@@ -1450,7 +1450,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 text,
                 SpreadsheetFormulaParserToken.cellRange(
                         Lists.of(
-                                SpreadsheetFormulaParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
                                                 SpreadsheetFormulaParserToken.columnReference(
                                                         SpreadsheetSelection.parseColumn("$A"),
@@ -1464,7 +1464,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                         "$A$1"
                                 ),
                                 betweenSymbol(),
-                                SpreadsheetFormulaParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
                                                 columnReference("$B"),
                                                 rowReference("$2")
@@ -1598,7 +1598,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 text,
                 negative(
                         minusSymbol(),
-                        cellReference(0, "A", 0)
+                        cell(0, "A", 0)
                 ),
                 text
         );
@@ -3221,8 +3221,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     }
 
     private void namedFunctionParserParseWithRangeArgument() {
-        final CellReferenceSpreadsheetFormulaParserToken from = this.cellReference(0, "A", 0);
-        final CellReferenceSpreadsheetFormulaParserToken to = this.cellReference(1, "B", 1);
+        final CellSpreadsheetFormulaParserToken from = this.cell(0, "A", 0);
+        final CellSpreadsheetFormulaParserToken to = this.cell(1, "B", 1);
 
         final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String rangeText = range.text();
@@ -4304,17 +4304,17 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         );
     }
 
-    private CellReferenceSpreadsheetFormulaParserToken cellReference(final ParserToken... tokens) {
+    private CellSpreadsheetFormulaParserToken cell(final ParserToken... tokens) {
         return parentToken(
-                SpreadsheetFormulaParserToken::cellReference,
+                SpreadsheetFormulaParserToken::cell,
                 tokens
         );
     }
 
-    private CellReferenceSpreadsheetFormulaParserToken cellReference(final int column,
-                                                                     final String columnText,
-                                                                     final int row) {
-        return cellReference(
+    private CellSpreadsheetFormulaParserToken cell(final int column,
+                                                   final String columnText,
+                                                   final int row) {
+        return cell(
                 SpreadsheetFormulaParserToken.columnReference(
                         SpreadsheetColumnOrRowReference.column(
                                 column,

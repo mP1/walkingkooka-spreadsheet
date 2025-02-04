@@ -39,7 +39,7 @@ public final class CellRangeSpreadsheetFormulaParserToken extends BinarySpreadsh
         final CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor visitor = CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor.with();
         visitor.accept(this);
 
-        final List<CellReferenceSpreadsheetFormulaParserToken> components = visitor.components;
+        final List<CellSpreadsheetFormulaParserToken> components = visitor.components;
         final int count = components.size();
 
         switch (count) {

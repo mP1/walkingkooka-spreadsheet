@@ -98,12 +98,12 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     }
 
     @Override
-    protected Visiting startVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
+    protected Visiting startVisit(final CellSpreadsheetFormulaParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected void endVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
+    protected void endVisit(final CellSpreadsheetFormulaParserToken token) {
         this.exitReference(token.cell(), token);
     }
 

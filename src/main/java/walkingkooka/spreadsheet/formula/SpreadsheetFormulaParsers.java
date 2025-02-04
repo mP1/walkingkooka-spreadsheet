@@ -129,7 +129,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
 
     private static ParserToken transformCell(final ParserToken token,
                                              final SpreadsheetParserContext context) {
-        return SpreadsheetFormulaParserToken.cellReference(
+        return SpreadsheetFormulaParserToken.cell(
                 token.cast(SequenceParserToken.class)
                         .value(),
                 token.text()

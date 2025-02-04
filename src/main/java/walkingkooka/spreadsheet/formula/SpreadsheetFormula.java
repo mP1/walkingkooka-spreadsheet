@@ -358,7 +358,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.setToken(
                 this.token.map(
                         t -> t.replaceIf(
-                                (tt) -> tt instanceof CellReferenceSpreadsheetFormulaParserToken,
+                                (tt) -> tt instanceof CellSpreadsheetFormulaParserToken,
                                 SpreadsheetFormulaReplaceReferencesFunction.parserToken(mapper)
                         ).cast(SpreadsheetFormulaParserToken.class)
                 )

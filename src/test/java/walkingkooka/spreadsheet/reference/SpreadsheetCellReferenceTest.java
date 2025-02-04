@@ -2093,7 +2093,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
         this.toParserTokenAndCheck(
                 SpreadsheetSelection.parseCell(text),
-                SpreadsheetFormulaParserToken.cellReference(
+                SpreadsheetFormulaParserToken.cell(
                         Lists.of(
                                 SpreadsheetSelection.parseColumn("B")
                                         .toParserToken(),
@@ -2112,7 +2112,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
         this.toParserTokenAndCheck(
                 SpreadsheetSelection.parseCell(text),
-                SpreadsheetFormulaParserToken.cellReference(
+                SpreadsheetFormulaParserToken.cell(
                         Lists.of(
                                 SpreadsheetSelection.parseColumn("$C")
                                         .toParserToken(),

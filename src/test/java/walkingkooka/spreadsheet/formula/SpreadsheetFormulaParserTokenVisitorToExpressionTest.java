@@ -59,9 +59,9 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
     }
 
     @Test
-    public void testCellReference() {
+    public void testCell() {
         this.toExpressionAndCheck(
-                SpreadsheetFormulaParserToken.cellReference(
+                SpreadsheetFormulaParserToken.cell(
                         Lists.of(
                                 SpreadsheetFormulaParserToken.columnReference(
                                         SpreadsheetSelection.parseColumn("A"),
@@ -85,7 +85,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
         this.toExpressionAndCheck(
                 SpreadsheetFormulaParserToken.cellRange(
                         Lists.of(
-                                SpreadsheetFormulaParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
                                                 SpreadsheetFormulaParserToken.columnReference(
                                                         SpreadsheetSelection.parseColumn("A"),
@@ -98,7 +98,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
                                         ),
                                         "A1"
                                 ),
-                                SpreadsheetFormulaParserToken.cellReference(
+                                SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
                                                 SpreadsheetFormulaParserToken.columnReference(
                                                         SpreadsheetSelection.parseColumn("B"),

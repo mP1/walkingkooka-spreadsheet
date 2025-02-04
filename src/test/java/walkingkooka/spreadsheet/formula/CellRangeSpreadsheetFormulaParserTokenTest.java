@@ -71,14 +71,14 @@ public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpre
             }
 
             @Override
-            protected Visiting startVisit(final CellReferenceSpreadsheetFormulaParserToken t) {
+            protected Visiting startVisit(final CellSpreadsheetFormulaParserToken t) {
                 b.append("5");
                 visited.add(t);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final CellReferenceSpreadsheetFormulaParserToken t) {
+            protected void endVisit(final CellSpreadsheetFormulaParserToken t) {
                 b.append("6");
                 visited.add(t);
             }
@@ -132,7 +132,7 @@ public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpre
 
     @Override
     SpreadsheetFormulaParserToken leftToken() {
-        return SpreadsheetFormulaParserToken.cellReference(
+        return SpreadsheetFormulaParserToken.cell(
                 Lists.of(
                         this.column("A"),
                         this.row("1")
@@ -143,7 +143,7 @@ public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpre
 
     @Override
     SpreadsheetFormulaParserToken rightToken() {
-        return SpreadsheetFormulaParserToken.cellReference(
+        return SpreadsheetFormulaParserToken.cell(
                 Lists.of(
                         this.column("B"),
                         this.row("2")
