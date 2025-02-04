@@ -27,6 +27,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FakeExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -161,6 +163,46 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkValue(error, Optional.of(function));
     }
 
+    // referenceNotFound................................................................................................
+
+    @Test
+    public void testReferenceNotFoundWithCell() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
+
+        final SpreadsheetError error = SpreadsheetError.referenceNotFound(cell);
+        this.checkKind(error, SpreadsheetErrorKind.NAME);
+        this.checkMessage(error, "Cell not found: A99");
+        this.checkValue(error, Optional.of(cell));
+    }
+
+    @Test
+    public void testReferenceNotFoundWithLabel() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        final SpreadsheetError error = SpreadsheetError.referenceNotFound(label);
+        this.checkKind(error, SpreadsheetErrorKind.NAME);
+        this.checkMessage(error, "Label not found: Label123");
+        this.checkValue(error, Optional.of(label));
+    }
+
+    @Test
+    public void testReferenceNotFoundWithNonSpreadsheetExpressionReference() {
+        final ExpressionReference reference = new FakeExpressionReference() {
+            @Override
+            public String toString() {
+                return "123";
+            }
+        };
+
+        final SpreadsheetError error = SpreadsheetError.referenceNotFound(reference);
+        this.checkKind(error, SpreadsheetErrorKind.NAME);
+        this.checkMessage(error, "Missing \"123\"");
+        this.checkValue(
+                error,
+                Optional.of(reference)
+        );
+    }
+    
     // isMissingCell....................................................................................................
 
     @Test
