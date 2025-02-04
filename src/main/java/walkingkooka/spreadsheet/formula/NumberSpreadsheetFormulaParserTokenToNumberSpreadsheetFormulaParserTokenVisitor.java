@@ -28,10 +28,10 @@ import java.util.Objects;
 /**
  * A {@link SpreadsheetFormulaParserTokenVisitor} that accepts a {@link NumberSpreadsheetFormulaParserToken} and creates a {@link ExpressionNumber}
  */
-final class SpreadsheetFormulaParserTokenVisitorExpressionNumber extends SpreadsheetFormulaParserTokenVisitor {
+final class NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
 
     /**
-     * Creates a {@link SpreadsheetFormulaParserTokenVisitorExpressionNumber}, that collects and translates symbols into a {@link String}
+     * Creates a {@link NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor}, that collects and translates symbols into a {@link String}
      * which is then parsed by {@link ExpressionNumberKind#parse(String)}.
      * If the token includes a {@link PercentSymbolSpreadsheetFormulaParserToken} then the value will be divided by 100.
      */
@@ -39,7 +39,7 @@ final class SpreadsheetFormulaParserTokenVisitorExpressionNumber extends Spreads
                                                final ExpressionNumberContext context) {
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetFormulaParserTokenVisitorExpressionNumber visitor = new SpreadsheetFormulaParserTokenVisitorExpressionNumber();
+        final NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor visitor = new NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor();
         visitor.accept(token);
 
         final ExpressionNumberKind kind = context.expressionNumberKind();
@@ -50,7 +50,7 @@ final class SpreadsheetFormulaParserTokenVisitorExpressionNumber extends Spreads
     }
 
     // @VisibleForTesting
-    SpreadsheetFormulaParserTokenVisitorExpressionNumber() {
+    NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor() {
         super();
     }
 
