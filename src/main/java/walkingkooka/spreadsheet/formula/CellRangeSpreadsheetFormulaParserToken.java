@@ -36,7 +36,7 @@ public final class CellRangeSpreadsheetFormulaParserToken extends BinarySpreadsh
     private CellRangeSpreadsheetFormulaParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
 
-        final SpreadsheetCellRangeParserTokenSpreadsheetFormulaParserTokenVisitor visitor = SpreadsheetCellRangeParserTokenSpreadsheetFormulaParserTokenVisitor.with();
+        final CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor visitor = CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor.with();
         visitor.accept(this);
 
         final List<CellReferenceSpreadsheetFormulaParserToken> components = visitor.components;
