@@ -26,6 +26,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
@@ -321,6 +322,13 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                             @Override
                             public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
                                 Objects.requireNonNull(cell, "cell");
+
+                                throw new UnsupportedOperationException();
+                            }
+
+                            @Override
+                            public Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
+                                Objects.requireNonNull(labelName, "labelName");
 
                                 throw new UnsupportedOperationException();
                             }

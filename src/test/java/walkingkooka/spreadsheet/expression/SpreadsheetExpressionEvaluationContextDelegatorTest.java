@@ -21,7 +21,7 @@ import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -134,7 +134,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
             return SpreadsheetExpressionEvaluationContexts.basic(
                     Optional.empty(), // cell
-                    SpreadsheetCellStores.treeMap(),
+                    SpreadsheetStoreRepositories.fake(),
                     Url.parseAbsolute("https://example.com"),
                     (rr) -> {
                         Objects.requireNonNull(rr, "rr");

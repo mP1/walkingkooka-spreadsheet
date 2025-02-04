@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.template.TemplateContext;
 import walkingkooka.template.TemplateContextTesting2;
 import walkingkooka.template.TemplateValueName;
@@ -187,7 +187,7 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
                         SPREADSHEET_PARSER_CONTEXT,
                         SpreadsheetExpressionEvaluationContexts.basic(
                                 Optional.empty(), // no cell
-                                SpreadsheetCellStores.fake(), // cellStore
+                                SpreadsheetStoreRepositories.fake(),
                                 Url.parseAbsolute("https://example.com"), // serverUrl
                                 (r) -> Optional.empty(), // reference -> value is empty
                                 SpreadsheetMetadata.EMPTY,

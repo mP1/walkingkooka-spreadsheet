@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -42,7 +42,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
      * {@see BasicSpreadsheetExpressionEvaluationContext}
      */
     public static SpreadsheetExpressionEvaluationContext basic(final Optional<SpreadsheetCell> cell,
-                                                               final SpreadsheetCellStore cellStore,
+                                                               final SpreadsheetStoreRepository repository,
                                                                final AbsoluteUrl serverUrl,
                                                                final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
@@ -51,7 +51,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 cell,
-                cellStore,
+                repository,
                 serverUrl,
                 referenceToValue,
                 spreadsheetMetadata,

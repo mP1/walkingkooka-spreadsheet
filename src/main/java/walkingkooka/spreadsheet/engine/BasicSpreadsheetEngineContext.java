@@ -285,7 +285,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return SpreadsheetExpressionEvaluationContexts.basic(
                 cell,
-                this.storeRepository.cells(),
+                this.storeRepository,
                 this.serverUrl,
                 this.referenceToValue,
                 metadata,

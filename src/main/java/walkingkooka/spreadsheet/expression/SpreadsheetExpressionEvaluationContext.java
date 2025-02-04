@@ -25,6 +25,8 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -96,6 +98,11 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      * Loads the cell for the given {@link SpreadsheetCellReference}, note that the formula is not evaluated.
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
+
+    /**
+     * Loads the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetLabelName}.
+     */
+    Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName);
 
     /**
      * Returns the base server url, which can then be used to create links to cells and more.
