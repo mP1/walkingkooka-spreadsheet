@@ -23,7 +23,7 @@ import walkingkooka.visit.Visiting;
 
 public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVisitor {
 
-    // AdditionSpreadsheetFormulaParserToken....................................................................................
+    // AdditionSpreadsheetFormulaParserToken............................................................................
 
     protected Visiting startVisit(final AdditionSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -43,7 +43,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // CellRangeSpreadsheetFormulaParserToken....................................................................................
+    // CellRangeSpreadsheetFormulaParserToken...........................................................................
 
     protected Visiting startVisit(final CellRangeSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -53,7 +53,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // CellReferenceSpreadsheetFormulaParserToken....................................................................................
+    // CellReferenceSpreadsheetFormulaParserToken.......................................................................
 
     protected Visiting startVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -63,7 +63,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // ConditionRightEqualsSpreadsheetFormulaParserToken.......................................................................
+    // ConditionRightEqualsSpreadsheetFormulaParserToken................................................................
 
     protected Visiting startVisit(final ConditionRightEqualsSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -73,7 +73,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // ConditionRightGreaterThanSpreadsheetFormulaParserToken..................................................................
+    // ConditionRightGreaterThanSpreadsheetFormulaParserToken...........................................................
 
     protected Visiting startVisit(final ConditionRightGreaterThanSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -83,7 +83,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken............................................................
+    // ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken.....................................................
 
     protected Visiting startVisit(final ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -93,7 +93,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // ConditionRightLessThanSpreadsheetFormulaParserToken.....................................................................
+    // ConditionRightLessThanSpreadsheetFormulaParserToken..............................................................
 
     protected Visiting startVisit(final ConditionRightLessThanSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -103,7 +103,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // ConditionRightLessThanEqualsSpreadsheetFormulaParserToken................................................................
+    // ConditionRightLessThanEqualsSpreadsheetFormulaParserToken........................................................
 
     protected Visiting startVisit(final ConditionRightLessThanEqualsSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -113,7 +113,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // ConditionRightNotEqualsSpreadsheetFormulaParserToken.....................................................................
+    // ConditionRightNotEqualsSpreadsheetFormulaParserToken.............................................................
 
     protected Visiting startVisit(final ConditionRightNotEqualsSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -123,7 +123,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // DateSpreadsheetFormulaParserToken.......................................................................................
+    // DateSpreadsheetFormulaParserToken................................................................................
 
     protected Visiting startVisit(final DateSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -133,7 +133,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // DateTimeSpreadsheetFormulaParserToken....................................................................................
+    // DateTimeSpreadsheetFormulaParserToken............................................................................
 
     protected Visiting startVisit(final DateTimeSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -143,7 +143,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // DivisionSpreadsheetFormulaParserToken....................................................................................
+    // DivisionSpreadsheetFormulaParserToken............................................................................
 
     protected Visiting startVisit(final DivisionSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -153,7 +153,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // EqualsSpreadsheetFormulaParserToken....................................................................................
+    // EqualsSpreadsheetFormulaParserToken..............................................................................
 
     protected Visiting startVisit(final EqualsSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -163,7 +163,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // ExpressionSpreadsheetFormulaParserToken....................................................................................
+    // ExpressionSpreadsheetFormulaParserToken..........................................................................
 
     protected Visiting startVisit(final ExpressionSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -173,7 +173,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // FunctionParametersSpreadsheetFormulaParserToken.........................................................................
+    // FunctionParametersSpreadsheetFormulaParserToken..................................................................
 
     protected Visiting startVisit(final FunctionParametersSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -193,7 +193,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // GreaterThanEqualsSpreadsheetFormulaParserToken....................................................................................
+    // GreaterThanEqualsSpreadsheetFormulaParserToken...................................................................
 
     protected Visiting startVisit(final GreaterThanEqualsSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -203,7 +203,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // GroupSpreadsheetFormulaParserToken....................................................................................
+    // GroupSpreadsheetFormulaParserToken...............................................................................
 
     protected Visiting startVisit(final GroupSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -213,7 +213,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // LambdaFunctionSpreadsheetFormulaParserToken....................................................................................
+    // LambdaFunctionSpreadsheetFormulaParserToken......................................................................
 
     protected Visiting startVisit(final LambdaFunctionSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -223,7 +223,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // LessThanSpreadsheetFormulaParserToken....................................................................................
+    // LessThanSpreadsheetFormulaParserToken............................................................................
 
     protected Visiting startVisit(final LessThanSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -233,7 +233,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // LessThanEqualsSpreadsheetFormulaParserToken....................................................................................
+    // LessThanEqualsSpreadsheetFormulaParserToken......................................................................
 
     protected Visiting startVisit(final LessThanEqualsSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -243,7 +243,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // MultiplicationSpreadsheetFormulaParserToken....................................................................................
+    // MultiplicationSpreadsheetFormulaParserToken......................................................................
 
     protected Visiting startVisit(final MultiplicationSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -253,7 +253,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // NamedFunctionSpreadsheetFormulaParserToken....................................................................................
+    // NamedFunctionSpreadsheetFormulaParserToken........................................................................
 
     protected Visiting startVisit(final NamedFunctionSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -263,7 +263,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // NegativeSpreadsheetFormulaParserToken....................................................................................
+    // NegativeSpreadsheetFormulaParserToken............................................................................
 
     protected Visiting startVisit(final NegativeSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -273,7 +273,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // NotEqualsSpreadsheetFormulaParserToken....................................................................................
+    // NotEqualsSpreadsheetFormulaParserToken...........................................................................
 
     protected Visiting startVisit(final NotEqualsSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -283,7 +283,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // NumberSpreadsheetFormulaParserToken.....................................................................................
+    // NumberSpreadsheetFormulaParserToken..............................................................................
 
     protected Visiting startVisit(final NumberSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -293,7 +293,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // PowerSpreadsheetFormulaParserToken....................................................................................
+    // PowerSpreadsheetFormulaParserToken...............................................................................
 
     protected Visiting startVisit(final PowerSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -303,8 +303,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // SubtractionSpreadsheetFormulaParserToken....................................................................................
-
+    // SubtractionSpreadsheetFormulaParserToken.........................................................................
     protected Visiting startVisit(final SubtractionSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
     }
@@ -313,7 +312,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // TextSpreadsheetFormulaParserToken....................................................................................
+    // TextSpreadsheetFormulaParserToken................................................................................
 
     protected Visiting startVisit(final TextSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -323,7 +322,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // TimeSpreadsheetFormulaParserToken....................................................................................
+    // TimeSpreadsheetFormulaParserToken................................................................................
 
     protected Visiting startVisit(final TimeSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
@@ -333,7 +332,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // LeafSpreadsheetFormulaParserToken ....................................................................................
+    // LeafSpreadsheetFormulaParserToken ...............................................................................
 
     protected void visit(final AmPmSpreadsheetFormulaParserToken token) {
         // nop
@@ -515,7 +514,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // ParserToken.......................................................................
+    // ParserToken.......................................................................................................
 
     @Override
     protected Visiting startVisit(final ParserToken token) {
@@ -527,7 +526,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    // SpreadsheetFormulaParserToken.......................................................................
+    // SpreadsheetFormulaParserToken....................................................................................
 
     protected Visiting startVisit(final SpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
