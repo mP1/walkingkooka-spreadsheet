@@ -112,6 +112,13 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      */
     Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName);
 
+    default SpreadsheetLabelMapping labelMappingOrFail(final SpreadsheetLabelName labelName) {
+        return this.loadLabelMapping(labelName)
+                .orElseThrow(() -> new SpreadsheetErrorException(
+                        SpreadsheetError.selectionNotFound(labelName))
+                );
+    }
+
     /**
      * Returns the base server url, which can then be used to create links to cells and more.
      * This is necessary for functions such as hyperlink which creates a link to a cell.
