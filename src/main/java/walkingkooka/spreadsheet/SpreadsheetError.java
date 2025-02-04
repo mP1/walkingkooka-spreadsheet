@@ -24,10 +24,12 @@ import walkingkooka.Value;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -88,6 +90,35 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         return SpreadsheetErrorKind.NAME.setMessageAndValue(
                 function.notFoundText(),
                 function
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetError} reporting that a {@link ExpressionReference} was not found.
+     * If the {@link ExpressionReference} is a {@link SpreadsheetExpressionReference} then {@link #selectionNotFound(SpreadsheetExpressionReference)}
+     * is returned.
+     */
+    public static SpreadsheetError referenceNotFound(final ExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        return reference instanceof SpreadsheetExpressionReference ?
+                selectionNotFound((SpreadsheetExpressionReference) reference) :
+                referenceNotSpreadsheetExpressionReferenceNotFound(reference);
+    }
+
+    private static SpreadsheetError referenceNotSpreadsheetExpressionReferenceNotFound(final ExpressionReference reference) {
+        String text;
+
+        if (reference instanceof HasNotFoundText) {
+            final HasNotFoundText hasNotFoundText = (HasNotFoundText) reference;
+            text = hasNotFoundText.notFoundText();
+        } else {
+            text = "Missing " + CharSequences.quoteAndEscape(reference.toString());
+        }
+
+        return SpreadsheetErrorKind.NAME.setMessageAndValue(
+                text,
+                reference
         );
     }
 
