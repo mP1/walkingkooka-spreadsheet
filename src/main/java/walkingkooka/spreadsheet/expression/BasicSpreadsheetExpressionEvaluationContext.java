@@ -112,22 +112,22 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private final Optional<SpreadsheetCell> cell;
 
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cellReference) {
-        Objects.requireNonNull(cellReference, "cell");
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
 
         Optional<SpreadsheetCell> loaded;
 
         for (; ; ) {
             Optional<SpreadsheetCell> maybeCell = this.cell();
             if (maybeCell.isPresent()) {
-                final SpreadsheetCell cell = maybeCell.get();
-                if (cell.reference().equalsIgnoreReferenceKind(cellReference)) {
+                final SpreadsheetCell spreadsheetCell = maybeCell.get();
+                if (spreadsheetCell.reference().equalsIgnoreReferenceKind(cell)) {
                     loaded = maybeCell;
                     break;
                 }
             }
 
-            loaded = this.cellStore.load(cellReference);
+            loaded = this.cellStore.load(cell);
             break;
         }
 
