@@ -112,7 +112,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      */
     Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName);
 
-    default SpreadsheetLabelMapping labelMappingOrFail(final SpreadsheetLabelName labelName) {
+    default SpreadsheetLabelMapping loadLabelMappingOrFail(final SpreadsheetLabelName labelName) {
         return this.loadLabelMapping(labelName)
                 .orElseThrow(() -> new SpreadsheetErrorException(
                         SpreadsheetError.selectionNotFound(labelName))
