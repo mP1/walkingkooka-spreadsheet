@@ -1391,7 +1391,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
         this.toParserTokenAndCheck(
                 SpreadsheetSelection.parseRow(text),
-                SpreadsheetFormulaParserToken.rowReference(
+                SpreadsheetFormulaParserToken.row(
                         SpreadsheetSelection.parseRow(text),
                         text
                 ),

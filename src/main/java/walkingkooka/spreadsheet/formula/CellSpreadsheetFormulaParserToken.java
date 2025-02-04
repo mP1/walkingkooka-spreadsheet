@@ -41,7 +41,7 @@ public final class CellSpreadsheetFormulaParserToken extends ParentSpreadsheetFo
         final CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor visitor = CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor.with();
         visitor.accept(this);
 
-        final RowReferenceSpreadsheetFormulaParserToken row = visitor.row;
+        final RowSpreadsheetFormulaParserToken row = visitor.row;
         if (null == row) {
             throw new IllegalArgumentException("Cell missing row=" + text);
         }

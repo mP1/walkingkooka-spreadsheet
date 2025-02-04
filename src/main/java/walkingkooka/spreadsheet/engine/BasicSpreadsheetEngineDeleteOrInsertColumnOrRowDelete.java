@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.formula.ColumnSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 
 /**
@@ -60,7 +60,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowDelete extends BasicS
     }
 
     @Override
-    boolean isRowDeleted(final RowReferenceSpreadsheetFormulaParserToken row) {
+    boolean isRowDeleted(final RowSpreadsheetFormulaParserToken row) {
         return this.isDeletedReference(row.value().value());
     }
 

@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.formula.CellSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.ColumnSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -180,9 +180,9 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
                                     parserToken.cast(ColumnSpreadsheetFormulaParserToken.class)
                             ).orElse(null);
                         } else {
-                            if (parserToken instanceof RowReferenceSpreadsheetFormulaParserToken) {
+                            if (parserToken instanceof RowSpreadsheetFormulaParserToken) {
                                 add = this.fixRowReferenceParserToken(
-                                        parserToken.cast(RowReferenceSpreadsheetFormulaParserToken.class)
+                                        parserToken.cast(RowSpreadsheetFormulaParserToken.class)
                                 ).orElse(null);
                             }
                         }
@@ -207,10 +207,10 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     abstract Optional<ColumnSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnSpreadsheetFormulaParserToken token);
 
     /**
-     * Handles a column {@link RowReferenceSpreadsheetFormulaParserToken} within an expression.
+     * Handles a column {@link RowSpreadsheetFormulaParserToken} within an expression.
      * It may be returned unmodified, replaced by a expression if the reference was deleted or simply have the reference adjusted.
      */
-    abstract Optional<RowReferenceSpreadsheetFormulaParserToken> fixRowReferenceParserToken(final RowReferenceSpreadsheetFormulaParserToken token);
+    abstract Optional<RowSpreadsheetFormulaParserToken> fixRowReferenceParserToken(final RowSpreadsheetFormulaParserToken token);
 
     /**
      * This token will replace any {@link SpreadsheetCellReference} that become invalid such as a reference to a deleted cell.

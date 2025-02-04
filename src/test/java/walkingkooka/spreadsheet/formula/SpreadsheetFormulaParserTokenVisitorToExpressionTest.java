@@ -67,7 +67,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
                                         SpreadsheetSelection.parseColumn("A"),
                                         "A"
                                 ),
-                                SpreadsheetFormulaParserToken.rowReference(
+                                SpreadsheetFormulaParserToken.row(
                                         SpreadsheetSelection.parseRow("1"),
                                         "1"
                                 )
@@ -91,7 +91,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
                                                         SpreadsheetSelection.parseColumn("A"),
                                                         "A"
                                                 ),
-                                                SpreadsheetFormulaParserToken.rowReference(
+                                                SpreadsheetFormulaParserToken.row(
                                                         SpreadsheetSelection.parseRow("1"),
                                                         "1"
                                                 )
@@ -104,7 +104,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
                                                         SpreadsheetSelection.parseColumn("B"),
                                                         "B"
                                                 ),
-                                                SpreadsheetFormulaParserToken.rowReference(
+                                                SpreadsheetFormulaParserToken.row(
                                                         SpreadsheetSelection.parseRow("2"),
                                                         "2"
                                                 )

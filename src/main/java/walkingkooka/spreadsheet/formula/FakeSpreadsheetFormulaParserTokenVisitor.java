@@ -523,7 +523,7 @@ public class FakeSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormula
     }
 
     @Override
-    protected void visit(final RowReferenceSpreadsheetFormulaParserToken token) {
+    protected void visit(final RowSpreadsheetFormulaParserToken token) {
         throw new UnsupportedOperationException();
     }
 
