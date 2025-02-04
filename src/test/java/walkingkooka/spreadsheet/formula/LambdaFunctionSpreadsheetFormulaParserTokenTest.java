@@ -199,8 +199,8 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
         );
     }
 
-    private LabelNameSpreadsheetFormulaParserToken label(final String label) {
-        return SpreadsheetFormulaParserToken.labelName(
+    private LabelSpreadsheetFormulaParserToken label(final String label) {
+        return SpreadsheetFormulaParserToken.label(
                 SpreadsheetSelection.labelName(label),
                 label
         );

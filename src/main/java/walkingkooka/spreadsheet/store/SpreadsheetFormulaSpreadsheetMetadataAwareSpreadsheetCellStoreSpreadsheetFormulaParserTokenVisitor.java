@@ -62,7 +62,7 @@ import walkingkooka.spreadsheet.formula.GreaterThanSymbolSpreadsheetFormulaParse
 import walkingkooka.spreadsheet.formula.GroupSeparatorSymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.GroupSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.HourSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.LabelNameSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.LabelSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.LessThanEqualsSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.LessThanEqualsSymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.LessThanSpreadsheetFormulaParserToken;
@@ -580,7 +580,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final LabelNameSpreadsheetFormulaParserToken token) {
+    protected void visit(final LabelSpreadsheetFormulaParserToken token) {
         this.leaf(token);
     }
 

@@ -348,10 +348,10 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * {@see LabelNameSpreadsheetFormulaParserToken}
+     * {@see LabelSpreadsheetFormulaParserToken}
      */
-    public static LabelNameSpreadsheetFormulaParserToken labelName(final SpreadsheetLabelName value, final String text) {
-        return LabelNameSpreadsheetFormulaParserToken.with(value, text);
+    public static LabelSpreadsheetFormulaParserToken label(final SpreadsheetLabelName value, final String text) {
+        return LabelSpreadsheetFormulaParserToken.with(value, text);
     }
 
     /**
@@ -956,10 +956,10 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link LabelNameSpreadsheetFormulaParserToken} return true
+     * Only {@link LabelSpreadsheetFormulaParserToken} return true
      */
-    public final boolean isLabelName() {
-        return this instanceof LabelNameSpreadsheetFormulaParserToken;
+    public final boolean isLabel() {
+        return this instanceof LabelSpreadsheetFormulaParserToken;
     }
 
     /**
@@ -1377,8 +1377,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
 
         registerLeaf(
-                LabelNameSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallLabelName
+                LabelSpreadsheetFormulaParserToken.class,
+                SpreadsheetFormulaParserToken::unmarshallLabel
         );
 
         registerLeaf(
@@ -1538,13 +1538,13 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
     }
 
-    static LabelNameSpreadsheetFormulaParserToken unmarshallLabelName(final JsonNode node,
-                                                                      final JsonNodeUnmarshallContext context) {
+    static LabelSpreadsheetFormulaParserToken unmarshallLabel(final JsonNode node,
+                                                              final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
                 node,
                 SpreadsheetLabelName.class,
                 context,
-                SpreadsheetFormulaParserToken::labelName
+                SpreadsheetFormulaParserToken::label
         );
     }
 

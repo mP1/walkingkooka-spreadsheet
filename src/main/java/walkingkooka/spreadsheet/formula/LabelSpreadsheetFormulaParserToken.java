@@ -22,18 +22,18 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 /**
  * Represents a {@link SpreadsheetLabelName} within an expression.
  */
-public final class LabelNameSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<SpreadsheetLabelName> implements SpreadsheetReferenceParserToken,
+public final class LabelSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<SpreadsheetLabelName> implements SpreadsheetReferenceParserToken,
         HasSpreadsheetReference<SpreadsheetLabelName> {
 
-    static LabelNameSpreadsheetFormulaParserToken with(final SpreadsheetLabelName value,
-                                                       final String text) {
-        return new LabelNameSpreadsheetFormulaParserToken(
+    static LabelSpreadsheetFormulaParserToken with(final SpreadsheetLabelName value,
+                                                   final String text) {
+        return new LabelSpreadsheetFormulaParserToken(
                 checkValue(value),
                 checkText(text)
         );
     }
 
-    private LabelNameSpreadsheetFormulaParserToken(final SpreadsheetLabelName value, final String text) {
+    private LabelSpreadsheetFormulaParserToken(final SpreadsheetLabelName value, final String text) {
         super(value, text);
     }
 

@@ -437,7 +437,7 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     }
 
     @Override
-    protected void visit(final LabelNameSpreadsheetFormulaParserToken token) {
+    protected void visit(final LabelSpreadsheetFormulaParserToken token) {
         this.addReference(
                 token.value(),
                 token
