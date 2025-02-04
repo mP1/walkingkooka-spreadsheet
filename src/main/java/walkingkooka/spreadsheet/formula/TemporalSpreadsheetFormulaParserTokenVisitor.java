@@ -29,21 +29,21 @@ import java.util.Objects;
  * A {@link SpreadsheetFormulaParserTokenVisitor} that accepts a {@link SpreadsheetFormulaParserToken} and after visiting may be used to create
  * one of {@link LocalDate}, {@link LocalDateTime} or {@link LocalTime}.
  */
-final class SpreadsheetFormulaParserTokenVisitorLocalDateTime extends SpreadsheetFormulaParserTokenVisitor {
+final class TemporalSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
 
     /**
-     * Creates a {@link SpreadsheetFormulaParserTokenVisitorLocalDateTime}, visits the {@link ParentSpreadsheetFormulaParserToken} and returns the visitor
+     * Creates a {@link TemporalSpreadsheetFormulaParserTokenVisitor}, visits the {@link ParentSpreadsheetFormulaParserToken} and returns the visitor
      * which has methods to create one of {@link LocalDate}, {@link LocalDateTime} or {@link LocalTime}.
      */
-    static SpreadsheetFormulaParserTokenVisitorLocalDateTime acceptSpreadsheetParentParserToken(final ParentSpreadsheetFormulaParserToken token,
-                                                                                                final int defaultYear) {
-        final SpreadsheetFormulaParserTokenVisitorLocalDateTime visitor = new SpreadsheetFormulaParserTokenVisitorLocalDateTime(defaultYear);
+    static TemporalSpreadsheetFormulaParserTokenVisitor acceptSpreadsheetParentParserToken(final ParentSpreadsheetFormulaParserToken token,
+                                                                                           final int defaultYear) {
+        final TemporalSpreadsheetFormulaParserTokenVisitor visitor = new TemporalSpreadsheetFormulaParserTokenVisitor(defaultYear);
         visitor.accept(token);
         return visitor;
     }
 
     // @VisibleForTesting
-    SpreadsheetFormulaParserTokenVisitorLocalDateTime(final int defaultYear) {
+    TemporalSpreadsheetFormulaParserTokenVisitor(final int defaultYear) {
         super();
         this.year = defaultYear;
     }

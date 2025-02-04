@@ -39,7 +39,7 @@ public final class TimeSpreadsheetFormulaParserToken extends ValueSpreadsheetFor
      * Creates a {@link LocalTime} parse the tokens in this {@link TimeSpreadsheetFormulaParserToken}.
      */
     public LocalTime toLocalTime() {
-        return SpreadsheetFormulaParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(this, Integer.MAX_VALUE)
+        return TemporalSpreadsheetFormulaParserTokenVisitor.acceptSpreadsheetParentParserToken(this, Integer.MAX_VALUE)
                 .toLocalTime();
     }
 
