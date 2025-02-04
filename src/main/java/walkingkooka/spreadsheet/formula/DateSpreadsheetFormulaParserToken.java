@@ -40,7 +40,7 @@ public final class DateSpreadsheetFormulaParserToken extends ValueSpreadsheetFor
      * Creates a {@link LocalDate} parse the tokens in this {@link DateSpreadsheetFormulaParserToken}.
      */
     public LocalDate toLocalDate(final DateTimeContext context) {
-        return SpreadsheetFormulaParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(
+        return TemporalSpreadsheetFormulaParserTokenVisitor.acceptSpreadsheetParentParserToken(
                 this,
                 context.defaultYear()
         ).toLocalDate(context);
