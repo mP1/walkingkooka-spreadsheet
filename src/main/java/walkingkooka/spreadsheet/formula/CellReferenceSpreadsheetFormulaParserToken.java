@@ -38,7 +38,7 @@ public final class CellReferenceSpreadsheetFormulaParserToken extends ParentSpre
     private CellReferenceSpreadsheetFormulaParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
 
-        final SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor visitor = SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor.with();
+        final CellReferenceSpreadsheetFormulaParserTokenVisitor visitor = CellReferenceSpreadsheetFormulaParserTokenVisitor.with();
         visitor.accept(this);
 
         final RowReferenceSpreadsheetFormulaParserToken row = visitor.row;

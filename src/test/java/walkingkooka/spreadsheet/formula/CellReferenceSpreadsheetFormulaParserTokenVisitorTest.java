@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.formula;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitorTest implements ClassTesting2<SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor> {
+public final class CellReferenceSpreadsheetFormulaParserTokenVisitorTest implements ClassTesting2<CellReferenceSpreadsheetFormulaParserTokenVisitor> {
     @Override
-    public Class<SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor> type() {
-        return SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor.class;
+    public Class<CellReferenceSpreadsheetFormulaParserTokenVisitor> type() {
+        return CellReferenceSpreadsheetFormulaParserTokenVisitor.class;
     }
 
     @Override
