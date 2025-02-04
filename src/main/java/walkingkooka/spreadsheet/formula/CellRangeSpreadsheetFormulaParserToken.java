@@ -24,7 +24,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * A wrapper around a numeric type that is also a percentage.
+ * Represents a cell-range, including the component begin, end, columns/rows.
  */
 public final class CellRangeSpreadsheetFormulaParserToken extends BinarySpreadsheetFormulaParserToken
         implements HasSpreadsheetReference<SpreadsheetCellRangeReference> {
