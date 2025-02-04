@@ -25,13 +25,13 @@ import java.util.List;
 /**
  * Used to collect the begin and end tokens for a {@link CellRangeSpreadsheetFormulaParserToken}.
  */
-final class SpreadsheetCellRangeParserTokenSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
+final class CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
 
-    static SpreadsheetCellRangeParserTokenSpreadsheetFormulaParserTokenVisitor with() {
-        return new SpreadsheetCellRangeParserTokenSpreadsheetFormulaParserTokenVisitor();
+    static CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor with() {
+        return new CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor();
     }
 
-    private SpreadsheetCellRangeParserTokenSpreadsheetFormulaParserTokenVisitor() {
+    private CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor() {
         super();
     }
 
