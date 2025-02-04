@@ -30,7 +30,7 @@ import walkingkooka.spreadsheet.formula.BooleanLiteralSpreadsheetFormulaParserTo
 import walkingkooka.spreadsheet.formula.BooleanSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.CellRangeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.CellSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.ConditionRightEqualsSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.ConditionRightGreaterThanEqualsSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.ConditionRightGreaterThanSpreadsheetFormulaParserToken;
@@ -467,7 +467,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final ColumnReferenceSpreadsheetFormulaParserToken token) {
+    protected void visit(final ColumnSpreadsheetFormulaParserToken token) {
         this.leaf(token);
     }
 

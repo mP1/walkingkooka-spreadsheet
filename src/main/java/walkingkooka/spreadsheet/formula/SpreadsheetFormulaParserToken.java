@@ -113,10 +113,10 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * {@see ColumnReferenceSpreadsheetFormulaParserToken}
+     * {@see ColumnSpreadsheetFormulaParserToken}
      */
-    public static ColumnReferenceSpreadsheetFormulaParserToken columnReference(final SpreadsheetColumnReference value, final String text) {
-        return ColumnReferenceSpreadsheetFormulaParserToken.with(value, text);
+    public static ColumnSpreadsheetFormulaParserToken column(final SpreadsheetColumnReference value, final String text) {
+        return ColumnSpreadsheetFormulaParserToken.with(value, text);
     }
 
     /**
@@ -711,10 +711,10 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link ColumnReferenceSpreadsheetFormulaParserToken} return true
+     * Only {@link ColumnSpreadsheetFormulaParserToken} return true
      */
-    public final boolean isColumnReference() {
-        return this instanceof ColumnReferenceSpreadsheetFormulaParserToken;
+    public final boolean isColumn() {
+        return this instanceof ColumnSpreadsheetFormulaParserToken;
     }
 
     /**
@@ -1337,8 +1337,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
 
         registerLeaf(
-                ColumnReferenceSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallColumnReference
+                ColumnSpreadsheetFormulaParserToken.class,
+                SpreadsheetFormulaParserToken::unmarshallColumn
         );
 
         registerLeaf(
@@ -1458,13 +1458,13 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
     }
 
-    static ColumnReferenceSpreadsheetFormulaParserToken unmarshallColumnReference(final JsonNode node,
-                                                                                  final JsonNodeUnmarshallContext context) {
+    static ColumnSpreadsheetFormulaParserToken unmarshallColumn(final JsonNode node,
+                                                                final JsonNodeUnmarshallContext context) {
         return unmarshallLeaf(
                 node,
                 SpreadsheetColumnReference.class,
                 context,
-                SpreadsheetFormulaParserToken::columnReference
+                SpreadsheetFormulaParserToken::column
         );
     }
 

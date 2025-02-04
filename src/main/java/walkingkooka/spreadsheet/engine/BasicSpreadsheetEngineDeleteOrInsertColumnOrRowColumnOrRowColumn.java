@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -77,21 +77,21 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     }
 
     @Override
-    Optional<ColumnReferenceSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnReferenceSpreadsheetFormulaParserToken token) {
+    Optional<ColumnSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnSpreadsheetFormulaParserToken token) {
         return this.deleteOrInsert.isColumnDeleted(token) ?
                 Optional.empty() :
                 this.fixColumnReferenceParserToken0(token);
     }
 
-    private Optional<ColumnReferenceSpreadsheetFormulaParserToken> fixColumnReferenceParserToken0(final ColumnReferenceSpreadsheetFormulaParserToken token) {
+    private Optional<ColumnSpreadsheetFormulaParserToken> fixColumnReferenceParserToken0(final ColumnSpreadsheetFormulaParserToken token) {
         final SpreadsheetColumnReference old = token.value();
         final int value = old.value();
 
-        ColumnReferenceSpreadsheetFormulaParserToken result = token;
+        ColumnSpreadsheetFormulaParserToken result = token;
 
         if (value > this.value) {
             final SpreadsheetColumnReference reference = old.setValue(value + this.deleteOrInsert.fixColumnOrRowReference(this.count));
-            result = SpreadsheetFormulaParserToken.columnReference(reference, reference.toString());
+            result = SpreadsheetFormulaParserToken.column(reference, reference.toString());
         }
 
         return Optional.of(result);

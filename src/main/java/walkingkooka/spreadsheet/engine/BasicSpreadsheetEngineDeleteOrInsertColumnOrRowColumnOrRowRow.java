@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetRow;
-import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -75,7 +75,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
     }
 
     @Override
-    Optional<ColumnReferenceSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnReferenceSpreadsheetFormulaParserToken token) {
+    Optional<ColumnSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnSpreadsheetFormulaParserToken token) {
         // only fixing rows refs not cols
         return Optional.of(token);
     }

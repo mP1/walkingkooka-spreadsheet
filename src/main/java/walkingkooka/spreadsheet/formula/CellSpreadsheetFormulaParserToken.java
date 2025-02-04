@@ -45,7 +45,7 @@ public final class CellSpreadsheetFormulaParserToken extends ParentSpreadsheetFo
         if (null == row) {
             throw new IllegalArgumentException("Cell missing row=" + text);
         }
-        final ColumnReferenceSpreadsheetFormulaParserToken column = visitor.column;
+        final ColumnSpreadsheetFormulaParserToken column = visitor.column;
         if (null == column) {
             throw new IllegalArgumentException("Cell missing column=" + text);
         }

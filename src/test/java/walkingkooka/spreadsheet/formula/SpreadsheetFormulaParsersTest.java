@@ -1410,7 +1410,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                         Lists.of(
                                 SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
-                                                SpreadsheetFormulaParserToken.columnReference(
+                                                SpreadsheetFormulaParserToken.column(
                                                         SpreadsheetSelection.parseColumn("A"),
                                                         "A"
                                                 ),
@@ -1424,7 +1424,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                 betweenSymbol(),
                                 SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
-                                                SpreadsheetFormulaParserToken.columnReference(
+                                                SpreadsheetFormulaParserToken.column(
                                                         SpreadsheetSelection.parseColumn("B"),
                                                         "B"
                                                 ),
@@ -1452,7 +1452,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                         Lists.of(
                                 SpreadsheetFormulaParserToken.cell(
                                         Lists.of(
-                                                SpreadsheetFormulaParserToken.columnReference(
+                                                SpreadsheetFormulaParserToken.column(
                                                         SpreadsheetSelection.parseColumn("$A"),
                                                         "$A"
                                                 ),
@@ -4315,7 +4315,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                    final String columnText,
                                                    final int row) {
         return cell(
-                SpreadsheetFormulaParserToken.columnReference(
+                SpreadsheetFormulaParserToken.column(
                         SpreadsheetColumnOrRowReference.column(
                                 column,
                                 SpreadsheetReferenceKind.RELATIVE
@@ -4332,8 +4332,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         );
     }
 
-    private ColumnReferenceSpreadsheetFormulaParserToken columnReference(final String text) {
-        return SpreadsheetFormulaParserToken.columnReference(
+    private ColumnSpreadsheetFormulaParserToken columnReference(final String text) {
+        return SpreadsheetFormulaParserToken.column(
                 SpreadsheetSelection.parseColumn(text),
                 text
         );

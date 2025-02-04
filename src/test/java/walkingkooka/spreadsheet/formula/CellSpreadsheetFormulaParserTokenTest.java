@@ -57,7 +57,7 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
 
     @Test
     public void testWith() {
-        final ColumnReferenceSpreadsheetFormulaParserToken column = this.column();
+        final ColumnSpreadsheetFormulaParserToken column = this.column();
         final RowReferenceSpreadsheetFormulaParserToken row = this.row();
         final String text = ROW_TEXT + ":" + COLUMN_TEXT;
         final CellSpreadsheetFormulaParserToken cell = this.createToken(text, row, column);
@@ -76,12 +76,12 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
         return SpreadsheetFormulaParserToken.cell(tokens, text);
     }
 
-    private ColumnReferenceSpreadsheetFormulaParserToken column() {
+    private ColumnSpreadsheetFormulaParserToken column() {
         return column(COLUMN_VALUE);
     }
 
-    private ColumnReferenceSpreadsheetFormulaParserToken column(final int value) {
-        return SpreadsheetFormulaParserToken.columnReference(SpreadsheetColumnOrRowReference.column(value, SpreadsheetReferenceKind.RELATIVE), String.valueOf(value));
+    private ColumnSpreadsheetFormulaParserToken column(final int value) {
+        return SpreadsheetFormulaParserToken.column(SpreadsheetColumnOrRowReference.column(value, SpreadsheetReferenceKind.RELATIVE), String.valueOf(value));
     }
 
     private RowReferenceSpreadsheetFormulaParserToken row() {
@@ -94,7 +94,7 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
 
     private void checkCell(final CellSpreadsheetFormulaParserToken cell,
                            final RowReferenceSpreadsheetFormulaParserToken row,
-                           final ColumnReferenceSpreadsheetFormulaParserToken column) {
+                           final ColumnSpreadsheetFormulaParserToken column) {
         this.checkEquals(
                 SpreadsheetSelection.cell(
                         column.value(),
