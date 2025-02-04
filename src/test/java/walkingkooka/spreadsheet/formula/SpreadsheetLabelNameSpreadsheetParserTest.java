@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
@@ -111,7 +112,7 @@ public final class SpreadsheetLabelNameSpreadsheetParserTest implements Spreadsh
                                 final String textAfter) {
         this.parseAndCheck(
                 text + textAfter,
-                LabelSpreadsheetFormulaParserToken.with(
+                SpreadsheetFormulaParserToken.label(
                         SpreadsheetSelection.labelName(text),
                         text
                 ),

@@ -19,6 +19,7 @@
 package walkingkooka.spreadsheet.formula;
 
 public final class SpreadsheetFormulaReplaceReferencesFunctionExpressionTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunctionExpression> {
+
     @Override
     public Class<SpreadsheetFormulaReplaceReferencesFunctionExpression> type() {
         return SpreadsheetFormulaReplaceReferencesFunctionExpression.class;

@@ -19,6 +19,7 @@
 package walkingkooka.spreadsheet.formula;
 
 public final class SpreadsheetFormulaReplaceReferencesFunctionParserTokenTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunctionParserToken> {
+
     @Override
     public Class<SpreadsheetFormulaReplaceReferencesFunctionParserToken> type() {
         return SpreadsheetFormulaReplaceReferencesFunctionParserToken.class;

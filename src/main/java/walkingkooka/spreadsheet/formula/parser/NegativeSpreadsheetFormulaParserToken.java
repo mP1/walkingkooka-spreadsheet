@@ -1,0 +1,76 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+package walkingkooka.spreadsheet.formula.parser;
+
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.visit.Visiting;
+
+import java.util.List;
+
+/**
+ * A wrapper around a numeric type that is also a percentage.
+ */
+public final class NegativeSpreadsheetFormulaParserToken extends ParentSpreadsheetFormulaParserToken {
+
+    static NegativeSpreadsheetFormulaParserToken with(final List<ParserToken> value,
+                                                      final String text) {
+        return new NegativeSpreadsheetFormulaParserToken(
+                copyAndCheckTokens(value),
+                checkText(text)
+        );
+    }
+
+    private NegativeSpreadsheetFormulaParserToken(final List<ParserToken> value,
+                                                  final String text) {
+        super(value, text);
+
+        final List<ParserToken> without = ParserToken.filterWithoutNoise(value);
+        final int count = without.size();
+        if (1 != count) {
+            throw new IllegalArgumentException("Expected 1 token but got " + count + "=" + without);
+        }
+        this.parameter = without.get(0)
+                .cast(SpreadsheetFormulaParserToken.class);
+    }
+
+    public SpreadsheetFormulaParserToken parameter() {
+        return this.parameter;
+    }
+
+    private final SpreadsheetFormulaParserToken parameter;
+
+    // children.........................................................................................................
+
+    @Override
+    public NegativeSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                NegativeSpreadsheetFormulaParserToken::with
+        );
+    }
+
+    // SpreadsheetFormulaParserTokenVisitor....................................................................................
+
+    @Override
+    void accept(final SpreadsheetFormulaParserTokenVisitor visitor) {
+        if (Visiting.CONTINUE == visitor.startVisit(this)) {
+            this.acceptValues(visitor);
+        }
+        visitor.endVisit(this);
+    }
+}

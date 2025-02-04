@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.formula;
 import walkingkooka.Cast;
 
 public final class SpreadsheetFormulaReplaceReferencesFunctionTest extends SpreadsheetFormulaReplaceReferencesFunctionTestCase<SpreadsheetFormulaReplaceReferencesFunction<?>> {
+
     @Override
     public Class<SpreadsheetFormulaReplaceReferencesFunction<?>> type() {
         return Cast.to(SpreadsheetFormulaReplaceReferencesFunction.class);
