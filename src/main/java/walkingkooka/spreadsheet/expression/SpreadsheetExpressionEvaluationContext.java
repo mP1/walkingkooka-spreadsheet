@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
@@ -98,6 +99,13 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      * Loads the cell for the given {@link SpreadsheetCellReference}, note that the formula is not evaluated.
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
+
+    default SpreadsheetCell loadCellOrFail(final SpreadsheetCellReference cell) {
+        return this.loadCell(cell)
+                .orElseThrow(() -> new SpreadsheetErrorException(
+                        SpreadsheetError.selectionNotFound(cell))
+                );
+    }
 
     /**
      * Loads the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetLabelName}.
