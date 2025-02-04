@@ -38,6 +38,16 @@ public class FakeSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormula
     }
 
     @Override
+    protected Visiting startVisit(final BooleanSpreadsheetFormulaParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final BooleanSpreadsheetFormulaParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected Visiting startVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
         throw new UnsupportedOperationException();
     }
@@ -339,6 +349,11 @@ public class FakeSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormula
 
     @Override
     protected void visit(final BetweenSymbolSpreadsheetFormulaParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final BooleanLiteralSpreadsheetFormulaParserToken token) {
         throw new UnsupportedOperationException();
     }
 

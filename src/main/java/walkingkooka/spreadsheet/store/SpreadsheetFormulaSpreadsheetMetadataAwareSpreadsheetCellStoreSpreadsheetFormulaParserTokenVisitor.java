@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.formula.AdditionSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.AmPmSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.ApostropheSymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.BetweenSymbolSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.BooleanLiteralSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.BooleanSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.CellRangeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
@@ -139,6 +141,19 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     @Override
     protected void endVisit(final AdditionSpreadsheetFormulaParserToken token) {
         this.exit(token, SpreadsheetFormulaParserToken::addition);
+    }
+
+    @Override
+    protected Visiting startVisit(final BooleanSpreadsheetFormulaParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final BooleanSpreadsheetFormulaParserToken token) {
+        this.exit(
+                token,
+                SpreadsheetFormulaParserToken::booleanValue
+        );
     }
 
     @Override
@@ -443,6 +458,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
 
     @Override
     protected void visit(final BetweenSymbolSpreadsheetFormulaParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected void visit(final BooleanLiteralSpreadsheetFormulaParserToken token) {
         this.leaf(token);
     }
 

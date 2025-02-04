@@ -95,6 +95,34 @@ public abstract class ParentSpreadsheetFormulaParserTokenTestCase<T extends Pare
         return SpreadsheetFormulaParserToken.apostropheSymbol(APOSTROPHE, APOSTROPHE);
     }
 
+    final BooleanSpreadsheetFormulaParserToken booleanValue(final boolean value,
+                                                            final String text) {
+        return SpreadsheetFormulaParserToken.booleanValue(
+                Lists.of(
+                        SpreadsheetFormulaParserToken.booleanLiteral(
+                                value,
+                                text
+                        )
+                ),
+                "" + value
+        );
+    }
+
+
+    final BooleanLiteralSpreadsheetFormulaParserToken booleanLiteralFalse() {
+        return SpreadsheetFormulaParserToken.booleanLiteral(
+                false,
+                "false"
+        );
+    }
+
+    final BooleanLiteralSpreadsheetFormulaParserToken booleanLiteralTrue() {
+        return SpreadsheetFormulaParserToken.booleanLiteral(
+                true,
+                "true"
+        );
+    }
+
     final TextLiteralSpreadsheetFormulaParserToken colonTextLiteral() {
         return SpreadsheetFormulaParserToken.textLiteral(":", ":");
     }
