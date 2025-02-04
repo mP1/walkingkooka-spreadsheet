@@ -33,6 +33,16 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
+    // BooleanSpreadsheetFormulaParserToken.............................................................................
+
+    protected Visiting startVisit(final BooleanSpreadsheetFormulaParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final BooleanSpreadsheetFormulaParserToken token) {
+        // nop
+    }
+
     // CellRangeSpreadsheetFormulaParserToken....................................................................................
 
     protected Visiting startVisit(final CellRangeSpreadsheetFormulaParserToken token) {
@@ -334,6 +344,10 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
     }
 
     protected void visit(final BetweenSymbolSpreadsheetFormulaParserToken token) {
+        // nop
+    }
+
+    protected void visit(final BooleanLiteralSpreadsheetFormulaParserToken token) {
         // nop
     }
 

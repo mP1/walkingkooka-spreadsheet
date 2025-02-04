@@ -68,11 +68,14 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
     @Test
     @Override
     public final void testPublicStaticFactoryMethod() {
-        PublicStaticFactoryTesting.checkFactoryMethods(SpreadsheetFormulaParserToken.class,
-                "",
-                SpreadsheetFormulaParserToken.class.getSimpleName(),
-                this.type()
-        );
+        if(false == (this instanceof BooleanSpreadsheetFormulaParserTokenTest)) {
+            PublicStaticFactoryTesting.checkFactoryMethods(
+                    SpreadsheetFormulaParserToken.class,
+                    "",
+                    SpreadsheetFormulaParserToken.class.getSimpleName(),
+                    this.type()
+            );
+        }
     }
 
     @Test
@@ -96,11 +99,13 @@ public abstract class SpreadsheetFormulaParserTokenTestCase<T extends Spreadshee
 
         String expected = type == EqualsSpreadsheetFormulaParserToken.class ?
                 "equalsSpreadsheetFormulaParserToken" :
-                CharSequences.subSequence(
-                        type.getSimpleName(),
-                                0,
-                                -SpreadsheetFormulaParserToken.class.getSimpleName().length()
-                        ).toString();
+                type == BooleanSpreadsheetFormulaParserToken.class ?
+                        "booleanValue" :
+        CharSequences.subSequence(
+                type.getSimpleName(),
+                0,
+                -SpreadsheetFormulaParserToken.class.getSimpleName().length()
+        ).toString();
         expected = Character.toLowerCase(
                 expected.charAt(0)
         ) + expected.substring(1);

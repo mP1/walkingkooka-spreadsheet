@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.formula;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -577,9 +578,11 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetParserContext> TEXT = SpreadsheetDoubleQuotesParser.INSTANCE.setToString(TEXT_IDENTIFIER.value());
 
     /**
-     * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.
+     * Value literals such as apostrophe string, boolean literals "true" or "false", number, date, date-time, time or equals-sign and expression.
      * <pre>
      * 'String or text
+     * true // boolean true
+     * false // boolean false
      * 1.234 // number matched by the number parser
      * 31/12/1999 // matched using the date parser
      * 31/12/1999 12:58:59 // matched using the date-time parser
@@ -663,6 +666,10 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
         );
 
         predefined.put(
+                BOOLEAN_IDENTIFIER,
+                BOOLEAN
+        );
+        predefined.put(
                 NUMBER_IDENTIFIER,
                 SpreadsheetPattern.parseNumberParsePattern("#.#E+#;#.#%;#.#;#%;#").expressionParser() //
         );
@@ -683,8 +690,35 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                 );
     }
 
+    private static final EbnfIdentifierName BOOLEAN_IDENTIFIER = EbnfIdentifierName.with("BOOLEAN");
     private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
     private static final EbnfIdentifierName VALUE_IDENTIFIER = EbnfIdentifierName.with("VALUE");
+
+    /**
+     * Handles matching boolean literals "true" or "false".
+     */
+    private static Parser<SpreadsheetParserContext> BOOLEAN = symbol(
+            "true",
+            SpreadsheetFormulaParsers::transformBoolean
+    ).or(
+            symbol(
+                    "false",
+                    SpreadsheetFormulaParsers::transformBoolean
+            )
+    ).setToString(BOOLEAN_IDENTIFIER.toString());
+
+    private static SpreadsheetFormulaParserToken transformBoolean(final String text,
+                                                                  final String value) {
+        return SpreadsheetFormulaParserToken.booleanValue(
+                Lists.of(
+                        SpreadsheetFormulaParserToken.booleanLiteral(
+                                Boolean.parseBoolean(text),
+                                value
+                        )
+                ),
+                text
+        );
+    }
 
     /*
      * Processes the grammar and sets all parsers that have static fields.

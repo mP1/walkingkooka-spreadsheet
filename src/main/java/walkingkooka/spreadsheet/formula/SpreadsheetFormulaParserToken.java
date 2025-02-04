@@ -77,6 +77,28 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
+     * {@see BooleanLiteralSpreadsheetFormulaParserToken}
+     */
+    public static BooleanLiteralSpreadsheetFormulaParserToken booleanLiteral(final boolean value,
+                                                                             final String text) {
+        return BooleanLiteralSpreadsheetFormulaParserToken.with(
+                value,
+                text
+        );
+    }
+
+    /**
+     * {@see BooleanLiteralSpreadsheetFormulaParserToken}
+     */
+    public static BooleanSpreadsheetFormulaParserToken booleanValue(final List<ParserToken> value,
+                                                                    final String text) {
+        return BooleanSpreadsheetFormulaParserToken.with(
+                value,
+                text
+        );
+    }
+
+    /**
      * {@see CellRangeSpreadsheetFormulaParserToken}
      */
     public static CellRangeSpreadsheetFormulaParserToken cellRange(final List<ParserToken> value, final String text) {
@@ -658,6 +680,20 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
      */
     public final boolean isBetweenSymbol() {
         return this instanceof BetweenSymbolSpreadsheetFormulaParserToken;
+    }
+
+    /**
+     * Only {@link BooleanSpreadsheetFormulaParserToken} returns true
+     */
+    public final boolean isBoolean() {
+        return this instanceof BooleanSpreadsheetFormulaParserToken;
+    }
+
+    /**
+     * Only {@link BooleanLiteralSpreadsheetFormulaParserToken} returns true
+     */
+    public final boolean isBooleanLiteral() {
+        return this instanceof BooleanLiteralSpreadsheetFormulaParserToken;
     }
 
     /**
@@ -1296,6 +1332,11 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
 
         registerLeaf(
+                BooleanLiteralSpreadsheetFormulaParserToken.class,
+                SpreadsheetFormulaParserToken::unmarshallBooleanLiteral
+        );
+
+        registerLeaf(
                 ColumnReferenceSpreadsheetFormulaParserToken.class,
                 SpreadsheetFormulaParserToken::unmarshallColumnReference
         );
@@ -1404,6 +1445,16 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetFormulaParserToken::amPm
+        );
+    }
+
+    static BooleanLiteralSpreadsheetFormulaParserToken unmarshallBooleanLiteral(final JsonNode node,
+                                                                                final JsonNodeUnmarshallContext context) {
+        return unmarshallLeaf(
+                node,
+                Boolean.class,
+                context,
+                SpreadsheetFormulaParserToken::booleanLiteral
         );
     }
 
@@ -2006,6 +2057,11 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
 
         registerParent(
+                BooleanSpreadsheetFormulaParserToken.class,
+                SpreadsheetFormulaParserToken::unmarshallBoolean
+        );
+
+        registerParent(
                 CellReferenceSpreadsheetFormulaParserToken.class,
                 SpreadsheetFormulaParserToken::unmarshallCellReference
         );
@@ -2157,6 +2213,15 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetFormulaParserToken::addition
+        );
+    }
+
+    static BooleanSpreadsheetFormulaParserToken unmarshallBoolean(final JsonNode node,
+                                                                  final JsonNodeUnmarshallContext context) {
+        return unmarshallParent(
+                node,
+                context,
+                SpreadsheetFormulaParserToken::booleanValue
         );
     }
 

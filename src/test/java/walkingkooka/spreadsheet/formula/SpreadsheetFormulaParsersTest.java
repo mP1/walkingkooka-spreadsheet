@@ -394,15 +394,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     // expression.......................................................................................................
 
     @Test
-    public void testExpressionApostropheStringFails() {
+    public void testExpressionWithApostropheStringFails() {
         this.expressionParserParseFails(
                 "'Apostrophe String",
-                "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
     @Test
-    public void testExpressionFunction() {
+    public void testExpressionWithFunction() {
         final String text = "z(123)";
 
         this.expressionParserParseStringAndCheck(
@@ -419,7 +419,31 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     }
 
     @Test
-    public void testExpressionNumber() {
+    public void testExpressionWithTrue() {
+        final String text = "true";
+
+        this.expressionParserParseStringAndCheck(
+                text,
+                booleanValue(
+                        booleanLiteral(true)
+                )
+        );
+    }
+
+    @Test
+    public void testExpressionWithFalse() {
+        final String text = "false";
+
+        this.expressionParserParseStringAndCheck(
+                text,
+                booleanValue(
+                        booleanLiteral(false)
+                )
+        );
+    }
+
+    @Test
+    public void testExpressionWithNumber() {
         final String text = "123";
 
         this.expressionParserParseStringAndCheck(
@@ -429,7 +453,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     }
 
     @Test
-    public void testExpressionAdditionNegativeNumberPlusNumber() {
+    public void testExpressionWithAdditionNegativeNumberPlusNumber() {
         final String text = "-1+2";
 
         this.expressionParserParseStringAndCheck(
@@ -446,7 +470,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     }
 
     @Test
-    public void testExpressionAdditionNumberPlusNumber() {
+    public void testExpressionWithAdditionNumberPlusNumber() {
         final String text = "1+2";
 
         this.expressionParserParseStringAndCheck(
@@ -493,7 +517,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testTemplateExpressionApostropheStringFails() {
         this.templateExpressionParserParseFails(
                 "'Apostrophe String",
-                "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | TEMPLATE_VALUE_NAME | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | TEMPLATE_VALUE_NAME | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -635,6 +659,40 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                         apostropheText),
                 apostropheText,
                 ""
+        );
+    }
+
+    // boolean..........................................................................................................
+
+    @Test
+    public void testValueOrExpressionParserWithTrue() {
+        final String text = "true";
+
+        this.valueOrExpressionParserParseAndCheck(
+                text,
+                SpreadsheetFormulaParserToken.booleanValue(
+                        Lists.of(
+                                booleanLiteral(true)
+                        ),
+                        text
+                ),
+                text
+        );
+    }
+
+    @Test
+    public void testValueOrExpressionParserWithFalse() {
+        final String text = "false";
+
+        this.valueOrExpressionParserParseAndCheck(
+                text,
+                SpreadsheetFormulaParserToken.booleanValue(
+                        Lists.of(
+                                booleanLiteral(false)
+                        ),
+                        text
+                ),
+                text
         );
     }
 
@@ -1280,7 +1338,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testValueOrExpressionParserParseStarFails() {
         this.valueOrExpressionParserParseFails(
                 "1+*",
-                "Invalid character '*' at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '*' at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3325,7 +3383,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testValueOrExpressionParserParseInvalidTokenFails() {
         this.valueOrExpressionParserParseFails(
                 "!",
-                "Invalid character '!' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '!' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3333,7 +3391,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testValueOrExpressionParserParseInvalidTokenFails2() {
         this.valueOrExpressionParserParseFails(
                 "  !",
-                "Invalid character '!' at (3,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '!' at (3,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3350,7 +3408,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     private void valueOrExpressionParserParseFails() {
         this.valueOrExpressionParserParseFails(
                 "1+!",
-                "Invalid character '!' at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '!' at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -3358,7 +3416,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testParseInvalidGroupTokenFails() {
         this.valueOrExpressionParserParseFails(
                 "( !",
-                "Invalid character '!' at (3,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+                "Invalid character '!' at (3,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -4228,6 +4286,22 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private SpreadsheetFormulaParserToken betweenSymbol() {
         return SpreadsheetFormulaParserToken.betweenSymbol(":", ":");
+    }
+
+    private BooleanSpreadsheetFormulaParserToken booleanValue(final ParserToken...tokens) {
+        return SpreadsheetFormulaParserToken.booleanValue(
+                Lists.of(tokens),
+                ParserToken.text(
+                        Lists.of(tokens)
+                )
+        );
+    }
+
+    private BooleanLiteralSpreadsheetFormulaParserToken booleanLiteral(final boolean value) {
+        return SpreadsheetFormulaParserToken.booleanLiteral(
+                value,
+                String.valueOf(value)
+        );
     }
 
     private CellReferenceSpreadsheetFormulaParserToken cellReference(final ParserToken... tokens) {

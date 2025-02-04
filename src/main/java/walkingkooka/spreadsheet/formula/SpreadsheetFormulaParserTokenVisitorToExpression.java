@@ -74,6 +74,20 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     }
 
     @Override
+    protected Visiting startVisit(final BooleanSpreadsheetFormulaParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final BooleanSpreadsheetFormulaParserToken token) {
+        this.exit();
+        this.add(
+                Expression.value(token.toBoolean()),
+                token
+        );
+    }
+
+    @Override
     protected Visiting startVisit(final CellRangeSpreadsheetFormulaParserToken token) {
         return this.enter();
     }
