@@ -36,14 +36,14 @@ final class CellRangeSpreadsheetParserTokenSpreadsheetFormulaParserTokenVisitor 
     }
 
     @Override
-    protected Visiting startVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
+    protected Visiting startVisit(final CellSpreadsheetFormulaParserToken token) {
         return Visiting.CONTINUE;
     }
 
     @Override
-    protected void endVisit(final CellReferenceSpreadsheetFormulaParserToken token) {
+    protected void endVisit(final CellSpreadsheetFormulaParserToken token) {
         this.components.add(token);
     }
 
-    final List<CellReferenceSpreadsheetFormulaParserToken> components = Lists.array();
+    final List<CellSpreadsheetFormulaParserToken> components = Lists.array();
 }

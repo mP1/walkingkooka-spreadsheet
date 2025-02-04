@@ -17,15 +17,15 @@
 package walkingkooka.spreadsheet.formula;
 
 /**
- * Used to collect the column and row for a {@link CellReferenceSpreadsheetFormulaParserToken}.
+ * Used to collect the column and row for a {@link CellSpreadsheetFormulaParserToken}.
  */
-final class CellReferenceSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
+final class CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
 
-    static CellReferenceSpreadsheetFormulaParserTokenVisitor with() {
-        return new CellReferenceSpreadsheetFormulaParserTokenVisitor();
+    static CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor with() {
+        return new CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor();
     }
 
-    private CellReferenceSpreadsheetFormulaParserTokenVisitor() {
+    private CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor() {
         super();
     }
 

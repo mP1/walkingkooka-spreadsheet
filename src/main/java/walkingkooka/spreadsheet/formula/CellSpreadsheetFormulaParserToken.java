@@ -27,18 +27,18 @@ import java.util.List;
 /**
  * A reference that includes a defined name or column and row.
  */
-public final class CellReferenceSpreadsheetFormulaParserToken extends ParentSpreadsheetFormulaParserToken
+public final class CellSpreadsheetFormulaParserToken extends ParentSpreadsheetFormulaParserToken
         implements SpreadsheetReferenceParserToken,
         HasSpreadsheetReference<SpreadsheetCellReference> {
 
-    static CellReferenceSpreadsheetFormulaParserToken with(final List<ParserToken> value, final String text) {
-        return new CellReferenceSpreadsheetFormulaParserToken(Lists.immutable(value), checkText(text));
+    static CellSpreadsheetFormulaParserToken with(final List<ParserToken> value, final String text) {
+        return new CellSpreadsheetFormulaParserToken(Lists.immutable(value), checkText(text));
     }
 
-    private CellReferenceSpreadsheetFormulaParserToken(final List<ParserToken> value, final String text) {
+    private CellSpreadsheetFormulaParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
 
-        final CellReferenceSpreadsheetFormulaParserTokenVisitor visitor = CellReferenceSpreadsheetFormulaParserTokenVisitor.with();
+        final CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor visitor = CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisitor.with();
         visitor.accept(this);
 
         final RowReferenceSpreadsheetFormulaParserToken row = visitor.row;
@@ -61,11 +61,11 @@ public final class CellReferenceSpreadsheetFormulaParserToken extends ParentSpre
     // children.........................................................................................................
 
     @Override
-    public CellReferenceSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
+    public CellSpreadsheetFormulaParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
                 this,
                 children,
-                CellReferenceSpreadsheetFormulaParserToken::with
+                CellSpreadsheetFormulaParserToken::with
         );
     }
 

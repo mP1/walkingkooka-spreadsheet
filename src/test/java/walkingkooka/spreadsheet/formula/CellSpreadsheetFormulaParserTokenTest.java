@@ -32,7 +32,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class CellReferenceSpreadsheetFormulaParserTokenTest extends ParentSpreadsheetFormulaParserTokenTestCase<CellReferenceSpreadsheetFormulaParserToken>
+public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadsheetFormulaParserTokenTestCase<CellSpreadsheetFormulaParserToken>
         implements HasSpreadsheetReferenceTesting {
 
     private final static String ROW_TEXT = "B";
@@ -60,7 +60,7 @@ public final class CellReferenceSpreadsheetFormulaParserTokenTest extends Parent
         final ColumnReferenceSpreadsheetFormulaParserToken column = this.column();
         final RowReferenceSpreadsheetFormulaParserToken row = this.row();
         final String text = ROW_TEXT + ":" + COLUMN_TEXT;
-        final CellReferenceSpreadsheetFormulaParserToken cell = this.createToken(text, row, column);
+        final CellSpreadsheetFormulaParserToken cell = this.createToken(text, row, column);
         this.textAndCheck(cell, text);
         this.checkValue(cell, row, column);
         this.checkCell(cell, row, column);
@@ -72,8 +72,8 @@ public final class CellReferenceSpreadsheetFormulaParserTokenTest extends Parent
     }
 
     @Override
-    CellReferenceSpreadsheetFormulaParserToken createToken(final String text, final List<ParserToken> tokens) {
-        return SpreadsheetFormulaParserToken.cellReference(tokens, text);
+    CellSpreadsheetFormulaParserToken createToken(final String text, final List<ParserToken> tokens) {
+        return SpreadsheetFormulaParserToken.cell(tokens, text);
     }
 
     private ColumnReferenceSpreadsheetFormulaParserToken column() {
@@ -92,7 +92,7 @@ public final class CellReferenceSpreadsheetFormulaParserTokenTest extends Parent
         return SpreadsheetFormulaParserToken.rowReference(SpreadsheetColumnOrRowReference.row(value, SpreadsheetReferenceKind.RELATIVE), text);
     }
 
-    private void checkCell(final CellReferenceSpreadsheetFormulaParserToken cell,
+    private void checkCell(final CellSpreadsheetFormulaParserToken cell,
                            final RowReferenceSpreadsheetFormulaParserToken row,
                            final ColumnReferenceSpreadsheetFormulaParserToken column) {
         this.checkEquals(
@@ -116,26 +116,26 @@ public final class CellReferenceSpreadsheetFormulaParserTokenTest extends Parent
     }
 
     @Override
-    public CellReferenceSpreadsheetFormulaParserToken createDifferentToken() {
+    public CellSpreadsheetFormulaParserToken createDifferentToken() {
         return this.createToken("D9", Lists.of(this.column(9), this.row(3, "D")));
     }
 
     @Override
-    public Class<CellReferenceSpreadsheetFormulaParserToken> type() {
-        return CellReferenceSpreadsheetFormulaParserToken.class;
+    public Class<CellSpreadsheetFormulaParserToken> type() {
+        return CellSpreadsheetFormulaParserToken.class;
     }
 
     @Override
-    public CellReferenceSpreadsheetFormulaParserToken unmarshall(final JsonNode from,
-                                                                 final JsonNodeUnmarshallContext context) {
-        return SpreadsheetFormulaParserToken.unmarshallCellReference(from, context);
+    public CellSpreadsheetFormulaParserToken unmarshall(final JsonNode from,
+                                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormulaParserToken.unmarshallCell(from, context);
     }
 
     // HasSpreadsheetReference..........................................................................................
 
     @Test
     public void testReference() {
-        final CellReferenceSpreadsheetFormulaParserToken token = this.createToken();
+        final CellSpreadsheetFormulaParserToken token = this.createToken();
 
         this.referenceAndCheck(
                 token,

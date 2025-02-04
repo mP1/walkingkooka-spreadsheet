@@ -24,7 +24,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.formula.CellReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.CellSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
@@ -367,7 +367,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                     parseSelection(
                             CELL_PARSER,
                             cursor,
-                            CellReferenceSpreadsheetFormulaParserToken.class
+                            CellSpreadsheetFormulaParserToken.class
                     ).reference()
             );
         } else {

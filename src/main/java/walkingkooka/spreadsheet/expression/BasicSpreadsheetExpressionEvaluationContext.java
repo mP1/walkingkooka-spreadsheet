@@ -113,7 +113,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cellReference) {
-        Objects.requireNonNull(cellReference, "cellReference");
+        Objects.requireNonNull(cellReference, "cell");
 
         Optional<SpreadsheetCell> loaded;
 

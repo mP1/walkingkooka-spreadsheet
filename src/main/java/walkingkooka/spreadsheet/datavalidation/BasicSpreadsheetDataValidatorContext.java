@@ -51,7 +51,7 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     static BasicSpreadsheetDataValidatorContext with(final ExpressionReference cellReference,
                                                      final Object value,
                                                      final ExpressionEvaluationContext context) {
-        Objects.requireNonNull(cellReference, "cellReference");
+        Objects.requireNonNull(cellReference, "cell");
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 

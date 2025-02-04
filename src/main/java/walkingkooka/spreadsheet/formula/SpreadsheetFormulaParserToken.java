@@ -106,10 +106,10 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * {@see CellReferenceSpreadsheetFormulaParserToken}
+     * {@see CellSpreadsheetFormulaParserToken}
      */
-    public static CellReferenceSpreadsheetFormulaParserToken cellReference(final List<ParserToken> value, final String text) {
-        return CellReferenceSpreadsheetFormulaParserToken.with(value, text);
+    public static CellSpreadsheetFormulaParserToken cell(final List<ParserToken> value, final String text) {
+        return CellSpreadsheetFormulaParserToken.with(value, text);
     }
 
     /**
@@ -704,10 +704,10 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link CellReferenceSpreadsheetFormulaParserToken} return true
+     * Only {@link CellSpreadsheetFormulaParserToken} return true
      */
-    public final boolean isCellReference() {
-        return this instanceof CellReferenceSpreadsheetFormulaParserToken;
+    public final boolean isCell() {
+        return this instanceof CellSpreadsheetFormulaParserToken;
     }
 
     /**
@@ -2062,8 +2062,8 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
 
         registerParent(
-                CellReferenceSpreadsheetFormulaParserToken.class,
-                SpreadsheetFormulaParserToken::unmarshallCellReference
+                CellSpreadsheetFormulaParserToken.class,
+                SpreadsheetFormulaParserToken::unmarshallCell
         );
 
         registerParent(
@@ -2225,12 +2225,12 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
     }
 
-    static CellReferenceSpreadsheetFormulaParserToken unmarshallCellReference(final JsonNode node,
-                                                                              final JsonNodeUnmarshallContext context) {
+    static CellSpreadsheetFormulaParserToken unmarshallCell(final JsonNode node,
+                                                            final JsonNodeUnmarshallContext context) {
         return unmarshallParent(
                 node,
                 context,
-                SpreadsheetFormulaParserToken::cellReference
+                SpreadsheetFormulaParserToken::cell
         );
     }
 
