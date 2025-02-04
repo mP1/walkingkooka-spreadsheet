@@ -19,13 +19,13 @@ package walkingkooka.spreadsheet.formula;
 /**
  * Used to collect the column and row for a {@link CellReferenceSpreadsheetFormulaParserToken}.
  */
-final class SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
+final class CellReferenceSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormulaParserTokenVisitor {
 
-    static SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor with() {
-        return new SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor();
+    static CellReferenceSpreadsheetFormulaParserTokenVisitor with() {
+        return new CellReferenceSpreadsheetFormulaParserTokenVisitor();
     }
 
-    private SpreadsheetCellReferenceParserTokenSpreadsheetFormulaParserTokenVisitor() {
+    private CellReferenceSpreadsheetFormulaParserTokenVisitor() {
         super();
     }
 
