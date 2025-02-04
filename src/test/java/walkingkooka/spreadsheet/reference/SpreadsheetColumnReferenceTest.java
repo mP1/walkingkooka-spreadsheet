@@ -1462,7 +1462,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
         this.toParserTokenAndCheck(
                 SpreadsheetSelection.parseColumn(text),
-                SpreadsheetFormulaParserToken.columnReference(
+                SpreadsheetFormulaParserToken.column(
                         SpreadsheetSelection.parseColumn(text),
                         text
                 ),

@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.formula.CellSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.LeafSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
@@ -449,7 +449,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return parseTextOrFail(
                 text,
                 COLUMN_PARSER
-        ).cast(ColumnReferenceSpreadsheetFormulaParserToken.class)
+        ).cast(ColumnSpreadsheetFormulaParserToken.class)
                 .value();
     }
 
@@ -499,7 +499,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 text,
                 ALL_COLUMNS,
                 SpreadsheetFormulaParsers.column(),
-                (t) -> t.cast(ColumnReferenceSpreadsheetFormulaParserToken.class).value(),
+                (t) -> t.cast(ColumnSpreadsheetFormulaParserToken.class).value(),
                 SpreadsheetColumnRangeReference::with
         );
     }

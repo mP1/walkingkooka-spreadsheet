@@ -21,7 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.formula.CellSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.ColumnReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -175,9 +175,9 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
                     List<ParserToken> newChildren = Lists.array();
                     for (final ParserToken parserToken : c.children()) {
                         ParserToken add = parserToken;
-                        if (parserToken instanceof ColumnReferenceSpreadsheetFormulaParserToken) {
+                        if (parserToken instanceof ColumnSpreadsheetFormulaParserToken) {
                             add = this.fixColumnReferenceParserToken(
-                                    parserToken.cast(ColumnReferenceSpreadsheetFormulaParserToken.class)
+                                    parserToken.cast(ColumnSpreadsheetFormulaParserToken.class)
                             ).orElse(null);
                         } else {
                             if (parserToken instanceof RowReferenceSpreadsheetFormulaParserToken) {
@@ -201,10 +201,10 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     /**
-     * Handles a column {@link ColumnReferenceSpreadsheetFormulaParserToken} within an expression.
+     * Handles a column {@link ColumnSpreadsheetFormulaParserToken} within an expression.
      * It may be returned unmodified, replaced by a expression if the reference was deleted or simply have the reference adjusted.
      */
-    abstract Optional<ColumnReferenceSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnReferenceSpreadsheetFormulaParserToken token);
+    abstract Optional<ColumnSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnSpreadsheetFormulaParserToken token);
 
     /**
      * Handles a column {@link RowReferenceSpreadsheetFormulaParserToken} within an expression.

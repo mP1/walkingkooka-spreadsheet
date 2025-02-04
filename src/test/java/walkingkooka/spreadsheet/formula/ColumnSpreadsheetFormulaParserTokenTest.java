@@ -27,7 +27,7 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColumnReferenceSpreadsheetFormulaParserTokenTest extends NonSymbolSpreadsheetFormulaParserTokenTestCase<ColumnReferenceSpreadsheetFormulaParserToken, SpreadsheetColumnReference> {
+public final class ColumnSpreadsheetFormulaParserTokenTest extends NonSymbolSpreadsheetFormulaParserTokenTestCase<ColumnSpreadsheetFormulaParserToken, SpreadsheetColumnReference> {
 
     @Test
     public void testWithEmptyTextFails() {
@@ -48,7 +48,7 @@ public final class ColumnReferenceSpreadsheetFormulaParserTokenTest extends NonS
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final ColumnReferenceSpreadsheetFormulaParserToken token = this.createToken();
+        final ColumnSpreadsheetFormulaParserToken token = this.createToken();
 
         new FakeSpreadsheetFormulaParserTokenVisitor() {
             @Override
@@ -78,7 +78,7 @@ public final class ColumnReferenceSpreadsheetFormulaParserTokenTest extends NonS
             }
 
             @Override
-            protected void visit(final ColumnReferenceSpreadsheetFormulaParserToken t) {
+            protected void visit(final ColumnSpreadsheetFormulaParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -97,23 +97,23 @@ public final class ColumnReferenceSpreadsheetFormulaParserTokenTest extends NonS
     }
 
     @Override
-    protected ColumnReferenceSpreadsheetFormulaParserToken createToken(final SpreadsheetColumnReference value, final String text) {
-        return ColumnReferenceSpreadsheetFormulaParserToken.with(value, text);
+    protected ColumnSpreadsheetFormulaParserToken createToken(final SpreadsheetColumnReference value, final String text) {
+        return ColumnSpreadsheetFormulaParserToken.with(value, text);
     }
 
     @Override
-    public ColumnReferenceSpreadsheetFormulaParserToken createDifferentToken() {
-        return ColumnReferenceSpreadsheetFormulaParserToken.with(SpreadsheetReferenceKind.RELATIVE.column(999), "999");
+    public ColumnSpreadsheetFormulaParserToken createDifferentToken() {
+        return ColumnSpreadsheetFormulaParserToken.with(SpreadsheetReferenceKind.RELATIVE.column(999), "999");
     }
 
     @Override
-    public Class<ColumnReferenceSpreadsheetFormulaParserToken> type() {
-        return ColumnReferenceSpreadsheetFormulaParserToken.class;
+    public Class<ColumnSpreadsheetFormulaParserToken> type() {
+        return ColumnSpreadsheetFormulaParserToken.class;
     }
 
     @Override
-    public ColumnReferenceSpreadsheetFormulaParserToken unmarshall(final JsonNode from,
-                                                                   final JsonNodeUnmarshallContext context) {
-        return SpreadsheetFormulaParserToken.unmarshallColumnReference(from, context);
+    public ColumnSpreadsheetFormulaParserToken unmarshall(final JsonNode from,
+                                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormulaParserToken.unmarshallColumn(from, context);
     }
 }

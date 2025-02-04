@@ -350,7 +350,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    protected void visit(final ColumnReferenceSpreadsheetFormulaParserToken token) {
+    protected void visit(final ColumnSpreadsheetFormulaParserToken token) {
         // nop
     }
 
