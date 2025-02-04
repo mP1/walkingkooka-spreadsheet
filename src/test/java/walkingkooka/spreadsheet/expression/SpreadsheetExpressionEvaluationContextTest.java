@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
@@ -104,6 +105,23 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
                 },
                 label,
                 SpreadsheetError.selectionNotFound(label)
+        );
+    }
+
+    @Test
+    public void testReferenceOrFailAbsentWhenNotSpreadsheetExpressionReference() {
+        final TemplateValueName notSpreadsheetExpressionReference = TemplateValueName.with("TemplateValueName123");
+
+        this.referenceOrFailAndCheck(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+                    @Override
+                    public Optional<Optional<Object>> reference(final ExpressionReference r) {
+                        assertSame(notSpreadsheetExpressionReference, r, "reference");
+                        return Optional.empty();
+                    }
+                },
+                notSpreadsheetExpressionReference,
+                SpreadsheetError.referenceNotFound(notSpreadsheetExpressionReference)
         );
     }
 
