@@ -22,18 +22,18 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 /**
  * A token that holds a row reference.
  */
-public final class RowReferenceSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<SpreadsheetRowReference>
+public final class RowSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<SpreadsheetRowReference>
         implements HasSpreadsheetReference<SpreadsheetRowReference> {
 
-    static RowReferenceSpreadsheetFormulaParserToken with(final SpreadsheetRowReference value,
-                                                          final String text) {
-        return new RowReferenceSpreadsheetFormulaParserToken(
+    static RowSpreadsheetFormulaParserToken with(final SpreadsheetRowReference value,
+                                                 final String text) {
+        return new RowSpreadsheetFormulaParserToken(
                 checkValue(value),
                 checkText(text)
         );
     }
 
-    private RowReferenceSpreadsheetFormulaParserToken(final SpreadsheetRowReference value, final String text) {
+    private RowSpreadsheetFormulaParserToken(final SpreadsheetRowReference value, final String text) {
         super(value, text);
     }
 

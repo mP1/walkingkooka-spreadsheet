@@ -90,7 +90,7 @@ public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpre
             }
 
             @Override
-            protected void visit(final RowReferenceSpreadsheetFormulaParserToken t) {
+            protected void visit(final RowSpreadsheetFormulaParserToken t) {
                 b.append("8");
             }
 
@@ -159,8 +159,8 @@ public final class CellRangeSpreadsheetFormulaParserTokenTest extends BinarySpre
         );
     }
 
-    private RowReferenceSpreadsheetFormulaParserToken row(final String text) {
-        return SpreadsheetFormulaParserToken.rowReference(
+    private RowSpreadsheetFormulaParserToken row(final String text) {
+        return SpreadsheetFormulaParserToken.row(
                 SpreadsheetSelection.parseRow(text),
                 text
         );

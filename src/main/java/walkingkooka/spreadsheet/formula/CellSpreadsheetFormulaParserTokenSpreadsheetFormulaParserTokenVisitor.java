@@ -35,10 +35,10 @@ final class CellSpreadsheetFormulaParserTokenSpreadsheetFormulaParserTokenVisito
     }
 
     @Override
-    protected void visit(final RowReferenceSpreadsheetFormulaParserToken token) {
+    protected void visit(final RowSpreadsheetFormulaParserToken token) {
         this.row = token;
     }
 
     ColumnSpreadsheetFormulaParserToken column;
-    RowReferenceSpreadsheetFormulaParserToken row;
+    RowSpreadsheetFormulaParserToken row;
 }

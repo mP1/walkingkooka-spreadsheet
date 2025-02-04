@@ -88,7 +88,7 @@ import walkingkooka.spreadsheet.formula.PercentSymbolSpreadsheetFormulaParserTok
 import walkingkooka.spreadsheet.formula.PlusSymbolSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.PowerSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.PowerSymbolSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SecondsSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserTokenVisitor;
@@ -698,7 +698,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreSpread
     }
 
     @Override
-    protected void visit(final RowReferenceSpreadsheetFormulaParserToken token) {
+    protected void visit(final RowSpreadsheetFormulaParserToken token) {
         this.leaf(token);
     }
 

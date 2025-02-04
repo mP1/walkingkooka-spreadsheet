@@ -1099,7 +1099,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public double rowHeight(final SpreadsheetRowReference rowReference,
                             final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(rowReference, "rowReference");
+        Objects.requireNonNull(rowReference, "row");
         Objects.requireNonNull(context, "context");
 
         double rowHeight = 0;

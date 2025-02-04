@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.formula.ColumnSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.formula.RowReferenceSpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.formula.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -81,21 +81,21 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow extend
     }
 
     @Override
-    Optional<RowReferenceSpreadsheetFormulaParserToken> fixRowReferenceParserToken(final RowReferenceSpreadsheetFormulaParserToken token) {
+    Optional<RowSpreadsheetFormulaParserToken> fixRowReferenceParserToken(final RowSpreadsheetFormulaParserToken token) {
         return this.deleteOrInsert.isRowDeleted(token) ?
                 Optional.empty() :
                 this.fixRowReferenceParserToken0(token);
     }
 
-    private Optional<RowReferenceSpreadsheetFormulaParserToken> fixRowReferenceParserToken0(final RowReferenceSpreadsheetFormulaParserToken token) {
+    private Optional<RowSpreadsheetFormulaParserToken> fixRowReferenceParserToken0(final RowSpreadsheetFormulaParserToken token) {
         final SpreadsheetRowReference old = token.value();
         final int value = old.value();
 
-        RowReferenceSpreadsheetFormulaParserToken result = token;
+        RowSpreadsheetFormulaParserToken result = token;
 
         if (value > this.value) {
             final SpreadsheetRowReference reference = old.setValue(value + this.deleteOrInsert.fixColumnOrRowReference(this.count));
-            result = SpreadsheetFormulaParserToken.rowReference(reference, reference.toString());
+            result = SpreadsheetFormulaParserToken.row(reference, reference.toString());
         }
 
         return Optional.of(result);
