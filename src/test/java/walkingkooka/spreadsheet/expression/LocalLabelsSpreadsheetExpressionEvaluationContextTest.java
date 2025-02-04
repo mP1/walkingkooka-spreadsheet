@@ -23,7 +23,9 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
@@ -38,6 +40,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import java.math.MathContext;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -314,6 +317,13 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                 LocalLabelsSpreadsheetExpressionEvaluationContext.with(
                         LABEL_TO_VALUES,
                         new FakeSpreadsheetExpressionEvaluationContext() {
+
+                            @Override
+                            public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+                                Objects.requireNonNull(cell, "cell");
+
+                                throw new UnsupportedOperationException();
+                            }
 
                             @Override
                             public String currencySymbol() {

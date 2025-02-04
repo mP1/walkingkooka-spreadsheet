@@ -89,6 +89,14 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
 
     // loadCell.........................................................................................................
 
+    @Test
+    default void testLoadCellWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().loadCell(null)
+        );
+    }
+
     default void loadCellAndCheck(final C context,
                                   final SpreadsheetCellReference cellReference,
                                   final Optional<SpreadsheetCell> expected) {
