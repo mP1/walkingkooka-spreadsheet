@@ -40,7 +40,7 @@ public final class NumberSpreadsheetFormulaParserToken extends ValueSpreadsheetF
      * Creates a {@link ExpressionNumber} parse the tokens in this {@link NumberSpreadsheetFormulaParserToken}.
      */
     public ExpressionNumber toNumber(final ExpressionNumberContext context) {
-        return SpreadsheetFormulaParserTokenVisitorExpressionNumber.toExpressionNumber(
+        return NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor.toExpressionNumber(
                 this,
                 context
         );
