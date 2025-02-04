@@ -63,7 +63,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     @Override
     public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
         // required so SpreadsheetLabelNameResolverTesting.testResolveLabelWithNullFails passes
-        Objects.requireNonNull(labelName, "labelName");
+        Objects.requireNonNull(labelName, "label");
 
         throw new UnsupportedOperationException();
     }

@@ -438,7 +438,7 @@ public class FakeSpreadsheetFormulaParserTokenVisitor extends SpreadsheetFormula
     }
 
     @Override
-    protected void visit(final LabelNameSpreadsheetFormulaParserToken token) {
+    protected void visit(final LabelSpreadsheetFormulaParserToken token) {
         throw new UnsupportedOperationException();
     }
 

@@ -28,7 +28,7 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class LabelNameSpreadsheetFormulaParserTokenTest extends NonSymbolSpreadsheetFormulaParserTokenTestCase<LabelNameSpreadsheetFormulaParserToken, SpreadsheetLabelName>
+public final class LabelSpreadsheetFormulaParserTokenTest extends NonSymbolSpreadsheetFormulaParserTokenTestCase<LabelSpreadsheetFormulaParserToken, SpreadsheetLabelName>
         implements HasSpreadsheetReferenceTesting {
 
     @Test
@@ -39,7 +39,7 @@ public final class LabelNameSpreadsheetFormulaParserTokenTest extends NonSymbolS
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final LabelNameSpreadsheetFormulaParserToken token = this.createToken();
+        final LabelSpreadsheetFormulaParserToken token = this.createToken();
 
         new FakeSpreadsheetFormulaParserTokenVisitor() {
             @Override
@@ -69,7 +69,7 @@ public final class LabelNameSpreadsheetFormulaParserTokenTest extends NonSymbolS
             }
 
             @Override
-            protected void visit(final LabelNameSpreadsheetFormulaParserToken t) {
+            protected void visit(final LabelSpreadsheetFormulaParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -88,27 +88,27 @@ public final class LabelNameSpreadsheetFormulaParserTokenTest extends NonSymbolS
     }
 
     @Override
-    LabelNameSpreadsheetFormulaParserToken createToken(final SpreadsheetLabelName value, final String text) {
-        return LabelNameSpreadsheetFormulaParserToken.with(value, text);
+    LabelSpreadsheetFormulaParserToken createToken(final SpreadsheetLabelName value, final String text) {
+        return LabelSpreadsheetFormulaParserToken.with(value, text);
     }
 
     @Override
-    public LabelNameSpreadsheetFormulaParserToken createDifferentToken() {
-        return LabelNameSpreadsheetFormulaParserToken.with(
+    public LabelSpreadsheetFormulaParserToken createDifferentToken() {
+        return LabelSpreadsheetFormulaParserToken.with(
                 SpreadsheetSelection.labelName("different"),
                 "different"
         );
     }
 
     @Override
-    public Class<LabelNameSpreadsheetFormulaParserToken> type() {
-        return LabelNameSpreadsheetFormulaParserToken.class;
+    public Class<LabelSpreadsheetFormulaParserToken> type() {
+        return LabelSpreadsheetFormulaParserToken.class;
     }
 
     @Override
-    public LabelNameSpreadsheetFormulaParserToken unmarshall(final JsonNode from,
-                                                             final JsonNodeUnmarshallContext context) {
-        return SpreadsheetFormulaParserToken.unmarshallLabelName(from, context);
+    public LabelSpreadsheetFormulaParserToken unmarshall(final JsonNode from,
+                                                         final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormulaParserToken.unmarshallLabel(from, context);
     }
 
     // HasSpreadsheetReference.........................................................................................

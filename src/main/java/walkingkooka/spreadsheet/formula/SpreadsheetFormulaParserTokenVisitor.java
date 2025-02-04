@@ -418,7 +418,7 @@ public abstract class SpreadsheetFormulaParserTokenVisitor extends ParserTokenVi
         // nop
     }
 
-    protected void visit(final LabelNameSpreadsheetFormulaParserToken token) {
+    protected void visit(final LabelSpreadsheetFormulaParserToken token) {
         // nop
     }
 

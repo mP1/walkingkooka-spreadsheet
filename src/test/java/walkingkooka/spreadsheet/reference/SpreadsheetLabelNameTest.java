@@ -544,7 +544,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
         this.toParserTokenAndCheck(
                 SpreadsheetSelection.labelName(text),
-                SpreadsheetFormulaParserToken.labelName(
+                SpreadsheetFormulaParserToken.label(
                         SpreadsheetSelection.labelName(text),
                         text
                 ),

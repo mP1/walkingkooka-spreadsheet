@@ -36,7 +36,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetParser} that consumes a {@link LabelNameSpreadsheetFormulaParserToken} matching a label.
+ * A {@link SpreadsheetParser} that consumes a {@link LabelSpreadsheetFormulaParserToken} matching a label.
  * Note {@link #tokens(SpreadsheetParserContext)} has no pattern representation and always returns {@link #NO_TOKENS}.
  */
 final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
@@ -76,7 +76,7 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
         if (cursor.isEmpty() || '$' != cursor.at()) {
             final String text = stringParserToken.text();
             if (SpreadsheetSelection.isLabelText(text)) {
-                token = SpreadsheetFormulaParserToken.labelName(
+                token = SpreadsheetFormulaParserToken.label(
                         SpreadsheetSelection.labelName(text),
                         text
                 );

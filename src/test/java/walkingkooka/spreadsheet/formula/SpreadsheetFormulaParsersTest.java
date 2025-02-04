@@ -1146,7 +1146,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final String text = "Hello";
 
         this.cellOrCellRangeOrLabelParseAndCheck(text,
-                SpreadsheetFormulaParserToken.labelName(SpreadsheetSelection.labelName(text), text),
+                SpreadsheetFormulaParserToken.label(SpreadsheetSelection.labelName(text), text),
                 text);
     }
 
@@ -1196,8 +1196,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testCellRangeParserParseLabelToLabel() {
-        final LabelNameSpreadsheetFormulaParserToken from = this.label("parse");
-        final LabelNameSpreadsheetFormulaParserToken to = this.label("to");
+        final LabelSpreadsheetFormulaParserToken from = this.label("parse");
+        final LabelSpreadsheetFormulaParserToken to = this.label("to");
 
         final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String text = range.text();
@@ -1209,7 +1209,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testCellRangeParserParseCellToLabel() {
         final CellSpreadsheetFormulaParserToken from = this.cell(0, "A", 0);
-        final LabelNameSpreadsheetFormulaParserToken to = this.label("to");
+        final LabelSpreadsheetFormulaParserToken to = this.label("to");
 
         final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
         final String text = range.text();
@@ -1220,7 +1220,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     @Disabled("https://github.com/mP1/walkingkooka-spreadsheet/issues/2197 SpreadsheetCellRangeReference only allowing begin/end cells")
     public void testCellRangeParserParseLabelToCell() {
-        final LabelNameSpreadsheetFormulaParserToken from = this.label("to");
+        final LabelSpreadsheetFormulaParserToken from = this.label("to");
         final CellSpreadsheetFormulaParserToken to = this.cell(0, "A", 0);
 
         final CellRangeSpreadsheetFormulaParserToken range = range(from, to);
@@ -2760,7 +2760,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testLambdaFunctionParserParseLambdaFunctionNameWithNumberParameter() {
         final String text = "lambda(x;x+x)(1)";
-        final LabelNameSpreadsheetFormulaParserToken x = this.label("x");
+        final LabelSpreadsheetFormulaParserToken x = this.label("x");
 
         final LambdaFunctionSpreadsheetFormulaParserToken lambda = lambdaFunction(
                 functionName("lambda"),
@@ -2792,7 +2792,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     @Test
     public void testLambdaFunctionParserParseLambdaFunctionNameWithStringParameter() {
         final String text = "lambda(x;x+x)(\"Hello\")";
-        final LabelNameSpreadsheetFormulaParserToken x = this.label("x");
+        final LabelSpreadsheetFormulaParserToken x = this.label("x");
 
         final LambdaFunctionSpreadsheetFormulaParserToken lambda = lambdaFunction(
                 functionName("lambda"),
@@ -4462,8 +4462,8 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         return SpreadsheetFormulaParserToken.minute(58, "58");
     }
 
-    private LabelNameSpreadsheetFormulaParserToken label(final String label) {
-        return SpreadsheetFormulaParserToken.labelName(SpreadsheetSelection.labelName(label), label);
+    private LabelSpreadsheetFormulaParserToken label(final String label) {
+        return SpreadsheetFormulaParserToken.label(SpreadsheetSelection.labelName(label), label);
     }
 
     private LambdaFunctionSpreadsheetFormulaParserToken lambdaFunction(final SpreadsheetFormulaParserToken... tokens) {

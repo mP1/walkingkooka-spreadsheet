@@ -41,7 +41,7 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
 
     static Optional<SpreadsheetCellReferenceOrRange> resolveLabel(final SpreadsheetLabelName labelName,
                                                                   final SpreadsheetLabelStore store) {
-        Objects.requireNonNull(labelName, "labelName");
+        Objects.requireNonNull(labelName, "label");
         Objects.requireNonNull(store, "store");
 
         final SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor(store);
