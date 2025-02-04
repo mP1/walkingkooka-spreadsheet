@@ -169,8 +169,7 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
 
     @Override
     protected Visiting startVisit(final DateSpreadsheetFormulaParserToken token) {
-        this.enter();
-        return Visiting.SKIP;
+        return this.enter();
     }
 
     @Override
@@ -184,8 +183,7 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
 
     @Override
     protected Visiting startVisit(final DateTimeSpreadsheetFormulaParserToken token) {
-        this.enter();
-        return Visiting.SKIP;
+        return this.enter();
     }
 
     @Override
@@ -411,8 +409,7 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
 
     @Override
     protected Visiting startVisit(final TimeSpreadsheetFormulaParserToken token) {
-        this.enter();
-        return Visiting.SKIP;
+        return this.enter();
     }
 
     @Override
