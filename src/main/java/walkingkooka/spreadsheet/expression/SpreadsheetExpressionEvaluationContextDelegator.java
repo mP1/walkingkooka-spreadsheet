@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
@@ -61,6 +63,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         return this.spreadsheetExpressionEvaluationContext()
                 .loadCell(cell);
+    }
+
+    @Override
+    default Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
+        return this.spreadsheetExpressionEvaluationContext()
+                .loadLabelMapping(labelName);
     }
 
     @Override

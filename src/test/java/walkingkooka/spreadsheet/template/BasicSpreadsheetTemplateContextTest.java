@@ -51,6 +51,11 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
     }
 
     @Override
+    public void testLoadLabelMappingWithNullLabelMappingFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testEvaluateExpressionUnknownFunctionNameFails() {
         throw new UnsupportedOperationException();
     }

@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
@@ -104,6 +106,26 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 expected,
                 context.loadCell(cellReference),
                 () -> "loadCell " + cellReference
+        );
+    }
+
+    // loadLabelMapping.................................................................................................
+
+    @Test
+    default void testLoadLabelMappingWithNullLabelMappingFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().loadLabelMapping(null)
+        );
+    }
+
+    default void loadLabelMappingAndCheck(final C context,
+                                          final SpreadsheetLabelName labelName,
+                                          final Optional<SpreadsheetLabelMapping> expected) {
+        this.checkEquals(
+                expected,
+                context.loadLabelMapping(labelName),
+                () -> "loadLabelMapping " + labelName
         );
     }
 }

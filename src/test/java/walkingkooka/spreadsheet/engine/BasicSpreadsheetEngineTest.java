@@ -14594,7 +14594,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return token.toExpression(
                         SpreadsheetExpressionEvaluationContexts.basic(
                                 Optional.empty(), // cell
-                                SpreadsheetCellStores.fake(),
+                                SpreadsheetStoreRepositories.fake(),
                                 SERVER_URL,
                                 (r) -> {
                                     throw new UnsupportedOperationException(r.toString());
@@ -14621,7 +14621,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         return expression.toBoolean(
                                 SpreadsheetExpressionEvaluationContexts.basic(
                                         cell,
-                                        storeRepository.cells(),
+                                        storeRepository,
                                         SERVER_URL, // serverUrl
                                         (r) -> {
                                             throw new UnsupportedOperationException();
@@ -14690,7 +14690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return expression.toValue(
                         SpreadsheetExpressionEvaluationContexts.basic(
                                 cell,
-                                storeRepository.cells(),
+                                storeRepository,
                                 SERVER_URL, // serverUrl
                                 this.references(), // references
                                 metadata, // metadata

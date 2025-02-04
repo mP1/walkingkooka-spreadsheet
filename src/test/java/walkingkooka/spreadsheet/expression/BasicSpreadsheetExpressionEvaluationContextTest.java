@@ -33,6 +33,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
@@ -52,7 +55,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"))
     );
 
-    private final static SpreadsheetCellStore CELL_STORE = SpreadsheetCellStores.fake();
+    private final static SpreadsheetStoreRepository REPOSITORY = SpreadsheetStoreRepositories.fake();
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -68,7 +71,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullCellFails() {
         this.withFails(
                 null,
-                CELL_STORE,
+                REPOSITORY,
                 SERVER_URL,
                 REFERENCE_TO_VALUE,
                 METADATA,
@@ -79,7 +82,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testWithNullCellStoreFails() {
+    public void testWithNullSpreadsheetStoreRepositoryFails() {
         this.withFails(
                 CELL,
                 null,
@@ -96,7 +99,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullServerUrlFails() {
         this.withFails(
                 CELL,
-                CELL_STORE,
+                REPOSITORY,
                 null,
                 REFERENCE_TO_VALUE,
                 METADATA,
@@ -110,7 +113,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullReferenceToValueFails() {
         this.withFails(
                 CELL,
-                CELL_STORE,
+                REPOSITORY,
                 SERVER_URL,
                 null,
                 METADATA,
@@ -124,7 +127,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullMetadataFails() {
         this.withFails(
                 CELL,
-                CELL_STORE,
+                REPOSITORY,
                 SERVER_URL,
                 REFERENCE_TO_VALUE,
                 null,
@@ -138,7 +141,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullSpreadsheetConverterContextFails() {
         this.withFails(
                 CELL,
-                CELL_STORE,
+                REPOSITORY,
                 SERVER_URL,
                 REFERENCE_TO_VALUE,
                 METADATA,
@@ -153,7 +156,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullExpressionFunctionProviderFails() {
         this.withFails(
                 CELL,
-                CELL_STORE,
+                REPOSITORY,
                 SERVER_URL,
                 REFERENCE_TO_VALUE,
                 METADATA,
@@ -167,7 +170,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullProviderContextFails() {
         this.withFails(
                 CELL,
-                CELL_STORE,
+                REPOSITORY,
                 SERVER_URL,
                 REFERENCE_TO_VALUE,
                 METADATA,
@@ -178,7 +181,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     private void withFails(final Optional<SpreadsheetCell> cell,
-                           final SpreadsheetCellStore cellStore,
+                           final SpreadsheetStoreRepository repository,
                            final AbsoluteUrl serverUrl,
                            final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                            final SpreadsheetMetadata spreadsheetMetadata,
@@ -189,7 +192,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 NullPointerException.class,
                 () -> BasicSpreadsheetExpressionEvaluationContext.with(
                         cell,
-                        cellStore,
+                        repository,
                         serverUrl,
                         referenceToValue,
                         spreadsheetMetadata,
@@ -205,7 +208,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Test
     public void testLoadCellCurrentCell() {
         this.loadCellAndCheck(
-                this.createContext(SpreadsheetCellStores.fake()),
+                this.createContext(REPOSITORY),
                 CELL_REFERENCE,
                 CELL
         );
@@ -222,7 +225,14 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         cellStore.save(cell);
 
         this.loadCellAndCheck(
-                this.createContext(cellStore),
+                this.createContext(
+                        new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public SpreadsheetCellStore cells() {
+                                return cellStore;
+                            }
+                        }
+                ),
                 cellReference,
                 Optional.of(cell)
         );
@@ -323,13 +333,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Override
     public BasicSpreadsheetExpressionEvaluationContext createContext() {
-        return this.createContext(CELL_STORE);
+        return this.createContext(REPOSITORY);
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetCellStore cellStore) {
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetStoreRepository repository) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 CELL,
-                cellStore,
+                repository,
                 SERVER_URL,
                 REFERENCE_TO_VALUE,
                 METADATA,

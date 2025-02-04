@@ -45,8 +45,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.Expression;
@@ -86,7 +86,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"))
     );
 
-    private final static SpreadsheetCellStore CELL_STORE = SpreadsheetCellStores.fake();
+    private final static SpreadsheetStoreRepository REPOSITORY = SpreadsheetStoreRepositories.fake();
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -525,7 +525,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 converter,
                 SpreadsheetExpressionEvaluationContexts.basic(
                         CELL,
-                        CELL_STORE,
+                        REPOSITORY,
                         SERVER_URL,
                         REFERENCES,
                         METADATA,

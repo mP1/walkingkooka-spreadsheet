@@ -31,7 +31,9 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -52,7 +54,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         SpreadsheetConverterContextDelegator {
 
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
-                                                            final SpreadsheetCellStore cellStore,
+                                                            final SpreadsheetStoreRepository repository,
                                                             final AbsoluteUrl serverUrl,
                                                             final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
@@ -60,7 +62,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(cellStore, "cellStore");
+        Objects.requireNonNull(repository, "repository");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(referenceToValue, "referenceToValue");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
@@ -70,7 +72,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
         return new BasicSpreadsheetExpressionEvaluationContext(
                 cell,
-                cellStore,
+                repository,
                 serverUrl,
                 referenceToValue,
                 spreadsheetMetadata,
@@ -81,7 +83,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private BasicSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                        final SpreadsheetCellStore cellStore,
+                                                        final SpreadsheetStoreRepository repository,
                                                         final AbsoluteUrl serverUrl,
                                                         final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
@@ -90,7 +92,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final ProviderContext providerContext) {
         super();
         this.cell = cell;
-        this.cellStore = cellStore;
+        this.repository = repository;
         this.serverUrl = serverUrl;
         this.referenceToValue = referenceToValue;
 
@@ -127,14 +129,23 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 }
             }
 
-            loaded = this.cellStore.load(cell);
+            loaded = this.repository.cells()
+                    .load(cell);
             break;
         }
 
         return loaded;
     }
 
-    private final SpreadsheetCellStore cellStore;
+    @Override
+    public Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
+        Objects.requireNonNull(labelName, "labelName");
+
+        return this.repository.labels()
+                .load(labelName);
+    }
+
+    final SpreadsheetStoreRepository repository;
 
     @Override
     public SpreadsheetFormulaParserToken parseFormula(final TextCursor expression) {
