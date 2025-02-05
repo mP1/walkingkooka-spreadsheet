@@ -291,7 +291,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     public void testNotFound() {
         this.notFoundTextAndCheck(
                 SpreadsheetSelection.labelName("Hello"),
-                "Label not found: Hello"
+                "Label not found: \"Hello\""
         );
     }
 

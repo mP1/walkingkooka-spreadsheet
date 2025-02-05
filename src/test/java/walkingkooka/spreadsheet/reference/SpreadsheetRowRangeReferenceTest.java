@@ -59,7 +59,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     public void testNotFound() {
         this.notFoundTextAndCheck(
                 SpreadsheetSelection.parseRowRange("1:2"),
-                "Row Range not found: 1:2"
+                "Row Range not found: \"1:2\""
         );
     }
 

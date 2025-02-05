@@ -1846,7 +1846,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 a1,
                                                 SpreadsheetError.with(
                                                         SpreadsheetErrorKind.NAME,
-                                                        "Label not found: Label123",
+                                                        "Label not found: \"Label123\"",
                                                         Optional.of(LABEL)
                                                 )
                                         )
@@ -1893,7 +1893,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 a1,
                                                 SpreadsheetError.with(
                                                         SpreadsheetErrorKind.NAME,
-                                                        "Label not found: LABEL123",
+                                                        "Label not found: \"LABEL123\"",
                                                         Optional.of(LABEL)
                                                 )
                                         )

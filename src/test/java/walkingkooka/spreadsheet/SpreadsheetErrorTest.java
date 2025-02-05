@@ -136,7 +136,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
         final SpreadsheetError error = SpreadsheetError.selectionNotFound(cell);
         this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Cell not found: A99");
+        this.checkMessage(error, "Cell not found: \"A99\"");
         this.checkValue(error, Optional.of(cell));
     }
 
@@ -146,7 +146,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
         final SpreadsheetError error = SpreadsheetError.selectionNotFound(label);
         this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Label not found: Label123");
+        this.checkMessage(error, "Label not found: \"Label123\"");
         this.checkValue(error, Optional.of(label));
     }
 
@@ -171,7 +171,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
         final SpreadsheetError error = SpreadsheetError.referenceNotFound(cell);
         this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Cell not found: A99");
+        this.checkMessage(error, "Cell not found: \"A99\"");
         this.checkValue(error, Optional.of(cell));
     }
 
@@ -181,7 +181,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
         final SpreadsheetError error = SpreadsheetError.referenceNotFound(label);
         this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Label not found: Label123");
+        this.checkMessage(error, "Label not found: \"Label123\"");
         this.checkValue(error, Optional.of(label));
     }
 

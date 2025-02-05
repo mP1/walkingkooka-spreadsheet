@@ -1632,7 +1632,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testNotFoundText() {
         this.notFoundTextAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
-                "Cell not found: Z99"
+                "Cell not found: \"Z99\""
         );
     }
 

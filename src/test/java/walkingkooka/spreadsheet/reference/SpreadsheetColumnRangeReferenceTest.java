@@ -57,7 +57,7 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     public void testNotFound() {
         this.notFoundTextAndCheck(
                 SpreadsheetSelection.parseColumnRange("C:D"),
-                "Column Range not found: C:D"
+                "Column Range not found: \"C:D\""
         );
     }
 
