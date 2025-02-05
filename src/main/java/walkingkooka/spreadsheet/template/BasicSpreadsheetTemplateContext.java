@@ -79,11 +79,6 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     // ExpressionEvaluationContext......................................................................................
 
     @Override
-    public Object evaluateExpression(final Expression expression) {
-        return expression.toValue(this);
-    }
-
-    @Override
     public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
                                    final List<Object> parameters) {
         return function

@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -193,21 +192,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public Object evaluateExpression(final Expression expression) {
-        Objects.requireNonNull(expression, "expression");
-
-        Object result;
-
-        try {
-            result = expression.toValue(this);
-        } catch (final RuntimeException exception) {
-            result = this.handleException(exception);
-        }
-
-        return result;
-    }
-
-    @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
         return this.expressionFunctionProvider.expressionFunction(
                 name,
@@ -230,14 +214,23 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return parameter.convertOrFail(value, this);
     }
 
-    @Override
     public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
                                    final List<Object> parameters) {
-        return function
-                .apply(
-                        this.prepareParameters(function, parameters),
-                        Cast.to(this)
-                );
+        Objects.requireNonNull(function, "function");
+        Objects.requireNonNull(parameters, "parameters");
+
+        Object result;
+
+        try {
+            result = function.apply(
+                    this.prepareParameters(function, parameters),
+                    Cast.to(this)
+            );
+        } catch (final RuntimeException exception) {
+            result = this.handleException(exception);
+        }
+
+        return result;
     }
 
     @Override

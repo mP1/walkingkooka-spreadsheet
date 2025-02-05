@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -124,11 +123,6 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     // ExpressionEvaluationContext......................................................................................
-
-    @Override
-    public Object evaluateExpression(final Expression expression) {
-        return expression.toValue(this);
-    }
 
     @Override
     public SpreadsheetFormulaParserToken parseFormula(final TextCursor cursor) {
