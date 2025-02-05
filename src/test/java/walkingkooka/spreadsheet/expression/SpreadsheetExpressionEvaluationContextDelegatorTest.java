@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.MathContext;
@@ -139,12 +138,6 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
             Objects.requireNonNull(scoped, "scoped");
 
             return new TestSpreadsheetExpressionEvaluationContextDelegator();
-        }
-
-        @Override
-        public Object evaluateExpression(final Expression expression) {
-            Objects.requireNonNull(expression, "expression");
-            throw new UnsupportedOperationException();
         }
 
         @Override

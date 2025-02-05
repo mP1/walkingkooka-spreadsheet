@@ -79,11 +79,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
-    public Object evaluateExpression(final Expression expression) {
-        return expression.toValue(this);
-    }
-
-    @Override
     public boolean isPure(final ExpressionFunctionName name) {
         throw new UnsupportedOperationException();
     }

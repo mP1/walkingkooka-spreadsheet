@@ -24,7 +24,6 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -61,11 +60,6 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
 
     @Override
     public ExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object evaluateExpression(final Expression expression) {
         throw new UnsupportedOperationException();
     }
 
