@@ -1347,7 +1347,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     @Override
     public final String notFoundText() {
-        return this.textLabel() + " not found: " + this;
+        return this.textLabel() + " not found: " + CharSequences.quoteAndEscape(this.toString());
     }
 
     // SpreadsheetSelectionVisitor......................................................................................

@@ -75,7 +75,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testNotFound() {
         this.notFoundTextAndCheck(
                 SpreadsheetSelection.parseCell("Z99"),
-                "Cell not found: Z99"
+                "Cell not found: \"Z99\""
         );
     }
 

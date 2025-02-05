@@ -54,7 +54,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testNotFound() {
         this.notFoundTextAndCheck(
                 SpreadsheetSelection.parseRow("123"),
-                "Row not found: 123"
+                "Row not found: \"123\""
         );
     }
 

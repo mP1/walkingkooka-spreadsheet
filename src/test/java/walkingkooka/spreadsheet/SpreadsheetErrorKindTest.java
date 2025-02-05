@@ -137,7 +137,7 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
         this.translateAndCheck(
                 new MissingStoreException(cell),
                 SpreadsheetErrorKind.NAME,
-                "Cell not found: B2",
+                "Cell not found: \"B2\"",
                 cell
         );
     }

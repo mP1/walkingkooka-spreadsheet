@@ -144,7 +144,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testNotFound() {
         this.notFoundTextAndCheck(
                 SpreadsheetSelection.parseCellRange("B2:C3"),
-                "Cell Range not found: B2:C3"
+                "Cell Range not found: \"B2:C3\""
         );
     }
 
