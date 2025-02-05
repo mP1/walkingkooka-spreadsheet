@@ -140,7 +140,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     // loadCellCycleCheck...............................................................................................
 
     @Test
-    public void loadCycleCheckWhenCellEmpty() {
+    public void loadCellCycleCheckWhenCellEmpty() {
         this.loadCellCycleCheck(
                 Optional.empty(),
                 "B2"
@@ -148,7 +148,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCycleCheckWhenCellDifferent() {
+    public void loadCellCycleCheckWhenCellDifferent() {
         this.loadCellCycleCheck(
                 Optional.of("A1"),
                 "B2"
@@ -156,7 +156,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCycleCheckFails() {
+    public void loadCellCycleCheckFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> this.loadCellCycleCheck(
@@ -167,7 +167,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCycleCheckDifferentReferenceKindFails() {
+    public void loadCellCycleCheckDifferentReferenceKindFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> this.loadCellCycleCheck(
