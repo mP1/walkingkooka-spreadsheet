@@ -192,6 +192,72 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
         );
     }
 
+    // loadCellsCycleCheck..............................................................................................
+
+    @Test
+    public void loadCellsCycleCheckWhenCellEmpty() {
+        this.loadCellsCycleCheck(
+                Optional.empty(),
+                "B2"
+        );
+    }
+
+    @Test
+    public void loadCellsCycleCheckWhenCellDifferent() {
+        this.loadCellsCycleCheck(
+                Optional.of("A1"),
+                "B2"
+        );
+    }
+
+    @Test
+    public void loadCellsCycleCheckFails() {
+        assertThrows(
+                SpreadsheetErrorException.class,
+                () -> this.loadCellsCycleCheck(
+                        Optional.of("A1"),
+                        "A1"
+                )
+        );
+    }
+
+    @Test
+    public void loadCellsCycleCheckDifferentReferenceKindFails() {
+        assertThrows(
+                SpreadsheetErrorException.class,
+                () -> this.loadCellsCycleCheck(
+                        Optional.of("$A1"),
+                        "A$1"
+                )
+        );
+    }
+
+    @Test
+    public void loadCellsCycleCheckContainsFails() {
+        assertThrows(
+                SpreadsheetErrorException.class,
+                () -> this.loadCellsCycleCheck(
+                        Optional.of("B2"),
+                        "A1:C3"
+                )
+        );
+    }
+
+    private void loadCellsCycleCheck(final Optional<String> current,
+                                     final String load) {
+        new FakeSpreadsheetExpressionEvaluationContext() {
+            @Override
+            public Optional<SpreadsheetCell> cell() {
+                return current.map(
+                        c -> SpreadsheetSelection.parseCell(c)
+                                .setFormula(SpreadsheetFormula.EMPTY)
+                );
+            }
+        }.loadCellsCycleCheck(
+                SpreadsheetSelection.parseCellRange(load)
+        );
+    }
+    
     // class............................................................................................................
 
     @Override

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
@@ -136,6 +137,26 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      * Loads all the cells present in the given {@link SpreadsheetCellRangeReference}.
      */
     Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range);
+
+    /**
+     * Helper that may be used to verify that the load cells {@link SpreadsheetCellRange} does not include the current
+     * cell, throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
+     */
+    default void loadCellsCycleCheck(final SpreadsheetCellRangeReference range) {
+        Objects.requireNonNull(range, "range");
+
+        final SpreadsheetCellReference current = this.cell()
+                .map(SpreadsheetCell::reference)
+                .orElse(null);
+
+        if(null != current) {
+            if(range.test(current)) {
+                throw new SpreadsheetErrorException(
+                        SpreadsheetError.cycle(range)
+                );
+            }
+        }
+    }
 
     /**
      * Loads the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetLabelName}.
