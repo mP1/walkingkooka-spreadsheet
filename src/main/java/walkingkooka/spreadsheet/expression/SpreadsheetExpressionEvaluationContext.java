@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.text.cursor.TextCursor;
@@ -35,6 +36,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -108,6 +110,26 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
                 .orElseThrow(() -> new SpreadsheetErrorException(
                         SpreadsheetError.selectionNotFound(cell))
                 );
+    }
+
+    /**
+     * Helper that may be used to verify that the load cell {@link SpreadsheetCellReference} is not the current cell,
+     * throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
+     */
+    default void loadCellCycleCheck(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        final SpreadsheetCellReference current = this.cell()
+                .map(SpreadsheetCell::reference)
+                .orElse(null);
+
+        if(null != current) {
+            if(current.equalsIgnoreReferenceKind(cell)) {
+                throw new SpreadsheetErrorException(
+                        SpreadsheetError.cycle(cell)
+                );
+            }
+        }
     }
 
     /**
