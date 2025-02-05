@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.visit.VisitorTesting;
 
 /**
  * A mixin interface with tests and helpers to assist in testing a {@link SpreadsheetSelectionVisitor}
  */
-public interface SpreadsheetSelectionVisitorTesting<V extends SpreadsheetSelectionVisitor> extends VisitorTesting<V, SpreadsheetSelection> {
+public interface SpreadsheetSelectionVisitorTesting<V extends SpreadsheetSelectionVisitor> extends VisitorTesting<V, SpreadsheetSelection>,
+        TreePrintableTesting {
 
     @Override
     default String typeNameSuffix() {
