@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -32,8 +31,16 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 
 import java.util.Optional;
-import java.util.Set;
 
+/**
+ * Delegates all {@link ExpressionEvaluationContextDelegator} and most {@link SpreadsheetExpressionEvaluationContext}
+ * except for cell getter and loaders:
+ * <ul>
+ *     <li>{@link #cell()}</li>
+ *     <li>{@link #loadCell(SpreadsheetCellReference)}</li>
+ *     <li>{@link #loadCells(SpreadsheetCellRangeReference)}</li>
+ * </ul>
+ */
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
         ExpressionEvaluationContextDelegator {
 
@@ -45,12 +52,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetExpressionEvaluationContext...........................................................................
 
     @Override
-    default Optional<SpreadsheetCell> cell() {
-        return this.spreadsheetExpressionEvaluationContext()
-                .cell();
-    }
-
-    @Override
     default Converter<SpreadsheetConverterContext> converter() {
         return this.spreadsheetExpressionEvaluationContext().converter();
     }
@@ -59,18 +60,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default boolean isText(final Object value) {
         return this.spreadsheetExpressionEvaluationContext()
                 .isText(value);
-    }
-
-    @Override
-    default Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        return this.spreadsheetExpressionEvaluationContext()
-                .loadCell(cell);
-    }
-
-    @Override
-    default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
-        return this.spreadsheetExpressionEvaluationContext()
-                .loadCells(range);
     }
 
     @Override
