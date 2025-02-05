@@ -27,6 +27,9 @@ import java.util.Set;
 
 /**
  * A store that holds all label to cell references for a spreadsheet. No additional actions are supported.
+ * When an attempt is made to save a {@link SpreadsheetLabelMapping} that would cause a cycle an {@link walkingkooka.spreadsheet.SpreadsheetErrorException}
+ * with {@link walkingkooka.spreadsheet.SpreadsheetError#cycle(SpreadsheetExpressionReference)} should be thrown and the
+ * save aborted.
  */
 public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabelName, SpreadsheetLabelMapping> {
 
