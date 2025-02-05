@@ -35,7 +35,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -221,27 +220,6 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     // eval scoped......................................................................................................
 
     /**
-     * Evaluates the given {@link Expression} using this as the context which should result in the format
-     * being used.
-     */
-    @Override
-    public Object evaluateExpression(final Expression expression) {
-        Objects.requireNonNull(expression, "expression");
-
-        Object result;
-
-        try {
-            result = expression.toValue(this);
-        } catch (final RuntimeException exception) {
-            result = this.handleException(exception);
-        }
-
-        return result;
-    }
-
-    private int scope;
-
-    /**
      * Prepares the parameter value.
      */
     @Override
@@ -282,6 +260,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
             this.scope--;
         }
     }
+
+    private int scope;
 
     // eval delegated..................................................................................................
 
