@@ -25,6 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -43,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -322,6 +324,13 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                             @Override
                             public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
                                 Objects.requireNonNull(cell, "cell");
+
+                                throw new UnsupportedOperationException();
+                            }
+
+                            @Override
+                            public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+                                Objects.requireNonNull(range, "range");
 
                                 throw new UnsupportedOperationException();
                             }

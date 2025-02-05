@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -34,6 +35,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -106,6 +108,11 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
                         SpreadsheetError.selectionNotFound(cell))
                 );
     }
+
+    /**
+     * Loads all the cells present in the given {@link SpreadsheetCellRangeReference}.
+     */
+    Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range);
 
     /**
      * Loads the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetLabelName}.

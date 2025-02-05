@@ -18,8 +18,10 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -28,6 +30,7 @@ import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -106,6 +109,37 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 expected,
                 context.loadCell(cellReference),
                 () -> "loadCell " + cellReference
+        );
+    }
+
+    // loadCells........................................................................................................
+
+    @Test
+    default void testLoadCellsWithNullRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .loadCells(null)
+        );
+    }
+
+    default void loadCellsAndCheck(final C context,
+                                   final SpreadsheetCellRangeReference range,
+                                   final SpreadsheetCell... expected) {
+        this.loadCellsAndCheck(
+                context,
+                range,
+                SortedSets.of(expected)
+        );
+    }
+
+    default void loadCellsAndCheck(final C context,
+                                   final SpreadsheetCellRangeReference range,
+                                   final Set<SpreadsheetCell> expected) {
+        this.checkEquals(
+                expected,
+                context.loadCells(range),
+                () -> "loadCells " + range
         );
     }
 
