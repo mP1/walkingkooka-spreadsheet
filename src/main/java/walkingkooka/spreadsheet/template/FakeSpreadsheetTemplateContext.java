@@ -33,7 +33,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -92,11 +91,6 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
 
     @Override
     public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object evaluateExpression(final Expression expression) {
         throw new UnsupportedOperationException();
     }
 

@@ -24,7 +24,6 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -84,11 +83,6 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
         return this.context.expressionFunction(name);
-    }
-
-    @Override
-    public Object evaluateExpression(final Expression expression) {
-        return this.context.evaluateExpression(expression);
     }
 
     @Override
