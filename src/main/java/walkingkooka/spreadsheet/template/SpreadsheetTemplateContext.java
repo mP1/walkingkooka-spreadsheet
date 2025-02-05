@@ -17,9 +17,16 @@
 
 package walkingkooka.spreadsheet.template;
 
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.template.TemplateValueName;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * A Context that leverages Spreadsheet components to parse and render templates.
@@ -31,4 +38,23 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
      * {@see TemplateContext#templateValue}
      */
     String templateValue(final TemplateValueName name);
+
+    @Override
+    default Optional<SpreadsheetCell> cell() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+        Objects.requireNonNull(range, "range");
+
+        throw new UnsupportedOperationException();
+    }
 }

@@ -18,7 +18,10 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.net.Url;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
@@ -31,6 +34,7 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 public final class SpreadsheetExpressionEvaluationContextDelegatorTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextDelegatorTest.TestSpreadsheetExpressionEvaluationContextDelegator>,
@@ -38,6 +42,16 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
     @Override
     public void testEvaluateExpressionUnknownFunctionNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testLoadCellWithNullCellFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testLoadCellsWithNullRangeFails() {
         throw new UnsupportedOperationException();
     }
 
@@ -102,6 +116,21 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     final static class TestSpreadsheetExpressionEvaluationContextDelegator implements SpreadsheetExpressionEvaluationContextDelegator {
+
+        @Override
+        public Optional<SpreadsheetCell> cell() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public Optional<Optional<Object>> reference(final ExpressionReference reference) {
