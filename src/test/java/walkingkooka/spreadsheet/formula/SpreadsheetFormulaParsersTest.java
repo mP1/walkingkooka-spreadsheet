@@ -21,7 +21,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
@@ -4109,15 +4108,6 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         );
 
         return new FakeExpressionEvaluationContext() {
-
-            @Override
-            public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                           final List<Object> parameters) {
-                return function.apply(
-                        this.prepareParameters(function, parameters),
-                        Cast.to(this)
-                );
-            }
 
             @Override
             public ExpressionNumberKind expressionNumberKind() {

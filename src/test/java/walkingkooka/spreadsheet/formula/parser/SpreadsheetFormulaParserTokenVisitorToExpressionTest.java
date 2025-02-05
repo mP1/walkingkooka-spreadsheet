@@ -34,10 +34,8 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -164,21 +162,6 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
                                 );
                                 return Cast.to(
                                         SpreadsheetExpressionFunctions.error()
-                                );
-                            }
-
-                            @Override
-                            public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                                           final List<Object> parameters) {
-                                final List<Object> prepared = parameters.stream()
-                                        .map(v -> {
-                                            final Expression ve = (Expression) v;
-                                            return ve.toValue(this);
-                                        }).collect(Collectors.toList());
-
-                                return function.apply(
-                                        prepared,
-                                        Cast.to(this)
                                 );
                             }
                         }),

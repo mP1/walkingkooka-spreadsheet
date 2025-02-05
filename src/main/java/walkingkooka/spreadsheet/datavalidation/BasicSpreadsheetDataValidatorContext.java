@@ -32,7 +32,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -90,15 +89,6 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     @Override
     public Object evaluateExpression(final Expression expression) {
         return this.context.evaluateExpression(expression);
-    }
-
-    @Override
-    public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                   final List<Object> parameters) {
-        return this.context.evaluateFunction(
-                function,
-                parameters
-        );
     }
 
     @Override

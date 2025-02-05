@@ -247,6 +247,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
      * Prepares the parameters which includes calling the given {@link #converter} when converting the parameter values,
      * rather than delegating to the same method on the wrapped {@link SpreadsheetExpressionEvaluationContext}.
      */
+    // special case the default adding the extra scope inc/dec
     @Override
     public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
                                    final List<Object> parameters) {
