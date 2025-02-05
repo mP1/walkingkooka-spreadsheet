@@ -33,6 +33,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.AdditionSpreadsheetFormulaParserToken;
@@ -4205,7 +4206,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
             @Override
             public boolean isText(final Object value) {
-                return value instanceof Character || value instanceof CharSequence;
+                return SpreadsheetStrings.isText(value);
             }
         };
     }

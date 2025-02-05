@@ -31,6 +31,13 @@ public final class SpreadsheetStrings implements PublicStaticHelper {
     public static final CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;
 
     /**
+     * THe spreadsheet {@link walkingkooka.tree.expression.ExpressionEvaluationContext#isText(Object)}.
+     */
+    public static boolean isText(final Object value) {
+        return value instanceof Character || value instanceof CharSequence;
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetStrings() {

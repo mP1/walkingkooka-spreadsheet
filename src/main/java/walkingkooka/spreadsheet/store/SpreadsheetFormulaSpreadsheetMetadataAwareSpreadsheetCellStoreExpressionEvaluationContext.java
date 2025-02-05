@@ -76,7 +76,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     @Override
     public boolean isText(final Object value) {
-        return value instanceof Character || value instanceof CharSequence;
+        return SpreadsheetStrings.isText(value);
     }
 
     @Override
