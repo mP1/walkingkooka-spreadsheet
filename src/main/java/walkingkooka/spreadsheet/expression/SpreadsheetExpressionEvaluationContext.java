@@ -22,6 +22,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorException;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
@@ -64,7 +65,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
 
     @Override
     default boolean isText(final Object value) {
-        return value instanceof Character || value instanceof CharSequence;
+        return SpreadsheetStrings.isText(value);
     }
 
     /**

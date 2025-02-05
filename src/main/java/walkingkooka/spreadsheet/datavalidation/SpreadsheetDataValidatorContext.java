@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import walkingkooka.Context;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -39,7 +40,7 @@ public interface SpreadsheetDataValidatorContext extends ExpressionEvaluationCon
 
     @Override
     default boolean isText(final Object value) {
-        return value instanceof Character || value instanceof CharSequence;
+        return SpreadsheetStrings.isText(value);
     }
 
     /**
