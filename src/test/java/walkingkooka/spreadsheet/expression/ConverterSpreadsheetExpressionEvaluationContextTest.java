@@ -302,7 +302,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     }
 
     @Override
-    public void testEvaluateFunctionNullParametersFails() {
+    public void testEvaluateFunctionWithNullParametersFails() {
         throw new UnsupportedOperationException();
     }
 
