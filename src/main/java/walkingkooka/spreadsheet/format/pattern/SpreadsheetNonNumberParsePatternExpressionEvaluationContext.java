@@ -33,7 +33,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
@@ -93,12 +92,6 @@ final class SpreadsheetNonNumberParsePatternExpressionEvaluationContext implemen
     @Override
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
                                   final Object value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                   final List<Object> parameters) {
         throw new UnsupportedOperationException();
     }
 

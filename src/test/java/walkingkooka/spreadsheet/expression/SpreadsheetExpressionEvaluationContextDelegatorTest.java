@@ -26,12 +26,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.function.ExpressionFunction;
 
 import java.math.MathContext;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -147,15 +144,6 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         @Override
         public Object evaluateExpression(final Expression expression) {
             Objects.requireNonNull(expression, "expression");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                       final List<Object> values) {
-            Objects.requireNonNull(function, "function");
-            Objects.requireNonNull(values, "values");
-
             throw new UnsupportedOperationException();
         }
 

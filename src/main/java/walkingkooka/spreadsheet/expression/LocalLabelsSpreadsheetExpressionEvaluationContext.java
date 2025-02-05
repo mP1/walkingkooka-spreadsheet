@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
@@ -45,7 +44,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -143,16 +141,6 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
                 parameter,
                 value
         );
-    }
-
-    @Override
-    public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                   final List<Object> parameters) {
-        return function
-                .apply(
-                        this.prepareParameters(function, parameters),
-                        Cast.to(this)
-                );
     }
 
     @Override

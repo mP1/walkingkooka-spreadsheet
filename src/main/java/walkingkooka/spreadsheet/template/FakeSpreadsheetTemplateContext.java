@@ -40,7 +40,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -104,12 +103,6 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
     @Override
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
                                   final Object value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                   final List<Object> values) {
         throw new UnsupportedOperationException();
     }
 

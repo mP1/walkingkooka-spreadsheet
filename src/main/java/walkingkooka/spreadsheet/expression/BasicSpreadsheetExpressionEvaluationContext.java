@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
@@ -45,7 +44,6 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -212,25 +210,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
                                   final Object value) {
         return parameter.convertOrFail(value, this);
-    }
-
-    public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                   final List<Object> parameters) {
-        Objects.requireNonNull(function, "function");
-        Objects.requireNonNull(parameters, "parameters");
-
-        Object result;
-
-        try {
-            result = function.apply(
-                    this.prepareParameters(function, parameters),
-                    Cast.to(this)
-            );
-        } catch (final RuntimeException exception) {
-            result = this.handleException(exception);
-        }
-
-        return result;
     }
 
     @Override

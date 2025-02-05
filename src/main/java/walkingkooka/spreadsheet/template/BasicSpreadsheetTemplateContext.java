@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.template;
 
-import walkingkooka.Cast;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -28,12 +27,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.function.ExpressionFunction;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -77,19 +73,6 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     private final SpreadsheetParserContext spreadsheetParserContext;
 
     // ExpressionEvaluationContext......................................................................................
-
-    @Override
-    public Object evaluateFunction(final ExpressionFunction<?, ? extends ExpressionEvaluationContext> function,
-                                   final List<Object> parameters) {
-        return function
-                .apply(
-                        this.prepareParameters(
-                                function,
-                                parameters
-                        ),
-                        Cast.to(this)
-                );
-    }
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
