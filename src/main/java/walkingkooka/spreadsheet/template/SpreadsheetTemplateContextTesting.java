@@ -17,11 +17,47 @@
 
 package walkingkooka.spreadsheet.template;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContextTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplateContext> extends SpreadsheetParserContextTesting<C>,
         SpreadsheetExpressionEvaluationContextTesting<C> {
+
+    @Test
+    default void testCellFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createContext()
+                        .cell()
+        );
+    }
+
+    @Test
+    default void testLoadCellFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createContext()
+                        .loadCell(SpreadsheetSelection.A1)
+        );
+    }
+
+    @Test
+    default void testLoadCellsFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createContext()
+                        .loadCells(
+                                SpreadsheetSelection.A1.toCellRange()
+                        )
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     default String typeNameSuffix() {
         return SpreadsheetTemplateContext.class.getSimpleName();
