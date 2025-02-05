@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -48,6 +49,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
@@ -135,6 +137,14 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         }
 
         return loaded;
+    }
+
+    @Override
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+        Objects.requireNonNull(range, "range");
+
+        return this.repository.cells()
+                .loadCells(range);
     }
 
     @Override

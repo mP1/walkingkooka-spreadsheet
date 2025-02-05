@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -41,6 +42,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
         implements SpreadsheetTemplateContext {
@@ -61,6 +63,11 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
 
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
         throw new UnsupportedOperationException();
     }
 

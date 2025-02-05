@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -31,6 +32,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
         ExpressionEvaluationContextDelegator {
@@ -63,6 +65,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         return this.spreadsheetExpressionEvaluationContext()
                 .loadCell(cell);
+    }
+
+    @Override
+    default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+        return this.spreadsheetExpressionEvaluationContext()
+                .loadCells(range);
     }
 
     @Override
