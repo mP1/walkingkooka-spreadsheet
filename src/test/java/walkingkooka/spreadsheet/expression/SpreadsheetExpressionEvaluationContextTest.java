@@ -22,6 +22,8 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorException;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
@@ -134,6 +136,63 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
                 () -> "referenceOrFail " + reference
         );
     }
+
+    // loadCellCycleCheck...............................................................................................
+
+    @Test
+    public void loadCycleCheckWhenCellEmpty() {
+        this.loadCellCycleCheck(
+                Optional.empty(),
+                "B2"
+        );
+    }
+
+    @Test
+    public void loadCycleCheckWhenCellDifferent() {
+        this.loadCellCycleCheck(
+                Optional.of("A1"),
+                "B2"
+        );
+    }
+
+    @Test
+    public void loadCycleCheckFails() {
+        assertThrows(
+                SpreadsheetErrorException.class,
+                () -> this.loadCellCycleCheck(
+                        Optional.of("A1"),
+                        "A1"
+                )
+        );
+    }
+
+    @Test
+    public void loadCycleCheckDifferentReferenceKindFails() {
+        assertThrows(
+                SpreadsheetErrorException.class,
+                () -> this.loadCellCycleCheck(
+                        Optional.of("$A1"),
+                        "A$1"
+                )
+        );
+    }
+
+    private void loadCellCycleCheck(final Optional<String> current,
+                                    final String load) {
+        new FakeSpreadsheetExpressionEvaluationContext() {
+            @Override
+            public Optional<SpreadsheetCell> cell() {
+                return current.map(
+                        c -> SpreadsheetSelection.parseCell(c)
+                                .setFormula(SpreadsheetFormula.EMPTY)
+                );
+            }
+        }.loadCellCycleCheck(
+                SpreadsheetSelection.parseCell(load)
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetExpressionEvaluationContext> type() {
