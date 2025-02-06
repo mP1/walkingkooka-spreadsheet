@@ -168,6 +168,14 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     // SpreadsheetExpressionEvaluationContext delegate..................................................................
 
     @Override
+    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+        return SpreadsheetExpressionEvaluationContexts.cell(
+                cell,
+                this
+        );
+    }
+
+    @Override
     public Optional<SpreadsheetCell> cell() {
         return this.context.cell();
     }

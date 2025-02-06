@@ -106,6 +106,14 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     // SpreadsheetExpressionEvaluationContext............................................................................
 
     @Override
+    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+        return SpreadsheetExpressionEvaluationContexts.cell(
+                cell,
+                this
+        );
+    }
+
+    @Override
     public Optional<SpreadsheetCell> cell() {
         return this.cell;
     }
@@ -136,6 +144,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .load(labelName);
     }
 
+    // @VisibleForTesting
     final SpreadsheetStoreRepository repository;
 
     @Override
