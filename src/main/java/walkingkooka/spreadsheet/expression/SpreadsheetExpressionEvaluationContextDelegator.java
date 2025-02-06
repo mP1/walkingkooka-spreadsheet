@@ -38,7 +38,7 @@ import java.util.Optional;
  * <ul>
  *     <li>{@link #cell()}</li>
  *     <li>{@link #loadCell(SpreadsheetCellReference)}</li>
- *     <li>{@link #loadCells(SpreadsheetCellRangeReference)}</li>
+ *     <li>{@link #loadCellRange(SpreadsheetCellRangeReference)}</li>
  * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,

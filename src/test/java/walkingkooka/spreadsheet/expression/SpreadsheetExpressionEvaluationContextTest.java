@@ -192,29 +192,29 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
         );
     }
 
-    // loadCellsCycleCheck..............................................................................................
+    // loadCellRangeCycleCheck..............................................................................................
 
     @Test
-    public void loadCellsCycleCheckWhenCellEmpty() {
-        this.loadCellsCycleCheck(
+    public void loadCellRangeCycleCheckWhenCellEmpty() {
+        this.loadCellRangeCycleCheck(
                 Optional.empty(),
                 "B2"
         );
     }
 
     @Test
-    public void loadCellsCycleCheckWhenCellDifferent() {
-        this.loadCellsCycleCheck(
+    public void loadCellRangeCycleCheckWhenCellDifferent() {
+        this.loadCellRangeCycleCheck(
                 Optional.of("A1"),
                 "B2"
         );
     }
 
     @Test
-    public void loadCellsCycleCheckFails() {
+    public void loadCellRangeCycleCheckFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
-                () -> this.loadCellsCycleCheck(
+                () -> this.loadCellRangeCycleCheck(
                         Optional.of("A1"),
                         "A1"
                 )
@@ -222,10 +222,10 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCellsCycleCheckDifferentReferenceKindFails() {
+    public void loadCellRangeCycleCheckDifferentReferenceKindFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
-                () -> this.loadCellsCycleCheck(
+                () -> this.loadCellRangeCycleCheck(
                         Optional.of("$A1"),
                         "A$1"
                 )
@@ -233,18 +233,18 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCellsCycleCheckContainsFails() {
+    public void loadCellRangeCycleCheckContainsFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
-                () -> this.loadCellsCycleCheck(
+                () -> this.loadCellRangeCycleCheck(
                         Optional.of("B2"),
                         "A1:C3"
                 )
         );
     }
 
-    private void loadCellsCycleCheck(final Optional<String> current,
-                                     final String load) {
+    private void loadCellRangeCycleCheck(final Optional<String> current,
+                                         final String load) {
         new FakeSpreadsheetExpressionEvaluationContext() {
             @Override
             public Optional<SpreadsheetCell> cell() {
@@ -253,7 +253,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
                                 .setFormula(SpreadsheetFormula.EMPTY)
                 );
             }
-        }.loadCellsCycleCheck(
+        }.loadCellRangeCycleCheck(
                 SpreadsheetSelection.parseCellRange(load)
         );
     }

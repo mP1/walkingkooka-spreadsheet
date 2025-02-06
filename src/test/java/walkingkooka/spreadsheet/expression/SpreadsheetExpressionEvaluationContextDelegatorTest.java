@@ -47,7 +47,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
-    public void testLoadCellsWithNullRangeFails() {
+    public void testLoadCellRangeWithNullRangeFails() {
         throw new UnsupportedOperationException();
     }
 
@@ -139,7 +139,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         }
 
         @Override
-        public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+        public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
             throw new UnsupportedOperationException();
         }
 

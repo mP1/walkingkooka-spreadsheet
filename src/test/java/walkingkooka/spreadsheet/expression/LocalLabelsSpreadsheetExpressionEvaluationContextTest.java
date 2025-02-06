@@ -334,7 +334,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                             }
 
                             @Override
-                            public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+                            public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
                                 Objects.requireNonNull(range, "range");
 
                                 throw new UnsupportedOperationException();

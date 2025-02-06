@@ -109,8 +109,8 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
-        return this.context.loadCells(range);
+    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+        return this.context.loadCellRange(range);
     }
 
     @Override
