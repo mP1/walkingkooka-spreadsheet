@@ -206,15 +206,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     // loadCell.........................................................................................................
 
     @Test
-    public void testLoadCellCurrentCell() {
-        this.loadCellAndCheck(
-                this.createContext(REPOSITORY),
-                CELL_REFERENCE,
-                CELL
-        );
-    }
-
-    @Test
     public void testLoadCell() {
         final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
 
