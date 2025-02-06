@@ -266,7 +266,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(cell, "cell");
 
-        final SpreadsheetProvider provider = this.spreadsheetProvider;
+        final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
         final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
@@ -292,12 +292,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 metadata.spreadsheetConverterContext(
                         converterSelector,
                         this, // SpreadsheetLabelNameResolver,
-                        provider, // SpreadsheetConverterProvider
+                        spreadsheetProvider, // SpreadsheetConverterProvider
                         this.providerContext
                 ),
                 metadata.expressionFunctionProvider(
                         functionAliases,
-                        provider
+                        spreadsheetProvider
                 ), // ExpressionFunctionProvider,
                 this // ProviderContext
         );
