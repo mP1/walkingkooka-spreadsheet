@@ -22,6 +22,9 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 
 import java.util.Objects;
@@ -55,6 +58,16 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 }

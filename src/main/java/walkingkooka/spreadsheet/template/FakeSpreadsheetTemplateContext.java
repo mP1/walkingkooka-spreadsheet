@@ -24,9 +24,6 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -51,11 +48,6 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public AbsoluteUrl serverUrl() {
         throw new UnsupportedOperationException();
     }
@@ -67,11 +59,6 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 
