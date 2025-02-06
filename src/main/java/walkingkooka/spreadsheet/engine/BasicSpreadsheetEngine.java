@@ -135,7 +135,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             for (final SpreadsheetCell cell : context.storeRepository()
                     .cells()
-                    .loadCells(cellRange)) {
+                    .loadCellRange(cellRange)) {
 
                 final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
@@ -422,7 +422,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     break;
                 }
 
-                final Collection<SpreadsheetCell> loaded = store.loadCells(
+                final Collection<SpreadsheetCell> loaded = store.loadCellRange(
                         cellRange,
                         path,
                         loadOffset,
@@ -487,7 +487,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             for (final SpreadsheetCell cell : context.storeRepository()
                     .cells()
-                    .loadCells(cellRange)) {
+                    .loadCellRange(cellRange)) {
 
                 final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,

@@ -181,11 +181,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     // batch............................................................................................................
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
-                                          final SpreadsheetCellRangeReferencePath path,
-                                          final int offset,
-                                          final int count) {
-        return this.store.loadCells(
+    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range,
+                                              final SpreadsheetCellRangeReferencePath path,
+                                              final int offset,
+                                              final int count) {
+        return this.store.loadCellRange(
                 range,
                 path,
                 offset,

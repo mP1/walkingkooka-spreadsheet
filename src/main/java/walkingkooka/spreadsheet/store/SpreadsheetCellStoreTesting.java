@@ -34,14 +34,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> extends SpreadsheetStoreTesting<S, SpreadsheetCellReference, SpreadsheetCell> {
 
-    // loadCells........................................................................................................
+    // loadCellRange....................................................................................................
 
     @Test
-    default void testLoadCellsNullCellRangeFails() {
+    default void testLoadCellRangeNullCellRangeFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore()
-                        .loadCells(
+                        .loadCellRange(
                                 null, // range
                                 SpreadsheetCellRangeReferencePath.LRTD,
                                 0, // offset
@@ -51,11 +51,11 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     @Test
-    default void testLoadCellsNullCellRangePathFails() {
+    default void testLoadCellRangeNullCellRangePathFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore()
-                        .loadCells(
+                        .loadCellRange(
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 null, // path
                                 0, // offset
@@ -65,11 +65,11 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     @Test
-    default void testLoadCellsNegativeOffsetFails() {
+    default void testLoadCellRangeNegativeOffsetFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createStore()
-                        .loadCells(
+                        .loadCellRange(
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD,
                                 -1, // offset
@@ -79,11 +79,11 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     @Test
-    default void testLoadCellsNegativeCountFails() {
+    default void testLoadCellRangeNegativeCountFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createStore()
-                        .loadCells(
+                        .loadCellRange(
                                 SpreadsheetSelection.ALL_CELLS, // range
                                 SpreadsheetCellRangeReferencePath.LRTD,
                                 0, // offset
@@ -92,13 +92,13 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         );
     }
 
-    default void loadCellsAndCheck(final SpreadsheetCellStore store,
-                                   final SpreadsheetCellRangeReference range,
-                                   final SpreadsheetCellRangeReferencePath path,
-                                   final int offset,
-                                   final int count,
-                                   final SpreadsheetCell... cells) {
-        this.loadCellsAndCheck(
+    default void loadCellRangeAndCheck(final SpreadsheetCellStore store,
+                                       final SpreadsheetCellRangeReference range,
+                                       final SpreadsheetCellRangeReferencePath path,
+                                       final int offset,
+                                       final int count,
+                                       final SpreadsheetCell... cells) {
+        this.loadCellRangeAndCheck(
                 store,
                 range,
                 path,
@@ -110,21 +110,21 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         );
     }
 
-    default void loadCellsAndCheck(final SpreadsheetCellStore store,
-                                   final SpreadsheetCellRangeReference range,
-                                   final SpreadsheetCellRangeReferencePath path,
-                                   final int offset,
-                                   final int count,
-                                   final Set<SpreadsheetCell> cells) {
+    default void loadCellRangeAndCheck(final SpreadsheetCellStore store,
+                                       final SpreadsheetCellRangeReference range,
+                                       final SpreadsheetCellRangeReferencePath path,
+                                       final int offset,
+                                       final int count,
+                                       final Set<SpreadsheetCell> cells) {
         this.checkEquals(
                 cells,
-                store.loadCells(
+                store.loadCellRange(
                         range,
                         path,
                         offset,
                         count
                 ),
-                () -> "loadCells " + range + " " + path + " " + offset + " " + count
+                () -> "loadCellRange " + range + " " + path + " " + offset + " " + count
         );
     }
 
