@@ -72,8 +72,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating nodes,
- * when they are refreshed and not when they are set.
+ * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating cells.
  */
 final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
