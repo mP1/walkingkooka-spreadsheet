@@ -51,11 +51,11 @@ final class SpreadsheetErrorThrowingConverter extends SpreadsheetErrorConverter<
     <T> Either<T, String> convertSpreadsheetError(final SpreadsheetError error,
                                                   final Class<T> type,
                                                   final ConverterContext context) {
-        throw new SpreadsheetErrorException(
+        throw (
                 error.isMissingCell() ?
                         error.setNameString() :
                         error
-        );
+        ).exception();
     }
 
     @Override
