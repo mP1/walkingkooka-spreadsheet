@@ -33,11 +33,11 @@ public final class SpreadsheetTemplateContexts implements PublicStaticHelper {
      */
     public static SpreadsheetTemplateContext basic(final SpreadsheetParserContext spreadsheetParserContext,
                                                    final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                                   final Function<TemplateValueName, Expression> nameToExpression) {
+                                                   final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         return BasicSpreadsheetTemplateContext.with(
                 spreadsheetParserContext,
                 spreadsheetExpressionEvaluationContext,
-                nameToExpression
+                templateValueNameToExpression
         );
     }
 

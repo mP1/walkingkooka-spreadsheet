@@ -45,22 +45,22 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
 
     static BasicSpreadsheetTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
                                                 final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                                final Function<TemplateValueName, Expression> nameToExpression) {
+                                                final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         return new BasicSpreadsheetTemplateContext(
                 Objects.requireNonNull(spreadsheetParserContext, "spreadsheetParserContext"),
                 Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext"),
-                Objects.requireNonNull(nameToExpression, "nameToExpression")
+                Objects.requireNonNull(templateValueNameToExpression, "templateValueNameToExpression")
         );
     }
 
     private BasicSpreadsheetTemplateContext(final SpreadsheetParserContext spreadsheetParserContext,
                                             final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
-                                            final Function<TemplateValueName, Expression> nameToExpression) {
+                                            final Function<TemplateValueName, Expression> templateValueNameToExpression) {
         this.spreadsheetParserContext = spreadsheetParserContext;
         this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext.enterScope(
                 this::reference
         );
-        this.nameToExpression = nameToExpression;
+        this.templateValueNameToExpression = templateValueNameToExpression;
     }
 
     @Override
@@ -89,7 +89,7 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
         if (reference instanceof TemplateValueName) {
             final TemplateValueName templateValueName = (TemplateValueName) reference;
 
-            final Expression expression = this.nameToExpression.apply(templateValueName);
+            final Expression expression = this.templateValueNameToExpression.apply(templateValueName);
             if(null == expression) {
                 throw new IllegalStateException("Missing expression for " + templateValueName);
             }
@@ -139,13 +139,13 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     public String templateValue(final TemplateValueName name) {
         return this.convertOrFail(
                 this.evaluateExpression(
-                        this.nameToExpression.apply(name)
+                        this.templateValueNameToExpression.apply(name)
                 ),
                 String.class
         );
     }
 
-    private final Function<TemplateValueName, Expression> nameToExpression;
+    private final Function<TemplateValueName, Expression> templateValueNameToExpression;
 
     // toString.........................................................................................................
 
@@ -155,6 +155,6 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
                 " " +
                 this.spreadsheetParserContext +
                 " " +
-                this.nameToExpression;
+                this.templateValueNameToExpression;
     }
 }

@@ -102,7 +102,7 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
     }
 
     @Test
-    public void testWithNullNameToExpressionFails() {
+    public void testWithNullTemplateValueNameToExpressionFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetTemplateContext.with(
