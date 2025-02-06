@@ -82,10 +82,10 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
     }
 
-    // loadCells........................................................................................................
+    // loadCellRange....................................................................................................
 
     @Test
-    public void testLoadCells() {
+    public void testLoadCellRange() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -108,7 +108,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
@@ -122,7 +122,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsMixedReferenceKind() {
+    public void testLoadCellRangeMixedReferenceKind() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -145,7 +145,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:$D$4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
@@ -160,7 +160,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
 
     @Test
-    public void testLoadCellsOppositeReferenceKind() {
+    public void testLoadCellRangeOppositeReferenceKind() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -183,7 +183,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("$A$1:$D$4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
@@ -197,7 +197,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsCountZero() {
+    public void testLoadCellRangeCountZero() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -220,7 +220,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
@@ -230,7 +230,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsCountLess() {
+    public void testLoadCellRangeCountLess() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -253,7 +253,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.LRTD,
@@ -266,7 +266,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsRLTD() {
+    public void testLoadCellRangeRLTD() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -289,7 +289,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.RLTD,
@@ -303,7 +303,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsRLTDOffset() {
+    public void testLoadCellRangeRLTDOffset() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -326,7 +326,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.RLTD,
@@ -339,7 +339,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsRLTDOffset2() {
+    public void testLoadCellRangeRLTDOffset2() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -362,7 +362,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.RLTD,
@@ -374,7 +374,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsRLTDCount() {
+    public void testLoadCellRangeRLTDCount() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -397,7 +397,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.RLTD,
@@ -410,7 +410,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsBULRCount() {
+    public void testLoadCellRangeBULRCount() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -438,7 +438,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:D4"),
                 SpreadsheetCellRangeReferencePath.BULR,
@@ -453,7 +453,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsAllLrtd() {
+    public void testLoadCellRangeAllLrtd() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -477,7 +477,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         ).setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
                 SpreadsheetCellRangeReferencePath.LRTD,
@@ -491,7 +491,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsAllBurl() {
+    public void testLoadCellRangeAllBurl() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
         final SpreadsheetCell a1 = store.save(
@@ -515,7 +515,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         ).setFormula(SpreadsheetFormula.EMPTY)
         );
 
-        this.loadCellsAndCheck(
+        this.loadCellRangeAndCheck(
                 store,
                 SpreadsheetSelection.parseCellRange("A1:" + last.reference()),
                 SpreadsheetCellRangeReferencePath.BULR,
@@ -531,7 +531,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     // save.............................................................................................................
 
     @Test
-    public void testLoadCellsWithinSaveCellWithSaveWatcher() {
+    public void testLoadCellRangeWithinSaveCellWithSaveWatcher() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("'Hello")
         );
@@ -542,7 +542,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         store.addSaveWatcher(
                 (s) -> loaded.addAll(
-                            store.loadCells(
+                            store.loadCellRange(
                                     SpreadsheetSelection.A1.toCellRange()
                             )
                     )
@@ -595,7 +595,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     }
 
     @Test
-    public void testLoadCellsWithinDeleteCellWithDeleteWatcher() {
+    public void testLoadCellRangeWithinDeleteCellWithDeleteWatcher() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("'Hello")
         );
@@ -607,7 +607,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         store.addDeleteWatcher(
                 (s) -> loaded.addAll(
-                        store.loadCells(
+                        store.loadCellRange(
                                 SpreadsheetSelection.A1.toCellRange()
                         )
                 )

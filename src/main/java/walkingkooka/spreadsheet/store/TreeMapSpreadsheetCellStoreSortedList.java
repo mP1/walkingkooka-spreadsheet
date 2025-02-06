@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * A very simple abstraction that holds {@link SpreadsheetCell cells} sorted by the given {@link Comparator} only exists
- * to support {@link TreeMapSpreadsheetCellStore#loadCells(SpreadsheetCellRangeReference, SpreadsheetCellRangeReferencePath, int, int)}.
+ * to support {@link TreeMapSpreadsheetCellStore#loadCellRange(SpreadsheetCellRangeReference, SpreadsheetCellRangeReferencePath, int, int)}.
  */
 final class TreeMapSpreadsheetCellStoreSortedList {
 

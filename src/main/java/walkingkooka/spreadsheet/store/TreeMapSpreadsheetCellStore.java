@@ -95,7 +95,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         this.bulr.addOrReplace(cell);
         this.burl.addOrReplace(cell);
 
-        // must be last so any SaveWatchers that try and loadCells after the #maps like #lrtd have already saved $cell
+        // must be last so any SaveWatchers that try and loadCellRange after the #maps like #lrtd have already saved $cell
         return this.store.save(cell);
     }
 
@@ -120,15 +120,15 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         this.bulr.remove(id);
         this.burl.remove(id);
 
-        // must be last so any DeleteWatchers that try and loadCells after the #maps like #lrtd have already deleted $id
+        // must be last so any DeleteWatchers that try and loadCellRange after the #maps like #lrtd have already deleted $id
         this.store.delete(id);
     }
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
-                                          final SpreadsheetCellRangeReferencePath path,
-                                          final int offset,
-                                          final int count) {
+    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range,
+                                              final SpreadsheetCellRangeReferencePath path,
+                                              final int offset,
+                                              final int count) {
         checkCellRange(range);
         Objects.requireNonNull(path, "path");
         if (offset < 0) {

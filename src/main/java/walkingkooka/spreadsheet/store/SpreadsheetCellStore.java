@@ -40,8 +40,8 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     /**
      * Attempts to load all the cells in the given {@link SpreadsheetCellRangeReference}.
      */
-    default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
-        return this.loadCells(
+    default Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+        return this.loadCellRange(
                 range,
                 SpreadsheetCellRangeReferencePath.LRTD,
                 0, // offset
@@ -52,10 +52,10 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     /**
      * Attempts to load all the cells in the given {@link SpreadsheetCellRangeReference}.
      */
-    Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range,
-                                   final SpreadsheetCellRangeReferencePath path,
-                                   final int offset,
-                                   final int count);
+    Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range,
+                                       final SpreadsheetCellRangeReferencePath path,
+                                       final int offset,
+                                       final int count);
 
     /**
      * Default implementation that deletes all the cells in the given {@link SpreadsheetCellRangeReference}.

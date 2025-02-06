@@ -133,7 +133,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.loadCellRangeCycleCheck(range);
 
         return this.repository.cells()
-                .loadCells(range);
+                .loadCellRange(range);
     }
 
     @Override
