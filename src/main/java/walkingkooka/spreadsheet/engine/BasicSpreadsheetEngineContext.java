@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetCompara
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -55,6 +56,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
@@ -255,24 +257,44 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return result;
     }
 
+    /**
+     * Factory that creates a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell}.
+     */
     private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(cell, "cell");
 
-        final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-        final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
+        // lazily create SpreadsheetConverterContext & ExpressionFunctionProvider, these can be shared even when
+        // the $cell changes
+        if (null == this.spreadsheetConverterContext && null == this.expressionFunctionProvider) {
+            final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
 
-        final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
+            final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
 
-        if (SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS.equals(functionAliases)) {
-            converterSelector = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
-        } else {
-            if (SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.equals(functionAliases)) {
-                converterSelector = SpreadsheetMetadataPropertyName.FIND_CONVERTER;
+            final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
+
+            if (SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS.equals(functionAliases)) {
+                converterSelector = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
             } else {
-                throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
+                if (SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.equals(functionAliases)) {
+                    converterSelector = SpreadsheetMetadataPropertyName.FIND_CONVERTER;
+                } else {
+                    throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
+                }
             }
+
+            this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
+                    converterSelector,
+                    this, // SpreadsheetLabelNameResolver,
+                    spreadsheetProvider, // SpreadsheetConverterProvider
+                    this.providerContext
+            );
+
+            this.expressionFunctionProvider = metadata.expressionFunctionProvider(
+                    functionAliases,
+                    spreadsheetProvider
+            );
         }
 
         return SpreadsheetExpressionEvaluationContexts.basic(
@@ -281,16 +303,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.serverUrl,
                 this.referenceToValue,
                 metadata,
-                metadata.spreadsheetConverterContext(
-                        converterSelector,
-                        this, // SpreadsheetLabelNameResolver,
-                        spreadsheetProvider, // SpreadsheetConverterProvider
-                        this.providerContext
-                ),
-                metadata.expressionFunctionProvider(
-                        functionAliases,
-                        spreadsheetProvider
-                ), // ExpressionFunctionProvider,
+                this.spreadsheetConverterContext,
+                this.expressionFunctionProvider, // ExpressionFunctionProvider,
                 this // ProviderContext
         );
     }
@@ -300,6 +314,16 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     private final AbsoluteUrl serverUrl;
 
     private final SpreadsheetEnginesExpressionReferenceToValueFunction referenceToValue;
+
+    /**
+     * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
+     */
+    private SpreadsheetConverterContext spreadsheetConverterContext;
+
+    /**
+     * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
+     */
+    private ExpressionFunctionProvider expressionFunctionProvider;
 
     // HasNow...........................................................................................................
 
