@@ -173,11 +173,6 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
-    public SpreadsheetCell cellOrFail() {
-        return this.context.cellOrFail();
-    }
-
-    @Override
     public Converter<SpreadsheetConverterContext> converter() {
         return this.context.converter();
     }
