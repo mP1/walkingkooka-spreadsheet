@@ -141,13 +141,13 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     /**
      * Loads all the cells present in the given {@link SpreadsheetCellRangeReference}.
      */
-    Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range);
+    Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range);
 
     /**
      * Helper that may be used to verify that the load cells {@link SpreadsheetCellRange} does not include the current
      * cell, throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
      */
-    default void loadCellsCycleCheck(final SpreadsheetCellRangeReference range) {
+    default void loadCellRangeCycleCheck(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
         final SpreadsheetCellReference current = this.cell()

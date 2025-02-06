@@ -60,7 +60,7 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     }
 
     @Override
-    default Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+    default Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
         throw new UnsupportedOperationException();

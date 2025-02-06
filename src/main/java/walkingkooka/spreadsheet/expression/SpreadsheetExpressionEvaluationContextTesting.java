@@ -113,34 +113,34 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
-    // loadCells........................................................................................................
+    // loadCellRange........................................................................................................
 
     @Test
-    default void testLoadCellsWithNullRangeFails() {
+    default void testLoadCellRangeWithNullRangeFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()
-                        .loadCells(null)
+                        .loadCellRange(null)
         );
     }
 
-    default void loadCellsAndCheck(final C context,
-                                   final SpreadsheetCellRangeReference range,
-                                   final SpreadsheetCell... expected) {
-        this.loadCellsAndCheck(
+    default void loadCellRangeAndCheck(final C context,
+                                       final SpreadsheetCellRangeReference range,
+                                       final SpreadsheetCell... expected) {
+        this.loadCellRangeAndCheck(
                 context,
                 range,
                 SortedSets.of(expected)
         );
     }
 
-    default void loadCellsAndCheck(final C context,
-                                   final SpreadsheetCellRangeReference range,
-                                   final Set<SpreadsheetCell> expected) {
+    default void loadCellRangeAndCheck(final C context,
+                                       final SpreadsheetCellRangeReference range,
+                                       final Set<SpreadsheetCell> expected) {
         this.checkEquals(
                 expected,
-                context.loadCells(range),
-                () -> "loadCells " + range
+                context.loadCellRange(range),
+                () -> "loadCellRange " + range
         );
     }
 

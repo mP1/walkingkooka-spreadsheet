@@ -51,7 +51,7 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
     }
 
     @Override
-    public void testLoadCellsWithNullRangeFails() {
+    public void testLoadCellRangeWithNullRangeFails() {
         throw new UnsupportedOperationException();
     }
 

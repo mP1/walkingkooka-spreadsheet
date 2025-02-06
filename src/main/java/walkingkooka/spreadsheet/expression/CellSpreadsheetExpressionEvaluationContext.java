@@ -75,10 +75,10 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     }
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
-        this.loadCellsCycleCheck(range);
+    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+        this.loadCellRangeCycleCheck(range);
 
-        return this.context.loadCells(range);
+        return this.context.loadCellRange(range);
     }
 
     @Override

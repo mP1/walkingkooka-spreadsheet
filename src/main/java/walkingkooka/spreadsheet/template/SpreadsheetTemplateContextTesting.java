@@ -48,11 +48,11 @@ public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplate
     }
 
     @Test
-    default void testLoadCellsFails() {
+    default void testLoadCellRangeFails() {
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> this.createContext()
-                        .loadCells(
+                        .loadCellRange(
                                 SpreadsheetSelection.A1.toCellRange()
                         )
         );

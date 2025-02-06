@@ -64,7 +64,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public Set<SpreadsheetCell> loadCells(final SpreadsheetCellRangeReference range) {
+    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         throw new UnsupportedOperationException();
     }
 
