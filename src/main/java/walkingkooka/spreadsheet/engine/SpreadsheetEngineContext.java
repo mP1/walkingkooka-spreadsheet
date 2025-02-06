@@ -65,7 +65,7 @@ public interface SpreadsheetEngineContext extends Context,
      */
     SpreadsheetFormulaParserToken parseFormula(final TextCursor formula);
 
-    // toExpresssion....................................................................................................
+    // toExpression.....................................................................................................
 
     /**
      * Helps by converting the given {@link SpreadsheetFormulaParserToken} into its {@link Expression} equivalent.
