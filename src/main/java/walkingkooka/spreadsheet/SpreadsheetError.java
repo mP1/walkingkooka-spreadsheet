@@ -147,6 +147,13 @@ public final class SpreadsheetError implements Value<Optional<?>>,
         this.value = value;
     }
 
+    /**
+     * Wraps this {@link SpreadsheetError} inside an exception ready to be thrown.
+     */
+    public SpreadsheetErrorException exception() {
+        return new SpreadsheetErrorException(this);
+    }
+
     public SpreadsheetErrorKind kind() {
         return this.kind;
     }

@@ -113,8 +113,9 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
 
     default SpreadsheetCell loadCellOrFail(final SpreadsheetCellReference cell) {
         return this.loadCell(cell)
-                .orElseThrow(() -> new SpreadsheetErrorException(
-                        SpreadsheetError.selectionNotFound(cell))
+                .orElseThrow(
+                        () -> SpreadsheetError.selectionNotFound(cell)
+                                .exception()
                 );
     }
 
@@ -131,9 +132,8 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
 
         if(null != current) {
             if(current.equalsIgnoreReferenceKind(cell)) {
-                throw new SpreadsheetErrorException(
-                        SpreadsheetError.cycle(cell)
-                );
+                throw SpreadsheetError.cycle(cell)
+                        .exception();
             }
         }
     }
@@ -156,9 +156,8 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
 
         if(null != current) {
             if(range.test(current)) {
-                throw new SpreadsheetErrorException(
-                        SpreadsheetError.cycle(range)
-                );
+                throw SpreadsheetError.cycle(range)
+                        .exception();
             }
         }
     }
