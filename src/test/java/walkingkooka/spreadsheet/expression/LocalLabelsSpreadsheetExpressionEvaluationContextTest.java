@@ -322,6 +322,11 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                         new FakeSpreadsheetExpressionEvaluationContext() {
 
                             @Override
+                            public Optional<SpreadsheetCell> cell() {
+                                return Optional.empty();
+                            }
+
+                            @Override
                             public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
                                 Objects.requireNonNull(cell, "cell");
 

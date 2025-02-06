@@ -44,6 +44,7 @@ import java.math.MathContext;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<BasicSpreadsheetExpressionEvaluationContext>,
@@ -200,6 +201,31 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         expressionFunctionProvider,
                         providerContext
                 )
+        );
+    }
+
+    // setCell..........................................................................................................
+
+    @Test
+    public void testSetCellDifferentCell() {
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext();
+
+        final Optional<SpreadsheetCell> differentCell = Optional.of(
+                SpreadsheetSelection.parseCell("B2")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("Different")
+                        )
+        );
+
+        final SpreadsheetExpressionEvaluationContext different = context.setCell(differentCell);
+        assertNotSame(
+                context,
+                different
+        );
+        this.checkEquals(
+                differentCell,
+                different.cell(),
+                "serverUrl"
         );
     }
 

@@ -43,6 +43,11 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     String templateValue(final TemplateValueName name);
 
     @Override
+    default SpreadsheetTemplateContext setCell(final Optional<SpreadsheetCell> cell) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     default Optional<SpreadsheetCell> cell() {
         throw new UnsupportedOperationException();
     }

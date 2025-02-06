@@ -52,6 +52,16 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
+    public void testSetCellWithNullCellFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetCellWithSame() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public TestSpreadsheetExpressionEvaluationContextDelegator createContext() {
         return new TestSpreadsheetExpressionEvaluationContextDelegator();
     }
@@ -112,6 +122,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     final static class TestSpreadsheetExpressionEvaluationContextDelegator implements SpreadsheetExpressionEvaluationContextDelegator {
+
+        @Override
+        public SpreadsheetExpressionEvaluationContextDelegator setCell(final Optional<walkingkooka.spreadsheet.SpreadsheetCell> cell) {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public Optional<SpreadsheetCell> cell() {

@@ -96,8 +96,16 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference spreadsheetCellReference) {
-        return this.context.loadCell(spreadsheetCellReference);
+    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+        return SpreadsheetExpressionEvaluationContexts.cell(
+                cell,
+                this
+        );
+    }
+
+    @Override
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        return this.context.loadCell(cell);
     }
 
     @Override

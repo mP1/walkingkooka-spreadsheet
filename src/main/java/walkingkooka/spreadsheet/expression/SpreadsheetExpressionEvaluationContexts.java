@@ -62,6 +62,17 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
+     * {@see CellSpreadsheetExpressionEvaluationContext}
+     */
+    public static SpreadsheetExpressionEvaluationContext cell(final Optional<SpreadsheetCell> cell,
+                                                              final SpreadsheetExpressionEvaluationContext context) {
+        return CellSpreadsheetExpressionEvaluationContext.with(
+                cell,
+                context
+        );
+    }
+
+    /**
      * {@see FakeSpreadsheetExpressionEvaluationContext}
      */
     public static FakeSpreadsheetExpressionEvaluationContext fake() {

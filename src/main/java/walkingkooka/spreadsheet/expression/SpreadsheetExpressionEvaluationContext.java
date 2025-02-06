@@ -92,6 +92,11 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     }
 
     /**
+     * Returns a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell} as the current cell.
+     */
+    SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell);
+
+    /**
      * Returns the current cell that owns the expression or formula being executed.
      */
     Optional<SpreadsheetCell> cell();

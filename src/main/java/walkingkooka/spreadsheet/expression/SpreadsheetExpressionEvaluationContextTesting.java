@@ -32,6 +32,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C> {
@@ -160,6 +161,38 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 expected,
                 context.loadLabelMapping(labelName),
                 () -> "loadLabelMapping " + labelName
+        );
+    }
+
+    // setCell..........................................................................................................
+
+    @Test
+    default void testSetCellWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .setCell(null)
+        );
+    }
+
+    @Test
+    default void testSetCellWithSame() {
+        final C context = this.createContext();
+
+        assertSame(
+                context,
+                context.setCell(
+                        context.cell()
+                )
+        );
+    }
+
+    default void setCellAndCheck(final C context,
+                                 final Optional<SpreadsheetCell> cell,
+                                 final SpreadsheetExpressionEvaluationContext expected) {
+        this.checkEquals(
+                expected,
+                context.setCell(cell)
         );
     }
 }
