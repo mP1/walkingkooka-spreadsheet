@@ -113,20 +113,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             cellRange = selection.toCellRange();
         }
 
-        return null != cellRange ?
-                this.loadCells0(
+        return this.loadCellRange(
                         cellRange,
                         evaluation,
                         deltaProperties,
                         context
-                ) :
-                SpreadsheetDelta.EMPTY;
+                );
     }
 
-    private SpreadsheetDelta loadCells0(final SpreadsheetCellRangeReference cellRange,
-                                        final SpreadsheetEngineEvaluation evaluation,
-                                        final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                        final SpreadsheetEngineContext context) {
+    private SpreadsheetDelta loadCellRange(final SpreadsheetCellRangeReference cellRange,
+                                           final SpreadsheetEngineEvaluation evaluation,
+                                           final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                           final SpreadsheetEngineContext context) {
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
             final SpreadsheetStoreRepository repository = context.storeRepository();
 
