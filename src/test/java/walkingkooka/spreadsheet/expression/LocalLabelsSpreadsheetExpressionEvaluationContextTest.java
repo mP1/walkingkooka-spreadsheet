@@ -341,7 +341,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                             }
 
                             @Override
-                            public Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
+                            public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
                                 Objects.requireNonNull(labelName, "labelName");
 
                                 throw new UnsupportedOperationException();

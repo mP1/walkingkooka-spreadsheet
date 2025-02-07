@@ -144,23 +144,23 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
-    // loadLabelMapping.................................................................................................
+    // loadLabel........................................................................................................
 
     @Test
-    default void testLoadLabelMappingWithNullLabelMappingFails() {
+    default void testLoadLabelWithNullLabelFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createContext().loadLabelMapping(null)
+                () -> this.createContext().loadLabel(null)
         );
     }
 
-    default void loadLabelMappingAndCheck(final C context,
-                                          final SpreadsheetLabelName labelName,
-                                          final Optional<SpreadsheetLabelMapping> expected) {
+    default void loadLabelAndCheck(final C context,
+                                   final SpreadsheetLabelName labelName,
+                                   final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
                 expected,
-                context.loadLabelMapping(labelName),
-                () -> "loadLabelMapping " + labelName
+                context.loadLabel(labelName),
+                () -> "loadLabel " + labelName
         );
     }
 
