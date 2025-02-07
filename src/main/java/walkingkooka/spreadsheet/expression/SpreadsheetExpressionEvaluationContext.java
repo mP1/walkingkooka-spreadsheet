@@ -123,7 +123,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      * Helper that may be used to verify that the load cell {@link SpreadsheetCellReference} is not the current cell,
      * throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
      */
-    default void loadCellCycleCheck(final SpreadsheetCellReference cell) {
+    default void cellCycleCheck(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         final SpreadsheetCellReference current = this.cell()

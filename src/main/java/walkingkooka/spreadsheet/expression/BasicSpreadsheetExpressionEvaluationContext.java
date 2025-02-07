@@ -122,7 +122,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        this.loadCellCycleCheck(cell);
+        this.cellCycleCheck(cell);
 
         return this.repository.cells()
                     .load(cell);

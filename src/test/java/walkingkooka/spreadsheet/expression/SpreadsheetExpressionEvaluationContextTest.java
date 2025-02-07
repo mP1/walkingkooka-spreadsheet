@@ -137,29 +137,29 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
         );
     }
 
-    // loadCellCycleCheck...............................................................................................
+    // testCycleCheck...................................................................................................
 
     @Test
-    public void loadCellCycleCheckWhenCellEmpty() {
-        this.loadCellCycleCheck(
+    public void testCellCycleCheckWhenCellEmpty() {
+        this.cellCycleCheck(
                 Optional.empty(),
                 "B2"
         );
     }
 
     @Test
-    public void loadCellCycleCheckWhenCellDifferent() {
-        this.loadCellCycleCheck(
+    public void testCellCycleCheckWhenCellDifferent() {
+        this.cellCycleCheck(
                 Optional.of("A1"),
                 "B2"
         );
     }
 
     @Test
-    public void loadCellCycleCheckFails() {
+    public void testCellCycleCheckFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
-                () -> this.loadCellCycleCheck(
+                () -> this.cellCycleCheck(
                         Optional.of("A1"),
                         "A1"
                 )
@@ -167,18 +167,18 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCellCycleCheckDifferentReferenceKindFails() {
+    public void testCellCycleCheckDifferentReferenceKindFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
-                () -> this.loadCellCycleCheck(
+                () -> this.cellCycleCheck(
                         Optional.of("$A1"),
                         "A$1"
                 )
         );
     }
 
-    private void loadCellCycleCheck(final Optional<String> current,
-                                    final String load) {
+    private void cellCycleCheck(final Optional<String> current,
+                                final String load) {
         new FakeSpreadsheetExpressionEvaluationContext() {
             @Override
             public Optional<SpreadsheetCell> cell() {
@@ -187,7 +187,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
                                 .setFormula(SpreadsheetFormula.EMPTY)
                 );
             }
-        }.loadCellCycleCheck(
+        }.cellCycleCheck(
                 SpreadsheetSelection.parseCell(load)
         );
     }
