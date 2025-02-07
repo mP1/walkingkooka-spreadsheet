@@ -849,6 +849,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     SpreadsheetEngineContext createContext();
 
+    // loadCell.........................................................................................................
+
     default SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,
                                            final SpreadsheetCellReference reference,
                                            final SpreadsheetEngineEvaluation evaluation,
@@ -1089,6 +1091,80 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "loadCell " + reference);
     }
 
+    // loadMultipleCellRanges...........................................................................................
+
+    default void loadMultipleCellRangesAndCheck(final SpreadsheetEngine engine,
+                                                final String cellRanges,
+                                                final SpreadsheetEngineEvaluation evaluation,
+                                                final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                final SpreadsheetEngineContext context,
+                                                final SpreadsheetCell... updated) {
+        this.loadMultipleCellRangesAndCheck(
+                engine,
+                SpreadsheetViewportWindows.parse(cellRanges)
+                        .cellRanges(),
+                evaluation,
+                deltaProperties,
+                context,
+                updated
+        );
+    }
+
+    default void loadMultipleCellRangesAndCheck(final SpreadsheetEngine engine,
+                                                final Set<SpreadsheetCellRangeReference> ranges,
+                                                final SpreadsheetEngineEvaluation evaluation,
+                                                final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                final SpreadsheetEngineContext context,
+                                                final SpreadsheetCell... updated) {
+        final SpreadsheetDelta result = engine.loadMultipleCellRanges(
+                ranges,
+                evaluation,
+                deltaProperties,
+                context
+        );
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(updated)
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                )
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                ).setWindow(
+                        result.window()
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "loadCells " + ranges + " " + evaluation
+        );
+    }
+
+    default void loadMultipleCellRangesAndCheck(final SpreadsheetEngine engine,
+                                                final Set<SpreadsheetCellRangeReference> ranges,
+                                                final SpreadsheetEngineEvaluation evaluation,
+                                                final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                final SpreadsheetEngineContext context,
+                                                final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.loadMultipleCellRanges(
+                        ranges,
+                        evaluation,
+                        deltaProperties,
+                        context
+                ),
+                () -> "loadCells " + ranges + " " + evaluation
+        );
+    }
+
+    // loadLabel........................................................................................................
+
     default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                    final SpreadsheetLabelName label,
                                    final SpreadsheetExpressionReference reference) {
@@ -1317,76 +1393,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 delta,
                 engine.insertRows(row, count, context),
                 () -> "insertRows row: " + row + " count: " + count
-        );
-    }
-
-    default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final String cells,
-                                   final SpreadsheetEngineEvaluation evaluation,
-                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetCell... updated) {
-        this.loadCellsAndCheck(
-                engine,
-                SpreadsheetViewportWindows.parse(cells)
-                        .cellRanges(),
-                evaluation,
-                deltaProperties,
-                context,
-                updated
-        );
-    }
-
-    default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Set<SpreadsheetCellRangeReference> ranges,
-                                   final SpreadsheetEngineEvaluation evaluation,
-                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetCell... updated) {
-        final SpreadsheetDelta result = engine.loadCells(
-                ranges,
-                evaluation,
-                deltaProperties,
-                context
-        );
-
-        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(updated)
-                ).setColumnCount(
-                        OptionalInt.of(
-                                engine.columnCount(context)
-                        )
-                )
-                .setRowCount(
-                        OptionalInt.of(
-                                engine.rowCount(context)
-                        )
-                ).setWindow(
-                        result.window()
-                );
-        this.checkEquals(
-                expected,
-                result,
-                () -> "loadCells " + ranges + " " + evaluation
-        );
-    }
-
-    default void loadCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Set<SpreadsheetCellRangeReference> ranges,
-                                   final SpreadsheetEngineEvaluation evaluation,
-                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta delta) {
-        checkEquals(
-                delta,
-                engine.loadCells(
-                        ranges,
-                        evaluation,
-                        deltaProperties,
-                        context
-                ),
-                () -> "loadCells " + ranges + " " + evaluation
         );
     }
 

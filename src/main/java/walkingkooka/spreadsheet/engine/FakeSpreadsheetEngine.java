@@ -52,10 +52,10 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
-                                      final SpreadsheetEngineEvaluation evaluation,
-                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                      final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta loadMultipleCellRanges(final Set<SpreadsheetCellRangeReference> cellRanges,
+                                                   final SpreadsheetEngineEvaluation evaluation,
+                                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                   final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

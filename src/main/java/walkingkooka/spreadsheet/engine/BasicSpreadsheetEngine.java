@@ -188,10 +188,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // LOAD CELLS.......................................................................................................
 
     @Override
-    public SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
-                                      final SpreadsheetEngineEvaluation evaluation,
-                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                      final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta loadMultipleCellRanges(final Set<SpreadsheetCellRangeReference> cellRanges,
+                                                   final SpreadsheetEngineEvaluation evaluation,
+                                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                   final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cellRanges, "cellRanges");
         checkEvaluation(evaluation);
         checkDeltaProperties(deltaProperties);

@@ -276,7 +276,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // loadCells........................................................................................................
 
     @Test
-    public void testLoadCellsCellWhenEmpty() {
+    public void testLoadMultipleCellRangesCellWhenEmpty() {
         this.loadCellFailCheck(
                 SpreadsheetSelection.A1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY
@@ -284,7 +284,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithFormulaWithInvalidValueFails() {
+    public void testLoadMultipleCellRangesWithFormulaWithInvalidValueFails() {
         this.loadCellFails(
                 "1.X",
                 SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'1\' at 0 expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
@@ -292,7 +292,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithFormulaExpressionErrorFails() {
+    public void testLoadMultipleCellRangesWithFormulaExpressionErrorFails() {
         this.loadCellFails(
                 "=1+",
                 SpreadsheetErrorKind.ERROR.setMessage(
@@ -302,7 +302,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithFormulaWithInvalidLabelFails() {
+    public void testLoadMultipleCellRangesWithFormulaWithInvalidLabelFails() {
         this.loadCellFails(
                 "=UnknownLabel",
                 SpreadsheetError.selectionNotFound(SpreadsheetSelection.labelName("UnknownLabel"))
@@ -310,7 +310,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithDivideByZeroFails() {
+    public void testLoadMultipleCellRangesWithDivideByZeroFails() {
         this.loadCellFails(
                 "=1/0",
                 SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
@@ -318,7 +318,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithUnknownFunctionFails() {
+    public void testLoadMultipleCellRangesWithUnknownFunctionFails() {
         this.loadCellFails(
                 "=unknownFunction()",
                 SpreadsheetError.functionNotFound(
@@ -353,7 +353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFormulaWithMissingCellReference() {
+    public void testLoadMultipleCellRangesFormulaWithMissingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -376,7 +376,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFormulaWithMissingCellReference2() {
+    public void testLoadMultipleCellRangesFormulaWithMissingCellReference2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -399,7 +399,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFormulaWithUnknownLabel() {
+    public void testLoadMultipleCellRangesFormulaWithUnknownLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -431,7 +431,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFormulaWithFunctionMissingCellNumberParameter() {
+    public void testLoadMultipleCellRangesFormulaWithFunctionMissingCellNumberParameter() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -457,7 +457,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFormulaWithFunctionMissingCellStringParameter() {
+    public void testLoadMultipleCellRangesFormulaWithFunctionMissingCellStringParameter() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -485,7 +485,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFormulaWithLabelToMissingCell() {
+    public void testLoadMultipleCellRangesFormulaWithLabelToMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -523,7 +523,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsSkipEvaluate() {
+    public void testLoadMultipleCellRangesSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -542,7 +542,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsCellWithoutFormatter() {
+    public void testLoadMultipleCellRangesCellWithoutFormatter() {
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1+2",
                 number(1 + 2),
@@ -552,7 +552,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsCellWithFormatter() {
+    public void testLoadMultipleCellRangesCellWithFormatter() {
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1+2",
                 number(1 + 2),
@@ -565,7 +565,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithErrorAndFormatter() {
+    public void testLoadMultipleCellRangesWithErrorAndFormatter() {
         this.cellStoreSaveAndLoadCellAndCheck(
                 "=1/0",
                 SpreadsheetErrorKind.DIV0.setMessage("Division by zero"),
@@ -608,7 +608,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsComputeIfNecessaryCachesCell() {
+    public void testLoadMultipleCellRangesComputeIfNecessaryCachesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -635,7 +635,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsParserFails() {
+    public void testLoadMultipleCellRangesParserFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -664,7 +664,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsParser() {
+    public void testLoadMultipleCellRangesParser() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -693,7 +693,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsComputeIfNecessaryKeepsExpression() {
+    public void testLoadMultipleCellRangesComputeIfNecessaryKeepsExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -726,7 +726,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsComputeIfNecessaryHonoursExpressionIsPure() {
+    public void testLoadMultipleCellRangesComputeIfNecessaryHonoursExpressionIsPure() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -768,7 +768,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsComputeIfNecessaryHonoursFunctionIsPure() {
+    public void testLoadMultipleCellRangesComputeIfNecessaryHonoursFunctionIsPure() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -820,7 +820,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
+    public void testLoadMultipleCellRangesComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -850,7 +850,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsForceRecomputeIgnoresValue() {
+    public void testLoadMultipleCellRangesForceRecomputeIgnoresValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -882,7 +882,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsForceRecomputeIgnoresCache() {
+    public void testLoadMultipleCellRangesForceRecomputeIgnoresCache() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -907,7 +907,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsForceRecomputeIgnoresPreviousError() {
+    public void testLoadMultipleCellRangesForceRecomputeIgnoresPreviousError() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -939,7 +939,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithComputeThenSkipEvaluate() {
+    public void testLoadMultipleCellRangesWithComputeThenSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -961,7 +961,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsManyCellsFormulasWithoutCrossCellReferences() {
+    public void testLoadMultipleCellRangesManyCellsFormulasWithoutCrossCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -996,7 +996,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFormulaWithCrossCellReferences() {
+    public void testLoadMultipleCellRangesFormulaWithCrossCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1052,7 +1052,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFormulaWithCrossCellReferences2() {
+    public void testLoadMultipleCellRangesFormulaWithCrossCellReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1117,7 +1117,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWhereValueLabelInvalidFails() {
+    public void testLoadMultipleCellRangesWhereValueLabelInvalidFails() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1134,7 +1134,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWhereValueIsCellReference() {
+    public void testLoadMultipleCellRangesWhereValueIsCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1164,7 +1164,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWhereValueIsLabel() {
+    public void testLoadMultipleCellRangesWhereValueIsLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -1328,7 +1328,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithCellRange() {
+    public void testLoadMultipleCellRangesWithCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -7685,14 +7685,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // loadCells........................................................................................................
+    // loadMultipleCellRanges...........................................................................................
 
     @Test
-    public void testLoadCellsNothing() {
+    public void testLoadMultipleCellRangesNothing() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 "A1:B2",
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -7702,7 +7702,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsMultipleRanges() {
+    public void testLoadMultipleCellRanges() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellStore cellStore = context.storeRepository()
+                .cells();
+
+        final SpreadsheetCell b2 = this.cell("b2", "=2");
+        cellStore.save(b2);
+
+        final SpreadsheetCell c3 = this.cell("c3", "=3");
+        cellStore.save(c3);
+
+        final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:c3");
+
+        this.loadMultipleCellRangesAndCheck(
+                engine,
+                window.cellRanges(),
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formattedCell(b2, this.expressionNumberKind().create(2)),
+                                        this.formattedCell(c3, this.expressionNumberKind().create(3))
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B,C")
+                        ).setRowHeights(
+                                rowHeights("2,3")
+                        ).setColumnCount(
+                                OptionalInt.of(3)
+                        ).setRowCount(
+                                OptionalInt.of(3)
+                        ).setWindow(window)
+        );
+    }
+
+    @Test
+    public void testLoadMultipleCellRanges2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -7727,7 +7767,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("A1:B2,D4:E5");
 
         // c3 must not be returned
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -7752,7 +7792,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsNothingWithColumns() {
+    public void testLoadMultipleCellRangesNothingWithColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -7775,7 +7815,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("B2:C3");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -7794,7 +7834,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsNothingWithLabels() {
+    public void testLoadMultipleCellRangesNothingWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -7808,7 +7848,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("B2:C3");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -7829,7 +7869,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsNothingWithRows() {
+    public void testLoadMultipleCellRangesNothingWithRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -7852,7 +7892,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("B2:C3");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -7871,7 +7911,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithDivideByZero() {
+    public void testLoadMultipleCellRangesWithDivideByZero() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -7883,7 +7923,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("z9");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -7910,47 +7950,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCells() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final SpreadsheetCell b2 = this.cell("b2", "=2");
-        cellStore.save(b2);
-
-        final SpreadsheetCell c3 = this.cell("c3", "=3");
-        cellStore.save(c3);
-
-        final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:c3");
-
-        this.loadCellsAndCheck(
-                engine,
-                window.cellRanges(),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formattedCell(b2, this.expressionNumberKind().create(2)),
-                                        this.formattedCell(c3, this.expressionNumberKind().create(3))
-                                )
-                        ).setColumnWidths(
-                                columnWidths("B,C")
-                        ).setRowHeights(
-                                rowHeights("2,3")
-                        ).setColumnCount(
-                                OptionalInt.of(3)
-                        ).setRowCount(
-                                OptionalInt.of(3)
-                        ).setWindow(window)
-        );
-    }
-
-    @Test
-    public void testLoadCellsWithCellReferences() {
+    public void testLoadMultipleCellRangesWithCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -7965,7 +7965,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:c3");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -7990,7 +7990,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithReferencesToReferences() {
+    public void testLoadMultipleCellRangesWithReferencesToReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8008,7 +8008,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("a1:c3");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -8034,7 +8034,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithReferencesToReferences2() {
+    public void testLoadMultipleCellRangesWithReferencesToReferences2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8052,7 +8052,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("a1:c3");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -8078,7 +8078,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithLabels() {
+    public void testLoadMultipleCellRangesWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8100,7 +8100,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("c3:d4");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -8131,7 +8131,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsOnlyLabelsToCell() {
+    public void testLoadMultipleCellRangesOnlyLabelsToCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8144,7 +8144,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:d4");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -8163,7 +8163,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsOnlyLabelsToRange() {
+    public void testLoadMultipleCellRangesOnlyLabelsToRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8176,7 +8176,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -8194,7 +8194,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsOnlyLabelsToCellAndRange() {
+    public void testLoadMultipleCellRangesOnlyLabelsToCellAndRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8211,7 +8211,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -8232,7 +8232,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsWithLabelsLabelWithoutCell() {
+    public void testLoadMultipleCellRangesWithLabelsLabelWithoutCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8251,7 +8251,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("c3:d4");
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -8279,7 +8279,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFiltersHiddenColumns() {
+    public void testLoadMultipleCellRangesFiltersHiddenColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8316,7 +8316,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -8348,7 +8348,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellsFiltersHiddenRows() {
+    public void testLoadMultipleCellRangesFiltersHiddenRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -8385,7 +8385,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.loadCellsAndCheck(
+        this.loadMultipleCellRangesAndCheck(
                 engine,
                 window.cellRanges(),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
