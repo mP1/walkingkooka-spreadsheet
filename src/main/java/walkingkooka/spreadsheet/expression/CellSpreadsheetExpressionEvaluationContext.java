@@ -69,7 +69,7 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        this.loadCellCycleCheck(cell);
+        this.cellCycleCheck(cell);
 
         return this.context.loadCell(cell);
     }
@@ -88,6 +88,12 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        if(reference instanceof SpreadsheetCellReference) {
+
+        }
+
         return this.context.reference(reference);
     }
 
