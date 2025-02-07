@@ -62,10 +62,10 @@ public interface SpreadsheetEngine {
     /**
      * Loads a range of cells. This is useful to fill a range that fills the viewportRectangle.
      */
-    SpreadsheetDelta loadCells(final Set<SpreadsheetCellRangeReference> cellRanges,
-                               final SpreadsheetEngineEvaluation evaluation,
-                               final Set<SpreadsheetDeltaProperties> deltaProperties,
-                               final SpreadsheetEngineContext context);
+    SpreadsheetDelta loadMultipleCellRanges(final Set<SpreadsheetCellRangeReference> cellRanges,
+                                            final SpreadsheetEngineEvaluation evaluation,
+                                            final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                            final SpreadsheetEngineContext context);
 
     /**
      * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
