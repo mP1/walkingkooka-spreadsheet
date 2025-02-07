@@ -24,10 +24,14 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 
 import java.util.Optional;
 
@@ -257,7 +261,263 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
                 SpreadsheetSelection.parseCellRange(load)
         );
     }
-    
+
+    // resolveIfLabelAndCycleCheck......................................................................................
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new FakeSpreadsheetExpressionEvaluationContext() {
+                }
+                        .resolveIfLabelAndCycleCheck(null)
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithNonSpreadsheetExpressionReference() {
+        this.resolveIfLabelAndCycleCheck(
+                new FakeSpreadsheetExpressionEvaluationContext(),
+                new ExpressionReference() {
+                    @Override
+                    public boolean testParameterName(ExpressionFunctionParameterName expressionFunctionParameterName) {
+                        throw new UnsupportedOperationException();
+                    }
+                }
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithCellFails() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.resolveIfLabelAndCycleCheckFails(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.of(
+                                cell.setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+                },
+                cell
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithDifferentCell() {
+        this.resolveIfLabelAndCycleCheck(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.of(
+                                SpreadsheetSelection.parseCell("B2")
+                                        .setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+                },
+                SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithCellRangeInsideFails() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.resolveIfLabelAndCycleCheckFails(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.of(
+                                cell.setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+                },
+                cell.toCellRange()
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithDifferentCellRange() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellRangeReference range = cell.toCellRange();
+
+        this.resolveIfLabelAndCycleCheck(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.of(
+                                SpreadsheetSelection.parseCell("B2")
+                                        .setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+                },
+                range,
+                range
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithLabelToCellFails() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        this.resolveIfLabelAndCycleCheckFails(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.of(
+                                cell.setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+
+                    @Override
+                    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName l) {
+                        checkEquals(label, l);
+                        return cell;
+                    }
+                },
+                label,
+                cell
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithDifferentLabelToCell() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        this.resolveIfLabelAndCycleCheck(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.of(
+                                SpreadsheetSelection.parseCell("B2")
+                                        .setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+
+                    @Override
+                    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName l) {
+                        checkEquals(label, l);
+                        return cell;
+                    }
+                },
+                label,
+                cell
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithLabelToCellRangeInsideFails() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final SpreadsheetCellRangeReference range = cell.toCellRange();
+
+        this.resolveIfLabelAndCycleCheckFails(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.of(
+                                cell.setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+
+                    @Override
+                    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName l) {
+                        checkEquals(label, l);
+                        return range;
+                    }
+                },
+                label,
+                range
+        );
+    }
+
+    @Test
+    public void testResolveIfLabelAndCycleCheckWithLabelToDifferentCellRange() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellRangeReference range = cell.toCellRange();
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        this.resolveIfLabelAndCycleCheck(
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.of(
+                                SpreadsheetSelection.parseCell("B2")
+                                        .setFormula(SpreadsheetFormula.EMPTY)
+                        );
+                    }
+
+                    @Override
+                    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName l) {
+                        checkEquals(label, l);
+                        return range;
+                    }
+                },
+                label,
+                range
+        );
+    }
+
+    private void resolveIfLabelAndCycleCheckFails(final SpreadsheetExpressionEvaluationContext context,
+                                                  final SpreadsheetExpressionReference reference) {
+        this.resolveIfLabelAndCycleCheckFails(
+                context,
+                reference,
+                reference
+        );
+    }
+
+    private void resolveIfLabelAndCycleCheckFails(final SpreadsheetExpressionEvaluationContext context,
+                                                  final SpreadsheetExpressionReference reference,
+                                                  final SpreadsheetExpressionReference expected) {
+        final SpreadsheetErrorException thrown = assertThrows(
+                SpreadsheetErrorException.class,
+                () -> context.resolveIfLabelAndCycleCheck(reference)
+        );
+
+        this.checkEquals(
+                SpreadsheetError.cycle(expected),
+                thrown.spreadsheetError()
+        );
+    }
+
+    private void resolveIfLabelAndCycleCheck(final SpreadsheetExpressionEvaluationContext context,
+                                             final ExpressionReference reference) {
+        this.resolveIfLabelAndCycleCheck(
+                context,
+                reference,
+                reference
+        );
+    }
+
+    private void resolveIfLabelAndCycleCheck(final SpreadsheetExpressionEvaluationContext context,
+                                             final ExpressionReference reference,
+                                             final ExpressionReference expected) {
+        if (reference.equals(expected)) {
+            assertSame(
+                    expected,
+                    context.resolveIfLabelAndCycleCheck(reference)
+            );
+        } else {
+            this.checkEquals(
+                    expected,
+                    context.resolveIfLabelAndCycleCheck(reference)
+            );
+        }
+    }
+
     // class............................................................................................................
 
     @Override

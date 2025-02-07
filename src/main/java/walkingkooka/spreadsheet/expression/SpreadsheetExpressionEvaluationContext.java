@@ -175,6 +175,38 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     }
 
     /**
+     * Guard that resolves any labels and verifies that the reference is not a cycle to the current cell.
+     */
+    default ExpressionReference resolveIfLabelAndCycleCheck(final ExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        ExpressionReference result  = reference;
+
+        if(reference instanceof SpreadsheetExpressionReference) {
+            final SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) reference;
+
+            final SpreadsheetExpressionReference notLabel = this.resolveIfLabel(spreadsheetExpressionReference)
+                    .toExpressionReference();
+
+            if(notLabel.isCell()) {
+                this.cellCycleCheck(
+                        notLabel.toCell()
+                );
+            }
+            if(notLabel.isCellRange()) {
+                this.cellRangeCycleCheck(
+                        notLabel.toCellRange()
+                );
+            }
+
+            result = notLabel;
+        }
+
+
+        return result;
+    }
+
+    /**
      * Returns the base server url, which can then be used to create links to cells and more.
      * This is necessary for functions such as hyperlink which creates a link to a cell.
      */
