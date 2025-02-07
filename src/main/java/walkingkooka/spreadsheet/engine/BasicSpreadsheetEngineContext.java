@@ -26,7 +26,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
@@ -221,20 +220,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public Object evaluate(final Expression expression,
                            final Optional<SpreadsheetCell> cell) {
-        Objects.requireNonNull(expression, "expression");
-        Objects.requireNonNull(cell, "cell");
-
-        Object result;
-
-        try {
-            result = expression.toValue(
-                    this.expressionEvaluationContext(cell)
-            );
-        } catch (final RuntimeException exception) {
-            result = SpreadsheetErrorKind.translate(exception);
-        }
-
-        return result;
+        return this.expressionEvaluationContext(cell)
+                .evaluateExpression(expression);
     }
 
     @Override
