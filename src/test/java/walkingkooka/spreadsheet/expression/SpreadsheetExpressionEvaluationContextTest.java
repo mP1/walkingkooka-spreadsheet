@@ -192,10 +192,10 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
         );
     }
 
-    // loadCellRangeCycleCheck..............................................................................................
+    // loadCellRangeCycleCheck..........................................................................................
 
     @Test
-    public void loadCellRangeCycleCheckWhenCellEmpty() {
+    public void testLoadCellRangeCycleCheckWhenCellEmpty() {
         this.loadCellRangeCycleCheck(
                 Optional.empty(),
                 "B2"
@@ -203,7 +203,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCellRangeCycleCheckWhenCellDifferent() {
+    public void testLoadCellRangeCycleCheckWhenCellDifferent() {
         this.loadCellRangeCycleCheck(
                 Optional.of("A1"),
                 "B2"
@@ -211,7 +211,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCellRangeCycleCheckFails() {
+    public void testLoadCellRangeCycleCheckFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> this.loadCellRangeCycleCheck(
@@ -222,7 +222,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCellRangeCycleCheckDifferentReferenceKindFails() {
+    public void testLoadCellRangeCycleCheckDifferentReferenceKindFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> this.loadCellRangeCycleCheck(
@@ -233,7 +233,7 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
     }
 
     @Test
-    public void loadCellRangeCycleCheckContainsFails() {
+    public void testLoadCellRangeCycleCheckContainsFails() {
         assertThrows(
                 SpreadsheetErrorException.class,
                 () -> this.loadCellRangeCycleCheck(
