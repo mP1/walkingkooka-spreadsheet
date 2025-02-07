@@ -59,7 +59,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -324,13 +323,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
      */
     private ExpressionFunctionProvider expressionFunctionProvider;
-
-    // HasNow...........................................................................................................
-
-    @Override
-    public LocalDateTime now() {
-        return this.providerContext.now();
-    }
 
     // formatValue......................................................................................................
 
