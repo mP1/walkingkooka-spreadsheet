@@ -72,7 +72,7 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     }
 
     @Override
-    default Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
+    default Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 }

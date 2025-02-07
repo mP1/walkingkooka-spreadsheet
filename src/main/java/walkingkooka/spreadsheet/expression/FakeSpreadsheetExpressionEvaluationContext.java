@@ -69,7 +69,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 

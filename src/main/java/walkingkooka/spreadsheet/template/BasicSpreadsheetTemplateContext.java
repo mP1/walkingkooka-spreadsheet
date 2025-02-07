@@ -64,8 +64,8 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
-        return SpreadsheetTemplateContext.super.loadLabelMapping(labelName);
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+        return SpreadsheetTemplateContext.super.loadLabel(labelName);
     }
 
     // SpreadsheetParserContext.........................................................................................

@@ -63,9 +63,9 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default Optional<SpreadsheetLabelMapping> loadLabelMapping(final SpreadsheetLabelName labelName) {
+    default Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetExpressionEvaluationContext()
-                .loadLabelMapping(labelName);
+                .loadLabel(labelName);
     }
 
     @Override
