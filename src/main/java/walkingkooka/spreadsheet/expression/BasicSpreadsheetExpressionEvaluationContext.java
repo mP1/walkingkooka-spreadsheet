@@ -130,7 +130,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-        this.loadCellRangeCycleCheck(range);
+        this.cellRangeCycleCheck(range);
 
         return this.repository.cells()
                 .loadCellRange(range);

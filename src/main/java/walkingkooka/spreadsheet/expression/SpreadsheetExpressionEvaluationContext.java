@@ -147,7 +147,7 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
      * Helper that may be used to verify that the load cells {@link SpreadsheetCellRange} does not include the current
      * cell, throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
      */
-    default void loadCellRangeCycleCheck(final SpreadsheetCellRangeReference range) {
+    default void cellRangeCycleCheck(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
         final SpreadsheetCellReference current = this.cell()
