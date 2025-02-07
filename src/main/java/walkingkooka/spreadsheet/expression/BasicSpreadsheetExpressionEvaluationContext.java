@@ -212,7 +212,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        return this.referenceToValue.apply(reference);
+        return this.referenceToValue.apply(
+                this.resolveIfLabelAndCycleCheck(reference)
+        );
     }
 
     private final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue;
