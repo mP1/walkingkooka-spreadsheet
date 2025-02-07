@@ -88,13 +88,9 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        if(reference instanceof SpreadsheetCellReference) {
-
-        }
-
-        return this.context.reference(reference);
+        return this.context.reference(
+                this.resolveIfLabelAndCycleCheck(reference)
+        );
     }
 
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................

@@ -1844,10 +1844,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                SpreadsheetError.with(
-                                                        SpreadsheetErrorKind.NAME,
-                                                        "Label not found: \"Label123\"",
-                                                        Optional.of(LABEL)
+                                                SpreadsheetError.cycle(
+                                                        a1.reference()
                                                 )
                                         )
                                 )
@@ -1891,10 +1889,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                SpreadsheetError.with(
-                                                        SpreadsheetErrorKind.NAME,
-                                                        "Label not found: \"LABEL123\"",
-                                                        Optional.of(LABEL)
+                                                SpreadsheetError.cycle(
+                                                        a1.reference()
                                                 )
                                         )
                                 )
@@ -14694,7 +14690,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SERVER_URL, // serverUrl
                                 this.references(), // references
                                 metadata, // metadata
-                                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                                METADATA_EN_AU.spreadsheetConverterContext(
+                                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                                        this, // SpreadsheetLabelNameResolver
+                                        CONVERTER_PROVIDER,
+                                        PROVIDER_CONTEXT
+                                ),
                                 this.expressionFunctionProvider(),
                                 PROVIDER_CONTEXT
                         )
@@ -14838,7 +14839,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                 return metadata.spreadsheetConverterContext(
                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                        SPREADSHEET_LABEL_NAME_RESOLVER,
+                        this,
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                                 metadata,
                                 SPREADSHEET_FORMATTER_PROVIDER,

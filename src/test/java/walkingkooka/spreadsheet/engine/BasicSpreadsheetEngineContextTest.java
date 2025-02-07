@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
@@ -92,6 +93,7 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -627,6 +629,68 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     // evaluate.........................................................................................................
+
+    @Test
+    public void testEvaluateWithSelfReferenceGivesError() {
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
+        final SpreadsheetCell cell = cellReference.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=A1")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.reference(cellReference)
+                                )
+                        )
+        );
+
+        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
+        cellStore.save(cell);
+
+        this.evaluateAndCheck(
+                this.createContext(cellStore),
+                cell,
+                SpreadsheetError.cycle(cellReference)
+        );
+    }
+
+    @Test
+    public void testEvaluateWithIndirectCycleReferenceGivesError() {
+        final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("B2");
+
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=B2")
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.reference(b2Reference)
+                                        )
+                                )
+                );
+
+        final SpreadsheetCell b2 = b2Reference.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=A1")
+                                .setExpression(
+                                        Optional.of(
+                                                Expression.reference(
+                                                        a1.reference()
+                                                )
+                                        )
+                                )
+                );
+        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
+        cellStore.save(a1);
+        cellStore.save(b2);
+
+        // https://github.com/mP1/walkingkooka-spreadsheet/issues/5654
+        // BasicSpreadsheetEngine formulas not detecting cycles
+        assertThrows(
+                StackOverflowError.class,
+                () -> this.evaluateAndCheck(
+                        this.createContext(cellStore),
+                        a1,
+                        SpreadsheetError.cycle(a1.reference())
+                )
+        );
+    }
 
     @Test
     public void testEvaluate() {
@@ -1230,6 +1294,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return this.createContext(SpreadsheetLabelStores.treeMap());
     }
 
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetCellStore cellStore) {
+        return this.createContext(
+                METADATA,
+                cellStore,
+                SpreadsheetLabelStores.treeMap(),
+                SpreadsheetCellRangeStores.fake()
+        );
+    }
+
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
         return this.createContext(
                 METADATA,
@@ -1240,7 +1313,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
         return this.createContext(
                 metadata,
-                SpreadsheetLabelStores.fake()
+                SpreadsheetLabelStores.treeMap()
         );
     }
 
@@ -1267,15 +1340,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 )
         );
 
-        return BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
+        return this.createContext(
                 metadata,
-                ENGINE,
+                cells,
+                labelStore,
+                rangeToConditionalFormattingRules
+        );
+    }
+
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final SpreadsheetCellStore cellStore,
+                                                        final SpreadsheetLabelStore labelStore,
+                                                        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
+        return this.createContext(
+                metadata,
                 new FakeSpreadsheetStoreRepository() {
 
                     @Override
                     public SpreadsheetCellStore cells() {
-                        return cells;
+                        return cellStore;
                     }
 
                     @Override
@@ -1287,7 +1371,47 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     public SpreadsheetLabelStore labels() {
                         return labelStore;
                     }
+                }
+        );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final SpreadsheetStoreRepository repository) {
+        return BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                metadata,
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                      final SpreadsheetEngineEvaluation evaluation,
+                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                      final SpreadsheetEngineContext context) {
+                        final SpreadsheetCellReference cellReference = selection.toCell();
+
+                        final SpreadsheetCell loaded = context.storeRepository()
+                                .cells()
+                                .loadOrFail(cellReference);
+
+                        final SpreadsheetFormula formula = loaded.formula();
+
+                        final Object value = context.evaluate(
+                                formula.expression()
+                                        .orElseThrow(() -> new IllegalStateException("Missing expression " + cellReference)),
+                                Optional.of(loaded)
+                        );
+
+                        return SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        loaded.setFormula(
+                                                formula.setValue(
+                                                        Optional.ofNullable(value)
+                                                )
+                                        )
+                                )
+                        );
+                    }
                 },
+                repository,
                 FUNCTION_ALIASES,
                 SpreadsheetProviders.basic(
                         CONVERTER_PROVIDER,
