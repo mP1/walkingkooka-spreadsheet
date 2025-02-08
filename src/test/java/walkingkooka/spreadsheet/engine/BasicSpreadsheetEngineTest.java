@@ -16803,14 +16803,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         }, // references
                                         metadata, // metadata
                                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                                        this.expressionFunctionProvider(),
+                                        EXPRESSION_FUNCTION_PROVIDER,
                                         PROVIDER_CONTEXT
                                 )
                         );
-                    }
-
-                    private ExpressionFunctionProvider expressionFunctionProvider() {
-                        return EXPRESSION_FUNCTION_PROVIDER;
                     }
                 };
             }
