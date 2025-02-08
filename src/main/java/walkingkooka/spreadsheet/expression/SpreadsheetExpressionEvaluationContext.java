@@ -22,7 +22,6 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -30,8 +29,6 @@ import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -39,7 +36,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -48,7 +44,8 @@ import java.util.function.Function;
  */
 public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
         SpreadsheetConverterContext,
-        HasSpreadsheetMetadata {
+        HasSpreadsheetMetadata,
+        SpreadsheetExpressionReferenceContext {
 
     @Override
     default SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
@@ -107,19 +104,6 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     }
 
     /**
-     * Loads the cell for the given {@link SpreadsheetCellReference}, note that the formula is not evaluated.
-     */
-    Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
-
-    default SpreadsheetCell loadCellOrFail(final SpreadsheetCellReference cell) {
-        return this.loadCell(cell)
-                .orElseThrow(
-                        () -> SpreadsheetError.selectionNotFound(cell)
-                                .exception()
-                );
-    }
-
-    /**
      * Helper that may be used to verify that the load cell {@link SpreadsheetCellReference} is not the current cell,
      * throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
      */
@@ -139,11 +123,6 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     }
 
     /**
-     * Loads all the cells present in the given {@link SpreadsheetCellRangeReference}.
-     */
-    Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range);
-
-    /**
      * Helper that may be used to verify that the load cells {@link SpreadsheetCellRange} does not include the current
      * cell, throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
      */
@@ -160,18 +139,6 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
                         .exception();
             }
         }
-    }
-
-    /**
-     * Loads the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetLabelName}.
-     */
-    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName);
-
-    default SpreadsheetLabelMapping loadLabelOrFail(final SpreadsheetLabelName labelName) {
-        return this.loadLabel(labelName)
-                .orElseThrow(() -> new SpreadsheetErrorException(
-                        SpreadsheetError.selectionNotFound(labelName))
-                );
     }
 
     /**
