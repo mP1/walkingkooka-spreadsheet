@@ -1156,23 +1156,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                1 + 2,
-                FORMATTED_PATTERN_SUFFIX);
+                1 + 2
+        );
         this.loadCellAndCheckFormatted2(
                 engine,
                 c2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                3 + 4,
-                FORMATTED_PATTERN_SUFFIX
+                3 + 4
         );
         this.loadCellAndCheckFormatted2(
                 engine,
                 d2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                5 + 6,
-                FORMATTED_PATTERN_SUFFIX
+                5 + 6
         );
     }
 
@@ -1333,8 +1331,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                3 + 4,
-                FORMATTED_PATTERN_SUFFIX
+                3 + 4
         );
 
         // reference to B1 which has formula
@@ -1343,8 +1340,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                3 + 4,
-                FORMATTED_PATTERN_SUFFIX
+                3 + 4
         );
     }
 
@@ -1371,8 +1367,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                3 + 4,
-                FORMATTED_PATTERN_SUFFIX
+                3 + 4
         );
 
         // reference to B1 which has formula
@@ -1381,8 +1376,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                3 + 4,
-                FORMATTED_PATTERN_SUFFIX
+                3 + 4
         );
     }
 
@@ -5175,8 +5169,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                2,
-                FORMATTED_PATTERN_SUFFIX
+                2
         );
 
         this.loadCellAndCheckFormatted2(
@@ -5184,8 +5177,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 i14.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                4,
-                FORMATTED_PATTERN_SUFFIX
+                4
         );
 
         this.loadCellAndCheckFormulaAndValue(
@@ -5273,8 +5265,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                2,
-                FORMATTED_PATTERN_SUFFIX
+                2
         );
 
         this.loadCellAndCheckFormatted2(
@@ -5282,8 +5273,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 i14.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                4,
-                FORMATTED_PATTERN_SUFFIX
+                4
         );
 
         this.loadCellAndCheckFormulaAndValue(
@@ -6432,8 +6422,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                2,
-                FORMATTED_PATTERN_SUFFIX
+                2
         );
 
         this.loadCellAndCheckFormatted2(
@@ -6441,8 +6430,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 n9.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                4,
-                FORMATTED_PATTERN_SUFFIX
+                4
         );
 
         this.loadCellAndCheckFormulaAndValue(
@@ -6560,8 +6548,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                2,
-                FORMATTED_PATTERN_SUFFIX
+                2
         );
 
         this.loadCellAndCheckFormatted2(
@@ -6569,8 +6556,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 n9.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                4,
-                FORMATTED_PATTERN_SUFFIX
+                4
         );
 
         this.loadCellAndCheckFormulaAndValue(
@@ -16969,8 +16955,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                        final SpreadsheetCellReference reference,
                                                        final SpreadsheetEngineEvaluation evaluation,
                                                        final SpreadsheetEngineContext context,
-                                                       final Number value,
-                                                       final String suffix) {
+                                                       final Number value) {
         final SpreadsheetCell cell = this.loadCellAndCheckValue(
                 engine,
                 reference,
@@ -16980,7 +16965,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
         this.checkFormattedValue(
                 cell,
-                value + " " + suffix
+                value + " " + FORMATTED_PATTERN_SUFFIX
         );
         return cell;
     }
