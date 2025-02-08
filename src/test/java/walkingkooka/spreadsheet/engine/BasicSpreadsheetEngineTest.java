@@ -16589,37 +16589,40 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    private SpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
+        return this.createContext(
+                metadata,
+                SpreadsheetCellStores.treeMap()
+        );
+    }
+
     private SpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                    final SpreadsheetCellStore cellStore) {
         return this.createContext(
                 DEFAULT_YEAR,
                 SpreadsheetEngines.fake(),
                 metadata,
-                this.createSpreadsheetStoreRepository(cellStore)
+                new FakeSpreadsheetStoreRepository() {
+                    @Override
+                    public SpreadsheetCellStore cells() {
+                        return cellStore;
+                    }
+
+                    @Override
+                    public SpreadsheetColumnStore columns() {
+                        return this.columnStore;
+                    }
+
+                    private final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
+
+                    @Override
+                    public SpreadsheetRowStore rows() {
+                        return this.rowStore;
+                    }
+
+                    private final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
+                }
         );
-    }
-
-    private SpreadsheetStoreRepository createSpreadsheetStoreRepository(final SpreadsheetCellStore cellStore) {
-        return new FakeSpreadsheetStoreRepository() {
-            @Override
-            public SpreadsheetCellStore cells() {
-                return cellStore;
-            }
-
-            @Override
-            public SpreadsheetColumnStore columns() {
-                return this.columnStore;
-            }
-
-            private final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
-
-            @Override
-            public SpreadsheetRowStore rows() {
-                return this.rowStore;
-            }
-
-            private final SpreadsheetRowStore rowStore = SpreadsheetRowStores.treeMap();
-        };
     }
 
     private SpreadsheetEngineContext createContext(final SpreadsheetEngine engine) {
@@ -16658,15 +16661,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 METADATA,
                 storeRepository
-        );
-    }
-
-    private SpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
-        return this.createContext(
-                20,
-                SpreadsheetEngines.fake(),
-                metadata,
-                this.createSpreadsheetStoreRepository(SpreadsheetCellStores.treeMap())
         );
     }
 
