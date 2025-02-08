@@ -397,7 +397,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                             final ExpressionEvaluationContext context) {
                             return parameters.stream()
                                     .map(ExpressionNumber.class::cast)
-                                    .reduce(context.expressionNumberKind().zero(), (l, r) -> l.add(r, context));
+                                    .reduce(
+                                            context.expressionNumberKind()
+                                                    .zero(),
+                                            (l, r) -> l.add(r, context)
+                                    );
                         }
 
                         @Override
@@ -531,9 +535,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                context.spreadsheetMetadata()
-                        .expressionNumberKind()
-                        .zero(),
+                EXPRESSION_NUMBER_KIND.zero(),
                 " " + FORMATTED_PATTERN_SUFFIX
         );
     }
@@ -554,9 +556,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                context.spreadsheetMetadata()
-                        .expressionNumberKind()
-                        .create(2),
+                EXPRESSION_NUMBER_KIND.create(2),
                 "2 " + FORMATTED_PATTERN_SUFFIX
         );
     }
@@ -2695,7 +2695,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellWithFormulaNumberLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "123",
-                this.expressionNumberKind().create(123)
+                123
         );
     }
 
@@ -2703,7 +2703,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellWithFormulaNumber() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123",
-                this.expressionNumberKind().create(123)
+                123
         );
     }
 
@@ -2711,8 +2711,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellWithFormulaNumberMath() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123+456.75",
-                this.expressionNumberKind()
-                        .create(123 + 456.75)
+                123 + 456.75
         );
     }
 
@@ -3608,7 +3607,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                this.expressionNumberKind().create(3),
+                EXPRESSION_NUMBER_KIND.create(3),
                 "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
@@ -3672,7 +3671,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                this.expressionNumberKind().create(3),
+                EXPRESSION_NUMBER_KIND.create(3),
                 "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
@@ -4571,7 +4570,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                this.expressionNumberKind().create(3),
+                EXPRESSION_NUMBER_KIND.create(3),
                 "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
@@ -4635,7 +4634,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                this.expressionNumberKind().create(3),
+                EXPRESSION_NUMBER_KIND.create(3),
                 "3 " + FORMATTED_PATTERN_SUFFIX
         );
     }
@@ -9344,8 +9343,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b2, this.expressionNumberKind().create(2)),
-                                        this.formattedCell(c3, this.expressionNumberKind().create(3))
+                                        this.formattedCell(
+                                                b2,
+                                                2
+                                        ),
+                                        this.formattedCell(
+                                                c3,
+                                                3
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C")
@@ -10067,7 +10072,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 c3,
-                                                this.expressionNumberKind().create(3)
+                                                3
                                         )
                                 )
                         ).setRows(
@@ -17096,7 +17101,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      */
     private SpreadsheetFormula parseFormula(final SpreadsheetFormula formula) {
         final String text = formula.text();
-        final ExpressionNumberKind expressionNumberKind = this.expressionNumberKind();
 
         final SpreadsheetFormulaParserToken token =
                 text.isEmpty() ?
@@ -17111,7 +17115,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         SpreadsheetParserContexts.basic(
                                                 this.dateTimeContext(),
                                                 ExpressionNumberContexts.basic(
-                                                        expressionNumberKind,
+                                                        EXPRESSION_NUMBER_KIND,
                                                         this.decimalNumberContext()
                                                 ),
                                                 VALUE_SEPARATOR
@@ -17134,7 +17138,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                                     @Override
                                     public ExpressionNumberKind expressionNumberKind() {
-                                        return expressionNumberKind;
+                                        return EXPRESSION_NUMBER_KIND;
                                     }
 
                                     @Override
