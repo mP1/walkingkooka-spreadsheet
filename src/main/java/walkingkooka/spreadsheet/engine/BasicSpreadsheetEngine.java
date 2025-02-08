@@ -292,24 +292,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+            context.storeRepository()
+                    .cells()
+                    .deleteCells(
+                            context.resolveIfLabel(selection)
+                                    .toCellRange()
+                    );
 
-            final SpreadsheetStoreRepository repository = context.storeRepository();
-
-            final SpreadsheetCellRangeReference cellRange;
-            if(selection.isLabelName()) {
-                cellRange = context.resolveLabel(selection.toLabelName())
-                        .toCellRange();
-            } else {
-                cellRange = selection.toCellRange();
-            }
-
-            // only skip deletion if the label was not resolved.
-            if(null != cellRange) {
-                repository.cells()
-                        .deleteCells(cellRange);
-            }
-
-            return this.prepareResponse(changes, context);
+            return this.prepareResponse(
+                    changes,
+                    context
+            );
         }
     }
 
