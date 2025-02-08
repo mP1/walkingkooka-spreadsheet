@@ -162,6 +162,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
     private final static String NUMBER_PATTERN = "#";
     private final static String TEXT_PATTERN = "@";
+
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
         public boolean canConvert(final Object value,
@@ -272,6 +273,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static double VIEWPORT_WIDTH = COLUMN_WIDTH * 5;
 
     private final static double VIEWPORT_HEIGHT = ROW_HEIGHT * 5;
+
+    static {
+        final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
+
+        METADATA = METADATA_EN_AU.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern(DATE_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern(DATETIME_PATTERN).spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern(NUMBER_PATTERN).spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern(TEXT_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern(TIME_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern(TIME_PATTERN).spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
+                        .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
+                        .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))
+                );
+    }
+
+    private final static SpreadsheetMetadata METADATA;
 
     // loadCells........................................................................................................
 
@@ -10999,9 +11025,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.columnWidthAndCheck2(
                 column,
-                this.metadata(),
+                METADATA,
                 expected,
-                expected);
+                expected
+        );
     }
 
     @Test
@@ -11185,8 +11212,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
 
         final SpreadsheetEngineContext context = this.createContext(
-                this.metadata()
-                        .set(
+                METADATA.set(
                                 SpreadsheetMetadataPropertyName.STYLE,
                                 TextStyle.EMPTY.set(
                                         TextStylePropertyName.WIDTH,
@@ -11251,8 +11277,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
 
         final SpreadsheetEngineContext context = this.createContext(
-                this.metadata()
-                        .set(
+                METADATA.set(
                                 SpreadsheetMetadataPropertyName.STYLE,
                                 TextStyle.EMPTY.set(
                                         TextStylePropertyName.HEIGHT,
@@ -13042,8 +13067,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 final int frozenRows,
                                 final Optional<SpreadsheetSelection> selection,
                                 final String window) {
-        final SpreadsheetMetadata metadata = this.metadata()
-                .setOrRemove(
+        final SpreadsheetMetadata metadata = METADATA.setOrRemove(
                         SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
                         frozenColumns > 0 ?
                                 SpreadsheetReferenceKind.RELATIVE.firstColumn().columnRange(SpreadsheetReferenceKind.RELATIVE.column(frozenColumns - 1)) :
@@ -14485,7 +14509,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.createContext(
                 defaultYear,
                 engine,
-                this.metadata(),
+                METADATA,
                 storeRepository
         );
     }
@@ -14562,8 +14586,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
                 return SpreadsheetFormulaParsers.valueOrExpression(
-                                BasicSpreadsheetEngineTest.this.metadata()
-                                        .spreadsheetParser(
+                                METADATA.spreadsheetParser(
                                                 SPREADSHEET_PARSER_PROVIDER,
                                                 PROVIDER_CONTEXT
                                         )
@@ -15026,16 +15049,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         if (value.isPresent()) {
-            final TextNode formattedText = this.metadata()
-                    .spreadsheetFormatter(
-                            SPREADSHEET_FORMATTER_PROVIDER,
-                            PROVIDER_CONTEXT
-                    ).format(
-                            value.get(),
-                            SPREADSHEET_TEXT_FORMAT_CONTEXT
-                    ).orElseThrow(
-                            () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))
-                    );
+            final TextNode formattedText = METADATA.spreadsheetFormatter(
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    PROVIDER_CONTEXT
+            ).format(
+                    value.get(),
+                    SPREADSHEET_TEXT_FORMAT_CONTEXT
+            ).orElseThrow(
+                    () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))
+            );
 
             result = result.setFormattedValue(
                     Optional.of(
@@ -15059,11 +15081,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 text.isEmpty() ?
                         null :
                         SpreadsheetFormulaParsers.valueOrExpression(
-                                        BasicSpreadsheetEngineTest.this.metadata()
-                                                .spreadsheetParser(
-                                                        SPREADSHEET_PARSER_PROVIDER,
-                                                        PROVIDER_CONTEXT
-                                                )
+                                        METADATA.spreadsheetParser(
+                                                SPREADSHEET_PARSER_PROVIDER,
+                                                PROVIDER_CONTEXT
+                                        )
                                 ).orFailIfCursorNotEmpty(ParserReporters.basic())
                                 .parse(TextCursors.charSequence(text),
                                         SpreadsheetParserContexts.basic(
@@ -15160,29 +15181,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private ExpressionNumber number(final Number number) {
         return this.expressionNumberKind().create(number);
-    }
-
-    private SpreadsheetMetadata metadata() {
-        final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
-
-        return METADATA_EN_AU.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
-                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern(DATE_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm").spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern(DATETIME_PATTERN).spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern(NUMBER_PATTERN).spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern(TEXT_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern(TIME_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern(TIME_PATTERN).spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
-                        .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
-                        .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))
-                );
     }
 
     private SpreadsheetColumnReference column(final int column) {
