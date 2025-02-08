@@ -223,7 +223,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public MathContext mathContext() {
-            return METADATA_EN_AU.mathContext();
+            return METADATA.mathContext();
         }
     };
 
@@ -16808,7 +16808,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SERVER_URL, // serverUrl
                                 this.references(), // references
                                 metadata, // metadata
-                                METADATA_EN_AU.spreadsheetConverterContext(
+                                metadata.spreadsheetConverterContext(
                                         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                         this, // SpreadsheetLabelNameResolver
                                         CONVERTER_PROVIDER,
@@ -17117,7 +17117,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                                     @Override
                                     public MathContext mathContext() {
-                                        return METADATA_EN_AU.mathContext();
+                                        return METADATA.mathContext();
                                     }
 
                                     @Override
