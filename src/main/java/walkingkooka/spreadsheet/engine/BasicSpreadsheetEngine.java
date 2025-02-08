@@ -105,16 +105,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkDeltaProperties(deltaProperties);
         checkContext(context);
 
-        final SpreadsheetCellRangeReference cellRange;
-        if(selection.isLabelName()) {
-            cellRange = context.resolveLabel(selection.toLabelName())
-                    .toCellRange();
-        } else {
-            cellRange = selection.toCellRange();
-        }
-
         return this.loadCellRange(
-                        cellRange,
+                        context.resolveIfLabel(selection)
+                                .toCellRange(),
                         evaluation,
                         deltaProperties,
                         context
