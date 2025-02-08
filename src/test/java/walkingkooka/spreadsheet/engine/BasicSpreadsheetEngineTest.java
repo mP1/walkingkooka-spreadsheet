@@ -1207,20 +1207,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(SpreadsheetLabelMapping.with(LABEL, b1));
 
         // formula
-        this.loadCellAndCheckFormatted2(engine,
+        this.loadCellAndCheckFormatted2(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 number(3 + 4),
-                FORMATTED_PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX
+        );
 
         // reference to B1 which has formula
-        this.loadCellAndCheckFormatted2(engine,
+        this.loadCellAndCheckFormatted2(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 number(3 + 4),
-                FORMATTED_PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX
+        );
     }
 
     @Test
@@ -3934,9 +3938,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a1, "=1+" + n9.addColumn(-count), number(1 + 4)),
-                                        this.formattedCell(n9.addColumn(-count), "=4", number(4)),
-                                        this.formattedCell(o10.addColumn(-count), "=5+" + b1, number(5 + 2))
+                                        this.formattedCell(
+                                                a1,
+                                                "=1+" + n9.addColumn(-count),
+                                                number(1 + 4)
+                                        ),
+                                        this.formattedCell(
+                                                n9.addColumn(-count),
+                                                "=4",
+                                                number(4)
+                                        ),
+                                        this.formattedCell(
+                                                o10.addColumn(-count),
+                                                "=5+" + b1,
+                                                number(5 + 2)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(k1, n9, o10)
@@ -3951,7 +3967,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $c deleted, old-d & old-e refreshed
 
-        this.countAndCheck(context.storeRepository().cells(), 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
     }
 
     @Test
@@ -3993,7 +4013,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b delete
 
-        this.countAndCheck(context.storeRepository().cells(), 1);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                1
+        );
     }
 
     @Test
@@ -4024,9 +4048,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(m3.addColumn(-count), "=4", number(4)),
-                                        this.formattedCell(u4.addColumn(-count), "=5", number(5)),
-                                        this.formattedCell(v5.addColumn(-count), "=6", number(6))
+                                        this.formattedCell(
+                                                m3.addColumn(-count),
+                                                "=4",
+                                                number(4)
+                                        ),
+                                        this.formattedCell(
+                                                u4.addColumn(-count),
+                                                "=5",
+                                                number(5)
+                                        ),
+                                        this.formattedCell(
+                                                v5.addColumn(-count),
+                                                "=6",
+                                                number(6)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(k1, l1, m3, u4, v5)
@@ -4041,10 +4077,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $k1 & $c
 
-        this.countAndCheck(context.storeRepository().cells(), 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
     }
 
-    // loadRow......................................................................................................
+    // loadRow..........................................................................................................
 
     @Test
     public void testLoadRowWithMissingRow() {
@@ -4209,7 +4249,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // deleteRow....................................................................................................
+    // deleteRow........................................................................................................
 
     @Test
     public void testDeleteRowsWithNone() {
@@ -4227,7 +4267,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0,
                 context);
 
-        this.countAndCheck(context.storeRepository().cells(), 1);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                1
+        );
     }
 
     @Test
@@ -4239,9 +4283,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("A2");
         final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("A3");
 
-        engine.saveCell(this.cell(a1, "=1+2"), context);
-        engine.saveCell(this.cell(a2, "=3+4"), context);
-        engine.saveCell(this.cell(a3, "=5+6"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+2"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a2,
+                        "=3+4"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a3,
+                        "=5+6"
+                ),
+                context
+        );
 
         this.deleteRowsAndCheck(engine,
                 a2.row(),
@@ -4250,7 +4312,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a3.addRow(-1), "=5+6", number(5 + 6))
+                                        this.formattedCell(
+                                                a3.addRow(-1),
+                                                "=5+6",
+                                                number(5 + 6)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(a3)
@@ -4267,12 +4333,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 2);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a3.addRow(-1),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+6",
-                number(5 + 6));
+                number(5 + 6)
+        );
     }
 
     @Test
@@ -4299,8 +4367,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a3.addRow(-count), "=5+6", number(5 + 6)),
-                                        this.formattedCell(b10.addRow(-count), "=7+8", number(7 + 8))
+                                        this.formattedCell(
+                                                a3.addRow(-count),
+                                                "=5+6",
+                                                number(5 + 6)
+                                        ),
+                                        this.formattedCell(
+                                                b10.addRow(-count),
+                                                "=7+8",
+                                                number(7 + 8)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(a3, b10)
@@ -4315,14 +4391,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b delete
 
-        this.countAndCheck(context.storeRepository().cells(), 3);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                3
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
     }
 
     @Test
@@ -4350,7 +4432,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b10.addRow(-count), "=7+8", number(7 + 8))
+                                        this.formattedCell(
+                                                b10.addRow(-count),
+                                                "=7+8",
+                                                number(7 + 8)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(a2, a3, b10)
@@ -4365,24 +4451,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(context.storeRepository().cells(), 2);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                2
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b10.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=7+8",
-                number(7 + 8));
+                number(7 + 8)
+        );
     }
 
-    // delete row with labels to cell references..................................................................
+    // delete row with labels to cell references........................................................................
 
     @Test
     public void testDeleteRowsWithLabelsToCellUnmodified() {
@@ -4397,11 +4491,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2");
         final SpreadsheetCellReference a6 = SpreadsheetSelection.parseCell("$A$6");
 
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1));
+        labelStore.save(
+                SpreadsheetLabelMapping.with(LABEL, a1)
+        );
 
-        engine.saveCell(this.cell(a1, "=1+0"), context);
-        engine.saveCell(this.cell(a2, "=20+0+" + LABEL), context);
-        engine.saveCell(this.cell(a6, "=99+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a2,
+                        "=20+0+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a6,
+                        "=99+0"
+                ),
+                context
+        );
 
         final int count = 2;
         this.deleteRowsAndCheck(
@@ -4412,7 +4526,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$4", "=99+0", number(99 + 0))
+                                        this.formattedCell(
+                                                "$A$4",
+                                                "=99+0",
+                                                number(99 + 0)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(a6)
@@ -4431,26 +4549,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadLabelAndCheck(labelStore, LABEL, a1);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0",
-                number(1));
+                number(1))
+        ;
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=20+0+" + LABEL,
-                number(20 + 0 + 1));
+                number(20 + 0 + 1)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a6.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99));
+                number(99)
+        );
     }
 
     @Test
@@ -4478,8 +4602,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(Sets.of(
-                                this.formattedCell(a1, "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
-                                this.formattedCell(a6.addRow(-count), "=2+0", number(2 + 0)))
+                                        this.formattedCell(
+                                                a1,
+                                                "=1+0+" + LABEL,
+                                                number(1 + 0 + 2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                a6.addRow(-count),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        )
+                                )
                         ).setLabels(
                                 Sets.of(
                                         LABEL.setLabelMappingTarget(SpreadsheetSelection.parseCell("$A$4"))
@@ -4501,19 +4634,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadLabelAndCheck(labelStore, LABEL, a6.addRow(-count));
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "=1+0+" + LABEL,
-                number(3));
+                number(3)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a6.addRow(-count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "=2+0",
-                number(2));
+                number(2)
+        );
     }
 
     @Test
@@ -4592,9 +4729,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$1", "=1+$I$13", number(1 + 4)),
-                                        this.formattedCell("$I$13", "=4", number(4)),
-                                        this.formattedCell("$J$14", "=5+$A$2", number(5 + 2))
+                                        this.formattedCell(
+                                                "$A$1",
+                                                "=1+$I$13",
+                                                number(1 + 4)
+                                        ),
+                                        this.formattedCell(
+                                                "$I$13",
+                                                "=4",
+                                                number(4)
+                                        ),
+                                        this.formattedCell(
+                                                "$J$14",
+                                                "=5+$A$2",
+                                                number(5 + 2)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(a11, i14, j15)
@@ -4609,35 +4758,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $a11 delete
 
-        this.countAndCheck(context.storeRepository().cells(), 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+" + i14.addRow(-count),
-                number(1 + 4)); // reference should have been fixed.
+                number(1 + 4)
+        ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormatted2(engine,
+        this.loadCellAndCheckFormatted2(
+                engine,
                 a2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 number(2),
-                FORMATTED_PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX
+        );
 
-        this.loadCellAndCheckFormatted2(engine,
+        this.loadCellAndCheckFormatted2(
+                engine,
                 i14.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 number(4),
-                FORMATTED_PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 j15.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+" + a2,
-                number(5 + 2));
+                number(5 + 2)
+        );
     }
 
     @Test
@@ -4666,9 +4827,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$1", "=1+$I$12", number(1 + 4)),
-                                        this.formattedCell("$I$12", "=4", number(4)),
-                                        this.formattedCell("$J$13", "=5+$A$2", number(5 + 2))
+                                        this.formattedCell(
+                                                "$A$1",
+                                                "=1+$I$12",
+                                                number(1 + 4)
+                                        ),
+                                        this.formattedCell(
+                                                "$I$12",
+                                                "=4",
+                                                number(4)
+                                        ),
+                                        this.formattedCell(
+                                                "$J$13",
+                                                "=5+$A$2",
+                                                number(5 + 2)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(a11, i14, j15)
@@ -4737,12 +4910,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellRangeReference ab = a1.cellRange(a6);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ab));
 
-        engine.saveCell(this.cell(a1, "=1+0"), context);
-        engine.saveCell(this.cell(a11, "=20+0+" + LABEL), context);
-        engine.saveCell(this.cell(a16, "=99+0"), context); // DELETED
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a11,
+                        "=20+0+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a16,
+                        "=99+0"
+                ),
+                context
+        ); // DELETED
 
         final int count = 2;
-        this.deleteRowsAndCheck(engine,
+        this.deleteRowsAndCheck(
+                engine,
                 a16.row(),
                 count,
                 context,
@@ -4760,24 +4952,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(cellStore, 2); // a&c
-        this.countAndCheck(labelStore, 1);
+        this.countAndCheck(
+                cellStore,
+                2
+        ); // a&c
+        this.countAndCheck(
+                labelStore,
+                1
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0",
-                number(1));
+                number(1)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a11,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=20+0+" + LABEL,
-                number(21));
+                number(21)
+        );
 
-        this.loadLabelAndCheck(labelStore, LABEL, ab);
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                ab
+        );
     }
 
     @Test
@@ -4793,7 +4999,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a6 = SpreadsheetSelection.parseCell("$A$6");
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11");
 
-        engine.saveCell(this.cell(a1, "=1+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0"
+                ),
+                context
+        );
 
         final SpreadsheetCellRangeReference bc = a6.cellRange(a11);
         labelStore.save(
@@ -4887,22 +5099,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // b..c deleted, d moved
 
-        this.countAndCheck(cellStore, 2); // a&d
-        this.countAndCheck(labelStore, 0);
+        this.countAndCheck(
+                cellStore,
+                2
+        ); // a&d
+        this.countAndCheck(
+                labelStore,
+                0
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0",
                 number(1));
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a21.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=20+0",
-                number(20));
+                number(20)
+        );
     }
 
     @Test
@@ -4919,10 +5140,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11");
 
         final SpreadsheetCellRangeReference a6a11 = a6.cellRange(a11);
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, a6a11));
+        labelStore.save(
+                SpreadsheetLabelMapping.with(LABEL, a6a11)
+        );
 
-        engine.saveCell(this.cell(a1, "=1+0+" + LABEL), context);
-        engine.saveCell(this.cell(a6, "=20+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a6,
+                        "=20+0"
+                ),
+                context
+        );
 
         final int count = a11.row().value() - a6.row().value() + 1;
         this.deleteRowsAndCheck(
@@ -4985,8 +5220,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellRangeReference a16a21 = a16.cellRange(a21);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a16a21));
 
-        engine.saveCell(this.cell(a1, "=1+0+" + LABEL), context);
-        engine.saveCell(this.cell(a16, "=20+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a16,
+                        "=20+0"
+                ),
+                context
+        );
 
         final int count = a11.row().value() - a6.row().value() + 1;
         this.deleteRowsAndCheck(
@@ -4997,8 +5244,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a1, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
-                                        this.formattedCell(a16.addRow(-count), "=20+0", number(20 + 0))
+                                        this.formattedCell(
+                                                a1,
+                                                "=1+0+" + LABEL,
+                                                number(1 + 0 + 20 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                a16.addRow(-count),
+                                                "=20+0",
+                                                number(20 + 0)
+                                        )
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -5021,24 +5276,35 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 2); // a&d
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                number(1 + 20));
+                number(1 + 20)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a16.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=20+0",
-                number(20));
+                number(20)
+        );
 
-        this.countAndCheck(labelStore, 1);
+        this.countAndCheck(
+                labelStore,
+                1
+        );
         final SpreadsheetCellReference begin = a16.addRow(-count);
         final SpreadsheetCellReference end = a21.addRow(-count);
-        this.loadLabelAndCheck(labelStore, LABEL, begin.cellRange(end));
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                begin.cellRange(end)
+        );
     }
 
     @SuppressWarnings("unused")
@@ -5104,7 +5370,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a16 = SpreadsheetSelection.parseCell("$A$16");
 
         final SpreadsheetCellRangeReference a6a16 = a6.cellRange(a16);
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, a6a16));
+        labelStore.save(
+                SpreadsheetLabelMapping.with(LABEL, a6a16)
+        );
 
         final int count = 1;
         this.deleteRowsAndCheck(
@@ -5165,12 +5433,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 count,
                 context,
                 SpreadsheetDelta.EMPTY.setLabels(
-                        Sets.of(
-                                LABEL.setLabelMappingTarget(
-                                        SpreadsheetSelection.parseCellRange("$A$6:$A$11")
+                                Sets.of(
+                                        LABEL.setLabelMappingTarget(
+                                                SpreadsheetSelection.parseCellRange("$A$6:$A$11")
+                                        )
                                 )
-                        )
-                ).setColumnCount(OptionalInt.of(0))
+                        ).setColumnCount(OptionalInt.of(0))
                         .setRowCount(OptionalInt.of(0))
         );
 
@@ -5186,7 +5454,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // deleteColumn....................................................................................................
+    // deleteColumn.....................................................................................................
 
     @Test
     public void testDeleteColumnsWithNone() {
@@ -5203,12 +5471,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99));
+                number(99)
+        );
     }
 
     @Test
@@ -5232,7 +5502,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$B$1", "=5+6", number(5 + 6))
+                                        this.formattedCell(
+                                                "$B$1",
+                                                "=5+6",
+                                                number(5 + 6)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(c1)
@@ -5249,19 +5523,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 2);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+6",
-                number(5 + 6));
+                number(5 + 6)
+        );
     }
 
     @Test
@@ -5305,28 +5583,37 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b delete
 
-        this.countAndCheck(context.storeRepository().cells(), 3);
+        this.countAndCheck(
+                context.storeRepository().cells(),
+                3
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+6",
-                number(5 + 6));
+                number(5 + 6)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 j2.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=7+8",
-                number(7 + 8));
+                number(7 + 8)
+        );
     }
 
     @Test
@@ -5345,7 +5632,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(j2, "=7+8"), context);
 
         final int count = 2;
-        this.deleteColumnsAndCheck(engine,
+        this.deleteColumnsAndCheck(
+                engine,
                 b1.column(),
                 count,
                 context,
@@ -5369,22 +5657,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 2);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 j2.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=7+8",
-                number(7 + 8));
+                number(7 + 8)
+        );
     }
 
-    // delete column with labels to cell references..................................................................
+    // delete column with labels to cell references.....................................................................
 
     @Test
     public void testDeleteColumnsWithLabelsToCellUnmodified() {
@@ -5406,7 +5698,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(this.cell(f1, "=99+0"), context);
 
         final int count = 2;
-        this.deleteColumnsAndCheck(engine,
+        this.deleteColumnsAndCheck(
+                engine,
                 b1.column().add(2),
                 count,
                 context,
@@ -5432,26 +5725,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadLabelAndCheck(labelStore, LABEL, a1);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0",
                 number(1));
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=20+0+" + LABEL,
-                number(21));
+                number(21)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 f1.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99));
+                number(99)
+        );
     }
 
     @Test
@@ -5468,8 +5766,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, e1));
 
-        engine.saveCell(this.cell(a1, "=1+0+" + LABEL), context);
-        engine.saveCell(this.cell(e1, "=2+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        e1,
+                        "=2+0"
+                ),
+                context
+        );
 
         final int count = 2;
         this.deleteColumnsAndCheck(
@@ -5480,8 +5790,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$1", "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
-                                        this.formattedCell("$C$1", "=2+0", number(2 + 0))
+                                        this.formattedCell(
+                                                "$A$1",
+                                                "=1+0+" + LABEL,
+                                                number(1 + 0 + 2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$C$1",
+                                                "=2+0",
+                                                number(2 + 0)
+                                        )
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -5500,23 +5818,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b moved
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(
+                cellStore,
+                2
+        );
 
-        this.loadLabelAndCheck(labelStore, LABEL, e1.addColumn(-count));
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                e1.addColumn(-count)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                number(3));
+                number(3)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 e1.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2));
+                number(2)
+        );
     }
 
     @Test
@@ -5557,7 +5886,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $v delete
 
-        this.countAndCheck(context.storeRepository().cells(), 1);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                1
+        );
 
         this.loadCellAndCheckFormulaAndValue(
                 engine,
@@ -5580,11 +5913,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference n9 = SpreadsheetSelection.parseCell("$N$9"); // MOVED
         final SpreadsheetCellReference o10 = SpreadsheetSelection.parseCell("$O$10"); // MOVED
 
-        engine.saveCell(this.cell(a1, "=1+" + n9), context);
-        engine.saveCell(this.cell(b1, "=2"), context);
-        engine.saveCell(this.cell(k1, "=3"), context);
-        engine.saveCell(this.cell(n9, "=4"), context);
-        engine.saveCell(this.cell(o10, "=5+" + b1), context); // =5+2
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+" + n9
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        b1,
+                        "=2"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        k1,
+                        "=3"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        n9,
+                        "=4"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        o10,
+                        "=5+" + b1
+                ),
+                context
+        ); // =5+2
 
         final int count = 1;
         this.deleteColumnsAndCheck(
@@ -5595,9 +5958,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$1", "=1+$M$9", number(1 + 4)),
-                                        this.formattedCell("$M$9", "=4", number(4)),
-                                        this.formattedCell("$N$10", "=5+" + b1, number(5 + 2))
+                                        this.formattedCell(
+                                                "$A$1",
+                                                "=1+$M$9",
+                                                number(1 + 4)
+                                        ),
+                                        this.formattedCell(
+                                                "$M$9",
+                                                "=4",
+                                                number(4)
+                                        ),
+                                        this.formattedCell(
+                                                "$N$10",
+                                                "=5+" + b1,
+                                                number(5 + 2)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(k1, n9, o10)
@@ -5624,26 +5999,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 number(1 + 4)
         ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormatted2(engine,
+        this.loadCellAndCheckFormatted2(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 number(2),
-                FORMATTED_PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX
+        );
 
-        this.loadCellAndCheckFormatted2(engine,
+        this.loadCellAndCheckFormatted2(
+                engine,
                 n9.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 number(4),
-                FORMATTED_PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 o10.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+" + b1,
-                number(5 + 2));
+                number(5 + 2)
+        );
     }
 
     @Test
@@ -5657,11 +6038,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference n9 = SpreadsheetSelection.parseCell("$N$9");
         final SpreadsheetCellReference o10 = SpreadsheetSelection.parseCell("$O$10");
 
-        engine.saveCell(this.cell(a1, "=1+" + n9), context);
-        engine.saveCell(this.cell(b1, "=2"), context);
-        engine.saveCell(this.cell(k1, "=3"), context); // DELETED
-        engine.saveCell(this.cell(n9, "=4"), context); // MOVED
-        engine.saveCell(this.cell(o10, "=5+" + b1), context); // MOVED
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+" + n9
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        b1,
+                        "=2"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        k1,
+                        "=3"
+                ),
+                context
+        ); // DELETED
+        engine.saveCell(
+                this.cell(
+                        n9,
+                        "=4"
+                ),
+                context
+        ); // MOVED
+        engine.saveCell(
+                this.cell(
+                        o10,
+                        "=5+" + b1
+                ),
+                context
+        ); // MOVED
 
         final int count = 2;
         this.deleteColumnsAndCheck(
@@ -5672,9 +6083,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$1", "=1+$L$9", number(1 + 4)),
-                                        this.formattedCell("$L$9", "=4", number(4)),
-                                        this.formattedCell("$M$10", "=5+$B$1", number(5 + 2))
+                                        this.formattedCell(
+                                                "$A$1",
+                                                "=1+$L$9",
+                                                number(1 + 4)
+                                        ),
+                                        this.formattedCell(
+                                                "$L$9",
+                                                "=4",
+                                                number(4)
+                                        ),
+                                        this.formattedCell(
+                                                "$M$10",
+                                                "=5+$B$1",
+                                                number(5 + 2)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(k1, n9, o10)
@@ -5689,38 +6112,50 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $c delete
 
-        this.countAndCheck(context.storeRepository().cells(), 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+" + n9.addColumn(-count),
-                number(1 + 4)); // reference should have been fixed.
+                number(1 + 4)
+        ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormatted2(engine,
+        this.loadCellAndCheckFormatted2(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 number(2),
-                FORMATTED_PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX
+        );
 
-        this.loadCellAndCheckFormatted2(engine,
+        this.loadCellAndCheckFormatted2(
+                engine,
                 n9.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 number(4),
-                FORMATTED_PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 o10.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+" + b1,
-                number(5 + 2));
+                number(5 + 2)
+        );
     }
 
-    // delete range....................................................................................
+    // delete range.....................................................................................................
 
     @Test
     public void testDeleteColumnsWithLabelsToRangeUnmodified() {
@@ -5737,11 +6172,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference p1 = SpreadsheetSelection.parseCell("$P$1");
 
         final SpreadsheetCellRangeReference ab = a1.cellRange(f1);
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, ab));
+        labelStore.save(
+                SpreadsheetLabelMapping.with(LABEL, ab)
+        );
 
-        engine.saveCell(this.cell(a1, "=1+0"), context);
-        engine.saveCell(this.cell(k1, "=20+0+" + LABEL), context);
-        engine.saveCell(this.cell(p1, "=99+0"), context); // deleted!!!
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        k1,
+                        "=20+0+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        p1,
+                        "=99+0"
+                ),
+                context
+        ); // deleted!!!
 
         final int count = 2;
         this.deleteColumnsAndCheck(
@@ -5763,24 +6218,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $d moved
 
-        this.countAndCheck(cellStore, 2); // a&c
-        this.countAndCheck(labelStore, 1);
+        this.countAndCheck(
+                cellStore,
+                2
+        ); // a&c
+        this.countAndCheck(
+                labelStore,
+                1
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0",
-                number(1));
+                number(1)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 k1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=20+0+" + LABEL,
-                number(21));
+                number(21)
+        );
 
-        this.loadLabelAndCheck(labelStore, LABEL, ab);
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                ab
+        );
     }
 
     @Test
@@ -5889,15 +6358,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // b..c deleted, d moved
 
-        this.countAndCheck(cellStore, 2); // a&d
-        this.countAndCheck(labelStore, 0);
+        this.countAndCheck(
+                cellStore,
+                2
+        ); // a&d
+        this.countAndCheck(
+                labelStore,
+                0
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0",
-                number(1));
+                number(1)
+        );
     }
 
     @Test
@@ -5961,8 +6438,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // b..c deleted
 
-        this.countAndCheck(cellStore, 1); // a
-        this.countAndCheck(labelStore, 0);
+        this.countAndCheck(
+                cellStore,
+                1
+        ); // a
+        this.countAndCheck(
+                labelStore,
+                0
+        );
 
         this.loadCellAndCheckFormulaAndValue(
                 engine,
@@ -5992,10 +6475,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellRangeReference p1u1 = p1.cellRange(u1);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, p1u1));
 
-        engine.saveCell(this.cell(a1, "=1+0+" + LABEL), context);
-        engine.saveCell(this.cell(p1, "=20+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        p1,
+                        "=20+0"
+                ),
+                context
+        );
 
         final int count = k1.column().value() - f1.column().value() + 1;
+
         this.deleteColumnsAndCheck(
                 engine,
                 f1.column(),
@@ -6004,8 +6500,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a1, "=1+0+" + LABEL, number(1 + 0 + 20 + 0)),
-                                        this.formattedCell(p1.addColumn(-count), "=20+0", number(20 + 0)))
+                                        this.formattedCell(
+                                                a1,
+                                                "=1+0+" + LABEL,
+                                                number(1 + 0 + 20 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                p1.addColumn(-count),
+                                                "=20+0",
+                                                number(20 + 0)
+                                        )
+                                )
                         ).setLabels(
                                 Sets.of(
                                         LABEL.setLabelMappingTarget(
@@ -6025,26 +6530,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // b..c deleted, d moved
 
-        this.countAndCheck(cellStore, 2); // a&d
+        this.countAndCheck(
+                cellStore,
+                2
+        ); // a&d
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + LABEL,
-                number(1 + 20));
+                number(1 + 20)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 p1.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=20+0",
-                number(20));
+                number(20)
+        );
 
-        this.countAndCheck(labelStore, 1);
+        this.countAndCheck(
+                labelStore,
+                1
+        );
+
         final SpreadsheetCellReference begin = p1.addColumn(-count);
         final SpreadsheetCellReference end = u1.addColumn(-count);
-        this.loadLabelAndCheck(labelStore, LABEL, begin.cellRange(end));
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                begin.cellRange(end)
+        );
     }
 
     @SuppressWarnings("unused")
@@ -6072,6 +6592,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final int count = u1.column().value() - p1.column().value() + 1;
+
         this.deleteColumnsAndCheck(
                 engine,
                 p1.column(),
@@ -6209,19 +6730,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.addFailingCellSaveWatcherAndDeleteWatcher(context);
 
-        this.insertColumnsAndCheck(engine,
+        this.insertColumnsAndCheck(
+                engine,
                 cv1.column(),
                 0,
                 context);
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 cv1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99));
+                number(99)
+        );
     }
 
     @Test
@@ -6262,14 +6786,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(context.storeRepository().cells(), 3);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                3
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
     }
 
     @Test
@@ -6310,28 +6840,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b insert
 
-        this.countAndCheck(context.storeRepository().cells(), 3);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                3
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+4",
-                number(3 + 4));
+                number(3 + 4)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 c1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+6",
-                number(5 + 6));
+                number(5 + 6)
+        );
     }
 
     @Test
@@ -6346,20 +6886,42 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("$C$2"); //
         final SpreadsheetCellReference e4 = SpreadsheetSelection.parseCell("$E$4"); // moved
 
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, c2));
+        labelStore.save(
+                SpreadsheetLabelMapping.with(
+                        LABEL,
+                        c2
+                )
+        );
 
-        engine.saveCell(this.cell(c2, "=100"), context);
-        engine.saveCell(this.cell(e4, "=2+" + LABEL), context);
+        engine.saveCell(
+                this.cell(
+                        c2,
+                        "=100"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        e4,
+                        "=2+" + LABEL
+                ),
+                context
+        );
 
         final int count = 1;
-        this.insertColumnsAndCheck(engine,
+        this.insertColumnsAndCheck(
+                engine,
                 e4.column(),
                 count,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$F$4", "=2+" + LABEL, number(2 + 100))
+                                        this.formattedCell(
+                                                "$F$4",
+                                                "=2+" + LABEL,
+                                                number(2 + 100)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(e4)
@@ -6374,23 +6936,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b insert
 
-        this.loadLabelAndCheck(labelStore, LABEL, c2);
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                c2
+        );
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(
+                cellStore,
+                2
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 c2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=100",
-                number(100));
+                number(100)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 e4.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+" + LABEL,
-                number(2 + 100));
+                number(2 + 100)
+        );
     }
 
     @Test
@@ -6422,14 +6995,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a1, "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCell("$C$1", "=2+0", number(2 + 0)),
-                                        this.formattedCell("$D$1", "=3+0+" + LABEL, number(3 + 0 + 99 + 0)),
-                                        this.formattedCell("$O$9", "=99+0", number(99 + 0))
+                                        this.formattedCell(
+                                                a1,
+                                                "=1+" + LABEL,
+                                                number(1 + 99 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$C$1",
+                                                "=2+0",
+                                                number(2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$D$1",
+                                                "=3+0+" + LABEL,
+                                                number(3 + 0 + 99 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$O$9",
+                                                "=99+0",
+                                                number(99 + 0)
+                                        )
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(SpreadsheetSelection.parseCell("$O$9"))
+                                        LABEL.setLabelMappingTarget(
+                                                SpreadsheetSelection.parseCell("$O$9")
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(b1, n9)
@@ -6444,37 +7035,52 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b insert
 
-        this.loadLabelAndCheck(labelStore, LABEL, n9.addColumn(count));
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                n9.addColumn(count)
+        );
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(
+                cellStore,
+                4
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+" + LABEL,
-                number(1 + 99));
+                number(1 + 99)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2 + 0));
+                number(2 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 c1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+0+" + LABEL,
-                number(3 + 99));
+                number(3 + 99)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 n9.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99 + 0));
+                number(99 + 0)
+        );
     }
 
     @Test
@@ -6524,19 +7130,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 2);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
                 number(99 + 0));
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 f6.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0+" + LABEL,
-                number(2 + 99));
+                number(2 + 99)
+        );
     }
 
     @Test
@@ -6556,8 +7165,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, k1.cellRange(p1)));
 
-        engine.saveCell(this.cell(a1, "=1+" + LABEL), context);
-        engine.saveCell(this.cell(k1, "=99+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        k1,
+                        "=99+0"
+                ),
+                context
+        );
 
         this.insertColumnsAndCheck(
                 engine,
@@ -6567,8 +7188,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a1, "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCell("$P$1", "=99+0", number(99 + 0))
+                                        this.formattedCell(
+                                                a1,
+                                                "=1+" + LABEL,
+                                                number(1 + 99 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$P$1",
+                                                "=99+0",
+                                                number(99 + 0)
+                                        )
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -6589,24 +7218,37 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b insert
 
-        this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, p1.cellRange(u1));
+        this.countAndCheck(
+                labelStore,
+                1
+        );
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                p1.cellRange(u1)
+        );
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(
+                cellStore,
+                2
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+" + LABEL,
                 number(1 + 99));
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 p1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99 + 0));
+                number(99 + 0)
+        );
     }
 
     @Test
@@ -6619,13 +7261,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1"); // moved
         final SpreadsheetCellReference n9 = SpreadsheetSelection.parseCell("$N$9"); // moved
 
-        engine.saveCell(this.cell(a1, "=1+0+" + n9), context);
-        engine.saveCell(this.cell(b1, "=2+0"), context);
-        engine.saveCell(this.cell(k1, "=3+0"), context);
-        engine.saveCell(this.cell(n9, "=4+0+" + b1), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0+" + n9
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        b1,
+                        "=2+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        k1,
+                        "=3+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        n9,
+                        "=4+0+" + b1
+                ),
+                context
+        );
 
         final int count = 1;
-        this.insertColumnsAndCheck(engine,
+        this.insertColumnsAndCheck(
+                engine,
                 k1.column(),
                 count,
                 context,
@@ -6649,35 +7316,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $c insert
 
-        this.countAndCheck(context.storeRepository().cells(), 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + n9.addColumn(count),
-                number(1 + 0 + 4 + 2)); // reference should have been fixed.
+                number(1 + 0 + 4 + 2)
+        ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2));
+                number(2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 k1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+0",
-                number(3));
+                number(3)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 n9.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=4+0+" + b1,
-                number(4 + 2));
+                number(4 + 2)
+        );
     }
 
     @Test
@@ -6690,22 +7369,59 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1"); // moved
         final SpreadsheetCellReference n9 = SpreadsheetSelection.parseCell("$N$9"); // moved
 
-        engine.saveCell(this.cell(a1, "=1+0+" + n9), context);
-        engine.saveCell(this.cell(b1, "=2+0"), context);
-        engine.saveCell(this.cell(k1, "=3+0"), context);
-        engine.saveCell(this.cell(n9, "=4+0+" + b1), context); // =5+2
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0+" + n9
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        b1,
+                        "=2+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        k1,
+                        "=3+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        n9,
+                        "=4+0+" + b1
+                ),
+                context
+        ); // =5+2
 
         final int count = 2;
-        this.insertColumnsAndCheck(engine,
+        this.insertColumnsAndCheck(
+                engine,
                 k1.column(),
                 count,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$1", "=1+0+$P$9", number(1 + 0 + 4 + 0 + 2 + 0)),
-                                        this.formattedCell("$M$1", "=3+0", number(3 + 0)),
-                                        this.formattedCell("$P$9", "=4+0+" + b1, number(4 + 0 + 2 + 0))
+                                        this.formattedCell(
+                                                "$A$1",
+                                                "=1+0+$P$9",
+                                                number(1 + 0 + 4 + 0 + 2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$M$1",
+                                                "=3+0",
+                                                number(3 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$P$9",
+                                                "=4+0+" + b1,
+                                                number(4 + 0 + 2 + 0)
+                                        )
                                 )
                         )
                         .setDeletedCells(
@@ -6721,35 +7437,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $c insert
 
-        this.countAndCheck(context.storeRepository().cells(), 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + n9.addColumn(count),
-                number(1 + 0 + 4 + 2)); // reference should have been fixed.
+                number(1 + 0 + 4 + 2)
+        ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2 + 0));
+                number(2 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 k1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+0",
-                number(3 + 0));
+                number(3 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 n9.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=4+0+" + b1,
-                number(4 + 0 + 2));
+                number(4 + 0 + 2)
+        );
     }
 
     @Test
@@ -6763,24 +7491,71 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference m3 = SpreadsheetSelection.parseCell("$M$3"); // MOVED
         final SpreadsheetCellReference u4 = SpreadsheetSelection.parseCell("$U$4"); // MOVED
 
-        engine.saveCell(this.cell(a1, "=1+0"), context);
-        engine.saveCell(this.cell(k1, "=2+0"), context);
-        engine.saveCell(this.cell(l1, "=3+0"), context);
-        engine.saveCell(this.cell(m3, "=4+0"), context);
-        engine.saveCell(this.cell(u4, "=5+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        k1,
+                        "=2+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        l1,
+                        "=3+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        m3,
+                        "=4+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        u4,
+                        "=5+0"
+                ),
+                context
+        );
 
         final int count = 5;
-        this.insertColumnsAndCheck(engine,
+        this.insertColumnsAndCheck(
+                engine,
                 this.column(7),
                 count,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$P$1", "=2+0", number(2 + 0)),
-                                        this.formattedCell("$Q$1", "=3+0", number(3 + 0)),
-                                        this.formattedCell("$R$3", "=4+0", number(4 + 0)),
-                                        this.formattedCell("$Z$4", "=5+0", number(5 + 0))
+                                        this.formattedCell(
+                                                "$P$1",
+                                                "=2+0",
+                                                number(2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$Q$1",
+                                                "=3+0",
+                                                number(3 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$R$3",
+                                                "=4+0",
+                                                number(4 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$Z$4",
+                                                "=5+0",
+                                                number(5 + 0)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(k1, l1, m3, u4)
@@ -6795,42 +7570,56 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b & $c
 
-        this.countAndCheck(context.storeRepository().cells(), 5);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                5
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0",
-                number(1 + 0));
+                number(1 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 k1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2 + 0));
+                number(2 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 l1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+0",
-                number(3 + 0));
+                number(3 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 m3.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=4+0",
-                number(4 + 0));
+                number(4 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 u4.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+0",
-                number(5 + 0));
+                number(5 + 0)
+        );
     }
 
     @Test
@@ -6849,8 +7638,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .column();
         engine.saveColumn(c, context);
 
-        engine.saveCell(this.cell(a1, ""), context);
-        engine.saveCell(this.cell(b1, ""), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        ""
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        b1,
+                        ""
+                ),
+                context
+        );
 
         final int count = 1;
         this.insertColumnsAndCheck(
@@ -6881,7 +7682,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.countAndCheck(
-                context.storeRepository().cells(),
+                context.storeRepository()
+                        .cells(),
                 2
         );
     }
@@ -6902,8 +7704,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .row();
         engine.saveRow(row3, context);
 
-        engine.saveCell(this.cell(a1, ""), context);
-        engine.saveCell(this.cell(b1, ""), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        ""
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        b1,
+                        ""
+                ),
+                context
+        );
 
         this.insertColumnsAndCheck(
                 engine,
@@ -6934,7 +7748,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.countAndCheck(
-                context.storeRepository().cells(),
+                context.storeRepository()
+                        .cells(),
                 2
         );
     }
@@ -6961,12 +7776,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 reference,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99));
+                number(99)
+        );
     }
 
     @Test
@@ -6991,8 +7808,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$3", "=3+4", number(3 + 4)),
-                                        this.formattedCell("$A$4", "=5+6", number(5 + 6))
+                                        this.formattedCell(
+                                                "$A$3",
+                                                "=3+4",
+                                                number(3 + 4)
+                                        ),
+                                        this.formattedCell(
+                                                "$A$4",
+                                                "=5+6",
+                                                number(5 + 6)
+                                        )
                                 )
                         )
                         .setDeletedCells(
@@ -7010,28 +7835,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(context.storeRepository().cells(), 3);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                3
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a2.addRow(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+4",
-                number(3 + 4));
+                number(3 + 4)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a3.addRow(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+6",
-                number(5 + 6));
+                number(5 + 6)
+        );
     }
 
     @Test
@@ -7074,28 +7909,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b insert
 
-        this.countAndCheck(context.storeRepository().cells(), 3);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                3
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+2",
-                number(1 + 2));
+                number(1 + 2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a2.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+4",
-                number(3 + 4));
+                number(3 + 4)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a3.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+6",
-                number(5 + 6));
+                number(5 + 6)
+        );
     }
 
     @Test
@@ -7110,10 +7955,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("$B$3"); //
         final SpreadsheetCellReference d5 = SpreadsheetSelection.parseCell("$D$5"); // moved
 
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, b3));
+        labelStore.save(
+                SpreadsheetLabelMapping.with(
+                        LABEL,
+                        b3
+                )
+        );
 
-        engine.saveCell(this.cell(b3, "=100"), context);
-        engine.saveCell(this.cell(d5, "=2+" + LABEL), context);
+        engine.saveCell(
+                this.cell(
+                        b3,
+                        "=100"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        d5,
+                        "=2+" + LABEL
+                ),
+                context
+        );
 
         final int count = 1;
         this.insertRowsAndCheck(
@@ -7124,7 +7986,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$D$6", "=2+" + LABEL, number(2 + 100))
+                                        this.formattedCell(
+                                                "$D$6",
+                                                "=2+" + LABEL,
+                                                number(2 + 100)
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(d5)
@@ -7143,19 +8009,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 2);
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 b3,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=100",
-                number(100));
+                number(100)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 d5.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+" + LABEL,
-                number(2 + 100));
+                number(2 + 100)
+        );
     }
 
     @Test
@@ -7174,10 +8044,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, i14));
 
-        engine.saveCell(this.cell(a1, "=1+" + LABEL), context);
-        engine.saveCell(this.cell(a2, "=2+0"), context);
-        engine.saveCell(this.cell(a3, "=3+0+" + LABEL), context);
-        engine.saveCell(this.cell(i14, "=99+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a2,
+                        "=2+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a3,
+                        "=3+0+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        i14,
+                        "=99+0"
+                ),
+                context
+        );
 
         final int count = 1;
         this.insertRowsAndCheck(
@@ -7188,14 +8082,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$1", "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCell("$A$3", "=2+0", number(2 + 0)),
-                                        this.formattedCell("$A$4", "=3+0+" + LABEL, number(3 + 0 + 99)),
-                                        this.formattedCell("$I$15", "=99+0", number(99 + 0)) // $b insert
+                                        this.formattedCell(
+                                                "$A$1",
+                                                "=1+" + LABEL,
+                                                number(1 + 99 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$A$3",
+                                                "=2+0",
+                                                number(2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$A$4",
+                                                "=3+0+" + LABEL,
+                                                number(3 + 0 + 99)
+                                        ),
+                                        this.formattedCell(
+                                                "$I$15",
+                                                "=99+0",
+                                                number(99 + 0)
+                                        ) // $b insert
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        SpreadsheetLabelMapping.with(LABEL, SpreadsheetSelection.parseCell("$I$15"))
+                                        SpreadsheetLabelMapping.with(
+                                                LABEL,
+                                                SpreadsheetSelection.parseCell("$I$15")
+                                        )
                                 )
                         ).setDeletedCells(
                                 Sets.of(a2, i14)
@@ -7210,37 +8123,52 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadLabelAndCheck(labelStore, LABEL, i14.addRow(+count));
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                i14.addRow(+count)
+        );
 
-        this.countAndCheck(cellStore, 4);
+        this.countAndCheck(
+                cellStore,
+                4
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+" + LABEL,
-                number(1 + 99));
+                number(1 + 99)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a2.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2 + 0));
+                number(2 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a3.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+0+" + LABEL,
-                number(3 + 99));
+                number(3 + 99)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 i14.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99 + 0));
+                number(99 + 0)
+        );
     }
 
     @Test
@@ -7255,11 +8183,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); //
         final SpreadsheetCellReference f6 = SpreadsheetSelection.parseCell("$F$6"); // moved
 
-        final SpreadsheetCellRangeReference a1b2 = a1.cellRange(a1.add(1, 1));
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1b2));
+        final SpreadsheetCellRangeReference a1b2 = a1.cellRange(
+                a1.add(1, 1)
+        );
+        labelStore.save(
+                SpreadsheetLabelMapping.with(
+                        LABEL,
+                        a1b2
+                )
+        );
 
-        engine.saveCell(this.cell(a1, "=99+0"), context);
-        engine.saveCell(this.cell(f6, "=2+0+" + LABEL), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=99+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        f6,
+                        "=2+0+" + LABEL
+                ),
+                context
+        );
 
         final int count = 1;
         this.insertRowsAndCheck(
@@ -7270,7 +8217,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$F$7", "=2+0+" + LABEL, number(2 + 0 + 99 + 0)) // $b insert
+                                        this.formattedCell(
+                                                "$F$7",
+                                                "=2+0+" + LABEL,
+                                                number(2 + 0 + 99 + 0)
+                                        ) // $b insert
                                 )
                         ).setDeletedCells(
                                 Sets.of(f6)
@@ -7285,25 +8236,39 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(labelStore, 1);
+        this.countAndCheck(
+                labelStore,
+                1
+        );
 
-        this.loadLabelAndCheck(labelStore, LABEL, a1b2);
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                a1b2
+        );
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(
+                cellStore,
+                2
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99 + 0));
+                number(99 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 f6.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0+" + LABEL,
-                number(2 + 99));
+                number(2 + 99)
+        );
     }
 
     @Test
@@ -7321,10 +8286,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a16 = SpreadsheetSelection.parseCell("$A$16");
         final SpreadsheetCellReference a21 = SpreadsheetSelection.parseCell("$A$21");
 
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, a11.cellRange(a16)));
+        labelStore.save(
+                SpreadsheetLabelMapping.with(
+                        LABEL,
+                        a11.cellRange(a16)
+                )
+        );
 
-        engine.saveCell(this.cell(a1, "=1+" + LABEL), context);
-        engine.saveCell(this.cell(a11, "=99+0"), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+" + LABEL
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a11,
+                        "=99+0"
+                ),
+                context
+        );
 
         this.insertRowsAndCheck(
                 engine,
@@ -7334,8 +8316,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a1, "=1+" + LABEL, number(1 + 99 + 0)),
-                                        this.formattedCell("$A$16", "=99+0", number(99 + 0))// $b insert
+                                        this.formattedCell(
+                                                a1,
+                                                "=1+" + LABEL,
+                                                number(1 + 99 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$A$16",
+                                                "=99+0",
+                                                number(99 + 0)
+                                        )// $b insert
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -7356,24 +8346,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, a16.cellRange(a21));
+        this.countAndCheck(
+                labelStore,
+                1
+        );
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                a16.cellRange(a21)
+        );
 
-        this.countAndCheck(cellStore, 2);
+        this.countAndCheck(
+                cellStore,
+                2
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+" + LABEL,
-                number(1 + 99));
+                number(1 + 99)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a16,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=99+0",
-                number(99 + 0));
+                number(99 + 0)
+        );
     }
 
     @Test
@@ -7386,10 +8390,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11"); // moved
         final SpreadsheetCellReference i14 = SpreadsheetSelection.parseCell("$I$14"); // moved
 
-        engine.saveCell(this.cell(a1, "=1+0+" + i14), context);
-        engine.saveCell(this.cell(a2, "=2+0"), context);
-        engine.saveCell(this.cell(a11, "=3+0"), context);
-        engine.saveCell(this.cell(i14, "=4+0+" + a2), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0+" + i14
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a2,
+                        "=2+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a11,
+                        "=3+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        i14,
+                        "=4+0+" + a2
+                ),
+                context
+        );
 
         final int count = 1;
         this.insertRowsAndCheck(
@@ -7400,9 +8428,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("$A$1", "=1+0+$I$15", number(3 + 4)),
-                                        this.formattedCell("$A$12", "=3+0", number(3 + 0)),
-                                        this.formattedCell("$I$15", "=4+0+" + a2, number(4 + 0 + 2 + 0))// $c insert
+                                        this.formattedCell(
+                                                "$A$1",
+                                                "=1+0+$I$15",
+                                                number(3 + 4)
+                                        ),
+                                        this.formattedCell(
+                                                "$A$12",
+                                                "=3+0",
+                                                number(3 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "$I$15",
+                                                "=4+0+" + a2,
+                                                number(4 + 0 + 2 + 0)
+                                        )// $c insert
                                 )
                         ).setDeletedCells(
                                 Sets.of(a11, i14)
@@ -7417,35 +8457,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(context.storeRepository().cells(), 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + i14.addRow(+count),
-                number(1 + 0 + 4 + 2)); // reference should have been fixed.
+                number(1 + 0 + 4 + 2)
+        ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2));
+                number(2)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a11.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+0",
-                number(3));
+                number(3)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 i14.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=4+0+" + a2,
-                number(4 + 2));
+                number(4 + 2)
+        );
     }
 
     @Test
@@ -7458,10 +8510,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11"); // moved
         final SpreadsheetCellReference i14 = SpreadsheetSelection.parseCell("$I$14"); // moved
 
-        engine.saveCell(this.cell(a1, "=1+0+" + i14), context);
-        engine.saveCell(this.cell(a2, "=2+0"), context);
-        engine.saveCell(this.cell(a11, "=3+0"), context);
-        engine.saveCell(this.cell(i14, "=4+0+" + a2), context); // =5+2
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=1+0+" + i14
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a2,
+                        "=2+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        a11,
+                        "=3+0"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        i14,
+                        "=4+0+" + a2
+                ),
+                context
+        ); // =5+2
 
         final int count = 2;
         this.insertRowsAndCheck(
@@ -7489,35 +8565,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(context.storeRepository().cells(), 4);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                4
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0+" + i14.addRow(+count),
-                number(1 + 0 + 4 + 2)); // reference should have been fixed.
+                number(1 + 0 + 4 + 2)
+        ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2 + 0));
+                number(2 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a11.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+0",
-                number(3 + 0));
+                number(3 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 i14.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=4+0+" + a2,
-                number(4 + 0 + 2));
+                number(4 + 0 + 2)
+        );
     }
 
     @Test
@@ -7564,42 +8652,55 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b & $c
 
-        this.countAndCheck(context.storeRepository().cells(), 5);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                5
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+0",
-                number(1 + 0));
+                number(1 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a11.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=2+0",
-                number(2 + 0));
+                number(2 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 a12.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=3+0",
                 number(3 + 0));
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 c13.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=4+0",
-                number(4 + 0));
+                number(4 + 0)
+        );
 
-        this.loadCellAndCheckFormulaAndValue(engine,
+        this.loadCellAndCheckFormulaAndValue(
+                engine,
                 d21.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=5+0",
-                number(5 + 0));
+                number(5 + 0)
+        );
     }
 
     @Test
@@ -7702,7 +8803,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.countAndCheck(
-                context.storeRepository().cells(),
+                context.storeRepository()
+                        .cells(),
                 1
         );
     }
@@ -7778,12 +8880,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         cellStore.save(
                 SpreadsheetSelection.parseCell("c3")
-                        .setFormula(SpreadsheetFormula.EMPTY.setText("=3"))
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        )
         );
 
         final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
         cellStore.save(
-                d4.setFormula(SpreadsheetFormula.EMPTY.setText("=4"))
+                d4.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=4")
+                )
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("A1:B2,D4:E5");
@@ -7798,8 +8904,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.loadCellOrFail(engine, a1, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context),
-                                        this.loadCellOrFail(engine, d4, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context)
+                                        this.loadCellOrFail(
+                                                engine,
+                                                a1,
+                                                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                                                context
+                                        ),
+                                        this.loadCellOrFail(
+                                                engine,
+                                                d4,
+                                                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                                                context
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,D")
@@ -7996,8 +9112,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b2, this.expressionNumberKind().create(4)),
-                                        this.formattedCell(c3, this.expressionNumberKind().create(2))
+                                        this.formattedCell(
+                                                b2,
+                                                this.number(4)
+                                        ),
+                                        this.formattedCell(
+                                                c3,
+                                                this.number(2)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C")
@@ -8039,9 +9161,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a1, this.expressionNumberKind().create(1 + 10 + 100)),
-                                        this.formattedCell(b2, this.expressionNumberKind().create(1 + 10)),
-                                        this.formattedCell(c3, this.expressionNumberKind().one())
+                                        this.formattedCell(
+                                                a1,
+                                                this.number(1 + 10 + 100)
+                                        ),
+                                        this.formattedCell(
+                                                b2,
+                                                this.number(1 + 10)
+                                        ),
+                                        this.formattedCell(
+                                                c3,
+                                                this.number(1)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
@@ -8083,9 +9214,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(a1, this.expressionNumberKind().create(1 + 100)),
-                                        this.formattedCell(b2, this.expressionNumberKind().create(1 + 100 + 10)),
-                                        this.formattedCell(c3, this.expressionNumberKind().one())
+                                        this.formattedCell(
+                                                a1,
+                                                this.number(1 + 100)
+                                        ),
+                                        this.formattedCell(
+                                                b2,
+                                                this.number(1 + 100 + 10)
+                                        ),
+                                        this.formattedCell(
+                                                c3,
+                                                this.number(1)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
@@ -8131,8 +9271,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(c3, this.expressionNumberKind().one()),
-                                        this.formattedCell(d4, this.expressionNumberKind().create(2))
+                                        this.formattedCell(
+                                                c3,
+                                                this.number(1)
+                                        ),
+                                        this.formattedCell(
+                                                d4,
+                                                this.number(2)
+                                        )
                                 )
                         )
                         .setWindow(window)
@@ -8162,7 +9308,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-        final SpreadsheetLabelMapping mapping = labelStore.save(label.setLabelMappingTarget(c3));
+        final SpreadsheetLabelMapping mapping = labelStore.save(
+                label.setLabelMappingTarget(c3)
+        );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:d4");
 
@@ -8194,7 +9342,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
         final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
-        final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(labelC3d4.setLabelMappingTarget(c3d4));
+        final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(
+                labelC3d4.setLabelMappingTarget(c3d4)
+        );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
 
@@ -8229,7 +9379,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
         final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
-        final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(labelC3d4.setLabelMappingTarget(c3d4));
+        final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(
+                labelC3d4.setLabelMappingTarget(c3d4)
+        );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
 
@@ -8282,7 +9434,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(c3, this.expressionNumberKind().one())
+                                        this.formattedCell(
+                                                c3,
+                                                this.number(1)
+                                        )
                                 )
                         ).setLabels(
                                 Sets.of(
@@ -8349,7 +9504,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 c3,
-                                                this.expressionNumberKind().create(3)
+                                                this.number(3)
                                         )
                                 )
                         ).setColumns(
@@ -8451,7 +9606,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells();
 
         final SpreadsheetCellReference f6 = SpreadsheetSelection.parseCell("$F$6");
-        final SpreadsheetCell cell = this.cell(f6, "=1+0");
+        final SpreadsheetCell cell = this.cell(
+                f6,
+                "=1+0"
+        );
 
         cellStore.save(cell);
 
@@ -8477,7 +9635,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(cellStore, 0); // a deleted
+        this.countAndCheck(
+                cellStore,
+                0
+        ); // a deleted
     }
 
     @Test
@@ -8529,7 +9690,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(k11, "=2+0", number(2))
+                                        this.formattedCell(
+                                                k11,
+                                                "=2+0",
+                                                number(2)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("K")
@@ -8552,11 +9717,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells();
 
         final SpreadsheetCellReference f6 = SpreadsheetSelection.parseCell("$F$6");
-        final SpreadsheetCell cellF6 = this.cell(f6, "=1+0");
+        final SpreadsheetCell cellF6 = this.cell(
+                f6,
+                "=1+0"
+        );
         cellStore.save(cellF6);
 
         final SpreadsheetCellReference g7 = SpreadsheetSelection.parseCell("$g$7");
-        final SpreadsheetCell cellG7 = this.cell(g7, "=2+0");
+        final SpreadsheetCell cellG7 = this.cell(
+                g7,
+                "=2+0"
+        );
         cellStore.save(cellG7);
 
         final SpreadsheetCellRangeReference rangeAtoB = f6.cellRange(g7);
@@ -8596,13 +9767,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         cellStore.save(cellF6);
 
         final SpreadsheetCellReference g7 = SpreadsheetSelection.parseCell("$g$7");
-        final SpreadsheetCell cellg7 = this.cell(g7, "=2+0");
+        final SpreadsheetCell cellg7 = this.cell(
+                g7,
+                "=2+0"
+        );
         cellStore.save(cellg7);
 
         final SpreadsheetCellRangeReference rangeAtoB = f6.cellRange(g7);
 
         final SpreadsheetCellReference k11 = SpreadsheetSelection.parseCell("$K$11");
-        final SpreadsheetCell cellK11 = this.cell(k11, "=3+0");
+        final SpreadsheetCell cellK11 = this.cell(
+                k11,
+                "=3+0"
+        );
         cellStore.save(cellK11);
 
         this.fillCellsAndCheck(
@@ -8636,7 +9813,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(k11, "=3+0", number(3))
+                                        this.formattedCell(
+                                                k11,
+                                                "=3+0",
+                                                number(3)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("K")
@@ -8660,8 +9841,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("$C$3");
 
-        final SpreadsheetCell cellB2 = this.cell(b2, "=1+0");
-        final SpreadsheetCell cellC3 = this.cell(c3, "=2+0");
+        final SpreadsheetCell cellB2 = this.cell(
+                b2,
+                "=1+0"
+        );
+        final SpreadsheetCell cellC3 = this.cell(
+                c3,
+                "=2+0"
+        );
 
         final SpreadsheetCellRangeReference range = b2.cellRange(c3);
 
@@ -8674,8 +9861,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b2, "=1+0", number(1)),
-                                        this.formattedCell(c3, "=2+0", number(2))
+                                        this.formattedCell(
+                                                b2,
+                                                "=1+0",
+                                                number(1)
+                                        ),
+                                        this.formattedCell(
+                                                c3,
+                                                "=2+0",
+                                                number(2)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C")
@@ -8688,7 +9883,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(context.storeRepository().cells(), 2); // a + b saved
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                2
+        ); // a + b saved
 
         this.loadCellAndCheck(
                 engine,
@@ -8699,7 +9898,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b2, "=1+0", number(1))
+                                        this.formattedCell(
+                                                b2,
+                                                "=1+0",
+                                                number(1)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -8721,7 +9924,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(c3, "=2+0", number(2))
+                                        this.formattedCell(
+                                                c3,
+                                                "=2+0",
+                                                number(2)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("C")
@@ -8746,13 +9953,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("$C$3");
 
-        final SpreadsheetCell cellB2 = this.cell(b2, "=1+0");
-        final SpreadsheetCell cellC3 = this.cell(c3, "=2+0");
+        final SpreadsheetCell cellB2 = this.cell(
+                b2,
+                "=1+0"
+        );
+        final SpreadsheetCell cellC3 = this.cell(
+                c3,
+                "=2+0"
+        );
 
         final SpreadsheetCellRangeReference range = b2.cellRange(c3);
 
         final SpreadsheetCellReference k11 = SpreadsheetSelection.parseCell("$K$11");
-        final SpreadsheetCell cellK11 = this.cell(k11, "=3+0");
+        final SpreadsheetCell cellK11 = this.cell(
+                k11,
+                "=3+0"
+        );
         cellStore.save(cellK11);
 
         this.fillCellsAndCheck(
@@ -8764,8 +9980,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b2, "=1+0", number(1)),
-                                        this.formattedCell(c3, "=2+0", number(2))
+                                        this.formattedCell(
+                                                b2,
+                                                "=1+0",
+                                                number(1)
+                                        ),
+                                        this.formattedCell(
+                                                c3,
+                                                "=2+0",
+                                                number(2)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("B,C")
@@ -8778,7 +10002,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(cellStore, 3); // a + b saved + c
+        this.countAndCheck(
+                cellStore,
+                3
+        ); // a + b saved + c
 
         this.loadCellAndCheck(
                 engine,
@@ -8789,7 +10016,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b2, "=1+0", number(1))
+                                        this.formattedCell(
+                                                b2,
+                                                "=1+0",
+                                                number(1)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -8811,7 +10042,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(c3, "=2+0", number(2))
+                                        this.formattedCell(
+                                                c3,
+                                                "=2+0",
+                                                number(2)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("C")
@@ -8861,9 +10096,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("$C$2");
         final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("$B$3");
 
-        final SpreadsheetCell cellB2 = this.cell(b2, "=1+0");
-        final SpreadsheetCell cellC2 = this.cell(c2, "=2+0");
-        final SpreadsheetCell cellB3 = this.cell(b3, "=3+0");
+        final SpreadsheetCell cellB2 = this.cell(
+                b2,
+                "=1+0"
+        );
+        final SpreadsheetCell cellC2 = this.cell(
+                c2,
+                "=2+0"
+        );
+        final SpreadsheetCell cellB3 = this.cell(
+                b3,
+                "=3+0"
+        );
 
         cellStore.save(cellB2);
         cellStore.save(cellC2);
@@ -8900,7 +10144,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b2, "=1+0", number(1))
+                                        this.formattedCell(
+                                                b2,
+                                                "=1+0",
+                                                number(1)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -8922,7 +10170,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(b3, "=3+0", number(3))
+                                        this.formattedCell(
+                                                b3,
+                                                "=3+0",
+                                                number(3)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("B")
@@ -8948,9 +10200,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("$C$2");
         final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("$B$3");
 
-        final SpreadsheetCell cellB2 = this.cell(b2, "=1+0");
-        final SpreadsheetCell cellC2 = this.cell(c2, "=2+0");
-        final SpreadsheetCell cellB3 = this.cell(b3, "=3+0");
+        final SpreadsheetCell cellB2 = this.cell(
+                b2,
+                "=1+0"
+        );
+        final SpreadsheetCell cellC2 = this.cell(
+                c2,
+                "=2+0"
+        );
+        final SpreadsheetCell cellB3 = this.cell(
+                b3,
+                "=3+0"
+        );
 
         cellStore.save(cellB2);
         cellStore.save(cellC2);
@@ -8960,7 +10221,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetDelta.NO_CELLS,
                 b2.cellRange(b2),
-                SpreadsheetCellRangeReference.fromCells(Lists.of(b2, c2)),
+                SpreadsheetCellRangeReference.fromCells(
+                        Lists.of(
+                                b2,
+                                c2
+                        )
+                ),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setDeletedCells(
@@ -8976,7 +10242,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(cellStore, 1);
+        this.countAndCheck(
+                cellStore,
+                1
+        );
 
         this.loadCellAndCheck(
                 engine,
@@ -9005,122 +10274,194 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsAddition() {
-        this.fillCellsAndCheck("=1+0", number(1 + 0));
+        this.fillCellsAndCheck(
+                "=1+0",
+                number(1 + 0)
+        );
     }
 
     @Test
     public void testFillCellsExpressionNumber() {
-        this.fillCellsAndCheck("=99.5", number(99.5));
+        this.fillCellsAndCheck(
+                "=99.5",
+                number(99.5)
+        );
     }
 
     @Test
     public void testFillCellsExpressionNumber2() {
-        this.fillCellsAndCheck("=99", number(99));
+        this.fillCellsAndCheck(
+                "=99",
+                number(99)
+        );
     }
 
     @Test
     public void testFillCellsDivision() {
-        this.fillCellsAndCheck("=10/5", number(10 / 5));
+        this.fillCellsAndCheck(
+                "=10/5",
+                number(10 / 5)
+        );
     }
 
     @Test
     public void testFillCellsEqualsTrue() {
-        this.fillCellsAndCheck("=10=10", true);
+        this.fillCellsAndCheck(
+                "=10=10",
+                true
+        );
     }
 
     @Test
     public void testFillCellsEqualsFalse() {
-        this.fillCellsAndCheck("=10=9", false);
+        this.fillCellsAndCheck(
+                "=10=9",
+                false
+        );
     }
 
     @Test
     public void testFillCellsGreaterThanTrue() {
-        this.fillCellsAndCheck("=10>9", true);
+        this.fillCellsAndCheck(
+                "=10>9",
+                true
+        );
     }
 
     @Test
     public void testFillCellsGreaterThanFalse() {
-        this.fillCellsAndCheck("=10>11", false);
+        this.fillCellsAndCheck(
+                "=10>11",
+                false
+        );
     }
 
     @Test
     public void testFillCellsGreaterThanEqualsTrue() {
-        this.fillCellsAndCheck("=10>=10", true);
+        this.fillCellsAndCheck(
+                "=10>=10",
+                true
+        );
     }
 
     @Test
     public void testFillCellsGreaterThanEqualsFalse() {
-        this.fillCellsAndCheck("=10>=11", false);
+        this.fillCellsAndCheck(
+                "=10>=11",
+                false
+        );
     }
 
     @Test
     public void testFillCellsFunction() {
-        this.fillCellsAndCheck("=BasicSpreadsheetEngineTestSum(1,99)", number(1 + 99));
+        this.fillCellsAndCheck(
+                "=BasicSpreadsheetEngineTestSum(1,99)",
+                number(1 + 99)
+        );
     }
 
     @Test
     public void testFillCellsGroup() {
-        this.fillCellsAndCheck("=(99)", number(99));
+        this.fillCellsAndCheck(
+                "=(99)",
+                number(99)
+        );
     }
 
     @Test
     public void testFillCellsLessThanTrue() {
-        this.fillCellsAndCheck("=10<11", true);
+        this.fillCellsAndCheck(
+                "=10<11",
+                true
+        );
     }
 
     @Test
     public void testFillCellsLessThanFalse() {
-        this.fillCellsAndCheck("=10<9", false);
+        this.fillCellsAndCheck(
+                "=10<9",
+                false
+        );
     }
 
     @Test
     public void testFillCellsLessThanEqualsTrue() {
-        this.fillCellsAndCheck("=10<=10", true);
+        this.fillCellsAndCheck(
+                "=10<=10",
+                true
+        );
     }
 
     @Test
     public void testFillCellsLessThanEqualsFalse() {
-        this.fillCellsAndCheck("=10<=9", false);
+        this.fillCellsAndCheck(
+                "=10<=9",
+                false
+        );
     }
 
     @Test
     public void testFillCellsMultiplication() {
-        this.fillCellsAndCheck("=6*7", number(6 * 7));
+        this.fillCellsAndCheck(
+                "=6*7",
+                number(6 * 7)
+        );
     }
 
     @Test
     public void testFillCellsNegative() {
-        this.fillCellsAndCheck("=-123", number(-123));
+        this.fillCellsAndCheck(
+                "=-123",
+                number(-123)
+        );
     }
 
     @Test
     public void testFillCellsNotEqualsTrue() {
-        this.fillCellsAndCheck("=10<>9", true);
+        this.fillCellsAndCheck(
+                "=10<>9",
+                true
+        );
     }
 
     @Test
     public void testFillCellsNotEqualsFalse() {
-        this.fillCellsAndCheck("=10<>10", false);
+        this.fillCellsAndCheck(
+                "=10<>10",
+                false
+        );
     }
 
     @Test
     public void testFillCellsPercentage() {
-        this.fillCellsAndCheck("=123.5%", number(123.5 / 100));
+        this.fillCellsAndCheck(
+                "=123.5%",
+                number(123.5 / 100)
+        );
     }
 
     @Test
     public void testFillCellsSubtraction() {
-        this.fillCellsAndCheck("=13-4", number(13 - 4));
+        this.fillCellsAndCheck(
+                "=13-4",
+                number(13 - 4)
+        );
     }
 
     @Test
     public void testFillCellsText() {
-        this.fillCellsAndCheck("=\"abc123\"", "abc123");
+        this.fillCellsAndCheck(
+                "=\"abc123\"",
+                "abc123"
+        );
     }
 
     @Test
     public void testFillCellsAdditionWithWhitespace() {
-        this.fillCellsAndCheck("=1 + 2", number(1 + 2));
+        this.fillCellsAndCheck(
+                "=1 + 2",
+                number(1 + 2)
+        );
     }
 
     private void fillCellsAndCheck(final String formulaText, final Object expected) {
@@ -9134,9 +10475,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference l22 = SpreadsheetSelection.parseCell("$L$22");
         final SpreadsheetCellReference m23 = SpreadsheetSelection.parseCell("$M$23");
 
-        final SpreadsheetCell cellK21 = this.cell(k21, formulaText);
-        final SpreadsheetCell cellL22 = this.cell(l22, "=2+0");
-        final SpreadsheetCell cellM23 = this.cell(m23, "=3+0");
+        final SpreadsheetCell cellK21 = this.cell(
+                k21,
+                formulaText
+        );
+        final SpreadsheetCell cellL22 = this.cell(
+                l22,
+                "=2+0"
+        );
+        final SpreadsheetCell cellM23 = this.cell(
+                m23,
+                "=3+0"
+        );
 
         cellStore.save(cellK21);
         cellStore.save(cellL22);
@@ -9153,7 +10503,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(ae41, formulaText, expected)
+                                        this.formattedCell(
+                                                ae41,
+                                                formulaText,
+                                                expected
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE")
@@ -9181,9 +10535,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference l22 = SpreadsheetSelection.parseCell("$L$22");
         final SpreadsheetCellReference m23 = SpreadsheetSelection.parseCell("$M$23");
 
-        final SpreadsheetCell cellK21 = this.cell(k21, "=1+0");
-        final SpreadsheetCell cellL22 = this.cell(l22, "=2+0");
-        final SpreadsheetCell cellM23 = this.cell(m23, "=3+0");
+        final SpreadsheetCell cellK21 = this.cell(
+                k21,
+                "=1+0"
+        );
+        final SpreadsheetCell cellL22 = this.cell(
+                l22,
+                "=2+0"
+        );
+        final SpreadsheetCell cellM23 = this.cell(
+                m23,
+                "=3+0"
+        );
 
         cellStore.save(cellK21);
         cellStore.save(cellL22);
@@ -9200,8 +10563,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(ae41, "=1+0", number(1 + 0)),
-                                        this.formattedCell(ae41.add(1, 1), "=2+0", number(2 + 0))
+                                        this.formattedCell(
+                                                ae41,
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                ae41.add(1, 1),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF")
@@ -9242,14 +10613,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellK21, cellL22),
-                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
-                d.cellRange(d.add(1, 1)),
+                SpreadsheetCellRangeReference.fromCells(
+                        Lists.of(
+                                k21,
+                                l22
+                        )
+                ),
+                d.cellRange(
+                        d.add(1, 1)
+                ),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(d, "=1+0", number(1 + 0)),
-                                        this.formattedCell(d.add(1, 1), "=2+0", number(2 + 0))
+                                        this.formattedCell(
+                                                d,
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                d.add(1, 1),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF")
@@ -9262,7 +10648,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(cellStore, 3 + 2);
+        this.countAndCheck(
+                cellStore,
+                3 + 2
+        );
     }
 
     @Test
@@ -9296,8 +10685,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(d, "=1+0", number(1 + 0)),
-                                        this.formattedCell(d.add(1, 1), "=2+0", number(2 + 0))
+                                        this.formattedCell(
+                                                d,
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                d.add(1, 1),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF")
@@ -9310,7 +10707,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(cellStore, 3 + 2);
+        this.countAndCheck(
+                cellStore,
+                3 + 2
+        );
     }
 
     @Test
@@ -9337,19 +10737,53 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(
                 engine,
-                Lists.of(cellK21, cellL22),
-                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
-                ae41.cellRange(ae41.add(6, 1)),
+                Lists.of(
+                        cellK21,
+                        cellL22
+                ),
+                SpreadsheetCellRangeReference.fromCells(
+                        Lists.of(
+                                k21,
+                                l22
+                        )
+                ),
+                ae41.cellRange(
+                        ae41.add(6, 1)
+                ),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(ae41, "=1+0", number(1 + 0)),
-                                        this.formattedCell(ae41.add(1, 1), "=2+0", number(2 + 0)),
-                                        this.formattedCell(ae41.add(2, 0), "=1+0", number(1 + 0)),
-                                        this.formattedCell(ae41.add(3, 1), "=2+0", number(2 + 0)),
-                                        this.formattedCell(ae41.add(4, 0), "=1+0", number(1 + 0)),
-                                        this.formattedCell(ae41.add(5, 1), "=2+0", number(2 + 0))
+                                        this.formattedCell(
+                                                ae41,
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                ae41.add(1, 1),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                ae41.add(2, 0),
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                ae41.add(3, 1),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                ae41.add(4, 0),
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                ae41.add(5, 1),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF,AG,AH,AI,AJ")
@@ -9362,7 +10796,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.countAndCheck(cellStore, 3 + 6);
+        this.countAndCheck(
+                cellStore,
+                3 + 6
+        );
     }
 
     @Test
@@ -9389,19 +10826,53 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(
                 engine,
-                Lists.of(cellK21, cellL22),
-                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
-                d.cellRange(d.add(1, 6)),
+                Lists.of(
+                        cellK21,
+                        cellL22
+                ),
+                SpreadsheetCellRangeReference.fromCells(
+                        Lists.of(
+                                k21,
+                                l22
+                        )
+                ),
+                d.cellRange(
+                        d.add(1, 6)
+                ),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(d, "=1+0", number(1 + 0)),
-                                        this.formattedCell(d.add(1, 1), "=2+0", number(2 + 0)),
-                                        this.formattedCell(d.addRow(2), "=1+0", number(1 + 0)),
-                                        this.formattedCell(d.add(1, 3), "=2+0", number(2 + 0)),
-                                        this.formattedCell(d.addRow(4), "=1+0", number(1 + 0)),
-                                        this.formattedCell(d.add(1, 5), "=2+0", number(2 + 0))
+                                        this.formattedCell(
+                                                d,
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                d.add(1, 1),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                d.addRow(2),
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                d.add(1, 3),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                d.addRow(4),
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                d.add(1, 5),
+                                                "=2+0",
+                                                number(2 + 0)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("AE,AF")
@@ -9428,8 +10899,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference k21 = SpreadsheetSelection.parseCell("$K$21");
         final SpreadsheetCellReference l22 = SpreadsheetSelection.parseCell("$L$22");
 
-        final SpreadsheetCell cellK21 = this.cell(k21, "=1+0");
-        final SpreadsheetCell cellL22 = this.cell(l22, "=" + k21);
+        final SpreadsheetCell cellK21 = this.cell(
+                k21,
+                "=1+0"
+        );
+        final SpreadsheetCell cellL22 = this.cell(
+                l22,
+                "=" + k21
+        );
 
         cellStore.save(cellK21);
         cellStore.save(cellL22);
@@ -9445,8 +10922,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(k21, "=1+0", number(1 + 0)),
-                                        this.formattedCell(d, "=" + k21, number(1 + 0))
+                                        this.formattedCell(
+                                                k21,
+                                                "=1+0",
+                                                number(1 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                d,
+                                                "=" + k21,
+                                                number(1 + 0)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("K,AE")
@@ -9470,8 +10955,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
-        final SpreadsheetCell cellB = this.cell("B2", "=2");
-        final SpreadsheetCell cellC = this.cell("C3", "=3+B2");
+        final SpreadsheetCell cellB = this.cell(
+                "B2",
+                "=2"
+        );
+        final SpreadsheetCell cellC = this.cell(
+                "C3",
+                "=3+B2"
+        );
 
         cellStore.save(cellB);
         cellStore.save(cellC);
@@ -9485,8 +10976,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell("E5", "=2", number(2 + 0)),
-                                        this.formattedCell("F6", "=3+E5", number(3 + 2))
+                                        this.formattedCell(
+                                                "E5",
+                                                "=2",
+                                                number(2 + 0)
+                                        ),
+                                        this.formattedCell(
+                                                "F6",
+                                                "=3+E5",
+                                                number(3 + 2)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("E,F")
@@ -9511,12 +11010,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells();
 
         final SpreadsheetCellReference b = SpreadsheetSelection.parseCell("b1");
-        final SpreadsheetCell cellB = this.cell(b, "=2+0"); // copied to C1
+        final SpreadsheetCell cellB = this.cell(
+                b,
+                "=2+0"
+        ); // copied to C1
         final SpreadsheetCellReference c = SpreadsheetSelection.parseCell("C1"); // fillCells dest...
-        final SpreadsheetCell cellA = this.cell("a1", "=10+" + c);
+        final SpreadsheetCell cellA = this.cell(
+                "a1",
+                "=10+" + c
+        );
 
-        engine.saveCell(cellA, context);
-        engine.saveCell(cellB, context);
+        engine.saveCell(
+                cellA,
+                context
+        );
+        engine.saveCell(
+                cellB,
+                context
+        );
 
         this.fillCellsAndCheck(
                 engine,
@@ -9527,8 +11038,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formattedCell(cellA.reference(), "=10+" + c, number(10 + 2 + 0)), // external reference to copied
-                                        this.formattedCell(c, "=2+0", number(2 + 0))
+                                        this.formattedCell(
+                                                cellA.reference(),
+                                                "=10+" + c,
+                                                number(10 + 2 + 0)
+                                        ), // external reference to copied
+                                        this.formattedCell(
+                                                c,
+                                                "=2+0",
+                                                number(2 + 0)
+                                        )
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,C")
@@ -9696,8 +11215,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCells(
                 Sets.of(
-                        this.cell("A1", "'BBB"),
-                        this.cell("A2", "'AAA")
+                        this.cell(
+                                "A1",
+                                "'BBB"
+                        ),
+                        this.cell(
+                                "A2",
+                                "'AAA"
+                        )
                 ),
                 context
         );
@@ -9710,8 +11235,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formattedCell("A1", "'AAA", "AAA"),
-                                this.formattedCell("A2", "'BBB", "BBB")
+                                this.formattedCell(
+                                        "A1",
+                                        "'AAA",
+                                        "AAA"
+                                ),
+                                this.formattedCell(
+                                        "A2",
+                                        "'BBB",
+                                        "BBB"
+                                )
                         )
                 ).setColumnWidths(
                         columnWidths("A")
@@ -9746,8 +11279,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formattedCell("A1", "'AAA", "AAA"),
-                                this.formattedCell("B1", "'BBB", "BBB")
+                                this.formattedCell(
+                                        "A1",
+                                        "'AAA",
+                                        "AAA"
+                                ),
+                                this.formattedCell(
+                                        "B1",
+                                        "'BBB",
+                                        "BBB"
+                                )
                         )
                 ).setColumnWidths(
                         columnWidths("A,B")
@@ -9784,10 +11325,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formattedCell("A1", "'AAA", "AAA"),
-                                this.formattedCell("B1", "=A1", "AAA"),
-                                this.formattedCell("A2", "'BBB", "BBB"),
-                                this.formattedCell("B2", "=A2", "BBB")
+                                this.formattedCell(
+                                        "A1",
+                                        "'AAA",
+                                        "AAA"
+                                ),
+                                this.formattedCell(
+                                        "B1",
+                                        "=A1",
+                                        "AAA"
+                                ),
+                                this.formattedCell(
+                                        "A2",
+                                        "'BBB",
+                                        "BBB"
+                                ),
+                                this.formattedCell(
+                                        "B2",
+                                        "=A2",
+                                        "BBB"
+                                )
                         )
                 ).setColumnWidths(
                         columnWidths("A,B")
@@ -9824,10 +11381,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formattedCell("A1", "'AAA", "AAA"),
-                                this.formattedCell("A2", "'BBB", "BBB"),
-                                this.formattedCell("B1", "=A1", "AAA"),
-                                this.formattedCell("B2", "=A2", "BBB")
+                                this.formattedCell(
+                                        "A1",
+                                        "'AAA",
+                                        "AAA"
+                                ),
+                                this.formattedCell(
+                                        "A2",
+                                        "'BBB",
+                                        "BBB"
+                                ),
+                                this.formattedCell(
+                                        "B1",
+                                        "=A1",
+                                        "AAA"
+                                ),
+                                this.formattedCell(
+                                        "B2",
+                                        "=A2",
+                                        "BBB"
+                                )
                         )
                 ).setColumnWidths(
                         columnWidths("A,B")
@@ -9868,8 +11441,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formattedCell("A1", "'AAA", "AAA"),
-                                this.formattedCell("A2", "'BBB", "BBB")
+                                this.formattedCell(
+                                        "A1",
+                                        "'AAA",
+                                        "AAA"
+                                ),
+                                this.formattedCell(
+                                        "A2",
+                                        "'BBB",
+                                        "BBB"
+                                )
                         )
                 ).setLabels(
                         Sets.of(
@@ -10400,7 +11981,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("B2")
+        );
 
         this.saveLabelAndCheck(
                 engine,
@@ -10467,7 +12051,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("B2")
+        );
 
         this.saveLabelAndCheck(engine,
                 mapping,
@@ -10484,7 +12071,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("B2")
+        );
 
         this.saveLabelAndCheck(engine,
                 mapping,
@@ -10502,9 +12092,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("B2")
+        );
 
-        engine.saveCell(this.cell("B2", "=99"), context);
+        engine.saveCell(
+                this.cell(
+                        "B2",
+                        "=99"
+                ),
+                context
+        );
 
         this.saveLabelAndCheck(
                 engine,
@@ -10541,10 +12140,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("B2")
+        );
 
-        engine.saveCell(this.cell("A1", "=" + label + "+1"), context);
-        engine.saveCell(this.cell("B2", "=99"), context);
+        engine.saveCell(
+                this.cell(
+                        "A1",
+                        "=" + label + "+1"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        "B2",
+                        "=99"
+                ),
+                context
+        );
 
         this.saveLabelAndCheck(
                 engine,
@@ -10644,7 +12258,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.parseCell("B2")
+        );
 
         final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1")
                 .row();
@@ -10658,8 +12275,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .row();
         engine.saveRow(row3, context);
 
-        engine.saveCell(this.cell("A1", "=" + label + "+1"), context);
-        engine.saveCell(this.cell("B2", "=99"), context);
+        engine.saveCell(
+                this.cell(
+                        "A1",
+                        "=" + label + "+1"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        "B2",
+                        "=99"
+                ),
+                context
+        );
 
         this.saveLabelAndCheck(
                 engine,
@@ -10854,10 +12483,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
 
-        engine.saveCell(this.cell("A1", "=" + label + "+1"), context);
-        engine.saveCell(this.cell("B2", "=99"), context);
+        engine.saveCell(
+                this.cell(
+                        "A1",
+                        "=" + label + "+1"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        "B2",
+                        "=99"
+                ),
+                context
+        );
 
-        engine.saveLabel(mapping, context);
+        engine.saveLabel(
+                mapping,
+                context
+        );
 
         this.deleteLabelAndCheck(
                 engine,
@@ -10908,11 +12552,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveColumn(b, context);
 
         engine.saveCell(
-                this.cell("A1", "=" + label + "+1"),
+                this.cell(
+                        "A1",
+                        "=" + label + "+1"
+                ),
                 context
         );
         engine.saveCell(
-                this.cell("B2", "=99"),
+                this.cell(
+                        "B2",
+                        "=99"
+                ),
                 context
         );
 
@@ -10965,18 +12615,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1")
                 .row();
-        engine.saveRow(row1, context);
+        engine.saveRow(
+                row1,
+                context
+        );
 
         final SpreadsheetRow row2 = SpreadsheetSelection.parseRow("2")
                 .row();
-        engine.saveRow(row2, context);
+        engine.saveRow(
+                row2,
+                context
+        );
 
         engine.saveCell(
-                this.cell("A1", "=" + label + "+1"),
+                this.cell(
+                        "A1",
+                        "=" + label + "+1"
+                ),
                 context
         );
         engine.saveCell(
-                this.cell("B2", "=99"),
+                this.cell(
+                        "B2",
+                        "=99"
+                ),
                 context
         );
 
@@ -11213,12 +12875,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = this.createContext(
                 METADATA.set(
-                                SpreadsheetMetadataPropertyName.STYLE,
-                                TextStyle.EMPTY.set(
-                                        TextStylePropertyName.WIDTH,
-                                        Length.pixel(COLUMN_WIDTH)
-                                )
-                        ),
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.WIDTH,
+                                Length.pixel(COLUMN_WIDTH)
+                        )
+                ),
                 cellStore
         );
 
@@ -11278,12 +12940,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = this.createContext(
                 METADATA.set(
-                                SpreadsheetMetadataPropertyName.STYLE,
-                                TextStyle.EMPTY.set(
-                                        TextStylePropertyName.HEIGHT,
-                                        Length.pixel(ROW_HEIGHT)
-                                )
-                        ),
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        TextStyle.EMPTY.set(
+                                TextStylePropertyName.HEIGHT,
+                                Length.pixel(ROW_HEIGHT)
+                        )
+                ),
                 cellStore
         );
 
@@ -13068,16 +14730,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 final Optional<SpreadsheetSelection> selection,
                                 final String window) {
         final SpreadsheetMetadata metadata = METADATA.setOrRemove(
-                        SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
-                        frozenColumns > 0 ?
-                                SpreadsheetReferenceKind.RELATIVE.firstColumn().columnRange(SpreadsheetReferenceKind.RELATIVE.column(frozenColumns - 1)) :
-                                null
-                ).setOrRemove(
-                        SpreadsheetMetadataPropertyName.FROZEN_ROWS,
-                        frozenRows > 0 ?
-                                SpreadsheetReferenceKind.RELATIVE.firstRow().rowRange(SpreadsheetReferenceKind.RELATIVE.row(frozenRows - 1)) :
-                                null
-                );
+                SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
+                frozenColumns > 0 ?
+                        SpreadsheetReferenceKind.RELATIVE.firstColumn().columnRange(SpreadsheetReferenceKind.RELATIVE.column(frozenColumns - 1)) :
+                        null
+        ).setOrRemove(
+                SpreadsheetMetadataPropertyName.FROZEN_ROWS,
+                frozenRows > 0 ?
+                        SpreadsheetReferenceKind.RELATIVE.firstRow().rowRange(SpreadsheetReferenceKind.RELATIVE.row(frozenRows - 1)) :
+                        null
+        );
 
         this.windowAndCheck(
                 this.createSpreadsheetEngine(),
@@ -13732,12 +15394,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(a2).get(),
-                                saved.cell(b2).get(),
-                                saved.cell(c2).get()
-                        )
-                ).setColumnWidths(columnWidths("A,B,C"))
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
                         .setRowHeights(rowHeights("2"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(2))
@@ -13779,11 +15441,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(b2).get(),
-                                saved.cell(c2).get()
-                        )
-                ).setColumnWidths(columnWidths("B,C"))
+                                Sets.of(
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setColumnWidths(columnWidths("B,C"))
                         .setRowHeights(rowHeights("2"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(2))
@@ -13962,16 +15624,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(a2).get(),
-                                saved.cell(a3).get(),
-                                saved.cell(b3).get(),
-                                saved.cell(c3).get(),
-                                saved.cell(a4).get(),
-                                saved.cell(b4).get(),
-                                saved.cell(c4).get()
-                        )
-                ).setColumnWidths(columnWidths("A,B,C"))
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(a3).get(),
+                                        saved.cell(b3).get(),
+                                        saved.cell(c3).get(),
+                                        saved.cell(a4).get(),
+                                        saved.cell(b4).get(),
+                                        saved.cell(c4).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
                         .setRowHeights(rowHeights("2,3,4"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(4))
@@ -14073,12 +15735,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(a2).get(),
-                                saved.cell(a3).get(),
-                                saved.cell(b3).get()
-                        )
-                ).setColumnWidths(columnWidths("A,B"))
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(a3).get(),
+                                        saved.cell(b3).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B"))
                         .setRowHeights(rowHeights("2,3"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(4))
@@ -14180,12 +15842,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(a3).get(),
-                                saved.cell(b3).get(),
-                                saved.cell(c3).get()
-                        )
-                ).setColumnWidths(columnWidths("A,B,C"))
+                                Sets.of(
+                                        saved.cell(a3).get(),
+                                        saved.cell(b3).get(),
+                                        saved.cell(c3).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
                         .setRowHeights(rowHeights("3"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(4))
@@ -14268,12 +15930,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(c4).get(),
-                                saved.cell(a4).get(),
-                                saved.cell(b3).get()
-                        )
-                ).setColumnWidths(columnWidths("A,B,C"))
+                                Sets.of(
+                                        saved.cell(c4).get(),
+                                        saved.cell(a4).get(),
+                                        saved.cell(b3).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
                         .setRowHeights(rowHeights("3,4"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(4))
@@ -14356,12 +16018,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(c4).get(), // 0
-                                saved.cell(a4).get(), // 1
-                                saved.cell(b3).get() // 2
-                        )
-                ).setColumnWidths(columnWidths("A,B,C"))
+                                Sets.of(
+                                        saved.cell(c4).get(), // 0
+                                        saved.cell(a4).get(), // 1
+                                        saved.cell(b3).get() // 2
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
                         .setRowHeights(rowHeights("3,4"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(4))
@@ -14378,11 +16040,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(a4).get(), // 1
-                                saved.cell(b3).get() // 2
-                        )
-                ).setColumnWidths(columnWidths("A,B"))
+                                Sets.of(
+                                        saved.cell(a4).get(), // 1
+                                        saved.cell(b3).get() // 2
+                                )
+                        ).setColumnWidths(columnWidths("A,B"))
                         .setRowHeights(rowHeights("3,4"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(4))
@@ -14399,10 +16061,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                        Sets.of(
-                                saved.cell(b3).get() // 2
-                        )
-                ).setColumnWidths(columnWidths("B"))
+                                Sets.of(
+                                        saved.cell(b3).get() // 2
+                                )
+                        ).setColumnWidths(columnWidths("B"))
                         .setRowHeights(rowHeights("3"))
                         .setColumnCount(OptionalInt.of(3))
                         .setRowCount(OptionalInt.of(4))
@@ -14587,9 +16249,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
                 return SpreadsheetFormulaParsers.valueOrExpression(
                                 METADATA.spreadsheetParser(
-                                                SPREADSHEET_PARSER_PROVIDER,
-                                                PROVIDER_CONTEXT
-                                        )
+                                        SPREADSHEET_PARSER_PROVIDER,
+                                        PROVIDER_CONTEXT
+                                )
                         ).orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
                                 formula,
@@ -15228,12 +16890,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         });
     }
 
+    // class............................................................................................................
+
     @Override
     public Class<BasicSpreadsheetEngine> type() {
         return BasicSpreadsheetEngine.class;
     }
-
-    // TypeNameTesting..........................................................................................
 
     @Override
     public String typeNameSuffix() {
