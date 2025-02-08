@@ -16786,7 +16786,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         CONVERTER_PROVIDER,
                                         PROVIDER_CONTEXT
                                 ),
-                                this.expressionFunctionProvider(),
+                                EXPRESSION_FUNCTION_PROVIDER,
                                 PROVIDER_CONTEXT
                         )
                 );
@@ -16834,7 +16834,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         CONVERTER_PROVIDER,
                                         PROVIDER_CONTEXT
                                 ),
-                                this.expressionFunctionProvider(),
+                                EXPRESSION_FUNCTION_PROVIDER,
                                 PROVIDER_CONTEXT
                         )
                 );
@@ -16842,16 +16842,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public boolean isPure(final ExpressionFunctionName function) {
-                return this.expressionFunctionProvider()
-                        .expressionFunction(
+                return EXPRESSION_FUNCTION_PROVIDER.expressionFunction(
                                 function,
                                 Lists.empty(),
                                 this // ProviderContext
                         ).isPure(this);
-            }
-
-            private ExpressionFunctionProvider expressionFunctionProvider() {
-                return EXPRESSION_FUNCTION_PROVIDER;
             }
 
             private Function<ExpressionReference, Optional<Optional<Object>>> references() {
