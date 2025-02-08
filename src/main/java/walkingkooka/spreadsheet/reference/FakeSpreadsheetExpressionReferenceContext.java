@@ -15,13 +15,9 @@
  *
  */
 
-package walkingkooka.spreadsheet.expression;
+package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 
 import java.util.Optional;
 import java.util.Set;
