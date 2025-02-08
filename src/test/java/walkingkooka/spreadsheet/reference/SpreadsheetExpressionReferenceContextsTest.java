@@ -16,7 +16,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.expression;
+package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
