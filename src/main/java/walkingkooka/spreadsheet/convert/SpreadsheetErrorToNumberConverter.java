@@ -60,8 +60,7 @@ final class SpreadsheetErrorToNumberConverter extends SpreadsheetErrorConverter<
                         context
                 ) :
                 this.successfulConversion(
-                        context.expressionNumberKind()
-                                .zero(),
+                        context.missingCellNumberValue(),
                         type
                 );
     }
