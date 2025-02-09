@@ -84,8 +84,8 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
     private final Set<SpreadsheetSelection> visited = Sets.ordered();
 
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
-        this.cellReferenceOrRange = reference;
+    protected void visit(final SpreadsheetCellReference cell) {
+        this.cellReferenceOrRange = cell;
     }
 
     @Override
@@ -97,8 +97,8 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
-        this.cellReferenceOrRange = range;
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
+        this.cellReferenceOrRange = cellRange;
     }
 
     @Override

@@ -40,23 +40,23 @@ final class SpreadsheetValueVisitorSpreadsheetSelectionVisitor extends Spreadshe
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
-        this.visitor.visit(range);
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
+        this.visitor.visit(cellRange);
     }
 
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
-        this.visitor.visit(reference);
+    protected void visit(final SpreadsheetCellReference cell) {
+        this.visitor.visit(cell);
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReference reference) {
-        this.visitor.visit(reference);
+    protected void visit(final SpreadsheetColumnReference column) {
+        this.visitor.visit(column);
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnRangeReference range) {
-        this.visitor.visit(range);
+    protected void visit(final SpreadsheetColumnRangeReference columnRange) {
+        this.visitor.visit(columnRange);
     }
 
     @Override
@@ -65,13 +65,13 @@ final class SpreadsheetValueVisitorSpreadsheetSelectionVisitor extends Spreadshe
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReference reference) {
-        this.visitor.visit(reference);
+    protected void visit(final SpreadsheetRowReference row) {
+        this.visitor.visit(row);
     }
 
     @Override
-    protected void visit(final SpreadsheetRowRangeReference range) {
-        this.visitor.visit(range);
+    protected void visit(final SpreadsheetRowRangeReference rowRange) {
+        this.visitor.visit(rowRange);
     }
 
     private final SpreadsheetValueVisitor visitor;

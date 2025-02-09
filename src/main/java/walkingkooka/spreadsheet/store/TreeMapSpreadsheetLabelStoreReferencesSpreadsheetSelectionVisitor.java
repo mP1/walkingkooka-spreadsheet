@@ -49,8 +49,8 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor ex
     }
 
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
-        this.references.add(reference);
+    protected void visit(final SpreadsheetCellReference cell) {
+        this.references.add(cell);
     }
 
     @Override
@@ -65,8 +65,8 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor ex
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
-        this.references.add(range);
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
+        this.references.add(cellRange);
     }
 
     private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings;
