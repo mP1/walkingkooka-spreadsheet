@@ -47,7 +47,7 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
         final SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor visitor = new SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor(store);
         visitor.accept(labelName);
         return Optional.ofNullable(
-                visitor.cellReferenceOrRange
+                visitor.cellOrRange
         );
     }
 
@@ -85,7 +85,7 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
 
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
-        this.cellReferenceOrRange = cell;
+        this.cellOrRange = cell;
     }
 
     @Override
@@ -98,15 +98,15 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
 
     @Override
     protected void visit(final SpreadsheetCellRangeReference cellRange) {
-        this.cellReferenceOrRange = cellRange;
+        this.cellOrRange = cellRange;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(this.cellReferenceOrRange);
+        return String.valueOf(this.cellOrRange);
     }
 
     private final SpreadsheetLabelStore store;
 
-    private SpreadsheetCellReferenceOrRange cellReferenceOrRange = null;
+    private SpreadsheetCellReferenceOrRange cellOrRange = null;
 }
