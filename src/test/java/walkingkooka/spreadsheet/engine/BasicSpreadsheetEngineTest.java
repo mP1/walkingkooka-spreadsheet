@@ -17994,38 +17994,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      * The #formattedCell overloads parse the formulaText into tokens, set a default style and format any given value.
      * The parsed formula text is never evaluated to produce a value
      */
-    private SpreadsheetCell formattedCell(final String reference,
+    private SpreadsheetCell formattedCell(final String cell,
                                           final String formulaText) {
         return this.formattedCell(
-                SpreadsheetSelection.parseCell(reference),
+                SpreadsheetSelection.parseCell(cell),
                 formulaText
         );
     }
 
-    private SpreadsheetCell formattedCell(final SpreadsheetCellReference reference,
+    private SpreadsheetCell formattedCell(final SpreadsheetCellReference cell,
                                           final String formulaText) {
         return this.formattedCell(
-                this.cell(reference, formulaText),
+                this.cell(cell, formulaText),
                 Optional.empty(),
                 style()
         );
     }
 
-    private SpreadsheetCell formattedCell(final String reference,
+    private SpreadsheetCell formattedCell(final String cell,
                                           final String formulaText,
                                           final Object value) {
         return this.formattedCell(
-                SpreadsheetSelection.parseCell(reference),
+                SpreadsheetSelection.parseCell(cell),
                 formulaText,
                 value
         );
     }
 
-    private SpreadsheetCell formattedCell(final SpreadsheetCellReference reference,
+    private SpreadsheetCell formattedCell(final SpreadsheetCellReference cell,
                                           final String formulaText,
                                           final Object value) {
         return this.formattedCell(
-                this.cell(reference, formulaText),
+                this.cell(cell, formulaText),
                 value
         );
     }
