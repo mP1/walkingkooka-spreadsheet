@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Context;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -33,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
@@ -56,7 +58,8 @@ public interface SpreadsheetEngineContext extends Context,
         HasNow,
         SpreadsheetProvider,
         ProviderContext,
-        SpreadsheetLabelNameResolver {
+        SpreadsheetLabelNameResolver,
+        HasMissingCellNumberValue {
 
     // parseFormula.....................................................................................................
 
@@ -146,4 +149,13 @@ public interface SpreadsheetEngineContext extends Context,
      * Getter that returns the {@link SpreadsheetStoreRepository} for this spreadsheet.
      */
     SpreadsheetStoreRepository storeRepository();
+
+    // HasMissingCellNumberValue........................................................................................
+
+    @Override
+    default ExpressionNumber missingCellNumberValue() {
+        return this.spreadsheetMetadata()
+                .expressionNumberKind()
+                .zero();
+    }
 }
