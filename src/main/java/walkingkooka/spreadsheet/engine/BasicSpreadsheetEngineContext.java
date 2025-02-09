@@ -207,36 +207,39 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-        // lazily create SpreadsheetConverterContext & ExpressionFunctionProvider, these can be shared even when
-        // the $cell changes
-        if (null == this.spreadsheetConverterContext && null == this.expressionFunctionProvider) {
+        {
+            final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
             final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
 
-            final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
-
-            final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
-
-            if (SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS.equals(functionAliases)) {
-                converterSelector = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
-            } else {
-                if (SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.equals(functionAliases)) {
-                    converterSelector = SpreadsheetMetadataPropertyName.FIND_CONVERTER;
-                } else {
-                    throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
-                }
+            // lazily create SpreadsheetConverterContext & ExpressionFunctionProvider, these can be shared even when
+            // the $cell changes
+            if (null == this.expressionFunctionProvider) {
+                this.expressionFunctionProvider = metadata.expressionFunctionProvider(
+                        functionAliases,
+                        spreadsheetProvider
+                );
             }
 
-            this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
-                    converterSelector,
-                    this, // SpreadsheetLabelNameResolver,
-                    spreadsheetProvider, // SpreadsheetConverterProvider
-                    this.providerContext
-            );
+            if (null == this.spreadsheetConverterContext) {
+                final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector;
 
-            this.expressionFunctionProvider = metadata.expressionFunctionProvider(
-                    functionAliases,
-                    spreadsheetProvider
-            );
+                if (SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS.equals(functionAliases)) {
+                    converterSelector = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER;
+                } else {
+                    if (SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.equals(functionAliases)) {
+                        converterSelector = SpreadsheetMetadataPropertyName.FIND_CONVERTER;
+                    } else {
+                        throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
+                    }
+                }
+
+                this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
+                        converterSelector,
+                        this, // SpreadsheetLabelNameResolver,
+                        spreadsheetProvider, // SpreadsheetConverterProvider
+                        this.providerContext
+                );
+            }
         }
 
         return SpreadsheetExpressionEvaluationContexts.basic(
