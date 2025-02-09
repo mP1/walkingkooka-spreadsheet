@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -107,17 +106,16 @@ final class SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelec
     private final SpreadsheetEngine engine;
     private final SpreadsheetEngineContext context;
 
-    private Object extractValueOrNull(final SpreadsheetCellReference reference,
+    /**
+     * Extracts the value of the given cell or returns null.
+     */
+    private Object extractValueOrNull(final SpreadsheetCellReference cell,
                                       final SpreadsheetDelta delta) {
-        return delta.cell(reference)
+        return delta.cell(cell)
                 .map(c -> c.formula()
                         .value()
-                        .orElseGet(
-                                () -> SpreadsheetError.selectionNotFound(reference)
-                        )
-                ).orElseGet(
-                        () -> SpreadsheetError.selectionNotFound(reference)
-                );
+                        .orElse(null)
+                ).orElse(null);
     }
 
     private Optional<Object> value;
