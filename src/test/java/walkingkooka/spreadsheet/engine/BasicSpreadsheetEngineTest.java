@@ -1050,7 +1050,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                this.createContext(defaultYear, engine, context.storeRepository()));
+                this.createContext(
+                        defaultYear,
+                        engine,
+                        context.storeRepository()
+                )
+        );
 
         assertNotSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
         this.checkValue(
@@ -1117,7 +1122,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
-        final SpreadsheetCell unsaved = this.cell(a1, "=1+$B$2");
+        final SpreadsheetCell unsaved = this.cell(
+                a1,
+                "=1+$B$2"
+        );
         final Set<SpreadsheetCell> saved = engine.saveCell(
                         unsaved,
                         context
@@ -17759,13 +17767,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public SpreadsheetMetadata spreadsheetMetadata() {
-                return metadata.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, defaultYear);
+                return metadata.set(
+                        SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
+                        defaultYear
+                );
             }
 
             @Override
             public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+
                 return SpreadsheetFormulaParsers.valueOrExpression(
-                                METADATA.spreadsheetParser(
+                                metadata.spreadsheetParser(
                                         SPREADSHEET_PARSER_PROVIDER,
                                         PROVIDER_CONTEXT
                                 )
@@ -17775,7 +17788,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetParserContexts.basic(
                                         DateTimeContexts.fake(),
                                         ExpressionNumberContexts.basic(
-                                                this.spreadsheetMetadata().expressionNumberKind(),
+                                                metadata.expressionNumberKind(),
                                                 converterContext()
                                         ),
                                         VALUE_SEPARATOR
@@ -17787,26 +17800,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
-                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
-
                 return token.toExpression(
-                        SpreadsheetExpressionEvaluationContexts.basic(
-                                Optional.empty(), // cell
-                                SpreadsheetStoreRepositories.fake(),
-                                SERVER_URL,
-                                (r) -> {
-                                    throw new UnsupportedOperationException(r.toString());
-                                }, // references
-                                metadata,
-                                metadata.spreadsheetConverterContext(
-                                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                        SPREADSHEET_LABEL_NAME_RESOLVER,
-                                        CONVERTER_PROVIDER,
-                                        PROVIDER_CONTEXT
-                                ),
-                                EXPRESSION_FUNCTION_PROVIDER,
-                                PROVIDER_CONTEXT
-                        )
+                        this.spreadsheetExpressionEvaluationContext(Optional.empty())
                 );
             }
 
@@ -17817,18 +17812,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     public boolean evaluateAsBoolean(final Expression expression,
                                                      final Optional<SpreadsheetCell> cell) {
                         return expression.toBoolean(
-                                SpreadsheetExpressionEvaluationContexts.basic(
-                                        cell,
-                                        storeRepository,
-                                        SERVER_URL, // serverUrl
-                                        (r) -> {
-                                            throw new UnsupportedOperationException();
-                                        }, // references
-                                        metadata, // metadata
-                                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                                        EXPRESSION_FUNCTION_PROVIDER,
-                                        PROVIDER_CONTEXT
-                                )
+                                spreadsheetExpressionEvaluationContext(cell)
                         );
                     }
                 };
@@ -17837,34 +17821,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public Object evaluate(final Expression expression,
                                    final Optional<SpreadsheetCell> cell) {
-                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
-
                 return expression.toValue(
-                        SpreadsheetExpressionEvaluationContexts.basic(
-                                cell,
-                                storeRepository,
-                                SERVER_URL, // serverUrl
-                                this.references(), // references
-                                metadata, // metadata
-                                metadata.spreadsheetConverterContext(
-                                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                        this, // SpreadsheetLabelNameResolver
-                                        CONVERTER_PROVIDER,
-                                        PROVIDER_CONTEXT
-                                ),
-                                EXPRESSION_FUNCTION_PROVIDER,
-                                PROVIDER_CONTEXT
-                        )
+                        this.spreadsheetExpressionEvaluationContext(cell)
                 );
             }
 
-            @Override
-            public boolean isPure(final ExpressionFunctionName function) {
-                return EXPRESSION_FUNCTION_PROVIDER.expressionFunction(
-                                function,
-                                Lists.empty(),
-                                this // ProviderContext
-                        ).isPure(this);
+            private SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+                
+                return SpreadsheetExpressionEvaluationContexts.basic(
+                        cell,
+                        storeRepository,
+                        SERVER_URL, // serverUrl
+                        this.references(), // references
+                        metadata, // metadata
+                        metadata.spreadsheetConverterContext(
+                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                                this, // SpreadsheetLabelNameResolver
+                                CONVERTER_PROVIDER,
+                                PROVIDER_CONTEXT
+                        ),
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                );
             }
 
             private Function<ExpressionReference, Optional<Optional<Object>>> references() {
@@ -17883,6 +17862,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                     return Optional.empty();
                 });
+            }
+
+            @Override
+            public boolean isPure(final ExpressionFunctionName function) {
+                return EXPRESSION_FUNCTION_PROVIDER.expressionFunction(
+                        function,
+                        Lists.empty(),
+                        this // ProviderContext
+                ).isPure(this);
             }
 
             private ConverterContext converterContext() {
