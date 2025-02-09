@@ -41,27 +41,27 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
         this.endVisit(selection);
     }
 
-    protected Visiting startVisit(final SpreadsheetSelection reference) {
+    protected Visiting startVisit(final SpreadsheetSelection selection) {
         return Visiting.CONTINUE;
     }
 
-    protected void endVisit(final SpreadsheetSelection reference) {
+    protected void endVisit(final SpreadsheetSelection selection) {
         // nop
     }
 
-    protected void visit(final SpreadsheetCellRangeReference range) {
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
         // nop
     }
 
-    protected void visit(final SpreadsheetCellReference reference) {
+    protected void visit(final SpreadsheetCellReference cell) {
         // nop
     }
 
-    protected void visit(final SpreadsheetColumnReference reference) {
+    protected void visit(final SpreadsheetColumnReference column) {
         // nop
     }
 
-    protected void visit(final SpreadsheetColumnRangeReference range) {
+    protected void visit(final SpreadsheetColumnRangeReference columnRange) {
         // nop
     }
 
@@ -69,11 +69,11 @@ public abstract class SpreadsheetSelectionVisitor extends Visitor<SpreadsheetSel
         // nop
     }
 
-    protected void visit(final SpreadsheetRowReference reference) {
+    protected void visit(final SpreadsheetRowReference row) {
         // nop
     }
 
-    protected void visit(final SpreadsheetRowRangeReference range) {
+    protected void visit(final SpreadsheetRowRangeReference rowRange) {
         // nop
     }
 }

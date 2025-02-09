@@ -42,10 +42,10 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
     }
 
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
+    protected void visit(final SpreadsheetCellReference cell) {
         this.context.storeRepository()
                 .cellReferences()
-                .addReference(TargetAndSpreadsheetCellReference.with(this.target, reference));
+                .addReference(TargetAndSpreadsheetCellReference.with(this.target, cell));
     }
 
     @Override
@@ -56,10 +56,10 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
         this.context.storeRepository()
                 .rangeToCells()
-                .addValue(range, this.target);
+                .addValue(cellRange, this.target);
     }
 
     /**

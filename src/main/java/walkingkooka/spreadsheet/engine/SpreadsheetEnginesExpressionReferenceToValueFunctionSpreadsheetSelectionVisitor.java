@@ -63,10 +63,10 @@ final class SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelec
 
     // a cell always returns an Optional of a scalar value
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
-        final SpreadsheetDelta loaded = this.loadCells(reference);
+    protected void visit(final SpreadsheetCellReference cell) {
+        final SpreadsheetDelta loaded = this.loadCells(cell);
 
-        this.value = loaded.cell(reference)
+        this.value = loaded.cell(cell)
                 .map(c -> c.formula()
                         .value()
                 ).orElse(null);
@@ -83,12 +83,12 @@ final class SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelec
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
-        final SpreadsheetDelta delta = loadCells(range);
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
+        final SpreadsheetDelta delta = loadCells(cellRange);
 
         this.value = Optional.of(
                 Lists.immutable(
-                        range.cellStream()
+                        cellRange.cellStream()
                                 .map(c -> this.extractValueOrNull(c, delta))
                                 .collect(Collectors.toList())
                 )

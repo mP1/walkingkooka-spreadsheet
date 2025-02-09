@@ -27,32 +27,32 @@ public class FakeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetSelection reference) {
+    protected Visiting startVisit(final SpreadsheetSelection selection) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetSelection reference) {
+    protected void endVisit(final SpreadsheetSelection selection) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
+    protected void visit(final SpreadsheetCellReference cell) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReference reference) {
+    protected void visit(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnRangeReference range) {
+    protected void visit(final SpreadsheetColumnRangeReference columnRange) {
         throw new UnsupportedOperationException();
     }
 
@@ -62,12 +62,12 @@ public class FakeSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReference reference) {
+    protected void visit(final SpreadsheetRowReference row) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetRowRangeReference range) {
+    protected void visit(final SpreadsheetRowRangeReference rowRange) {
         throw new UnsupportedOperationException();
     }
 }

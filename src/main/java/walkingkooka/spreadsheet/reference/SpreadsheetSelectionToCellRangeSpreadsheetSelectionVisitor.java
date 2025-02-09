@@ -48,8 +48,8 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
     }
 
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
-        this.cellRange = reference.cellRange(reference); // toCellRangeResolvingLabels will result in StackOverflowError
+    protected void visit(final SpreadsheetCellReference cell) {
+        this.cellRange = cell.cellRange(cell); // toCellRangeResolvingLabels will result in StackOverflowError
     }
 
     @Override
@@ -73,8 +73,8 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
     }
 
     @Override
-    protected void visit(final SpreadsheetRowRangeReference rows) {
-        this.cellRange = rows.setColumnRange(SpreadsheetSelection.ALL_COLUMNS);
+    protected void visit(final SpreadsheetRowRangeReference rowRange) {
+        this.cellRange = rowRange.setColumnRange(SpreadsheetSelection.ALL_COLUMNS);
     }
 
     /**

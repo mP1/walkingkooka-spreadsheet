@@ -282,8 +282,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     final void deleteOrFixLabelMapping(final SpreadsheetLabelMapping mapping) {
         new SpreadsheetSelectionVisitor() {
             @Override
-            protected void visit(final SpreadsheetCellReference reference) {
-                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetCellReference(reference, mapping);
+            protected void visit(final SpreadsheetCellReference cell) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetCellReference(cell, mapping);
             }
 
             @Override
@@ -292,8 +292,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             }
 
             @Override
-            protected void visit(final SpreadsheetCellRangeReference range) {
-                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetCellRange(range, mapping);
+            protected void visit(final SpreadsheetCellRangeReference cellRange) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetCellRange(cellRange, mapping);
             }
         }.accept(mapping.target());
     }
@@ -369,8 +369,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     final void insertFixLabelMapping(final SpreadsheetLabelMapping mapping) {
         new SpreadsheetSelectionVisitor() {
             @Override
-            protected void visit(final SpreadsheetCellReference reference) {
-                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetCellReference(reference, mapping);
+            protected void visit(final SpreadsheetCellReference cell) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetCellReference(cell, mapping);
             }
 
             @Override
@@ -379,8 +379,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             }
 
             @Override
-            protected void visit(final SpreadsheetCellRangeReference range) {
-                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetCellRange(range, mapping);
+            protected void visit(final SpreadsheetCellRangeReference cellRange) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetCellRange(cellRange, mapping);
             }
         }.accept(mapping.target());
     }

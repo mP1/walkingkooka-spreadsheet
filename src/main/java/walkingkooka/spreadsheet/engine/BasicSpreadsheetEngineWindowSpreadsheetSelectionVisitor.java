@@ -66,25 +66,25 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
-        this.columnRange(range.columnRange());
-        this.rowRange(range.rowRange());
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
+        this.columnRange(cellRange.columnRange());
+        this.rowRange(cellRange.rowRange());
     }
 
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
-        this.accept(reference.column());
-        this.accept(reference.row());
+    protected void visit(final SpreadsheetCellReference cell) {
+        this.accept(cell.column());
+        this.accept(cell.row());
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnReference reference) {
-        this.columnRange(reference.toColumnRange());
+    protected void visit(final SpreadsheetColumnReference column) {
+        this.columnRange(column.toColumnRange());
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnRangeReference range) {
-        this.columnRange(range);
+    protected void visit(final SpreadsheetColumnRangeReference columnRange) {
+        this.columnRange(columnRange);
     }
 
     private void columnRange(final SpreadsheetColumnRangeReference columnRange) {
@@ -141,13 +141,13 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     }
 
     @Override
-    protected void visit(final SpreadsheetRowReference reference) {
-        this.rowRange(reference.toRowRange());
+    protected void visit(final SpreadsheetRowReference row) {
+        this.rowRange(row.toRowRange());
     }
 
     @Override
-    protected void visit(final SpreadsheetRowRangeReference range) {
-        this.rowRange(range);
+    protected void visit(final SpreadsheetRowRangeReference rowRange) {
+        this.rowRange(rowRange);
     }
 
     private void rowRange(SpreadsheetRowRangeReference rowRange) {

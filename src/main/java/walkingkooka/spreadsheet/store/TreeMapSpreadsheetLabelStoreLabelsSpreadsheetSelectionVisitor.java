@@ -65,8 +65,8 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor extend
     }
 
     @Override
-    protected void visit(final SpreadsheetCellReference reference) {
-        this.add = this.filter.testCell(reference);
+    protected void visit(final SpreadsheetCellReference cell) {
+        this.add = this.filter.testCell(cell);
     }
 
     @Override
@@ -80,8 +80,8 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor extend
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
-        this.add = this.add | range.cellStream()
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
+        this.add = this.add | cellRange.cellStream()
                 .anyMatch(this.filter::testCell);
     }
 

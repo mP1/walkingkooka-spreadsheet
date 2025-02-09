@@ -31,8 +31,8 @@ final class SpreadsheetSelectionTestSpreadsheetSelectionVisitor extends Spreadsh
     }
 
     @Override
-    protected void visit(final SpreadsheetCellRangeReference range) {
-        this.test = this.selection.testCellRange(range);
+    protected void visit(final SpreadsheetCellRangeReference cellRange) {
+        this.test = this.selection.testCellRange(cellRange);
     }
 
     @Override
@@ -46,8 +46,8 @@ final class SpreadsheetSelectionTestSpreadsheetSelectionVisitor extends Spreadsh
     }
 
     @Override
-    protected void visit(final SpreadsheetColumnRangeReference range) {
-        throw new UnsupportedOperationException(range.toString());
+    protected void visit(final SpreadsheetColumnRangeReference columnRange) {
+        throw new UnsupportedOperationException(columnRange.toString());
     }
 
     @Override
@@ -61,8 +61,8 @@ final class SpreadsheetSelectionTestSpreadsheetSelectionVisitor extends Spreadsh
     }
 
     @Override
-    protected void visit(final SpreadsheetRowRangeReference range) {
-        throw new UnsupportedOperationException(range.toString());
+    protected void visit(final SpreadsheetRowRangeReference rowRange) {
+        throw new UnsupportedOperationException(rowRange.toString());
     }
 
     private final SpreadsheetSelection selection;
