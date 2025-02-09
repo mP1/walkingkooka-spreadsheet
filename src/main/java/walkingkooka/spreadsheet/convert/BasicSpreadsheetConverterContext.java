@@ -23,15 +23,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionNumberConverterContextDelegator;
 
-import java.math.MathContext;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
-final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext {
+final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
+        ExpressionNumberConverterContextDelegator {
 
     static BasicSpreadsheetConverterContext with(final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
@@ -95,98 +92,8 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     // ExpressionNumberConverterContext.................................................................................
 
     @Override
-    public long dateOffset() {
-        return this.context.dateOffset();
-    }
-
-    @Override
-    public Locale locale() {
-        return this.context.locale();
-    }
-
-    @Override
-    public List<String> ampms() {
-        return this.context.ampms();
-    }
-
-    @Override
-    public int defaultYear() {
-        return this.context.defaultYear();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        return this.context.monthNames();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.context.monthNameAbbreviations();
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.context.twoDigitYear();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.context.weekDayNames();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.context.weekDayNameAbbreviations();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.context.now();
-    }
-
-    @Override
-    public String currencySymbol() {
-        return this.context.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.context.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.context.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.context.groupSeparator();
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return this.context.mathContext();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.context.negativeSign();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.context.percentageSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.context.positiveSign();
-    }
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.context.expressionNumberKind();
+    public ExpressionNumberConverterContext expressionNumberConverterContext() {
+        return this.context;
     }
 
     private final ExpressionNumberConverterContext context;
