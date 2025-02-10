@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -30,7 +30,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A visitor which resolves any {@link ExpressionReference} down to values. A range may match many cells, resulting in
@@ -86,11 +85,9 @@ final class SpreadsheetEnginesExpressionReferenceToValueFunctionSpreadsheetSelec
         final SpreadsheetDelta delta = loadCells(cellRange);
 
         this.value = Optional.of(
-                Lists.immutable(
-                        cellRange.cellStream()
-                                .map(c -> this.extractValueOrNull(c, delta))
-                                .collect(Collectors.toList())
-                )
+                cellRange.cellStream()
+                        .map(c -> this.extractValueOrNull(c, delta))
+                        .collect(ImmutableList.collector())
         );
     }
 
