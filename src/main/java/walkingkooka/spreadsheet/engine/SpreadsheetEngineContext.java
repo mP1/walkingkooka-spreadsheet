@@ -155,7 +155,6 @@ public interface SpreadsheetEngineContext extends Context,
     @Override
     default ExpressionNumber missingCellNumberValue() {
         return this.spreadsheetMetadata()
-                .expressionNumberKind()
-                .zero();
+                .missingCellNumberValue();
     }
 }

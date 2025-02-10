@@ -43,6 +43,7 @@ import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -87,6 +88,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -135,7 +137,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         HateosResource<SpreadsheetId>,
         Patchable<SpreadsheetMetadata>,
         TreePrintable,
-        Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
+        Value<Map<SpreadsheetMetadataPropertyName<?>, Object>>,
+        HasMissingCellNumberValue {
 
     public static final String HATEOS_RESOURCE_NAME_STRING = "spreadsheet";
 
@@ -1384,5 +1387,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
             printer.lineStart();
         }
+    }
+
+    // HasMissingCellNumberValue........................................................................................
+
+    @Override
+    public final ExpressionNumber missingCellNumberValue() {
+        return this.expressionNumberKind()
+                .zero();
     }
 }
