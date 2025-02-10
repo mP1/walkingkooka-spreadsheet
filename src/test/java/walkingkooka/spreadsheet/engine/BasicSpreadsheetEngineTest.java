@@ -18,22 +18,17 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
-import walkingkooka.convert.provider.ConverterName;
-import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -43,18 +38,11 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
-import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
-import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
-import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -65,9 +53,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
@@ -101,8 +88,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -113,7 +100,6 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
@@ -122,6 +108,8 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 import walkingkooka.tree.text.FontWeight;
@@ -139,15 +127,12 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -163,6 +148,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
     private final static String NUMBER_PATTERN = "#";
     private final static String TEXT_PATTERN = "@";
+
+    private final static String CURRENCY_SYMBOL = "$";
+    private final static char DECIMAL_SEPARATOR = '.';
+    private final static String EXPONENT_SYMBOL = "E";
+    private final static char GROUP_SEPARATOR = ',';
+    private final static char NEGATIVE_SIGN = '-';
+    private final static char PERCENTAGE_SYMBOL = '%';
+    private final static char POSITIVE_SIGN = '+';
 
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
         @Override
@@ -203,7 +196,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public char decimalSeparator() {
-            return '.';
+            return DECIMAL_SEPARATOR;
         }
 
         @Override
@@ -213,12 +206,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public char negativeSign() {
-            return '-';
+            return NEGATIVE_SIGN;
         }
 
         @Override
         public char positiveSign() {
-            return '+';
+            return POSITIVE_SIGN;
         }
 
         @Override
@@ -275,40 +268,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static double VIEWPORT_HEIGHT = ROW_HEIGHT * 5;
 
-    static {
-        final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
+    private final static String TEST_FILTER_CELLS_PREDICATE = "BasicSpreadsheetEngineTestFilterCellsPredicate";
 
-        METADATA = METADATA_EN_AU.set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
-                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
-                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
-                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern(DATE_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm").spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern(DATETIME_PATTERN).spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern(NUMBER_PATTERN).spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern(TEXT_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern(TIME_PATTERN + suffix).spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern(TIME_PATTERN).spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
-                        .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
-                        .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))
-                );
-    }
+    private final static String TEST_NUMBER_PARAMETER = "BasicSpreadsheetEngineTestNumberParameter";
 
-    private final static SpreadsheetMetadata METADATA;
+    private final static String TEST_STRING_PARAMETER = "BasicSpreadsheetEngineTestStringParameter";
 
-    private static Object VALUE;
+    private final static String TEST_SUM = "BasicSpreadsheetEngineTestSum";
+
+    private final static String TEST_VALUE = "BasicSpreadsheetEngineTestValue";
 
     private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new FakeExpressionFunctionProvider() {
+
         @Override
         public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                      final List<?> values,
                                                                                      final ProviderContext context) {
             switch (name.value()) {
-                case "BasicSpreadsheetEngineTestFilterCellsPredicate":
+                case TEST_FILTER_CELLS_PREDICATE:
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
@@ -340,7 +317,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return false;
                         }
                     };
-                case "BasicSpreadsheetEngineTestNumberParameter":
+                case TEST_NUMBER_PARAMETER:
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
@@ -365,7 +342,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return false;
                         }
                     };
-                case "BasicSpreadsheetEngineTestStringParameter":
+                case TEST_STRING_PARAMETER:
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
@@ -390,12 +367,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return false;
                         }
                     };
-                case "BasicSpreadsheetEngineTestSum":
+                case TEST_SUM:
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
                                             final ExpressionEvaluationContext context) {
                             return parameters.stream()
+                                    .filter(Objects::nonNull)
                                     .map(ExpressionNumber.class::cast)
                                     .reduce(
                                             context.expressionNumberKind()
@@ -409,11 +387,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return Lists.of(
                                     ExpressionFunctionParameterName.with("parameters")
                                             .variable(Object.class)
-                                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
+                                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_FLATTEN_RESOLVE_REFERENCES)
                             );
                         }
                     };
-                case "BasicSpreadsheetEngineTestValue":
+                case TEST_VALUE:
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
@@ -438,7 +416,85 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     throw new UnknownExpressionFunctionException(name);
             }
         }
+
+        @Override
+        public ExpressionFunctionInfoSet expressionFunctionInfos() {
+            return ExpressionFunctionInfoSet.with(
+                    Sets.of(
+                            info(TEST_FILTER_CELLS_PREDICATE),
+                            info(TEST_NUMBER_PARAMETER),
+                            info(TEST_STRING_PARAMETER),
+                            info(TEST_SUM),
+                            info(TEST_VALUE)
+                    )
+            );
+        }
+
+        private ExpressionFunctionInfo info(final String name) {
+            return ExpressionFunctionInfo.with(
+                    Url.parseAbsolute("https://example.com/" + name),
+                    ExpressionFunctionName.with(name).setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+            );
+        }
+
+        @Override
+        public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+            return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
+        }
     };
+
+    static {
+        final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
+
+        METADATA = METADATA_EN_AU
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, CURRENCY_SYMBOL)
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
+                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
+                .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
+                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, PERCENTAGE_SYMBOL)
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, POSITIVE_SIGN)
+                .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
+                .set(
+                        SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+                        ExpressionFunctionAliasSet.parse(
+                                TEST_FILTER_CELLS_PREDICATE
+                        )
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                        ExpressionFunctionAliasSet.parse(
+                                        TEST_NUMBER_PARAMETER +
+                                        "," +
+                                        TEST_STRING_PARAMETER +
+                                        "," +
+                                        TEST_SUM +
+                                        "," +
+                                        TEST_VALUE
+                        )
+                ).set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern(DATE_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern(DATETIME_PATTERN).spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern(NUMBER_PATTERN).spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern(TEXT_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern(TIME_PATTERN + suffix).spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern(TIME_PATTERN).spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
+                        .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
+                        .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))
+                );
+    }
+
+    private final static SpreadsheetMetadata METADATA;
+
+    private static Object VALUE;
 
     // loadCells........................................................................................................
 
@@ -733,7 +789,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "=1/0",
                 SpreadsheetErrorKind.DIV0.setMessage("Division by zero"),
                 Optional.of(
-                        SpreadsheetPattern.parseNumberFormatPattern("# \"" + FORMATTED_PATTERN_SUFFIX + "\"")
+                        SpreadsheetPattern.parseTextFormatPattern("@ \"" + FORMATTED_PATTERN_SUFFIX + "\"")
                                 .spreadsheetFormatterSelector()
                 ),
                 "#DIV/0! " + FORMATTED_PATTERN_SUFFIX
@@ -5843,7 +5899,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         a11,
-                        "=20+0+" + LABEL
+                        "=20+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
@@ -5898,7 +5954,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a11,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=20+0+" + LABEL,
+                "=20+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 21
         );
 
@@ -6170,7 +6226,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         a1,
-                        "=1+0+" + LABEL
+                        "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
@@ -6193,7 +6249,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                "=1+0+" + LABEL,
+                                                "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                                                 1 + 0 + 20 + 0
                                         ),
                                         this.formattedCell(
@@ -6228,7 +6284,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+0+" + LABEL,
+                "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 1 + 20
         );
 
@@ -7271,7 +7327,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         k1,
-                        "=20+0+" + LABEL
+                        "=20+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
@@ -7326,7 +7382,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 k1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=20+0+" + LABEL,
+                "=20+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 21
         );
 
@@ -7578,7 +7634,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         a1,
-                        "=1+0+" + LABEL
+                        "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
@@ -7602,7 +7658,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                "=1+0+" + LABEL,
+                                                "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                                                 1 + 0 + 20 + 0
                                         ),
                                         this.formattedCell(
@@ -7640,7 +7696,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+0+" + LABEL,
+                "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 1 + 20
         );
 
@@ -8278,7 +8334,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference f6 = SpreadsheetSelection.parseCell("$F$6"); // moved
 
         final SpreadsheetCellRangeReference a1b2 = a1.cellRange(a1.add(1, 1));
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1b2));
+        labelStore.save(
+                SpreadsheetLabelMapping.with(
+                        LABEL,
+                        a1b2
+                )
+        );
 
         engine.saveCell(
                 this.cell(
@@ -8290,7 +8351,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         f6,
-                        "=2+0+" + LABEL
+                        "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL +")"
                 ),
                 context
         );
@@ -8306,7 +8367,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 "$G$6",
-                                                "=2+0+" + LABEL,
+                                                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL+")",
                                                 2 + 0 + 99 + 0
                                         )
                                 )
@@ -8343,7 +8404,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 f6.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=2+0+" + LABEL,
+                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL +")",
                 2 + 99
         );
     }
@@ -8373,7 +8434,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         a1,
-                        "=1+" + LABEL
+                        "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
@@ -8395,7 +8456,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                "=1+" + LABEL,
+                                                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                                                 1 + 99 + 0
                                         ),
                                         this.formattedCell(
@@ -8443,7 +8504,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+" + LABEL,
+                "=1+BasicSpreadsheetEngineTestSum(" + LABEL +")",
                 1 + 99
         );
 
@@ -9478,7 +9539,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         f6,
-                        "=2+0+" + LABEL
+                        "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
@@ -9494,7 +9555,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 "$F$7",
-                                                "=2+0+" + LABEL,
+                                                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                                                 2 + 0 + 99 + 0
                                         ) // $b insert
                                 )
@@ -9541,7 +9602,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 f6.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=2+0+" + LABEL,
+                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 2 + 99
         );
     }
@@ -9571,7 +9632,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         a1,
-                        "=1+" + LABEL
+                        "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
@@ -9593,7 +9654,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formattedCell(
                                                 a1,
-                                                "=1+" + LABEL,
+                                                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                                                 1 + 99 + 0
                                         ),
                                         this.formattedCell(
@@ -9641,7 +9702,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+" + LABEL,
+                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 1 + 99
         );
 
@@ -14229,14 +14290,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("Z");
         final double expected = 150.5;
 
-        SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
-        final TextStyle style = metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
-                .set(TextStylePropertyName.WIDTH, Length.pixel(expected));
-        metadata = metadata.set(SpreadsheetMetadataPropertyName.STYLE, style);
-
         this.columnWidthAndCheck2(
                 column,
-                metadata,
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        METADATA.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
+                                .set(
+                                        TextStylePropertyName.WIDTH,
+                                        Length.pixel(expected)
+                                )
+                ),
                 0,
                 expected);
     }
@@ -14261,34 +14324,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    @Test
-    public void testColumnWidthDefaultMissingFails() {
-        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("Z");
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSpreadsheetEngine()
-                        .columnWidth(
-                                column,
-                                this.createContext(
-                                        new FakeSpreadsheetCellStore() {
-                                            @Override
-                                            public double maxColumnWidth(final SpreadsheetColumnReference c) {
-                                                checkEquals(column, c);
-                                                return 0;
-                                            }
-                                        }
-                                )
-                        )
-        );
-    }
-
     // rowHeight........................................................................................................
 
     @Test
     public void testRowHeight() {
         this.rowHeightAndCheck2(
                 SpreadsheetSelection.parseRow("987"),
-                SpreadsheetMetadata.EMPTY,
+                METADATA,
                 150.5
         );
     }
@@ -14298,13 +14340,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("987");
         final double expected = 150.5;
 
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
-        final TextStyle style = metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
-                .set(TextStylePropertyName.HEIGHT, Length.pixel(expected));
-
         this.rowHeightAndCheck2(
                 row,
-                metadata.set(SpreadsheetMetadataPropertyName.STYLE, style),
+                METADATA.set(
+                        SpreadsheetMetadataPropertyName.STYLE,
+                        METADATA.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
+                                .set(
+                                        TextStylePropertyName.HEIGHT,
+                                        Length.pixel(expected)
+                                )
+                ),
                 expected
         );
     }
@@ -14325,28 +14370,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             }
                         }),
                 expected
-        );
-    }
-
-    @Test
-    public void testRowHeightDefaultMissing() {
-        final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("999");
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSpreadsheetEngine()
-                        .rowHeight(
-                                row,
-                                this.createContext(
-                                        new FakeSpreadsheetCellStore() {
-
-                                            @Override
-                                            public double maxRowHeight(final SpreadsheetRowReference r) {
-                                                checkEquals(row, r);
-                                                return 0;
-                                            }
-                                        }
-                                )
-                        )
         );
     }
 
@@ -16795,7 +16818,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetValueType.ANY,
                 Expression.call(
                         Expression.namedFunction(
-                                ExpressionFunctionName.with("BasicSpreadsheetEngineTestFilterCellsPredicate")
+                                ExpressionFunctionName.with(TEST_FILTER_CELLS_PREDICATE)
                                         .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
                         ),
                         Expression.NO_CHILDREN
@@ -17630,7 +17653,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetEngineContext createContext(final SpreadsheetCellStore cellStore) {
         return this.createContext(
-                SpreadsheetMetadata.EMPTY,
+                METADATA,
                 cellStore
         );
     }
@@ -17660,6 +17683,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
 
                     private final SpreadsheetColumnStore columnStore = SpreadsheetColumnStores.treeMap();
+
+                    @Override
+                    public SpreadsheetLabelStore labels() {
+                        return this.labels;
+                    }
+
+                    private final SpreadsheetLabelStore labels = SpreadsheetLabelStores.treeMap();
 
                     @Override
                     public SpreadsheetRowStore rows() {
@@ -17714,261 +17744,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                    final SpreadsheetEngine engine,
                                                    final SpreadsheetMetadata metadata, // required by ranges tests with frozen columns/rows.
                                                    final SpreadsheetStoreRepository storeRepository) {
-        return new FakeSpreadsheetEngineContext() {
-
-            @Override
-            public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-                return this.storeRepository()
-                        .labels()
-                        .resolveLabelOrFail(labelName);
-            }
-
-            @Override
-            public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
-                                                                  final ProviderContext context) {
-                return SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
-                        selector,
-                        context
-                );
-            }
-
-            @Override
-            public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                       final List<?> values,
-                                                                       final ProviderContext context) {
-                return SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                        this.spreadsheetMetadata(),
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER
-                ).converter(
-                        name,
-                        values,
-                        context
-                );
-            }
-
-            @Override
-            public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector,
-                                                             final ProviderContext context) {
-                return SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatter(
-                        selector,
-                        context
-                );
-            }
-
-            @Override
-            public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
-                                                       final ProviderContext context) {
-                return SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
-                        selector,
-                        context
-                );
-            }
-
-            @Override
-            public SpreadsheetMetadata spreadsheetMetadata() {
-                return metadata.set(
+        return SpreadsheetEngineContexts.basic(
+                SERVER_URL,
+                metadata.set(
                         SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
                         defaultYear
-                );
-            }
-
-            @Override
-            public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
-                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
-
-                return SpreadsheetFormulaParsers.valueOrExpression(
-                                metadata.spreadsheetParser(
-                                        SPREADSHEET_PARSER_PROVIDER,
-                                        PROVIDER_CONTEXT
-                                )
-                        ).orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(
-                                formula,
-                                SpreadsheetParserContexts.basic(
-                                        DateTimeContexts.fake(),
-                                        ExpressionNumberContexts.basic(
-                                                metadata.expressionNumberKind(),
-                                                converterContext()
-                                        ),
-                                        VALUE_SEPARATOR
-                                )
-                        )
-                        .get()
-                        .cast(SpreadsheetFormulaParserToken.class);
-            }
-
-            @Override
-            public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
-                return token.toExpression(
-                        this.spreadsheetExpressionEvaluationContext(Optional.empty())
-                );
-            }
-
-            @Override
-            public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
-                return new FakeSpreadsheetEngineContext() {
-                    @Override
-                    public boolean evaluateAsBoolean(final Expression expression,
-                                                     final Optional<SpreadsheetCell> cell) {
-                        return expression.toBoolean(
-                                spreadsheetExpressionEvaluationContext(cell)
-                        );
-                    }
-                };
-            }
-
-            @Override
-            public Object evaluate(final Expression expression,
-                                   final Optional<SpreadsheetCell> cell) {
-                return expression.toValue(
-                        this.spreadsheetExpressionEvaluationContext(cell)
-                );
-            }
-
-            private SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
-                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
-                
-                return SpreadsheetExpressionEvaluationContexts.basic(
-                        cell,
-                        storeRepository,
-                        SERVER_URL, // serverUrl
-                        this.references(), // references
-                        metadata, // metadata
-                        metadata.spreadsheetConverterContext(
-                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                this, // SpreadsheetLabelNameResolver
-                                CONVERTER_PROVIDER,
-                                PROVIDER_CONTEXT
-                        ),
+                ),
+                engine,
+                storeRepository,
+                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, // final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases
+                SpreadsheetProviders.basic(
+                        CONVERTER_PROVIDER,
                         EXPRESSION_FUNCTION_PROVIDER,
-                        PROVIDER_CONTEXT
-                );
-            }
-
-            private Function<ExpressionReference, Optional<Optional<Object>>> references() {
-                return (r -> {
-                    if (r instanceof SpreadsheetExpressionReference) {
-                        final SpreadsheetCellReference cell = this.resolveIfLabel((SpreadsheetExpressionReference) r)
-                                .toCell();
-                        final SpreadsheetDelta delta = engine.loadCells(
-                                cell,
-                                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                                SpreadsheetDeltaProperties.ALL,
-                                this
-                        );
-                        return delta.cell(cell)
-                                .map(c -> c.formula().value());
-                    }
-                    return Optional.empty();
-                });
-            }
-
-            @Override
-            public boolean isPure(final ExpressionFunctionName function) {
-                return EXPRESSION_FUNCTION_PROVIDER.expressionFunction(
-                        function,
-                        Lists.empty(),
-                        this // ProviderContext
-                ).isPure(this);
-            }
-
-            private ConverterContext converterContext() {
-                final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
-
-                return metadata.spreadsheetConverterContext(
-                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                        this,
-                        SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                                metadata,
-                                SPREADSHEET_FORMATTER_PROVIDER,
-                                SPREADSHEET_PARSER_PROVIDER
-                        ),
-                        PROVIDER_CONTEXT
-                );
-            }
-
-            @Override
-            public Optional<TextNode> formatValue(final Object value,
-                                                  final SpreadsheetFormatter formatter) {
-                assertFalse(
-                        value instanceof Optional,
-                        () -> "Value must not be optional" + value
-                );
-                return formatter.format(
-                        value,
-                        SPREADSHEET_TEXT_FORMAT_CONTEXT
-                );
-            }
-
-            @Override
-            public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
-                                                       final Optional<SpreadsheetFormatter> formatter) {
-                final Optional<Object> value = cell.formula()
-                        .value();
-                return value.isPresent() ?
-                        cell.setFormattedValue(
-                                Optional.of(
-                                        this.formatValue(
-                                                        value.get(),
-                                                        formatter.orElse(
-                                                                this.spreadsheetMetadata()
-                                                                        .spreadsheetFormatter(
-                                                                                SPREADSHEET_FORMATTER_PROVIDER,
-                                                                                PROVIDER_CONTEXT
-                                                                        )
-                                                        )
-                                                ).map(
-                                                        f -> cell.style()
-                                                                .replace(f)
-                                                )
-                                                .orElse(TextNode.EMPTY_TEXT)
-                                )
-                        ) :
-                        cell;
-            }
-
-            @Override
-            public SpreadsheetCellRange sortCells(final SpreadsheetCellRange cells,
-                                                  final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
-                                                  final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedFromTo) {
-                return cells.sort(
-                        comparators.stream()
-                                .map(
-                                        crn ->
-                                                SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                                                        crn.columnOrRow(),
-                                                        crn.comparatorNameAndDirections()
-                                                                .stream()
-                                                                .map(
-                                                                        cnad -> cnad.direction()
-                                                                                .apply(
-                                                                                        Cast.to(
-                                                                                                SPREADSHEET_COMPARATOR_PROVIDER.spreadsheetComparator(
-                                                                                                        cnad.name(),
-                                                                                                        Lists.empty(),
-                                                                                                        PROVIDER_CONTEXT
-                                                                                                )
-                                                                                        )
-                                                                                )
-                                                                ).collect(Collectors.toList())
-                                                )
-                                ).collect(Collectors.toList()),
-                        movedFromTo, // moved cells
-                        this.spreadsheetMetadata()
-                                .sortSpreadsheetComparatorContext(
-                                        this, // ConverterProvider
-                                        this, // SpreadsheetLabelNameResolver
-                                        this // ProviderContext
-                                )
-                );
-            }
-
-            @Override
-            public SpreadsheetStoreRepository storeRepository() {
-                return storeRepository;
-            }
-        };
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER
+                ), // SpreadsheetProvider
+                PROVIDER_CONTEXT
+        );
     }
 
     private SpreadsheetCell loadCellAndCheckFormatted2(final SpreadsheetEngine engine,
