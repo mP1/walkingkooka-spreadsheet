@@ -38,6 +38,8 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -12698,6 +12700,51 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     // sortCells........................................................................................................
+
+    @Test
+    public void testSortCellsInvalidComparatorFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                SpreadsheetSelection.A1.toCellRange(),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("A=day-of-month,month-of-year,year"),
+                                SpreadsheetDeltaProperties.ALL,
+                                new FakeSpreadsheetEngineContext() {
+                                    @Override
+                                    public SpreadsheetStoreRepository storeRepository() {
+                                        return SpreadsheetStoreRepositories.basic(
+                                                SpreadsheetCellStores.treeMap(),
+                                                SpreadsheetExpressionReferenceStores.treeMap(),
+                                                SpreadsheetColumnStores.treeMap(),
+                                                SpreadsheetGroupStores.fake(),
+                                                SpreadsheetLabelStores.treeMap(),
+                                                SpreadsheetExpressionReferenceStores.treeMap(),
+                                                SpreadsheetMetadataStores.fake(),
+                                                SpreadsheetCellRangeStores.treeMap(),
+                                                SpreadsheetCellRangeStores.treeMap(),
+                                                SpreadsheetRowStores.treeMap(),
+                                                SpreadsheetUserStores.fake()
+                                        );
+                                    }
+
+                                    @Override
+                                    public SpreadsheetMetadata spreadsheetMetadata() {
+                                        return METADATA.set(
+                                                SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
+                                                SpreadsheetComparatorNameList.parse("day-of-month")
+                                        );
+                                    }
+                                }
+                        )
+        );
+
+        // day-of-month is available others are absent
+        this.checkEquals(
+                "Invalid comparators: month-of-year,year",
+                thrown.getMessage()
+        );
+    }
 
     @Test
     public void testSortWithColumnsNothingChanged() {

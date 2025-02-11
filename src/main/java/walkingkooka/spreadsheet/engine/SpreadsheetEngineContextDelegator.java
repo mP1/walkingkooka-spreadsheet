@@ -20,8 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -37,9 +35,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.function.BiConsumer;
 
 /**
  * A delegator for {@link SpreadsheetEngineContext}.
@@ -117,18 +113,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     default LocalDateTime now() {
         return this.spreadsheetEngineContext()
                 .now();
-    }
-
-    @Override
-    default SpreadsheetCellRange sortCells(final SpreadsheetCellRange cells,
-                                           final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
-                                           final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedFromTo) {
-        return this.spreadsheetEngineContext()
-                .sortCells(
-                        cells,
-                        comparators,
-                        movedFromTo
-                );
     }
 
     @Override

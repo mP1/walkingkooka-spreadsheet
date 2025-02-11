@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
@@ -29,6 +30,9 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
+import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -67,6 +71,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -483,10 +488,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             final Map<SpreadsheetCell, SpreadsheetCell> movedFromTo = Maps.sorted();
 
-            final SpreadsheetCellRange sorted = context.sortCells(
+            this.sortCells1(
                     range,
-                    comparators,
-                    movedFromTo::put
+                    SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparators),
+                    movedFromTo::put,
+                    context
             );
 
             // delete old cells...
@@ -511,6 +517,53 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context
             );
         }
+    }
+
+    private void sortCells1(final SpreadsheetCellRange cells,
+                            final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList columnOrRowAndComparatorNames,
+                            final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedFromTo,
+                            final SpreadsheetEngineContext context) {
+
+        final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+        final SpreadsheetComparatorNameList sortComparators = metadata.getOrFail(SpreadsheetMetadataPropertyName.SORT_COMPARATORS);
+
+        final Set<SpreadsheetComparatorName> requiredNames = columnOrRowAndComparatorNames.names();
+
+        final String missing = requiredNames.stream()
+                .filter(n -> false == sortComparators.contains(n))
+                .map(SpreadsheetComparatorName::toString)
+                .collect(Collectors.joining(","));
+        if (false == missing.isEmpty()) {
+            throw new IllegalArgumentException("Invalid comparators: " + missing);
+        }
+
+        final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators = columnOrRowAndComparatorNames.stream()
+                .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
+                                n.columnOrRow(),
+                                n.comparatorNameAndDirections()
+                                        .stream()
+                                        .map(
+                                                nad -> nad.direction()
+                                                        .apply(
+                                                                context.spreadsheetComparator(
+                                                                        nad.name(),
+                                                                        Lists.empty(),
+                                                                        context // ProviderContext
+                                                                )
+                                                        )
+                                        ).collect(Collectors.toList())
+                        )
+                ).collect(Collectors.toList());
+
+        cells.sort(
+                comparators,
+                movedFromTo, // moved cells
+                metadata.sortSpreadsheetComparatorContext(
+                        context, // ConverterProvider
+                        context, // SpreadsheetLabelNameResolver
+                        context // ProviderContext
+                )
+        );
     }
 
     // loadReferences...................................................................................................

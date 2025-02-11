@@ -19,12 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.locale.HasLocaleTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -40,9 +36,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.function.BiConsumer;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -393,76 +387,6 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                         formatter
                 ),
                 () -> "formatValueAndStyle " + cell + " " + formatter);
-    }
-
-    // sort.............................................................................................................
-
-    @Test
-    default void testSortCellsWithNullCellsFails() {
-        final C context = this.createContext();
-
-        assertThrows(
-                NullPointerException.class,
-                () -> context.sortCells(
-                        null,
-                        Lists.empty(),
-                        (from, to) -> {
-                            throw new UnsupportedOperationException();
-                        }
-                )
-        );
-    }
-
-    @Test
-    default void testSortCellsWithNullComparatorsFails() {
-        final C context = this.createContext();
-
-        assertThrows(
-                NullPointerException.class,
-                () -> context.sortCells(
-                        SpreadsheetCellRange.with(
-                                SpreadsheetSelection.ALL_CELLS,
-                                Sets.empty()
-                        ),
-                        null,
-                        (from, to) -> {
-                            throw new UnsupportedOperationException();
-                        }
-                )
-        );
-    }
-
-    @Test
-    default void testSortCellsWithNullMovedCellsFails() {
-        final C context = this.createContext();
-
-        assertThrows(
-                NullPointerException.class,
-                () -> context.sortCells(
-                        SpreadsheetCellRange.with(
-                                SpreadsheetSelection.ALL_CELLS,
-                                Sets.empty()
-                        ),
-                        Lists.empty(),
-                        null
-                )
-        );
-    }
-
-    default void sortCellsAndCheck(final C context,
-                                   final SpreadsheetCellRange cells,
-                                   final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
-                                   final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedCells,
-                                   final SpreadsheetCellRange expected) {
-        this.checkEquals(
-                expected,
-                context.sortCells(
-                        cells,
-                        comparators,
-                        movedCells
-                ),
-                () -> "sort " + cells
-        );
     }
 
     // TypeNameTesting .................................................................................................

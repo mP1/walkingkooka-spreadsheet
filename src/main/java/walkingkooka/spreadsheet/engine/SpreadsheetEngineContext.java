@@ -22,9 +22,7 @@ import walkingkooka.datetime.HasNow;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
@@ -39,10 +37,8 @@ import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.BiConsumer;
 
 /**
  * A context that holds individual values tailored for an individual spreadsheet or user such as their locale,
@@ -133,15 +129,6 @@ public interface SpreadsheetEngineContext extends Context,
                 Optional.empty() // ignore cell formatter
         );
     }
-
-    // sort.............................................................................................................
-
-    /**
-     * Sorts the given range of cells.
-     */
-    SpreadsheetCellRange sortCells(final SpreadsheetCellRange cells,
-                                   final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
-                                   final BiConsumer<SpreadsheetCell, SpreadsheetCell> movedFromTo);
 
     // stores...........................................................................................................
 
