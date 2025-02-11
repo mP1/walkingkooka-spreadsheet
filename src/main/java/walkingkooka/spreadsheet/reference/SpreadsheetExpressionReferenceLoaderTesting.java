@@ -18,16 +18,16 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ContextTesting;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetExpressionReferenceLoaderTesting<C extends SpreadsheetExpressionReferenceLoader> extends ContextTesting<C> {
+public interface SpreadsheetExpressionReferenceLoaderTesting<T extends SpreadsheetExpressionReferenceLoader> extends TreePrintableTesting {
 
     // loadCell.........................................................................................................
 
@@ -35,16 +35,16 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<C extends Spreadshe
     default void testLoadCellWithNullCellFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createContext().loadCell(null)
+                () -> this.createSpreadsheetExpressionReferenceLoader().loadCell(null)
         );
     }
 
-    default void loadCellAndCheck(final C context,
+    default void loadCellAndCheck(final T loader,
                                   final SpreadsheetCellReference cellReference,
                                   final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
                 expected,
-                context.loadCell(cellReference),
+                loader.loadCell(cellReference),
                 () -> "loadCell " + cellReference
         );
     }
@@ -55,27 +55,27 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<C extends Spreadshe
     default void testLoadCellRangeWithNullRangeFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createContext()
+                () -> this.createSpreadsheetExpressionReferenceLoader()
                         .loadCellRange(null)
         );
     }
 
-    default void loadCellRangeAndCheck(final C context,
+    default void loadCellRangeAndCheck(final T loader,
                                        final SpreadsheetCellRangeReference range,
                                        final SpreadsheetCell... expected) {
         this.loadCellRangeAndCheck(
-                context,
+                loader,
                 range,
                 SortedSets.of(expected)
         );
     }
 
-    default void loadCellRangeAndCheck(final C context,
+    default void loadCellRangeAndCheck(final T loader,
                                        final SpreadsheetCellRangeReference range,
                                        final Set<SpreadsheetCell> expected) {
         this.checkEquals(
                 expected,
-                context.loadCellRange(range),
+                loader.loadCellRange(range),
                 () -> "loadCellRange " + range
         );
     }
@@ -86,17 +86,21 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<C extends Spreadshe
     default void testLoadLabelWithNullLabelFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createContext().loadLabel(null)
+                () -> this.createSpreadsheetExpressionReferenceLoader().loadLabel(null)
         );
     }
 
-    default void loadLabelAndCheck(final C context,
+    default void loadLabelAndCheck(final T loader,
                                    final SpreadsheetLabelName labelName,
                                    final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
                 expected,
-                context.loadLabel(labelName),
+                loader.loadLabel(labelName),
                 () -> "loadLabel " + labelName
         );
     }
+    
+    // createLoader.....................................................................................................
+    
+    T createSpreadsheetExpressionReferenceLoader();
 }
