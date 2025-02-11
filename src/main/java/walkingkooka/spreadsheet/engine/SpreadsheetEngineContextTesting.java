@@ -143,12 +143,19 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     // evaluate.........................................................................................................
 
     @Test
-    default void testEvaluateNullExpressionFails() {
-        assertThrows(NullPointerException.class, () -> this.createContext().evaluate(null, Optional.empty()));
+    default void testEvaluateWithNullExpressionFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .evaluate(
+                                null,
+                                Optional.empty()
+                        )
+        );
     }
 
     @Test
-    default void testEvaluateNullCellFails() {
+    default void testEvaluateWithNullCellFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()
