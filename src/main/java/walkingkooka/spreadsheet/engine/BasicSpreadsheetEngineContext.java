@@ -160,6 +160,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetEngine engine;
 
+    // resolveLabel.....................................................................................................
+
+    @Override
+    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        return this.labelNameResolver.resolveLabel(labelName);
+    }
+
+    private final SpreadsheetLabelNameResolver labelNameResolver;
+
     // parsing formula and executing....................................................................................
 
     @Override
@@ -190,6 +199,34 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         Optional.empty()// cell
                 )
         );
+    }
+
+    // evaluate.........................................................................................................
+
+    @Override
+    public Object evaluate(final Expression expression,
+                           final Optional<SpreadsheetCell> cell) {
+        return this.expressionEvaluationContext(cell)
+                .evaluateExpression(expression);
+    }
+
+    @Override
+    public boolean evaluateAsBoolean(final Expression expression,
+                                     final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(cell, "cell");
+
+        boolean result;
+
+        try {
+            result = expression.toBoolean(
+                    this.expressionEvaluationContext(cell)
+            );
+        } catch (final RuntimeException exception) {
+            result = false; // return false for any errors.
+        }
+
+        return result;
     }
 
     /**
@@ -262,43 +299,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
      */
     private ExpressionFunctionProvider expressionFunctionProvider;
-
-    // resolveLabel.....................................................................................................
-
-    @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.labelNameResolver.resolveLabel(labelName);
-    }
-
-    private final SpreadsheetLabelNameResolver labelNameResolver;
-
-    // evaluate.........................................................................................................
-
-    @Override
-    public Object evaluate(final Expression expression,
-                           final Optional<SpreadsheetCell> cell) {
-        return this.expressionEvaluationContext(cell)
-                .evaluateExpression(expression);
-    }
-
-    @Override
-    public boolean evaluateAsBoolean(final Expression expression,
-                                     final Optional<SpreadsheetCell> cell) {
-        Objects.requireNonNull(expression, "expression");
-        Objects.requireNonNull(cell, "cell");
-
-        boolean result;
-
-        try {
-            result = expression.toBoolean(
-                    this.expressionEvaluationContext(cell)
-            );
-        } catch (final RuntimeException exception) {
-            result = false; // return false for any errors.
-        }
-
-        return result;
-    }
 
     @Override
     public boolean isPure(final ExpressionFunctionName function) {
