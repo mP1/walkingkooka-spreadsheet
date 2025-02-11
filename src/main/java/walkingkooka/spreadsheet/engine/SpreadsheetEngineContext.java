@@ -88,8 +88,6 @@ public interface SpreadsheetEngineContext extends Context,
 
     /**
      * Helper that executes {@link #evaluate(Expression, Optional)} and converts the result into a {@link Boolean}.
-     * If executing the expression results in an error a false will be returned. This is intended for filter type operations,
-     * where only true/false results are desired, and errors should be considered as a non match.
      */
     boolean evaluateAsBoolean(final Expression expression,
                               final Optional<SpreadsheetCell> cell);

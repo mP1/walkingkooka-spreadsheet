@@ -68,16 +68,23 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
                         formula.value()
                                 .orElse(null)
                 ) &&
-                this.testExpression(cell);
+                this.evaluateExpressionAsBoolean(cell);
     }
 
-    private boolean testExpression(final SpreadsheetCell cell) {
-        return this.context.evaluateAsBoolean(
-                this.expression,
-                Optional.of(
-                        cell
-                )
-        );
+    private boolean evaluateExpressionAsBoolean(final SpreadsheetCell cell) {
+        boolean test;
+
+        try {
+            test = this.context.evaluateAsBoolean(
+                    this.expression,
+                    Optional.of(
+                            cell
+                    )
+            );
+        } catch (final RuntimeException ignore) {
+            test = false;
+        }
+        return test;
     }
 
     private final Predicate<Object> valueType;
