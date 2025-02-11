@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * Defines numerous methods to load each of the different {@link SpreadsheetExpressionReference}.
  */
-public interface SpreadsheetExpressionReferenceContext extends Context {
+public interface SpreadsheetExpressionReferenceLoader extends Context {
 
     /**
      * Loads the cell for the given {@link SpreadsheetCellReference}, note that the formula is not evaluated.

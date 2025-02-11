@@ -27,7 +27,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetExpressionReferenceContextTesting<C extends SpreadsheetExpressionReferenceContext> extends ContextTesting<C> {
+public interface SpreadsheetExpressionReferenceLoaderTesting<C extends SpreadsheetExpressionReferenceLoader> extends ContextTesting<C> {
 
     // loadCell.........................................................................................................
 
