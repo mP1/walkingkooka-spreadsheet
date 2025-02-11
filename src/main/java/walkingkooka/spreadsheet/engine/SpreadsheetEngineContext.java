@@ -57,6 +57,11 @@ public interface SpreadsheetEngineContext extends Context,
         SpreadsheetLabelNameResolver,
         HasMissingCellNumberValue {
 
+    /**
+     * Returns a {@link SpreadsheetEngineContext} which will use the {@link ExpressionFunctionAliasSet} when fetching functions.
+     */
+    SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases);
+
     // parseFormula.....................................................................................................
 
     /**
@@ -70,11 +75,6 @@ public interface SpreadsheetEngineContext extends Context,
      * Helps by converting the given {@link SpreadsheetFormulaParserToken} into its {@link Expression} equivalent.
      */
     Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token);
-
-    /**
-     * Returns a {@link SpreadsheetEngineContext} which will use the {@link ExpressionFunctionAliasSet} when fetching functions.
-     */
-    SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases);
 
     // evaluate.........................................................................................................
 

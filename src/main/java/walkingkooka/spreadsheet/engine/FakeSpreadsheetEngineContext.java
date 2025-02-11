@@ -64,6 +64,13 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
+    // SpreadsheetEngineContext.........................................................................................
+
+    @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
+        return new FakeSpreadsheetEngineContext();
+    }
+
     // formula..........................................................................................................
 
     @Override
@@ -76,11 +83,6 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
         Objects.requireNonNull(token, "token");
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
-        return new FakeSpreadsheetEngineContext();
     }
 
     @Override

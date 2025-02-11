@@ -46,6 +46,12 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
         SpreadsheetProviderDelegator {
 
     @Override
+    default SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
+        return this.spreadsheetEngineContext()
+                .spreadsheetEngineContext(functionAliases);
+    }
+
+    @Override
     default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         return this.spreadsheetEngineContext()
                 .parseFormula(formula);
@@ -55,12 +61,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     default Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
         return this.spreadsheetEngineContext()
                 .toExpression(token);
-    }
-
-    @Override
-    default SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
-        return this.spreadsheetEngineContext()
-                .spreadsheetEngineContext(functionAliases);
     }
 
     @Override

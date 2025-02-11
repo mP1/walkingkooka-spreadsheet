@@ -139,6 +139,27 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetMetadata metadata;
 
+    // SpreadsheetEngineContext.........................................................................................
+
+    @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
+        Objects.requireNonNull(functionAliases, "functionAliases");
+
+        return this.functionAliases.equals(functionAliases) ?
+                this :
+                new BasicSpreadsheetEngineContext(
+                        this.serverUrl,
+                        this.metadata,
+                        this.engine,
+                        this.storeRepository,
+                        functionAliases,
+                        this.spreadsheetProvider,
+                        this.providerContext
+                );
+    }
+
+    private final SpreadsheetEngine engine;
+
     // parsing formula and executing....................................................................................
 
     @Override
@@ -170,25 +191,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 )
         );
     }
-
-    @Override
-    public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
-        Objects.requireNonNull(functionAliases, "functionAliases");
-
-        return this.functionAliases.equals(functionAliases) ?
-                this :
-                new BasicSpreadsheetEngineContext(
-                        this.serverUrl,
-                        this.metadata,
-                        this.engine,
-                        this.storeRepository,
-                        functionAliases,
-                        this.spreadsheetProvider,
-                        this.providerContext
-                );
-    }
-
-    private final SpreadsheetEngine engine;
 
     /**
      * Factory that creates a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell}.
