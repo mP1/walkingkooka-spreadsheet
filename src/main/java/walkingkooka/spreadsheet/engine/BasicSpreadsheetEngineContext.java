@@ -214,19 +214,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public boolean evaluateAsBoolean(final Expression expression,
                                      final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(expression, "expression");
-        Objects.requireNonNull(cell, "cell");
 
-        boolean result;
-
-        try {
-            result = expression.toBoolean(
+        return expression.toBoolean(
                     this.expressionEvaluationContext(cell)
-            );
-        } catch (final RuntimeException exception) {
-            result = false; // return false for any errors.
-        }
-
-        return result;
+        );
     }
 
     /**
