@@ -18,20 +18,24 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceContextTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C>,
-        SpreadsheetExpressionReferenceContextTesting<C> {
+public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ExpressionEvaluationContextTesting<C> {
 
     // parseExpression......................................................................................................
 
@@ -86,6 +90,77 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 expected,
                 thrown.getMessage(),
                 "message"
+        );
+    }
+
+    // loadCell.........................................................................................................
+
+    @Test
+    default void testLoadCellWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().loadCell(null)
+        );
+    }
+
+    default void loadCellAndCheck(final C context,
+                                  final SpreadsheetCellReference cellReference,
+                                  final Optional<SpreadsheetCell> expected) {
+        this.checkEquals(
+                expected,
+                context.loadCell(cellReference),
+                () -> "loadCell " + cellReference
+        );
+    }
+
+    // loadCellRange....................................................................................................
+
+    @Test
+    default void testLoadCellRangeWithNullRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .loadCellRange(null)
+        );
+    }
+
+    default void loadCellRangeAndCheck(final C context,
+                                       final SpreadsheetCellRangeReference range,
+                                       final SpreadsheetCell... expected) {
+        this.loadCellRangeAndCheck(
+                context,
+                range,
+                SortedSets.of(expected)
+        );
+    }
+
+    default void loadCellRangeAndCheck(final C context,
+                                       final SpreadsheetCellRangeReference range,
+                                       final Set<SpreadsheetCell> expected) {
+        this.checkEquals(
+                expected,
+                context.loadCellRange(range),
+                () -> "loadCellRange " + range
+        );
+    }
+
+    // loadLabel........................................................................................................
+
+    @Test
+    default void testLoadLabelWithNullLabelFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext().loadLabel(null)
+        );
+    }
+
+    default void loadLabelAndCheck(final C context,
+                                   final SpreadsheetLabelName labelName,
+                                   final Optional<SpreadsheetLabelMapping> expected) {
+        this.checkEquals(
+                expected,
+                context.loadLabel(labelName),
+                () -> "loadLabel " + labelName
         );
     }
 
