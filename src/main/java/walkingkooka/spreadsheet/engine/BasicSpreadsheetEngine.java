@@ -440,8 +440,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context
             );
         }
-
-        //return Sets.readOnly(found);
     }
 
     @Override
