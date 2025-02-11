@@ -21,21 +21,21 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.reflect.PublicStaticHelper;
 
 /**
- * Collection of factory methods returning {@link SpreadsheetExpressionReferenceContext}.
+ * Collection of factory methods returning {@link SpreadsheetExpressionReferenceLoader}.
  */
-public final class SpreadsheetExpressionReferenceContexts implements PublicStaticHelper {
+public final class SpreadsheetExpressionReferenceLoaders implements PublicStaticHelper {
 
     /**
-     * {@see FakeSpreadsheetExpressionReferenceContext}
+     * {@see FakeSpreadsheetExpressionReferenceLoader}
      */
-    public static SpreadsheetExpressionReferenceContext fake() {
-        return new FakeSpreadsheetExpressionReferenceContext();
+    public static SpreadsheetExpressionReferenceLoader fake() {
+        return new FakeSpreadsheetExpressionReferenceLoader();
     }
 
     /**
      * Stop creation
      */
-    private SpreadsheetExpressionReferenceContexts() {
+    private SpreadsheetExpressionReferenceLoaders() {
         throw new UnsupportedOperationException();
     }
 }

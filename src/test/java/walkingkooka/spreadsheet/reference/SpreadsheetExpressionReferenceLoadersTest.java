@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -17,29 +18,27 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicStaticHelperTesting;
 
-import java.util.Optional;
-import java.util.Set;
+import java.lang.reflect.Method;
 
-public class FakeSpreadsheetExpressionReferenceContext implements SpreadsheetExpressionReferenceContext {
+public final class SpreadsheetExpressionReferenceLoadersTest implements PublicStaticHelperTesting<SpreadsheetExpressionReferenceLoaders> {
 
-    public FakeSpreadsheetExpressionReferenceContext() {
-        super();
+    // ClassTesting2....................................................................................................
+
+    @Override
+    public Class<SpreadsheetExpressionReferenceLoaders> type() {
+        return SpreadsheetExpressionReferenceLoaders.class;
     }
 
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        throw new UnsupportedOperationException();
+    public boolean canHavePublicTypes(final Method method) {
+        return false;
     }
 
     @Override
-    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-        throw new UnsupportedOperationException();
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
