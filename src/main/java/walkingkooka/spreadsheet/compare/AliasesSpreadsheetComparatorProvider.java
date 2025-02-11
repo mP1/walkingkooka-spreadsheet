@@ -46,8 +46,8 @@ final class AliasesSpreadsheetComparatorProvider implements SpreadsheetComparato
     }
 
     @Override
-    public SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorSelector selector,
-                                                       final ProviderContext context) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                                                          final ProviderContext context) {
         return this.provider.spreadsheetComparator(
                 this.aliases.selector(selector),
                 context
@@ -55,14 +55,14 @@ final class AliasesSpreadsheetComparatorProvider implements SpreadsheetComparato
     }
 
     @Override
-    public SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorName name,
-                                                       final List<?> values,
-                                                       final ProviderContext context) {
+    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                          final List<?> values,
+                                                          final ProviderContext context) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        SpreadsheetComparator comparator;
+        SpreadsheetComparator<?> comparator;
 
         final SpreadsheetComparatorAliasSet aliases = this.aliases;
         final SpreadsheetComparatorProvider provider = this.provider;

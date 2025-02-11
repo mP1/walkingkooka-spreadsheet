@@ -30,15 +30,15 @@ public interface SpreadsheetComparatorProvider extends Provider {
     /**
      * Resolves the given {@link SpreadsheetComparatorSelector} to a {@link SpreadsheetComparator}.
      */
-    SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorSelector selector,
-                                                final ProviderContext context);
+    SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                                                   final ProviderContext context);
 
     /**
      * Resolves the given {@link SpreadsheetComparatorName} to a {@link SpreadsheetComparator}.
      */
-    SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorName name,
-                                                final List<?> values,
-                                                final ProviderContext context);
+    SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                   final List<?> values,
+                                                   final ProviderContext context);
 
     /**
      * Returns all available {@link SpreadsheetComparatorInfo}
