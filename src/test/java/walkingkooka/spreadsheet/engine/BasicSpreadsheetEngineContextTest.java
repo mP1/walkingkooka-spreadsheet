@@ -31,14 +31,11 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
-import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -894,39 +891,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         this.expression(2)
                 ),
                 true
-        );
-    }
-
-    // sortCells........................................................................................................
-
-    @Test
-    public void testSortCellsInvalidComparatorFails() {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createContext(
-                                METADATA.set(
-                                        SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
-                                        SpreadsheetComparatorNameList.parse("day-of-month")
-                                )
-                        )
-                        .sortCells(
-                                SpreadsheetCellRange.with(
-                                        SpreadsheetSelection.ALL_CELLS,
-                                        Sets.of(
-                                                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
-                                        )
-                                ),
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("A=day-of-month,month-of-year,year"),
-                                (from, to) -> {
-                                    throw new UnsupportedOperationException();
-                                }
-                        )
-        );
-
-        // day-of-month is available others are absent
-        this.checkEquals(
-                "Invalid comparators: month-of-year,year",
-                thrown.getMessage()
         );
     }
 
