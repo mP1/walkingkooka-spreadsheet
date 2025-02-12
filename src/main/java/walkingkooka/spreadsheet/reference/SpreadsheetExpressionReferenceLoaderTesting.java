@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
@@ -35,16 +37,36 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
     default void testLoadCellWithNullCellFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createSpreadsheetExpressionReferenceLoader().loadCell(null)
+                () -> this.createSpreadsheetExpressionReferenceLoader()
+                        .loadCell(
+                                null,
+                                SpreadsheetExpressionEvaluationContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadCellWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetExpressionReferenceLoader()
+                        .loadCell(
+                                SpreadsheetSelection.A1,
+                                null
+                        )
         );
     }
 
     default void loadCellAndCheck(final T loader,
                                   final SpreadsheetCellReference cellReference,
+                                  final SpreadsheetExpressionEvaluationContext context,
                                   final Optional<SpreadsheetCell> expected) {
         this.checkEquals(
                 expected,
-                loader.loadCell(cellReference),
+                loader.loadCell(
+                        cellReference,
+                        context
+                ),
                 () -> "loadCell " + cellReference
         );
     }
@@ -56,26 +78,47 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetExpressionReferenceLoader()
-                        .loadCellRange(null)
+                        .loadCellRange(
+                                null,
+                                SpreadsheetExpressionEvaluationContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadCellRangeWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetExpressionReferenceLoader()
+                        .loadCellRange(
+                                SpreadsheetSelection.ALL_CELLS,
+                                null
+                        )
         );
     }
 
     default void loadCellRangeAndCheck(final T loader,
                                        final SpreadsheetCellRangeReference range,
+                                       final SpreadsheetExpressionEvaluationContext context,
                                        final SpreadsheetCell... expected) {
         this.loadCellRangeAndCheck(
                 loader,
                 range,
+                context,
                 SortedSets.of(expected)
         );
     }
 
     default void loadCellRangeAndCheck(final T loader,
                                        final SpreadsheetCellRangeReference range,
+                                       final SpreadsheetExpressionEvaluationContext context,
                                        final Set<SpreadsheetCell> expected) {
         this.checkEquals(
                 expected,
-                loader.loadCellRange(range),
+                loader.loadCellRange(
+                        range,
+                        context
+                ),
                 () -> "loadCellRange " + range
         );
     }
@@ -86,21 +129,44 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
     default void testLoadLabelWithNullLabelFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createSpreadsheetExpressionReferenceLoader().loadLabel(null)
+                () -> this.createSpreadsheetExpressionReferenceLoader()
+                        .loadLabel(
+                                null,
+                                SpreadsheetExpressionEvaluationContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadLabelWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetExpressionReferenceLoader()
+                        .loadLabel(
+                                SpreadsheetSelection.labelName("Hello"),
+                                null
+                        )
         );
     }
 
     default void loadLabelAndCheck(final T loader,
                                    final SpreadsheetLabelName labelName,
+                                   final SpreadsheetExpressionEvaluationContext context,
                                    final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
                 expected,
-                loader.loadLabel(labelName),
+                loader.loadLabel(
+                        labelName,
+                        context
+                ),
                 () -> "loadLabel " + labelName
         );
     }
-    
+
     // createLoader.....................................................................................................
-    
+
     T createSpreadsheetExpressionReferenceLoader();
+
+
+    SpreadsheetExpressionEvaluationContext createContext();
 }

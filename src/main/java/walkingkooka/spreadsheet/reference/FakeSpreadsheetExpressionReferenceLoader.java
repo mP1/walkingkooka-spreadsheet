@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 
 import java.util.Optional;
 import java.util.Set;
@@ -29,17 +30,20 @@ public class FakeSpreadsheetExpressionReferenceLoader implements SpreadsheetExpr
     }
 
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                              final SpreadsheetExpressionEvaluationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range,
+                                              final SpreadsheetExpressionEvaluationContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName,
+                                                       final SpreadsheetExpressionEvaluationContext context) {
         throw new UnsupportedOperationException();
     }
 }

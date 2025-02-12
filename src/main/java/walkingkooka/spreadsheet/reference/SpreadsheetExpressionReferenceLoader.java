@@ -21,6 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorException;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 
 import java.util.Optional;
 import java.util.Set;
@@ -33,38 +34,47 @@ public interface SpreadsheetExpressionReferenceLoader extends Context {
     /**
      * Loads the cell for the given {@link SpreadsheetCellReference}, note that the formula is not evaluated.
      */
-    Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell);
+    Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                       final SpreadsheetExpressionEvaluationContext context);
 
     /**
      * Attempts to load the given {@link SpreadsheetCellReference} throwing a {@link SpreadsheetError#selectionNotFound(SpreadsheetExpressionReference)}
      * if it is missing.
      */
-    default SpreadsheetCell loadCellOrFail(final SpreadsheetCellReference cell) {
-        return this.loadCell(cell)
-                .orElseThrow(
-                        () -> SpreadsheetError.selectionNotFound(cell)
-                                .exception()
-                );
+    default SpreadsheetCell loadCellOrFail(final SpreadsheetCellReference cell,
+                                           final SpreadsheetExpressionEvaluationContext context) {
+        return this.loadCell(
+                cell,
+                context
+        ).orElseThrow(
+                () -> SpreadsheetError.selectionNotFound(cell)
+                        .exception()
+        );
     }
 
     /**
      * Loads all the cells present in the given {@link SpreadsheetCellRangeReference}.
      */
-    Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range);
+    Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range,
+                                       final SpreadsheetExpressionEvaluationContext context);
 
     /**
      * Loads the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetLabelName}.
      */
-    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName);
+    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName,
+                                                final SpreadsheetExpressionEvaluationContext context);
 
     /**
      * Attempts to load the given {@link SpreadsheetLabelMapping} throwing a {@link SpreadsheetError#selectionNotFound(SpreadsheetExpressionReference)}
      * if it is missing.
      */
-    default SpreadsheetLabelMapping loadLabelOrFail(final SpreadsheetLabelName labelName) {
-        return this.loadLabel(labelName)
-                .orElseThrow(() -> new SpreadsheetErrorException(
-                        SpreadsheetError.selectionNotFound(labelName))
-                );
+    default SpreadsheetLabelMapping loadLabelOrFail(final SpreadsheetLabelName labelName,
+                                                    final SpreadsheetExpressionEvaluationContext context) {
+        return this.loadLabel(
+                labelName,
+                context
+        ).orElseThrow(() -> new SpreadsheetErrorException(
+                SpreadsheetError.selectionNotFound(labelName))
+        );
     }
 }
