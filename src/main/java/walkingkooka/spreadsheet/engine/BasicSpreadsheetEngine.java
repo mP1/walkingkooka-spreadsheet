@@ -1023,42 +1023,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
     }
 
-    /**
-     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
-     */
-    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
-                                             final SpreadsheetEngineContext context) {
-        changes.commit();
-
-        return this.prepareResponse(
-                changes,
-                changes.changesCellRange()
-                        .map(
-                                r -> SpreadsheetViewportWindows.with(
-                                        Sets.of(r)
-                                )
-                        ).orElse(SpreadsheetViewportWindows.EMPTY),
-                context
-        );
-    }
-
-    /**
-     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for the
-     * given {@link SpreadsheetViewportWindows}. Labels must be loaded for the entire {@link SpreadsheetViewportWindows},
-     * because {@link SpreadsheetLabelMapping} may exist for missing/empty cells which are not present in either
-     * {@link SpreadsheetDelta#cells} or {@link SpreadsheetDelta#deletedColumns}.
-     */
-    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
-                                             final SpreadsheetViewportWindows window,
-                                             final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEnginePrepareResponse(
-                this,
-                changes,
-                window,
-                context
-        ).go();
-    }
-
     // PARSE .........................................................................................................
 
     /**
@@ -1215,6 +1179,44 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         Optional.of(cell)
                 )
         );
+    }
+
+    // prepareResponse..................................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for those cells.
+     */
+    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
+                                             final SpreadsheetEngineContext context) {
+        changes.commit();
+
+        return this.prepareResponse(
+                changes,
+                changes.changesCellRange()
+                        .map(
+                                r -> SpreadsheetViewportWindows.with(
+                                        Sets.of(r)
+                                )
+                        ).orElse(SpreadsheetViewportWindows.EMPTY),
+                context
+        );
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDelta} to hold the given cells and then queries to fetch the labels for the
+     * given {@link SpreadsheetViewportWindows}. Labels must be loaded for the entire {@link SpreadsheetViewportWindows},
+     * because {@link SpreadsheetLabelMapping} may exist for missing/empty cells which are not present in either
+     * {@link SpreadsheetDelta#cells} or {@link SpreadsheetDelta#deletedColumns}.
+     */
+    private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
+                                             final SpreadsheetViewportWindows window,
+                                             final SpreadsheetEngineContext context) {
+        return new BasicSpreadsheetEnginePrepareResponse(
+                this,
+                changes,
+                window,
+                context
+        ).go();
     }
 
     // columnWidth......................................................................................................
