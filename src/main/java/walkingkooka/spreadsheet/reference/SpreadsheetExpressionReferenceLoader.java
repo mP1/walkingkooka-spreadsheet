@@ -61,18 +61,15 @@ public interface SpreadsheetExpressionReferenceLoader extends Context {
     /**
      * Loads the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetLabelName}.
      */
-    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName,
-                                                final SpreadsheetExpressionEvaluationContext context);
+    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName);
 
     /**
      * Attempts to load the given {@link SpreadsheetLabelMapping} throwing a {@link SpreadsheetError#selectionNotFound(SpreadsheetExpressionReference)}
      * if it is missing.
      */
-    default SpreadsheetLabelMapping loadLabelOrFail(final SpreadsheetLabelName labelName,
-                                                    final SpreadsheetExpressionEvaluationContext context) {
+    default SpreadsheetLabelMapping loadLabelOrFail(final SpreadsheetLabelName labelName) {
         return this.loadLabel(
-                labelName,
-                context
+                labelName
         ).orElseThrow(() -> new SpreadsheetErrorException(
                 SpreadsheetError.selectionNotFound(labelName))
         );

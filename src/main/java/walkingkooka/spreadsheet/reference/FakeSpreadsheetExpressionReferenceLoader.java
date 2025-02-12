@@ -42,8 +42,7 @@ public class FakeSpreadsheetExpressionReferenceLoader implements SpreadsheetExpr
     }
 
     @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName,
-                                                       final SpreadsheetExpressionEvaluationContext context) {
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 }

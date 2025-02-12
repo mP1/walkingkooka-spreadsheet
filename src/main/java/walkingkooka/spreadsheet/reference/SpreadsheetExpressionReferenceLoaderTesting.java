@@ -130,35 +130,16 @@ public interface SpreadsheetExpressionReferenceLoaderTesting<T extends Spreadshe
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetExpressionReferenceLoader()
-                        .loadLabel(
-                                null,
-                                SpreadsheetExpressionEvaluationContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testLoadLabelWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetExpressionReferenceLoader()
-                        .loadLabel(
-                                SpreadsheetSelection.labelName("Hello"),
-                                null
-                        )
+                        .loadLabel(null)
         );
     }
 
     default void loadLabelAndCheck(final T loader,
                                    final SpreadsheetLabelName labelName,
-                                   final SpreadsheetExpressionEvaluationContext context,
                                    final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
                 expected,
-                loader.loadLabel(
-                        labelName,
-                        context
-                ),
+                loader.loadLabel(labelName),
                 () -> "loadLabel " + labelName
         );
     }
