@@ -1119,8 +1119,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         formula.setValue(
                                 evaluation.evaluate(
                                         this,
-                                        maybeExpression.get(),
-                                        formula,
                                         cell,
                                         context
                                 )
@@ -1147,19 +1145,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
+    // SpreadsheetEngineEvaluation #evaluateXXX.........................................................................kout
+
     /**
      * If a formatted value is present and the {@link Expression#isPure(ExpressionPurityContext)} then return
      * the current {@link SpreadsheetFormula#value()} otherwise evaluate the expression again.
      */
     // SpreadsheetEngineEvaluation#COMPUTE_IF_NECESSARY
-    Optional<Object> evaluateIfNecessary(final Expression expression,
-                                         final SpreadsheetFormula formula,
-                                         final SpreadsheetCell cell,
+    Optional<Object> evaluateIfNecessary(final SpreadsheetCell cell,
                                          final SpreadsheetEngineContext context) {
-        return cell.formattedValue().isPresent() && expression.isPure(context) ?
-                formula.value() :
+        return cell.formattedValue().isPresent() && expressionRequired(cell).isPure(context) ?
+                cell.formula()
+                        .value() :
                 this.evaluate(
-                        expression,
                         cell,
                         context
                 );
@@ -1169,16 +1167,26 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Unconditionally evaluate the {@link Expression} returning the value.
      */
     // SpreadsheetEngineEvaluation#FORCE_RECOMPUTE
-    Optional<Object> evaluate(final Expression expression,
-                              final SpreadsheetCell cell,
+    Optional<Object> evaluate(final SpreadsheetCell cell,
                               final SpreadsheetEngineContext context) {
 
         return Optional.ofNullable(
                 context.evaluate(
-                        expression,
+                        expressionRequired(cell),
                         Optional.of(cell)
                 )
         );
+    }
+
+    private static Expression expressionRequired(final SpreadsheetCell cell) {
+        return cell.formula()
+                .expression()
+                .orElseThrow(() -> new IllegalStateException(
+                                "Formula of " +
+                                        CharSequences.quoteAndEscape(cell.reference().toString()) +
+                                        " missing expected expression"
+                        )
+                );
     }
 
     // prepareResponse..................................................................................................

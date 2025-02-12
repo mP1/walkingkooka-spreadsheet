@@ -20,9 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.text.CaseKind;
-import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -49,8 +47,6 @@ public enum SpreadsheetEngineEvaluation {
 
         @Override
         Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
-                                  final Expression expression,
-                                  final SpreadsheetFormula formula,
                                   final SpreadsheetCell cell,
                                   final SpreadsheetEngineContext context) {
             throw new UnsupportedOperationException();
@@ -70,8 +66,6 @@ public enum SpreadsheetEngineEvaluation {
 
         @Override
         Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
-                                  final Expression expression,
-                                  final SpreadsheetFormula formula,
                                   final SpreadsheetCell cell,
                                   final SpreadsheetEngineContext context) {
             throw new UnsupportedOperationException();
@@ -100,12 +94,9 @@ public enum SpreadsheetEngineEvaluation {
 
         @Override
         Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
-                                  final Expression expression,
-                                  final SpreadsheetFormula formula,
                                   final SpreadsheetCell cell,
                                   final SpreadsheetEngineContext context) {
             return engine.evaluate(
-                    expression,
                     cell,
                     context
             );
@@ -129,13 +120,9 @@ public enum SpreadsheetEngineEvaluation {
 
         @Override
         Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
-                                  final Expression expression,
-                                  final SpreadsheetFormula formula,
                                   final SpreadsheetCell cell,
                                   final SpreadsheetEngineContext context) {
             return engine.evaluateIfNecessary(
-                    expression,
-                    formula,
                     cell,
                     context
             );
@@ -156,8 +143,6 @@ public enum SpreadsheetEngineEvaluation {
      * This method is only really executed by {@link #COMPUTE_IF_NECESSARY} and {@link #FORCE_RECOMPUTE}.
      */
     abstract Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
-                                       final Expression expression,
-                                       final SpreadsheetFormula formula,
                                        final SpreadsheetCell cell,
                                        final SpreadsheetEngineContext context);
 
