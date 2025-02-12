@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
  * <br>
  * Note that cell reference save events are not watched.
  */
-final class BasicSpreadsheetEngineChanges implements AutoCloseable {
+final class BasicSpreadsheetEngineChanges {
 
     static BasicSpreadsheetEngineChanges with(final BasicSpreadsheetEngine engine,
                                               final SpreadsheetEngineContext context,
@@ -705,8 +705,7 @@ final class BasicSpreadsheetEngineChanges implements AutoCloseable {
     /**
      * Removes previously added watchers.
      */
-    @Override
-    public void close() {
+    void close() {
         // some might be null if the corresponding {@link SpreadsheetDeltaProperties} was clear.
         Watchers.removeAllThenFail(
                 this.onSaveCell,

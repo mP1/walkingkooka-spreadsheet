@@ -123,7 +123,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                            final SpreadsheetEngineEvaluation evaluation,
                                            final Set<SpreadsheetDeltaProperties> deltaProperties,
                                            final SpreadsheetEngineContext context) {
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                deltaProperties,
+                context
+        );
+
+        try {
             final SpreadsheetStoreRepository repository = context.storeRepository();
 
             // load and evaluate cells
@@ -180,6 +186,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             return delta;
+        } finally {
+            changes.close();
         }
     }
 
@@ -195,7 +203,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkDeltaProperties(deltaProperties);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, deltaProperties, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+                this,
+                deltaProperties,
+                context
+        );
+
+        try {
             final SpreadsheetCellStore store = context.storeRepository()
                     .cells();
 
@@ -220,6 +234,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     window,
                     context
             ).setWindow(window);
+        } finally {
+            changes.close();
         }
     }
 
@@ -234,7 +250,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(cell, "cell");
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+                this,
+                context
+        );
+
+        try {
             final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
                     cell,
                     SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -245,6 +266,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     context
             );
+        } finally {
+            changes.close();
         }
     }
 
@@ -267,7 +290,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetDelta saveCellsNotEmpty(final Set<SpreadsheetCell> cells,
                                                final SpreadsheetEngineContext context) {
         // save all cells.
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                context
+        );
+
+        try {
             for (final SpreadsheetCell cell : cells) {
                 final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
@@ -282,6 +310,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     context
             );
+        } finally {
+            changes.close();
         }
     }
 
@@ -296,7 +326,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkSelection(selection);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+                this,
+                context
+        );
+
+        try {
             context.storeRepository()
                     .cells()
                     .deleteCells(
@@ -308,6 +343,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     context
             );
+        } finally {
+            changes.close();
         }
     }
 
@@ -323,7 +360,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(to, "to");
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                context
+        );
+        try {
             BasicSpreadsheetEngineFillCells.execute(
                     cells,
                     from,
@@ -333,6 +374,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
 
             return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
         }
     }
 
@@ -404,7 +447,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         int loadOffset = 0;
         int skipOffset = 0;
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                deltaProperties,
+                context
+        );
+        try {
             for (; ; ) {
                 final int maxLeft = count - found.size();
                 if (maxLeft <= 0) {
@@ -444,6 +492,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     context
             );
+        } finally {
+            changes.close();
         }
     }
 
@@ -469,7 +519,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparators,
                                         final Set<SpreadsheetDeltaProperties> deltaProperties,
                                         final SpreadsheetEngineContext context) {
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, deltaProperties, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                deltaProperties,
+                context
+        );
+        try {
             final Set<SpreadsheetCell> loaded = SortedSets.tree();
 
             for (final SpreadsheetCell cell : context.storeRepository()
@@ -516,6 +571,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     context
             );
+        } finally {
+            changes.close();
         }
     }
 
@@ -584,7 +641,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(properties, "properties");
         Objects.requireNonNull(context, "context");
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, properties, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                properties,
+                context
+        );
+
+        try {
             final SpreadsheetStoreRepository repository = context.storeRepository();
             final SpreadsheetCellStore cellStore = repository.cells();
 
@@ -628,6 +691,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     context
             );
+        } finally {
+            changes.close();
         }
     }
 
@@ -657,7 +722,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(column, "column");
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+                this,
+                context
+        );
+
+        try {
             final SpreadsheetStoreRepository repo = context.storeRepository();
             repo.columns()
                     .save(column);
@@ -673,6 +743,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
         }
     }
 
@@ -701,7 +773,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(row, "row");
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+                this,
+                context
+        );
+        try {
             final SpreadsheetStoreRepository repo = context.storeRepository();
             repo.rows()
                     .save(row);
@@ -717,6 +793,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
         }
     }
 
@@ -730,7 +808,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                context
+        );
+        try {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.with(
                     column.value(),
                     count,
@@ -739,6 +821,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             ).delete();
 
             return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
         }
     }
 
@@ -750,7 +834,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                context
+        );
+        try {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow.with(
                             row.value(),
                             count,
@@ -760,6 +848,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .delete();
 
             return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
         }
     }
 
@@ -771,7 +861,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                context
+        );
+        try {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn.with(
                             column.value(),
                             count,
@@ -781,6 +875,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .insert();
 
             return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
         }
     }
 
@@ -792,7 +888,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                context
+        );
+        try {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowRow.with(
                             row.value(),
                             count,
@@ -802,6 +902,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .insert();
 
             return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
         }
     }
 
@@ -819,7 +921,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkMapping(mapping);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+                this,
+                context
+        );
+
+        try {
             final SpreadsheetLabelMapping saved = context.storeRepository()
                     .labels()
                     .save(mapping);
@@ -830,6 +937,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     context
             );
+        } finally {
+            changes.close();
         }
     }
 
@@ -839,7 +948,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkLabel(label);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(this, context)) {
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+                this,
+                context
+        );
+
+        try {
             context.storeRepository()
                     .labels()
                     .delete(label);
@@ -847,6 +961,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             changes.onLabelDeletedImmediate(label);
 
             return this.prepareResponse(changes, context);
+        } finally {
+            changes.close();
         }
     }
 
