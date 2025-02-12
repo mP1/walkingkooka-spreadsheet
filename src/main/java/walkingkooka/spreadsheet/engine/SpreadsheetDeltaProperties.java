@@ -109,6 +109,11 @@ public enum SpreadsheetDeltaProperties {
 
     public final static Set<SpreadsheetDeltaProperties> ALL;
 
+    /**
+     * Constant representing no {@link SpreadsheetDeltaProperties}.
+     */
+    public final static Set<SpreadsheetDeltaProperties> NONE = EnumSet.noneOf(SpreadsheetDeltaProperties.class);
+
     private static Set<SpreadsheetDeltaProperties> parseCsv(final String values) {
         return Arrays.stream(values.split(","))
                 .map(SpreadsheetDeltaProperties::with)
