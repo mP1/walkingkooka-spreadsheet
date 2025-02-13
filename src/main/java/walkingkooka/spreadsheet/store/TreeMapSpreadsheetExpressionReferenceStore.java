@@ -55,9 +55,10 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     public Optional<Set<SpreadsheetCellReference>> load(final T target) {
         Objects.requireNonNull(target, "target");
 
+        // best to take defensive copy to prevent ConcurrentModificationException
         return Optional.ofNullable(
                 this.targetToReferences.get(target)
-        ).map(Sets::readOnly);
+        ).map(SortedSets::immutable);
     }
 
     @Override
