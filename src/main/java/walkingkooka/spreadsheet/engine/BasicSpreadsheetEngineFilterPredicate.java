@@ -75,10 +75,9 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
         boolean test;
 
         try {
-            test = this.context.evaluateAsBoolean(
-                    this.expression,
-                    Optional.of(
-                            cell
+            test = this.expression.toBoolean(
+                    this.context.spreadsheetExpressionEvaluationContext(
+                            Optional.of(cell)
                     )
             );
         } catch (final RuntimeException ignore) {

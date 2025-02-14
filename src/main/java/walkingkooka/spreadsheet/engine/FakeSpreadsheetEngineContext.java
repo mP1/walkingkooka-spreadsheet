@@ -21,6 +21,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -86,14 +87,8 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
-    public Object evaluate(final Expression expression,
-                           final Optional<SpreadsheetCell> cell) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean evaluateAsBoolean(final Expression expression,
-                                     final Optional<SpreadsheetCell> cell) {
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+        Objects.requireNonNull(cell, "cell");
         throw new UnsupportedOperationException();
     }
 

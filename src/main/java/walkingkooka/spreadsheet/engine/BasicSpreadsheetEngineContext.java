@@ -195,7 +195,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(token, "token");
 
         return token.toExpression(
-                this.expressionEvaluationContext(
+                this.spreadsheetExpressionEvaluationContext(
                         Optional.empty()// cell
                 )
         );
@@ -203,27 +203,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     // evaluate.........................................................................................................
 
-    @Override
-    public Object evaluate(final Expression expression,
-                           final Optional<SpreadsheetCell> cell) {
-        return this.expressionEvaluationContext(cell)
-                .evaluateExpression(expression);
-    }
-
-    @Override
-    public boolean evaluateAsBoolean(final Expression expression,
-                                     final Optional<SpreadsheetCell> cell) {
-        Objects.requireNonNull(expression, "expression");
-
-        return expression.toBoolean(
-                    this.expressionEvaluationContext(cell)
-        );
-    }
-
     /**
      * Factory that creates a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell}.
      */
-    private SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+    @Override
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(cell, "cell");
 
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
@@ -375,14 +359,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         // apply them
         for (final SpreadsheetConditionalFormattingRule rule : rules) {
-            final boolean ruleResult = this.evaluateAsBoolean(
-                    rule.formula()
-                            .expression()
-                            .get(),
-                    Optional.of(
-                            cell
-                    )
-            );
+            final boolean ruleResult = rule.formula()
+                    .expression()
+                    .get()
+                    .toBoolean(
+                            this.spreadsheetExpressionEvaluationContext(
+                                    Optional.of(cell)
+                            )
+                    );
+
             if (Boolean.TRUE.equals(ruleResult)) {
                 final TextNode formattedText = cell.formattedValue()
                         .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formattedValue cell=" + cell));

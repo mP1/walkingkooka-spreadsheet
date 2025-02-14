@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -64,23 +65,9 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default Object evaluate(final Expression expression,
-                            final Optional<SpreadsheetCell> cell) {
+    default SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
         return this.spreadsheetEngineContext()
-                .evaluate(
-                        expression,
-                        cell
-                );
-    }
-
-    @Override
-    default boolean evaluateAsBoolean(final Expression expression,
-                                      final Optional<SpreadsheetCell> cell) {
-        return this.spreadsheetEngineContext()
-                .evaluateAsBoolean(
-                        expression,
-                        cell
-                );
+                .spreadsheetExpressionEvaluationContext(cell);
     }
 
     @Override

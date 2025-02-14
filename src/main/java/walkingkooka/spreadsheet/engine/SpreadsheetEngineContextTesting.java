@@ -140,27 +140,14 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         );
     }
 
-    // evaluate.........................................................................................................
+    // spreadsheetExpressionEvaluationContext...........................................................................
 
     @Test
-    default void testEvaluateWithNullExpressionFails() {
+    default void testSpreadsheetExpressionEvaluationContextWithNullCellFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createContext()
-                        .evaluate(
-                                null,
-                                Optional.empty()
-                        )
-        );
-    }
-
-    @Test
-    default void testEvaluateWithNullCellFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .evaluate(
-                                Expression.value("required expression"),
+                        .spreadsheetExpressionEvaluationContext(
                                 null
                         )
         );
@@ -206,59 +193,10 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                   final Object expected) {
         this.checkEquals(
                 expected,
-                context.evaluate(expression, cell),
-                () -> "evaluate " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
-        );
-    }
-
-    // evaluateAsBoolean................................................................................................
-
-    @Test
-    default void testEvaluateAsBooleanWithNullExpressionFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .evaluateAsBoolean(
-                                null,
-                                Optional.empty()
-                        )
-        );
-    }
-
-    @Test
-    default void testEvaluateAsBooleanWithNullCellFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .evaluateAsBoolean(
-                                Expression.value("required expression"),
-                                null
-                        )
-        );
-    }
-
-    default void evaluateAsBooleanAndCheck(final SpreadsheetEngineContext context,
-                                           final Expression expression,
-                                           final boolean expected) {
-        this.evaluateAsBooleanAndCheck(
-                context,
-                expression,
-                Optional.empty(),
-                expected
-        );
-    }
-
-    default void evaluateAsBooleanAndCheck(final SpreadsheetEngineContext context,
-                                           final Expression expression,
-                                           final Optional<SpreadsheetCell> cell,
-                                           final boolean expected) {
-        this.checkEquals(
-                expected,
-                context.evaluateAsBoolean(
-                        expression,
-                        cell
+                expression.toValue(
+                        context.spreadsheetExpressionEvaluationContext(cell)
                 ),
-                () -> "evaluateAsBoolean " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
+                () -> "evaluate " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
         );
     }
 

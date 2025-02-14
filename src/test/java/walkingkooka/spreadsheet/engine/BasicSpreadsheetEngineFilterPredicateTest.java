@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
+import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.provider.ConverterName;
@@ -26,18 +29,26 @@ import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
+import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.ExpressionPurityContext;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
+import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class BasicSpreadsheetEngineFilterPredicateTest implements PredicateTesting2<BasicSpreadsheetEngineFilterPredicate, SpreadsheetCell>,
         SpreadsheetMetadataTesting {
@@ -131,27 +142,55 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                 valueType,
                 expression,
                 new FakeSpreadsheetEngineContext() {
-                    @Override
-                    public Object evaluate(final Expression e,
-                                           final Optional<SpreadsheetCell> cell) {
-                        assertSame(expression, e);
-
-                        final SpreadsheetCellReference cellReference = cell.get()
-                                .reference();
-                        switch (cellReference.text()) {
-                            case "A1":
-                                return true;
-                            case "B2":
-                                return false;
-                            default:
-                                throw new IllegalArgumentException("Unexpected cell " + cell);
-                        }
-                    }
 
                     @Override
-                    public boolean evaluateAsBoolean(final Expression e,
-                                                     final Optional<SpreadsheetCell> cell) {
-                        return (Boolean) this.evaluate(e, cell);
+                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+                        Objects.requireNonNull(cell, "cell");
+
+                        return new FakeSpreadsheetExpressionEvaluationContext() {
+                            @Override
+                            public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+                                Objects.requireNonNull(name, "name");
+
+                                return Cast.to(
+                                        new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+                                            @Override
+                                            public Object apply(final List<Object> parameters,
+                                                                final SpreadsheetExpressionEvaluationContext context) {
+                                                assertEquals(
+                                                        Lists.empty(),
+                                                        parameters,
+                                                        "parameters"
+                                                );
+
+                                                return true;
+                                            }
+
+                                            @Override
+                                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                                return Lists.of(
+                                                        ExpressionFunctionParameterName.with("parameters")
+                                                                .variable(Object.class)
+                                                );
+                                            }
+
+                                            @Override
+                                            public boolean isPure(final ExpressionPurityContext context) {
+                                                return true;
+                                            }
+                                        }
+                                );
+                            }
+
+                            @Override
+                            public <T> Either<T, String> convert(final Object value,
+                                                                 final Class<T> target) {
+                                return this.successfulConversion(
+                                        target.cast(value),
+                                        target
+                                );
+                            }
+                        };
                     }
 
                     @Override

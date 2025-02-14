@@ -25,6 +25,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -62,6 +64,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -487,9 +490,10 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             }
 
             @Override
-            public Object evaluate(final Expression expression,
-                                   final Optional<SpreadsheetCell> cell) {
-                return FORMULA_VALUE;
+            public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+                Objects.requireNonNull(cell, "cell");
+
+                return SpreadsheetExpressionEvaluationContexts.fake();
             }
 
             @Override
