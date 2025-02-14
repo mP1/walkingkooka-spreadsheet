@@ -111,13 +111,12 @@ public class JunitTest {
     }
 
     @Test
-    public void testWithCellReference() {
+    public void testFormulaWithCellReference() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext(engine);
 
         engine.saveCell(
-                SpreadsheetSelection.parseCell("A1")
-                        .setFormula(
+                SpreadsheetSelection.A1.setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("=12+B2")
                         ),
@@ -140,13 +139,21 @@ public class JunitTest {
         // a1=12+b2
         // a1=12+34
         // b2=34
-        checkEquals(Sets.of("46", "34"), saved, "saved formula values");
+        checkEquals(
+                Sets.of("46", "34"),
+                saved,
+                "saved formula values"
+        );
     }
 
     private static void checkEquals(final Object expected,
                                     final Object actual,
                                     final String message) {
-        Assert.assertEquals(message, expected, actual);
+        Assert.assertEquals(
+                message,
+                expected,
+                actual
+        );
     }
 
     private static SpreadsheetMetadata metadata() {
@@ -356,5 +363,4 @@ public class JunitTest {
         };
     }
 }
-
 

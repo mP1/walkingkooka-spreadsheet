@@ -102,12 +102,16 @@ public final class Sample {
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     public static void main(final String[] args) {
+        final Sample sample = new Sample();
+        sample.testFormulaWithCellReference();
+    }
+
+    public void testFormulaWithCellReference() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext(engine);
 
         engine.saveCell(
-                SpreadsheetSelection.A1
-                        .setFormula(
+                SpreadsheetSelection.A1.setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("=12+B2")
                         ),
@@ -130,13 +134,21 @@ public final class Sample {
         // a1=12+b2
         // a1=12+34
         // b2=34
-        checkEquals(Sets.of("46", "34"), saved, "saved formula values");
+        checkEquals(
+                Sets.of("46", "34"),
+                saved,
+                "saved formula values"
+        );
     }
 
     private static void checkEquals(final Object expected,
                                     final Object actual,
                                     final String message) {
-        assertEquals(expected, actual, message);
+        assertEquals(
+                expected,
+                actual,
+                message
+        );
     }
 
     private static SpreadsheetMetadata metadata() {
@@ -346,3 +358,4 @@ public final class Sample {
         };
     }
 }
+
