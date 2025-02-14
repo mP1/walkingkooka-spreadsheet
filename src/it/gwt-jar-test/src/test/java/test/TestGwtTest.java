@@ -72,7 +72,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @walkingkooka.j2cl.locale.LocaleAware
@@ -98,13 +97,12 @@ public class TestGwtTest extends GWTTestCase {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
-    public void testWithCellReference() {
+    public void testFormulaWithCellReference() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext(engine);
 
         engine.saveCell(
-                SpreadsheetSelection.parseCell("A1")
-                        .setFormula(
+                SpreadsheetSelection.A1.setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("=12+B2")
                         ),
