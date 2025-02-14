@@ -858,42 +858,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    // evaluateAsBoolean................................................................................................
-
-    @Test
-    public void testEvaluateAsBooleanTrue() {
-        final boolean value = true;
-
-        this.evaluateAsBooleanAndCheck(
-                this.createContext(),
-                Expression.value(value),
-                value
-        );
-    }
-
-    @Test
-    public void testEvaluateAsBooleanFalse() {
-        final boolean value = false;
-
-        this.evaluateAsBooleanAndCheck(
-                this.createContext(),
-                Expression.value(value),
-                value
-        );
-    }
-
-    @Test
-    public void testEvaluateAsBooleanAddition() {
-        this.evaluateAsBooleanAndCheck(
-                this.createContext(),
-                Expression.add(
-                        this.expression(1),
-                        this.expression(2)
-                ),
-                true
-        );
-    }
-
     // SpreadsheetFormatterProvider.....................................................................................
 
     // Default
@@ -1358,11 +1322,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
                         final SpreadsheetFormula formula = loaded.formula();
 
-                        final Object value = context.evaluate(
-                                formula.expression()
-                                        .orElseThrow(() -> new IllegalStateException("Missing expression " + cellReference)),
-                                Optional.of(loaded)
-                        );
+                        final Object value = formula.expression()
+                                .orElseThrow(() -> new IllegalStateException("Missing expression " + cellReference))
+                                .toValue(
+                                        context.spreadsheetExpressionEvaluationContext(
+                                        Optional.of(loaded))
+                                );
 
                         return SpreadsheetDelta.EMPTY.setCells(
                                 Sets.of(

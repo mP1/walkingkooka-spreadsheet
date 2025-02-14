@@ -1171,10 +1171,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                               final SpreadsheetEngineContext context) {
 
         return Optional.ofNullable(
-                context.evaluate(
-                        expressionRequired(cell),
-                        Optional.of(cell)
-                )
+                expressionRequired(cell)
+                        .toValue(
+                                context.spreadsheetExpressionEvaluationContext(
+                                        Optional.of(cell)
+                                )
+                        )
         );
     }
 

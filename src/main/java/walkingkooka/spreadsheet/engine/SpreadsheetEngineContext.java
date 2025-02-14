@@ -23,6 +23,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
@@ -76,21 +77,13 @@ public interface SpreadsheetEngineContext extends Context,
      */
     Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token);
 
-    // evaluate.........................................................................................................
+    // spreadsheetExpressionEvaluationContext...........................................................................
 
     /**
-     * Evaluates the expression into a value.
-     * The cell parameter is optional because not all {@link Expression expressions} that may need evaluation belong to a cell.
-     * If a {@link RuntimeException} is thrown while evaluating the {@link Expression} it will be translated into a {@link walkingkooka.spreadsheet.SpreadsheetError}.
+     * Returns a {@link SpreadsheetExpressionEvaluationContext} that may be used to evaluate an {@link Expression} using
+     * the given {@link SpreadsheetCell} as the current cell.
      */
-    Object evaluate(final Expression expression,
-                    final Optional<SpreadsheetCell> cell);
-
-    /**
-     * Helper that executes {@link #evaluate(Expression, Optional)} and converts the result into a {@link Boolean}.
-     */
-    boolean evaluateAsBoolean(final Expression expression,
-                              final Optional<SpreadsheetCell> cell);
+    SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell);
 
     // Formatting & SpreadsheetFormatterProvider........................................................................
 
