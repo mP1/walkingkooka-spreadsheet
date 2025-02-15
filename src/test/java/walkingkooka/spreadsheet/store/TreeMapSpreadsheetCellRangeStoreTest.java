@@ -587,43 +587,43 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     // load cell reference ranges....................................................................................
 
     @Test
-    public void testLoadCellReferenceValuesBeginRange() {
+    public void testFindValuesWithCellBeginRange() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1A.begin(), VALUE1);
+        this.findValuesWithCellAndCheck(store, RANGE1A.begin(), VALUE1);
     }
 
     @Test
-    public void testLoadCellReferenceValuesBeginRangeAbsolute() {
+    public void testFindValuesWithCellBeginRangeAbsolute() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1AABSOLUTE, VALUE1);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1AABSOLUTE.begin(), VALUE1);
+        this.findValuesWithCellAndCheck(store, RANGE1AABSOLUTE.begin(), VALUE1);
     }
 
     @Test
-    public void testLoadCellReferenceValuesBeginRangeAbsolute2() {
+    public void testFindValuesWithCellBeginRangeAbsolute2() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1AABSOLUTE, VALUE1);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1A.begin(), VALUE1);
+        this.findValuesWithCellAndCheck(store, RANGE1A.begin(), VALUE1);
     }
 
     @Test
-    public void testLoadCellReferenceValuesBeginRangeAbsolute3() {
+    public void testFindValuesWithCellBeginRangeAbsolute3() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1AABSOLUTE.begin(), VALUE1);
+        this.findValuesWithCellAndCheck(store, RANGE1AABSOLUTE.begin(), VALUE1);
     }
 
     @Test
-    public void testLoadCellReferenceValuesMidRange() {
+    public void testFindValuesWithCellMidRange() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1);
@@ -632,20 +632,20 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
         assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
 
-        this.loadCellReferenceValuesAndCheck(store, mid, VALUE1);
+        this.findValuesWithCellAndCheck(store, mid, VALUE1);
     }
 
     @Test
-    public void testLoadCellReferenceValuesEndRange() {
+    public void testFindValuesWithCellEndRange() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1A.end(), VALUE1);
+        this.findValuesWithCellAndCheck(store, RANGE1A.end(), VALUE1);
     }
 
     @Test
-    public void testLoadCellReferenceValuesBeginRange2() {
+    public void testFindValuesWithCellBeginRange2() {
         this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -655,11 +655,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE1C, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1A.begin(), VALUE1);
+        this.findValuesWithCellAndCheck(store, RANGE1A.begin(), VALUE1);
     }
 
     @Test
-    public void testLoadCellReferenceValuesBeginRange3() {
+    public void testFindValuesWithCellBeginRange3() {
         this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -669,11 +669,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE1C, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1C.begin(), VALUE1, VALUE2);
+        this.findValuesWithCellAndCheck(store, RANGE1C.begin(), VALUE1, VALUE2);
     }
 
     @Test
-    public void testLoadCellReferenceValuesBeginRange4() {
+    public void testFindValuesWithCellBeginRange4() {
         this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -683,11 +683,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE1C, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE2A.begin(), VALUE3);
+        this.findValuesWithCellAndCheck(store, RANGE2A.begin(), VALUE3);
     }
 
     @Test
-    public void testLoadCellReferenceValuesEndRange2() {
+    public void testFindValuesWithCellEndRange2() {
         this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -697,11 +697,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE1B, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1A.end(), VALUE1, VALUE2);
+        this.findValuesWithCellAndCheck(store, RANGE1A.end(), VALUE1, VALUE2);
     }
 
     @Test
-    public void testLoadCellReferenceValuesEndRange3() {
+    public void testFindValuesWithCellEndRange3() {
         this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -711,11 +711,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE1B, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE1B.end(), VALUE2);
+        this.findValuesWithCellAndCheck(store, RANGE1B.end(), VALUE2);
     }
 
     @Test
-    public void testLoadCellReferenceValuesEndRange4() {
+    public void testFindValuesWithCellEndRange4() {
         this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -725,11 +725,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         store.addValue(RANGE1B, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceValuesAndCheck(store, RANGE2A.end(), VALUE3);
+        this.findValuesWithCellAndCheck(store, RANGE2A.end(), VALUE3);
     }
 
     @Test
-    public void testLoadCellReferenceValuesMidRange2() {
+    public void testFindValuesWithCellMidRange2() {
         final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1);
@@ -740,7 +740,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
         assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
 
-        this.loadCellReferenceValuesAndCheck(store, mid, VALUE1);
+        this.findValuesWithCellAndCheck(store, mid, VALUE1);
     }
 
     // delete range.....................................................................

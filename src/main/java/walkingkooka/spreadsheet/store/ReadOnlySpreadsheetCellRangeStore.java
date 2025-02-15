@@ -97,8 +97,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<V> loadCellReferenceValues(final SpreadsheetCellReference cell) {
-        return store.loadCellReferenceValues(cell);
+    public Set<V> findValuesWithCell(final SpreadsheetCellReference cell) {
+        return store.findValuesWithCell(cell);
     }
 
     @Override

@@ -354,7 +354,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         rules.addAll(
                 this.storeRepository()
                         .rangeToConditionalFormattingRules()
-                        .loadCellReferenceValues(cell.reference())
+                        .findValuesWithCell(cell.reference())
         );
 
         // apply them
