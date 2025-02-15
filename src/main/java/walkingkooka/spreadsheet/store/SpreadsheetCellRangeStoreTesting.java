@@ -44,7 +44,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     SpreadsheetCellReference BOTTOMRIGHT = CENTER.add(1, 1);
     SpreadsheetCellRangeReference RANGE = TOPLEFT.cellRange(BOTTOMRIGHT);
 
-    // tests.......................................................................................................
+    // tests.............................................................................................................
 
     @Test
     default void testLoadUnknownFails() {
@@ -61,8 +61,39 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     @Test
     default void testAddSaveWatcherFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addSaveWatcher((a) -> {
-        }));
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createStore()
+                        .addSaveWatcher((a) -> {}
+                        )
+        );
+    }
+
+    default void loadRangeFails(final SpreadsheetCellRangeStore<V> store,
+                                final SpreadsheetCellRangeReference range) {
+        this.checkEquals(
+                Optional.empty(),
+                store.load(range),
+                () -> "load range " + range + " should have returned no values"
+        );
+    }
+
+    @SuppressWarnings({"OptionalGetWithoutIsPresent", "unchecked"})
+    default void loadRangeAndCheck(final SpreadsheetCellRangeStore<V> store,
+                                   final SpreadsheetCellRangeReference range,
+                                   final V... expected) {
+        final Optional<List<V>> values = store.load(range);
+
+        this.checkNotEquals(
+                Optional.empty(),
+                values,
+                () -> "load of " + range + " failed"
+        );
+        this.checkEquals(
+                Lists.of(expected),
+                values.get(),
+                () -> "load range " + range
+        );
     }
 
     @Test
@@ -80,64 +111,102 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
         store.delete(range);
 
-        this.checkEquals(Lists.of(range), fired, "fired values");
+        this.checkEquals(
+                Lists.of(range),
+                fired,
+                "fired values"
+        );
     }
+
+    // addValue.........................................................................................................
 
     @Test
     default void testAddValueNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().addValue(null, this.valueValue()));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .addValue(
+                                null,
+                                this.valueValue()
+                        )
+        );
     }
 
     @Test
     default void testAddValueNullValueFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().addValue(RANGE, null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .addValue(
+                                RANGE,
+                                null
+                        )
+        );
+    }
+
+    // replaceValue.....................................................................................................
+
+    @Test
+    default void testReplaceValueNullRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .replaceValue(
+                                null,
+                                this.valueValue(),
+                                this.valueValue()
+                        )
+        );
     }
 
     @Test
-    default void testReplaceNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().replaceValue(null, this.valueValue(), this.valueValue()));
+    default void testReplaceValueNullNewValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .replaceValue(
+                                RANGE,
+                                null,
+                                this.valueValue()
+                        )
+        );
     }
 
     @Test
-    default void testReplaceNullNewValueFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().replaceValue(RANGE, null, this.valueValue()));
-    }
-
-    @Test
-    default void testReplaceNullOldValueFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().replaceValue(RANGE, this.valueValue(), null));
+    default void testReplaceValueNullOldValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .replaceValue(
+                                RANGE,
+                                this.valueValue(),
+                                null
+                        )
+        );
     }
 
     @Test
     default void testRemoveValueNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().removeValue(null, this.valueValue()));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .removeValue(
+                                null,
+                                this.valueValue()
+                        )
+        );
     }
 
     @Test
     default void testRemoveValueNullValueFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().removeValue(RANGE, null));
-    }
-
-    // helpers ............................................................
-
-    static SpreadsheetCellReference cell(final int column, final int row) {
-        return SpreadsheetReferenceKind.RELATIVE.column(column)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(row));
-    }
-
-    default void loadRangeFails(final SpreadsheetCellRangeStore<V> store, final SpreadsheetCellRangeReference range) {
-        this.checkEquals(Optional.empty(),
-                store.load(range),
-                () -> "load range " + range + " should have returned no values");
-    }
-
-    @SuppressWarnings({"OptionalGetWithoutIsPresent", "unchecked"})
-    default void loadRangeAndCheck(final SpreadsheetCellRangeStore<V> store,
-                                   final SpreadsheetCellRangeReference range,
-                                   final V... expected) {
-        final Optional<List<V>> values = store.load(range);
-        this.checkNotEquals(Optional.empty(), values, () -> "load of " + range + " failed");
-        this.checkEquals(Lists.of(expected), values.get(), () -> "load range " + range);
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .removeValue(
+                                RANGE,
+                                null
+                        )
+        );
     }
 
     // findCellRangesIncludingCell......................................................................................
@@ -258,7 +327,7 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     V valueValue();
 
-    // StoreTesting...........................................................
+    // StoreTesting.....................................................................................................
 
     @Override
     default SpreadsheetCellRangeReference id() {
@@ -270,10 +339,18 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         return Lists.of(this.valueValue());
     }
 
-    // TypeNameTesting..................................................................
+    // TypeNameTesting..................................................................................................
 
     @Override
     default String typeNameSuffix() {
         return SpreadsheetCellRangeStore.class.getSimpleName();
+    }
+
+    // helpers .........................................................................................................
+
+    static SpreadsheetCellReference cell(final int column,
+                                         final int row) {
+        return SpreadsheetReferenceKind.RELATIVE.column(column)
+                .setRow(SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 }
