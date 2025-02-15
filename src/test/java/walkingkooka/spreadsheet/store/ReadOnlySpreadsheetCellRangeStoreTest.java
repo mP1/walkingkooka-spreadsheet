@@ -80,6 +80,7 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Test
+    @Override
     public void testFindCellRangesWithValue() {
         final SpreadsheetCellRangeStore<String> store = SpreadsheetCellRangeStores.treeMap();
         store.addValue(RANGE, VALUE);
