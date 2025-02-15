@@ -68,7 +68,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
     }
 
     @Override
-    public Set<SpreadsheetCellRangeReference> rangesWithValue(final V value) {
+    public Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final V value) {
         Objects.requireNonNull(value, "value");
 
         throw new UnsupportedOperationException();

@@ -127,10 +127,10 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<SpreadsheetCellRangeReference> rangesWithValue(final V value) {
+    public Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final V value) {
         Objects.requireNonNull(value, "value");
 
-        return this.store.rangesWithValue(value);
+        return this.store.findCellRangesWithValue(value);
     }
 
     private final SpreadsheetCellRangeStore<V> store;

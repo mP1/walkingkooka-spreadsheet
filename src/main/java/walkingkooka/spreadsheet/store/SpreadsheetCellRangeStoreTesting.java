@@ -118,24 +118,6 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         assertThrows(NullPointerException.class, () -> this.createStore().removeValue(RANGE, null));
     }
 
-    @Test
-    default void testRangesNullValueFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().rangesWithValue(null));
-    }
-
-    @Test
-    default void testRangesWithValue() {
-        final S store = this.createStore();
-
-        final SpreadsheetCellRangeReference range = this.id();
-        final V value = this.valueValue();
-        this.rangesWithValuesAndCheck(store, value);
-
-        store.addValue(range, value);
-
-        this.rangesWithValuesAndCheck(store, value, range);
-    }
-
     // helpers ............................................................
 
     static SpreadsheetCellReference cell(final int column, final int row) {
@@ -240,19 +222,38 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         return values;
     }
 
-    default void rangesWithValuesAndCheck(final SpreadsheetCellRangeStore<V> store,
-                                          final V value,
-                                          final SpreadsheetCellRangeReference... ranges) {
-        this.checkEquals(Sets.of(ranges),
-                this.rangesWithValues(store, value),
-                () -> "ranges with values for " + value);
+    // findCellRangesWithValue..........................................................................................
+
+    @Test
+    default void testFindCellRangesWithValueWithNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .findCellRangesWithValue(null)
+        );
     }
 
-    default Set<SpreadsheetCellRangeReference> rangesWithValues(final SpreadsheetCellRangeStore<V> store,
-                                                                final V value) {
-        final Set<SpreadsheetCellRangeReference> ranges = store.rangesWithValue(value);
-        assertNotNull(ranges, "ranges");
-        return ranges;
+    @Test
+    default void testFindCellRangesWithValue() {
+        final S store = this.createStore();
+
+        final SpreadsheetCellRangeReference range = this.id();
+        final V value = this.valueValue();
+        this.findCellRangesWithValueAndCheck(store, value);
+
+        store.addValue(range, value);
+
+        this.findCellRangesWithValueAndCheck(store, value, range);
+    }
+
+    default void findCellRangesWithValueAndCheck(final SpreadsheetCellRangeStore<V> store,
+                                                 final V value,
+                                                 final SpreadsheetCellRangeReference... ranges) {
+        this.checkEquals(
+                Sets.of(ranges),
+                store.findCellRangesWithValue(value),
+                () -> "ranges with values for " + value
+        );
     }
 
     V valueValue();

@@ -593,7 +593,7 @@ final class BasicSpreadsheetEngineChanges {
                         )
                 );
         repository.rangeToCells()
-                .rangesWithValue(cell)
+                .findCellRangesWithValue(cell)
                 .forEach(r -> this.repository.rangeToCells()
                         .removeValue(
                                 r,

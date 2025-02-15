@@ -81,5 +81,5 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     /**
      * Returns all the {@link SpreadsheetCellRangeReference ranges} containing the given value.
      */
-    Set<SpreadsheetCellRangeReference> rangesWithValue(final V value);
+    Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final V value);
 }
