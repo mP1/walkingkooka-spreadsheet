@@ -60,7 +60,7 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     /**
      * Load all the values for a single cell.
      */
-    Set<V> loadCellReferenceValues(final SpreadsheetCellReference cell);
+    Set<V> findValuesWithCell(final SpreadsheetCellReference cell);
 
     /**
      * Add a single value to the given {@link SpreadsheetCellRangeReference}. If the mapping exists nothing happens.

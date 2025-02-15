@@ -51,16 +51,6 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         this.loadFailCheck(RANGE);
     }
 
-    @Test
-    default void testLoadCellReferenceNullCellReferenceFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().loadCellReferenceValues(null));
-    }
-
-    @Test
-    default void testLoadCellReferenceUnknownReference() {
-        this.loadCellReferenceValuesFails(RANGE.begin());
-    }
-
     @Override
     default void testAddSaveWatcherAndRemove() {
     }
@@ -196,32 +186,57 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         return ranges;
     }
 
-    // loadCellReferenceValues.........................................................................................
+    // findValuesWithCell...............................................................................................
 
-    default void loadCellReferenceValuesFails(final SpreadsheetCellReference cell) {
-        this.loadCellReferenceValuesFails(this.createStore(), cell);
+    @Test
+    default void testFindValuesWithCellWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .findValuesWithCell(null)
+        );
     }
 
-    default void loadCellReferenceValuesFails(final SpreadsheetCellRangeStore<V> store,
-                                              final SpreadsheetCellReference cell) {
-        this.checkEquals(Sets.empty(),
-                this.loadCellReferenceValues(store, cell),
-                () -> "load cell " + cell + " should have returned no values");
+    @Test
+    default void testFindValuesWithCellUnknownReference() {
+        this.findValuesWithCellFails(RANGE.begin());
+    }
+
+    default void findValuesWithCellFails(final SpreadsheetCellReference cell) {
+        this.findValuesWithCellFails(
+                this.createStore(),
+                cell
+        );
+    }
+
+    default void findValuesWithCellFails(final SpreadsheetCellRangeStore<V> store,
+                                         final SpreadsheetCellReference cell) {
+        this.checkEquals(
+                Sets.empty(),
+                this.findValuesWithCell(store, cell),
+                () -> "load cell " + cell + " should have returned no values"
+        );
     }
 
     @SuppressWarnings("unchecked")
-    default void loadCellReferenceValuesAndCheck(final SpreadsheetCellRangeStore<V> store,
-                                                 final SpreadsheetCellReference cell,
-                                                 final V... values) {
-        this.checkEquals(Sets.of(values),
-                this.loadCellReferenceValues(store, cell),
-                () -> "load cell reference values for " + cell);
+    default void findValuesWithCellAndCheck(final SpreadsheetCellRangeStore<V> store,
+                                            final SpreadsheetCellReference cell,
+                                            final V... values) {
+        this.checkEquals(
+                Sets.of(values),
+                this.findValuesWithCell(store, cell),
+                () -> "load cell reference values for " + cell
+        );
     }
 
-    default Set<V> loadCellReferenceValues(final SpreadsheetCellRangeStore<V> store,
-                                           final SpreadsheetCellReference cell) {
-        final Set<V> values = store.loadCellReferenceValues(cell);
-        assertNotNull(values, "values");
+    default Set<V> findValuesWithCell(final SpreadsheetCellRangeStore<V> store,
+                                      final SpreadsheetCellReference cell) {
+        final Set<V> values = store.findValuesWithCell(cell);
+        this.checkNotEquals(
+                null,
+                values,
+                "values"
+        );
         return values;
     }
 
