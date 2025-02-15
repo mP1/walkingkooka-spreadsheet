@@ -382,7 +382,7 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
     }
 
     @Override
-    public Set<SpreadsheetCellRangeReference> rangesWithValue(final V value) {
+    public Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final V value) {
         checkValue(value);
 
         Set<SpreadsheetCellRangeReference> ranges;
