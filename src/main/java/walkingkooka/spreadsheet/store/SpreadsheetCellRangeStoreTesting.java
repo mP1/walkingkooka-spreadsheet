@@ -168,30 +168,30 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         this.checkEquals(Lists.of(expected), values.get(), () -> "load range " + range);
     }
 
-    // loadCellRangeReferences.........................................................................................
+    // findCellRangesIncludingCell......................................................................................
 
-    default void loadCellRangeReferencesFails(final SpreadsheetCellReference cell) {
-        this.loadCellRangeReferencesFails(this.createStore(), cell);
+    default void findCellRangesIncludingCellFails(final SpreadsheetCellReference cell) {
+        this.findCellRangesIncludingCellFails(this.createStore(), cell);
     }
 
-    default void loadCellRangeReferencesFails(final SpreadsheetCellRangeStore<V> store,
-                                              final SpreadsheetCellReference cell) {
+    default void findCellRangesIncludingCellFails(final SpreadsheetCellRangeStore<V> store,
+                                                  final SpreadsheetCellReference cell) {
         this.checkEquals(Sets.empty(),
-                this.loadCellRangeReferences(store, cell),
+                this.findCellRangesIncludingCell(store, cell),
                 () -> "load cell " + cell + " should have returned no ranges");
     }
 
-    default void loadCellRangeReferencesAndCheck(final SpreadsheetCellRangeStore<V> store,
-                                                 final SpreadsheetCellReference cell,
-                                                 final SpreadsheetCellRangeReference... ranges) {
+    default void findCellRangesIncludingCellAndCheck(final SpreadsheetCellRangeStore<V> store,
+                                                     final SpreadsheetCellReference cell,
+                                                     final SpreadsheetCellRangeReference... ranges) {
         this.checkEquals(Sets.of(ranges),
-                this.loadCellRangeReferences(store, cell),
+                this.findCellRangesIncludingCell(store, cell),
                 () -> "load cell reference ranges for " + cell);
     }
 
-    default Set<SpreadsheetCellRangeReference> loadCellRangeReferences(final SpreadsheetCellRangeStore<V> store,
-                                                                       final SpreadsheetCellReference cell) {
-        final Set<SpreadsheetCellRangeReference> ranges = store.loadCellRangeReferences(cell);
+    default Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellRangeStore<V> store,
+                                                                           final SpreadsheetCellReference cell) {
+        final Set<SpreadsheetCellRangeReference> ranges = store.findCellRangesIncludingCell(cell);
         assertNotNull(ranges, "ranges");
         return ranges;
     }

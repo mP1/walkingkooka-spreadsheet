@@ -53,9 +53,9 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     }
 
     /**
-     * Loads all the {@link SpreadsheetCellRangeReference} that cover the cell
+     * Finds all {@link SpreadsheetCellRangeReference} that include the given {@link SpreadsheetCellReference}.
      */
-    Set<SpreadsheetCellRangeReference> loadCellRangeReferences(final SpreadsheetCellReference cell);
+    Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellReference cell);
 
     /**
      * Load all the values for a single cell.
