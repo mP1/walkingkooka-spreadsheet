@@ -627,7 +627,7 @@ final class BasicSpreadsheetEngineChanges {
                 .forEach(m -> this.refreshSavedLabel(m.label()));
 
         repository.rangeToCells()
-                .loadCellRangeReferences(reference)
+                .findCellRangesIncludingCell(reference)
                 .forEach(this::refreshRange);
     }
 

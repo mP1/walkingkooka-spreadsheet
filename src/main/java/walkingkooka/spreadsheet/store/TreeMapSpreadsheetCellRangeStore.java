@@ -67,16 +67,28 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
                 Optional.empty();
     }
 
-    // loadCellRangeReferences.............................................................................................
+    // findCellRangesIncludingCell......................................................................................
 
     @Override
-    public Set<SpreadsheetCellRangeReference> loadCellRangeReferences(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellReference cell) {
         checkCell(cell);
 
         final Set<SpreadsheetCellRangeReference> values = Sets.ordered();
 
-        this.gatherTopLeft(cell, entry -> entry.loadCellRangeReferences(cell, values));
-        this.gatherBottomRight(cell, entry -> entry.loadCellRangeReferences(cell, values));
+        this.gatherTopLeft(
+                cell,
+                entry -> entry.loadCellRangeReferences(
+                        cell,
+                        values
+                )
+        );
+        this.gatherBottomRight(
+                cell,
+                entry -> entry.loadCellRangeReferences(
+                        cell,
+                        values
+                )
+        );
 
         return Sets.readOnly(values);
     }
@@ -95,7 +107,7 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
         return Sets.readOnly(values);
     }
 
-    // loadCellRangeReferences & loadCellReferences ................................................................................
+    // findCellRangesIncludingCell & loadCellReferences ................................................................
 
     private void gatherTopLeft(final SpreadsheetCellReference cell,
                                final Consumer<TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V>> values) {

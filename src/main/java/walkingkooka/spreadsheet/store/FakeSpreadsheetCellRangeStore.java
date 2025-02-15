@@ -29,7 +29,7 @@ import java.util.Set;
 public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellRangeReference, List<V>> implements SpreadsheetCellRangeStore<V>, Fake {
 
     @Override
-    public Set<SpreadsheetCellRangeReference> loadCellRangeReferences(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();
