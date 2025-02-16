@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
@@ -27,7 +26,7 @@ import java.util.Objects;
 /**
  * Holds a {@link SpreadsheetExpressionReference source} to a {@link SpreadsheetCellReference}.
  */
-public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpressionReference> implements HasSpreadsheetReference<SpreadsheetCellReference> {
+public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpressionReference> {
 
     public static <T extends SpreadsheetExpressionReference> TargetAndSpreadsheetCellReference<T> with(final T target,
                                                                                                        final SpreadsheetCellReference reference) {
@@ -52,7 +51,6 @@ public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpres
 
     private final T target;
 
-    @Override
     public SpreadsheetCellReference reference() {
         return this.reference;
     }
