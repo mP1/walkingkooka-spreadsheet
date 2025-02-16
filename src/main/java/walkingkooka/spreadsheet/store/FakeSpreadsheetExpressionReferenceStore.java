@@ -30,37 +30,37 @@ public class FakeSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
         extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetExpressionReferenceStore<T>, Fake {
 
     @Override
-    public void saveCells(final T target,
+    public void saveCells(final T reference,
                           final Set<SpreadsheetCellReference> cells) {
-        Objects.requireNonNull(target, "target");
+        Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(cells, "cells");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void addCell(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
-        Objects.requireNonNull(targetAndCell, "targetAndCell");
+    public void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
+        Objects.requireNonNull(referenceAndCell, "referenceAndCell");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Runnable addAddCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+    public Runnable addAddCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher) {
         Objects.requireNonNull(watcher, "watcher");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void removeCell(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
-        Objects.requireNonNull(targetAndCell, "targetAndCell");
+    public void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
+        Objects.requireNonNull(referenceAndCell, "referenceAndCell");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Runnable addRemoveCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+    public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher) {
         Objects.requireNonNull(watcher, "watcher");
 
         throw new UnsupportedOperationException();

@@ -49,34 +49,34 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
      * Saves all the references for a cell or label.
      * Note any {@link #addAddCellWatcher(Consumer)} and {@link #addRemoveCellWatcher(Consumer)} will be fired for all targets.
      */
-    void saveCells(final T target,
+    void saveCells(final T reference,
                    final Set<SpreadsheetCellReference> cells);
 
     /**
      * Adds a reference to the given target.
      */
-    void addCell(final TargetAndSpreadsheetCellReference<T> targetAndCell);
+    void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell);
 
     /**
      * Adds a {@link Consumer watcher} which receives all added reference events.
      */
     @SuppressWarnings("UnusedReturnValue")
-    Runnable addAddCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
+    Runnable addAddCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher);
 
     /**
-     * Removes a target from a {@link SpreadsheetCellReference}
+     * Removes a {@link SpreadsheetExpressionReference} from a {@link SpreadsheetCellReference}
      */
-    void removeCell(final TargetAndSpreadsheetCellReference<T> targetAndCell);
+    void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell);
 
     /**
      * Adds a {@link Consumer watcher} which receives all removed reference events.
      */
-    Runnable addRemoveCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
+    Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher);
 
     /**
      * Loads ALL the targets (references too or mentions) for a given {@link SpreadsheetCellReference cell}.
      * <pre>
-     * target=references
+     * cell=references
      * A1=Z9+11
      * B2=Z9+22
      *

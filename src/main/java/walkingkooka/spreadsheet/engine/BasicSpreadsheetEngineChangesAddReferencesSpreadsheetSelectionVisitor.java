@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
-import walkingkooka.spreadsheet.store.TargetAndSpreadsheetCellReference;
+import walkingkooka.spreadsheet.store.ReferenceAndSpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 /**
@@ -48,13 +48,13 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
         this.repository.cellReferences()
-                .addCell(TargetAndSpreadsheetCellReference.with(this.target, cell));
+                .addCell(ReferenceAndSpreadsheetCellReference.with(this.target, cell));
     }
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
         this.repository.labelReferences()
-                .addCell(TargetAndSpreadsheetCellReference.with(label, this.target));
+                .addCell(ReferenceAndSpreadsheetCellReference.with(label, this.target));
     }
 
     @Override

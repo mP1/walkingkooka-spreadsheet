@@ -168,7 +168,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Test
     public void testAddCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addCell(TargetAndSpreadsheetCellReference.with(this.id(), this.b1())));
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addCell(ReferenceAndSpreadsheetCellReference.with(this.id(), this.b1())));
     }
 
     @Override
@@ -178,7 +178,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Test
     public void testRemoveCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().removeCell(TargetAndSpreadsheetCellReference.with(this.id(), this.b1())));
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().removeCell(ReferenceAndSpreadsheetCellReference.with(this.id(), this.b1())));
     }
 
     @Override
@@ -202,7 +202,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         final SpreadsheetCellReference c1 = this.c1();
         store.saveCells(a1, Sets.of(b1, c1));
 
-        final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> and = TargetAndSpreadsheetCellReference.with(a1, c1);
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference> and = ReferenceAndSpreadsheetCellReference.with(a1, c1);
         store.removeCell(and);
         store.addCell(and);
 

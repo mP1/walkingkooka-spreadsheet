@@ -34,11 +34,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.ReferenceAndSpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
-import walkingkooka.spreadsheet.store.TargetAndSpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.watch.Watchers;
 
@@ -530,7 +530,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                 .findReferencesWithCell(cell)
                 .forEach(l -> this.repository.labelReferences()
                         .removeCell(
-                                TargetAndSpreadsheetCellReference.with(
+                                ReferenceAndSpreadsheetCellReference.with(
                                         l,
                                         cell
                                 )

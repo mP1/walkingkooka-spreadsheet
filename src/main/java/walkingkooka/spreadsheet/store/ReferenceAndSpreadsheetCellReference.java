@@ -26,21 +26,21 @@ import java.util.Objects;
 /**
  * Holds a {@link SpreadsheetExpressionReference reference} to a {@link SpreadsheetCellReference}.
  */
-public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpressionReference> {
+public final class ReferenceAndSpreadsheetCellReference<T extends SpreadsheetExpressionReference> {
 
-    public static <T extends SpreadsheetExpressionReference> TargetAndSpreadsheetCellReference<T> with(final T reference,
-                                                                                                       final SpreadsheetCellReference cell) {
+    public static <T extends SpreadsheetExpressionReference> ReferenceAndSpreadsheetCellReference<T> with(final T reference,
+                                                                                                          final SpreadsheetCellReference cell) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(cell, "cell");
 
-        return new TargetAndSpreadsheetCellReference<>(
+        return new ReferenceAndSpreadsheetCellReference<>(
                 reference,
                 cell
         );
     }
 
-    private TargetAndSpreadsheetCellReference(final T reference,
-                                              final SpreadsheetCellReference cell) {
+    private ReferenceAndSpreadsheetCellReference(final T reference,
+                                                 final SpreadsheetCellReference cell) {
         this.reference = reference;
         this.cell = cell;
     }
@@ -70,11 +70,11 @@ public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpres
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof TargetAndSpreadsheetCellReference &&
+                other instanceof ReferenceAndSpreadsheetCellReference &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final TargetAndSpreadsheetCellReference<?> other) {
+    private boolean equals0(final ReferenceAndSpreadsheetCellReference<?> other) {
         return this.reference.equals(other.reference) &&
                 this.cell.equalsIgnoreReferenceKind(other.cell); // not strictly necessary SpreadsheetReferenceKind should be the same
     }
