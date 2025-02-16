@@ -57,7 +57,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
         // best to take defensive copy to prevent ConcurrentModificationException
         return Optional.ofNullable(
-                this.targetToReferences.get(target)
+                this.targetToCell.get(target)
         ).map(SortedSets::immutable);
     }
 
@@ -82,18 +82,18 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
      */
     private boolean removeAllWithTarget(final T target) {
         // where id=label remove label to cells, then remove cell to label.
-        final Set<SpreadsheetCellReference> allReferences = this.targetToReferences.remove(target);
+        final Set<SpreadsheetCellReference> allReferences = this.targetToCell.remove(target);
 
         final boolean needsFire = null != allReferences;
         if (needsFire) {
             for (final SpreadsheetCellReference reference : allReferences) {
-                final Set<T> targets = this.referenceToTargets.get(reference);
+                final Set<T> targets = this.cellToTargets.get(reference);
                 if (null != targets) {
                     if (targets.remove(target)) {
                         if (targets.isEmpty()) {
-                            this.referenceToTargets.remove(reference);
+                            this.cellToTargets.remove(reference);
                         }
-                        this.removeReferenceWatchers.accept(TargetAndSpreadsheetCellReference.with(target, reference));
+                        this.removeCellWatchers.accept(TargetAndSpreadsheetCellReference.with(target, reference));
                     }
                 }
             }
@@ -110,7 +110,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     @Override
     public int count() {
-        return this.targetToReferences.size();
+        return this.targetToCell.size();
     }
 
     @Override
@@ -118,7 +118,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                       final int count) {
         Store.checkFromAndCount(from, count);
 
-        return this.targetToReferences.keySet()
+        return this.targetToCell.keySet()
                 .stream()
                 .skip(from)
                 .limit(count)
@@ -130,7 +130,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                                                       final int count) {
         Store.checkFromAndCount(from, count);
 
-        return this.targetToReferences.values()
+        return this.targetToCell.values()
                 .stream()
                 .skip(from)
                 .limit(count)
@@ -142,7 +142,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                                                        final T to) {
         Store.checkBetween(from, to);
 
-        return this.targetToReferences.entrySet()
+        return this.targetToCell.entrySet()
                 .stream()
                 .filter(e -> comparable(e.getKey()).compareTo(from) >= 0 && comparable(e.getKey()).compareTo(to) <= 0)
                 .map(Map.Entry::getValue)
@@ -154,14 +154,14 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     @Override
-    public void saveReferences(final T target,
-                               final Set<SpreadsheetCellReference> references) {
+    public void saveCells(final T target,
+                          final Set<SpreadsheetCellReference> cells) {
         Objects.requireNonNull(target, "target");
-        Objects.requireNonNull(references, "references");
+        Objects.requireNonNull(cells, "cells");
 
-        final Set<SpreadsheetCellReference> previous = this.targetToReferences.get(target);
+        final Set<SpreadsheetCellReference> previous = this.targetToCell.get(target);
         if (null == previous) {
-            references.forEach(r -> this.addReference0(
+            cells.forEach(r -> this.addCell0(
                             TargetAndSpreadsheetCellReference.with(
                                     target,
                                     r
@@ -172,10 +172,10 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
             final Set<SpreadsheetCellReference> copy = Sets.ordered();
             copy.addAll(previous);
 
-            references.stream()
+            cells.stream()
                     .map(SpreadsheetCellReference::toRelative)
                     .filter(r -> !copy.contains(r))
-                    .forEach(r -> this.addReference0(
+                    .forEach(r -> this.addCell0(
                                     TargetAndSpreadsheetCellReference.with(
                                             target,
                                             r
@@ -184,8 +184,8 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                     );
 
             copy.stream()
-                    .filter(r -> !references.contains(r))
-                    .forEach(r -> this.removeReference0(
+                    .filter(r -> !cells.contains(r))
+                    .forEach(r -> this.removeCell0(
                                     TargetAndSpreadsheetCellReference.with(
                                             target,
                                             r
@@ -196,89 +196,89 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     @Override
-    public void addReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        this.addReference0(
-                checkTargetAndReference(targetAndReference)
+    public void addCell(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
+        this.addCell0(
+                checkTargetAndSpreadsheetCellReference(targetAndCell)
         );
     }
 
-    private void addReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        final T target = targetAndReference.target();
-        final SpreadsheetCellReference reference = targetAndReference.reference()
+    private void addCell0(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
+        final T target = targetAndCell.target();
+        final SpreadsheetCellReference cell = targetAndCell.reference()
                 .toRelative();
 
-        SortedSet<SpreadsheetCellReference> allReferences = this.targetToReferences.get(target);
+        SortedSet<SpreadsheetCellReference> allCells = this.targetToCell.get(target);
         //noinspection Java8MapApi
-        if (null == allReferences) {
-            allReferences = SortedSets.tree();
-            this.targetToReferences.put(target, allReferences);
+        if (null == allCells) {
+            allCells = SortedSets.tree();
+            this.targetToCell.put(target, allCells);
         }
-        allReferences.add(reference);
+        allCells.add(cell);
 
-        SortedSet<T> targets = this.referenceToTargets.get(reference);
+        SortedSet<T> targets = this.cellToTargets.get(cell);
         //noinspection Java8MapApi
         if (null == targets) {
             targets = SortedSets.tree();
-            this.referenceToTargets.put(reference, targets);
+            this.cellToTargets.put(cell, targets);
         }
         targets.add(target);
 
-        this.addReferenceWatchers.accept(targetAndReference);
+        this.addCellWatchers.accept(targetAndCell);
     }
 
     @Override
-    public Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
-        return this.addReferenceWatchers.add(watcher);
+    public Runnable addAddCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+        return this.addCellWatchers.add(watcher);
     }
 
-    private final Watchers<TargetAndSpreadsheetCellReference<T>> addReferenceWatchers = Watchers.create();
+    private final Watchers<TargetAndSpreadsheetCellReference<T>> addCellWatchers = Watchers.create();
 
     @Override
-    public void removeReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        this.removeReference0(
-                checkTargetAndReference(targetAndReference)
+    public void removeCell(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
+        this.removeCell0(
+                checkTargetAndSpreadsheetCellReference(targetAndCell)
         );
     }
 
-    private void removeReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        final T target = targetAndReference.target();
-        final SpreadsheetCellReference reference = targetAndReference.reference();
+    private void removeCell0(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
+        final T target = targetAndCell.target();
+        final SpreadsheetCellReference cell = targetAndCell.reference();
 
-        final Set<SpreadsheetCellReference> allReferences = this.targetToReferences.get(target);
-        final boolean removed = null != allReferences;
+        final Set<SpreadsheetCellReference> allCells = this.targetToCell.get(target);
+        final boolean removed = null != allCells;
         if (removed) {
-            allReferences.remove(reference);
-            if (allReferences.isEmpty()) {
-                this.targetToReferences.remove(target);
+            allCells.remove(cell);
+            if (allCells.isEmpty()) {
+                this.targetToCell.remove(target);
                 this.deleteWatchers.accept(target);
             }
         }
 
         if (removed) {
-            final Set<T> allTargets = this.referenceToTargets.get(reference);
+            final Set<T> allTargets = this.cellToTargets.get(cell);
             if (null != allTargets) {
                 if (allTargets.remove(target)) {
                     if (allTargets.isEmpty()) {
-                        this.referenceToTargets.remove(reference);
+                        this.cellToTargets.remove(cell);
                     }
                 }
             }
-            this.removeReferenceWatchers.accept(targetAndReference);
+            this.removeCellWatchers.accept(targetAndCell);
         }
     }
 
     @Override
-    public Runnable addRemoveReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
-        return this.removeReferenceWatchers.add(watcher);
+    public Runnable addRemoveCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+        return this.removeCellWatchers.add(watcher);
     }
 
-    private final Watchers<TargetAndSpreadsheetCellReference<T>> removeReferenceWatchers = Watchers.create();
+    private final Watchers<TargetAndSpreadsheetCellReference<T>> removeCellWatchers = Watchers.create();
 
     @Override
-    public Set<T> loadTargets(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
+    public Set<T> loadTargets(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
 
-        final SortedSet<T> targets = this.referenceToTargets.get(reference);
+        final SortedSet<T> targets = this.cellToTargets.get(cell);
         return null != targets ?
                 SortedSets.immutable(targets) :
                 SortedSets.empty();
@@ -286,24 +286,24 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     // helpers..........................................................................................................
 
-    private TargetAndSpreadsheetCellReference<T> checkTargetAndReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
-        return Objects.requireNonNull(targetAndReference, "targetAndReference");
+    private TargetAndSpreadsheetCellReference<T> checkTargetAndSpreadsheetCellReference(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
+        return Objects.requireNonNull(targetAndCell, "targetAndCell");
     }
 
     /**
      * Something like labels and the cell references expressions containing the label.
      */
     // VisibleForTesting
-    final Map<T, SortedSet<SpreadsheetCellReference>> targetToReferences = Maps.sorted();
+    final Map<T, SortedSet<SpreadsheetCellReference>> targetToCell = Maps.sorted();
 
     /**
-     * The inverse of {@link #targetToReferences}
+     * The inverse of {@link #targetToCell}
      */
     // VisibleForTesting
-    final Map<SpreadsheetCellReference, SortedSet<T>> referenceToTargets = Maps.sorted();
+    final Map<SpreadsheetCellReference, SortedSet<T>> cellToTargets = Maps.sorted();
 
     @Override
     public String toString() {
-        return this.targetToReferences.toString();
+        return this.targetToCell.toString();
     }
 }

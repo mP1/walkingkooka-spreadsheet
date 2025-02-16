@@ -47,8 +47,8 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
-    public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> references) {
-        Objects.requireNonNull(references, "references");
+    public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
+        Objects.requireNonNull(cells, "cells");
         throw new UnsupportedOperationException();
     }
 
@@ -91,45 +91,45 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
-    public void saveReferences(final T target,
-                               final Set<SpreadsheetCellReference> references) {
+    public void saveCells(final T target,
+                          final Set<SpreadsheetCellReference> cells) {
         Objects.requireNonNull(target, "target");
-        Objects.requireNonNull(references, "references");
+        Objects.requireNonNull(cells, "cells");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void addReference(final TargetAndSpreadsheetCellReference<T> targetedReference) {
-        checkTargetedReference(targetedReference);
+    public void addCell(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
+        checkTargetAndSpreadsheetCellReference(targetAndCell);
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+    public Runnable addAddCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
         Objects.requireNonNull(watcher, "watcher");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void removeReference(final TargetAndSpreadsheetCellReference<T> targetedReference) {
-        checkTargetedReference(targetedReference);
+    public void removeCell(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
+        checkTargetAndSpreadsheetCellReference(targetAndCell);
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Runnable addRemoveReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+    public Runnable addRemoveCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
         Objects.requireNonNull(watcher, "watcher");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Set<T> loadTargets(final SpreadsheetCellReference reference) {
-        return this.store.loadTargets(reference);
+    public Set<T> loadTargets(final SpreadsheetCellReference cell) {
+        return this.store.loadTargets(cell);
     }
 
     private final SpreadsheetExpressionReferenceStore<T> store;
@@ -139,7 +139,7 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
         return this.store.toString();
     }
 
-    private static void checkTargetedReference(final TargetAndSpreadsheetCellReference<?> targetedReference) {
-        Objects.requireNonNull(targetedReference, "targetedReference");
+    private static void checkTargetAndSpreadsheetCellReference(final TargetAndSpreadsheetCellReference<?> targetAndCell) {
+        Objects.requireNonNull(targetAndCell, "targetAndCell");
     }
 }

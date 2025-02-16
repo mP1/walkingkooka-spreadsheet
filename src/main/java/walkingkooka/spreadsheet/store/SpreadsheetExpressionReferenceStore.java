@@ -34,8 +34,8 @@ import java.util.function.Consumer;
 public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference> extends SpreadsheetStore<T, Set<SpreadsheetCellReference>> {
 
     @Override
-    default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> references) {
-        Objects.requireNonNull(references, "references");
+    default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
+        Objects.requireNonNull(cells, "references");
         throw new UnsupportedOperationException();
     }
 
@@ -47,34 +47,34 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
 
     /**
      * Saves all the references for a cell or label.
-     * Note any {@link #addAddReferenceWatcher(Consumer)} and {@link #addRemoveReferenceWatcher(Consumer)} will be fired for all targets.
+     * Note any {@link #addAddCellWatcher(Consumer)} and {@link #addRemoveCellWatcher(Consumer)} will be fired for all targets.
      */
-    void saveReferences(final T target,
-                        final Set<SpreadsheetCellReference> references);
+    void saveCells(final T target,
+                   final Set<SpreadsheetCellReference> cells);
 
     /**
      * Adds a reference to the given target.
      */
-    void addReference(final TargetAndSpreadsheetCellReference<T> targetAndReference);
+    void addCell(final TargetAndSpreadsheetCellReference<T> targetAndCell);
 
     /**
      * Adds a {@link Consumer watcher} which receives all added reference events.
      */
     @SuppressWarnings("UnusedReturnValue")
-    Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
+    Runnable addAddCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
 
     /**
-     * Removes a reference parse the given id.
+     * Removes a target from a {@link SpreadsheetCellReference}
      */
-    void removeReference(final TargetAndSpreadsheetCellReference<T> targetAndReference);
+    void removeCell(final TargetAndSpreadsheetCellReference<T> targetAndCell);
 
     /**
      * Adds a {@link Consumer watcher} which receives all removed reference events.
      */
-    Runnable addRemoveReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
+    Runnable addRemoveCellWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
 
     /**
-     * Loads ALL the targets (references too or mentions) for a given {@link SpreadsheetCellReference reference}.
+     * Loads ALL the targets (references too or mentions) for a given {@link SpreadsheetCellReference cell}.
      * <pre>
      * target=references
      * A1=Z9+11
@@ -89,5 +89,5 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
      * This might be useful to display all references to a particular cell. To display references to a label try
      * {@link SpreadsheetLabelStore#loadCellOrRanges(SpreadsheetLabelName)}.
      */
-    Set<T> loadTargets(final SpreadsheetCellReference reference);
+    Set<T> loadTargets(final SpreadsheetCellReference cell);
 }
