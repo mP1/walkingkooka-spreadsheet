@@ -418,6 +418,16 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    // serverUrl........................................................................................................
+
+    @Test
+    public void testServerUrl() {
+        this.serverUrlAndCheck(
+                this.createContext(),
+                SERVER_URL
+        );
+    }
+
     // resolveLabel.....................................................................................................
 
     @Test

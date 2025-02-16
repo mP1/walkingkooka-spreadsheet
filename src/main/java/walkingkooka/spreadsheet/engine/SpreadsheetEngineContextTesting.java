@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
 import walkingkooka.locale.HasLocaleTesting;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -53,6 +54,15 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         return this.createContext();
     }
 
+    // serverUrl........................................................................................................
+
+    default void serverUrlAndCheck(final C context,
+                                   final AbsoluteUrl expected) {
+        this.checkEquals(
+                expected,
+                context.serverUrl()
+        );
+    }
 
     // parseFormula......................................................................................................
 

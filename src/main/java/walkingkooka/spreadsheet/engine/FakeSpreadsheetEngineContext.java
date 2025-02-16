@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -43,6 +44,11 @@ import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implements SpreadsheetEngineContext, Fake {
+
+    @Override
+    public AbsoluteUrl serverUrl() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {

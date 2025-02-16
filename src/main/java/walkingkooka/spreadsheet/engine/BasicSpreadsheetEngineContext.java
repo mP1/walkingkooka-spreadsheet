@@ -130,6 +130,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.parserContext = metadata.spreadsheetParserContext(providerContext);
     }
 
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return this.serverUrl;
+    }
+
+    private final AbsoluteUrl serverUrl;
+
     // metadata.........................................................................................................
 
     @Override
@@ -260,8 +267,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     private final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases;
-
-    private final AbsoluteUrl serverUrl;
 
     private final SpreadsheetEnginesExpressionReferenceToValueFunction referenceToValue;
 
