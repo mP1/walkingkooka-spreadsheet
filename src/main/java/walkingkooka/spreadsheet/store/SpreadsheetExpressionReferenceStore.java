@@ -80,7 +80,7 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
      * A1=Z9+11
      * B2=Z9+22
      *
-     * loadTargets(Z9) -> A1, B2
+     * findReferencesWithCell(Z9) -> A1, B2
      *
      * // to find references within A1 (without walking the formula AST) try
      * load(A1) -> Z9
@@ -89,5 +89,5 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
      * This might be useful to display all references to a particular cell. To display references to a label try
      * {@link SpreadsheetLabelStore#loadCellOrRanges(SpreadsheetLabelName)}.
      */
-    Set<T> loadTargets(final SpreadsheetCellReference cell);
+    Set<T> findReferencesWithCell(final SpreadsheetCellReference cell);
 }

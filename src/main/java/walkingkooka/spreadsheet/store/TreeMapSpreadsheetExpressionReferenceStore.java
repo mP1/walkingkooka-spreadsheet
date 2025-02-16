@@ -275,7 +275,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     private final Watchers<TargetAndSpreadsheetCellReference<T>> removeCellWatchers = Watchers.create();
 
     @Override
-    public Set<T> loadTargets(final SpreadsheetCellReference cell) {
+    public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         final SortedSet<T> targets = this.cellToTargets.get(cell);

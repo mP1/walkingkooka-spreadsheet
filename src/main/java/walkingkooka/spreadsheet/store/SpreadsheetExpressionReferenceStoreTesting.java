@@ -307,47 +307,48 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         }
 
         for (SpreadsheetCellReference reference : references) {
-            final Set<T> referred = store.loadTargets(reference);
+            final Set<T> referred = store.findReferencesWithCell(reference);
             if (!referred.contains(id)) {
                 fail(store + " loadTargets " + reference + " didnt return id " + id + ", actual: " + referred);
             }
         }
     }
 
-    // loadTargets.....................................................................................................
+    // findReferencesWithCell...........................................................................................
 
     @Test
-    default void testLoadTargetsWithNullReferenceFails() {
+    default void testFindReferencesWithCellWithNullCellFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> this.createStore().loadTargets(null)
+                () -> this.createStore()
+                        .findReferencesWithCell(null)
         );
     }
 
     @SuppressWarnings("unchecked")
-    default void loadTargetsAndCheck(final S store,
-                                     final SpreadsheetCellReference reference,
-                                     final T... targets) {
-        this.loadTargetsAndCheck(
+    default void findReferencesWithCellAndCheck(final S store,
+                                                final SpreadsheetCellReference cell,
+                                                final T... expected) {
+        this.findReferencesWithCellAndCheck(
                 store,
-                reference,
-                Sets.of(targets)
+                cell,
+                Sets.of(expected)
         );
     }
 
-    default void loadTargetsAndCheck(final S store,
-                                     final SpreadsheetCellReference reference,
-                                     final Set<T> targets) {
+    default void findReferencesWithCellAndCheck(final S store,
+                                                final SpreadsheetCellReference cell,
+                                                final Set<T> expected) {
         this.checkEquals(
-                targets,
-                store.loadTargets(reference),
-                "loadTargets " + reference
+                expected,
+                store.findReferencesWithCell(cell),
+                "findReferencesWithCell " + cell
         );
 
-        for (T id : targets) {
+        for (T id : expected) {
             final Optional<Set<SpreadsheetCellReference>> references = store.load(id);
-            if (false == references.isPresent() && references.get().contains(reference)) {
-                fail(store + " load " + id + " didnt return reference " + reference + ", actual: " + references);
+            if (false == references.isPresent() && references.get().contains(cell)) {
+                fail(store + " load " + id + " didnt return cell " + cell + ", actual: " + references);
             }
         }
     }
