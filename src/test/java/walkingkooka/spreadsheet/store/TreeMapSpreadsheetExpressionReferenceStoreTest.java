@@ -1478,7 +1478,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     // count............................................................................................................
 
     @Test
-    public void testCountWhenSaveReferencesAddReferenceRemoveReference() {
+    public void testCountWhenSaveReferencesAddCellRemoveCell() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
