@@ -27,14 +27,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqualsDefinedTesting2<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>>,
-        ToStringTesting<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>> {
+public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeEqualsDefinedTesting2<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>>,
+        ToStringTesting<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> {
 
     @Test
     public void testWithNullReference() {
         assertThrows(
                 NullPointerException.class,
-                () -> TargetAndSpreadsheetCellReference.with(
+                () -> ReferenceAndSpreadsheetCellReference.with(
                         null,
                         this.cell()
                 )
@@ -45,7 +45,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     public void testWithNullCell() {
         assertThrows(
                 NullPointerException.class,
-                () -> TargetAndSpreadsheetCellReference.with(
+                () -> ReferenceAndSpreadsheetCellReference.with(
                         this.label(),
                         null
                 )
@@ -56,7 +56,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     public void testWith() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference reference = this.cell();
-        final TargetAndSpreadsheetCellReference<?> and = TargetAndSpreadsheetCellReference.with(
+        final ReferenceAndSpreadsheetCellReference<?> and = ReferenceAndSpreadsheetCellReference.with(
                 label,
                 reference
         );
@@ -76,7 +76,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     @Test
     public void testWithSelfCell() {
         final SpreadsheetCellReference reference = this.cell();
-        final TargetAndSpreadsheetCellReference<?> and = TargetAndSpreadsheetCellReference.with(
+        final ReferenceAndSpreadsheetCellReference<?> and = ReferenceAndSpreadsheetCellReference.with(
                 reference,
                 reference
         );
@@ -98,7 +98,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     @Test
     public void testEqualsDifferentReference() {
         this.checkNotEquals(
-                TargetAndSpreadsheetCellReference.with(
+                ReferenceAndSpreadsheetCellReference.with(
                         SpreadsheetSelection.labelName("Different"),
                         this.cell()
                 )
@@ -108,7 +108,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     @Test
     public void testEqualsDifferentCell() {
         this.checkNotEquals(
-                TargetAndSpreadsheetCellReference.with(
+                ReferenceAndSpreadsheetCellReference.with(
                         this.label(),
                         SpreadsheetSelection.parseCell("Z99")
                 )
@@ -116,8 +116,8 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     }
 
     @Override
-    public TargetAndSpreadsheetCellReference<SpreadsheetLabelName> createObject() {
-        return TargetAndSpreadsheetCellReference.with(
+    public ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> createObject() {
+        return ReferenceAndSpreadsheetCellReference.with(
                 this.label(),
                 this.cell()
         );
@@ -146,7 +146,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     // class............................................................................................................
 
     @Override
-    public Class<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>> type() {
-        return Cast.to(TargetAndSpreadsheetCellReference.class);
+    public Class<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> type() {
+        return Cast.to(ReferenceAndSpreadsheetCellReference.class);
     }
 }
