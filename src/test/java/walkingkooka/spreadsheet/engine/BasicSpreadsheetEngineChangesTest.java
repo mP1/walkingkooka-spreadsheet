@@ -47,6 +47,8 @@ import java.util.Optional;
 public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChanges>
         implements ToStringTesting<BasicSpreadsheetEngineChanges> {
 
+    // toString.........................................................................................................
+
     @Test
     public void testToString() {
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.INSTANCE;
@@ -150,6 +152,8 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                 "{A1=A1 A1 1+2 status=SAVE committed=true, B2=B2 B2 3+4 status=SAVE committed=true} {} {M=M M status=SAVE, N=N N hidden=true status=SAVE} {6=6 6 status=SAVE, 7=7 7 hidden=true status=SAVE}"
         );
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<BasicSpreadsheetEngineChanges> type() {
