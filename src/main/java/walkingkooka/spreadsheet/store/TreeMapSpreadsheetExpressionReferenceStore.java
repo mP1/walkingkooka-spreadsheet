@@ -203,15 +203,15 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     private void addCell0(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
-        final T target = targetAndCell.target();
+        final T reference = targetAndCell.reference();
         final SpreadsheetCellReference cell = targetAndCell.cell()
                 .toRelative();
 
-        SortedSet<SpreadsheetCellReference> allCells = this.targetToCell.get(target);
+        SortedSet<SpreadsheetCellReference> allCells = this.targetToCell.get(reference);
         //noinspection Java8MapApi
         if (null == allCells) {
             allCells = SortedSets.tree();
-            this.targetToCell.put(target, allCells);
+            this.targetToCell.put(reference, allCells);
         }
         allCells.add(cell);
 
@@ -221,7 +221,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
             targets = SortedSets.tree();
             this.cellToTargets.put(cell, targets);
         }
-        targets.add(target);
+        targets.add(reference);
 
         this.addCellWatchers.accept(targetAndCell);
     }
@@ -241,23 +241,23 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     private void removeCell0(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
-        final T target = targetAndCell.target();
+        final T reference = targetAndCell.reference();
         final SpreadsheetCellReference cell = targetAndCell.cell();
 
-        final Set<SpreadsheetCellReference> allCells = this.targetToCell.get(target);
+        final Set<SpreadsheetCellReference> allCells = this.targetToCell.get(reference);
         final boolean removed = null != allCells;
         if (removed) {
             allCells.remove(cell);
             if (allCells.isEmpty()) {
-                this.targetToCell.remove(target);
-                this.deleteWatchers.accept(target);
+                this.targetToCell.remove(reference);
+                this.deleteWatchers.accept(reference);
             }
         }
 
         if (removed) {
             final Set<T> allTargets = this.cellToTargets.get(cell);
             if (null != allTargets) {
-                if (allTargets.remove(target)) {
+                if (allTargets.remove(reference)) {
                     if (allTargets.isEmpty()) {
                         this.cellToTargets.remove(cell);
                     }

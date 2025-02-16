@@ -31,7 +31,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
         ToStringTesting<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>> {
 
     @Test
-    public void testWithNullTarget() {
+    public void testWithNullReference() {
         assertThrows(
                 NullPointerException.class,
                 () -> TargetAndSpreadsheetCellReference.with(
@@ -63,8 +63,8 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
 
         this.checkEquals(
                 label,
-                and.target(),
-                "target"
+                and.reference(),
+                "reference"
         );
         this.checkEquals(
                 reference,
@@ -83,8 +83,8 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
 
         this.checkEquals(
                 reference,
-                and.target(),
-                "target"
+                and.reference(),
+                "reference"
         );
         this.checkEquals(
                 reference,
@@ -96,7 +96,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     // equals............................................................................................................
 
     @Test
-    public void testEqualsDifferentTarget() {
+    public void testEqualsDifferentReference() {
         this.checkNotEquals(
                 TargetAndSpreadsheetCellReference.with(
                         SpreadsheetSelection.labelName("Different"),
