@@ -204,7 +204,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     private void addCell0(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
         final T target = targetAndCell.target();
-        final SpreadsheetCellReference cell = targetAndCell.reference()
+        final SpreadsheetCellReference cell = targetAndCell.cell()
                 .toRelative();
 
         SortedSet<SpreadsheetCellReference> allCells = this.targetToCell.get(target);
@@ -242,7 +242,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     private void removeCell0(final TargetAndSpreadsheetCellReference<T> targetAndCell) {
         final T target = targetAndCell.target();
-        final SpreadsheetCellReference cell = targetAndCell.reference();
+        final SpreadsheetCellReference cell = targetAndCell.cell();
 
         final Set<SpreadsheetCellReference> allCells = this.targetToCell.get(target);
         final boolean removed = null != allCells;

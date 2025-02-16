@@ -29,20 +29,20 @@ import java.util.Objects;
 public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpressionReference> {
 
     public static <T extends SpreadsheetExpressionReference> TargetAndSpreadsheetCellReference<T> with(final T target,
-                                                                                                       final SpreadsheetCellReference reference) {
+                                                                                                       final SpreadsheetCellReference cell) {
         Objects.requireNonNull(target, "target");
-        Objects.requireNonNull(reference, "reference");
+        Objects.requireNonNull(cell, "cell");
 
         return new TargetAndSpreadsheetCellReference<>(
                 target,
-                reference
+                cell
         );
     }
 
     private TargetAndSpreadsheetCellReference(final T target,
-                                              final SpreadsheetCellReference reference) {
+                                              final SpreadsheetCellReference cell) {
         this.target = target;
-        this.reference = reference;
+        this.cell = cell;
     }
 
     public T target() {
@@ -51,11 +51,11 @@ public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpres
 
     private final T target;
 
-    public SpreadsheetCellReference reference() {
-        return this.reference;
+    public SpreadsheetCellReference cell() {
+        return this.cell;
     }
 
-    private final SpreadsheetCellReference reference;
+    private final SpreadsheetCellReference cell;
 
     // Object...........................................................................................................
 
@@ -63,7 +63,7 @@ public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpres
     public int hashCode() {
         return Objects.hash(
                 this.target,
-                this.reference
+                this.cell
         );
     }
 
@@ -76,12 +76,12 @@ public final class TargetAndSpreadsheetCellReference<T extends SpreadsheetExpres
 
     private boolean equals0(final TargetAndSpreadsheetCellReference<?> other) {
         return this.target.equals(other.target) &&
-                this.reference.equalsIgnoreReferenceKind(other.reference); // not strictly necessary SpreadsheetReferenceKind should be the same
+                this.cell.equalsIgnoreReferenceKind(other.cell); // not strictly necessary SpreadsheetReferenceKind should be the same
     }
 
 
     @Override
     public String toString() {
-        return this.target + "->" + this.reference;
+        return this.target + "->" + this.cell;
     }
 }
