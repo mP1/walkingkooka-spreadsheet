@@ -59,8 +59,10 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
 
     private final static String LOADER_TO_STRING = "LoaderToString";
 
+    // test.............................................................................................................
+
     @Test
-    public void testFalseEmptyFormulaNoValueWithAny() {
+    public void testTestFalseEmptyFormulaNoValueWithAny() {
         this.testFalse(
                 this.createPredicate(SpreadsheetValueType.ANY),
                 SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
@@ -68,7 +70,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     }
 
     @Test
-    public void testTrueAnyValueTypeWithNotEmptyFormula() {
+    public void testTestTrueAnyValueTypeWithNotEmptyFormula() {
         this.testTrue(
                 this.createPredicate(SpreadsheetValueType.ANY),
                 SpreadsheetSelection.A1.setFormula(
@@ -78,7 +80,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     }
 
     @Test
-    public void testTrueSameValueType() {
+    public void testTestTrueSameValueType() {
         this.testTrue(
                 this.createPredicate(SpreadsheetValueType.TEXT),
                 SpreadsheetSelection.A1.setFormula(
@@ -91,7 +93,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     }
 
     @Test
-    public void testFalseAnyValueType() {
+    public void testTestFalseAnyValueType() {
         this.testFalse(
                 this.createPredicate(SpreadsheetValueType.ANY),
                 SpreadsheetSelection.parseCell("B2")
@@ -100,7 +102,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     }
 
     @Test
-    public void testFalseWrongValueType() {
+    public void testTestFalseWrongValueType() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=\"Hello\"")
                         .setValue(
@@ -115,14 +117,6 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
         this.testFalse(
                 this.createPredicate(SpreadsheetValueType.NUMBER),
                 cell
-        );
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createPredicate(),
-                "* Test123() " + CONTEXT_TO_STRING + " " + LOADER_TO_STRING
         );
     }
 
@@ -227,6 +221,18 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                 } ///
         );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createPredicate(),
+                "* Test123() " + CONTEXT_TO_STRING + " " + LOADER_TO_STRING
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<BasicSpreadsheetEngineFilterPredicate> type() {
