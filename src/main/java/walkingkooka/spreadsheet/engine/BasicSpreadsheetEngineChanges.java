@@ -527,7 +527,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                 .delete(cell);
 
         repository.labelReferences()
-                .loadTargets(cell)
+                .findReferencesWithCell(cell)
                 .forEach(l -> this.repository.labelReferences()
                         .removeCell(
                                 TargetAndSpreadsheetCellReference.with(
@@ -563,7 +563,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetStoreRepository repository = this.repository;
 
         repository.cellReferences()
-                .loadTargets(cell)
+                .findReferencesWithCell(cell)
                 .forEach(this::refreshCellExternalReference);
 
         repository.labels()
