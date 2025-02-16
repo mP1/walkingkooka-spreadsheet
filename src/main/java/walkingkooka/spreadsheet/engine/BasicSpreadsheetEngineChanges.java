@@ -529,7 +529,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         repository.labelReferences()
                 .loadTargets(cell)
                 .forEach(l -> this.repository.labelReferences()
-                        .removeReference(
+                        .removeCell(
                                 TargetAndSpreadsheetCellReference.with(
                                         l,
                                         cell
