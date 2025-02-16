@@ -60,6 +60,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -119,7 +120,7 @@ public final class Sample {
 
     public void testFormulaWithCellReference() {
         final SpreadsheetEngine engine = engine();
-        final SpreadsheetEngineContext engineContext = engineContext(engine);
+        final SpreadsheetEngineContext engineContext = engineContext();
 
         engine.saveCell(
                 SpreadsheetSelection.A1.setFormula(
@@ -220,7 +221,7 @@ public final class Sample {
         return SpreadsheetEngines.basic();
     }
 
-    private static SpreadsheetEngineContext engineContext(final SpreadsheetEngine engine) {
+    private static SpreadsheetEngineContext engineContext() {
         final SpreadsheetMetadata metadata = metadata();
         final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
         final SpreadsheetParserProvider spreadsheetParserProvider = SpreadsheetParserProviders.spreadsheetParsePattern(spreadsheetFormatterProvider);
@@ -260,9 +261,8 @@ public final class Sample {
             }
 
             @Override
-            public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
-                Objects.requireNonNull(cell, "cell");
-
+            public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                 final SpreadsheetExpressionReferenceLoader loader) {
                 return new SampleSpreadsheetExpressionEvaluationContext(
                         cell,
                         ExpressionEvaluationContexts.basic(
@@ -290,10 +290,19 @@ public final class Sample {
             }
 
             private Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceToValue() {
-                return SpreadsheetEngines.expressionReferenceToValue(
-                        engine,
-                        this
-                );
+                return (r) -> {
+                    switch (r.toString().toLowerCase()) {
+                        case "b2":
+                            return Optional.of(
+                                    Optional.ofNullable(
+
+                                            EXPRESSION_NUMBER_KIND.create(34)
+                                    )
+                            );
+                        default:
+                            return Optional.empty();
+                    }
+                };
             }
 
             @Override
@@ -385,12 +394,12 @@ public final class Sample {
             return this.cell;
         }
 
+        private final Optional<SpreadsheetCell> cell;
+
         @Override
         public AbsoluteUrl serverUrl() {
             throw new UnsupportedOperationException();
         }
-
-        private final Optional<SpreadsheetCell> cell;
 
         @Override
         public Optional<Optional<Object>> reference(final ExpressionReference reference) {
@@ -424,7 +433,10 @@ public final class Sample {
 
         @Override
         public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
-            throw new UnsupportedOperationException();
+            return SpreadsheetExpressionEvaluationContexts.cell(
+                    cell,
+                    this
+            );
         }
 
         @Override

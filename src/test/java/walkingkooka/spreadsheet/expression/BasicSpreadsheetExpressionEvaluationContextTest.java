@@ -29,20 +29,18 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
-import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.math.MathContext;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -50,21 +48,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<BasicSpreadsheetExpressionEvaluationContext>,
         SpreadsheetMetadataTesting {
 
-    private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.parseCell("B2");
+    private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.parseCell("Z9");
 
     private final static Optional<SpreadsheetCell> CELL = Optional.of(
-            CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"))
+            CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("'CurrentCell"))
     );
 
-    private final static SpreadsheetStoreRepository REPOSITORY = SpreadsheetStoreRepositories.fake();
+    private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT = SpreadsheetExpressionReferenceLoaders.fake(); // SpreadsheetExpressionReferenceContextREPOSITORY
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
-
-    private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCE_TO_VALUE = (r) -> {
-        throw new UnsupportedOperationException();
-    };
 
     // with.............................................................................................................
 
@@ -72,9 +66,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullCellFails() {
         this.withFails(
                 null,
-                REPOSITORY,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
-                REFERENCE_TO_VALUE,
+                //REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -83,12 +77,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testWithNullSpreadsheetStoreRepositoryFails() {
+    public void testWithNullSpreadsheetExpressionReferenceContextFails() {
         this.withFails(
                 CELL,
                 null,
                 SERVER_URL,
-                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -100,22 +93,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullServerUrlFails() {
         this.withFails(
                 CELL,
-                REPOSITORY,
-                null,
-                REFERENCE_TO_VALUE,
-                METADATA,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testWithNullReferenceToValueFails() {
-        this.withFails(
-                CELL,
-                REPOSITORY,
-                SERVER_URL,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 null,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
@@ -128,9 +106,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullMetadataFails() {
         this.withFails(
                 CELL,
-                REPOSITORY,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
-                REFERENCE_TO_VALUE,
                 null,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -142,9 +119,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullSpreadsheetConverterContextFails() {
         this.withFails(
                 CELL,
-                REPOSITORY,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
-                REFERENCE_TO_VALUE,
                 METADATA,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -157,9 +133,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullExpressionFunctionProviderFails() {
         this.withFails(
                 CELL,
-                REPOSITORY,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
-                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 null,
@@ -171,9 +146,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullProviderContextFails() {
         this.withFails(
                 CELL,
-                REPOSITORY,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
-                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -182,9 +156,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     private void withFails(final Optional<SpreadsheetCell> cell,
-                           final SpreadsheetStoreRepository repository,
+                           final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                            final AbsoluteUrl serverUrl,
-                           final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                            final SpreadsheetMetadata spreadsheetMetadata,
                            final SpreadsheetConverterContext spreadsheetConverterContext,
                            final ExpressionFunctionProvider expressionFunctionProvider,
@@ -193,9 +166,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 NullPointerException.class,
                 () -> BasicSpreadsheetExpressionEvaluationContext.with(
                         cell,
-                        repository,
+                        spreadsheetExpressionReferenceLoader,
                         serverUrl,
-                        referenceToValue,
                         spreadsheetMetadata,
                         spreadsheetConverterContext,
                         expressionFunctionProvider,
@@ -235,23 +207,24 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testLoadCell() {
         final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
 
-        final SpreadsheetCellReference cellReference = SpreadsheetSelection.parseCell("Z999");
-        final SpreadsheetCell cell = cellReference.setFormula(
-                SpreadsheetFormula.EMPTY.setText("'9999")
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1+22+333")
         );
-        cellStore.save(cell);
+        cellStore.save(spreadsheetCell);
 
         this.loadCellAndCheck(
                 this.createContext(
-                        new FakeSpreadsheetStoreRepository() {
+                        new FakeSpreadsheetExpressionReferenceLoader() {
                             @Override
-                            public SpreadsheetCellStore cells() {
-                                return cellStore;
+                            public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                                      final SpreadsheetExpressionEvaluationContext context) {
+                                return cellStore.load(cell);
                             }
                         }
                 ),
-                cellReference,
-                Optional.of(cell)
+                cell,
+                Optional.of(spreadsheetCell)
         );
     }
 
@@ -350,15 +323,14 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Override
     public BasicSpreadsheetExpressionEvaluationContext createContext() {
-        return this.createContext(REPOSITORY);
+        return this.createContext(SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT);
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetStoreRepository repository) {
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 CELL,
-                repository,
+                spreadsheetExpressionReferenceLoader,
                 SERVER_URL,
-                REFERENCE_TO_VALUE,
                 METADATA,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -453,6 +425,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Override
     public void testIsPureNullNameFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testLoadLabelWithNullLabelFails() {
         throw new UnsupportedOperationException();
     }
 

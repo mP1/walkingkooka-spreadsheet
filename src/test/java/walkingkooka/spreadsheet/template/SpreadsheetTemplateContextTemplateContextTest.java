@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.template.TemplateContext;
 import walkingkooka.template.TemplateContextTesting2;
 import walkingkooka.template.TemplateValueName;
@@ -187,9 +187,8 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
                         SPREADSHEET_PARSER_CONTEXT,
                         SpreadsheetExpressionEvaluationContexts.basic(
                                 Optional.empty(), // no cell
-                                SpreadsheetStoreRepositories.fake(),
+                                SpreadsheetExpressionReferenceLoaders.fake(),
                                 Url.parseAbsolute("https://example.com"), // serverUrl
-                                (r) -> Optional.empty(), // reference -> value is empty
                                 SpreadsheetMetadata.EMPTY,
                                 SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
                                 new FakeExpressionFunctionProvider() {
@@ -197,7 +196,11 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
                                     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                                                  final List<?> values,
                                                                                                                  final ProviderContext context) {
-                                        checkEquals("hello", name.value(), "function name");
+                                        checkEquals(
+                                                "hello",
+                                                name.value(),
+                                                "function name"
+                                        );
 
                                         return Cast.to(
                                                 new FakeExpressionFunction<String, SpreadsheetExpressionEvaluationContext>() {
@@ -251,16 +254,15 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
         );
     }
 
-
     // class............................................................................................................
-
-    @Override
-    public String typeNameSuffix() {
-        return TemplateContext.class.getSimpleName();
-    }
 
     @Override
     public Class<SpreadsheetTemplateContextTemplateContext> type() {
         return SpreadsheetTemplateContextTemplateContext.class;
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return TemplateContext.class.getSimpleName();
     }
 }

@@ -21,6 +21,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
@@ -36,17 +37,20 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
 
     static BasicSpreadsheetEngineFilterPredicate with(final String valueType,
                                                       final Expression expression,
-                                                      final SpreadsheetEngineContext context) {
+                                                      final SpreadsheetEngineContext context,
+                                                      final SpreadsheetExpressionReferenceLoader loader) {
         return new BasicSpreadsheetEngineFilterPredicate(
                 valueType,
                 expression,
-                context
+                context,
+                loader
         );
     }
 
     private BasicSpreadsheetEngineFilterPredicate(final String valueType,
                                                   final Expression expression,
-                                                  final SpreadsheetEngineContext context) {
+                                                  final SpreadsheetEngineContext context,
+                                                  final SpreadsheetExpressionReferenceLoader loader) {
         this.valueType = Predicates.customToString(
                 SpreadsheetValueType.ANY.equals(valueType) ?
                         v -> Boolean.TRUE :
@@ -58,6 +62,7 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
         );
         this.expression = expression;
         this.context = context;
+        this.loader = loader;
     }
 
     @Override
@@ -77,7 +82,8 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
         try {
             test = this.expression.toBoolean(
                     this.context.spreadsheetExpressionEvaluationContext(
-                            Optional.of(cell)
+                            Optional.of(cell),
+                            this.loader
                     )
             );
         } catch (final RuntimeException ignore) {
@@ -87,12 +93,12 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
     }
 
     private final Predicate<Object> valueType;
-
     private final Expression expression;
     private final SpreadsheetEngineContext context;
+    private final SpreadsheetExpressionReferenceLoader loader;
 
     @Override
     public String toString() {
-        return this.valueType + " " + this.expression + " " + this.context;
+        return this.valueType + " " + this.expression + " " + this.context + " " + this.loader;
     }
 }

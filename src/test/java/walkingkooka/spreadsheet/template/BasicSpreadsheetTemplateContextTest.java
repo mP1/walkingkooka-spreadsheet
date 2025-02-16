@@ -39,6 +39,7 @@ public final class BasicSpreadsheetTemplateContextTest implements SpreadsheetTem
         throw new UnsupportedOperationException();
     };
     private static final FakeSpreadsheetExpressionEvaluationContext SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = new FakeSpreadsheetExpressionEvaluationContext() {
+
         @Override
         public SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
             return SpreadsheetExpressionEvaluationContexts.fake();

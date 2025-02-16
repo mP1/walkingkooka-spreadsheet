@@ -24,50 +24,31 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A cache of an SAVE/UPDATE or DELETE operation upon a reference and value. A save flag is used rather than testing the
- * value for null to avoid mistakes like a SAVE without the actual value.
+ * A cache that contains the parameters such as the reference and value of an operation. A status is also kept to track whether the operation has been performed.
  */
 final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V> {
 
     static <S extends SpreadsheetSelection, V> BasicSpreadsheetEngineChangesCache<S, V> getOrCreate(
             final S reference,
-            final V value,
             final Map<S, BasicSpreadsheetEngineChangesCache<S, V>> referenceToValue) {
         Objects.requireNonNull(reference, "reference");
 
+
         BasicSpreadsheetEngineChangesCache<S, V> cache = referenceToValue.get(reference);
         if (null == cache) {
-            cache = new BasicSpreadsheetEngineChangesCache<>(
-                    reference,
-                    value
-            );
+            cache = new BasicSpreadsheetEngineChangesCache<>(reference);
+
             referenceToValue.put(
                     reference,
                     cache
             );
-        } else {
-            // if extra save with the DIFFERENT cell clear $committed
-            if(null != value) {
-                //cache.committed = false == value.equals(cache.value);
-
-                // clear committed if new save value happens
-                if(false == value.equals(cache.value)) {
-                    cache.committed = false;
-                }
-            }
-        }
-
-        if(null != value) {
-            cache.save = true; // must be save when value provided.
         }
 
         return cache;
     }
 
-    private BasicSpreadsheetEngineChangesCache(final S reference,
-                                               final V value) {
+    private BasicSpreadsheetEngineChangesCache(final S reference) {
         this.reference = reference;
-        this.value = value;
     }
 
     /**
@@ -75,26 +56,102 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
      */
     final S reference;
 
+    BasicSpreadsheetEngineChangesCache<S, V> load() {
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE ?
+                this :
+                this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD);
+    }
+
+    BasicSpreadsheetEngineChangesCache<S, V> load(final V value) {
+        Objects.requireNonNull(value, "value");
+
+        this.value = value;
+
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE ?
+                this :
+                this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD);
+    }
+
+    BasicSpreadsheetEngineChangesCache<S, V> loadCellReference(final V value) {
+        Objects.requireNonNull(value, "value");
+
+        this.value = value;
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE || this.status == BasicSpreadsheetEngineChangesCacheStatus.LOAD ?
+                this : // unchanged
+                this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD_REFERENCE);
+    }
+
     BasicSpreadsheetEngineChangesCache<S, V> save() {
-        this.save = true;
-        return this;
+        return this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.SAVE);
+    }
+
+    BasicSpreadsheetEngineChangesCache<S, V> save(final V value) {
+        Objects.requireNonNull(value, "value");
+
+        if (false == Objects.equals(this.value, value)) {
+            this.committed = false;
+        }
+        this.value = value;
+        return this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.SAVE);
     }
 
     BasicSpreadsheetEngineChangesCache<S, V> delete() {
-        this.save = false;
+        this.value = null;
+        return this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.DELETE);
+    }
+
+    BasicSpreadsheetEngineChangesCache<S, V> missing() {
+        this.value = null;
+        return this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.MISSING);
+    }
+
+    BasicSpreadsheetEngineChangesCache<S, V> setStatus(final BasicSpreadsheetEngineChangesCacheStatus status) {
+        Objects.requireNonNull(status, "operation");
+        this.status = status;
+
         return this;
     }
 
-    /**
-     * Only true for SAVE/UPDATES will be false for DELETES.
-     */
-    boolean save;
+    boolean isLoad() {
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.LOAD;
+    }
+
+    boolean isloadReference() {
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.LOAD_REFERENCE;
+    }
+
+    boolean isSave() {
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE;
+    }
+
+    boolean isLoadOrSave() {
+        return this.isLoad() || this.isSave();
+    }
+
+    boolean isDelete() {
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.DELETE;
+    }
+
+    boolean isMissing() {
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.MISSING;
+    }
+
+    boolean isDeleteOrMissing() {
+        return this.isDelete() || this.isMissing();
+    }
+
+    private BasicSpreadsheetEngineChangesCacheStatus status;
 
     /**
-     * When {@link #save is true, could be null if an existing cell hasnt been loaded such as when iterating over
-     * {@link walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping}.
+     * Getter that returns the loaded or saved value.
      */
-    V value;
+    V value() {
+        this.status.value();
+
+        return this.value;
+    }
+
+    private V value;
 
     /**
      * Setter supporting fluent setter.
@@ -117,8 +174,8 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
                 .value(this.reference)
                 .labelSeparator("=")
                 .value(this.value)
-                .label("save")
-                .value(this.save)
+                .label("status")
+                .value(this.status)
                 .label("committed")
                 .value(this.committed)
                 .build();

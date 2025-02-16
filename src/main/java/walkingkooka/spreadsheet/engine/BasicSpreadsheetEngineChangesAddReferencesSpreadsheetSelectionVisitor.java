@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 import walkingkooka.spreadsheet.store.TargetAndSpreadsheetCellReference;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 /**
  * A {@link SpreadsheetSelectionVisitor} that adds references to each reference present within cell formula.
@@ -29,36 +30,36 @@ import walkingkooka.spreadsheet.store.TargetAndSpreadsheetCellReference;
 final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor with(final SpreadsheetCellReference target,
-                                                                                      final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(target, context);
+                                                                                      final SpreadsheetStoreRepository repository) {
+        return new BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(
+                target,
+                repository
+        );
     }
 
     // VisibleForTesting
     BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(final SpreadsheetCellReference target,
-                                                                          final SpreadsheetEngineContext context) {
+                                                                          final SpreadsheetStoreRepository repository) {
         super();
         this.target = target;
-        this.context = context;
+        this.repository = repository;
     }
 
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
-        this.context.storeRepository()
-                .cellReferences()
+        this.repository.cellReferences()
                 .addReference(TargetAndSpreadsheetCellReference.with(this.target, cell));
     }
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
-        this.context.storeRepository()
-                .labelReferences()
+        this.repository.labelReferences()
                 .addReference(TargetAndSpreadsheetCellReference.with(label, this.target));
     }
 
     @Override
     protected void visit(final SpreadsheetCellRangeReference cellRange) {
-        this.context.storeRepository()
-                .rangeToCells()
+        this.repository.rangeToCells()
                 .addValue(cellRange, this.target);
     }
 
@@ -70,7 +71,7 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
     /**
      * Used to get stores.
      */
-    private final SpreadsheetEngineContext context;
+    private final SpreadsheetStoreRepository repository;
 
     @Override
     public String toString() {

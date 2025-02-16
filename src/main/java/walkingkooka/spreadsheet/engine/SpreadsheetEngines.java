@@ -19,9 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.tree.expression.ExpressionReference;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetEngines implements PublicStaticHelper {
@@ -46,17 +44,6 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     public static SpreadsheetEngine stamper(final SpreadsheetEngine engine,
                                             final Function<SpreadsheetMetadata, SpreadsheetMetadata> stamper) {
         return SpreadsheetMetadataStampingSpreadsheetEngine.with(engine, stamper);
-    }
-
-    /**
-     * {@see SpreadsheetEnginesExpressionReferenceToValueFunction}
-     */
-    public static Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceToValue(final SpreadsheetEngine engine,
-                                                                                                       final SpreadsheetEngineContext context) {
-        return SpreadsheetEnginesExpressionReferenceToValueFunction.with(
-                engine,
-                context
-        );
     }
 
     /**

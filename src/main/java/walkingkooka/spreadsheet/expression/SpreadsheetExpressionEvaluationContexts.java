@@ -25,9 +25,9 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -42,18 +42,16 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
      * {@see BasicSpreadsheetExpressionEvaluationContext}
      */
     public static SpreadsheetExpressionEvaluationContext basic(final Optional<SpreadsheetCell> cell,
-                                                               final SpreadsheetStoreRepository repository,
+                                                               final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                final AbsoluteUrl serverUrl,
-                                                               final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final SpreadsheetConverterContext spreadsheetConverterContext,
                                                                final ExpressionFunctionProvider expressionFunctionProvider,
                                                                final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 cell,
-                repository,
+                spreadsheetExpressionReferenceLoader,
                 serverUrl,
-                referenceToValue,
                 spreadsheetMetadata,
                 spreadsheetConverterContext,
                 expressionFunctionProvider,

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.text.CaseKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.json.JsonNode;
@@ -39,6 +40,7 @@ public enum SpreadsheetEngineEvaluation {
         @Override
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                      final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             return context.storeRepository()
                     .cells()
@@ -48,6 +50,7 @@ public enum SpreadsheetEngineEvaluation {
         @Override
         Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
                                   final SpreadsheetCell cell,
+                                  final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
             throw new UnsupportedOperationException();
         }
@@ -60,6 +63,7 @@ public enum SpreadsheetEngineEvaluation {
         @Override
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                      final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             return cell;
         }
@@ -67,6 +71,7 @@ public enum SpreadsheetEngineEvaluation {
         @Override
         Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
                                   final SpreadsheetCell cell,
+                                  final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
             throw new UnsupportedOperationException();
         }
@@ -80,6 +85,7 @@ public enum SpreadsheetEngineEvaluation {
         @Override
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                      final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             // clear value and error to allow evaluation to continue.
             return engine.parseFormulaEvaluateFormatAndStyle(
@@ -88,6 +94,7 @@ public enum SpreadsheetEngineEvaluation {
                                     .clear()
                     ),
                     this,
+                    loader,
                     context
             );
         }
@@ -95,9 +102,11 @@ public enum SpreadsheetEngineEvaluation {
         @Override
         Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
                                   final SpreadsheetCell cell,
+                                  final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
             return engine.evaluate(
                     cell,
+                    loader,
                     context
             );
         }
@@ -110,10 +119,12 @@ public enum SpreadsheetEngineEvaluation {
         @Override
         SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                      final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetExpressionReferenceLoader loader,
                                                      final SpreadsheetEngineContext context) {
             return engine.parseFormulaEvaluateFormatAndStyle(
                     cell,
                     this,
+                    loader,
                     context
             );
         }
@@ -121,9 +132,11 @@ public enum SpreadsheetEngineEvaluation {
         @Override
         Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
                                   final SpreadsheetCell cell,
+                                  final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
             return engine.evaluateIfNecessary(
                     cell,
+                    loader,
                     context
             );
         }
@@ -137,6 +150,7 @@ public enum SpreadsheetEngineEvaluation {
 
     abstract SpreadsheetCell parseFormulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                           final BasicSpreadsheetEngine engine,
+                                                          final SpreadsheetExpressionReferenceLoader loader,
                                                           final SpreadsheetEngineContext context);
 
     /**
@@ -144,6 +158,7 @@ public enum SpreadsheetEngineEvaluation {
      */
     abstract Optional<Object> evaluate(final BasicSpreadsheetEngine engine,
                                        final SpreadsheetCell cell,
+                                       final SpreadsheetExpressionReferenceLoader loader,
                                        final SpreadsheetEngineContext context);
 
     // LinkRelation.....................................................................................................

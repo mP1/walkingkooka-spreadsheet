@@ -19,8 +19,12 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -38,6 +42,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
+import java.util.Optional;
+
 public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChanges>
         implements ToStringTesting<BasicSpreadsheetEngineChanges> {
 
@@ -48,6 +54,18 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChanges.with(
                 engine,
                 new FakeSpreadsheetEngineContext() {
+
+                    @Override
+                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
+                        return new FakeSpreadsheetExpressionEvaluationContext() {
+                            @Override
+                            public String toString() {
+                                return this.getClass().getSimpleName();
+                            }
+                        };
+                    }
+
                     @Override
                     public SpreadsheetStoreRepository storeRepository() {
                         return new FakeSpreadsheetStoreRepository() {
@@ -129,7 +147,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
 
         this.toStringAndCheck(
                 changes,
-                "{A1=A1 save=true committed=true, B2=B2 save=true committed=true} {} {M=M M save=true, N=N N hidden=true save=true} {6=6 6 save=true, 7=7 7 hidden=true save=true}"
+                "{A1=A1 A1 1+2 status=SAVE committed=true, B2=B2 B2 3+4 status=SAVE committed=true} {} {M=M M status=SAVE, N=N N hidden=true status=SAVE} {6=6 6 status=SAVE, 7=7 7 hidden=true status=SAVE}"
         );
     }
 

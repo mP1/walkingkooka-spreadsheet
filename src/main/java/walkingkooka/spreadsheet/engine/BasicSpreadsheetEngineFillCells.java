@@ -35,15 +35,25 @@ final class BasicSpreadsheetEngineFillCells {
                         final SpreadsheetCellRangeReference from,
                         final SpreadsheetCellRangeReference to,
                         final BasicSpreadsheetEngine engine,
+                        final BasicSpreadsheetEngineChanges changes,
                         final SpreadsheetEngineContext context) {
-        new BasicSpreadsheetEngineFillCells(engine, context)
-                .execute(cells, from, to);
+        new BasicSpreadsheetEngineFillCells(
+                engine,
+                changes,
+                context
+        ).execute(
+                cells,
+                from,
+                to
+        );
     }
 
     BasicSpreadsheetEngineFillCells(final BasicSpreadsheetEngine engine,
+                                    final BasicSpreadsheetEngineChanges changes,
                                     final SpreadsheetEngineContext context) {
         super();
         this.engine = engine;
+        this.changes = changes;
         this.context = context;
     }
 
@@ -125,12 +135,18 @@ final class BasicSpreadsheetEngineFillCells {
     private void saveCell(final SpreadsheetCell cell,
                           final int xOffset,
                           final int yOffset) {
-        final SpreadsheetCell updatedReference = cell.setReference(cell.reference().add(xOffset, yOffset));
+        final SpreadsheetCell updatedReference = cell.setReference(
+                cell.reference()
+                        .add(
+                                xOffset,
+                                yOffset
+                        )
+        );
 
         final BasicSpreadsheetEngine engine = this.engine;
         final SpreadsheetEngineContext context = this.context;
 
-        final SpreadsheetCell save2 = engine.parseFormulaIfNecessary(
+        final SpreadsheetCell cell2 = engine.parseFormulaIfNecessary(
                 updatedReference,
                 t -> t.replaceIf(
                         p -> p instanceof CellSpreadsheetFormulaParserToken, // predicate
@@ -139,16 +155,20 @@ final class BasicSpreadsheetEngineFillCells {
                                 .addIfRelative(xOffset, yOffset)
                                 .toParserToken()
                 ).cast(SpreadsheetFormulaParserToken.class),
-
                 context
         );
 
-        this.engine.parseFormulaEvaluateFormatStyleAndSave(save2,
+        engine.parseFormulaEvaluateFormatStyleAndSave(
+                cell2,
                 SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
-                context);
+                this.changes, // SpreadsheetExpressionReferenceLoader
+                context
+        );
     }
 
     private final BasicSpreadsheetEngine engine;
+
+    private final BasicSpreadsheetEngineChanges changes;
 
     private final SpreadsheetEngineContext context;
 

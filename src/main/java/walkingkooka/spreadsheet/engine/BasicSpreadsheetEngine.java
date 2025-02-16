@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -139,13 +140,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .cells()
                     .loadCellRange(cellRange)) {
 
-                final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
+                final SpreadsheetCell evaluated = this.loadCell(
                         cell,
                         evaluation,
+                        changes,
                         context
                 );
-                changes.onCellLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
-
+                changes.onCellLoad(evaluated);
                 loaded.add(evaluated);
             }
 
@@ -191,6 +192,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    SpreadsheetCell loadCell(final SpreadsheetCell cell,
+                             final SpreadsheetEngineEvaluation evaluation,
+                             final SpreadsheetExpressionReferenceLoader loader,
+                             final SpreadsheetEngineContext context) {
+        return this.parseFormulaEvaluateFormatStyleAndSave(
+                cell,
+                evaluation,
+                loader,
+                context
+        );
+    }
+
     // LOAD CELLS.......................................................................................................
 
     @Override
@@ -216,10 +229,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             for (final SpreadsheetCellRangeReference cellRange : cellRanges) {
                 cellRange.cellStream()
                         .forEach(reference -> {
-                                    if (!changes.isLoaded(reference)) {
+                                    if (false == changes.isCellLoaded(reference)) {
                                         final Optional<SpreadsheetCell> loaded = store.load(reference);
                                         if (loaded.isPresent()) {
-                                            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(loaded.get(), evaluation, context);
+                                            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
+                                                    loaded.get(),
+                                                    evaluation,
+                                                    changes, // SpreadsheetExpressionReferenceLoader
+                                                    context
+                                            );
                                             changes.onCellLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
                                         }
                                     }
@@ -259,6 +277,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
                     cell,
                     SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                    changes, // SpreadsheetExpressionReferenceLoader
                     context
             );
             changes.onCellSavedImmediate(saved);
@@ -300,6 +319,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                        changes, // SpreadsheetExpressionReferenceLoader
                         context
                 );
 
@@ -370,6 +390,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     from,
                     to,
                     this,
+                    changes,
                     context
             );
 
@@ -391,16 +412,26 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(expression, "expression");
         checkContext(context);
 
-        return cells.stream()
-                .filter(
-                        BasicSpreadsheetEngineFilterPredicate.with(
-                                valueType,
-                                expression,
-                                context.spreadsheetEngineContext(
-                                        SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
-                                )
-                        )
-                ).collect(Collectors.toCollection(Sets::ordered));
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                context
+        );
+
+        try {
+            return cells.stream()
+                    .filter(
+                            BasicSpreadsheetEngineFilterPredicate.with(
+                                    valueType,
+                                    expression,
+                                    context.spreadsheetEngineContext(
+                                            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
+                                    ),
+                                    changes
+                            )
+                    ).collect(Collectors.toCollection(Sets::ordered));
+        } finally {
+            changes.close();
+        }
     }
 
     // FIND CELLS.......................................................................................................
@@ -427,32 +458,34 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(deltaProperties, "deltaProperties");
         checkContext(context);
 
-        // this will be used to filter individual cells matching the find range and type.
-        final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
-                valueType,
-                expression,
-                context.spreadsheetEngineContext(
-                        SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
-                )
-        );
-
-        final Set<SpreadsheetCell> found = SortedSets.tree(
-                SpreadsheetCellReference.cellComparator(
-                        path.comparator()
-                )
-        );
-
-        final SpreadsheetCellStore store = context.storeRepository()
-                .cells();
-        int loadOffset = 0;
-        int skipOffset = 0;
-
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
                 deltaProperties,
                 context
         );
+
         try {
+            // this will be used to filter individual cells matching the find range and type.
+            final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
+                    valueType,
+                    expression,
+                    context.spreadsheetEngineContext(
+                            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
+                    ),
+                    changes
+            );
+
+            final Set<SpreadsheetCell> found = SortedSets.tree(
+                    SpreadsheetCellReference.cellComparator(
+                            path.comparator()
+                    )
+            );
+
+            final SpreadsheetCellStore store = context.storeRepository()
+                    .cells();
+            int loadOffset = 0;
+            int skipOffset = 0;
+
             for (; ; ) {
                 final int maxLeft = count - found.size();
                 if (maxLeft <= 0) {
@@ -475,6 +508,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     final SpreadsheetCell loadedAndEval = this.evaluateFormatAndStyle(
                             possible,
                             SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                            changes, // SpreadsheetExpressionReferenceLoader
                             context
                     );
 
@@ -534,6 +568,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                        changes, // SpreadsheetExpressionReferenceLoader
                         context
                 );
                 loaded.add(evaluated);
@@ -562,6 +597,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
                         to,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                        changes, // SpreadsheetExpressionReferenceLoader
                         context
                 );
                 changes.onCellSavedBatch(saved);
@@ -677,6 +713,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     target = this.parseFormulaEvaluateFormatStyleAndSave(
                             loadedCellForCellReference,
                             SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                            changes, // SpreadsheetExpressionReferenceLoader
                             context
                     );
                 } else {
@@ -738,6 +775,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                        changes, // SpreadsheetExpressionReferenceLoader
                         context
                 );
             }
@@ -788,6 +826,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                        changes, // SpreadsheetExpressionReferenceLoader
                         context
                 );
             }
@@ -988,10 +1027,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     SpreadsheetCell parseFormulaEvaluateFormatStyleAndSave(final SpreadsheetCell cell,
                                                            final SpreadsheetEngineEvaluation evaluation,
+                                                           final SpreadsheetExpressionReferenceLoader loader,
                                                            final SpreadsheetEngineContext context) {
         SpreadsheetCell styled = evaluation.parseFormulaEvaluateAndStyle(
                 cell,
                 this,
+                loader,
                 context
         );
         if(cell.equals(styled)) {
@@ -1007,6 +1048,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // Visible for SpreadsheetEngineEvaluation only called by COMPUTE_IF_NECESSARY & FORCE_RECOMPUTE
     SpreadsheetCell parseFormulaEvaluateFormatAndStyle(final SpreadsheetCell cell,
                                                        final SpreadsheetEngineEvaluation evaluation,
+                                                       final SpreadsheetExpressionReferenceLoader loader,
                                                        final SpreadsheetEngineContext context) {
         final SpreadsheetCell afterParse = this.parseFormulaIfNecessary(
                 cell,
@@ -1019,6 +1061,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 this.evaluateFormatAndStyle(
                         afterParse,
                         evaluation,
+                        loader,
                         context
                 );
     }
@@ -1107,6 +1150,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private SpreadsheetCell evaluateFormatAndStyle(final SpreadsheetCell cell,
                                                    final SpreadsheetEngineEvaluation evaluation,
+                                                   final SpreadsheetExpressionReferenceLoader loader,
                                                    final SpreadsheetEngineContext context) {
         SpreadsheetFormula formula = cell.formula();
         SpreadsheetCell result = cell;
@@ -1120,6 +1164,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 evaluation.evaluate(
                                         this,
                                         cell,
+                                        loader,
                                         context
                                 )
                         ).replaceErrorWithValueIfPossible(context)
@@ -1145,7 +1190,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    // SpreadsheetEngineEvaluation #evaluateXXX.........................................................................kout
+    // SpreadsheetEngineEvaluation #evaluateXXX.........................................................................
 
     /**
      * If a formatted value is present and the {@link Expression#isPure(ExpressionPurityContext)} then return
@@ -1153,12 +1198,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     // SpreadsheetEngineEvaluation#COMPUTE_IF_NECESSARY
     Optional<Object> evaluateIfNecessary(final SpreadsheetCell cell,
+                                         final SpreadsheetExpressionReferenceLoader loader,
                                          final SpreadsheetEngineContext context) {
         return cell.formattedValue().isPresent() && expressionRequired(cell).isPure(context) ?
                 cell.formula()
                         .value() :
                 this.evaluate(
                         cell,
+                        loader,
                         context
                 );
     }
@@ -1168,13 +1215,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     // SpreadsheetEngineEvaluation#FORCE_RECOMPUTE
     Optional<Object> evaluate(final SpreadsheetCell cell,
+                              final SpreadsheetExpressionReferenceLoader loader,
                               final SpreadsheetEngineContext context) {
 
         return Optional.ofNullable(
                 expressionRequired(cell)
                         .toValue(
                                 context.spreadsheetExpressionEvaluationContext(
-                                        Optional.of(cell)
+                                        Optional.of(cell),
+                                        loader
                                 )
                         )
         );
@@ -1221,12 +1270,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetDelta prepareResponse(final BasicSpreadsheetEngineChanges changes,
                                              final SpreadsheetViewportWindows window,
                                              final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEnginePrepareResponse(
+        return BasicSpreadsheetEnginePrepareResponse.prepare(
                 this,
                 changes,
                 window,
                 context
-        ).go();
+        );
     }
 
     // columnWidth......................................................................................................
