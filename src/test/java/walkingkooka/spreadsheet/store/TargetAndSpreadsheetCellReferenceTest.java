@@ -36,13 +36,13 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
                 NullPointerException.class,
                 () -> TargetAndSpreadsheetCellReference.with(
                         null,
-                        this.reference()
+                        this.cell()
                 )
         );
     }
 
     @Test
-    public void testWithNullCellReference() {
+    public void testWithNullCell() {
         assertThrows(
                 NullPointerException.class,
                 () -> TargetAndSpreadsheetCellReference.with(
@@ -55,7 +55,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     @Test
     public void testWith() {
         final SpreadsheetLabelName label = this.label();
-        final SpreadsheetCellReference reference = this.reference();
+        final SpreadsheetCellReference reference = this.cell();
         final TargetAndSpreadsheetCellReference<?> and = TargetAndSpreadsheetCellReference.with(
                 label,
                 reference
@@ -68,14 +68,14 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
         );
         this.checkEquals(
                 reference,
-                and.reference(),
-                "reference"
+                and.cell(),
+                "cell"
         );
     }
 
     @Test
-    public void testWithSelfReference() {
-        final SpreadsheetCellReference reference = this.reference();
+    public void testWithSelfCell() {
+        final SpreadsheetCellReference reference = this.cell();
         final TargetAndSpreadsheetCellReference<?> and = TargetAndSpreadsheetCellReference.with(
                 reference,
                 reference
@@ -88,8 +88,8 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
         );
         this.checkEquals(
                 reference,
-                and.reference(),
-                "reference"
+                and.cell(),
+                "cell"
         );
     }
 
@@ -100,13 +100,13 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
         this.checkNotEquals(
                 TargetAndSpreadsheetCellReference.with(
                         SpreadsheetSelection.labelName("Different"),
-                        this.reference()
+                        this.cell()
                 )
         );
     }
 
     @Test
-    public void testEqualsDifferentCellReference() {
+    public void testEqualsDifferentCell() {
         this.checkNotEquals(
                 TargetAndSpreadsheetCellReference.with(
                         this.label(),
@@ -119,7 +119,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     public TargetAndSpreadsheetCellReference<SpreadsheetLabelName> createObject() {
         return TargetAndSpreadsheetCellReference.with(
                 this.label(),
-                this.reference()
+                this.cell()
         );
     }
 
@@ -129,7 +129,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
     public void testToString() {
         this.toStringAndCheck(
                 this.createObject(),
-                this.label() + "->" + this.reference()
+                this.label() + "->" + this.cell()
         );
     }
 
@@ -139,7 +139,7 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
         return SpreadsheetSelection.labelName("Label123");
     }
 
-    private SpreadsheetCellReference reference() {
+    private SpreadsheetCellReference cell() {
         return SpreadsheetSelection.A1;
     }
 
