@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -158,33 +160,62 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 NullPointerException.class,
                 () -> this.createContext()
                         .spreadsheetExpressionEvaluationContext(
+                                null,
+                                SpreadsheetExpressionReferenceLoaders.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSpreadsheetExpressionEvaluationContextWithNullSpreadsheetExpressionReferenceLoaderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .spreadsheetExpressionEvaluationContext(
+                                Optional.empty(), // cell
                                 null
                         )
         );
     }
 
+    // evaluate.........................................................................................................
+
     default void evaluateAndCheck(final Expression expression,
+                                  final Object expected) {
+        this.evaluateAndCheck(
+                expression,
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                expected
+        );
+    }
+
+    default void evaluateAndCheck(final Expression expression,
+                                  final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                   final Object expected) {
         this.evaluateAndCheck(
                 this.createContext(),
                 expression,
+                spreadsheetExpressionReferenceLoader,
                 expected
         );
     }
 
     default void evaluateAndCheck(final SpreadsheetEngineContext context,
                                   final Expression expression,
+                                  final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                   final Object expected) {
         this.evaluateAndCheck(
                 context,
                 expression,
                 Optional.empty(),
+                spreadsheetExpressionReferenceLoader,
                 expected
         );
     }
 
     default void evaluateAndCheck(final SpreadsheetEngineContext context,
                                   final SpreadsheetCell cell,
+                                  final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                   final Object expected) {
         final Expression expression = cell.formula()
                 .expression()
@@ -193,6 +224,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 context,
                 expression,
                 Optional.of(cell),
+                spreadsheetExpressionReferenceLoader,
                 expected
         );
     }
@@ -200,11 +232,15 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void evaluateAndCheck(final SpreadsheetEngineContext context,
                                   final Expression expression,
                                   final Optional<SpreadsheetCell> cell,
+                                  final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                   final Object expected) {
         this.checkEquals(
                 expected,
                 expression.toValue(
-                        context.spreadsheetExpressionEvaluationContext(cell)
+                        context.spreadsheetExpressionEvaluationContext(
+                                cell,
+                                spreadsheetExpressionReferenceLoader
+                        )
                 ),
                 () -> "evaluate " + expression + cell.map(c -> " " + c).orElse("") + " with context " + context
         );

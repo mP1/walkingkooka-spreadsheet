@@ -22,9 +22,9 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.MathContext;
@@ -48,6 +48,16 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
     @Override
     public void testLoadCellRangeWithNullRangeFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testLoadLabelWithNullLabelFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testReferenceWithNullReferenceFails() {
         throw new UnsupportedOperationException();
     }
 
@@ -159,12 +169,8 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
             return SpreadsheetExpressionEvaluationContexts.basic(
                     Optional.empty(), // cell
-                    SpreadsheetStoreRepositories.fake(),
+                    SpreadsheetExpressionReferenceLoaders.fake(),
                     Url.parseAbsolute("https://example.com"),
-                    (rr) -> {
-                        Objects.requireNonNull(rr, "rr");
-                        throw new UnsupportedOperationException();
-                    },
                     METADATA_EN_AU,
                     SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                     EXPRESSION_FUNCTION_PROVIDER,

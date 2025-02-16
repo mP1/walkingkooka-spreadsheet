@@ -38,6 +38,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -69,14 +71,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      */
     static BasicSpreadsheetEngineContext with(final AbsoluteUrl serverUrl,
                                               final SpreadsheetMetadata metadata,
-                                              final SpreadsheetEngine engine,
                                               final SpreadsheetStoreRepository storeRepository,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                               final SpreadsheetProvider spreadsheetProvider,
                                               final ProviderContext providerContext) {
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(metadata, "metadata");
-        Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(functionAliases, "functionAliases");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
@@ -86,7 +86,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return new BasicSpreadsheetEngineContext(
                 serverUrl,
                 metadata,
-                engine,
                 storeRepository,
                 functionAliases,
                 spreadsheetProvider,
@@ -99,7 +98,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      */
     private BasicSpreadsheetEngineContext(final AbsoluteUrl serverUrl,
                                           final SpreadsheetMetadata metadata,
-                                          final SpreadsheetEngine engine,
                                           final SpreadsheetStoreRepository storeRepository,
                                           final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                           final SpreadsheetProvider spreadsheetProvider,
@@ -110,18 +108,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         this.metadata = metadata;
 
-        this.referenceToValue = SpreadsheetEnginesExpressionReferenceToValueFunction.with(
-                engine,
-                this
-        );
-
         this.storeRepository = storeRepository;
 
         this.labelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
                 storeRepository.labels()
         );
-
-        this.engine = engine;
 
         this.functionAliases = functionAliases;
         this.spreadsheetProvider = spreadsheetProvider;
@@ -157,15 +148,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 new BasicSpreadsheetEngineContext(
                         this.serverUrl,
                         this.metadata,
-                        this.engine,
                         this.storeRepository,
                         functionAliases,
                         this.spreadsheetProvider,
                         this.providerContext
                 );
     }
-
-    private final SpreadsheetEngine engine;
 
     // resolveLabel.....................................................................................................
 
@@ -203,19 +191,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return token.toExpression(
                 this.spreadsheetExpressionEvaluationContext(
-                        Optional.empty()// cell
+                        Optional.empty(),// cell
+                        SpreadsheetExpressionReferenceLoaders.fake() // toExpression never loads references
                 )
         );
     }
 
-    // evaluate.........................................................................................................
-
-    /**
-     * Factory that creates a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell}.
-     */
     @Override
-    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
         Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(loader, "loader");
 
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
@@ -256,19 +242,16 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return SpreadsheetExpressionEvaluationContexts.basic(
                 cell,
-                this.storeRepository,
+                loader,
                 this.serverUrl,
-                this.referenceToValue,
                 metadata,
                 this.spreadsheetConverterContext,
-                this.expressionFunctionProvider, // ExpressionFunctionProvider,
+                this.expressionFunctionProvider,
                 this // ProviderContext
         );
     }
 
     private final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases;
-
-    private final SpreadsheetEnginesExpressionReferenceToValueFunction referenceToValue;
 
     /**
      * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
@@ -369,7 +352,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                     .get()
                     .toBoolean(
                             this.spreadsheetExpressionEvaluationContext(
-                                    Optional.of(cell)
+                                    Optional.of(
+                                            cell
+                                    ),
+                                    SpreadsheetExpressionReferenceLoaders.fake() ///
                             )
                     );
 

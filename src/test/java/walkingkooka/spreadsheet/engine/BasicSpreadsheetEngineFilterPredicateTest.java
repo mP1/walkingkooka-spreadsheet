@@ -34,6 +34,8 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -54,6 +56,8 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
         SpreadsheetMetadataTesting {
 
     private final static String CONTEXT_TO_STRING = "FakeSpreadsheetEngineContext123";
+
+    private final static String LOADER_TO_STRING = "LoaderToString";
 
     @Test
     public void testFalseEmptyFormulaNoValueWithAny() {
@@ -118,7 +122,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     public void testToString() {
         this.toStringAndCheck(
                 this.createPredicate(),
-                "* Test123() " + CONTEXT_TO_STRING
+                "* Test123() " + CONTEXT_TO_STRING + " " + LOADER_TO_STRING
         );
     }
 
@@ -144,7 +148,8 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                 new FakeSpreadsheetEngineContext() {
 
                     @Override
-                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell) {
+                    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+                                                                                                         final SpreadsheetExpressionReferenceLoader loader) {
                         Objects.requireNonNull(cell, "cell");
 
                         return new FakeSpreadsheetExpressionEvaluationContext() {
@@ -213,7 +218,13 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                     public String toString() {
                         return CONTEXT_TO_STRING;
                     }
-                }
+                },
+                new FakeSpreadsheetExpressionReferenceLoader(){
+                    @Override
+                    public String toString() {
+                        return LOADER_TO_STRING;
+                    }
+                } ///
         );
     }
 

@@ -42,11 +42,11 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.Expression;
@@ -54,7 +54,6 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
@@ -71,7 +70,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -86,7 +84,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2"))
     );
 
-    private final static SpreadsheetStoreRepository REPOSITORY = SpreadsheetStoreRepositories.fake();
+    private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT = SpreadsheetExpressionReferenceLoaders.fake();
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -226,11 +224,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         public CaseSensitivity expressionFunctionNameCaseSensitivity() {
             return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
         }
-    };
-
-    private final static Function<ExpressionReference, Optional<Optional<Object>>> REFERENCES = (r) -> {
-        Objects.requireNonNull(r, "reference");
-        throw new UnsupportedOperationException();
     };
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
@@ -525,9 +518,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 converter,
                 SpreadsheetExpressionEvaluationContexts.basic(
                         CELL,
-                        REPOSITORY,
+                        SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                         SERVER_URL,
-                        REFERENCES,
                         METADATA,
                         METADATA.spreadsheetConverterContext(
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -539,6 +531,16 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         PROVIDER_CONTEXT
                 )
         );
+    }
+
+    @Override
+    public void testLoadLabelWithNullLabelFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testReferenceWithNullReferenceFails() {
+        throw new UnsupportedOperationException();
     }
 
     // ToString........................................................................................................

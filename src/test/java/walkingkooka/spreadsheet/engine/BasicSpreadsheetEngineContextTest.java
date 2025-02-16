@@ -51,7 +51,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -90,7 +92,6 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -298,11 +299,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
             .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, ExpressionFunctionAliasSet.parse("xyz, " + TEST_CONTEXT_LOADCELL + ", " + TEST_CONTEXT_SERVER_URL + ", " + TEST_CONTEXT_SPREADSHEET_METADATA));
 
-    private final static SpreadsheetEngine ENGINE = SpreadsheetEngines.fake();
-
     private final static SpreadsheetStoreRepository STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
     private final static SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTION_ALIASES = SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS;
+
+    private final static SpreadsheetExpressionReferenceLoader LOADER = new FakeSpreadsheetExpressionReferenceLoader() {
+        @Override
+        public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                  final SpreadsheetExpressionEvaluationContext context) {
+            if (cell.equalsIgnoreReferenceKind(LOAD_CELL_REFERENCE)) {
+                return Optional.of(
+                        LOAD_CELL_REFERENCE.setFormula(
+                                SpreadsheetFormula.EMPTY.setValue(
+                                        Optional.of(LOAD_CELL_VALUE)
+                                )
+                        )
+                );
+            }
+            return Optional.empty();
+        }
+    };
 
     // with.............................................................................................................
 
@@ -313,7 +329,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 () -> BasicSpreadsheetEngineContext.with(
                         null,
                         METADATA,
-                        ENGINE,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
@@ -328,23 +343,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 NullPointerException.class,
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
-                        null,
-                        ENGINE,
-                        STORE_REPOSITORY,
-                        FUNCTION_ALIASES,
-                        SPREADSHEET_PROVIDER,
-                        PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public void testWithNullEngineFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> BasicSpreadsheetEngineContext.with(
-                        SERVER_URL,
-                        METADATA,
                         null,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
@@ -361,7 +359,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
                         METADATA,
-                        ENGINE,
                         null,
                         FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
@@ -377,7 +374,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
                         METADATA,
-                        ENGINE,
                         STORE_REPOSITORY,
                         null,
                         SPREADSHEET_PROVIDER,
@@ -393,7 +389,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
                         METADATA,
-                        ENGINE,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
                         null,
@@ -409,7 +404,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 () -> BasicSpreadsheetEngineContext.with(
                         SERVER_URL,
                         METADATA,
-                        ENGINE,
                         STORE_REPOSITORY,
                         FUNCTION_ALIASES,
                         SPREADSHEET_PROVIDER,
@@ -655,6 +649,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.evaluateAndCheck(
                 this.createContext(cellStore),
                 cell,
+                LOADER,
                 SpreadsheetError.cycle(cellReference)
         );
     }
@@ -687,15 +682,37 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         cellStore.save(a1);
         cellStore.save(b2);
 
-        // https://github.com/mP1/walkingkooka-spreadsheet/issues/5654
-        // BasicSpreadsheetEngine formulas not detecting cycles
-        assertThrows(
-                StackOverflowError.class,
-                () -> this.evaluateAndCheck(
-                        this.createContext(cellStore),
-                        a1,
-                        SpreadsheetError.cycle(a1.reference())
-                )
+        this.evaluateAndCheck(
+                this.createContext(cellStore),
+                a1,
+                new FakeSpreadsheetExpressionReferenceLoader() {
+                    @Override
+                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                              final SpreadsheetExpressionEvaluationContext context) {
+                        switch (cell.toString().toLowerCase()) {
+                            case "a1":
+                                return cellStore.load(cell);
+                            case "b2":
+                                final SpreadsheetCell b2 = cellStore.loadOrFail(cell);
+
+                                return Optional.of(
+                                        b2.setFormula(
+                                                b2.formula()
+                                                        .setValue(
+                                                                Optional.of(
+                                                                        context.setCell(
+                                                                                Optional.of(b2)
+                                                                        ).referenceOrFail(SpreadsheetSelection.A1)
+                                                                )
+                                                        )
+                                        )
+                                );
+                        }
+
+                        return cellStore.load(cell);
+                    }
+                },
+                SpreadsheetError.cycle(a1.reference())
         );
     }
 
@@ -745,6 +762,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                 )
                         )
                 ),
+                LOADER,
                 LOAD_CELL_VALUE
         );
     }
@@ -1318,38 +1336,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return BasicSpreadsheetEngineContext.with(
                 SERVER_URL,
                 metadata,
-                new FakeSpreadsheetEngine() {
-                    @Override
-                    public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
-                                                      final SpreadsheetEngineEvaluation evaluation,
-                                                      final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                                      final SpreadsheetEngineContext context) {
-                        final SpreadsheetCellReference cellReference = selection.toCell();
-
-                        final SpreadsheetCell loaded = context.storeRepository()
-                                .cells()
-                                .loadOrFail(cellReference);
-
-                        final SpreadsheetFormula formula = loaded.formula();
-
-                        final Object value = formula.expression()
-                                .orElseThrow(() -> new IllegalStateException("Missing expression " + cellReference))
-                                .toValue(
-                                        context.spreadsheetExpressionEvaluationContext(
-                                        Optional.of(loaded))
-                                );
-
-                        return SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        loaded.setFormula(
-                                                formula.setValue(
-                                                        Optional.ofNullable(value)
-                                                )
-                                        )
-                                )
-                        );
-                    }
-                },
                 repository,
                 FUNCTION_ALIASES,
                 SpreadsheetProviders.basic(

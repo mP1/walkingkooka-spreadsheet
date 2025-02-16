@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.store.TargetAndSpreadsheetCellReference;
 
 import java.util.Set;
 
@@ -48,12 +47,6 @@ enum BasicSpreadsheetEngineChangesMode {
         void onCellDeleted(final SpreadsheetCellReference cell,
                            final BasicSpreadsheetEngineChanges changes) {
             changes.onCellDeletedImmediate(cell);
-        }
-
-        @Override
-        void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                    final BasicSpreadsheetEngineChanges changes) {
-            changes.onCellReferenceDeletedImmediate(targetAndReference);
         }
 
         @Override
@@ -122,12 +115,6 @@ enum BasicSpreadsheetEngineChangesMode {
         }
 
         @Override
-        void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                    final BasicSpreadsheetEngineChanges changes) {
-            changes.onCellReferenceDeletedBatch(targetAndReference);
-        }
-
-        @Override
         void onLabelSaved(final SpreadsheetLabelMapping mapping,
                           final BasicSpreadsheetEngineChanges changes) {
             changes.onLabelSavedBatch(mapping);
@@ -183,9 +170,6 @@ enum BasicSpreadsheetEngineChangesMode {
 
     abstract void onCellDeleted(final SpreadsheetCellReference cell,
                                 final BasicSpreadsheetEngineChanges changes);
-
-    abstract void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
-                                         final BasicSpreadsheetEngineChanges changes);
 
     abstract void onColumnSaved(final SpreadsheetColumn column,
                                 final BasicSpreadsheetEngineChanges changes);

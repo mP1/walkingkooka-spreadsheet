@@ -33,7 +33,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      */
     public static SpreadsheetEngineContext basic(final AbsoluteUrl serverUrl,
                                                  final SpreadsheetMetadata metadata,
-                                                 final SpreadsheetEngine engine,
                                                  final SpreadsheetStoreRepository storeRepository,
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                  final SpreadsheetProvider spreadsheetProvider,
@@ -41,7 +40,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
         return BasicSpreadsheetEngineContext.with(
                 serverUrl,
                 metadata,
-                engine,
                 storeRepository,
                 functionAliases,
                 spreadsheetProvider,

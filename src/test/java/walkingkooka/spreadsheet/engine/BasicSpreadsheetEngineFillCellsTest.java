@@ -30,7 +30,8 @@ public final class BasicSpreadsheetEngineFillCellsTest extends BasicSpreadsheetE
         this.toStringAndCheck(
                 new BasicSpreadsheetEngineFillCells(
                         engine,
-                        null
+                        null, // BasicSpreadsheetEngineChanges
+                        SpreadsheetEngineContexts.fake()
                 ),
                 engine.toString()
         );

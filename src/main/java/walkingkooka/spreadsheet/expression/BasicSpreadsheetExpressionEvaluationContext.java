@@ -31,9 +31,10 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -47,23 +48,20 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
         SpreadsheetConverterContextDelegator {
 
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
-                                                            final SpreadsheetStoreRepository repository,
+                                                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                             final AbsoluteUrl serverUrl,
-                                                            final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(repository, "repository");
+        Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(serverUrl, "serverUrl");
-        Objects.requireNonNull(referenceToValue, "referenceToValue");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
@@ -71,9 +69,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
         return new BasicSpreadsheetExpressionEvaluationContext(
                 cell,
-                repository,
+                spreadsheetExpressionReferenceLoader,
                 serverUrl,
-                referenceToValue,
                 spreadsheetMetadata,
                 spreadsheetConverterContext,
                 expressionFunctionProvider,
@@ -82,23 +79,18 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private BasicSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                        final SpreadsheetStoreRepository repository,
+                                                        final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                         final AbsoluteUrl serverUrl,
-                                                        final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
                                                         final ProviderContext providerContext) {
         super();
         this.cell = cell;
-        this.repository = repository;
+        this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.serverUrl = serverUrl;
-        this.referenceToValue = referenceToValue;
-
         this.spreadsheetMetadata = spreadsheetMetadata;
-
         this.spreadsheetConverterContext = spreadsheetConverterContext;
-
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.providerContext = providerContext;
     }
@@ -124,28 +116,28 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         this.cellCycleCheck(cell);
 
-        return this.repository.cells()
-                    .load(cell);
+        return this.spreadsheetExpressionReferenceLoader.loadCell(
+                cell,
+                this
+        );
     }
 
     @Override
     public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         this.cellRangeCycleCheck(range);
 
-        return this.repository.cells()
-                .loadCellRange(range);
+        return this.spreadsheetExpressionReferenceLoader.loadCellRange(
+                range,
+                this
+        );
     }
 
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-        Objects.requireNonNull(labelName, "labelName");
-
-        return this.repository.labels()
-                .load(labelName);
+        return this.spreadsheetExpressionReferenceLoader.loadLabel(labelName);
     }
 
-    // @VisibleForTesting
-    final SpreadsheetStoreRepository repository;
+    final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader;
 
     @Override
     public SpreadsheetFormulaParserToken parseFormula(final TextCursor expression) {
@@ -212,12 +204,24 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        return this.referenceToValue.apply(
-                this.resolveIfLabelAndCycleCheck(reference)
-        );
-    }
+        Objects.requireNonNull(reference, "reference");
 
-    private final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValue;
+        Optional<Optional<Object>> value = Optional.empty();
+
+        ExpressionReference expressionReference = reference;
+        if (expressionReference instanceof SpreadsheetExpressionReference) {
+            expressionReference = this.resolveIfLabelAndCycleCheck(expressionReference);
+        }
+        if (expressionReference instanceof SpreadsheetExpressionReference) {
+            value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
+                    (SpreadsheetExpressionReference) reference,
+                    this.spreadsheetExpressionReferenceLoader,
+                    this
+            );
+        }
+
+        return value;
+    }
 
     // SpreadsheetConverterContextDelegator.............................................................................
 
