@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -45,6 +46,12 @@ import java.util.Optional;
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
         ProviderContextDelegator,
         SpreadsheetProviderDelegator {
+
+    @Override
+    default  AbsoluteUrl serverUrl() {
+        return this.spreadsheetEngineContext()
+                .serverUrl();
+    }
 
     @Override
     default SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -57,6 +58,12 @@ public interface SpreadsheetEngineContext extends Context,
         ProviderContext,
         SpreadsheetLabelNameResolver,
         HasMissingCellNumberValue {
+
+    /**
+     * Returns the base server url, which can then be used to create links to cells and more.
+     * This is necessary for functions such as hyperlink which creates a link to a cell.
+     */
+    AbsoluteUrl serverUrl();
 
     /**
      * Returns a {@link SpreadsheetEngineContext} which will use the {@link ExpressionFunctionAliasSet} when fetching functions.
