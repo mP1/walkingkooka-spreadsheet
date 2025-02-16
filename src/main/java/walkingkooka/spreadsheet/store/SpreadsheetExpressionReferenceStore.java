@@ -35,7 +35,7 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
 
     @Override
     default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
-        Objects.requireNonNull(cells, "references");
+        Objects.requireNonNull(cells, "cells");
         throw new UnsupportedOperationException();
     }
 
