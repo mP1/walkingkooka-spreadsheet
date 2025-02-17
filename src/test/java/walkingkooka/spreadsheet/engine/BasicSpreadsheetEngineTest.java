@@ -825,7 +825,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         EXPRESSION_NUMBER_KIND.create((Number)value) :
                         value
         );
-        this.checkFormattedValue(
+        this.cellFormattedValueAndCheck(
                 cell,
                 formattedText
         );
@@ -927,7 +927,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(this.cell(b2, "1/2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, b2, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
-        this.checkValue(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
+        this.cellFormulaValueAndCheck(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
 
         final int defaultYear = DEFAULT_YEAR + 100;
 
@@ -939,11 +939,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
 
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 second,
                 LocalDate.of(1900, 2, 1)
         );
-        this.checkFormattedValue(
+        this.cellFormattedValueAndCheck(
                 second,
                 "1900/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -965,7 +965,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 context
         );
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 first,
                 LocalDate.of(DEFAULT_YEAR, 2, 1)
         );
@@ -981,11 +981,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
 
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 second,
                 LocalDate.of(1900, 2, 1)
         );
-        this.checkFormattedValue(
+        this.cellFormattedValueAndCheck(
                 second,
                 "1900/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -1015,11 +1015,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context
         );
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 first,
                 value
         );
-        this.checkFormattedValue(
+        this.cellFormattedValueAndCheck(
                 first,
                 "1 FORMATTED_PATTERN_SUFFIX"
         );
@@ -1033,11 +1033,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context
         );
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 second,
                 value2
         );
-        this.checkFormattedValue(
+        this.cellFormattedValueAndCheck(
                 second,
                 "2 FORMATTED_PATTERN_SUFFIX"
         );
@@ -1067,7 +1067,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell second = this.loadCellOrFail(engine, b2, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
 
-        this.checkFormattedValue(
+        this.cellFormattedValueAndCheck(
                 second,
                 "#ERROR " + FORMATTED_PATTERN_SUFFIX
         );
@@ -1094,7 +1094,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 context
         );
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 first,
                 LocalDate.of(
                         DEFAULT_YEAR,
@@ -1117,11 +1117,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         assertNotSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 second,
                 LocalDate.of(defaultYear, 2, 1)
         );
-        this.checkFormattedValue(
+        this.cellFormattedValueAndCheck(
                 second,
                 "2000/02/01 FORMATTED_PATTERN_SUFFIX"
         );
@@ -18341,7 +18341,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 EXPRESSION_NUMBER_KIND.create(value)
         );
-        this.checkFormattedValue(
+        this.cellFormattedValueAndCheck(
                 cell,
                 value + " " + FORMATTED_PATTERN_SUFFIX
         );

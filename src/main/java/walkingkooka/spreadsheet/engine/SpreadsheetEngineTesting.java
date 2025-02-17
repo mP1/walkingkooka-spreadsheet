@@ -957,7 +957,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 evaluation,
                 context
         );
-        this.checkFormula(
+        this.cellFormulaTextAndCheck(
                 spreadsheetCell,
                 formula
         );
@@ -978,7 +978,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context,
                 formula
         );
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 spreadsheetCell,
                 value
         );
@@ -996,7 +996,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 evaluation,
                 context
         );
-        this.checkValue(
+        this.cellFormulaValueAndCheck(
                 spreadsheetCell,
                 value
         );
@@ -1066,7 +1066,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 value
         );
 
-        this.checkFormattedValue(spreadsheetCell, text);
+        this.cellFormattedValueAndCheck(spreadsheetCell, text);
 
         if (null != errorContains) {
             final SpreadsheetFormula formula = spreadsheetCell.formula();
@@ -2173,20 +2173,24 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     // helpers..........................................................................................................
 
-    default void checkFormula(final SpreadsheetCell cell, final String formula) {
-        this.checkEquals(formula,
+    default void cellFormulaTextAndCheck(final SpreadsheetCell cell,
+                                         final String formula) {
+        this.checkEquals(
+                formula,
                 cell.formula().text(),
-                () -> "formula.text parse returned cell=" + cell);
+                () -> "formula.text parse returned cell=" + cell
+        );
     }
 
-    default void checkValue(final SpreadsheetCell cell, final Object value) {
+    default void cellFormulaValueAndCheck(final SpreadsheetCell cell,
+                                          final Object value) {
         this.checkEquals(
                 value,
                 cell.formula().value().orElse(null),
                 () -> "formula values returned cell=" + cell);
     }
 
-    default void checkFormattedValue(final SpreadsheetCell cell) {
+    default void cellFormattedValueAndCheck(final SpreadsheetCell cell) {
         this.checkEquals(
                 Optional.empty(),
                 cell.formattedValue(),
@@ -2195,8 +2199,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    default void checkFormattedValue(final SpreadsheetCell cell,
-                                     final String text) {
+    default void cellFormattedValueAndCheck(final SpreadsheetCell cell,
+                                            final String text) {
         this.checkNotEquals(
                 Optional.empty(),
                 cell.formattedValue(),
