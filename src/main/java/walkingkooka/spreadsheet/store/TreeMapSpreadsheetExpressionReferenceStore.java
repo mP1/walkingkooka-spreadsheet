@@ -35,6 +35,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -282,6 +283,20 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         return null != references ?
                 SortedSets.immutable(references) :
                 SortedSets.empty();
+    }
+
+    @Override
+    public void removeReferencesWithCell(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        for(final T reference : new TreeSet<>(this.referenceToCells.keySet())) {
+            this.removeCell0(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference,
+                        cell
+                )
+            );
+        }
     }
 
     // helpers..........................................................................................................

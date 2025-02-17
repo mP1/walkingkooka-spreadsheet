@@ -1513,6 +1513,35 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.removeCell(ReferenceAndSpreadsheetCellReference.with(b1, a1));
     }
 
+    // removeReferencesWithCell.........................................................................................
+
+    @Test
+    public void testRemoveReferencesWithCell() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferenceStore.create();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetLabelName b1 = SpreadsheetSelection.labelName("Label1");
+        final SpreadsheetLabelName c1 = SpreadsheetSelection.labelName("Label2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(b1, a1)
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(c1, a1)
+        );
+
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                b1, c1
+        );
+
+        this.removeReferencesWithCellAndCheck(
+                store,
+                a1
+        );
+    }
+
     // count............................................................................................................
 
     @Test

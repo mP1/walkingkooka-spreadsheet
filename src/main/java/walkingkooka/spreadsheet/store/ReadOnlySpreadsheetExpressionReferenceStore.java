@@ -132,6 +132,13 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
         return this.store.findReferencesWithCell(cell);
     }
 
+    @Override
+    public void removeReferencesWithCell(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        throw new UnsupportedOperationException();
+    }
+
     private final SpreadsheetExpressionReferenceStore<T> store;
 
     @Override

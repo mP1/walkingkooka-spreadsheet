@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -90,4 +91,13 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
      * {@link SpreadsheetLabelStore#loadCellOrRanges(SpreadsheetLabelName)}.
      */
     Set<T> findReferencesWithCell(final SpreadsheetCellReference cell);
+
+    /**
+     * Removes any references for the provided {@link SpreadsheetCellReference}.
+     * This is useful to remove references within a {@link SpreadsheetCell#formula()}.
+     * <br>
+     * This is equivalent to {@link #findReferencesWithCell(SpreadsheetCellReference) finding all references for a cell}
+     * and then {@link #removeCell(ReferenceAndSpreadsheetCellReference) removing them one by one}.
+     */
+    void removeReferencesWithCell(final SpreadsheetCellReference cell);
 }

@@ -183,7 +183,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testSaveCellsNullIdFails() {
         assertThrows(
-                NullPointerException.class, 
+                NullPointerException.class,
                 () -> this.createStore()
                         .saveCells(
                                 null,
@@ -379,6 +379,27 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                 fail(store + " load " + id + " didnt return cell " + cell + ", actual: " + references);
             }
         }
+    }
+
+    default <TT extends SpreadsheetExpressionReference> void removeReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+                                                                                              final SpreadsheetCellReference cell) {
+        store.removeReferencesWithCell(cell);
+
+        this.findReferencesWithCellAndCheck(
+                store,
+                cell
+        );
+    }
+
+    // removeReferencesWithCell.........................................................................................
+
+    @Test
+    default void testRemoveReferencesWithCellWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .removeReferencesWithCell(null)
+        );
     }
 
     // TypeNameTesting...........................................................................................
