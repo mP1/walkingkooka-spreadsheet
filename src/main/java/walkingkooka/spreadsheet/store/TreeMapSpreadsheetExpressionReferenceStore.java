@@ -24,9 +24,11 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
 import walkingkooka.watch.Watchers;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -49,6 +51,10 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     private TreeMapSpreadsheetExpressionReferenceStore() {
         super();
+
+        final Comparator<SpreadsheetSelection> comparator = SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR;
+        this.cellToReferences = Maps.sorted(comparator);
+        this.referenceToCells = Maps.sorted(comparator);
     }
 
     @Override
@@ -199,7 +205,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         SortedSet<SpreadsheetCellReference> allCells = this.referenceToCells.get(reference);
         //noinspection Java8MapApi
         if (null == allCells) {
-            allCells = SortedSets.tree();
+            allCells = emptySortedSet();
             this.referenceToCells.put(reference, allCells);
         }
         allCells.add(cell);
@@ -207,7 +213,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         SortedSet<T> references = this.cellToReferences.get(cell);
         //noinspection Java8MapApi
         if (null == references) {
-            references = SortedSets.tree();
+            references = emptySortedSet();
             this.cellToReferences.put(
                     cell,
                     references
@@ -216,6 +222,10 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         references.add(reference);
 
         this.addCellWatchers.accept(referenceAndCell);
+    }
+
+    private static <T extends SpreadsheetExpressionReference> SortedSet<T> emptySortedSet() {
+        return SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
     }
 
     @Override
@@ -286,13 +296,13 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
      * Something like labels and the cell references expressions containing the label.
      */
     // VisibleForTesting
-    final Map<T, SortedSet<SpreadsheetCellReference>> referenceToCells = Maps.sorted();
+    final Map<T, SortedSet<SpreadsheetCellReference>> referenceToCells;
 
     /**
      * The inverse of {@link #referenceToCells}
      */
     // VisibleForTesting
-    final Map<SpreadsheetCellReference, SortedSet<T>> cellToReferences = Maps.sorted();
+    final Map<SpreadsheetCellReference, SortedSet<T>> cellToReferences;
 
     @Override
     public String toString() {
