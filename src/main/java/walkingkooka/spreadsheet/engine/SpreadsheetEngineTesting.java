@@ -946,11 +946,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return spreadsheetCell;
     }
 
-    default SpreadsheetCell loadCellAndFormulaCheck(final SpreadsheetEngine engine,
-                                                    final SpreadsheetCellReference cell,
-                                                    final SpreadsheetEngineEvaluation evaluation,
-                                                    final SpreadsheetEngineContext context,
-                                                    final String formula) {
+    default SpreadsheetCell loadCellAndFormulaTextCheck(final SpreadsheetEngine engine,
+                                                        final SpreadsheetCellReference cell,
+                                                        final SpreadsheetEngineEvaluation evaluation,
+                                                        final SpreadsheetEngineContext context,
+                                                        final String formulaText) {
         final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
                 engine,
                 cell,
@@ -959,25 +959,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
         this.cellFormulaTextAndCheck(
                 spreadsheetCell,
-                formula
-        );
-        return spreadsheetCell;
-    }
-
-    default SpreadsheetCell loadCellAndValueCheck(final SpreadsheetEngine engine,
-                                                  final SpreadsheetCellReference cell,
-                                                  final SpreadsheetEngineEvaluation evaluation,
-                                                  final SpreadsheetEngineContext context,
-                                                  final Object value) {
-        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
-                engine,
-                cell,
-                evaluation,
-                context
-        );
-        this.cellFormulaValueAndCheck(
-                spreadsheetCell,
-                value
+                formulaText
         );
         return spreadsheetCell;
     }
@@ -987,37 +969,20 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                                             final SpreadsheetCellReference cell,
                                                             final SpreadsheetEngineEvaluation evaluation,
                                                             final SpreadsheetEngineContext context,
-                                                            final String formula,
+                                                            final String formulaText,
                                                             final Object value) {
-        final SpreadsheetCell spreadsheetCell = this.loadCellAndFormulaCheck(
+        final SpreadsheetCell spreadsheetCell = this.loadCellAndFormulaTextCheck(
                 engine,
                 cell,
                 evaluation,
                 context,
-                formula
+                formulaText
         );
         this.cellFormulaValueAndCheck(
                 spreadsheetCell,
                 value
         );
         return spreadsheetCell;
-    }
-
-    default SpreadsheetCell loadCellAndFormattedCheck(final SpreadsheetEngine engine,
-                                                      final SpreadsheetCellReference cell,
-                                                      final SpreadsheetEngineEvaluation evaluation,
-                                                      final SpreadsheetEngineContext context,
-                                                      final Object value,
-                                                      final String text) {
-        return this.loadCellAndCheck(
-                engine,
-                cell,
-                evaluation,
-                context,
-                value,
-                text,
-                null
-        );
     }
 
     default void loadCellAndErrorCheck(final SpreadsheetEngine engine,
@@ -1056,7 +1021,24 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                              final SpreadsheetEngineEvaluation evaluation,
                                              final SpreadsheetEngineContext context,
                                              final Object value,
-                                             final String text,
+                                             final String formattedValueText) {
+        return this.loadCellAndCheck(
+                engine,
+                cell,
+                evaluation,
+                context,
+                value,
+                formattedValueText,
+                null
+        );
+    }
+
+    default SpreadsheetCell loadCellAndCheck(final SpreadsheetEngine engine,
+                                             final SpreadsheetCellReference cell,
+                                             final SpreadsheetEngineEvaluation evaluation,
+                                             final SpreadsheetEngineContext context,
+                                             final Object value,
+                                             final String formattedValueText,
                                              final String errorContains) {
         final SpreadsheetCell spreadsheetCell = this.loadCellAndValueCheck(
                 engine,
@@ -1066,7 +1048,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 value
         );
 
-        this.cellFormattedValueAndCheck(spreadsheetCell, text);
+        this.cellFormattedValueAndCheck(spreadsheetCell, formattedValueText);
 
         if (null != errorContains) {
             final SpreadsheetFormula formula = spreadsheetCell.formula();
@@ -1089,6 +1071,24 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             );
         }
 
+        return spreadsheetCell;
+    }
+
+    default SpreadsheetCell loadCellAndValueCheck(final SpreadsheetEngine engine,
+                                                  final SpreadsheetCellReference cell,
+                                                  final SpreadsheetEngineEvaluation evaluation,
+                                                  final SpreadsheetEngineContext context,
+                                                  final Object value) {
+        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
+                engine,
+                cell,
+                evaluation,
+                context
+        );
+        this.cellFormulaValueAndCheck(
+                spreadsheetCell,
+                value
+        );
         return spreadsheetCell;
     }
 
