@@ -964,6 +964,24 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return spreadsheetCell;
     }
 
+    default SpreadsheetCell loadCellAndValueCheck(final SpreadsheetEngine engine,
+                                                  final SpreadsheetCellReference cell,
+                                                  final SpreadsheetEngineEvaluation evaluation,
+                                                  final SpreadsheetEngineContext context,
+                                                  final Object value) {
+        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
+                engine,
+                cell,
+                evaluation,
+                context
+        );
+        this.cellFormulaValueAndCheck(
+                spreadsheetCell,
+                value
+        );
+        return spreadsheetCell;
+    }
+
     @SuppressWarnings("UnusedReturnValue")
     default SpreadsheetCell loadCellAndFormulaAndValueCheck(final SpreadsheetEngine engine,
                                                             final SpreadsheetCellReference cell,
@@ -977,24 +995,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 evaluation,
                 context,
                 formula
-        );
-        this.cellFormulaValueAndCheck(
-                spreadsheetCell,
-                value
-        );
-        return spreadsheetCell;
-    }
-
-    default SpreadsheetCell loadCellAndValueCheck(final SpreadsheetEngine engine,
-                                                  final SpreadsheetCellReference cell,
-                                                  final SpreadsheetEngineEvaluation evaluation,
-                                                  final SpreadsheetEngineContext context,
-                                                  final Object value) {
-        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
-                engine,
-                cell,
-                evaluation,
-                context
         );
         this.cellFormulaValueAndCheck(
                 spreadsheetCell,
