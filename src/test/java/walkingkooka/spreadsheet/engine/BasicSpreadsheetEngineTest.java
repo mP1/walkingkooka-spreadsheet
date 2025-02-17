@@ -1988,10 +1988,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.toRelative()); // references parse A1 -> B2
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
 
         this.loadReferencesAndCheck(cellReferenceStore, b2); // references to B2 -> none
-        this.loadReferrersAndCheck(cellReferenceStore, b2, a1.reference()); // references parse B2 -> A1
+        this.findReferencesWithCellAndCheck(cellReferenceStore, b2, a1.reference()); // references parse B2 -> A1
     }
 
     @Test
@@ -2203,13 +2203,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellReferenceStore, 0);
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference()); // references parse A1 -> none
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference()); // references parse A1 -> none
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference()); // references to B2 -> none
-        this.loadReferrersAndCheck(cellReferenceStore, b2.reference()); // references parse B2 -> none
+        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference()); // references parse B2 -> none
 
         this.loadReferencesAndCheck(cellReferenceStore, c3.reference()); // references to C3 -> none
-        this.loadReferrersAndCheck(cellReferenceStore, c3.reference()); // references parse C3 -> none
+        this.findReferencesWithCellAndCheck(cellReferenceStore, c3.reference()); // references parse C3 -> none
     }
 
     @Test
@@ -2393,10 +2393,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference(), b2.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference(), b2.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference(), a1Reference.toRelative());
-        this.loadReferrersAndCheck(cellReferenceStore, b2.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference());
     }
 
     @Test
@@ -2795,10 +2795,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2Reference.toRelative());
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, b2.reference(), a1.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference(), a1.reference());
     }
 
     @Test
@@ -2887,10 +2887,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, b2.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference());
 
         this.loadReferencesAndCheck(labelReferencesStore, labelB2, a1.reference());
 
@@ -2982,10 +2982,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, d4.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, d4.reference());
     }
 
     @Test
@@ -3068,7 +3068,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReferenceStore,
                 a1.reference()
         );
-        this.loadReferrersAndCheck(
+        this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 a1.reference()
         );
@@ -3077,7 +3077,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReferenceStore,
                 d4.reference()
         );
-        this.loadReferrersAndCheck(
+        this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 d4.reference()
         );
@@ -3181,10 +3181,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5Reference.toRelative());
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, d4.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, d4.reference());
 
         this.loadReferencesAndCheck(labelReferencesStore, labelB2);
         this.loadReferencesAndCheck(labelReferencesStore, labelD4, a1.reference());
@@ -3965,10 +3965,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1);
-        this.loadReferrersAndCheck(cellReferenceStore, a1);
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1);
 
         this.loadReferencesAndCheck(cellReferenceStore, b2);
-        this.loadReferrersAndCheck(cellReferenceStore, b2);
+        this.findReferencesWithCellAndCheck(cellReferenceStore, b2);
     }
 
     @Test
@@ -4026,10 +4026,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2Reference.toRelative());
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, b2.reference(), a1.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference(), a1.reference());
     }
 
     @Test
@@ -4132,7 +4132,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReferenceStore,
                 a1.reference()
         );
-        this.loadReferrersAndCheck(
+        this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 a1.reference()
         );
@@ -4140,7 +4140,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReferenceStore,
                 b2.reference()
         );
-        this.loadReferrersAndCheck(
+        this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 b2.reference()
         );
@@ -4203,10 +4203,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
-        this.loadReferrersAndCheck(cellReferenceStore, b2.reference());
+        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference());
 
         this.loadReferencesAndCheck(labelReferencesStore, labelB2, a1.reference());
     }
@@ -18549,12 +18549,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void loadReferrersAndCheck(final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store,
-                                       final SpreadsheetCellReference cell,
-                                       final SpreadsheetCellReference... out) {
-        this.checkEquals(Sets.of(out),
+    private void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store,
+                                                final SpreadsheetCellReference cell,
+                                                final SpreadsheetCellReference... expected) {
+        this.checkEquals(
+                Sets.of(expected),
                 store.findReferencesWithCell(cell),
-                "referrers parse " + cell);
+                () -> "findReferences with " + cell
+        );
     }
 
     private SpreadsheetColumnReference column(final int column) {
