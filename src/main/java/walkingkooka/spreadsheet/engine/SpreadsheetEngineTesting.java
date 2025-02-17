@@ -919,7 +919,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    default SpreadsheetCell loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
+    default SpreadsheetCell loadCellAndWithoutValueOrErrorCheck(final SpreadsheetEngine engine,
                                                                 final SpreadsheetCellReference reference,
                                                                 final SpreadsheetEngineEvaluation evaluation,
                                                                 final Set<SpreadsheetDeltaProperties> deltaProperties,
@@ -937,7 +937,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return cell;
     }
 
-    default SpreadsheetCell loadCellAndCheckFormula(final SpreadsheetEngine engine,
+    default SpreadsheetCell loadCellAndFormulaCheck(final SpreadsheetEngine engine,
                                                     final SpreadsheetCellReference reference,
                                                     final SpreadsheetEngineEvaluation evaluation,
                                                     final SpreadsheetEngineContext context,
@@ -953,13 +953,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    default SpreadsheetCell loadCellAndCheckFormulaAndValue(final SpreadsheetEngine engine,
+    default SpreadsheetCell loadCellAndFormulaAndValueCheck(final SpreadsheetEngine engine,
                                                             final SpreadsheetCellReference reference,
                                                             final SpreadsheetEngineEvaluation evaluation,
                                                             final SpreadsheetEngineContext context,
                                                             final String formula,
                                                             final Object value) {
-        final SpreadsheetCell cell = this.loadCellAndCheckFormula(
+        final SpreadsheetCell cell = this.loadCellAndFormulaCheck(
                 engine,
                 reference,
                 evaluation,
@@ -970,7 +970,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return cell;
     }
 
-    default SpreadsheetCell loadCellAndCheckValue(final SpreadsheetEngine engine,
+    default SpreadsheetCell loadCellAndValueCheck(final SpreadsheetEngine engine,
                                                   final SpreadsheetCellReference reference,
                                                   final SpreadsheetEngineEvaluation evaluation,
                                                   final SpreadsheetEngineContext context,
@@ -985,7 +985,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return cell;
     }
 
-    default SpreadsheetCell loadCellAndCheckFormatted(final SpreadsheetEngine engine,
+    default SpreadsheetCell loadCellAndFormattedCheck(final SpreadsheetEngine engine,
                                                       final SpreadsheetCellReference reference,
                                                       final SpreadsheetEngineEvaluation evaluation,
                                                       final SpreadsheetEngineContext context,
@@ -1002,7 +1002,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default void loadCellAndCheckError(final SpreadsheetEngine engine,
+    default void loadCellAndErrorCheck(final SpreadsheetEngine engine,
                                        final SpreadsheetCellReference reference,
                                        final SpreadsheetEngineEvaluation evaluation,
                                        final SpreadsheetEngineContext context,
@@ -1040,7 +1040,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                              final Object value,
                                              final String text,
                                              final String errorContains) {
-        final SpreadsheetCell cell = this.loadCellAndCheckValue(
+        final SpreadsheetCell cell = this.loadCellAndValueCheck(
                 engine,
                 reference,
                 evaluation,
