@@ -4301,7 +4301,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
         final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("B");
 
@@ -4429,7 +4429,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell(b2, "=99+0"), context);
 
-        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
         this.deleteColumnsAndCheck(
                 engine,
@@ -5447,7 +5447,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
         final SpreadsheetRowReference row2 = SpreadsheetSelection.parseRow("2");
 
@@ -5585,7 +5585,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
         this.deleteRowsAndCheck(
                 engine,
@@ -6978,7 +6978,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
         engine.deleteColumns(
                 b1.column(),
@@ -8393,7 +8393,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
         this.insertColumnsAndCheck(
                 engine,
@@ -9556,7 +9556,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell(reference, "=99+0"), context);
 
-        this.addFailingCellSaveWatcherAndDeleteWatcher(context);
+        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
 
         this.insertRowsAndCheck(
                 engine,
@@ -18597,7 +18597,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void addFailingCellSaveWatcherAndDeleteWatcher(final SpreadsheetEngineContext context) {
+    private void addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(final SpreadsheetEngineContext context) {
         final SpreadsheetCellStore store = context.storeRepository()
                 .cells();
 
