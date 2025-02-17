@@ -48,19 +48,32 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
         this.repository.cellReferences()
-                .addCell(ReferenceAndSpreadsheetCellReference.with(this.target, cell));
+                .addCell(
+                        ReferenceAndSpreadsheetCellReference.with(
+                                this.target,
+                                cell
+                        )
+                );
     }
 
     @Override
     protected void visit(final SpreadsheetLabelName label) {
         this.repository.labelReferences()
-                .addCell(ReferenceAndSpreadsheetCellReference.with(label, this.target));
+                .addCell(
+                        ReferenceAndSpreadsheetCellReference.with(
+                                label,
+                                this.target
+                        )
+                );
     }
 
     @Override
     protected void visit(final SpreadsheetCellRangeReference cellRange) {
         this.repository.rangeToCells()
-                .addValue(cellRange, this.target);
+                .addValue(
+                        cellRange,
+                        this.target
+                );
     }
 
     /**
