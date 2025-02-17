@@ -63,7 +63,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Override
     @SuppressWarnings("unused")
-    public void testAddDeleteWatcherAndDelete2() {
+    public void testDeleteDoesntFireDeleteWatcher() {
     }
 
     @Override

@@ -72,10 +72,9 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         Objects.requireNonNull(reference, "reference");
 
         // where id=label remove label to cells, then remove cell to label.
-        final Set<SpreadsheetCellReference> allCells = this.referenceToCells.remove(reference);
+        final Set<SpreadsheetCellReference> allCells = this.referenceToCells.get(reference);
 
-        final boolean needsFire = null != allCells;
-        if (needsFire) {
+        if (null != allCells) {
             for (final SpreadsheetCellReference cell : allCells) {
                 final Set<T> references = this.cellToReferences.get(cell);
                 if (null != references) {
@@ -92,7 +91,6 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                     }
                 }
             }
-            this.deleteWatchers.accept(reference);
         }
     }
 
