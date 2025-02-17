@@ -18567,21 +18567,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return SpreadsheetReferenceKind.ABSOLUTE.row(row);
     }
 
-    private SpreadsheetCell cell(final String reference, final String formula) {
-        return this.cell(SpreadsheetSelection.parseCell(reference), formula);
-    }
-
-    private SpreadsheetCell cell(final SpreadsheetCellReference reference,
+    private SpreadsheetCell cell(final String cell,
                                  final String formula) {
         return this.cell(
-                reference,
+                SpreadsheetSelection.parseCell(cell),
+                formula
+        );
+    }
+
+    private SpreadsheetCell cell(final SpreadsheetCellReference cell,
+                                 final String formula) {
+        return this.cell(
+                cell,
                 SpreadsheetFormula.EMPTY
                         .setText(formula)
         );
     }
 
-    private SpreadsheetCell cell(final SpreadsheetCellReference reference, final SpreadsheetFormula formula) {
-        return reference.setFormula(formula)
+    private SpreadsheetCell cell(final SpreadsheetCellReference cell,
+                                 final SpreadsheetFormula formula) {
+        return cell.setFormula(formula)
                 .setStyle(this.style());
     }
 
