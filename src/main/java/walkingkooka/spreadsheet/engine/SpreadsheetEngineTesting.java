@@ -932,7 +932,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default SpreadsheetCell loadCellAndWithoutValueOrErrorCheck(final SpreadsheetEngine engine,
                                                                 final SpreadsheetCellReference cell,
                                                                 final SpreadsheetEngineEvaluation evaluation,
-                                                                final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                                 final SpreadsheetEngineContext context) {
         final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
                 engine,
