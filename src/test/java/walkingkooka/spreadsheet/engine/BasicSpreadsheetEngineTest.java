@@ -590,7 +590,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(a1.setFormula(SpreadsheetFormula.EMPTY.setText("=Z99")));
 
-        this.loadCellAndCheckFormatted(
+        this.loadCellAndFormattedCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -611,7 +611,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(a1.setFormula(SpreadsheetFormula.EMPTY.setText("=2+Z99")));
 
-        this.loadCellAndCheckFormatted(
+        this.loadCellAndFormattedCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -669,7 +669,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheckFormatted(
+        this.loadCellAndFormattedCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -695,7 +695,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheckFormatted(
+        this.loadCellAndFormattedCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -755,7 +755,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(this.cell(b2, "=1+2"));
 
-        this.loadCellAndCheckWithoutValueOrError(
+        this.loadCellAndWithoutValueOrErrorCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -817,7 +817,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                                 .setFormatter(formatter)
                 );
-        final SpreadsheetCell cell = this.loadCellAndCheckValue(
+        final SpreadsheetCell cell = this.loadCellAndValueCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -879,7 +879,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheckError(
+        this.loadCellAndErrorCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
@@ -908,7 +908,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheckValue(
+        this.loadCellAndValueCheck(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
@@ -1209,7 +1209,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheckValue(
+        this.loadCellAndValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
@@ -1422,7 +1422,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 );
 
-        this.loadCellAndCheckError(
+        this.loadCellAndErrorCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -4346,7 +4346,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1
         );
 
-        this.loadCellAndCheckFormatted(
+        this.loadCellAndFormattedCheck(
                 engine,
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -4410,7 +4410,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
 
-        this.loadCellAndCheckFormatted(
+        this.loadCellAndFormattedCheck(
                 engine,
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -5494,7 +5494,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1
         );
 
-        this.loadCellAndCheckFormatted(
+        this.loadCellAndFormattedCheck(
                 engine,
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -5560,7 +5560,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
 
-        this.loadCellAndCheckFormatted(
+        this.loadCellAndFormattedCheck(
                 engine,
                 cell.reference(),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -6109,7 +6109,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(context.storeRepository().cells(), 1);
 
-        this.loadCellAndCheckFormulaAndValue(
+        this.loadCellAndFormulaAndValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -6696,7 +6696,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
 
-        this.loadCellAndCheckFormulaAndValue(
+        this.loadCellAndFormulaAndValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -7540,7 +7540,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1
         );
 
-        this.loadCellAndCheckFormulaAndValue(
+        this.loadCellAndFormulaAndValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -8104,7 +8104,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0
         );
 
-        this.loadCellAndCheckFormulaAndValue(
+        this.loadCellAndFormulaAndValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -18335,7 +18335,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                        final SpreadsheetEngineEvaluation evaluation,
                                                        final SpreadsheetEngineContext context,
                                                        final Number value) {
-        final SpreadsheetCell cell = this.loadCellAndCheckValue(
+        final SpreadsheetCell cell = this.loadCellAndValueCheck(
                 engine,
                 reference,
                 evaluation,
@@ -18614,7 +18614,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                             final SpreadsheetEngineContext context,
                                                             final String formula,
                                                             final Number value) {
-        return this.loadCellAndCheckFormulaAndValue(
+        return this.loadCellAndFormulaAndValueCheck(
                 engine,
                 reference,
                 evaluation,
