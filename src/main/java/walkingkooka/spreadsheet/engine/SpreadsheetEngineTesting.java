@@ -401,40 +401,48 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullCellsFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
-        final SpreadsheetCellRangeReference range = reference.cellRange(reference);
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellRangeReference range = cell.cellRange(cell);
 
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(null,
-                range,
-                range,
-                this.createContext()));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine().fillCells(null,
+                        range,
+                        range,
+                        this.createContext()
+                )
+        );
     }
 
     @Test
     default void testFillCellsNullFromFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
-        final SpreadsheetCell cell = reference.setFormula(
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRangeReference range = reference.cellRange(reference);
+        final SpreadsheetCellRangeReference range = cell.cellRange(cell);
 
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
-                null,
-                range,
-                this.createContext()));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine().fillCells(Lists.of(spreadsheetCell),
+                        null,
+                        range,
+                        this.createContext()
+                )
+        );
     }
 
     @Test
     default void testFillCellsNullToFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
-        final SpreadsheetCell cell = reference.setFormula(
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRangeReference range = reference.cellRange(reference);
+        final SpreadsheetCellRangeReference range = cell.cellRange(cell);
 
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(spreadsheetCell),
                 range,
                 null,
                 this.createContext()));
@@ -442,14 +450,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsNullContextFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
-        final SpreadsheetCell cell = reference.setFormula(
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRangeReference range = reference.cellRange(reference);
+        final SpreadsheetCellRangeReference range = cell.cellRange(cell);
 
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(spreadsheetCell),
                 range,
                 range,
                 null));
@@ -457,14 +465,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsCellOutOfFromRangeFails() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
-        final SpreadsheetCell cell = reference.setFormula(
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
         final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(SpreadsheetSelection.parseCell("C3")));
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(spreadsheetCell),
                 range,
                 range,
                 this.createContext()));
@@ -476,14 +484,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testFillCellsCellOutOfFromRangeFails2() {
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
-        final SpreadsheetCell cell = reference.setFormula(
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
         final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.parseCellRange("C3:D4");
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(spreadsheetCell),
                 range,
                 range,
                 this.createContext()));
@@ -852,11 +860,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     // loadCell.........................................................................................................
 
     default SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,
-                                           final SpreadsheetCellReference reference,
+                                           final SpreadsheetCellReference cell,
                                            final SpreadsheetEngineEvaluation evaluation,
                                            final SpreadsheetEngineContext context) {
         final SpreadsheetDelta delta = engine.loadCells(
-                reference,
+                cell,
                 evaluation,
                 SpreadsheetDeltaProperties.ALL,
                 context
@@ -864,136 +872,147 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         return delta.cells()
                 .stream()
-                .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(cell))
                 .findFirst()
                 .orElseGet(() -> {
-                    Assertions.fail("Loading " + reference + " failed to return requested cell, cells: " + delta);
+                    Assertions.fail("Loading " + cell + " failed to return requested cell, cells: " + delta);
                     return null;
                 });
     }
 
-    default void loadCellFailCheck(final SpreadsheetCellReference reference,
+    default void loadCellFailCheck(final SpreadsheetCellReference cell,
                                    final SpreadsheetEngineEvaluation evaluation) {
-        this.loadCellFailCheck(reference, evaluation, this.createContext());
+        this.loadCellFailCheck(cell, evaluation, this.createContext());
     }
 
-    default void loadCellFailCheck(final SpreadsheetCellReference reference,
+    default void loadCellFailCheck(final SpreadsheetCellReference cell,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context) {
         this.loadCellFailCheck(
                 this.createSpreadsheetEngine(),
-                reference,
+                cell,
                 evaluation,
                 context
         );
     }
 
     default void loadCellFailCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetCellReference reference,
+                                   final SpreadsheetCellReference cell,
                                    final SpreadsheetEngineContext context) {
         this.loadCellFailCheck(
                 engine,
-                reference,
+                cell,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context
         );
     }
 
     default void loadCellFailCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetCellReference reference,
+                                   final SpreadsheetCellReference cell,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context) {
         final SpreadsheetDelta loaded = engine.loadCells(
-                reference,
+                cell,
                 evaluation,
                 SpreadsheetDeltaProperties.ALL,
                 context
         );
 
-        this.checkEquals(Optional.empty(),
+        this.checkEquals(
+                Optional.empty(),
                 loaded.cells()
                         .stream()
-                        .filter(c -> c.reference().equals(reference))
+                        .filter(c -> c.reference().equals(cell))
                         .findFirst(),
-                "Expected reference " + reference + " to fail");
+                "Expected reference " + cell + " to fail"
+        );
     }
 
     @SuppressWarnings("UnusedReturnValue")
     default SpreadsheetCell loadCellAndWithoutValueOrErrorCheck(final SpreadsheetEngine engine,
-                                                                final SpreadsheetCellReference reference,
+                                                                final SpreadsheetCellReference cell,
                                                                 final SpreadsheetEngineEvaluation evaluation,
                                                                 final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                                 final SpreadsheetEngineContext context) {
-        final SpreadsheetCell cell = this.loadCellOrFail(
+        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
                 engine,
-                reference,
+                cell,
                 evaluation,
                 context
         );
         this.checkEquals(
                 SpreadsheetFormula.NO_VALUE,
-                cell.formula().value(),
-                () -> "values parse returned cells=" + cell);
-        return cell;
+                spreadsheetCell.formula().value(),
+                () -> "values parse returned cells=" + spreadsheetCell);
+        return spreadsheetCell;
     }
 
     default SpreadsheetCell loadCellAndFormulaCheck(final SpreadsheetEngine engine,
-                                                    final SpreadsheetCellReference reference,
+                                                    final SpreadsheetCellReference cell,
                                                     final SpreadsheetEngineEvaluation evaluation,
                                                     final SpreadsheetEngineContext context,
                                                     final String formula) {
-        final SpreadsheetCell cell = this.loadCellOrFail(
+        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
                 engine,
-                reference,
+                cell,
                 evaluation,
                 context
         );
-        this.checkFormula(cell, formula);
-        return cell;
+        this.checkFormula(
+                spreadsheetCell,
+                formula
+        );
+        return spreadsheetCell;
     }
 
     @SuppressWarnings("UnusedReturnValue")
     default SpreadsheetCell loadCellAndFormulaAndValueCheck(final SpreadsheetEngine engine,
-                                                            final SpreadsheetCellReference reference,
+                                                            final SpreadsheetCellReference cell,
                                                             final SpreadsheetEngineEvaluation evaluation,
                                                             final SpreadsheetEngineContext context,
                                                             final String formula,
                                                             final Object value) {
-        final SpreadsheetCell cell = this.loadCellAndFormulaCheck(
+        final SpreadsheetCell spreadsheetCell = this.loadCellAndFormulaCheck(
                 engine,
-                reference,
+                cell,
                 evaluation,
                 context,
                 formula
         );
-        this.checkValue(cell, value);
-        return cell;
+        this.checkValue(
+                spreadsheetCell,
+                value
+        );
+        return spreadsheetCell;
     }
 
     default SpreadsheetCell loadCellAndValueCheck(final SpreadsheetEngine engine,
-                                                  final SpreadsheetCellReference reference,
+                                                  final SpreadsheetCellReference cell,
                                                   final SpreadsheetEngineEvaluation evaluation,
                                                   final SpreadsheetEngineContext context,
                                                   final Object value) {
-        final SpreadsheetCell cell = this.loadCellOrFail(
+        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
                 engine,
-                reference,
+                cell,
                 evaluation,
                 context
         );
-        this.checkValue(cell, value);
-        return cell;
+        this.checkValue(
+                spreadsheetCell,
+                value
+        );
+        return spreadsheetCell;
     }
 
     default SpreadsheetCell loadCellAndFormattedCheck(final SpreadsheetEngine engine,
-                                                      final SpreadsheetCellReference reference,
+                                                      final SpreadsheetCellReference cell,
                                                       final SpreadsheetEngineEvaluation evaluation,
                                                       final SpreadsheetEngineContext context,
                                                       final Object value,
                                                       final String text) {
         return this.loadCellAndCheck(
                 engine,
-                reference,
+                cell,
                 evaluation,
                 context,
                 value,
@@ -1003,17 +1022,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellAndErrorCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetCellReference reference,
+                                       final SpreadsheetCellReference cell,
                                        final SpreadsheetEngineEvaluation evaluation,
                                        final SpreadsheetEngineContext context,
                                        final String errorContains) {
-        final SpreadsheetCell cell = this.loadCellOrFail(
+        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
                 engine,
-                reference,
+                cell,
                 evaluation,
                 context
         );
-        final SpreadsheetFormula formula = cell.formula();
+        final SpreadsheetFormula formula = spreadsheetCell.formula();
         final Optional<SpreadsheetError> maybeError = formula.error();
 
         this.checkNotEquals(
@@ -1034,24 +1053,24 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default SpreadsheetCell loadCellAndCheck(final SpreadsheetEngine engine,
-                                             final SpreadsheetCellReference reference,
+                                             final SpreadsheetCellReference cell,
                                              final SpreadsheetEngineEvaluation evaluation,
                                              final SpreadsheetEngineContext context,
                                              final Object value,
                                              final String text,
                                              final String errorContains) {
-        final SpreadsheetCell cell = this.loadCellAndValueCheck(
+        final SpreadsheetCell spreadsheetCell = this.loadCellAndValueCheck(
                 engine,
-                reference,
+                cell,
                 evaluation,
                 context,
                 value
         );
 
-        this.checkFormattedValue(cell, text);
+        this.checkFormattedValue(spreadsheetCell, text);
 
         if (null != errorContains) {
-            final SpreadsheetFormula formula = cell.formula();
+            final SpreadsheetFormula formula = spreadsheetCell.formula();
             final Optional<SpreadsheetError> maybeError = formula.error();
 
             this.checkNotEquals(
@@ -1071,11 +1090,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             );
         }
 
-        return cell;
+        return spreadsheetCell;
     }
 
     default void loadCellAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetCellReference reference,
+                                  final SpreadsheetCellReference cell,
                                   final SpreadsheetEngineEvaluation evaluation,
                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
                                   final SpreadsheetEngineContext context,
@@ -1083,12 +1102,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(
                 loaded,
                 engine.loadCells(
-                        reference,
+                        cell,
                         evaluation,
                         deltaProperties,
                         context
                 ),
-                () -> "loadCell " + reference);
+                () -> "loadCell " + cell);
     }
 
     // loadMultipleCellRanges...........................................................................................
@@ -1111,13 +1130,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadMultipleCellRangesAndCheck(final SpreadsheetEngine engine,
-                                                final Set<SpreadsheetCellRangeReference> ranges,
+                                                final Set<SpreadsheetCellRangeReference> cellRanges,
                                                 final SpreadsheetEngineEvaluation evaluation,
                                                 final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                 final SpreadsheetEngineContext context,
                                                 final SpreadsheetCell... updated) {
         final SpreadsheetDelta result = engine.loadMultipleCellRanges(
-                ranges,
+                cellRanges,
                 evaluation,
                 deltaProperties,
                 context
@@ -1141,12 +1160,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(
                 expected,
                 result,
-                () -> "loadCells " + ranges + " " + evaluation
+                () -> "loadCells " + cellRanges + " " + evaluation
         );
     }
 
     default void loadMultipleCellRangesAndCheck(final SpreadsheetEngine engine,
-                                                final Set<SpreadsheetCellRangeReference> ranges,
+                                                final Set<SpreadsheetCellRangeReference> cellRanges,
                                                 final SpreadsheetEngineEvaluation evaluation,
                                                 final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                 final SpreadsheetEngineContext context,
@@ -1154,12 +1173,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         checkEquals(
                 delta,
                 engine.loadMultipleCellRanges(
-                        ranges,
+                        cellRanges,
                         evaluation,
                         deltaProperties,
                         context
                 ),
-                () -> "loadCells " + ranges + " " + evaluation
+                () -> "loadCells " + cellRanges + " " + evaluation
         );
     }
 
