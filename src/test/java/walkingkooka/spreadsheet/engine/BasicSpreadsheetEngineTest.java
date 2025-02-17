@@ -1981,17 +1981,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1Formatted
+        );
         this.loadLabelStoreAndCheck(labelStore);
 
         // verify references all ways are present in the store.
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.toRelative()); // references parse A1 -> B2
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
-
-        this.loadReferencesAndCheck(cellReferenceStore, b2); // references to B2 -> none
-        this.findReferencesWithCellAndCheck(cellReferenceStore, b2, a1.reference()); // references parse B2 -> A1
+        this.loadReferencesAndCheck(
+               cellReferenceStore,
+               b2.toRelative(),
+               a1.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                a1.reference(),
+                b2
+        );
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                b2
+        );
     }
 
     @Test
@@ -2392,11 +2408,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
                 .cellReferences();
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference(), b2.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1.reference(),
+                b2.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                a1.reference()
+        );
 
-        this.loadReferencesAndCheck(cellReferenceStore, b2.reference(), a1Reference.toRelative());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                b2.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                b2.reference(),
+                a1Reference
+        );
     }
 
     @Test
@@ -2794,11 +2824,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
                 .cellReferences();
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2Reference.toRelative());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
-
-        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference(), a1.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                b2Reference,
+                a1.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                a1.reference(),
+                b2Reference
+        );
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                b2.reference()
+        );
     }
 
     @Test
@@ -2954,6 +2997,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "$A$1",
                 "=40+" + e5.reference()
         );
+
         this.saveCellAndCheck(
                 engine,
                 a1,
@@ -2983,14 +3027,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadReferencesAndCheck(
                 cellReferenceStore,
+                a1.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
                 a1.reference(),
-                d4.reference(),
                 e5.reference()
         );
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
 
-        this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, d4.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                d4.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                d4.reference()
+        );
     }
 
     @Test
@@ -3187,23 +3239,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadReferencesAndCheck(
                 cellReferenceStore,
-                a1.reference(),
-                SpreadsheetSelection.parseCell("C2"),
-                e5Reference.toRelative()
+                a1.reference()
         );
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
-                a1.reference()
+                a1.reference(),
+                e5Reference
         );
 
-        this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                d4.reference()
+        );
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 d4.reference()
         );
 
-        this.loadReferencesAndCheck(labelReferencesStore, labelB2);
-        this.loadReferencesAndCheck(labelReferencesStore, labelD4, a1.reference());
+        this.loadReferencesAndCheck(
+                labelReferencesStore,
+                labelB2
+        );
+        this.loadReferencesAndCheck(
+                labelReferencesStore,
+                labelD4,
+                a1.reference()
+        );
     }
 
     // saveCell tests with non expression formula's only value literals.................................................
@@ -3950,14 +4011,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteCellsWhereCellHasCellReferences() {
+    public void testDeleteCellsWhereCellFormulaWithCellReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
-        engine.saveCell(this.cell(a1, "=99+" + b2), context);
+        engine.saveCell(
+                this.cell(
+                        a1,
+                        "=99+" + b2
+                ),
+                context
+        );
 
         this.deleteCellAndCheck(
                 engine,
@@ -3982,8 +4049,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadReferencesAndCheck(
                 cellReferenceStore,
-                a1,
-                b2.toRelative()
+                a1
         );
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
@@ -4001,7 +4067,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteCellsWhereCellHasCellReferrers() {
+    public void testDeleteCellsWhereCellWithCellExternalReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
         final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("$B$2");
@@ -4016,7 +4082,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetCell b2 = this.cell(
-                "$B$2",
+                b2Reference,
                 "=20"
         );
         engine.saveCell(
@@ -4054,11 +4120,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
                 .cellReferences();
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2Reference.toRelative());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                a1.reference(),
+                b2Reference
+        );
 
-        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference(), a1.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                b2.reference(),
+                a1.reference()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                a1.reference(),
+                b2Reference
+        );
     }
 
     @Test

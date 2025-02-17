@@ -690,10 +690,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             int skipCount = 0;
             int loadedCount = 0;
 
-
             // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferenceStore.loadReferences(SpreadsheetCellReference, int offset, int count)
             for (final SpreadsheetCellReference reference : repository.cellReferences()
-                    .load(cell).orElse(Sets.empty())) {
+                    .findReferencesWithCell(cell)) {
                 if(skipCount < offset) {
                     skipCount++;
                     continue;
