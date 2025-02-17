@@ -759,7 +759,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
-                SpreadsheetDeltaProperties.ALL,
                 context
         );
     }
