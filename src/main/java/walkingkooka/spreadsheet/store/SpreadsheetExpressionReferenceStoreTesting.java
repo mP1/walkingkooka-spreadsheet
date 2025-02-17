@@ -314,9 +314,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Override
     T id();
 
-    default void loadAndCheck(final S store,
-                              final T id,
-                              final SpreadsheetCellReference... cells) {
+    default <TT extends SpreadsheetExpressionReference> void loadAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+                                                                          final TT id,
+                                                                          final SpreadsheetCellReference... cells) {
         this.loadAndCheck(
                 store,
                 id,
@@ -324,9 +324,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    default void loadAndCheck(final S store,
-                              final T id,
-                              final Set<SpreadsheetCellReference> cells) {
+    default <TT extends SpreadsheetExpressionReference> void loadAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+                                                                          final TT id,
+                                                                          final Set<SpreadsheetCellReference> cells) {
         if (cells.isEmpty()) {
             this.loadFailCheck(store, id);
         } else {
@@ -335,7 +335,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         }
 
         for (SpreadsheetCellReference cell : cells) {
-            final Set<T> referred = store.findReferencesWithCell(cell);
+            final Set<TT> referred = store.findReferencesWithCell(cell);
             if (!referred.contains(id)) {
                 fail(store + " loadTargets " + cell + " didnt return id " + id + ", actual: " + referred);
             }
@@ -354,9 +354,9 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     }
 
     @SuppressWarnings("unchecked")
-    default void findReferencesWithCellAndCheck(final S store,
-                                                final SpreadsheetCellReference cell,
-                                                final T... expected) {
+    default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+                                                                                            final SpreadsheetCellReference cell,
+                                                                                            final TT... expected) {
         this.findReferencesWithCellAndCheck(
                 store,
                 cell,
@@ -364,16 +364,16 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    default void findReferencesWithCellAndCheck(final S store,
-                                                final SpreadsheetCellReference cell,
-                                                final Set<T> expected) {
+    default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+                                                                                            final SpreadsheetCellReference cell,
+                                                                                            final Set<TT> expected) {
         this.checkEquals(
                 expected,
                 store.findReferencesWithCell(cell),
                 "findReferencesWithCell " + cell
         );
 
-        for (T id : expected) {
+        for (TT id : expected) {
             final Optional<Set<SpreadsheetCellReference>> references = store.load(id);
             if (false == references.isPresent() && references.get().contains(cell)) {
                 fail(store + " load " + id + " didnt return cell " + cell + ", actual: " + references);
