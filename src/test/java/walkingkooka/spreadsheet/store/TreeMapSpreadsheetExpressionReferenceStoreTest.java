@@ -54,7 +54,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 Sets.of(b1)
         );
 
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -83,7 +83,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 Sets.of(b1, c1)
         );
 
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -120,7 +120,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 )
         );
 
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -152,7 +152,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 Sets.of(a1)
         );
 
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -184,7 +184,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 )
         );
 
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -456,7 +456,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 store,
                 Maps.empty()
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.empty()
         );
@@ -489,7 +489,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(c1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         c1,
@@ -516,7 +516,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 store,
                 Maps.empty()
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.empty()
         );
@@ -741,7 +741,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -768,7 +768,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -798,7 +798,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -837,7 +837,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -894,7 +894,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -951,7 +951,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -982,7 +982,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -1016,7 +1016,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(c1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -1044,7 +1044,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -1077,7 +1077,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -1158,7 +1158,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.removeCell(ReferenceAndSpreadsheetCellReference.with(a1, b1));
 
         this.cellToReferencesAndCheck(store, Maps.empty());
-        this.referenceToCellAndCheck(store, Maps.empty());
+        this.referenceToCellsAndCheck(store, Maps.empty());
     }
 
     @Test
@@ -1190,7 +1190,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -1221,7 +1221,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 store,
                 Maps.empty()
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.empty()
         );
@@ -1253,7 +1253,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -1291,7 +1291,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                         Sets.of(a1)
                 )
         );
-        this.referenceToCellAndCheck(
+        this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
                         a1,
@@ -1570,12 +1570,12 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         return Sets.of(this.f99(), this.g99(), this.i99(), this.j99());
     }
 
-    private void referenceToCellAndCheck(final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> map,
-                                         final Map<SpreadsheetCellReference, Set<SpreadsheetCellReference>> cellToReferences) {
+    private void referenceToCellsAndCheck(final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> map,
+                                          final Map<SpreadsheetCellReference, Set<SpreadsheetCellReference>> cellToReferences) {
         this.checkEquals(
                 cellToReferences,
-                map.referenceToCell,
-                "referenceToCell"
+                map.referenceToCells,
+                "referenceToCells"
         );
     }
 
