@@ -65,22 +65,6 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     public void delete(final T reference) {
         Objects.requireNonNull(reference, "reference");
 
-        this.removeAllWithReferenceAndFireDeleteWatchers(reference);
-    }
-
-    /**
-     * Delete the reference and all referrers to that reference.
-     */
-    private void removeAllWithReferenceAndFireDeleteWatchers(final T reference) {
-        if (this.removeAllWithReference(reference)) {
-            this.deleteWatchers.accept(reference);
-        }
-    }
-
-    /**
-     * Delete the cells for the given {@link SpreadsheetExpressionReference}
-     */
-    private boolean removeAllWithReference(final T reference) {
         // where id=label remove label to cells, then remove cell to label.
         final Set<SpreadsheetCellReference> allCells = this.referenceToCell.remove(reference);
 
@@ -102,8 +86,8 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                     }
                 }
             }
+            this.deleteWatchers.accept(reference);
         }
-        return needsFire;
     }
 
     @Override
