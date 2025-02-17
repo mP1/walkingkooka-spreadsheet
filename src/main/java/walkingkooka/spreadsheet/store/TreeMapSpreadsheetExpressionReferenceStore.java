@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.Cast;
+import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -317,8 +318,15 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     // VisibleForTesting
     final Map<SpreadsheetCellReference, SortedSet<T>> cellToReferences;
 
+    // Object...........................................................................................................
+
     @Override
     public String toString() {
-        return this.referenceToCells.toString();
+        return ToStringBuilder.empty()
+                .label("referenceToCells")
+                .value(this.referenceToCells)
+                .label("cellToReferences")
+                .value(this.cellToReferences)
+                .build();
     }
 }

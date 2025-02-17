@@ -1572,20 +1572,25 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     public void testToString() {
         final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
-        final SpreadsheetCellReference b1 = this.b1();
-        final SpreadsheetCellReference c1 = this.c1();
         store.saveCells(
-                a1,
+                SpreadsheetSelection.A1,
                 Sets.of(
-                        b1,
-                        c1
+                        this.b1(),
+                        this.c1()
+                )
+        );
+
+        store.saveCells(
+                SpreadsheetSelection.parseCell("e5"),
+                Sets.of(
+                        SpreadsheetSelection.A1,
+                        this.c1()
                 )
         );
 
         this.toStringAndCheck(
                 store,
-                "{A1=[B1, C1]}"
+                "referenceToCells=A1=B1, C1, E5=A1, C1 cellToReferences=A1=E5, B1=A1, C1=A1, E5"
         );
     }
 
