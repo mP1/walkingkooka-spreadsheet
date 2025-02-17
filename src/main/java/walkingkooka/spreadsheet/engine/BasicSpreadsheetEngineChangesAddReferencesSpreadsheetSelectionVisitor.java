@@ -29,19 +29,19 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
  */
 final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor with(final SpreadsheetCellReference target,
+    static BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor with(final SpreadsheetCellReference cell,
                                                                                       final SpreadsheetStoreRepository repository) {
         return new BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(
-                target,
+                cell,
                 repository
         );
     }
 
     // VisibleForTesting
-    BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(final SpreadsheetCellReference target,
+    BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(final SpreadsheetCellReference cell,
                                                                           final SpreadsheetStoreRepository repository) {
         super();
-        this.target = target;
+        this.cell = cell;
         this.repository = repository;
     }
 
@@ -50,7 +50,7 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
         this.repository.cellReferences()
                 .addCell(
                         ReferenceAndSpreadsheetCellReference.with(
-                                this.target,
+                                this.cell,
                                 cell
                         )
                 );
@@ -62,7 +62,7 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
                 .addCell(
                         ReferenceAndSpreadsheetCellReference.with(
                                 label,
-                                this.target
+                                this.cell
                         )
                 );
     }
@@ -72,22 +72,24 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
         this.repository.rangeToCells()
                 .addValue(
                         cellRange,
-                        this.target
+                        this.cell
                 );
     }
 
     /**
      * The target cell.
      */
-    private final SpreadsheetCellReference target;
+    private final SpreadsheetCellReference cell;
 
     /**
      * Used to get stores.
      */
     private final SpreadsheetStoreRepository repository;
 
+    // Object...........................................................................................................
+
     @Override
     public String toString() {
-        return this.target.toString();
+        return this.cell.toString();
     }
 }
