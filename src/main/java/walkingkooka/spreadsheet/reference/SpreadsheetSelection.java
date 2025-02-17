@@ -62,6 +62,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -108,6 +109,11 @@ public abstract class SpreadsheetSelection implements HasText,
      * The star character represents all cells/columns/rows depending on context.
      */
     public final static CharacterConstant ALL = CharacterConstant.with('*');
+
+    /**
+     * {@see SpreadsheetSelectionIgnoresReferenceKindComparator}
+     */
+    public final static Comparator<SpreadsheetSelection> IGNORES_REFERENCE_KIND_COMPARATOR = SpreadsheetSelectionIgnoresReferenceKindComparator.INSTANCE;
 
     /**
      * Separator by ranges between cells / columns/ rows.
