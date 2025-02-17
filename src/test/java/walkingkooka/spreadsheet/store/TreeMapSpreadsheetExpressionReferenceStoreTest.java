@@ -23,6 +23,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.List;
@@ -458,7 +460,10 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         );
         this.referenceToCellsAndCheck(
                 store,
-                Maps.empty()
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
         );
     }
 
@@ -492,6 +497,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
+                        a1,
+                        Sets.of(b1),
                         c1,
                         Sets.of(d1)
                 )
@@ -518,7 +525,38 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         );
         this.referenceToCellsAndCheck(
                 store,
+                Maps.of(
+                        a1,
+                        Sets.of(b1)
+                )
+        );
+    }
+
+    @Test
+    public void testDeleteAfterSaveLabels() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferenceStore.create();
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        store.saveCells(
+                label1,
+                Sets.of(a1)
+        );
+
+        store.delete(label1);
+
+        this.cellToReferencesAndCheck(
+                store,
                 Maps.empty()
+        );
+        this.referenceToCellsAndCheck(
+                store,
+                Maps.of(
+                        label1,
+                        Sets.of(a1)
+                )
         );
     }
 
@@ -1570,20 +1608,20 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         return Sets.of(this.f99(), this.g99(), this.i99(), this.j99());
     }
 
-    private void referenceToCellsAndCheck(final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> map,
-                                          final Map<SpreadsheetCellReference, Set<SpreadsheetCellReference>> cellToReferences) {
+    private <T extends SpreadsheetExpressionReference> void referenceToCellsAndCheck(final TreeMapSpreadsheetExpressionReferenceStore<T> store,
+                                                                                     final Map<T, Set<SpreadsheetCellReference>> cellToReferences) {
         this.checkEquals(
                 cellToReferences,
-                map.referenceToCells,
+                store.referenceToCells,
                 "referenceToCells"
         );
     }
 
-    private void cellToReferencesAndCheck(final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> map,
-                                          final Map<SpreadsheetCellReference, Set<SpreadsheetCellReference>> cellToReferences) {
+    private <T extends SpreadsheetExpressionReference> void cellToReferencesAndCheck(final TreeMapSpreadsheetExpressionReferenceStore<T> store,
+                                                                                     final Map<SpreadsheetCellReference, Set<T>> cellToReferences) {
         this.checkEquals(
                 cellToReferences,
-                map.cellToReferences,
+                store.cellToReferences,
                 "cellToReferences"
         );
     }

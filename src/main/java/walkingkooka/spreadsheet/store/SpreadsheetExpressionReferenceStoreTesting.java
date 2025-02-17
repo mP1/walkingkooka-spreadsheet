@@ -57,7 +57,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     }
 
     @Test
-    default void testAddDeleteWatcherAndDelete2() {
+    default void testDeleteDoesntFireDeleteWatcher() {
         final Set<SpreadsheetCellReference> references = this.value();
 
         final S store = this.createStore();
@@ -71,7 +71,11 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
         store.delete(id);
 
-        this.checkEquals(Lists.of(id), fired, "fired values");
+        this.checkEquals(
+                Lists.of(),
+                fired,
+                "fired values"
+        );
     }
 
     // addCell..........................................................................................................

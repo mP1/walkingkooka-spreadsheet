@@ -2981,7 +2981,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .storeRepository()
                 .cellReferences();
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1.reference(),
+                d4.reference(),
+                e5.reference()
+        );
         this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
@@ -3180,11 +3185,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5Reference.toRelative());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1.reference(),
+                SpreadsheetSelection.parseCell("C2"),
+                e5Reference.toRelative()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                a1.reference()
+        );
 
         this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, d4.reference());
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                d4.reference()
+        );
 
         this.loadReferencesAndCheck(labelReferencesStore, labelB2);
         this.loadReferencesAndCheck(labelReferencesStore, labelD4, a1.reference());
@@ -3964,11 +3980,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
                 .cellReferences();
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1);
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1);
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1,
+                b2.toRelative()
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                a1
+        );
 
-        this.loadReferencesAndCheck(cellReferenceStore, b2);
-        this.findReferencesWithCellAndCheck(cellReferenceStore, b2);
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                b2
+        );
+        this.findReferencesWithCellAndCheck(
+                cellReferenceStore,
+                b2
+        );
     }
 
     @Test
