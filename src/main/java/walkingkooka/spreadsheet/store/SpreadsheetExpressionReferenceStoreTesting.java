@@ -324,7 +324,6 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    @Override
     default void loadAndCheck(final S store,
                               final T id,
                               final Set<SpreadsheetCellReference> cells) {
