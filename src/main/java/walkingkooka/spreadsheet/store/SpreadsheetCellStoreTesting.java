@@ -256,7 +256,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         );
     }
 
-    default void findCellsWithValueTypeAndCheck(final S store,
+    default void findCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                 final SpreadsheetCellRangeReference cellRange,
                                                 final String valueTypeName,
                                                 final int max,
@@ -270,7 +270,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         );
     }
 
-    default void findCellsWithValueTypeAndCheck(final S store,
+    default void findCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                 final SpreadsheetCellRangeReference cellRange,
                                                 final String valueTypeName,
                                                 final int max,
@@ -310,7 +310,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         );
     }
 
-    default void countCellsWithValueTypeAndCheck(final S store,
+    default void countCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                  final SpreadsheetCellRangeReference cellRange,
                                                  final String valueTypeName,
                                                  final int expected) {
