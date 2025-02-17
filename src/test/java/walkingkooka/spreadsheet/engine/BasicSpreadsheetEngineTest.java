@@ -1262,21 +1262,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         cellStore.save(this.cell(c2, "=3+4"));
         cellStore.save(this.cell(d2, "=5+6"));
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 b2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 1 + 2
         );
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 c2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 3 + 4
         );
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 d2,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1454,7 +1454,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         // formula
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 b1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1463,7 +1463,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         // reference to B1 which has formula
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1502,7 +1502,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 );
 
         // formula
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 b1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1511,7 +1511,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         // reference to B1 which has formula
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -6218,7 +6218,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1 + 4
         ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 a2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -6226,7 +6226,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 2
         );
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 i14.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -6344,7 +6344,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1 + 4
         ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 a2,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -6352,7 +6352,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 2
         );
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 i14.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -7646,7 +7646,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1 + 4
         ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -7654,7 +7654,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 2
         );
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 n9.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -7772,7 +7772,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1 + 4
         ); // reference should have been fixed.
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 b1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -7780,7 +7780,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 2
         );
 
-        this.loadCellAndCheckFormatted2(
+        this.loadCellAndValueCheck2(
                 engine,
                 n9.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
@@ -18329,11 +18329,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private SpreadsheetCell loadCellAndCheckFormatted2(final SpreadsheetEngine engine,
-                                                       final SpreadsheetCellReference reference,
-                                                       final SpreadsheetEngineEvaluation evaluation,
-                                                       final SpreadsheetEngineContext context,
-                                                       final Number value) {
+    private SpreadsheetCell loadCellAndValueCheck2(final SpreadsheetEngine engine,
+                                                   final SpreadsheetCellReference reference,
+                                                   final SpreadsheetEngineEvaluation evaluation,
+                                                   final SpreadsheetEngineContext context,
+                                                   final Number value) {
         final SpreadsheetCell cell = this.loadCellAndValueCheck(
                 engine,
                 reference,
