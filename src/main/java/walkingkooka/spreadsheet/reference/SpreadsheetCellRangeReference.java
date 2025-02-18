@@ -67,7 +67,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     /**
      * Computes the range of the given cells.
      */
-    public static SpreadsheetCellRangeReference fromCells(final List<SpreadsheetCellReference> cells) {
+    public static SpreadsheetCellRangeReference bounds(final List<SpreadsheetCellReference> cells) {
         Objects.requireNonNull(cells, "cells");
 
         final List<SpreadsheetCellReference> copy = Lists.immutable(cells);
@@ -80,7 +80,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                 range = with(Range.singleton(copy.get(0)));
                 break;
             default:
-                range = computeEnclosingRange(copy);
+                range = computeEnclosingBounds(copy);
                 break;
         }
 
@@ -88,7 +88,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     }
 
     @SuppressWarnings("lgtm[java/dereferenced-value-may-be-null]")
-    private static SpreadsheetCellRangeReference computeEnclosingRange(final List<SpreadsheetCellReference> cells) {
+    private static SpreadsheetCellRangeReference computeEnclosingBounds(final List<SpreadsheetCellReference> cells) {
         SpreadsheetColumnReference left = null;
         SpreadsheetRowReference top = null;
 

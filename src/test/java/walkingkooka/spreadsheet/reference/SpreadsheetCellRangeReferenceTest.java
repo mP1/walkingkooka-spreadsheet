@@ -3110,60 +3110,110 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         return this.range(COLUMN1, ROW1, COLUMN2, ROW2);
     }
 
-    // fromCells.......................................................................................................
+    // bounds...........................................................................................................
 
     @Test
-    public void testFromCellsWithNullCellsFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetCellRangeReference.fromCells(null));
+    public void testBoundsWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetCellRangeReference.bounds(null)
+        );
     }
 
     @Test
-    public void testFromCellsEmptyCellsFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellRangeReference.fromCells(Lists.empty()));
+    public void testBoundsWithEmptyListFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetCellRangeReference.bounds(Lists.empty())
+        );
     }
 
     @Test
-    public void testFromCellOne() {
+    public void testBoundsWithListOneElement() {
         final int column = 2;
         final int row = 3;
 
         final SpreadsheetCellReference a = this.cellReference(column, row);
 
-        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(a));
-        this.check(range, column, row, column, row);
-        this.checkEquals(Range.singleton(a), range.range(), "range");
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(Lists.of(a));
+        this.check(
+                range,
+                column,
+                row,
+                column,
+                row
+        );
+        this.checkEquals(
+                Range.singleton(a),
+                range.range(),
+                "range"
+        );
     }
 
     @Test
-    public void testFromCells() {
+    public void testBounds() {
         final SpreadsheetCellReference a = this.cellReference(111, 11);
         final SpreadsheetCellReference b = this.cellReference(112, 12);
         final SpreadsheetCellReference c = this.cellReference(113, 20);
         final SpreadsheetCellReference d = this.cellReference(114, 24);
         final SpreadsheetCellReference e = this.cellReference(115, 24);
 
-        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(a, b, c, d, e));
-        this.check(range, 111, 11, 115, 24);
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(
+                Lists.of(
+                        a,
+                        b,
+                        c,
+                        d,
+                        e
+                )
+        );
+        this.check(
+                range,
+                111,
+                11,
+                115,
+                24
+        );
     }
 
     @Test
-    public void testFromCells2() {
+    public void testBounds2() {
         final SpreadsheetCellReference a = this.cellReference(111, 11);
         final SpreadsheetCellReference b = this.cellReference(112, 12);
         final SpreadsheetCellReference c = this.cellReference(113, 20);
         final SpreadsheetCellReference d = this.cellReference(114, 24);
         final SpreadsheetCellReference e = this.cellReference(115, 24);
 
-        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(e, d, c, b, a));
-        this.check(range, 111, 11, 115, 24);
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(
+                Lists.of(
+                        e,
+                        d,
+                        c,
+                        b,
+                        a
+                )
+        );
+        this.check(
+                range,
+                111,
+                11,
+                115,
+                24
+        );
     }
 
     @Test
-    public void testFromCells3() {
+    public void testBounds3() {
         final SpreadsheetCellReference a = this.cellReference(111, 11);
 
-        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(a));
-        this.check(range, 111, 11, 111, 11);
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(Lists.of(a));
+        this.check(
+                range,
+                111,
+                11,
+                111,
+                11
+        );
     }
 
     // ParseStringTesting.................................................................................
