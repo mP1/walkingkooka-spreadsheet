@@ -53,7 +53,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
         final Set<SpreadsheetLabelMapping> different = Sets.of(
                 SpreadsheetLabelName.labelName("Different")
-                        .setLabelMappingTarget(SpreadsheetSelection.parseCell("A3"))
+                        .setLabelMappingReference(SpreadsheetSelection.parseCell("A3"))
         );
 
         final SpreadsheetDelta after = before.setLabels(different);
@@ -66,7 +66,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     public void testSetLabelsOutsideWindowFiltered() {
         final SpreadsheetDeltaWindowed before = this.createSpreadsheetDelta();
         final Set<SpreadsheetLabelMapping> different = Sets.of(
-                SpreadsheetLabelName.labelName("Different").setLabelMappingTarget(SpreadsheetSelection.parseCell("Z99"))
+                SpreadsheetLabelName.labelName("Different").setLabelMappingReference(SpreadsheetSelection.parseCell("Z99"))
         );
 
         final SpreadsheetDelta after = before.setLabels(different);
@@ -86,14 +86,14 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         final SpreadsheetLabelName kept3 = SpreadsheetLabelName.labelName("Kept2");
 
         final Set<SpreadsheetLabelMapping> different = Sets.of(
-                kept.setLabelMappingTarget(a1),
-                kept3.setLabelMappingTarget(a3),
-                SpreadsheetLabelName.labelName("Lost").setLabelMappingTarget(SpreadsheetSelection.parseCell("Z99"))
+                kept.setLabelMappingReference(a1),
+                kept3.setLabelMappingReference(a3),
+                SpreadsheetLabelName.labelName("Lost").setLabelMappingReference(SpreadsheetSelection.parseCell("Z99"))
         );
 
         final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
-        this.checkLabels(after, Sets.of(kept.setLabelMappingTarget(a1), kept3.setLabelMappingTarget(a3)));
+        this.checkLabels(after, Sets.of(kept.setLabelMappingReference(a1), kept3.setLabelMappingReference(a3)));
         this.checkCells(after, before.cells());
     }
 
@@ -189,8 +189,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 c
         );
 
-        final SpreadsheetLabelMapping labelA1a = this.label1a().setLabelMappingTarget(a1.reference());
-        final SpreadsheetLabelMapping label2b = SpreadsheetSelection.labelName("label2b").setLabelMappingTarget(b2.reference());
+        final SpreadsheetLabelMapping labelA1a = this.label1a().setLabelMappingReference(a1.reference());
+        final SpreadsheetLabelMapping label2b = SpreadsheetSelection.labelName("label2b").setLabelMappingReference(b2.reference());
 
         final Set<SpreadsheetLabelMapping> labels = Sets.of(
                 labelA1a,

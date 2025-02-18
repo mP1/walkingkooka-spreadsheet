@@ -40,18 +40,18 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("label123");
-    private final static SpreadsheetExpressionReference TARGET = cell(1);
+    private final static SpreadsheetExpressionReference REFERENCE = cell(1);
 
     @Test
     public void testWithNullLabelFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> SpreadsheetLabelMapping.with(null, TARGET)
+                () -> SpreadsheetLabelMapping.with(null, REFERENCE)
         );
     }
 
     @Test
-    public void testWithNullTargetFails() {
+    public void testWithNullReferenceFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetLabelMapping.with(LABEL, null)
@@ -59,7 +59,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     @Test
-    public void testWithTargetSameAsLabelFails() {
+    public void testWithReferenceSameAsLabelFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> SpreadsheetLabelMapping.with(LABEL, LABEL)
@@ -70,7 +70,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     public void testWith() {
         final SpreadsheetLabelMapping mapping = this.createObject();
         this.checkLabel(mapping, LABEL);
-        this.checkTarget(mapping, TARGET);
+        this.checkReference(mapping, REFERENCE);
     }
 
     // setLabel.......................................................................................................
@@ -81,12 +81,18 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     @Test
-    public void testSetLabelSameAsTargetFails() {
+    public void testSetLabelSameAsReferenceFails() {
         final SpreadsheetLabelName different = SpreadsheetLabelName.with("different");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, different);
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setLabel(different));
-        this.checkEquals("New label \"different\" must be different parse target \"different\"", thrown.getMessage());
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> mapping.setLabel(different)
+        );
+        this.checkEquals(
+                "Label \"different\" and reference \"different\" must be different",
+                thrown.getMessage()
+        );
     }
 
     @Test
@@ -103,43 +109,43 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
         assertNotSame(mapping, different);
         this.checkLabel(different, differentLabel);
-        this.checkTarget(different, TARGET);
+        this.checkReference(different, REFERENCE);
     }
 
-    // setTarget.......................................................................................................
+    // setReference.....................................................................................................
 
     @Test
-    public void testSetTargetNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createObject().setTarget(null));
+    public void testSetReferenceWithNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createObject().setReference(null));
     }
 
     @Test
-    public void testSetTargetSameLabelFails() {
+    public void testSetReferenceSameLabelFails() {
         final SpreadsheetLabelMapping mapping = this.createObject();
         assertSame(LABEL, mapping.label());
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setTarget(LABEL));
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setReference(LABEL));
         this.checkEquals(
-                "Target \"label123\" must be different to label \"label123\"",
+                "Reference \"label123\" must be different to label \"label123\"",
                 thrown.getMessage()
         );
     }
 
     @Test
-    public void testSetTargetSame() {
+    public void testSetReferenceSame() {
         final SpreadsheetLabelMapping mapping = this.createObject();
-        assertSame(mapping, mapping.setTarget(TARGET));
+        assertSame(mapping, mapping.setReference(REFERENCE));
     }
 
     @Test
-    public void testSetTargetDifferent() {
+    public void testSetReferenceDifferent() {
         final SpreadsheetLabelMapping mapping = this.createObject();
         final SpreadsheetExpressionReference differentTarget = cell(999);
-        final SpreadsheetLabelMapping different = mapping.setTarget(differentTarget);
+        final SpreadsheetLabelMapping different = mapping.setReference(differentTarget);
 
         assertNotSame(mapping, different);
         this.checkLabel(different, LABEL);
-        this.checkTarget(different, differentTarget);
+        this.checkReference(different, differentTarget);
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
@@ -155,13 +161,13 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
                 this.createObject(),
                 "{\n" +
                         "  \"label\": \"label123\",\n" +
-                        "  \"target\": \"$B3\"\n" +
+                        "  \"reference\": \"$B3\"\n" +
                         "}"
         );
     }
 
     @Test
-    public void testJsonRoundtripCellTarget() {
+    public void testJsonRoundtripCellReference() {
         this.marshallRoundTrip2(SpreadsheetSelection.A1);
     }
 
@@ -178,7 +184,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     private void marshallRoundTrip2(final SpreadsheetExpressionReference reference) {
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetLabelName.with("Label234")
-                        .setLabelMappingTarget(reference)
+                        .setLabelMappingReference(reference)
         );
     }
 
@@ -205,12 +211,22 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testEqualsDifferentLabel() {
-        this.checkNotEquals(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("different"), TARGET));
+        this.checkNotEquals(
+                SpreadsheetLabelMapping.with(
+                        SpreadsheetSelection.labelName("different"),
+                        REFERENCE
+                )
+        );
     }
 
     @Test
-    public void testEqualsDifferentCell() {
-        this.checkNotEquals(SpreadsheetLabelMapping.with(LABEL, cell(99)));
+    public void testEqualsDifferentReference() {
+        this.checkNotEquals(
+                SpreadsheetLabelMapping.with(
+                        LABEL,
+                        cell(99)
+                )
+        );
     }
 
     // compareTo........................................................................................................
@@ -260,7 +276,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     }
 
     @Test
-    public void testCompareToSameLabelsDifferentTarget() {
+    public void testCompareToSameLabelsDifferentReference() {
         final SpreadsheetLabelName label = SpreadsheetLabelName.with("Label123");
 
         this.compareToAndCheckLess(
@@ -325,14 +341,14 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Override
     public SpreadsheetLabelMapping createComparable() {
-        return SpreadsheetLabelMapping.with(LABEL, TARGET);
+        return SpreadsheetLabelMapping.with(LABEL, REFERENCE);
     }
 
     // toString...............................................................................................
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createObject(), LABEL + "=" + TARGET);
+        this.toStringAndCheck(this.createObject(), LABEL + "=" + REFERENCE);
     }
 
     // helpers...............................................................................................
@@ -341,9 +357,9 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.checkEquals(label, mapping.label(), "label");
     }
 
-    private void checkTarget(final SpreadsheetLabelMapping mapping,
-                             final SpreadsheetExpressionReference reference) {
-        this.checkEquals(reference, mapping.target(), "reference");
+    private void checkReference(final SpreadsheetLabelMapping mapping,
+                                final SpreadsheetExpressionReference reference) {
+        this.checkEquals(reference, mapping.reference(), "reference");
     }
 
     private static SpreadsheetCellReference cell(final int column) {

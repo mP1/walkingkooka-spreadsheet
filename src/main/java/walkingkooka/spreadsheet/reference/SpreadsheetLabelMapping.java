@@ -44,13 +44,13 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
      * Creates a new {@link SpreadsheetLabelMapping}
      */
     public static SpreadsheetLabelMapping with(final SpreadsheetLabelName label,
-                                               final SpreadsheetExpressionReference target) {
+                                               final SpreadsheetExpressionReference reference) {
         checkLabel(label);
-        checkTarget(target, label);
+        checkReference(reference, label);
 
         return new SpreadsheetLabelMapping(
                 label,
-                target
+                reference
         );
     }
 
@@ -58,9 +58,9 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
      * Private ctor use factory
      */
     private SpreadsheetLabelMapping(final SpreadsheetLabelName label,
-                                    final SpreadsheetExpressionReference target) {
+                                    final SpreadsheetExpressionReference reference) {
         this.label = label;
-        this.target = target;
+        this.reference = reference;
     }
 
     public SpreadsheetLabelName label() {
@@ -70,23 +70,23 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     public SpreadsheetLabelMapping setLabel(final SpreadsheetLabelName label) {
         checkLabel(label);
 
-        final SpreadsheetExpressionReference target = this.target;
-        if (label.equals(target)) {
+        final SpreadsheetExpressionReference reference = this.reference;
+        if (label.equals(reference)) {
             throw new IllegalArgumentException(
-                    "New label " +
+                    "Label " +
                             CharSequences.quote(
                                     label.toString()
                             ) +
-                            " must be different parse target " +
-                            CharSequences.quote(target.toString()
-                            )
+                            " and reference " +
+                            CharSequences.quote(reference.toString()) +
+                            " must be different"
             );
         }
 
 
         return this.label.equals(label) ?
                 this :
-                this.replace(label, target);
+                this.replace(label, reference);
     }
 
     private static void checkLabel(final SpreadsheetLabelName label) {
@@ -95,27 +95,27 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     private final SpreadsheetLabelName label;
 
-    public SpreadsheetExpressionReference target() {
-        return this.target;
+    public SpreadsheetExpressionReference reference() {
+        return this.reference;
     }
 
-    public SpreadsheetLabelMapping setTarget(final SpreadsheetExpressionReference target) {
-        checkTarget(target, this.label);
+    public SpreadsheetLabelMapping setReference(final SpreadsheetExpressionReference reference) {
+        checkReference(reference, this.label);
 
-        return this.target.equals(target) ?
+        return this.reference.equals(reference) ?
                 this :
-                this.replace(this.label, target);
+                this.replace(this.label, reference);
     }
 
-    private final SpreadsheetExpressionReference target;
+    private final SpreadsheetExpressionReference reference;
 
-    private static void checkTarget(final SpreadsheetExpressionReference target,
-                                    final SpreadsheetLabelName label) {
+    private static void checkReference(final SpreadsheetExpressionReference target,
+                                       final SpreadsheetLabelName label) {
         Objects.requireNonNull(target, "target");
 
         if (target.equals(label)) {
             throw new IllegalArgumentException(
-                    "Target " +
+                    "Reference " +
                             CharSequences.quote(
                                     target.toString()
                             ) +
@@ -128,8 +128,8 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     }
 
     private SpreadsheetLabelMapping replace(final SpreadsheetLabelName label,
-                                            final SpreadsheetExpressionReference target) {
-        return new SpreadsheetLabelMapping(label, target);
+                                            final SpreadsheetExpressionReference reference) {
+        return new SpreadsheetLabelMapping(label, reference);
     }
 
     // HateosResource............................................................................................
@@ -154,7 +154,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         Objects.requireNonNull(node, "node");
 
         SpreadsheetLabelName labelName = null;
-        SpreadsheetExpressionReference target = null;
+        SpreadsheetExpressionReference reference = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -165,8 +165,8 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
                             SpreadsheetLabelName.class
                     );
                     break;
-                case TARGET_PROPERTY_STRING:
-                    target = context.unmarshall(
+                case REFERENCE_PROPERTY_STRING:
+                    reference = context.unmarshall(
                             child,
                             SpreadsheetExpressionReference.class
                     );
@@ -180,24 +180,24 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         if (null == labelName) {
             JsonNodeUnmarshallContext.missingProperty(LABEL_PROPERTY, node);
         }
-        if (null == target) {
-            JsonNodeUnmarshallContext.missingProperty(TARGET_PROPERTY, node);
+        if (null == reference) {
+            JsonNodeUnmarshallContext.missingProperty(REFERENCE_PROPERTY, node);
         }
 
-        return new SpreadsheetLabelMapping(labelName, target);
+        return new SpreadsheetLabelMapping(labelName, reference);
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
                 .set(LABEL_PROPERTY, context.marshall(this.label))
-                .set(TARGET_PROPERTY, context.marshall(this.target));
+                .set(REFERENCE_PROPERTY, context.marshall(this.reference));
     }
 
     private final static String LABEL_PROPERTY_STRING = "label";
-    private final static String TARGET_PROPERTY_STRING = "target";
+    private final static String REFERENCE_PROPERTY_STRING = "reference";
 
     private final static JsonPropertyName LABEL_PROPERTY = JsonPropertyName.with(LABEL_PROPERTY_STRING);
-    private final static JsonPropertyName TARGET_PROPERTY = JsonPropertyName.with(TARGET_PROPERTY_STRING);
+    private final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register(
@@ -216,7 +216,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.label, this.target);
+        return Objects.hash(this.label, this.reference);
     }
 
     @Override
@@ -228,12 +228,12 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     private boolean equals0(final SpreadsheetLabelMapping other) {
         return this.label.equals(other.label) &
-                this.target.equals(other.target);
+                this.reference.equals(other.reference);
     }
 
     @Override
     public String toString() {
-        return this.label + "=" + this.target;
+        return this.label + "=" + this.reference;
     }
 
     // Comparable.......................................................................................................
@@ -245,10 +245,10 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     public int compareTo(final SpreadsheetLabelMapping other) {
         int compareTo = this.label.compareTo(other.label);
         if (Comparators.EQUAL == compareTo) {
-            compareTo = this.target.toRelative()
+            compareTo = this.reference.toRelative()
                     .toString()
                     .compareToIgnoreCase(
-                            other.target.toRelative()
+                            other.reference.toRelative()
                                     .toString()
                     );
         }
@@ -260,6 +260,6 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
 
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.println(this.label() + ": " + this.target());
+        printer.println(this.label() + ": " + this.reference());
     }
 }

@@ -139,7 +139,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private Set<SpreadsheetLabelMapping> labelMappingsLabel123ToC3E5() {
         return Sets.of(
                 SpreadsheetSelection.labelName("Label123")
-                        .setLabelMappingTarget(
+                        .setLabelMappingReference(
                                 SpreadsheetSelection.parseCellRange("C3:E5")
                         )
         );

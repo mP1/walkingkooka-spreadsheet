@@ -73,7 +73,7 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
         // load the cell or cells pointed to by the label
         this.accept(
                 this.loader.loadLabelOrFail(label)
-                        .target()
+                        .reference()
         );
     }
 

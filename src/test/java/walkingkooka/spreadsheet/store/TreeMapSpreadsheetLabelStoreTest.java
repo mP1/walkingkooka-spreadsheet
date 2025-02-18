@@ -42,8 +42,8 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2= SpreadsheetSelection.labelName("Label222");
 
-        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingTarget(label2);
-        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingTarget(label1);
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(label2);
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingReference(label1);
 
         store.save(mapping1);
 
@@ -73,9 +73,9 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetLabelName label2= SpreadsheetSelection.labelName("Label222");
         final SpreadsheetLabelName label3= SpreadsheetSelection.labelName("Label333");
 
-        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingTarget(label2);
-        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingTarget(label3);
-        final SpreadsheetLabelMapping mapping3 = label3.setLabelMappingTarget(label1);
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(label2);
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingReference(label3);
+        final SpreadsheetLabelMapping mapping3 = label3.setLabelMappingReference(label1);
 
         store.save(mapping1);
         store.save(mapping2);
@@ -114,17 +114,17 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference a2 = this.a2();
         final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("A3");
 
-        store.save(label1.setLabelMappingTarget(a1));
-        store.save(label2.setLabelMappingTarget(a2));
-        store.save(label3.setLabelMappingTarget(a3));
+        store.save(label1.setLabelMappingReference(a1));
+        store.save(label2.setLabelMappingReference(a2));
+        store.save(label3.setLabelMappingReference(a3));
 
         this.betweenAndCheck(
                 store,
                 label1,
                 label3,
-                label1.setLabelMappingTarget(a1),
-                label2.setLabelMappingTarget(a2),
-                label3.setLabelMappingTarget(a3)
+                label1.setLabelMappingReference(a1),
+                label2.setLabelMappingReference(a2),
+                label3.setLabelMappingReference(a3)
         );
     }
 
@@ -140,15 +140,15 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference a2 = this.a2();
         final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("A3");
 
-        store.save(label1.setLabelMappingTarget(a1));
-        store.save(label2.setLabelMappingTarget(a2));
-        store.save(label3.setLabelMappingTarget(a3));
+        store.save(label1.setLabelMappingReference(a1));
+        store.save(label2.setLabelMappingReference(a2));
+        store.save(label3.setLabelMappingReference(a3));
 
         this.betweenAndCheck(
                 store,
                 label2,
                 label2,
-                label2.setLabelMappingTarget(a2)
+                label2.setLabelMappingReference(a2)
         );
     }
 
@@ -177,8 +177,8 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference a2 = this.a2();
 
-        store.save(label1.setLabelMappingTarget(a1));
-        store.save(label2.setLabelMappingTarget(a2));
+        store.save(label1.setLabelMappingReference(a1));
+        store.save(label2.setLabelMappingReference(a2));
 
         this.labelsAndCheck(
                 store,
@@ -209,8 +209,8 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference a2 = this.a2();
 
-        store.save(label1.setLabelMappingTarget(a1));
-        final SpreadsheetLabelMapping mapping = store.save(label2.setLabelMappingTarget(a2));
+        store.save(label1.setLabelMappingReference(a1));
+        final SpreadsheetLabelMapping mapping = store.save(label2.setLabelMappingReference(a2));
 
         this.labelsAndCheck(
                 store,
@@ -242,8 +242,8 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellRangeReference a2 = SpreadsheetSelection.parseCellRange("a2:b3");
 
-        store.save(label1.setLabelMappingTarget(a1));
-        final SpreadsheetLabelMapping mapping = store.save(label2.setLabelMappingTarget(a2));
+        store.save(label1.setLabelMappingReference(a1));
+        final SpreadsheetLabelMapping mapping = store.save(label2.setLabelMappingReference(a2));
 
         this.labelsAndCheck(
                 store,
@@ -269,7 +269,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         final SpreadsheetLabelName label = this.label1();
         final SpreadsheetCellReference cell = this.a1();
-        final SpreadsheetLabelMapping mapping = label.setLabelMappingTarget(cell);
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(cell);
 
         store.save(mapping);
 
@@ -287,7 +287,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         final SpreadsheetLabelName label = this.label1();
         final SpreadsheetCellReference cell = this.a1();
-        final SpreadsheetLabelMapping mapping = label.setLabelMappingTarget(cell);
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(cell);
 
         store.save(mapping);
 
@@ -305,7 +305,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         final SpreadsheetLabelName label = this.label1();
         final SpreadsheetCellReference cell = this.a1();
-        final SpreadsheetLabelMapping mapping = label.setLabelMappingTarget(cell);
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(cell);
 
         store.save(mapping);
         store.save(SpreadsheetLabelMapping.with(SpreadsheetLabelName.labelName("xyz"), this.a1()));
@@ -324,7 +324,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("Label123");
         final SpreadsheetCellReference cell = this.a1();
-        final SpreadsheetLabelMapping mapping = label.setLabelMappingTarget(cell);
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(cell);
 
         store.save(mapping);
 
@@ -338,11 +338,11 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference cell = this.a1();
 
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
-        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingTarget(cell);
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(cell);
         store.save(mapping1);
 
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label1234");
-        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingTarget(cell);
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingReference(cell);
         store.save(mapping2);
 
         final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");
@@ -363,11 +363,11 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetCellReference cell = this.a1();
 
         final SpreadsheetLabelName label1 = SpreadsheetLabelName.labelName("Label123");
-        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingTarget(cell);
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(cell);
         store.save(mapping1);
 
         final SpreadsheetLabelName label2 = SpreadsheetLabelName.labelName("Label1234");
-        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingTarget(cell);
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingReference(cell);
         store.save(mapping2);
 
         final SpreadsheetLabelName label3 = SpreadsheetLabelName.labelName("Label999");

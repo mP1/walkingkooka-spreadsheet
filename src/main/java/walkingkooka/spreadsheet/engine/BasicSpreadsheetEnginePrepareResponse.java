@@ -412,11 +412,11 @@ final class BasicSpreadsheetEnginePrepareResponse {
         if (this.shouldSaveUpdateCells) {
             SpreadsheetExpressionReference target;
             do {
-                target = labelMapping.target();
+                target = labelMapping.reference();
                 if (target instanceof SpreadsheetLabelName) {
                     target = this.labelStore.load(
                                     target.toLabelName()
-                            ).map(SpreadsheetLabelMapping::target)
+                            ).map(SpreadsheetLabelMapping::reference)
                             .orElse(null);
                 }
             } while (target instanceof SpreadsheetLabelName);
