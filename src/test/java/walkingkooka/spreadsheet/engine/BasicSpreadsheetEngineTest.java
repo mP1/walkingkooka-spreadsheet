@@ -12221,7 +12221,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetDelta.NO_CELLS,
                 b2.cellRange(b2),
-                SpreadsheetCellRangeReference.fromCells(Lists.of(c2)),
+                SpreadsheetCellRangeReference.bounds(Lists.of(c2)),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setDeletedCells(
@@ -12325,7 +12325,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetDelta.NO_CELLS,
                 b2.cellRange(b2),
-                SpreadsheetCellRangeReference.fromCells(
+                SpreadsheetCellRangeReference.bounds(
                         Lists.of(
                                 b2,
                                 c2
@@ -12661,7 +12661,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellK21, cellL22),
-                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
+                SpreadsheetCellRangeReference.bounds(Lists.of(k21, l22)),
                 ae41.cellRange(ae41.add(2, 2)),
                 context,
                 SpreadsheetDelta.EMPTY
@@ -12729,7 +12729,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         cellK21,
                         cellL22
                 ),
-                SpreadsheetCellRangeReference.fromCells(
+                SpreadsheetCellRangeReference.bounds(
                         Lists.of(
                                 k21,
                                 l22
@@ -12804,7 +12804,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellK21, cellL22),
-                SpreadsheetCellRangeReference.fromCells(Lists.of(k21, l22)),
+                SpreadsheetCellRangeReference.bounds(Lists.of(k21, l22)),
                 d.cellRange(d.add(2, 2)),
                 context,
                 SpreadsheetDelta.EMPTY
@@ -12875,7 +12875,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         cellK21,
                         cellL22
                 ),
-                SpreadsheetCellRangeReference.fromCells(
+                SpreadsheetCellRangeReference.bounds(
                         Lists.of(
                                 k21,
                                 l22
@@ -12973,7 +12973,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         cellK21,
                         cellL22
                 ),
-                SpreadsheetCellRangeReference.fromCells(
+                SpreadsheetCellRangeReference.bounds(
                         Lists.of(
                                 k21,
                                 l22

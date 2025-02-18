@@ -470,7 +470,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 SpreadsheetFormula.EMPTY
                         .setText("1")
         );
-        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.fromCells(Lists.of(SpreadsheetSelection.parseCell("C3")));
+        final SpreadsheetCellRangeReference range = SpreadsheetCellRangeReference.bounds(Lists.of(SpreadsheetSelection.parseCell("C3")));
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(spreadsheetCell),
                 range,
