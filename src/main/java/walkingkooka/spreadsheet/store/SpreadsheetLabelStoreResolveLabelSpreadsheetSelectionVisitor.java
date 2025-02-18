@@ -92,7 +92,7 @@ final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor extends
     protected void visit(final SpreadsheetLabelName label) {
         final Optional<SpreadsheetLabelMapping> mapping = this.store.load(label);
         if (mapping.isPresent()) {
-            this.accept(mapping.get().target());
+            this.accept(mapping.get().reference());
         }
     }
 

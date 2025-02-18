@@ -88,13 +88,13 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label333");
 
         store.save(
-                label3.setLabelMappingTarget(label1)
+                label3.setLabelMappingReference(label1)
         );
         store.save(
-                label2.setLabelMappingTarget(label3)
+                label2.setLabelMappingReference(label3)
         );
         store.save(
-                label1.setLabelMappingTarget(label2)
+                label1.setLabelMappingReference(label2)
         );
 
         final IllegalStateException thrown = assertThrows(
@@ -126,7 +126,7 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         final SpreadsheetCellReference cell = this.cell();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.setLabelMappingTarget(cell));
+        store.save(label.setLabelMappingReference(cell));
 
         this.resolveLabelAndCheck(
                 label,
@@ -142,8 +142,8 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         final SpreadsheetCellReference cell = this.cell();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.setLabelMappingTarget(label2));
-        store.save(label2.setLabelMappingTarget(cell));
+        store.save(label.setLabelMappingReference(label2));
+        store.save(label2.setLabelMappingReference(cell));
 
         this.resolveLabelAndCheck(
                 label,
@@ -158,7 +158,7 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
         final SpreadsheetCellRangeReference range = this.range();
 
         final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
-        store.save(label.setLabelMappingTarget(range));
+        store.save(label.setLabelMappingReference(range));
 
         this.resolveLabelAndCheck(
                 label,

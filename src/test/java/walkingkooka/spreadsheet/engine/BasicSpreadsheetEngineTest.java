@@ -632,7 +632,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
 
-        final SpreadsheetLabelMapping labelMapping = LABEL.setLabelMappingTarget(LABEL_CELL);
+        final SpreadsheetLabelMapping labelMapping = LABEL.setLabelMappingReference(LABEL_CELL);
         context.storeRepository()
                 .labels()
                 .save(labelMapping);
@@ -643,7 +643,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setDeletedCells(
                                 Sets.of(LABEL_CELL)
                         ).setLabels(
-                                Sets.of(LABEL.setLabelMappingTarget(LABEL_CELL))
+                                Sets.of(LABEL.setLabelMappingReference(LABEL_CELL))
                         ).setColumnCount(
                                 OptionalInt.of(0)
                         ).setRowCount(
@@ -726,7 +726,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelMapping labelMapping = context.storeRepository()
                 .labels()
-                .save(LABEL.setLabelMappingTarget(LABEL_CELL));
+                .save(LABEL.setLabelMappingReference(LABEL_CELL));
 
         this.checkEquals(
                 SpreadsheetDelta.EMPTY
@@ -1578,7 +1578,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .cells()
                 .save(cell);
 
-        final SpreadsheetLabelMapping label = LABEL.setLabelMappingTarget(a1);
+        final SpreadsheetLabelMapping label = LABEL.setLabelMappingReference(a1);
 
         context.storeRepository()
                 .labels()
@@ -2238,7 +2238,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingTarget(SpreadsheetSelection.A1);
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(SpreadsheetSelection.A1);
 
         engine.saveLabel(
                 mapping,
@@ -2282,7 +2282,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingTarget(SpreadsheetSelection.A1);
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(SpreadsheetSelection.A1);
 
         engine.saveLabel(
                 mapping,
@@ -2959,7 +2959,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 ).setLabels(
                         Sets.of(
-                                labelB2.setLabelMappingTarget(b2.reference())
+                                labelB2.setLabelMappingReference(b2.reference())
                         )
                 ).setColumnWidths(
                         columnWidths("A,B")
@@ -5119,7 +5119,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(SpreadsheetSelection.parseCell("$N$10"))
+                                        LABEL.setLabelMappingReference(SpreadsheetSelection.parseCell("$N$10"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(c1, n9, o10)
@@ -6132,7 +6132,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(SpreadsheetSelection.parseCell("$A$4"))
+                                        LABEL.setLabelMappingReference(SpreadsheetSelection.parseCell("$A$4"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(a6)
@@ -6879,7 +6879,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$A$10:$A$15")
                                         )
                                 )
@@ -6960,7 +6960,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$A$11:$A$16")
                                         )
                                 )
@@ -7004,7 +7004,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$A$6:$A$15")
                                         )
                                 )
@@ -7056,7 +7056,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$A$6:$A$11")
                                         )
                                 )
@@ -7552,7 +7552,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(SpreadsheetSelection.parseCell("$C$1"))
+                                        LABEL.setLabelMappingReference(SpreadsheetSelection.parseCell("$C$1"))
                                 )
                         ).setDeletedCells(
                                 Sets.of(e1)
@@ -8288,7 +8288,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$J$1:$O$1")
                                         )
                                 )
@@ -8375,7 +8375,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$K$1:$P$1")
                                         )
                                 )
@@ -8419,7 +8419,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$F$1:$O$1")
                                         )
                                 )
@@ -8471,7 +8471,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$F$1:$K$1")
                                         )
                                 )
@@ -8877,7 +8877,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCell("$O$9")
                                         )
                                 )
@@ -9090,7 +9090,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$P$1:$U$1")
                                         )
                                 )
@@ -10292,7 +10292,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingTarget(
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCellRange("$A$16:$A$21")
                                         )
                                 )
@@ -11026,7 +11026,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("C3");
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
 
-        labelStore.save(label.setLabelMappingTarget(b2));
+        labelStore.save(label.setLabelMappingReference(b2));
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("B2:C3");
 
@@ -11040,7 +11040,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(SpreadsheetDelta.NO_CELLS)
                         .setLabels(
                                 Sets.of(
-                                        label.setLabelMappingTarget(b2)
+                                        label.setLabelMappingReference(b2)
                                 )
                         ).setColumnCount(
                                 OptionalInt.of(0)
@@ -11327,7 +11327,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelD4");
 
         labelStore.save(
-                label.setLabelMappingTarget(
+                label.setLabelMappingReference(
                         d4.reference()
                 )
         );
@@ -11356,7 +11356,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setWindow(window)
                         .setLabels(
                                 Sets.of(
-                                        label.setLabelMappingTarget(d4.reference())
+                                        label.setLabelMappingReference(d4.reference())
                                 )
                         ).setColumnWidths(
                                 columnWidths("C,D")
@@ -11381,7 +11381,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
         final SpreadsheetLabelMapping mapping = labelStore.save(
-                label.setLabelMappingTarget(c3)
+                label.setLabelMappingReference(c3)
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:d4");
@@ -11415,7 +11415,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
         final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
         final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(
-                labelC3d4.setLabelMappingTarget(c3d4)
+                labelC3d4.setLabelMappingReference(c3d4)
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
@@ -11447,12 +11447,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelName labelC3 = SpreadsheetLabelName.labelName("LabelC3");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-        final SpreadsheetLabelMapping mappingC3 = labelStore.save(labelC3.setLabelMappingTarget(c3));
+        final SpreadsheetLabelMapping mappingC3 = labelStore.save(labelC3.setLabelMappingReference(c3));
 
         final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
         final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
         final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(
-                labelC3d4.setLabelMappingTarget(c3d4)
+                labelC3d4.setLabelMappingReference(c3d4)
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
@@ -11494,7 +11494,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelD4");
         final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
         labelStore.save(
-                label.setLabelMappingTarget(d4)
+                label.setLabelMappingReference(d4)
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("c3:d4");
@@ -11515,7 +11515,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        label.setLabelMappingTarget(d4)
+                                        label.setLabelMappingReference(d4)
                                 )
                         ).setColumnWidths(
                                 columnWidths("C")
@@ -13671,7 +13671,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         engine.saveLabel(
-                label.setLabelMappingTarget(SpreadsheetSelection.A1),
+                label.setLabelMappingReference(SpreadsheetSelection.A1),
                 context
         );
 
@@ -13696,7 +13696,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                 ).setLabels(
                         Sets.of(
-                                label.setLabelMappingTarget(SpreadsheetSelection.A1)
+                                label.setLabelMappingReference(SpreadsheetSelection.A1)
                         )
                 ).setColumnWidths(
                         columnWidths("A")
@@ -13842,7 +13842,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         // points to cell
-        final SpreadsheetLabelMapping mappingLabel123 = LABEL.setLabelMappingTarget(
+        final SpreadsheetLabelMapping mappingLabel123 = LABEL.setLabelMappingReference(
                 SpreadsheetSelection.parseCell("B2")
         );
 
@@ -13879,7 +13879,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         // points to cell
-        final SpreadsheetLabelMapping mappingLabel123 = LABEL.setLabelMappingTarget(SpreadsheetSelection.A1);
+        final SpreadsheetLabelMapping mappingLabel123 = LABEL.setLabelMappingReference(SpreadsheetSelection.A1);
 
         engine.saveLabel(
                 mappingLabel123,
@@ -13935,7 +13935,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
 
-        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingTarget(
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(
                 b2.reference()
         );
 
@@ -13991,7 +13991,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingTarget(
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(
                 SpreadsheetSelection.A1
         );
 
@@ -14251,8 +14251,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
 
-        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingTarget(label2);
-        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingTarget(label1);
+        final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(label2);
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingReference(label1);
 
         engine.saveLabel(
                 mapping1,
@@ -16994,7 +16994,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference home = SpreadsheetSelection.parseCell("B2");
         engine.saveLabel(
-                LABEL.setLabelMappingTarget(
+                LABEL.setLabelMappingReference(
                         home
                 ),
                 context
@@ -17020,7 +17020,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference home = SpreadsheetSelection.parseCell("B2");
         engine.saveLabel(
-                LABEL.setLabelMappingTarget(
+                LABEL.setLabelMappingReference(
                         home.toCellRange()
                 ),
                 context
@@ -17046,7 +17046,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference home = SpreadsheetSelection.parseCell("B2");
         engine.saveLabel(
-                LABEL.setLabelMappingTarget(
+                LABEL.setLabelMappingReference(
                         SpreadsheetSelection.parseCellRange("B2:B3")
                 ),
                 context
@@ -17130,7 +17130,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         context.storeRepository()
                 .labels()
-                .save(LABEL.setLabelMappingTarget(SpreadsheetSelection.parseCell("B2")));
+                .save(LABEL.setLabelMappingReference(SpreadsheetSelection.parseCell("B2")));
 
         final SpreadsheetViewport viewport = SpreadsheetSelection.A1
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
@@ -17249,7 +17249,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         context.storeRepository()
                 .labels()
-                .save(LABEL.setLabelMappingTarget(selection));
+                .save(LABEL.setLabelMappingReference(selection));
 
         final SpreadsheetViewport viewport = SpreadsheetSelection.A1
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
@@ -17281,7 +17281,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         context.storeRepository()
                 .labels()
-                .save(LABEL.setLabelMappingTarget(selection));
+                .save(LABEL.setLabelMappingReference(selection));
 
         this.navigateAndCheck(
                 engine,
@@ -17319,7 +17319,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         context.storeRepository()
                 .labels()
-                .save(LABEL.setLabelMappingTarget(selection));
+                .save(LABEL.setLabelMappingReference(selection));
 
         this.navigateAndCheck(
                 engine,

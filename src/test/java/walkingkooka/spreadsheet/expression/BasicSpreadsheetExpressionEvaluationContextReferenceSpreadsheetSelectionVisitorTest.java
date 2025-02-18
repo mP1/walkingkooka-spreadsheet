@@ -163,7 +163,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName l) {
                         checkEquals(label, l);
                         return Optional.of(
-                                l.setLabelMappingTarget(cell)
+                                l.setLabelMappingReference(cell)
                         );
                     }
                 },

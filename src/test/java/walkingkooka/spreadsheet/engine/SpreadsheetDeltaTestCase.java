@@ -254,7 +254,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final D delta = this.createSpreadsheetDelta();
         final Set<SpreadsheetLabelMapping> labels = delta.labels();
 
-        assertThrows(UnsupportedOperationException.class, () -> labels.add(this.label1b().setLabelMappingTarget(this.a1().reference())));
+        assertThrows(UnsupportedOperationException.class, () -> labels.add(this.label1b().setLabelMappingReference(this.a1().reference())));
 
         this.checkLabels(delta, this.labels());
     }
@@ -1297,10 +1297,10 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final Set<SpreadsheetLabelMapping> labels() {
         return Sets.of(
-                this.label1a().setLabelMappingTarget(this.a1().reference()),
-                this.label1b().setLabelMappingTarget(this.a1().reference()),
-                this.label2().setLabelMappingTarget(this.b2().reference()),
-                this.label3().setLabelMappingTarget(SpreadsheetSelection.parseCellRange("C3:D4"))
+                this.label1a().setLabelMappingReference(this.a1().reference()),
+                this.label1b().setLabelMappingReference(this.a1().reference()),
+                this.label2().setLabelMappingReference(this.b2().reference()),
+                this.label3().setLabelMappingReference(SpreadsheetSelection.parseCellRange("C3:D4"))
         );
     }
 
@@ -1308,10 +1308,10 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetCellReference a1 = this.a1().reference();
 
         return Sets.of(
-                this.label1a().setLabelMappingTarget(a1),
-                this.label1b().setLabelMappingTarget(a1),
-                this.label2().setLabelMappingTarget(a1),
-                this.label3().setLabelMappingTarget(a1)
+                this.label1a().setLabelMappingReference(a1),
+                this.label1b().setLabelMappingReference(a1),
+                this.label2().setLabelMappingReference(a1),
+                this.label3().setLabelMappingReference(a1)
         );
     }
 
@@ -1323,7 +1323,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                            final Set<SpreadsheetLabelMapping> labels) {
         this.checkEquals(labels, delta.labels(), "labels");
         assertThrows(UnsupportedOperationException.class, () -> delta.labels()
-                .add(SpreadsheetLabelName.labelName("LabelZ").setLabelMappingTarget(SpreadsheetSelection.parseCell("Z9")))
+                .add(SpreadsheetLabelName.labelName("LabelZ").setLabelMappingReference(SpreadsheetSelection.parseCell("Z9")))
         );
     }
 

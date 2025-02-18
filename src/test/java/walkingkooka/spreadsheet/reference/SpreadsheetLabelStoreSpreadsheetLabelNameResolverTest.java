@@ -75,9 +75,9 @@ public final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverTest impleme
                     public Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName id) {
                         return Optional.ofNullable(
                                 LABEL1.equals(id) ?
-                                        LABEL1.setLabelMappingTarget(LABEL2) :
+                                        LABEL1.setLabelMappingReference(LABEL2) :
                                         LABEL2.equals(id) ?
-                                                LABEL2.setLabelMappingTarget(TARGET) :
+                                                LABEL2.setLabelMappingReference(TARGET) :
                                                 null
                         );
                     }

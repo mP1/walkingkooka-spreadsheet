@@ -258,26 +258,26 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     }
 
     @Test
-    public void testSetLabelMappingTargetWithCell() {
-        this.setLabelMappingTargetAndCheck(SpreadsheetSelection.A1);
+    public void testSetLabelMappingReferenceWithCell() {
+        this.setLabelMappingReferenceAndCheck(SpreadsheetSelection.A1);
     }
 
     @Test
     public void testSetLabelMappingTargetWithLabel() {
-        this.setLabelMappingTargetAndCheck(SpreadsheetSelection.labelName("LABEL456"));
+        this.setLabelMappingReferenceAndCheck(SpreadsheetSelection.labelName("LABEL456"));
     }
 
     @Test
-    public void testSetLabelMappingTargetWithCellRange() {
-        this.setLabelMappingTargetAndCheck(SpreadsheetSelection.parseCellRange("A1:b2"));
+    public void testSetLabelMappingReferenceWithCellRange() {
+        this.setLabelMappingReferenceAndCheck(SpreadsheetSelection.parseCellRange("A1:b2"));
     }
 
-    private void setLabelMappingTargetAndCheck(final SpreadsheetExpressionReference reference) {
+    private void setLabelMappingReferenceAndCheck(final SpreadsheetExpressionReference reference) {
         final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
 
-        final SpreadsheetLabelMapping mapping = label.setLabelMappingTarget(reference);
+        final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(reference);
         assertSame(label, mapping.label(), "label");
-        assertSame(reference, mapping.target(), "reference");
+        assertSame(reference, mapping.reference(), "reference");
     }
 
     @Override

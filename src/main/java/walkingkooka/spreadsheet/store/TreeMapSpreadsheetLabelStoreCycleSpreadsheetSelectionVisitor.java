@@ -44,7 +44,7 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
                 mapping.label()
         );
         visitor.accept(
-                mapping.target()
+                mapping.reference()
         );
     }
 
@@ -80,7 +80,7 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
 
         final Optional<SpreadsheetLabelMapping> mapping = this.store.load(label);
         if (mapping.isPresent()) {
-            this.accept(mapping.get().target());
+            this.accept(mapping.get().reference());
         }
     }
 
