@@ -239,18 +239,17 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     // Comparable.......................................................................................................
 
     /**
-     * Compares the label and then the target after converting the target to a string.
+     * Compares the {@link SpreadsheetLabelName} and then the {@link SpreadsheetExpressionReference}.
      */
     @Override
     public int compareTo(final SpreadsheetLabelMapping other) {
         int compareTo = this.label.compareTo(other.label);
+
         if (Comparators.EQUAL == compareTo) {
-            compareTo = this.reference.toRelative()
-                    .toString()
-                    .compareToIgnoreCase(
-                            other.reference.toRelative()
-                                    .toString()
-                    );
+            compareTo = SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR.compare(
+                    this.reference,
+                    other.reference
+            );
         }
 
         return compareTo;
