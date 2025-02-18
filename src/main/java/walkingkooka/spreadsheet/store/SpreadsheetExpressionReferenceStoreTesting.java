@@ -43,13 +43,25 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     @Override
     default void testSaveNullFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().save(Sets.of(SpreadsheetSelection.A1)));
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createStore()
+                        .save(
+                                Sets.of(
+                                        SpreadsheetSelection.A1
+                                )
+                        )
+        );
     }
 
     @Test
     default void testAddSaveWatcherFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addSaveWatcher((a) -> {
-        }));
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createStore()
+                        .addSaveWatcher((a) -> {}
+                        )
+        );
     }
 
     @Override
@@ -58,7 +70,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     @Test
     default void testDeleteDoesntFireDeleteWatcher() {
-        final Set<SpreadsheetCellReference> references = this.value();
+        final Set<SpreadsheetCellReference> cells = this.value();
 
         final S store = this.createStore();
 
@@ -67,7 +79,10 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
         final T id = this.id();
 
-        references.forEach(v -> store.addCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
+        cells.forEach(
+                v -> store.addCell(ReferenceAndSpreadsheetCellReference.with(id, v)
+                )
+        );
 
         store.delete(id);
 
@@ -82,35 +97,50 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     @Test
     default void testAddCellNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().addCell(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .addCell(null)
+        );
     }
 
     @Test
     default void testAddCellWithWatcher() {
         final S store = this.createStore();
 
-        final T target = this.id();
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
+        final T reference = this.id();
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         final List<ReferenceAndSpreadsheetCellReference<T>> fired = Lists.array();
         store.addAddCellWatcher(fired::add);
 
-        final ReferenceAndSpreadsheetCellReference<T> referenceAndCell = ReferenceAndSpreadsheetCellReference.with(target, reference);
+        final ReferenceAndSpreadsheetCellReference<T> referenceAndCell = ReferenceAndSpreadsheetCellReference.with(
+                reference,
+                cell
+        );
         store.addCell(referenceAndCell);
 
-        this.checkEquals(Lists.of(referenceAndCell), fired, "fired add reference events");
+        this.checkEquals(
+                Lists.of(referenceAndCell),
+                fired,
+                "fired add reference events"
+        );
     }
 
     // removeCell........................................................................................................
 
     @Test
     default void testRemoveCellNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createStore().removeCell(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .removeCell(null)
+        );
     }
 
     @Test
     default void testRemoveLastCellAddDeleteWatcher() {
-        final Set<SpreadsheetCellReference> references = this.value();
+        final Set<SpreadsheetCellReference> cells = this.value();
 
         final S store = this.createStore();
 
@@ -119,10 +149,14 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
         final T id = this.id();
 
-        references.forEach(v -> store.addCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
-        references.forEach(v -> store.removeCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
+        cells.forEach(v -> store.addCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
+        cells.forEach(v -> store.removeCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
 
-        this.checkEquals(Lists.of(id), fired, "fired values");
+        this.checkEquals(
+                Lists.of(id),
+                fired,
+                "fired values"
+        );
     }
 
     @Test
@@ -213,10 +247,15 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
     @Test
     default void testSaveCellsDoesntFireDeleteWatchers() {
         final S store = this.createStore();
-        store.addDeleteWatcher((v) -> {
+        store.addDeleteWatcher(
+                (v) -> {
             throw new UnsupportedOperationException();
-        });
-        store.saveCells(this.id(), this.value());
+                }
+                );
+        store.saveCells(
+                this.id(),
+                this.value()
+        );
     }
 
     @Test
@@ -230,11 +269,13 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         store.addAddCellWatcher(fired::add);
         store.saveCells(id, cells);
 
-        this.checkEquals(cells.stream()
+        this.checkEquals(
+                cells.stream()
                         .map(r -> ReferenceAndSpreadsheetCellReference.with(id, r))
                         .collect(Collectors.toList()),
                 fired,
-                "fired add reference");
+                "fired add reference"
+        );
     }
 
     @Test
@@ -246,13 +287,20 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
         store.saveCells(id, Sets.of(b2));
 
-        store.addAddCellWatcher((e) -> {
-            throw new UnsupportedOperationException();
-        });
-        store.addRemoveCellWatcher((e) -> {
-            throw new UnsupportedOperationException();
-        });
-        store.saveCells(id, Sets.of(b2));
+        store.addAddCellWatcher(
+                (e) -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
+        store.addRemoveCellWatcher(
+                (e) -> {
+                    throw new UnsupportedOperationException();
+                }
+        );
+        store.saveCells(
+                id,
+                Sets.of(b2)
+        );
     }
 
     @Test
@@ -273,12 +321,18 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final SpreadsheetCellReference z9 = SpreadsheetSelection.parseCell("Z9");
         store.saveCells(id, Sets.of(z9));
 
-        this.checkEquals(Lists.of(ReferenceAndSpreadsheetCellReference.with(id, z9)),
+        this.checkEquals(
+                Lists.of(
+                        ReferenceAndSpreadsheetCellReference.with(id, z9)
+                ),
                 addFired,
-                "fired add reference");
-        this.checkEquals(Lists.of(ReferenceAndSpreadsheetCellReference.with(id, b2)),
+                "fired add reference"
+        );
+        this.checkEquals(
+                Lists.of(ReferenceAndSpreadsheetCellReference.with(id, b2)),
                 removeFired,
-                "fired remove reference");
+                "fired remove reference"
+        );
     }
 
     @Test
@@ -300,12 +354,20 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
         store.saveCells(id, Sets.of(c3, d4));
 
-        this.checkEquals(Lists.of(ReferenceAndSpreadsheetCellReference.with(id, d4)),
+        this.checkEquals(
+                Lists.of(
+                        ReferenceAndSpreadsheetCellReference.with(id, d4)
+                ),
                 addFired,
-                "fired add reference");
-        this.checkEquals(Lists.of(ReferenceAndSpreadsheetCellReference.with(id, b2)),
+                "fired add reference"
+        );
+        this.checkEquals(
+                Lists.of(
+                        ReferenceAndSpreadsheetCellReference.with(id, b2)
+                ),
                 removeFired,
-                "fired remove reference");
+                "fired remove reference"
+        );
     }
 
     /**
@@ -316,25 +378,25 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     default <TT extends SpreadsheetExpressionReference> void loadAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
                                                                           final TT id,
-                                                                          final SpreadsheetCellReference... cells) {
+                                                                          final SpreadsheetCellReference... expected) {
         this.loadAndCheck(
                 store,
                 id,
-                Sets.of(cells)
+                Sets.of(expected)
         );
     }
 
     default <TT extends SpreadsheetExpressionReference> void loadAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
                                                                           final TT id,
-                                                                          final Set<SpreadsheetCellReference> cells) {
-        if (cells.isEmpty()) {
+                                                                          final Set<SpreadsheetCellReference> expected) {
+        if (expected.isEmpty()) {
             this.loadFailCheck(store, id);
         } else {
-            StoreTesting.super.loadAndCheck(store, id, cells);
+            StoreTesting.super.loadAndCheck(store, id, expected);
 
         }
 
-        for (SpreadsheetCellReference cell : cells) {
+        for (SpreadsheetCellReference cell : expected) {
             final Set<TT> referred = store.findReferencesWithCell(cell);
             if (!referred.contains(id)) {
                 fail(store + " load " + cell + " didnt return id " + id + ", actual: " + referred);
