@@ -337,7 +337,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         for (SpreadsheetCellReference cell : cells) {
             final Set<TT> referred = store.findReferencesWithCell(cell);
             if (!referred.contains(id)) {
-                fail(store + " loadTargets " + cell + " didnt return id " + id + ", actual: " + referred);
+                fail(store + " load " + cell + " didnt return id " + id + ", actual: " + referred);
             }
         }
     }
