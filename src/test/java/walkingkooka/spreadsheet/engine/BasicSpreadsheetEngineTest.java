@@ -236,6 +236,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static Map<SpreadsheetColumnReference, Double> COLUMN_A_WIDTH = columnWidths("A");
     private static final AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://server123");
 
+    private static final TextStyle STYLE = TextStyle.EMPTY.set(
+            TextStylePropertyName.FONT_WEIGHT,
+            FontWeight.BOLD
+    );
+
     private static Map<SpreadsheetColumnReference, Double> columnWidths(final String columns) {
         final Map<SpreadsheetColumnReference, Double> map = Maps.sorted();
 
@@ -5467,7 +5472,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int count = 5;
         this.deleteColumnsAndCheck(
                 engine,
-                this.column(7),
+                SpreadsheetReferenceKind.ABSOLUTE.column(7),
                 count,
                 context,
                 SpreadsheetDelta.EMPTY
@@ -9428,7 +9433,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int count = 5;
         this.insertColumnsAndCheck(
                 engine,
-                this.column(7),
+                SpreadsheetReferenceKind.ABSOLUTE.column(7),
                 count,
                 context,
                 SpreadsheetDelta.EMPTY
@@ -10616,7 +10621,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int count = 5;
         this.insertRowsAndCheck(
                 engine,
-                this.row(7),
+                SpreadsheetReferenceKind.ABSOLUTE.row(7),
                 count,
                 context,
                 SpreadsheetDelta.EMPTY
@@ -18470,7 +18475,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.formatCell(
                 this.cell(cell, formulaText),
                 Optional.empty(),
-                style()
+                STYLE
         );
     }
 
@@ -18501,7 +18506,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.formatCell(
                 cell,
                 Optional.empty(),
-                this.style()
+                STYLE
         );
     }
 
@@ -18510,7 +18515,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.formatCell(
                 cell,
                 value,
-                this.style()
+                STYLE
         );
     }
 
@@ -18648,10 +18653,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private <E extends SpreadsheetExpressionReference & Comparable<E>>
-    void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
-                                final E cell,
-                                final SpreadsheetCellReference... out) {
+    private <E extends SpreadsheetExpressionReference & Comparable<E>> void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
+                                                                                                   final E cell,
+                                                                                                   final SpreadsheetCellReference... out) {
         this.checkEquals(
                 Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
                 store.load(cell),
@@ -18667,14 +18671,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 store.findReferencesWithCell(cell),
                 () -> "findReferences with " + cell
         );
-    }
-
-    private SpreadsheetColumnReference column(final int column) {
-        return SpreadsheetReferenceKind.ABSOLUTE.column(column);
-    }
-
-    private SpreadsheetRowReference row(final int row) {
-        return SpreadsheetReferenceKind.ABSOLUTE.row(row);
     }
 
     private SpreadsheetCell cell(final String cell,
@@ -18697,14 +18693,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetCell cell(final SpreadsheetCellReference cell,
                                  final SpreadsheetFormula formula) {
         return cell.setFormula(formula)
-                .setStyle(this.style());
-    }
-
-    private TextStyle style() {
-        return TextStyle.EMPTY.set(
-                TextStylePropertyName.FONT_WEIGHT,
-                FontWeight.BOLD
-        );
+                .setStyle(STYLE);
     }
 
     private void addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(final SpreadsheetEngineContext context) {
