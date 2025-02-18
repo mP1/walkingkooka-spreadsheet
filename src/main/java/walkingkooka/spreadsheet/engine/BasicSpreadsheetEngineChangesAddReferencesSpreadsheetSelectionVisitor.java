@@ -50,8 +50,8 @@ final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisito
         this.repository.cellReferences()
                 .addCell(
                         ReferenceAndSpreadsheetCellReference.with(
-                                this.cell,
-                                cell
+                                cell,
+                                this.cell
                         )
                 );
     }

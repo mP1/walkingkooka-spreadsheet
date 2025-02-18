@@ -72,13 +72,18 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
                 this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD);
     }
 
+    BasicSpreadsheetEngineChangesCache<S, V> loadCellReference() {
+        // dont change status if already loaded or saved.
+        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE || this.status == BasicSpreadsheetEngineChangesCacheStatus.LOAD ?
+                this : // unchanged
+                this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD_REFERENCE);
+    }
+
     BasicSpreadsheetEngineChangesCache<S, V> loadCellReference(final V value) {
         Objects.requireNonNull(value, "value");
 
         this.value = value;
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE || this.status == BasicSpreadsheetEngineChangesCacheStatus.LOAD ?
-                this : // unchanged
-                this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD_REFERENCE);
+        return this.loadCellReference();
     }
 
     BasicSpreadsheetEngineChangesCache<S, V> save() {

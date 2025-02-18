@@ -337,6 +337,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
         this.removeCellExternalReferences(cell);
         if (null != spreadsheetCell) {
+            this.removeFormulaReferences(cell);
             this.addFormulaReferences(spreadsheetCell);
         }
         this.addCellExternalReferences(cell);
@@ -390,6 +391,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     private void refreshDeletedCell(final SpreadsheetCellReference cell,
                                     final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache) {
         this.removeCellExternalReferences(cell);
+        this.removeFormulaReferences(cell);
         this.addCellExternalReferences(cell);
 
         cache.setCommitted(true); // previous #removeReferences will clear committed
@@ -546,14 +548,21 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                 );
     }
 
+    private void removeFormulaReferences(final SpreadsheetCellReference cell) {
+        this.repository.cellReferences()
+                .removeReferencesWithCell(cell);
+    }
+
     /**
-     * Records any {@link walkingkooka.tree.expression.ExpressionReference} within the given {@link SpreadsheetFormula}.
+     * Records any {@link walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference} within the given {@link SpreadsheetFormula}.
      */
-    private void addFormulaReferences(final SpreadsheetCell cell) {
-        cell.formula()
+    private void addFormulaReferences(final SpreadsheetCell spreadsheetCell) {
+        final SpreadsheetCellReference cell = spreadsheetCell.reference();
+
+        spreadsheetCell.formula()
                 .consumeSpreadsheetExpressionReferences(
                         BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor.with(
-                                cell.reference(),
+                                cell,
                                 this.repository
                         )::accept
                 );
@@ -563,7 +572,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetStoreRepository repository = this.repository;
 
         repository.cellReferences()
-                .findReferencesWithCell(cell)
+                .load(cell)
+                .orElse(Sets.empty())
                 .forEach(this::refreshCellExternalReference);
 
         repository.labels()
