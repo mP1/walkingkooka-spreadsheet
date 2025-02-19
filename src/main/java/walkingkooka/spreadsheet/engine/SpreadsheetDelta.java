@@ -394,7 +394,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                      final SpreadsheetViewportWindows window) {
         return window.isEmpty() ?
                 labels :
-                filterLabelsByWin(
+                filterLabelsByWindow(
                         labels,
                         window
                 );
@@ -403,7 +403,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Removes all {@link SpreadsheetLabelMapping} that belong to cells that outside the window.
      */
-    private static Set<SpreadsheetLabelMapping> filterLabelsByWin(final Set<SpreadsheetLabelMapping> labels,
+    private static Set<SpreadsheetLabelMapping> filterLabelsByWindow(final Set<SpreadsheetLabelMapping> labels,
                                                                      final SpreadsheetViewportWindows window) {
         return filter(
                 labels,
@@ -856,7 +856,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     viewport,
                     filteredCells,
                     filterColumnsByWindow(columns, window),
-                    filterLabelsByWin(labels, window),
+                    filterLabelsByWindow(labels, window),
                     filterRowsByWindow(rows, window),
                     filterDeletedCellsByWindow(deletedCells, window),
                     filterDeletedColumnsByWindow(deletedColumns, window),
