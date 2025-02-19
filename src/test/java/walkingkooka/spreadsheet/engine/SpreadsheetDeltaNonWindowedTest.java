@@ -48,547 +48,33 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
         this.checkCells(delta);
     }
 
-    // TreePrintable.....................................................................................................
-
-    @Test
-    public void testPrintTreeNoCells() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n"
+    @Override
+    SpreadsheetDeltaNonWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
+        return SpreadsheetDeltaNonWindowed.withNonWindowed(
+                this.viewport(),
+                cells,
+                this.columns(),
+                this.labels(),
+                this.rows(),
+                this.references(),
+                this.deletedCells(),
+                this.deletedColumns(),
+                this.deletedRows(),
+                this.deletedLabels(),
+                this.matchedCells(),
+                this.columnWidths(),
+                this.rowHeights(),
+                this.columnCount(),
+                this.rowCount()
         );
     }
 
-    @Test
-    public void testPrintTreeViewport() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        this.viewport(),
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  viewport:\n" +
-                        "    rectangle:\n" +
-                        "      home: A1\n" +
-                        "      width: 100.0\n" +
-                        "      height: 40.0\n" +
-                        "    anchoredSelection: cell-range A1:B2 BOTTOM_RIGHT\n"
-        );
+    @Override
+    SpreadsheetViewportWindows window() {
+        return SpreadsheetViewportWindows.EMPTY;
     }
 
-    @Test
-    public void testPrintTreeCells() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  cells:\n" +
-                        "    Cell A1\n" +
-                        "      Formula\n" +
-                        "        text: \"1\"\n" +
-                        "    Cell B2\n" +
-                        "      Formula\n" +
-                        "        text: \"2\"\n" +
-                        "    Cell C3\n" +
-                        "      Formula\n" +
-                        "        text: \"3\"\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeColumns() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        Sets.of(
-                                this.a(),
-                                this.hiddenD()
-                        ),
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  columns:\n" +
-                        "    A\n" +
-                        "    D\n" +
-                        "      hidden\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeLabels() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        this.labels(),
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  labels:\n" +
-                        "    LabelA1A: A1\n" +
-                        "    LabelA1B: A1\n" +
-                        "    LabelB2: B2\n" +
-                        "    LabelC3: C3:D4\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeRows() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        Sets.of(
-                                this.row1(),
-                                this.hiddenRow4()
-                        ),
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  rows:\n" +
-                        "    1\n" +
-                        "    4\n" +
-                        "      hidden\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeCellsAndLabels() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        this.labels(),
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  cells:\n" +
-                        "    Cell A1\n" +
-                        "      Formula\n" +
-                        "        text: \"1\"\n" +
-                        "    Cell B2\n" +
-                        "      Formula\n" +
-                        "        text: \"2\"\n" +
-                        "    Cell C3\n" +
-                        "      Formula\n" +
-                        "        text: \"3\"\n" +
-                        "  labels:\n" +
-                        "    LabelA1A: A1\n" +
-                        "    LabelA1B: A1\n" +
-                        "    LabelB2: B2\n" +
-                        "    LabelC3: C3:D4\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeReferences() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        this.references(),
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  References:\n" +
-                        "    A1\n" +
-                        "      B2,C3:D4,LabelA1A\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeDeletedCells() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        this.labels(),
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        this.deletedCells(),
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  cells:\n" +
-                        "    Cell A1\n" +
-                        "      Formula\n" +
-                        "        text: \"1\"\n" +
-                        "    Cell B2\n" +
-                        "      Formula\n" +
-                        "        text: \"2\"\n" +
-                        "    Cell C3\n" +
-                        "      Formula\n" +
-                        "        text: \"3\"\n" +
-                        "  labels:\n" +
-                        "    LabelA1A: A1\n" +
-                        "    LabelA1B: A1\n" +
-                        "    LabelB2: B2\n" +
-                        "    LabelC3: C3:D4\n" +
-                        "  deletedCells:\n" +
-                        "    C1,C2\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeDeletedColumns() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        this.deletedColumns(),
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  deletedColumns:\n" +
-                        "    C,D\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeDeletedRows() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        this.deletedRows(),
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  deletedRows:\n" +
-                        "    3,4\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeDeletedLabels() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        this.deletedLabels(),
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  deletedLabels:\n" +
-                        "    DeletedLabel111,DeletedLabel222\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeMatchedCells() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        this.labels(),
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        this.matchedCells(),
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  cells:\n" +
-                        "    Cell A1\n" +
-                        "      Formula\n" +
-                        "        text: \"1\"\n" +
-                        "    Cell B2\n" +
-                        "      Formula\n" +
-                        "        text: \"2\"\n" +
-                        "    Cell C3\n" +
-                        "      Formula\n" +
-                        "        text: \"3\"\n" +
-                        "  labels:\n" +
-                        "    LabelA1A: A1\n" +
-                        "    LabelA1B: A1\n" +
-                        "    LabelB2: B2\n" +
-                        "    LabelC3: C3:D4\n" +
-                        "  matchedCells:\n" +
-                        "    A1,B2,C3\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeColumnWidths() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        this.columnWidths(),
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  cells:\n" +
-                        "    Cell A1\n" +
-                        "      Formula\n" +
-                        "        text: \"1\"\n" +
-                        "    Cell B2\n" +
-                        "      Formula\n" +
-                        "        text: \"2\"\n" +
-                        "    Cell C3\n" +
-                        "      Formula\n" +
-                        "        text: \"3\"\n" +
-                        "  columnWidths:\n" +
-                        "    A: 50.0\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeRowHeights() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        this.rowHeights(),
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT
-                ),
-                "SpreadsheetDelta\n" +
-                        "  cells:\n" +
-                        "    Cell A1\n" +
-                        "      Formula\n" +
-                        "        text: \"1\"\n" +
-                        "    Cell B2\n" +
-                        "      Formula\n" +
-                        "        text: \"2\"\n" +
-                        "    Cell C3\n" +
-                        "      Formula\n" +
-                        "        text: \"3\"\n" +
-                        "  rowHeights:\n" +
-                        "    1: 75.0\n"
-        );
-    }
-
-    @Test
-    public void testPrintTreeNothingEmpty() {
-        this.treePrintAndCheck(
-                SpreadsheetDeltaNonWindowed.withNonWindowed(
-                        this.viewport(),
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        this.labels(),
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        this.deletedCells(),
-                        this.deletedColumns(),
-                        this.deletedRows(),
-                        this.deletedLabels(),
-                        this.matchedCells(),
-                        this.columnWidths(),
-                        this.rowHeights(),
-                        this.columnCount(),
-                        this.rowCount()
-                ),
-                "SpreadsheetDelta\n" +
-                        "  viewport:\n" +
-                        "    rectangle:\n" +
-                        "      home: A1\n" +
-                        "      width: 100.0\n" +
-                        "      height: 40.0\n" +
-                        "    anchoredSelection: cell-range A1:B2 BOTTOM_RIGHT\n" +
-                        "  cells:\n" +
-                        "    Cell A1\n" +
-                        "      Formula\n" +
-                        "        text: \"1\"\n" +
-                        "    Cell B2\n" +
-                        "      Formula\n" +
-                        "        text: \"2\"\n" +
-                        "    Cell C3\n" +
-                        "      Formula\n" +
-                        "        text: \"3\"\n" +
-                        "  labels:\n" +
-                        "    LabelA1A: A1\n" +
-                        "    LabelA1B: A1\n" +
-                        "    LabelB2: B2\n" +
-                        "    LabelC3: C3:D4\n" +
-                        "  deletedCells:\n" +
-                        "    C1,C2\n" +
-                        "  deletedColumns:\n" +
-                        "    C,D\n" +
-                        "  deletedRows:\n" +
-                        "    3,4\n" +
-                        "  deletedLabels:\n" +
-                        "    DeletedLabel111,DeletedLabel222\n" +
-                        "  matchedCells:\n" +
-                        "    A1,B2,C3\n" +
-                        "  columnWidths:\n" +
-                        "    A: 50.0\n" +
-                        "  rowHeights:\n" +
-                        "    1: 75.0\n" +
-                        "  columnCount: 88\n" +
-                        "  rowCount: 99\n"
-        );
-    }
-
-    // JsonNodeMarshallingTesting...........................................................................................
+    // json.............................................................................................................
 
     @Override
     void unmarshallViewportAndCheck(final SpreadsheetViewport viewport) {
@@ -1425,31 +911,547 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
         );
     }
 
-    @Override
-    SpreadsheetDeltaNonWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
-        return SpreadsheetDeltaNonWindowed.withNonWindowed(
-                this.viewport(),
-                cells,
-                this.columns(),
-                this.labels(),
-                this.rows(),
-                this.references(),
-                this.deletedCells(),
-                this.deletedColumns(),
-                this.deletedRows(),
-                this.deletedLabels(),
-                this.matchedCells(),
-                this.columnWidths(),
-                this.rowHeights(),
-                this.columnCount(),
-                this.rowCount()
+    // TreePrintable.....................................................................................................
+
+    @Test
+    public void testPrintTreeNoCells() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n"
         );
     }
 
-    @Override
-    SpreadsheetViewportWindows window() {
-        return SpreadsheetViewportWindows.EMPTY;
+    @Test
+    public void testPrintTreeViewport() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.viewport(),
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  viewport:\n" +
+                        "    rectangle:\n" +
+                        "      home: A1\n" +
+                        "      width: 100.0\n" +
+                        "      height: 40.0\n" +
+                        "    anchoredSelection: cell-range A1:B2 BOTTOM_RIGHT\n"
+        );
     }
+
+    @Test
+    public void testPrintTreeCells() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeColumns() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        Sets.of(
+                                this.a(),
+                                this.hiddenD()
+                        ),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  columns:\n" +
+                        "    A\n" +
+                        "    D\n" +
+                        "      hidden\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeLabels() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.labels(),
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3:D4\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeRows() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        Sets.of(
+                                this.row1(),
+                                this.hiddenRow4()
+                        ),
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  rows:\n" +
+                        "    1\n" +
+                        "    4\n" +
+                        "      hidden\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeCellsAndLabels() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.labels(),
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3:D4\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeReferences() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        this.references(),
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  References:\n" +
+                        "    A1\n" +
+                        "      B2,C3:D4,LabelA1A\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeDeletedCells() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.labels(),
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        this.deletedCells(),
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3:D4\n" +
+                        "  deletedCells:\n" +
+                        "    C1,C2\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeDeletedColumns() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        this.deletedColumns(),
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  deletedColumns:\n" +
+                        "    C,D\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeDeletedRows() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        this.deletedRows(),
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  deletedRows:\n" +
+                        "    3,4\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeDeletedLabels() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        this.deletedLabels(),
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  deletedLabels:\n" +
+                        "    DeletedLabel111,DeletedLabel222\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeMatchedCells() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.labels(),
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        this.matchedCells(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3:D4\n" +
+                        "  matchedCells:\n" +
+                        "    A1,B2,C3\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeColumnWidths() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        this.columnWidths(),
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  columnWidths:\n" +
+                        "    A: 50.0\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeRowHeights() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        this.rowHeights(),
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  rowHeights:\n" +
+                        "    1: 75.0\n"
+        );
+    }
+
+    @Test
+    public void testPrintTreeNothingEmpty() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.viewport(),
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.labels(),
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        this.deletedCells(),
+                        this.deletedColumns(),
+                        this.deletedRows(),
+                        this.deletedLabels(),
+                        this.matchedCells(),
+                        this.columnWidths(),
+                        this.rowHeights(),
+                        this.columnCount(),
+                        this.rowCount()
+                ),
+                "SpreadsheetDelta\n" +
+                        "  viewport:\n" +
+                        "    rectangle:\n" +
+                        "      home: A1\n" +
+                        "      width: 100.0\n" +
+                        "      height: 40.0\n" +
+                        "    anchoredSelection: cell-range A1:B2 BOTTOM_RIGHT\n" +
+                        "  cells:\n" +
+                        "    Cell A1\n" +
+                        "      Formula\n" +
+                        "        text: \"1\"\n" +
+                        "    Cell B2\n" +
+                        "      Formula\n" +
+                        "        text: \"2\"\n" +
+                        "    Cell C3\n" +
+                        "      Formula\n" +
+                        "        text: \"3\"\n" +
+                        "  labels:\n" +
+                        "    LabelA1A: A1\n" +
+                        "    LabelA1B: A1\n" +
+                        "    LabelB2: B2\n" +
+                        "    LabelC3: C3:D4\n" +
+                        "  deletedCells:\n" +
+                        "    C1,C2\n" +
+                        "  deletedColumns:\n" +
+                        "    C,D\n" +
+                        "  deletedRows:\n" +
+                        "    3,4\n" +
+                        "  deletedLabels:\n" +
+                        "    DeletedLabel111,DeletedLabel222\n" +
+                        "  matchedCells:\n" +
+                        "    A1,B2,C3\n" +
+                        "  columnWidths:\n" +
+                        "    A: 50.0\n" +
+                        "  rowHeights:\n" +
+                        "    1: 75.0\n" +
+                        "  columnCount: 88\n" +
+                        "  rowCount: 99\n"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetDeltaNonWindowed> type() {
