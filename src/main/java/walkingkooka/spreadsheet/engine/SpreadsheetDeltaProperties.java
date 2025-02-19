@@ -158,11 +158,16 @@ public enum SpreadsheetDeltaProperties {
     }
 
     private static Set<SpreadsheetDeltaProperties> parseCsv(final String values) {
-        return Arrays.stream(values.split(","))
-                .map(SpreadsheetDeltaProperties::with)
-                .collect(Collectors.toCollection(() -> EnumSet.noneOf(SpreadsheetDeltaProperties.class)));
+        return Sets.readOnly(
+                Arrays.stream(values.split(","))
+                        .map(SpreadsheetDeltaProperties::with)
+                        .collect(
+                                Collectors.toCollection(
+                                        () -> EnumSet.noneOf(SpreadsheetDeltaProperties.class)
+                                )
+                        )
+        );
     }
-
 
     /**
      * Attempts to read the {@link SpreadsheetDeltaProperties} from a http request parameters.
