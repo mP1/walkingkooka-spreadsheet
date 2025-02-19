@@ -18,15 +18,11 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.set.ImmutableSortedSet;
-import walkingkooka.collect.set.SortedSets;
-import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -38,7 +34,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A {@link SpreadsheetDelta} without any window/filtering.
@@ -154,15 +149,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {
-        return columns instanceof ImmutableSortedSet ?
-                columns :
-                SortedSets.immutable(
-                        new TreeSet<>(columns)
-                );
-    }
-
-    @Override
     SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
@@ -208,15 +194,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows) {
-        return rows instanceof ImmutableSortedSet ?
-                rows :
-                SortedSets.immutable(
-                        new TreeSet<>(rows)
-                );
-    }
-
-    @Override
     SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
@@ -242,15 +219,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
-        return filter(
-                deletedCells,
-                Predicates.always(),
-                SpreadsheetCellReference::toRelative
-        );
-    }
-
-    @Override
     SpreadsheetDelta replaceDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
@@ -271,15 +239,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetColumnReference> filterDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
-        return filter(
-                deletedColumns,
-                Predicates.always(),
-                SpreadsheetColumnReference::toRelative
-        );
-    }
-
-    @Override
     SpreadsheetDelta replaceDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
@@ -296,15 +255,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.rowHeights,
                 this.columnCount,
                 this.rowCount
-        );
-    }
-
-    @Override
-    Set<SpreadsheetRowReference> filterDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
-        return filter(
-                deletedRows,
-                Predicates.always(),
-                SpreadsheetRowReference::toRelative
         );
     }
 
@@ -349,15 +299,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetCellReference> filterMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
-        return filter(
-                matchedCells,
-                Predicates.always(),
-                SpreadsheetCellReference::toRelative
-        );
-    }
-
-    @Override
     SpreadsheetDelta replaceMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
@@ -378,13 +319,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        return filterMap(
-                columnWidths
-        );
-    }
-
-    @Override
     SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
@@ -401,13 +335,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.rowHeights,
                 this.columnCount,
                 this.rowCount
-        );
-    }
-
-    @Override
-    Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
-        return filterMap(
-                rowHeights
         );
     }
 
@@ -468,13 +395,6 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.rowHeights,
                 this.columnCount,
                 rowCount
-        );
-    }
-
-    private static <R extends SpreadsheetColumnOrRowReference> Map<R, Double> filterMap(final Map<R, Double> source) {
-        return filterMap(
-                source,
-                Predicates.always()
         );
     }
 
