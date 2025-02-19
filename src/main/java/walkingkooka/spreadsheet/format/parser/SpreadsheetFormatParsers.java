@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.parser;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
@@ -108,8 +109,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         );
     }
 
-    private static final Parser<SpreadsheetFormatParserContext> COLOR_NUMBER = Parsers.string("COLOR", CaseSensitivity.INSENSITIVE)
-            .transform(SpreadsheetFormatParsers::transformColorLiteral)
+    private static final Parser<SpreadsheetFormatParserContext> COLOR_NUMBER = Parsers.string(
+            "COLOR",
+                    SpreadsheetStrings.CASE_SENSITIVITY
+            ).transform(SpreadsheetFormatParsers::transformColorLiteral)
             .and(WHITESPACE.optional().cast())
             .and(COLOR_DIGITS.cast())
             .setToString(COLOR_NUMBER_IDENTIFIER.toString())
@@ -287,8 +290,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName GENERAL_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("GENERAL_SYMBOL");
 
-    private static final Parser<SpreadsheetFormatParserContext> GENERAL_SYMBOL = Parsers.string("GENERAL", CaseSensitivity.INSENSITIVE)
-            .transform(SpreadsheetFormatParsers::transformGeneralSymbol)
+    private static final Parser<SpreadsheetFormatParserContext> GENERAL_SYMBOL = Parsers.string(
+            "GENERAL",
+                    SpreadsheetStrings.CASE_SENSITIVITY
+            ).transform(SpreadsheetFormatParsers::transformGeneralSymbol)
             .setToString("GENERAL")
             .cast();
 
@@ -671,7 +676,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static Parser<SpreadsheetFormatParserContext> repeatingSymbol(final char c,
                                                                           final BiFunction<String, String, ParserToken> factory) {
         return Parsers.charPredicateString(
-                        CaseSensitivity.INSENSITIVE.charPredicate(c),
+                        SpreadsheetStrings.CASE_SENSITIVITY.charPredicate(c),
                         1,
                         Integer.MAX_VALUE
                 ).transform(
@@ -709,7 +714,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                                  final BiFunction<String, String, ParserToken> factory) {
         return Parsers.string(
                         text,
-                        CaseSensitivity.INSENSITIVE
+                        SpreadsheetStrings.CASE_SENSITIVITY
                 ).transform(
                         (stringParserToken, context) ->
                                 factory.apply(
