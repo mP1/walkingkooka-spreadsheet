@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.CaseKind;
@@ -56,6 +57,11 @@ public enum SpreadsheetDeltaProperties {
      * Only populated with {@link SpreadsheetLabelMapping} for any selected cell or label API.
      */
     LABELS,
+
+    /**
+     * Only populated with {@link SpreadsheetExpressionReference} for {@link SpreadsheetCell} for any cell API
+     */
+    REFERENCES,
 
     /**
      * Only populated with  {@link SpreadsheetRow} for any selected cell or row API
