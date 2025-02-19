@@ -119,6 +119,23 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
     }
 
     @Test
+    public void testParseWithSeveralReadOnly() {
+        final Set<SpreadsheetDeltaProperties> properties = this.parseStringAndCheck(
+                "cells,columns,deleted-cells",
+                EnumSet.of(
+                        SpreadsheetDeltaProperties.CELLS,
+                        SpreadsheetDeltaProperties.COLUMNS,
+                        SpreadsheetDeltaProperties.DELETED_CELLS
+                )
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> properties.clear()
+        );
+    }
+
+    @Test
     public void testParseWithStar() {
         this.parseStringAndCheck(
                 "*",
