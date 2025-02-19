@@ -2150,9 +2150,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                     reference.name()
                                             .toString()
                                 ),
-                                context.unmarshallWithTypeSet(
-                                        reference
-                                )
+                                context.unmarshallSetWithType(reference)
                         );
                     }
 

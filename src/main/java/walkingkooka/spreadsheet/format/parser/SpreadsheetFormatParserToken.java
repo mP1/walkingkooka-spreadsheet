@@ -1784,7 +1784,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
 
             switch (name.value()) {
                 case VALUE_PROPERTY_STRING:
-                    value = context.unmarshallWithTypeList(child);
+                    value = context.unmarshallListWithType(child);
                     break;
                 case TEXT_PROPERTY_STRING:
                     try {
