@@ -157,7 +157,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
-                filterCells(
+                filterCellsByWindow(
                         this.cells,
                         columns,
                         null, // cells have already been filtered by hidden rows so SKIP
@@ -202,7 +202,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
-                filterCells(
+                filterCellsByWindow(
                         this.cells,
                         null, // cells have already been filtered by hidden columns so SKIP
                         rows,

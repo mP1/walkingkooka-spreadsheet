@@ -201,12 +201,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.cells;
     }
 
+    final Set<SpreadsheetCell> cells;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given cells after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setCells(final Set<SpreadsheetCell> cells) {
-        checkCells(cells);
+        Objects.requireNonNull(cells, "cells");
 
         final Set<SpreadsheetCell> copy = this.filterCells(cells);
         return equals(this.cells, copy) ?
@@ -221,7 +223,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Note filtering of {@link #labels} will happen later.
      */
     private Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells) {
-        return filterCells(
+        return filterCellsByWindow(
                 cells,
                 this.columns,
                 this.rows,
@@ -229,10 +231,71 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    final Set<SpreadsheetCell> cells;
+    /**
+     * Filters the given cells there are several rules that could make this happen. Cells within hidden columns or rows,
+     * or outside the window if present will be removed.
+     */
+    static Set<SpreadsheetCell> filterCellsByWindow(final Set<SpreadsheetCell> cells,
+                                                    final Set<SpreadsheetColumn> columns,
+                                                    final Set<SpreadsheetRow> rows,
+                                                    final SpreadsheetViewportWindows window) {
+        Predicate<SpreadsheetCell> predicate = null;
 
-    private static Set<SpreadsheetCell> checkCells(final Set<SpreadsheetCell> cells) {
-        return Objects.requireNonNull(cells, "cells");
+        final int columnCount = null != columns ? columns.size() : 0;
+        final int rowCount = null != rows ? rows.size() : 0;
+
+        if (columnCount + rowCount > 0) {
+            // Any columns or rows within this Set are hidden and matches by a cell will be removed.
+            final Set<SpreadsheetColumnOrRowReference> hidden = SortedSets.tree(
+                    SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR
+            );
+
+            if (columnCount > 0) {
+                for (final SpreadsheetColumn column : columns) {
+                    if (column.hidden()) {
+                        hidden.add(column.reference());
+                    }
+                }
+            }
+
+            if (rowCount > 0) {
+                for (final SpreadsheetRow row : rows) {
+                    if (row.hidden()) {
+                        hidden.add(row.reference());
+                    }
+                }
+            }
+
+            if (false == hidden.isEmpty()) {
+                predicate = (c) -> {
+                    final SpreadsheetCellReference cellReference = c.reference();
+                    return !(
+                            hidden.contains(cellReference.column()) ||
+                                    hidden.contains(cellReference.row())
+                    );
+                };
+            }
+        }
+
+
+        if (null != window && window.isNotEmpty()) {
+            final Predicate<SpreadsheetCell> windowPredicate = c -> window.test(c.reference());
+
+            predicate = null != predicate ?
+                    predicate.and(windowPredicate) :
+                    windowPredicate;
+        }
+
+        return null != predicate ?
+                filter(
+                        cells,
+                        predicate
+                ) :
+                cells instanceof ImmutableSortedSet ?
+                        cells :
+                        SortedSets.immutable(
+                                new TreeSet<>(cells)
+                        );
     }
 
     /**
@@ -256,12 +319,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.columns;
     }
 
+    final Set<SpreadsheetColumn> columns;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given columns after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setColumns(final Set<SpreadsheetColumn> columns) {
-        checkColumns(columns);
+        Objects.requireNonNull(columns, "columns");
 
         final Set<SpreadsheetColumn> copy = this.filterColumns(columns);
         return equals(this.columns, copy) ?
@@ -269,18 +334,22 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.replaceColumns(copy);
     }
 
-    abstract SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns);
-
     /**
      * Takes a copy of the columns, possibly filtering out columns if a window is present. Note filtering of {@link #labels} will happen later.
      */
     abstract Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns);
 
-    final Set<SpreadsheetColumn> columns;
-
-    private static Set<SpreadsheetColumn> checkColumns(final Set<SpreadsheetColumn> columns) {
-        return Objects.requireNonNull(columns, "columns");
+    static Set<SpreadsheetColumn> filterColumnsByWindow(final Set<SpreadsheetColumn> columns,
+                                                        final SpreadsheetViewportWindows window) {
+        return window.isEmpty() ?
+                columns :
+                filter(
+                        columns,
+                        (c) -> window.test(c.reference())
+                );
     }
+
+    abstract SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns);
 
     /**
      * Finds a {@link SpreadsheetColumn} matching the given {@link SpreadsheetColumnReference}.
@@ -294,7 +363,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .findFirst();
     }
 
-    // labels............................................................................................................
+    // labels...........................................................................................................
 
     /**
      * Returns labels (if selected) following an operation which are related to selected cells.
@@ -303,12 +372,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.labels;
     }
 
+    final Set<SpreadsheetLabelMapping> labels;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given labels after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setLabels(final Set<SpreadsheetLabelMapping> labels) {
-        checkLabels(labels);
+        Objects.requireNonNull(labels, "labels");
 
         final Set<SpreadsheetLabelMapping> copy = filterLabels(labels, this.window());
         return equals(this.labels, copy) ?
@@ -317,15 +388,40 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
+     * Returns a {@link Set} removing any references that are not within the window if present.
+     */
+    static Set<SpreadsheetLabelMapping> filterLabels(final Set<SpreadsheetLabelMapping> labels,
+                                                     final SpreadsheetViewportWindows window) {
+        return window.isEmpty() ?
+                labels :
+                filterLabelsByWin(
+                        labels,
+                        window
+                );
+    }
+
+    /**
+     * Removes all {@link SpreadsheetLabelMapping} that belong to cells that outside the window.
+     */
+    private static Set<SpreadsheetLabelMapping> filterLabelsByWin(final Set<SpreadsheetLabelMapping> labels,
+                                                                     final SpreadsheetViewportWindows window) {
+        return filter(
+                labels,
+                m -> {
+                    final SpreadsheetExpressionReference r = m.reference();
+
+                    return r.isLabelName() ||
+                            window.cellRanges()
+                                    .stream()
+                                    .anyMatch(r::testCellRange);
+                }
+        );
+    }
+
+    /**
      * sub-classes only need to call the right constructor, the map is already immutable and has been filtered by {#link #cells}
      */
     abstract SpreadsheetDelta replaceLabels(final Set<SpreadsheetLabelMapping> labels);
-
-    final Set<SpreadsheetLabelMapping> labels;
-
-    private static Set<SpreadsheetLabelMapping> checkLabels(final Set<SpreadsheetLabelMapping> labels) {
-        return Objects.requireNonNull(labels, "labels");
-    }
 
     // rows............................................................................................................
 
@@ -336,12 +432,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.rows;
     }
 
+    final Set<SpreadsheetRow> rows;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given rows after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setRows(final Set<SpreadsheetRow> rows) {
-        checkRows(rows);
+        Objects.requireNonNull(rows, "rows");
 
         final Set<SpreadsheetRow> copy = this.filterRows(rows);
         return equals(this.rows, copy) ?
@@ -356,10 +454,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     abstract Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows);
 
-    final Set<SpreadsheetRow> rows;
-
-    private static Set<SpreadsheetRow> checkRows(final Set<SpreadsheetRow> rows) {
-        return Objects.requireNonNull(rows, "rows");
+    static Set<SpreadsheetRow> filterRowsByWindow(final Set<SpreadsheetRow> rows,
+                                                  final SpreadsheetViewportWindows window) {
+        return window.isEmpty() ?
+                rows :
+                filter(
+                        rows,
+                        r -> window.test(r.reference())
+                );
     }
 
     /**
@@ -374,30 +476,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .findFirst();
     }
 
-    /**
-     * The {@link Set sets} holding cells, columns, labels and rows are sorted and each class only uses its
-     * {@link SpreadsheetSelection} to determine equality. This means {@link Sets#equals(Object)} will return true for
-     * entries with the same {@link SpreadsheetSelection} but other different properties.
-     */
-    private static <T> boolean equals(final Set<T> left,
-                                      final Set<T> right) {
-        boolean equals = left.size() == right.size();
-
-        if (equals) {
-            final Iterator<T> leftIterator = left.iterator();
-            final Iterator<T> rightIterator = right.iterator();
-            while (equals && leftIterator.hasNext()) {
-                equals = rightIterator.hasNext() &&
-                        leftIterator.next()
-                                .equals(
-                                        rightIterator.next()
-                                );
-            }
-        }
-
-        return equals;
-    }
-
     // deletedCells.....................................................................................................
 
     /**
@@ -407,12 +485,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.deletedCells;
     }
 
+    final Set<SpreadsheetCellReference> deletedCells;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given deletedCells after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
-        checkDeletedCells(deletedCells);
+        Objects.requireNonNull(deletedCells, "deletedCells");
 
         final Set<SpreadsheetCellReference> copy = this.filterDeletedCells(deletedCells);
         return this.deletedCells.equals(copy) ?
@@ -427,10 +507,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     abstract Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells);
 
-    final Set<SpreadsheetCellReference> deletedCells;
-
-    private static Set<SpreadsheetCellReference> checkDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
-        return Objects.requireNonNull(deletedCells, "deletedCells");
+    static Set<SpreadsheetCellReference> filterDeletedCellsByWindow(final Set<SpreadsheetCellReference> deletedCells,
+                                                                    final SpreadsheetViewportWindows window) {
+        return window.isEmpty() ?
+                deletedCells :
+                filter(
+                        deletedCells,
+                        window::test,
+                        SpreadsheetCellReference::toRelative
+                );
     }
 
     // deletedColumns............................................................................................................
@@ -439,12 +524,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.deletedColumns;
     }
 
+    final Set<SpreadsheetColumnReference> deletedColumns;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given deletedColumns after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
-        checkDeletedColumns(deletedColumns);
+        Objects.requireNonNull(deletedColumns, "deletedColumns");
 
         final Set<SpreadsheetColumnReference> copy = this.filterDeletedColumns(deletedColumns);
         return this.deletedColumns.equals(copy) ?
@@ -459,13 +546,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     abstract Set<SpreadsheetColumnReference> filterDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns);
 
-    final Set<SpreadsheetColumnReference> deletedColumns;
-
-    private static Set<SpreadsheetColumnReference> checkDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
-        return Objects.requireNonNull(deletedColumns, "deletedColumns");
+    static Set<SpreadsheetColumnReference> filterDeletedColumnsByWindow(final Set<SpreadsheetColumnReference> deletedColumns,
+                                                                        final SpreadsheetViewportWindows window) {
+        return window.isEmpty() ?
+                deletedColumns :
+                filter(
+                        deletedColumns,
+                        window::test,
+                        SpreadsheetColumnReference::toRelative
+                );
     }
 
-    // deletedRows............................................................................................................
+    // deletedRows......................................................................................................
 
     /**
      * Returns deleted rows (if selected) following an operation which are related to selected cells.
@@ -474,12 +566,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.deletedRows;
     }
 
+    final Set<SpreadsheetRowReference> deletedRows;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given deletedRows after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
-        checkDeletedRows(deletedRows);
+        Objects.requireNonNull(deletedRows, "deletedRows");
 
         final Set<SpreadsheetRowReference> copy = this.filterDeletedRows(deletedRows);
         return this.deletedRows.equals(copy) ?
@@ -494,10 +588,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     abstract Set<SpreadsheetRowReference> filterDeletedRows(final Set<SpreadsheetRowReference> deletedRows);
 
-    final Set<SpreadsheetRowReference> deletedRows;
-
-    private static Set<SpreadsheetRowReference> checkDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
-        return Objects.requireNonNull(deletedRows, "deletedRows");
+    static Set<SpreadsheetRowReference> filterDeletedRowsByWindow(final Set<SpreadsheetRowReference> deletedRows,
+                                                                  final SpreadsheetViewportWindows window) {
+        return window.isEmpty() ?
+                deletedRows :
+                filter(
+                        deletedRows,
+                        window::test,
+                        SpreadsheetRowReference::toRelative
+                );
     }
 
     // deletedLabels....................................................................................................
@@ -506,20 +605,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.deletedLabels;
     }
 
+    final Set<SpreadsheetLabelName> deletedLabels;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given deletedLabels after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels) {
-        checkDeletedLabels(deletedLabels);
+        Objects.requireNonNull(deletedLabels, "deletedLabels");
 
         final Set<SpreadsheetLabelName> copy = this.filterDeletedLabels(deletedLabels);
         return this.deletedLabels.equals(copy) ?
                 this :
                 this.replaceDeletedLabels(copy);
     }
-
-    abstract SpreadsheetDelta replaceDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels);
 
     /**
      * Takes a copy of the deleted labels, because no target is present actual filtering is NOT possible.
@@ -528,19 +627,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return Sets.immutable(deletedLabels);
     }
 
-    final Set<SpreadsheetLabelName> deletedLabels;
-
-    private static Set<SpreadsheetLabelName> checkDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels) {
-        return checkDeletedLabels0(
-                Objects.requireNonNull(deletedLabels, "deletedLabels")
-        );
+    private static Set<SpreadsheetLabelName> filterDeletedLabelsByWindow(final Set<SpreadsheetLabelName> deletedLabels,
+                                                                         final SpreadsheetViewportWindows window) {
+        return deletedLabels; // not possible to filter label names because reference is missing
     }
 
-    private static Set<SpreadsheetLabelName> checkDeletedLabels0(final Set<SpreadsheetLabelName> deletedLabels) {
-        return Sets.immutable(deletedLabels);
-    }
+    abstract SpreadsheetDelta replaceDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels);
 
-    // matchedCells............................................................................................................
+    // matchedCells.....................................................................................................
 
     /**
      * Returns matched cells (if selected) for a given find parameters
@@ -549,12 +643,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.matchedCells;
     }
 
+    final Set<SpreadsheetCellReference> matchedCells;
+
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given matched cells after they are possibly filtered
      * using the {@link #window()}
      */
     public final SpreadsheetDelta setMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
-        checkMatchedCells(matchedCells);
+        Objects.requireNonNull(matchedCells, "matchedCells");
 
         final Set<SpreadsheetCellReference> copy = this.filterMatchedCells(matchedCells);
         return this.matchedCells.equals(copy) ?
@@ -562,18 +658,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.replaceMatchedCells(copy);
     }
 
-    abstract SpreadsheetDelta replaceMatchedCells(final Set<SpreadsheetCellReference> matchedCells);
-
     /**
      * Takes a copy of the matched cells, possibly filtering out matched Cells if a window is present.
      */
     abstract Set<SpreadsheetCellReference> filterMatchedCells(final Set<SpreadsheetCellReference> matchedCells);
 
-    final Set<SpreadsheetCellReference> matchedCells;
-
-    private static Set<SpreadsheetCellReference> checkMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
-        return Objects.requireNonNull(matchedCells, "matchedCells");
+    static Set<SpreadsheetCellReference> filterMatchedCellsByWindow(final Set<SpreadsheetCellReference> matchedCells,
+                                                                    final SpreadsheetViewportWindows window) {
+        return window.isEmpty() ?
+                matchedCells :
+                filter(
+                        matchedCells,
+                        window::test,
+                        SpreadsheetCellReference::toRelative
+                );
     }
+
+    abstract SpreadsheetDelta replaceMatchedCells(final Set<SpreadsheetCellReference> matchedCells);
 
     // columnWidths.....................................................................................................
 
@@ -583,6 +684,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final Map<SpreadsheetColumnReference, Double> columnWidths() {
         return this.columnWidths;
     }
+
+    final Map<SpreadsheetColumnReference, Double> columnWidths;
 
     public final SpreadsheetDelta setColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
         Objects.requireNonNull(columnWidths, "columnWidths");
@@ -599,9 +702,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     abstract Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths);
 
-    abstract SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths);
+    static Map<SpreadsheetColumnReference, Double> filterColumnWidthsByWindow(final Map<SpreadsheetColumnReference, Double> columnWidths,
+                                                                              final SpreadsheetViewportWindows window) {
+        return filterMap(
+                columnWidths,
+                window::test
+        );
+    }
 
-    final Map<SpreadsheetColumnReference, Double> columnWidths;
+    abstract SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths);
 
     // rowHeights.......................................................................................................
 
@@ -611,6 +720,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final Map<SpreadsheetRowReference, Double> rowHeights() {
         return this.rowHeights;
     }
+
+    final Map<SpreadsheetRowReference, Double> rowHeights;
 
     public final SpreadsheetDelta setRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
         Objects.requireNonNull(rowHeights, "rowHeights");
@@ -626,11 +737,17 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     abstract Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights);
 
+    static Map<SpreadsheetRowReference, Double> filterRowHeightsByWindow(final Map<SpreadsheetRowReference, Double> rowHeights,
+                                                                         final SpreadsheetViewportWindows window) {
+        return filterMap(
+                rowHeights,
+                window::test
+        );
+    }
+
     abstract SpreadsheetDelta replaceRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights);
 
-    final Map<SpreadsheetRowReference, Double> rowHeights;
-
-    // max..............................................................................................................
+    // columnCount......................................................................................................
 
     /**
      * Returns the total number or columns in this spreadsheet (if selected).
@@ -650,6 +767,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     abstract SpreadsheetDelta replaceColumnCount(final OptionalInt columnCount);
 
     final OptionalInt columnCount;
+
+    // rowCount.........................................................................................................
 
     /**
      * Returns the total number of rows in this spreadsheet (if selected).
@@ -721,7 +840,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final Map<SpreadsheetColumnReference, Double> columnWidths = this.columnWidths;
         final Map<SpreadsheetRowReference, Double> rowHeights = this.rowHeights;
 
-        final Set<SpreadsheetCell> filteredCells = filterCells(
+        final Set<SpreadsheetCell> filteredCells = filterCellsByWindow(
                 cells,
                 columns,
                 rows,
@@ -736,16 +855,16 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             delta = SpreadsheetDeltaWindowed.withWindowed(
                     viewport,
                     filteredCells,
-                    filterColumns0(columns, window),
-                    filterLabels0(labels, window),
-                    filterRows0(rows, window),
-                    filterDeletedCells0(deletedCells, window),
-                    filterDeletedColumns0(deletedColumns, window),
-                    filterDeletedRows0(deletedRows, window),
-                    filterDeletedLabels0(deletedLabels, window),
-                    filterMatchedCells0(matchedCells, window),
-                    filterColumnWidths0(columnWidths, window),
-                    filterRowHeights0(rowHeights, window),
+                    filterColumnsByWindow(columns, window),
+                    filterLabelsByWin(labels, window),
+                    filterRowsByWindow(rows, window),
+                    filterDeletedCellsByWindow(deletedCells, window),
+                    filterDeletedColumnsByWindow(deletedColumns, window),
+                    filterDeletedRowsByWindow(deletedRows, window),
+                    filterDeletedLabelsByWindow(deletedLabels, window),
+                    filterMatchedCellsByWindow(matchedCells, window),
+                    filterColumnWidthsByWindow(columnWidths, window),
+                    filterRowHeightsByWindow(rowHeights, window),
                     columnCount,
                     rowCount,
                     window
@@ -772,202 +891,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return delta;
     }
 
-    /**
-     * Filters the given cells there are several rules that could make this happen. Cells within hidden columns or rows,
-     * or outside the window if present will be removed.
-     */
-    static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final Set<SpreadsheetColumn> columns,
-                                            final Set<SpreadsheetRow> rows,
-                                            final SpreadsheetViewportWindows window) {
-        Predicate<SpreadsheetCell> predicate = null;
-
-        final int columnCount = null != columns ? columns.size() : 0;
-        final int rowCount = null != rows ? rows.size() : 0;
-
-        if (columnCount + rowCount > 0) {
-            // Any columns or rows within this Set are hidden and matches by a cell will be removed.
-            final Set<SpreadsheetColumnOrRowReference> hidden = SortedSets.tree(
-                    SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR
-            );
-
-            if (columnCount > 0) {
-                for (final SpreadsheetColumn column : columns) {
-                    if (column.hidden()) {
-                        hidden.add(column.reference());
-                    }
-                }
-            }
-
-            if (rowCount > 0) {
-                for (final SpreadsheetRow row : rows) {
-                    if (row.hidden()) {
-                        hidden.add(row.reference());
-                    }
-                }
-            }
-
-            if (false == hidden.isEmpty()) {
-                predicate = (c) -> {
-                    final SpreadsheetCellReference cellReference = c.reference();
-                    return !(
-                            hidden.contains(cellReference.column()) ||
-                                    hidden.contains(cellReference.row())
-                    );
-                };
-            }
-        }
-
-
-        if (null != window && window.isNotEmpty()) {
-            final Predicate<SpreadsheetCell> windowPredicate = c -> window.test(c.reference());
-
-            predicate = null != predicate ?
-                    predicate.and(windowPredicate) :
-                    windowPredicate;
-        }
-
-        return null != predicate ?
-                filter(
-                        cells,
-                        predicate
-                ) :
-                cells instanceof ImmutableSortedSet ?
-                        cells :
-                        SortedSets.immutable(
-                                new TreeSet<>(cells)
-                        );
-    }
-
-    static Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns,
-                                                final SpreadsheetViewportWindows window) {
-        return window.isEmpty() ?
-                columns :
-                filterColumns0(columns, window);
-    }
-
-    private static Set<SpreadsheetColumn> filterColumns0(final Set<SpreadsheetColumn> columns,
-                                                         final SpreadsheetViewportWindows window) {
-        return filter(
-                columns,
-                (c) -> window.test(c.reference())
-        );
-    }
-
-    /**
-     * Returns a {@link Set} removing any references that are not within the window if present.
-     */
-    static Set<SpreadsheetLabelMapping> filterLabels(final Set<SpreadsheetLabelMapping> labels,
-                                                     final SpreadsheetViewportWindows window) {
-        return window.isEmpty() ?
-                labels :
-                filterLabels0(
-                        labels,
-                        window
-                );
-    }
-
-    /**
-     * Removes all {@link SpreadsheetLabelMapping} that belong to cells that outside the window.
-     */
-    private static Set<SpreadsheetLabelMapping> filterLabels0(final Set<SpreadsheetLabelMapping> labels,
-                                                              final SpreadsheetViewportWindows window) {
-        return filter(
-                labels,
-                m -> {
-                    final SpreadsheetExpressionReference r = m.reference();
-
-                    return r.isLabelName() ||
-                            window.cellRanges()
-                                    .stream()
-                                    .anyMatch(r::testCellRange);
-                }
-        );
-    }
-
-    static Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows,
-                                          final SpreadsheetViewportWindows window) {
-        return window.isEmpty() ?
-                rows :
-                filterRows0(rows, window);
-    }
-
-    private static Set<SpreadsheetRow> filterRows0(final Set<SpreadsheetRow> rows,
-                                                   final SpreadsheetViewportWindows window) {
-        return filter(
-                rows,
-                r -> window.test(r.reference())
-        );
-    }
-
-    static Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells,
-                                                            final SpreadsheetViewportWindows window) {
-        return window.isEmpty() ?
-                deletedCells :
-                filterDeletedCells0(deletedCells, window);
-    }
-
-    private static Set<SpreadsheetCellReference> filterDeletedCells0(final Set<SpreadsheetCellReference> deletedCells,
-                                                                     final SpreadsheetViewportWindows window) {
-        return filter(
-                deletedCells,
-                window::test,
-                SpreadsheetCellReference::toRelative
-        );
-    }
-
-    static Set<SpreadsheetColumnReference> filterDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns,
-                                                                final SpreadsheetViewportWindows window) {
-        return window.isEmpty() ?
-                deletedColumns :
-                filterDeletedColumns0(deletedColumns, window);
-    }
-
-    private static Set<SpreadsheetColumnReference> filterDeletedColumns0(final Set<SpreadsheetColumnReference> deletedColumns,
-                                                                         final SpreadsheetViewportWindows window) {
-        return filter(
-                deletedColumns,
-                window::test,
-                SpreadsheetColumnReference::toRelative
-        );
-    }
-
-    static Set<SpreadsheetRowReference> filterDeletedRows(final Set<SpreadsheetRowReference> deletedRows,
-                                                          final SpreadsheetViewportWindows window) {
-        return window.isEmpty() ?
-                deletedRows :
-                filterDeletedRows0(deletedRows, window);
-    }
-
-    private static Set<SpreadsheetRowReference> filterDeletedRows0(final Set<SpreadsheetRowReference> deletedRows,
-                                                                   final SpreadsheetViewportWindows window) {
-        return filter(
-                deletedRows,
-                window::test,
-                SpreadsheetRowReference::toRelative
-        );
-    }
-
-    private static Set<SpreadsheetLabelName> filterDeletedLabels0(final Set<SpreadsheetLabelName> deletedLabels,
-                                                                  final SpreadsheetViewportWindows window) {
-        return deletedLabels; // not possible to filter label names because target is missing
-    }
-
-    static Set<SpreadsheetCellReference> filterMatchedCells(final Set<SpreadsheetCellReference> matchedCells,
-                                                            final SpreadsheetViewportWindows window) {
-        return window.isEmpty() ?
-                matchedCells :
-                filterMatchedCells0(matchedCells, window);
-    }
-
-    private static Set<SpreadsheetCellReference> filterMatchedCells0(final Set<SpreadsheetCellReference> matchedCells,
-                                                                     final SpreadsheetViewportWindows window) {
-        return filter(
-                matchedCells,
-                window::test,
-                SpreadsheetCellReference::toRelative
-        );
-    }
+    // filter...........................................................................................................
 
     static <T> Set<T> filter(final Set<T> values,
                              final Predicate<T> keep) {
@@ -987,22 +911,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .collect(
                         ImmutableSortedSet.collector()
                 );
-    }
-
-    static Map<SpreadsheetColumnReference, Double> filterColumnWidths0(final Map<SpreadsheetColumnReference, Double> columnWidths,
-                                                                       final SpreadsheetViewportWindows window) {
-        return filterMap(
-                columnWidths,
-                window::test
-        );
-    }
-
-    static Map<SpreadsheetRowReference, Double> filterRowHeights0(final Map<SpreadsheetRowReference, Double> rowHeights,
-                                                                  final SpreadsheetViewportWindows window) {
-        return filterMap(
-                rowHeights,
-                window::test
-        );
     }
 
     static <R extends SpreadsheetColumnOrRowReference> Map<R, Double> filterMap(final Map<R, Double> source,
@@ -1029,7 +937,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     public static JsonNode cellsPatch(final Set<SpreadsheetCell> cells,
                                       final JsonNodeMarshallContext context) {
-        checkCells(cells);
+        Objects.requireNonNull(cells, "cells");
         checkContext(context);
 
         return JsonNode.object()
@@ -1494,21 +1402,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case CELLS_PROPERTY_STRING:
-                    cells = patchCells0(
+                    cells = patchApplyCells(
                             selection,
                             propertyAndValue,
                             context
                     );
                     break;
                 case COLUMNS_PROPERTY_STRING:
-                    columns = patchColumns0(
+                    columns = patchApplyColumns(
                             selection,
                             propertyAndValue,
                             context
                     );
                     break;
                 case FORMATTER_PROPERTY_STRING:
-                    cells = patchFormatter(
+                    cells = patchApplyFormatter(
                             selection.toCellRange(),
                             cells,
                             JsonNode.object()
@@ -1517,7 +1425,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case FORMULA_PROPERTY_STRING:
-                    cells = patchFormula(
+                    cells = patchApplyCellFormula(
                             selection.toCellRange(),
                             cells,
                             JsonNode.object()
@@ -1529,7 +1437,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case PARSER_PROPERTY_STRING:
-                    cells = patchParser(
+                    cells = patchApplyParser(
                             selection.toCellRange(),
                             cells,
                             JsonNode.object()
@@ -1538,7 +1446,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case ROWS_PROPERTY_STRING:
-                    rows = patchRows0(
+                    rows = patchApplyRows(
                             selection,
                             propertyAndValue,
                             context
@@ -1577,13 +1485,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .setWindow(window);
     }
 
-    private Set<SpreadsheetCell> patchCells0(final SpreadsheetSelection selection,
-                                             final JsonNode node,
-                                             final JsonNodeUnmarshallContext context) {
+    private Set<SpreadsheetCell> patchApplyCells(final SpreadsheetSelection selection,
+                                                 final JsonNode node,
+                                                 final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_CELLS :
-                this.patchCellsNonNull(
+                this.patchApplyCellsNonNull(
                         selection,
                         node,
                         context
@@ -1594,10 +1502,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Takes a json object of reference to cell and patches the existing cells in this {@link SpreadsheetDelta}.
      * If the patch is a new cell it is added, existing cells are patched.
      */
-    private Set<SpreadsheetCell> patchCellsNonNull(final SpreadsheetSelection selection,
-                                                   final JsonNode node,
-                                                   final JsonNodeUnmarshallContext context) {
-        return patchReferenceToValue(
+    private Set<SpreadsheetCell> patchApplyCellsNonNull(final SpreadsheetSelection selection,
+                                                        final JsonNode node,
+                                                        final JsonNodeUnmarshallContext context) {
+        return patchApplySelectionToValue(
                 selection,
                 node,
                 SpreadsheetSelection::parseCell,
@@ -1607,13 +1515,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private Set<SpreadsheetColumn> patchColumns0(final SpreadsheetSelection selection,
-                                                 final JsonNode node,
-                                                 final JsonNodeUnmarshallContext context) {
+    private Set<SpreadsheetColumn> patchApplyColumns(final SpreadsheetSelection selection,
+                                                     final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_COLUMNS :
-                this.patchColumnsNonNull(
+                this.patchApplyColumnsNonNull(
                         selection,
                         node,
                         context
@@ -1624,10 +1532,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Takes a json object of reference to column and patches the existing columns in this {@link SpreadsheetDelta}.
      * If the patch is a new column it is added, existing columns are patched.
      */
-    private Set<SpreadsheetColumn> patchColumnsNonNull(final SpreadsheetSelection selection,
-                                                       final JsonNode node,
-                                                       final JsonNodeUnmarshallContext context) {
-        return patchReferenceToValue(
+    private Set<SpreadsheetColumn> patchApplyColumnsNonNull(final SpreadsheetSelection selection,
+                                                            final JsonNode node,
+                                                            final JsonNodeUnmarshallContext context) {
+        return patchApplySelectionToValue(
                 selection,
                 node,
                 SpreadsheetSelection::parseColumn,
@@ -1647,10 +1555,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchFormula(final SpreadsheetCellRangeReference cellRange,
-                                                     final Set<SpreadsheetCell> cells,
-                                                     final JsonNode patch,
-                                                     final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchApplyCellFormula(final SpreadsheetCellRangeReference cellRange,
+                                                              final Set<SpreadsheetCell> cells,
+                                                              final JsonNode patch,
+                                                              final JsonNodeUnmarshallContext context) {
         final SpreadsheetFormula formula = context.unmarshall(
                 patch.objectOrFail()
                         .getOrFail(FORMULA_PROPERTY),
@@ -1673,10 +1581,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchFormatter(final SpreadsheetCellRangeReference cellRange,
-                                                       final Set<SpreadsheetCell> cells,
-                                                       final JsonNode patch,
-                                                       final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchApplyFormatter(final SpreadsheetCellRangeReference cellRange,
+                                                            final Set<SpreadsheetCell> cells,
+                                                            final JsonNode patch,
+                                                            final JsonNodeUnmarshallContext context) {
         final Optional<SpreadsheetFormatterSelector> formatter = Optional.ofNullable(
                 context.unmarshall(
                         patch.objectOrFail()
@@ -1702,10 +1610,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    private static Set<SpreadsheetCell> patchParser(final SpreadsheetCellRangeReference cellRange,
-                                                    final Set<SpreadsheetCell> cells,
-                                                    final JsonNode patch,
-                                                    final JsonNodeUnmarshallContext context) {
+    private static Set<SpreadsheetCell> patchApplyParser(final SpreadsheetCellRangeReference cellRange,
+                                                         final Set<SpreadsheetCell> cells,
+                                                         final JsonNode patch,
+                                                         final JsonNodeUnmarshallContext context) {
         final Optional<SpreadsheetParserSelector> parserSelector = Optional.ofNullable(
                 context.unmarshall(
                         patch.objectOrFail()
@@ -1723,13 +1631,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private Set<SpreadsheetRow> patchRows0(final SpreadsheetSelection selection,
-                                           final JsonNode node,
-                                           final JsonNodeUnmarshallContext context) {
+    private Set<SpreadsheetRow> patchApplyRows(final SpreadsheetSelection selection,
+                                               final JsonNode node,
+                                               final JsonNodeUnmarshallContext context) {
 
         return node.isNull() ?
                 NO_ROWS :
-                this.patchRowsNonNull(
+                this.patchApplyRowsNonNull(
                         selection,
                         node,
                         context
@@ -1740,10 +1648,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Takes a json object of reference to row and patches the existing rows in this {@link SpreadsheetDelta}.
      * If the patch is a new row it is added, existing rows are patched.
      */
-    private Set<SpreadsheetRow> patchRowsNonNull(final SpreadsheetSelection selection,
-                                                 final JsonNode node,
-                                                 final JsonNodeUnmarshallContext context) {
-        return patchReferenceToValue(
+    private Set<SpreadsheetRow> patchApplyRowsNonNull(final SpreadsheetSelection selection,
+                                                      final JsonNode node,
+                                                      final JsonNodeUnmarshallContext context) {
+        return patchApplySelectionToValue(
                 selection,
                 node,
                 SpreadsheetSelection::parseRow,
@@ -1753,12 +1661,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private <R extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchReferenceToValue(final SpreadsheetSelection selection,
-                                                                                                  final JsonNode node,
-                                                                                                  final Function<String, R> referenceParser,
-                                                                                                  final Function<R, Optional<V>> referenceToValue,
-                                                                                                  final Class<V> valueType,
-                                                                                                  final JsonNodeUnmarshallContext context) {
+    private <R extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchApplySelectionToValue(final SpreadsheetSelection selection,
+                                                                                                       final JsonNode node,
+                                                                                                       final Function<String, R> referenceParser,
+                                                                                                       final Function<R, Optional<V>> referenceToValue,
+                                                                                                       final Class<V> valueType,
+                                                                                                       final JsonNodeUnmarshallContext context) {
         // collect either patch or invalid cells.
         Set<V> patched = null;
         Set<R> invalid = null;
@@ -2646,6 +2554,30 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.columnCount.equals(other.columnCount) &&
                 this.rowCount.equals(other.rowCount) &&
                 this.window().equals(other.window());
+    }
+
+    /**
+     * The {@link Set sets} holding cells, columns, labels and rows are sorted and each class only uses its
+     * {@link SpreadsheetSelection} to determine equality. This means {@link Sets#equals(Object)} will return true for
+     * entries with the same {@link SpreadsheetSelection} but other different properties.
+     */
+    private static <T> boolean equals(final Set<T> left,
+                                      final Set<T> right) {
+        boolean equals = left.size() == right.size();
+
+        if (equals) {
+            final Iterator<T> leftIterator = left.iterator();
+            final Iterator<T> rightIterator = right.iterator();
+            while (equals && leftIterator.hasNext()) {
+                equals = rightIterator.hasNext() &&
+                        leftIterator.next()
+                                .equals(
+                                        rightIterator.next()
+                                );
+            }
+        }
+
+        return equals;
     }
 
     /**
