@@ -118,6 +118,25 @@ public enum SpreadsheetDeltaProperties {
 
     private final String kebabCase;
 
+    // J2cl EnumSet.allOf not implemented.
+    //
+    // https://github.com/google/j2cl/blob/master/jre/java/java/util/EnumSet.java#L134
+    static {
+        final EnumSet<SpreadsheetDeltaProperties> all = EnumSet.noneOf(SpreadsheetDeltaProperties.class);
+        all.addAll(Sets.of(SpreadsheetDeltaProperties.values()));
+        ALL = Sets.readOnly(all);
+    }
+
+    public final static Set<SpreadsheetDeltaProperties> ALL;
+
+    /**
+     * Constant representing no {@link SpreadsheetDeltaProperties}. The {@link SpreadsheetEngine} changes will be still be
+     * performed but the response with changes will be empty.
+     */
+    public final static Set<SpreadsheetDeltaProperties> NONE = Sets.readOnly(
+            EnumSet.noneOf(SpreadsheetDeltaProperties.class)
+    );
+
     /**
      * Factory that maps a kebab-case name into a {@link SpreadsheetDeltaProperties}.
      */
@@ -137,23 +156,6 @@ public enum SpreadsheetDeltaProperties {
                 ALL :
                 parseCsv(selection);
     }
-
-    // J2cl EnumSet.allOf not implemented.
-    //
-    // https://github.com/google/j2cl/blob/master/jre/java/java/util/EnumSet.java#L134
-    static {
-        final EnumSet<SpreadsheetDeltaProperties> all = EnumSet.noneOf(SpreadsheetDeltaProperties.class);
-        all.addAll(Sets.of(SpreadsheetDeltaProperties.values()));
-        ALL = Sets.readOnly(all);
-    }
-
-    public final static Set<SpreadsheetDeltaProperties> ALL;
-
-    /**
-     * Constant representing no {@link SpreadsheetDeltaProperties}. The {@link SpreadsheetEngine} changes will be still be
-     * performed but the response with changes will be empty.
-     */
-    public final static Set<SpreadsheetDeltaProperties> NONE = EnumSet.noneOf(SpreadsheetDeltaProperties.class);
 
     private static Set<SpreadsheetDeltaProperties> parseCsv(final String values) {
         return Arrays.stream(values.split(","))
