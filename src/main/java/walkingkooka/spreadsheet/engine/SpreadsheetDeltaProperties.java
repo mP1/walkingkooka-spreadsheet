@@ -20,6 +20,13 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetRow;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
@@ -31,42 +38,75 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * This enum is used to select which {@link SpreadsheetDelta} should be populated in a request that returns a
- * {@link SpreadsheetDelta}.
- * <br>
- * For example the full spreadsheet grid will always want all {@link SpreadsheetDelta} properties to be populated,
- * so multiple requests accumulate changes.
- * <br>
- * However loading a small one time panel of cells perhaps for a preview might only want the cells, columnWidths &
- * rowHeights.
+ * This enum is used to select which {@link SpreadsheetDelta} properties should be populated in the {@link SpreadsheetEngine} response.
  */
 public enum SpreadsheetDeltaProperties {
 
+    /**
+     * Returns any loaded or changed {@link walkingkooka.spreadsheet.SpreadsheetCell}.
+     */
     CELLS,
+
+    /**
+     * Only populated with  {@link SpreadsheetColumn} for any selected cell or column API
+     */
     COLUMNS,
+
+    /**
+     * Only populated with {@link SpreadsheetLabelMapping} for any selected cell or label API.
+     */
     LABELS,
+
+    /**
+     * Only populated with  {@link SpreadsheetRow} for any selected cell or row API
+     */
     ROWS,
 
+    /**
+     * Only populated with {@link SpreadsheetCellReference} when {@link SpreadsheetCell} are deleted.
+     */
     DELETED_CELLS,
+
+    /**
+     * Only populated with {@link SpreadsheetColumnReference} when {@link SpreadsheetColumn} are deleted.
+     */
     DELETED_COLUMNS,
+
+    /**
+     * Only populated with {@link SpreadsheetRowReference} when {@link SpreadsheetRow} are deleted.
+     */
     DELETED_ROWS,
 
+    /**
+     * Only populated when {@link SpreadsheetLabelMapping} are deleted.
+     */
     DELETED_LABELS,
 
     /**
-     * When present cells in the response will be matched using the find parameters or query.
+     * When present {@link SpreadsheetCellReference} in the response will be matched using the find parameters or query.
      */
     MATCHED_CELLS,
 
+    /**
+     * Returns the column widths for any cells
+     */
     COLUMN_WIDTHS,
 
+    /**
+     * Returns the row heights for any cells
+     */
     ROW_HEIGHTS,
 
     /**
-     * The {@link #COLUMN_COUNT} and {@link #ROW_COUNT} are required by the UI to compute a slider that grows to show
-     * the visible window against the visible viewport dimensions.
+     * The number of columns in the spreadsheet.
+     * This is required by the UI to compute and render the horizontal slider.
      */
     COLUMN_COUNT,
+
+    /**
+     * The number of rows in the spreadsheet.
+     * This is required by the UI to compute and render the vertical slider.
+     */
     ROW_COUNT;
 
     SpreadsheetDeltaProperties() {
@@ -79,7 +119,7 @@ public enum SpreadsheetDeltaProperties {
     private final String kebabCase;
 
     /**
-     * Factory that finds the {@link SpreadsheetDeltaProperties} with the given {@link String kebab-case name}.
+     * Factory that maps a kebab-case name into a {@link SpreadsheetDeltaProperties}.
      */
     static SpreadsheetDeltaProperties with(final String kebabCase) {
         return Arrays.stream(values())
@@ -110,7 +150,8 @@ public enum SpreadsheetDeltaProperties {
     public final static Set<SpreadsheetDeltaProperties> ALL;
 
     /**
-     * Constant representing no {@link SpreadsheetDeltaProperties}.
+     * Constant representing no {@link SpreadsheetDeltaProperties}. The {@link SpreadsheetEngine} changes will be still be
+     * performed but the response with changes will be empty.
      */
     public final static Set<SpreadsheetDeltaProperties> NONE = EnumSet.noneOf(SpreadsheetDeltaProperties.class);
 
@@ -122,7 +163,7 @@ public enum SpreadsheetDeltaProperties {
 
 
     /**
-     * Attempts to read the {@link SpreadsheetDeltaProperties} from the {@link #PROPERTIES}.
+     * Attempts to read the {@link SpreadsheetDeltaProperties} from a http request parameters.
      */
     public static Set<SpreadsheetDeltaProperties> extract(final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(parameters, "parameters");
