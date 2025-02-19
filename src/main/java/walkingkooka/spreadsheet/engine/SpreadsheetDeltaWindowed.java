@@ -158,11 +158,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns) {
-        return filterColumnsByWindow(columns, this.window);
-    }
-
-    @Override
     SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns) {
         return new SpreadsheetDeltaWindowed(
                 this.viewport,
@@ -210,11 +205,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetRow> filterRows(final Set<SpreadsheetRow> rows) {
-        return filterRowsByWindow(rows, this.window);
-    }
-
-    @Override
     SpreadsheetDelta replaceRows(final Set<SpreadsheetRow> rows) {
         return new SpreadsheetDeltaWindowed(
                 this.viewport,
@@ -241,11 +231,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
-        return filterDeletedCellsByWindow(deletedCells, this.window);
-    }
-
-    @Override
     SpreadsheetDelta replaceDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
         return new SpreadsheetDeltaWindowed(
                 this.viewport,
@@ -264,11 +249,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.rowCount,
                 this.window
         );
-    }
-
-    @Override
-    Set<SpreadsheetColumnReference> filterDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
-        return filterDeletedColumnsByWindow(deletedColumns, this.window);
     }
 
     @Override
@@ -314,11 +294,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetRowReference> filterDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
-        return filterDeletedRowsByWindow(deletedRows, this.window);
-    }
-
-    @Override
     SpreadsheetDelta replaceDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
         return new SpreadsheetDeltaWindowed(
                 this.viewport,
@@ -335,14 +310,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.rowHeights,
                 this.columnCount,
                 this.rowCount,
-                this.window
-        );
-    }
-
-    @Override
-    Set<SpreadsheetCellReference> filterMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
-        return filterMatchedCellsByWindow(
-                matchedCells,
                 this.window
         );
     }
@@ -369,14 +336,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Map<SpreadsheetColumnReference, Double> filterColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        return filterColumnWidthsByWindow(
-                columnWidths,
-                this.window
-        );
-    }
-
-    @Override
     SpreadsheetDelta replaceColumnWidths(final Map<SpreadsheetColumnReference, Double> columnWidths) {
         return new SpreadsheetDeltaWindowed(
                 this.viewport,
@@ -393,14 +352,6 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                 this.rowHeights,
                 this.columnCount,
                 this.rowCount,
-                this.window
-        );
-    }
-
-    @Override
-    Map<SpreadsheetRowReference, Double> filterRowHeights(final Map<SpreadsheetRowReference, Double> rowHeights) {
-        return filterRowHeightsByWindow(
-                rowHeights,
                 this.window
         );
     }
