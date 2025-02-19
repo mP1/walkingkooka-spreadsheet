@@ -1814,8 +1814,16 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
      */
     private JsonNode marshallParentParserToken(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(VALUE_PROPERTY, context.marshallWithTypeCollection(Cast.to(this.value()))) // unnecessary to include type.
-                .set(TEXT_PROPERTY, JsonNode.string(this.text()));
+                .set(
+                        VALUE_PROPERTY,
+                        context.marshallCollectionWithType(
+                                Cast.to(this.value())
+                        )
+                ) // unnecessary to include type.
+            .set(
+                    TEXT_PROPERTY,
+                    JsonNode.string(this.text())
+            );
     }
 
     private static <T extends ParentSpreadsheetFormatParserToken> void registerParentParserToken(final Class<T> type,

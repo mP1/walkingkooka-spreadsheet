@@ -2531,8 +2531,16 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
      */
     private JsonNode marshallParent(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(VALUE_PROPERTY, context.marshallWithTypeCollection(Cast.to(this.value()))) // unnecessary to include type.
-                .set(TEXT_PROPERTY, JsonNode.string(this.text()));
+                .set(
+                        VALUE_PROPERTY,
+                        context.marshallCollectionWithType(
+                                Cast.to(this.value())
+                        )
+                ) // unnecessary to include type.
+                .set(
+                        TEXT_PROPERTY,
+                        JsonNode.string(this.text())
+                );
     }
 
     private static <T extends ParentSpreadsheetFormulaParserToken> void registerParent(final Class<T> type,

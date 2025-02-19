@@ -2393,8 +2393,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                         references.entrySet()
                                                 .stream()
                                                 .map(car ->
-                                                        context.marshallWithTypeCollection(car.getValue())
-                                                                .setName(JsonPropertyName.with(car.getKey().toString()))
+                                                        context.marshallCollectionWithType(car.getValue())
+                                                                .setName(
+                                                                        JsonPropertyName.with(
+                                                                                car.getKey()
+                                                                                        .toString()
+                                                                        )
+                                                                )
                                                 ).collect(Collectors.toList())
                                 ).setName(REFERENCES_PROPERTY)
                 );
