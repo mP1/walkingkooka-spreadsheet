@@ -96,26 +96,26 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after
         );
 
-        this.checkViewport(after, different);
+        this.viewportAndCheck(after, different);
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
 
-        this.checkColumnCount(after);
-        this.checkRowCount(after);
+        this.columnCountAndCheck(after);
+        this.rowCountAndCheck(after);
 
-        this.checkViewport(before);
+        this.viewportAndCheck(before);
     }
 
     // cells............................................................................................................
@@ -130,7 +130,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 () -> cells.add(this.a1())
         );
 
-        this.checkCells(
+        this.cellsAndCheck(
                 delta,
                 this.cells()
         );
@@ -160,11 +160,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta after = before.setCells(different);
         assertNotSame(before, after);
 
-        this.checkCells(
+        this.cellsAndCheck(
                 after,
                 different
         );
-        this.checkLabels(
+        this.labelsAndCheck(
                 after,
                 before.labels()
         );
@@ -178,7 +178,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setCells(Sets.of(b2, a1));
 
-        this.checkCells(
+        this.cellsAndCheck(
                 delta,
                 Sets.of(a1, b2)
         );
@@ -200,7 +200,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 () -> columns.add(this.a())
         );
 
-        this.checkColumns(delta, this.columns());
+        this.columnsAndCheck(delta, this.columns());
     }
 
     @Test
@@ -221,11 +221,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta after = before.setColumns(different);
         assertNotSame(before, after);
 
-        this.checkColumns(
+        this.columnsAndCheck(
                 after,
                 different
         );
-        this.checkLabels(after);
+        this.labelsAndCheck(after);
 
         this.checkNotEquals(
                 before,
@@ -243,7 +243,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 .setColumns(
                         Sets.of(b, c, a));
 
-        this.checkColumns(
+        this.columnsAndCheck(
                 delta,
                 Sets.of(a, b, c)
         );
@@ -257,7 +257,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public final void testSetColumnsWithHiddenFiltersCells() {
         final SpreadsheetDelta delta = this.createSpreadsheetDelta();
-        this.checkCells(
+        this.cellsAndCheck(
                 delta,
                 Sets.of(
                         this.a1(),
@@ -271,14 +271,14 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
 
         final SpreadsheetDelta after = delta.setColumns(hiddenA);
-        this.checkCells(
+        this.cellsAndCheck(
                 after,
                 Sets.of(
                         this.b2(),
                         this.c3()
                 )
         );
-        this.checkColumns(
+        this.columnsAndCheck(
                 after,
                 hiddenA
         );
@@ -302,7 +302,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 )
         );
 
-        this.checkLabels(delta);
+        this.labelsAndCheck(delta);
     }
 
     @Test
@@ -331,23 +331,23 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
 
-        this.checkLabels(
+        this.labelsAndCheck(
                 after,
                 different
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
     }
 
     @Test
@@ -361,23 +361,23 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after
         );
 
-        this.checkLabels(
+        this.labelsAndCheck(
                 after,
                 different
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
     }
 
     // rows.............................................................................................................
@@ -392,7 +392,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 () -> rows.add(this.row1())
         );
 
-        this.checkRows(delta, this.rows());
+        this.rowsAndCheck(delta, this.rows());
     }
 
     @Test
@@ -411,23 +411,23 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final Set<SpreadsheetRow> different = this.differentRows();
         final SpreadsheetDelta after = before.setRows(different);
         assertNotSame(before, after);
-        this.checkRows(
+        this.rowsAndCheck(
                 after,
                 different
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
 
         this.checkNotEquals(
                 before,
@@ -445,7 +445,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 .setRows(
                         Sets.of(b, c, a));
 
-        this.checkRows(
+        this.rowsAndCheck(
                 delta,
                 Sets.of(a, b, c)
         );
@@ -459,7 +459,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public final void testSetRowsWithHiddenFiltersCells() {
         final SpreadsheetDelta delta = this.createSpreadsheetDelta();
-        this.checkCells(
+        this.cellsAndCheck(
                 delta,
                 Sets.of(
                         this.a1(),
@@ -473,14 +473,14 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
 
         final SpreadsheetDelta after = delta.setRows(hiddenRow1);
-        this.checkCells(
+        this.cellsAndCheck(
                 after,
                 Sets.of(
                         this.b2(),
                         this.c3()
                 )
         );
-        this.checkRows(
+        this.rowsAndCheck(
                 after,
                 hiddenRow1
         );
@@ -498,7 +498,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 () -> references.clear()
         );
 
-        this.checkReferences(
+        this.referencesAndCheck(
                 delta,
                 this.references()
         );
@@ -529,22 +529,22 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         final SpreadsheetDelta after = before.setReferences(different);
         assertNotSame(before, after);
-        this.checkReferences(
+        this.referencesAndCheck(
                 after,
                 different
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
     }
 
     @Test
@@ -554,22 +554,22 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         final SpreadsheetDelta after = before.setReferences(different);
         assertNotSame(before, after);
-        this.checkReferences(
+        this.referencesAndCheck(
                 after,
                 different
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
     }
 
     // deletedCells.....................................................................................................
@@ -587,7 +587,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 )
         );
 
-        this.checkDeletedCells(
+        this.deletedCellsAndCheck(
                 delta,
                 this.deletedCells()
         );
@@ -614,23 +614,23 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after
         );
 
-        this.checkDeletedCells(
+        this.deletedCellsAndCheck(
                 after,
                 different
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
 
         this.checkNotEquals(
                 before,
@@ -651,7 +651,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         )
                 );
 
-        this.checkDeletedCells(
+        this.deletedCellsAndCheck(
                 delta,
                 Sets.of(a1, b2)
         );
@@ -668,7 +668,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setDeletedCells(Sets.of(b2, a1, d4, c3));
 
-        this.checkDeletedCells(
+        this.deletedCellsAndCheck(
                 delta,
                 Sets.of(
                         a1.toRelative(),
@@ -700,7 +700,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 () -> deletedColumns.add(this.a1().reference().column())
         );
 
-        this.checkDeletedColumns(
+        this.deletedColumnsAndCheck(
                 delta,
                 this.deletedColumns()
         );
@@ -729,20 +729,20 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after
         );
 
-        this.checkDeletedColumns(
+        this.deletedColumnsAndCheck(
                 after,
                 different
         );
 
-        this.checkColumns(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.columnsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
     }
 
     @Test
@@ -755,7 +755,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         Sets.of(b, a)
                 );
 
-        this.checkDeletedColumns(
+        this.deletedColumnsAndCheck(
                 delta,
                 Sets.of(a, b)
         );
@@ -773,7 +773,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setDeletedColumns(Sets.of(b, a));
 
-        this.checkDeletedColumns(
+        this.deletedColumnsAndCheck(
                 delta,
                 Sets.of(
                         a.toRelative(),
@@ -801,7 +801,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 () -> deletedRows.add(this.a1().reference().row())
         );
 
-        this.checkDeletedRows(delta, this.deletedRows());
+        this.deletedRowsAndCheck(delta, this.deletedRows());
     }
 
     @Test
@@ -825,23 +825,23 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after
         );
 
-        this.checkDeletedRows(
+        this.deletedRowsAndCheck(
                 after,
                 different
         );
 
-        this.checkRows(after);
-        this.checkRows(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.rowsAndCheck(after);
+        this.rowsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkDeletedColumns(after);
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
     }
 
     @Test
@@ -852,7 +852,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setDeletedRows(Sets.of(b2, a1));
 
-        this.checkDeletedRows(
+        this.deletedRowsAndCheck(
                 delta,
                 Sets.of(a1, b2)
         );
@@ -870,7 +870,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setDeletedRows(Sets.of(row1, row2));
 
-        this.checkDeletedRows(
+        this.deletedRowsAndCheck(
                 delta,
                 Sets.of(
                         row1.toRelative(),
@@ -897,7 +897,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 UnsupportedOperationException.class,
                 () -> deletedLabels.add(SpreadsheetSelection.labelName("AddShouldFail")));
 
-        this.checkDeletedLabels(delta, this.deletedLabels());
+        this.deletedLabelsAndCheck(delta, this.deletedLabels());
     }
 
     @Test
@@ -921,23 +921,23 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after
         );
 
-        this.checkDeletedLabels(
+        this.deletedLabelsAndCheck(
                 after,
                 different
         );
 
-        this.checkLabels(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.labelsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
 
         this.checkNotEquals(
                 before,
@@ -954,7 +954,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         assertThrows(UnsupportedOperationException.class, () -> matchedCells.add(this.a1().reference()));
 
-        this.checkMatchedCells(delta, this.matchedCells());
+        this.matchedCellsAndCheck(delta, this.matchedCells());
     }
 
     @Test
@@ -975,24 +975,24 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after
         );
 
-        this.checkMatchedCells(
+        this.matchedCellsAndCheck(
                 after,
                 different
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkDeletedColumns(after);
-        this.checkDeletedRows(after);
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
 
-        this.checkColumnWidths(after);
-        this.checkRowHeights(after);
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
 
         this.checkNotEquals(
                 before,
@@ -1008,7 +1008,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setMatchedCells(Sets.of(b2, a1));
 
-        this.checkMatchedCells(
+        this.matchedCellsAndCheck(
                 delta,
                 Sets.of(a1, b2)
         );
@@ -1025,7 +1025,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setMatchedCells(Sets.of(b2, a1, d4, c3));
 
-        this.checkMatchedCells(
+        this.matchedCellsAndCheck(
                 delta,
                 Sets.of(
                         a1.toRelative(),
@@ -1071,16 +1071,16 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         final SpreadsheetDelta after = delta.setColumnWidths(different);
         assertNotSame(delta, after);
-        this.checkColumnWidths(after, different);
+        this.columnWidthsAndCheck(after, different);
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkRowHeights(after);
+        this.rowHeightsAndCheck(after);
     }
 
     // setRowHeights....................................................................................................
@@ -1113,20 +1113,20 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 delta,
                 after
         );
-        this.checkRowHeights(
+        this.rowHeightsAndCheck(
                 after,
                 different
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkDeletedCells(after);
-        this.checkColumnWidths(after);
+        this.deletedCellsAndCheck(after);
+        this.columnWidthsAndCheck(after);
     }
 
     // setWindow........................................................................................................
@@ -1152,21 +1152,21 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         final SpreadsheetDelta after = before.setWindow(window);
 
-        this.checkWindow(
+        this.windowAndCheck(
                 after,
                 window
         );
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkCells(before);
-        this.checkColumns(before);
-        this.checkRows(before);
+        this.cellsAndCheck(before);
+        this.columnsAndCheck(before);
+        this.rowsAndCheck(before);
     }
 
     @Test
@@ -1181,18 +1181,18 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         final SpreadsheetDelta after = before.setWindow(window);
 
-        this.checkCells(after);
-        this.checkColumns(after);
-        this.checkLabels(after);
-        this.checkRows(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
 
-        this.checkReferences(after);
+        this.referencesAndCheck(after);
 
-        this.checkWindow(after, window);
+        this.windowAndCheck(after, window);
 
-        this.checkCells(before);
-        this.checkColumns(before);
-        this.checkRows(before);
+        this.cellsAndCheck(before);
+        this.columnsAndCheck(before);
+        this.rowsAndCheck(before);
     }
 
     // unmarshall.......................................................................................................
@@ -1494,12 +1494,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final void checkViewport(final SpreadsheetDelta delta) {
-        this.checkViewport(delta, this.viewport());
+    final void viewportAndCheck(final SpreadsheetDelta delta) {
+        this.viewportAndCheck(delta, this.viewport());
     }
 
-    final void checkViewport(final SpreadsheetDelta delta,
-                             final Optional<SpreadsheetViewport> viewport) {
+    final void viewportAndCheck(final SpreadsheetDelta delta,
+                                final Optional<SpreadsheetViewport> viewport) {
         this.checkEquals(
                 viewport,
                 delta.viewport(),
@@ -1564,12 +1564,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 );
     }
 
-    final void checkCells(final SpreadsheetDelta delta) {
-        this.checkCells(delta, this.cells());
+    final void cellsAndCheck(final SpreadsheetDelta delta) {
+        this.cellsAndCheck(delta, this.cells());
     }
 
-    final void checkCells(final SpreadsheetDelta delta,
-                          final Set<SpreadsheetCell> cells) {
+    final void cellsAndCheck(final SpreadsheetDelta delta,
+                             final Set<SpreadsheetCell> cells) {
         this.checkEquals(cells, delta.cells(), "cells");
 
         assertThrows(
@@ -1657,12 +1657,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 .column();
     }
 
-    final void checkColumns(final SpreadsheetDelta delta) {
-        this.checkColumns(delta, this.columns());
+    final void columnsAndCheck(final SpreadsheetDelta delta) {
+        this.columnsAndCheck(
+                delta,
+                this.columns()
+        );
     }
 
-    final void checkColumns(final SpreadsheetDelta delta,
-                            final Set<SpreadsheetColumn> columns) {
+    final void columnsAndCheck(final SpreadsheetDelta delta,
+                               final Set<SpreadsheetColumn> columns) {
         this.checkEquals(columns, delta.columns(), "columns");
 
         assertThrows(
@@ -1735,15 +1738,24 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final void checkLabels(final SpreadsheetDelta delta) {
-        this.checkLabels(delta, this.labels());
+    final void labelsAndCheck(final SpreadsheetDelta delta) {
+        this.labelsAndCheck(
+                delta,
+                this.labels()
+        );
     }
 
-    final void checkLabels(final SpreadsheetDelta delta,
-                           final Set<SpreadsheetLabelMapping> labels) {
+    final void labelsAndCheck(final SpreadsheetDelta delta,
+                              final Set<SpreadsheetLabelMapping> labels) {
         this.checkEquals(labels, delta.labels(), "labels");
-        assertThrows(UnsupportedOperationException.class, () -> delta.labels()
-                .add(SpreadsheetLabelName.labelName("LabelZ").setLabelMappingReference(SpreadsheetSelection.parseCell("Z9")))
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.labels()
+                        .add(
+                                SpreadsheetLabelName.labelName("LabelZ")
+                                        .setLabelMappingReference(SpreadsheetSelection.parseCell("Z9")
+                                        )
+                        )
         );
     }
 
@@ -1812,13 +1824,20 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 .row();
     }
 
-    final void checkRows(final SpreadsheetDelta delta) {
-        this.checkRows(delta, this.rows());
+    final void rowsAndCheck(final SpreadsheetDelta delta) {
+        this.rowsAndCheck(
+                delta,
+                this.rows()
+        );
     }
 
-    final void checkRows(final SpreadsheetDelta delta,
-                         final Set<SpreadsheetRow> rows) {
-        this.checkEquals(rows, delta.rows(), "rows");
+    final void rowsAndCheck(final SpreadsheetDelta delta,
+                            final Set<SpreadsheetRow> rows) {
+        this.checkEquals(
+                rows,
+                delta.rows(),
+                "rows"
+        );
 
         assertThrows(
                 UnsupportedOperationException.class,
@@ -1893,15 +1912,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final void checkReferences(final SpreadsheetDelta delta) {
-        this.checkReferences(
+    final void referencesAndCheck(final SpreadsheetDelta delta) {
+        this.referencesAndCheck(
                 delta,
                 this.references()
         );
     }
 
-    final void checkReferences(final SpreadsheetDelta delta,
-                               final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references) {
+    final void referencesAndCheck(final SpreadsheetDelta delta,
+                                  final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references) {
         this.checkEquals(
                 references,
                 delta.references(),
@@ -1955,12 +1974,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return Set.of(SpreadsheetSelection.parseCell("C2"));
     }
 
-    final void checkDeletedCells(final SpreadsheetDelta delta) {
-        this.checkDeletedCells(delta, this.deletedCells());
+    final void deletedCellsAndCheck(final SpreadsheetDelta delta) {
+        this.deletedCellsAndCheck(
+                delta,
+                this.deletedCells()
+        );
     }
 
-    final void checkDeletedCells(final SpreadsheetDelta delta,
-                                 final Set<SpreadsheetCellReference> cells) {
+    final void deletedCellsAndCheck(final SpreadsheetDelta delta,
+                                    final Set<SpreadsheetCellReference> cells) {
         this.checkEquals(cells,
                 delta.deletedCells(),
                 "deletedCells");
@@ -1984,12 +2006,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return Set.of(SpreadsheetSelection.parseColumn("E"));
     }
 
-    final void checkDeletedColumns(final SpreadsheetDelta delta) {
-        this.checkDeletedColumns(delta, this.deletedColumns());
+    final void deletedColumnsAndCheck(final SpreadsheetDelta delta) {
+        this.deletedColumnsAndCheck(
+                delta,
+                this.deletedColumns()
+        );
     }
 
-    final void checkDeletedColumns(final SpreadsheetDelta delta,
-                                   final Set<SpreadsheetColumnReference> columns) {
+    final void deletedColumnsAndCheck(final SpreadsheetDelta delta,
+                                      final Set<SpreadsheetColumnReference> columns) {
         this.checkEquals(columns,
                 delta.deletedColumns(),
                 "deletedColumns");
@@ -2018,15 +2043,20 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final void checkDeletedRows(final SpreadsheetDelta delta) {
-        this.checkDeletedRows(delta, this.deletedRows());
+    final void deletedRowsAndCheck(final SpreadsheetDelta delta) {
+        this.deletedRowsAndCheck(
+                delta,
+                this.deletedRows()
+        );
     }
 
-    final void checkDeletedRows(final SpreadsheetDelta delta,
-                                final Set<SpreadsheetRowReference> rows) {
-        this.checkEquals(rows,
+    final void deletedRowsAndCheck(final SpreadsheetDelta delta,
+                                   final Set<SpreadsheetRowReference> rows) {
+        this.checkEquals(
+                rows,
                 delta.deletedRows(),
-                "deletedRows");
+                "deletedRows"
+        );
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> delta.deletedRows().add(null)
@@ -2052,12 +2082,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final void checkDeletedLabels(final SpreadsheetDelta delta) {
-        this.checkDeletedLabels(delta, this.deletedLabels());
+    final void deletedLabelsAndCheck(final SpreadsheetDelta delta) {
+        this.deletedLabelsAndCheck(
+                delta,
+                this.deletedLabels()
+        );
     }
 
-    final void checkDeletedLabels(final SpreadsheetDelta delta,
-                                  final Set<SpreadsheetLabelName> labels) {
+    final void deletedLabelsAndCheck(final SpreadsheetDelta delta,
+                                     final Set<SpreadsheetLabelName> labels) {
         this.checkEquals(labels,
                 delta.deletedLabels(),
                 "deletedLabels");
@@ -2086,12 +2119,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return Set.of(SpreadsheetSelection.parseCell("C2"));
     }
 
-    final void checkMatchedCells(final SpreadsheetDelta delta) {
-        this.checkMatchedCells(delta, this.matchedCells());
+    final void matchedCellsAndCheck(final SpreadsheetDelta delta) {
+        this.matchedCellsAndCheck(delta, this.matchedCells());
     }
 
-    final void checkMatchedCells(final SpreadsheetDelta delta,
-                                 final Set<SpreadsheetCellReference> cells) {
+    final void matchedCellsAndCheck(final SpreadsheetDelta delta,
+                                    final Set<SpreadsheetCellReference> cells) {
         this.checkEquals(
                 cells,
                 delta.matchedCells(),
@@ -2125,12 +2158,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final void checkColumnWidths(final SpreadsheetDelta delta) {
-        checkColumnWidths(delta, this.columnWidths());
+    final void columnWidthsAndCheck(final SpreadsheetDelta delta) {
+        columnWidthsAndCheck(
+                delta,
+                this.columnWidths()
+        );
     }
 
-    final void checkColumnWidths(final SpreadsheetDelta delta,
-                                 final Map<SpreadsheetColumnReference, Double> columnWidths) {
+    final void columnWidthsAndCheck(final SpreadsheetDelta delta,
+                                    final Map<SpreadsheetColumnReference, Double> columnWidths) {
         this.checkEquals(
                 columnWidths,
                 delta.columnWidths(),
@@ -2156,12 +2192,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final void checkRowHeights(final SpreadsheetDelta delta) {
-        checkRowHeights(delta, this.rowHeights());
+    final void rowHeightsAndCheck(final SpreadsheetDelta delta) {
+        rowHeightsAndCheck(
+                delta,
+                this.rowHeights()
+        );
     }
 
-    final void checkRowHeights(final SpreadsheetDelta delta,
-                               final Map<SpreadsheetRowReference, Double> rowHeights) {
+    final void rowHeightsAndCheck(final SpreadsheetDelta delta,
+                                  final Map<SpreadsheetRowReference, Double> rowHeights) {
         this.checkEquals(
                 rowHeights,
                 delta.rowHeights(),
@@ -2181,12 +2220,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return OptionalInt.empty();
     }
 
-    final void checkColumnCount(final SpreadsheetDelta delta) {
-        checkColumnCount(delta, this.columnCount());
+    final void columnCountAndCheck(final SpreadsheetDelta delta) {
+        columnCountAndCheck(
+                delta,
+                this.columnCount()
+        );
     }
 
-    final void checkColumnCount(final SpreadsheetDelta delta,
-                                final OptionalInt columnCount) {
+    final void columnCountAndCheck(final SpreadsheetDelta delta,
+                                   final OptionalInt columnCount) {
         this.checkEquals(
                 columnCount,
                 delta.columnCount(),
@@ -2206,12 +2248,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return OptionalInt.empty();
     }
 
-    final void checkRowCount(final SpreadsheetDelta delta) {
-        checkRowCount(delta, this.rowCount());
+    final void rowCountAndCheck(final SpreadsheetDelta delta) {
+        rowCountAndCheck(
+                delta,
+                this.rowCount()
+        );
     }
 
-    final void checkRowCount(final SpreadsheetDelta delta,
-                             final OptionalInt rowCount) {
+    final void rowCountAndCheck(final SpreadsheetDelta delta,
+                                final OptionalInt rowCount) {
         this.checkEquals(
                 rowCount,
                 delta.rowCount(),
@@ -2227,15 +2272,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return SpreadsheetViewportWindows.parse("A1:Z99");
     }
 
-    final void checkWindow(final SpreadsheetDelta delta) {
-        this.checkWindow(
+    final void windowAndCheck(final SpreadsheetDelta delta) {
+        this.windowAndCheck(
                 delta,
                 this.window()
         );
     }
 
-    final void checkWindow(final SpreadsheetDelta delta,
-                           final SpreadsheetViewportWindows window) {
+    final void windowAndCheck(final SpreadsheetDelta delta,
+                              final SpreadsheetViewportWindows window) {
         this.checkEquals(
                 window,
                 delta.window(),

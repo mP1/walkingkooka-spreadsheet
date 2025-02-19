@@ -63,8 +63,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
-        this.checkLabels(after, different);
-        this.checkCells(after, before.cells());
+        this.labelsAndCheck(after, different);
+        this.cellsAndCheck(after, before.cells());
     }
 
     @Test
@@ -76,8 +76,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
-        this.checkLabels(after, SpreadsheetDelta.NO_LABELS);
-        this.checkCells(after, before.cells());
+        this.labelsAndCheck(after, SpreadsheetDelta.NO_LABELS);
+        this.cellsAndCheck(after, before.cells());
     }
 
     @Test
@@ -98,8 +98,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final SpreadsheetDelta after = before.setLabels(different);
         assertNotSame(before, after);
-        this.checkLabels(after, Sets.of(kept.setLabelMappingReference(a1), kept3.setLabelMappingReference(a3)));
-        this.checkCells(after, before.cells());
+        this.labelsAndCheck(after, Sets.of(kept.setLabelMappingReference(a1), kept3.setLabelMappingReference(a3)));
+        this.cellsAndCheck(after, before.cells());
     }
 
     // setColumnWidths..................................................................................................
@@ -114,8 +114,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final SpreadsheetDelta after = before.setColumnWidths(different);
         assertNotSame(before, after);
-        this.checkColumnWidths(after, SpreadsheetDelta.NO_COLUMN_WIDTHS);
-        this.checkCells(after, before.cells());
+        this.columnWidthsAndCheck(after, SpreadsheetDelta.NO_COLUMN_WIDTHS);
+        this.cellsAndCheck(after, before.cells());
     }
 
     @Test
@@ -130,11 +130,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final SpreadsheetDelta after = before.setColumnWidths(different);
         assertNotSame(before, after);
-        this.checkColumnWidths(
+        this.columnWidthsAndCheck(
                 after,
                 Map.of(kept, 20.0)
         );
-        this.checkCells(after, before.cells());
+        this.cellsAndCheck(after, before.cells());
     }
 
     // setRowHeights..................................................................................................
@@ -149,8 +149,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final SpreadsheetDelta after = before.setRowHeights(different);
         assertNotSame(before, after);
-        this.checkRowHeights(after, SpreadsheetDelta.NO_ROW_HEIGHTS);
-        this.checkCells(after, before.cells());
+        this.rowHeightsAndCheck(after, SpreadsheetDelta.NO_ROW_HEIGHTS);
+        this.cellsAndCheck(after, before.cells());
     }
 
     @Test
@@ -165,11 +165,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final SpreadsheetDelta after = before.setRowHeights(different);
         assertNotSame(before, after);
-        this.checkRowHeights(
+        this.rowHeightsAndCheck(
                 after,
                 Map.of(kept, 20.0)
         );
-        this.checkCells(after, before.cells());
+        this.cellsAndCheck(after, before.cells());
     }
 
     // setWindow........................................................................................................
@@ -274,45 +274,45 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 window
         );
 
-        this.checkViewport(before, viewport);
+        this.viewportAndCheck(before, viewport);
 
-        this.checkCells(before, cells);
-        this.checkColumns(before, columns);
-        this.checkLabels(before, labels);
-        this.checkRows(before, rows);
+        this.cellsAndCheck(before, cells);
+        this.columnsAndCheck(before, columns);
+        this.labelsAndCheck(before, labels);
+        this.rowsAndCheck(before, rows);
 
-        this.checkReferences(before, references);
+        this.referencesAndCheck(before, references);
 
-        this.checkDeletedCells(before, deletedCells);
-        this.checkDeletedColumns(before, deletedColumns);
-        this.checkDeletedRows(before, deletedRows);
+        this.deletedCellsAndCheck(before, deletedCells);
+        this.deletedColumnsAndCheck(before, deletedColumns);
+        this.deletedRowsAndCheck(before, deletedRows);
 
-        this.checkMatchedCells(before, matchedCells);
+        this.matchedCellsAndCheck(before, matchedCells);
 
-        this.checkColumnCount(before, columnCount);
-        this.checkRowCount(before, rowCount);
+        this.columnCountAndCheck(before, columnCount);
+        this.rowCountAndCheck(before, rowCount);
 
-        this.checkWindow(before, window);
+        this.windowAndCheck(before, window);
 
         final SpreadsheetViewportWindows window2 = SpreadsheetViewportWindows.parse("a1,e5:f6");
 
         final SpreadsheetDelta after = before.setWindow(window2);
 
-        this.checkCells(after, Sets.of(a1));
-        this.checkColumns(after, Sets.of(a));
-        this.checkLabels(after, Sets.of(labelA1a));
-        this.checkRows(after, Sets.of(row1));
+        this.cellsAndCheck(after, Sets.of(a1));
+        this.columnsAndCheck(after, Sets.of(a));
+        this.labelsAndCheck(after, Sets.of(labelA1a));
+        this.rowsAndCheck(after, Sets.of(row1));
 
-        this.checkReferences(after, references);
+        this.referencesAndCheck(after, references);
 
-        this.checkDeletedCells(after, Sets.of(e5));
-        this.checkDeletedColumns(after, Sets.of(e));
-        this.checkDeletedRows(after, Sets.of(row5));
+        this.deletedCellsAndCheck(after, Sets.of(e5));
+        this.deletedColumnsAndCheck(after, Sets.of(e));
+        this.deletedRowsAndCheck(after, Sets.of(row5));
 
-        this.checkColumnCount(after, columnCount);
-        this.checkRowCount(after, rowCount);
+        this.columnCountAndCheck(after, columnCount);
+        this.rowCountAndCheck(after, rowCount);
 
-        this.checkWindow(after, window2);
+        this.windowAndCheck(after, window2);
     }
 
     // helpers..........................................................................................................

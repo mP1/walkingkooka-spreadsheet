@@ -32,10 +32,10 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     @Test
     public void testWith() {
         final SpreadsheetDeltaNonWindowed delta = this.createSpreadsheetDelta();
-        this.checkCells(delta);
-        this.checkRowCount(delta);
-        this.checkRowCount(delta);
-        this.checkWindow(delta, SpreadsheetDelta.NO_WINDOW);
+        this.cellsAndCheck(delta);
+        this.rowCountAndCheck(delta);
+        this.rowCountAndCheck(delta);
+        this.windowAndCheck(delta, SpreadsheetDelta.NO_WINDOW);
     }
 
     @Test
@@ -43,9 +43,9 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
         final SpreadsheetDeltaNonWindowed delta = this.createSpreadsheetDelta();
         final Set<SpreadsheetCell> cells = this.cells0("B2", "C3");
         final SpreadsheetDelta different = delta.setCells(cells);
-        this.checkCells(different, cells);
+        this.cellsAndCheck(different, cells);
 
-        this.checkCells(delta);
+        this.cellsAndCheck(delta);
     }
 
     @Override
