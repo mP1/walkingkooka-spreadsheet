@@ -94,6 +94,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
     public final static Set<SpreadsheetRow> NO_ROWS = Sets.empty();
 
+    public final static Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> NO_REFERENCES = Maps.empty();
+
     public final static Set<SpreadsheetCellReference> NO_DELETED_CELLS = Sets.empty();
     public final static Set<SpreadsheetColumnReference> NO_DELETED_COLUMNS = Sets.empty();
     public final static Set<SpreadsheetRowReference> NO_DELETED_ROWS = Sets.empty();
@@ -118,6 +120,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             NO_COLUMNS,
             NO_LABELS,
             NO_ROWS,
+            NO_REFERENCES,
             NO_DELETED_CELLS,
             NO_DELETED_COLUMNS,
             NO_DELETED_ROWS,
@@ -137,6 +140,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                      final Set<SpreadsheetColumn> columns,
                      final Set<SpreadsheetLabelMapping> labels,
                      final Set<SpreadsheetRow> rows,
+                     final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
                      final Set<SpreadsheetCellReference> deletedCells,
                      final Set<SpreadsheetColumnReference> deletedColumns,
                      final Set<SpreadsheetRowReference> deletedRows,
@@ -153,6 +157,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         this.columns = columns;
         this.labels = labels;
         this.rows = rows;
+
+        this.references = references;
 
         this.deletedCells = deletedCells;
         this.deletedColumns = deletedColumns;
@@ -458,6 +464,78 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .stream()
                 .filter(c -> c.reference().equalsIgnoreReferenceKind(row))
                 .findFirst();
+    }
+
+    // references............................................................................................................
+
+    /**
+     * Returns references (if selected) following an operation which are related to selected cells.
+     */
+    public final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references() {
+        return this.references;
+    }
+
+    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references;
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given references after they are possibly filtered
+     * using the {@link #window()}
+     */
+    public final SpreadsheetDelta setReferences(final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references) {
+        Objects.requireNonNull(references, "references");
+
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> copy = filterReferences(
+                references,
+                this.window()
+        );
+        return this.references.equals(copy) ?
+                this :
+                this.replaceReferences(copy);
+    }
+
+    /**
+     * Takes a copy of the references, possibly filtering out references if a window is present. Note filtering of {@link #labels} will happen later.
+     */
+    private static Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> filterReferences(final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
+                                                                                                       final SpreadsheetViewportWindows window) {
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> filtered = Maps.sorted();
+
+        for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellAndReferences : references.entrySet()) {
+            final SpreadsheetCellReference cell = cellAndReferences.getKey();
+
+            if (window.test(cell)) {
+                final Set<SpreadsheetExpressionReference> cellReferences = cellAndReferences.getValue();
+
+                SortedSet<SpreadsheetExpressionReference> spreadsheetExpressionReferences;
+
+                if(cellReferences instanceof SortedSet) {
+                    spreadsheetExpressionReferences = (SortedSet<SpreadsheetExpressionReference>) cellReferences;
+                } else {
+                    spreadsheetExpressionReferences = new TreeSet<>(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+                    spreadsheetExpressionReferences.addAll(cellReferences);
+                }
+
+                filtered.put(
+                        cell,
+                        SortedSets.immutable(spreadsheetExpressionReferences)
+                );
+            }
+        }
+
+        return Maps.immutable(filtered);
+    }
+
+    abstract SpreadsheetDelta replaceReferences(final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references);
+
+    /**
+     * Returns the references for the given {@link SpreadsheetCellReference}.
+     */
+    public Optional<Set<SpreadsheetExpressionReference>> references(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        return Optional.ofNullable(
+                this.references.get(cell)
+        );
     }
 
     // deletedCells.....................................................................................................
@@ -793,6 +871,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final Set<SpreadsheetLabelMapping> labels = this.labels;
         final Set<SpreadsheetRow> rows = this.rows;
 
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = this.references;
+
         final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
         final Set<SpreadsheetColumnReference> deletedColumns = this.deletedColumns;
         final Set<SpreadsheetRowReference> deletedRows = this.deletedRows;
@@ -821,6 +901,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     filterColumns(columns, window),
                     filterLabels(labels, window),
                     filterRows(rows, window),
+                    filterReferences(references, window),
                     filterDeletedCells(deletedCells, window),
                     filterDeletedColumns(deletedColumns, window),
                     filterDeletedRows(deletedRows, window),
@@ -839,6 +920,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     columns,
                     labels,
                     rows,
+                    references,
                     deletedCells,
                     deletedColumns,
                     deletedRows,
@@ -1844,6 +1926,30 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             printTreeCollectionTreePrinter("labels", this.labels(), printer);
             printTreeCollectionTreePrinter("rows", this.rows(), printer);
 
+            // references...............................................................................................
+            {
+                final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = this.references();
+                if (false == references.isEmpty()) {
+                    printer.println("References:");
+                    printer.indent();
+                    {
+                        for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellAndReferences : references.entrySet()) {
+                            printer.println(cellAndReferences.getKey().toString());
+
+                            printer.indent();
+
+                            this.printTreeCollectionCsv(
+                                    cellAndReferences.getValue(),
+                                    printer
+                            );
+
+                            printer.outdent();
+                        }
+                    }
+                    printer.outdent();
+                }
+            }
+
             printTreeCollectionCsv(
                     "deletedCells",
                     this.deletedCells(),
@@ -2034,6 +2140,23 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                     context
                             )
                     );
+                    break;
+                case REFERENCES_PROPERTY_STRING:
+                    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = Maps.sorted();
+
+                    for(final JsonNode reference : child.objectOrFail().children()) {
+                        references.put(
+                                SpreadsheetSelection.parseCell(
+                                    reference.name()
+                                            .toString()
+                                ),
+                                context.unmarshallWithTypeSet(
+                                        reference
+                                )
+                        );
+                    }
+
+                    unmarshalled = unmarshalled.setReferences(references);
                     break;
                 case DELETED_CELLS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setDeletedCells(
@@ -2260,6 +2383,25 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         {
+            // A1:
+            //  [ B2, C3, D4 ]
+            final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = this.references;
+            if (false == references.isEmpty()) {
+                children.add(
+                        JsonNode.object()
+                                .setChildren(
+                                        references.entrySet()
+                                                .stream()
+                                                .map(car ->
+                                                        context.marshallWithTypeCollection(car.getValue())
+                                                                .setName(JsonPropertyName.with(car.getKey().toString()))
+                                                ).collect(Collectors.toList())
+                                ).setName(REFERENCES_PROPERTY)
+                );
+            }
+        }
+
+        {
             final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
             if (false == deletedCells.isEmpty()) {
                 children.add(
@@ -2395,6 +2537,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
     private final static String LABELS_PROPERTY_STRING = "labels";
     private final static String PARSER_PROPERTY_STRING = "parser";
+    private final static String REFERENCES_PROPERTY_STRING = "references";
     private final static String ROWS_PROPERTY_STRING = "rows";
     private final static String STYLE_PROPERTY_STRING = "style"; // only used by patchCells
 
@@ -2432,6 +2575,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName PARSER_PROPERTY = JsonPropertyName.with(PARSER_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName ROWS_PROPERTY = JsonPropertyName.with(ROWS_PROPERTY_STRING);
+
+    // @VisibleForTesting
+    final static JsonPropertyName REFERENCES_PROPERTY = JsonPropertyName.with(REFERENCES_PROPERTY_STRING);
+
     // @VisibleForTesting
     final static JsonPropertyName DELETED_CELLS_PROPERTY = JsonPropertyName.with(DELETED_CELLS_PROPERTY_STRING);
     // @VisibleForTesting
@@ -2510,6 +2657,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 equals(this.columns, other.columns) &&
                 equals(this.labels, other.labels) &&
                 equals(this.rows, other.rows) &&
+                this.references.equals(other.references) &&
                 this.deletedCells.equals(other.deletedCells) &&
                 this.deletedColumns.equals(other.deletedColumns) &&
                 this.deletedRows.equals(other.deletedRows) &&
@@ -2565,6 +2713,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .value(this.labels)
                 .label("rows")
                 .value(this.rows)
+                .label("references")
+                .value(this.references)
                 .label("deletedCells")
                 .value(this.deletedCells)
                 .label("deletedColumns")

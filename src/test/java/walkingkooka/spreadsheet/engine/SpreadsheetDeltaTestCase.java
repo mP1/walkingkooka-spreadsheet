@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -407,6 +408,86 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after,
                 hiddenRow1
         );
+    }
+
+    // references.......................................................................................................
+
+    @Test
+    public final void testReferencesReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = delta.references();
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> references.clear()
+        );
+
+        this.checkReferences(
+                delta,
+                this.references()
+        );
+    }
+
+    @Test
+    public final void testSetReferencesWithNullFails() {
+        final D delta = this.createSpreadsheetDelta();
+        assertThrows(
+                NullPointerException.class,
+                () -> delta.setReferences(null)
+        );
+    }
+
+    @Test
+    public final void testSetReferencesWithSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(
+                delta,
+                delta.setReferences(this.references())
+        );
+    }
+
+    @Test
+    public void testSetReferencesWithEmpty() {
+        final D before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> different = SpreadsheetDelta.NO_REFERENCES;
+
+        final SpreadsheetDelta after = before.setReferences(different);
+        assertNotSame(before, after);
+        this.checkReferences(after, different);
+
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkLabels(after);
+        this.checkRows(after);
+
+        this.checkDeletedCells(after);
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
+    }
+
+    @Test
+    public final void testSetReferencesWithDifferent() {
+        final D before = this.createSpreadsheetDelta();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> different = this.differentReferences();
+
+        final SpreadsheetDelta after = before.setReferences(different);
+        assertNotSame(before, after);
+        this.checkReferences(after, different);
+
+        this.checkCells(after);
+        this.checkColumns(after);
+        this.checkLabels(after);
+        this.checkRows(after);
+
+        this.checkDeletedCells(after);
+        this.checkDeletedColumns(after);
+        this.checkDeletedRows(after);
+
+        this.checkColumnWidths(after);
+        this.checkRowHeights(after);
     }
 
     // deletedCells.....................................................................................................
@@ -1063,6 +1144,22 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     @Test
+    public final void testEqualsDifferentReferences() {
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = this.differentReferences();
+
+        this.checkNotEquals(
+                this.references(),
+                references,
+                "references() and differentReferences() must be un equal"
+        );
+
+        this.checkNotEquals(
+                this.createSpreadsheetDelta()
+                        .setReferences(references)
+        );
+    }
+
+    @Test
     public final void testEqualsDifferentDeletedLabels() {
         final Set<SpreadsheetLabelName> deletedLabels = this.differentDeletedLabels();
         this.checkNotEquals(
@@ -1530,6 +1627,79 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
             updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
         }
         return updated;
+    }
+
+    // references.......................................................................................................
+
+    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references() {
+        return Maps.of(
+                SpreadsheetSelection.A1,
+                Sets.of(
+                        this.b2()
+                                .reference(),
+                        SpreadsheetSelection.parseCellRange("C3:D4"),
+                        this.label1a()
+                )
+        );
+    }
+
+    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> differentReferences() {
+        return Maps.of(
+                SpreadsheetSelection.A1,
+                Sets.of(
+                        this.b2()
+                                .reference()
+                )
+        );
+    }
+
+    final void checkReferences(final SpreadsheetDelta delta) {
+        this.checkReferences(
+                delta,
+                this.references()
+        );
+    }
+
+    final void checkReferences(final SpreadsheetDelta delta,
+                               final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references) {
+        this.checkEquals(
+                references,
+                delta.references(),
+                "references"
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.references()
+                        .put(
+                                b2().reference(),
+                                Sets.empty()
+                        )
+        );
+    }
+
+    final JsonNode referencesJson() {
+        return JsonNode.object()
+                .set(
+                        JsonPropertyName.with("A1"),
+                        JsonNode.array()
+                                .appendChild(
+                                        marshallContext()
+                                                .marshallWithType(
+                                                        SpreadsheetSelection.parseCell("B2")
+                                                )
+                                ).appendChild(
+                                        marshallContext()
+                                                .marshallWithType(
+                                                        SpreadsheetSelection.parseCellRange("C3:D4")
+                                                )
+                                ).appendChild(
+                                        marshallContext()
+                                                .marshallWithType(
+                                                        SpreadsheetSelection.labelName("LabelA1A")
+                                                )
+                                )
+                );
     }
 
     // deletedCells.....................................................................................................
