@@ -96,6 +96,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after, before.labels());
         this.checkRows(after);
 
+        this.checkReferences(after);
+
         this.checkDeletedCells(after);
         this.checkDeletedColumns(after);
         this.checkDeletedRows(after);
@@ -285,6 +287,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkColumns(after);
         this.checkRows(after);
 
+        this.checkReferences(after);
+
         this.checkDeletedCells(after);
         this.checkDeletedColumns(after);
         this.checkDeletedRows(after);
@@ -306,6 +310,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkCells(after);
         this.checkColumns(after);
         this.checkRows(after);
+
+        this.checkReferences(after);
 
         this.checkDeletedCells(after);
         this.checkDeletedColumns(after);
@@ -348,6 +354,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkCells(after);
         this.checkColumns(after);
         this.checkLabels(after);
+
+        this.checkReferences(after);
 
         this.checkDeletedCells(after);
         this.checkDeletedColumns(after);
@@ -524,6 +532,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after, before.labels());
         this.checkRows(after);
 
+        this.checkReferences(after);
+
         this.checkDeletedColumns(after);
         this.checkDeletedRows(after);
 
@@ -610,6 +620,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after, before.labels());
         this.checkRows(after);
 
+        this.checkReferences(after);
+
         this.checkColumnWidths(after);
         this.checkRowHeights(after);
     }
@@ -692,6 +704,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkRows(after);
         this.checkLabels(after, before.labels());
         this.checkRows(after);
+
+        this.checkReferences(after);
 
         this.checkDeletedCells(after);
         this.checkDeletedColumns(after);
@@ -781,6 +795,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after, before.labels());
         this.checkRows(after);
 
+        this.checkReferences(after);
+
         this.checkDeletedColumns(after);
         this.checkDeletedRows(after);
         this.checkDeletedLabels(after, different);
@@ -827,6 +843,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkColumns(after);
         this.checkLabels(after, before.labels());
         this.checkRows(after);
+
+        this.checkReferences(after);
 
         this.checkDeletedCells(after);
         this.checkDeletedColumns(after);
@@ -905,6 +923,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after);
         this.checkRows(after);
 
+        this.checkReferences(after);
+
         this.checkRowHeights(after);
     }
 
@@ -935,6 +955,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkLabels(after);
         this.checkRows(after);
 
+        this.checkReferences(after);
+
         this.checkDeletedCells(after);
         this.checkColumnWidths(after);
     }
@@ -958,7 +980,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.checkCells(after);
         this.checkColumns(after);
+        this.checkLabels(after);
         this.checkRows(after);
+
+        this.checkReferences(after);
+
         this.checkWindow(after, window);
 
         this.checkCells(before);
@@ -977,7 +1003,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.checkCells(after);
         this.checkColumns(after);
+        this.checkLabels(after);
         this.checkRows(after);
+
+        this.checkReferences(after);
+
         this.checkWindow(after, window);
 
         this.checkCells(before);
