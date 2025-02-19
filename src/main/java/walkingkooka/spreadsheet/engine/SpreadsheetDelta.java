@@ -354,12 +354,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Finds a {@link SpreadsheetColumn} matching the given {@link SpreadsheetColumnReference}.
      */
-    public Optional<SpreadsheetColumn> column(final SpreadsheetColumnReference reference) {
-        Objects.requireNonNull(reference, "reference");
+    public Optional<SpreadsheetColumn> column(final SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
 
         return this.columns()
                 .stream()
-                .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(column))
                 .findFirst();
     }
 
@@ -467,12 +467,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Finds a {@link SpreadsheetRow} matching the given {@link SpreadsheetRowReference}.
      */
-    public Optional<SpreadsheetRow> row(final SpreadsheetRowReference reference) {
-        Objects.requireNonNull(reference, "reference");
+    public Optional<SpreadsheetRow> row(final SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
 
         return this.rows()
                 .stream()
-                .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(row))
                 .findFirst();
     }
 
@@ -1661,27 +1661,27 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
-    private <R extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchApplySelectionToValue(final SpreadsheetSelection selection,
+    private <S extends SpreadsheetSelection, V extends Patchable<V>> Set<V> patchApplySelectionToValue(final SpreadsheetSelection patchSelection,
                                                                                                        final JsonNode node,
-                                                                                                       final Function<String, R> referenceParser,
-                                                                                                       final Function<R, Optional<V>> referenceToValue,
+                                                                                                       final Function<String, S> selectionParser,
+                                                                                                       final Function<S, Optional<V>> selectionToValue,
                                                                                                        final Class<V> valueType,
                                                                                                        final JsonNodeUnmarshallContext context) {
         // collect either patch or invalid cells.
         Set<V> patched = null;
-        Set<R> invalid = null;
+        Set<S> invalid = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName propertyName = child.name();
 
-            final R reference = referenceParser.apply(
+            final S selection = selectionParser.apply(
                     propertyName.value()
             );
-            if (null != selection && false == selection.test(reference)) {
+            if (null != patchSelection && false == patchSelection.test(selection)) {
                 if (null == invalid) {
                     invalid = Sets.ordered();
                 }
-                invalid.add(reference);
+                invalid.add(selection);
                 patched = null; // no longer patching.
                 continue;
             }
@@ -1692,7 +1692,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
             final V add;
 
-            final Optional<V> old = referenceToValue.apply(reference);
+            final Optional<V> old = selectionToValue.apply(selection);
             if (old.isPresent()) {
                 add = old.get()
                         .patch(child, context);
@@ -1717,7 +1717,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                     .map(Objects::toString)
                                     .collect(Collectors.joining(", ")) +
                             " outside " +
-                            selection.toStringMaybeStar()
+                            patchSelection.toStringMaybeStar()
             );
         }
 
@@ -1994,13 +1994,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     private void printTreeMap(final String label,
-                              final Map<? extends SpreadsheetColumnOrRowReference, Double> references,
+                              final Map<? extends SpreadsheetColumnOrRowReference, Double> columnOrRowAndDoubleValue,
                               final IndentingPrinter printer) {
-        if (false == references.isEmpty()) {
+        if (false == columnOrRowAndDoubleValue.isEmpty()) {
             printer.println(label + ":");
             printer.indent();
             {
-                for (final Map.Entry<? extends SpreadsheetColumnOrRowReference, Double> referenceAndWidth : references.entrySet()) {
+                for (final Map.Entry<? extends SpreadsheetColumnOrRowReference, Double> referenceAndWidth : columnOrRowAndDoubleValue.entrySet()) {
                     printer.println(referenceAndWidth.getKey() + ": " + referenceAndWidth.getValue());
                 }
             }
