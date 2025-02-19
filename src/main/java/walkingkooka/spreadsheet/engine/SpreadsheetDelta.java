@@ -70,6 +70,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -599,7 +600,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Takes a copy of the deleted labels, because no target is present actual filtering is NOT possible.
      */
     private Set<SpreadsheetLabelName> filterDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels) {
-        return Sets.immutable(deletedLabels);
+        return SortedSets.immutable(
+                deletedLabels instanceof SortedSet ?
+                        (SortedSet) deletedLabels :
+                        new TreeSet<>(deletedLabels)
+        );
     }
 
     abstract SpreadsheetDelta replaceDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels);
