@@ -178,7 +178,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given selection.
      */
     public final SpreadsheetDelta setViewport(final Optional<SpreadsheetViewport> viewport) {
-        checkViewport(viewport);
+        Objects.requireNonNull(viewport, "viewport");
 
         return this.viewport.equals(viewport) ?
                 this :
@@ -188,10 +188,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     abstract SpreadsheetDelta replaceViewport(final Optional<SpreadsheetViewport> viewport);
 
     final Optional<SpreadsheetViewport> viewport;
-
-    private static Optional<SpreadsheetViewport> checkViewport(final Optional<SpreadsheetViewport> viewport) {
-        return Objects.requireNonNull(viewport, "viewport");
-    }
 
     // cells............................................................................................................
 
