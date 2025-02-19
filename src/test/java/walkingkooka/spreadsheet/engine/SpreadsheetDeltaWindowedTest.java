@@ -46,7 +46,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
     public SpreadsheetDeltaWindowedTest() {
         super();
-        this.checkNotEquals(this.window(), this.differentWindow(), "window v differentWindow must NOT be equal");
+        this.checkNotEquals(
+                this.window(),
+                this.differentWindow(),
+                "window v differentWindow must NOT be equal"
+        );
     }
 
     @Test
@@ -309,6 +313,340 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         this.checkRowCount(after, rowCount);
 
         this.checkWindow(after, window2);
+    }
+
+    // helpers..........................................................................................................
+
+    @Override
+    SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
+        return this.createSpreadsheetDelta(
+                cells,
+                this.window()
+        );
+    }
+
+    private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
+                                                            final SpreadsheetViewportWindows window) {
+        return SpreadsheetDeltaWindowed.withWindowed(
+                this.viewport(),
+                cells,
+                this.columns(),
+                this.labels(),
+                this.rows(),
+                this.references(),
+                this.deletedCells(),
+                this.deletedColumns(),
+                this.deletedRows(),
+                this.deletedLabels(),
+                this.matchedCells(),
+                this.columnWidths(),
+                this.rowHeights(),
+                this.columnCount(),
+                this.rowCount(),
+                window
+        );
+    }
+
+    @Override
+    SpreadsheetViewportWindows window() {
+        return SpreadsheetViewportWindows.parse("A1:E5");
+    }
+
+    // toString..........................................................................................................
+
+    @Test
+    public void testToStringViewport() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        this.viewport(),
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "home: A1 width: 100.0 height: 40.0 anchoredSelection: A1:B2 BOTTOM_RIGHT window: A1:E5");
+    }
+
+    @Test
+    public void testToStringCells() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "cells: A1 1, B2 2, C3 3 window: A1:E5"
+        );
+    }
+
+    @Test
+    public void testToStringLabels() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.labels(),
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 window: A1:E5"
+        );
+    }
+
+    @Test
+    public void testToStringDeletedCells() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.labels(),
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        this.deletedCells(),
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 deletedCells: C1, C2 window: A1:E5"
+        );
+    }
+
+    @Test
+    public void testToStringDeletedColumns() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        this.deletedColumns(),
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "deletedColumns: C, D window: A1:E5");
+    }
+
+    @Test
+    public void testToStringDeletedRows() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        this.deletedRows(),
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "deletedRows: 3, 4 window: A1:E5");
+    }
+
+    @Test
+    public void testToStringDeletedLabels() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        this.deletedLabels(),
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "deletedLabels: DeletedLabel111, DeletedLabel222 window: A1:E5");
+    }
+
+    @Test
+    public void testToStringMatchedCells() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        this.matchedCells(),
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "matchedCells: A1, B2, C3 window: A1:E5");
+    }
+
+    @Test
+    public void testToStringColumnWidths() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        this.columnWidths(),
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "cells: A1 1, B2 2, C3 3 max: A=50.0 window: A1:E5"
+        );
+    }
+
+    @Test
+    public void testToStringRowCountHeights() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        this.rowHeights(),
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "cells: A1 1, B2 2, C3 3 max: 1=75.0 window: A1:E5"
+        );
+    }
+
+    @Test
+    public void testToStringColumnWidthsRowHeights() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        this.columnWidths(),
+                        this.rowHeights(),
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
+                        this.window()
+                ),
+                "cells: A1 1, B2 2, C3 3 max: A=50.0, 1=75.0 window: A1:E5"
+        );
+    }
+
+    @Test
+    public void testToStringColumnCountRowCount() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaWindowed.withWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        this.columnCount(),
+                        this.rowCount(),
+                        this.window()
+                ),
+                "cells: A1 1, B2 2, C3 3 columnCount: 88 rowCount: 99 window: A1:E5"
+        );
     }
 
     // TreePrintable.....................................................................................................
@@ -858,7 +1196,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         );
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // json.............................................................................................................
 
     private final static JsonString WINDOW_JSON_STRING = JsonNode.string("A1:E5");
 
@@ -1208,339 +1546,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         );
     }
 
-    // toString..........................................................................................................
-
-    @Test
-    public void testToStringViewport() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        this.viewport(),
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "home: A1 width: 100.0 height: 40.0 anchoredSelection: A1:B2 BOTTOM_RIGHT window: A1:E5");
-    }
-
-    @Test
-    public void testToStringCells() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "cells: A1 1, B2 2, C3 3 window: A1:E5"
-        );
-    }
-
-    @Test
-    public void testToStringLabels() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        this.labels(),
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 window: A1:E5"
-        );
-    }
-
-    @Test
-    public void testToStringDeletedCells() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        this.labels(),
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        this.deletedCells(),
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "cells: A1 1, B2 2, C3 3 labels: LabelA1A=A1, LabelA1B=A1, LabelB2=B2, LabelC3=C3:D4 deletedCells: C1, C2 window: A1:E5"
-        );
-    }
-
-    @Test
-    public void testToStringDeletedColumns() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        this.deletedColumns(),
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "deletedColumns: C, D window: A1:E5");
-    }
-
-    @Test
-    public void testToStringDeletedRows() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        this.deletedRows(),
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "deletedRows: 3, 4 window: A1:E5");
-    }
-
-    @Test
-    public void testToStringDeletedLabels() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        this.deletedLabels(),
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "deletedLabels: DeletedLabel111, DeletedLabel222 window: A1:E5");
-    }
-
-    @Test
-    public void testToStringMatchedCells() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        SpreadsheetDelta.NO_CELLS,
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        this.matchedCells(),
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "matchedCells: A1, B2, C3 window: A1:E5");
-    }
-
-    @Test
-    public void testToStringColumnWidths() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        this.columnWidths(),
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "cells: A1 1, B2 2, C3 3 max: A=50.0 window: A1:E5"
-        );
-    }
-
-    @Test
-    public void testToStringRowCountHeights() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        this.rowHeights(),
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "cells: A1 1, B2 2, C3 3 max: 1=75.0 window: A1:E5"
-        );
-    }
-
-    @Test
-    public void testToStringColumnWidthsRowHeights() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        this.columnWidths(),
-                        this.rowHeights(),
-                        SpreadsheetDelta.NO_TOTAL_WIDTH,
-                        SpreadsheetDelta.NO_TOTAL_HEIGHT,
-                        this.window()
-                ),
-                "cells: A1 1, B2 2, C3 3 max: A=50.0, 1=75.0 window: A1:E5"
-        );
-    }
-
-    @Test
-    public void testToStringColumnCountRowCount() {
-        this.toStringAndCheck(
-                SpreadsheetDeltaWindowed.withWindowed(
-                        SpreadsheetDelta.NO_VIEWPORT,
-                        this.cells(),
-                        SpreadsheetDelta.NO_COLUMNS,
-                        SpreadsheetDelta.NO_LABELS,
-                        SpreadsheetDelta.NO_ROWS,
-                        SpreadsheetDelta.NO_REFERENCES,
-                        SpreadsheetDelta.NO_DELETED_CELLS,
-                        SpreadsheetDelta.NO_DELETED_COLUMNS,
-                        SpreadsheetDelta.NO_DELETED_ROWS,
-                        SpreadsheetDelta.NO_DELETED_LABELS,
-                        SpreadsheetDelta.NO_MATCHED_CELLS,
-                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
-                        SpreadsheetDelta.NO_ROW_HEIGHTS,
-                        this.columnCount(),
-                        this.rowCount(),
-                        this.window()
-                ),
-                "cells: A1 1, B2 2, C3 3 columnCount: 88 rowCount: 99 window: A1:E5"
-        );
-    }
-
-    // helpers..........................................................................................................
-
-    @Override
-    SpreadsheetViewportWindows window() {
-        return SpreadsheetViewportWindows.parse("A1:E5");
-    }
-
-    @Override
-    SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
-        return this.createSpreadsheetDelta(
-                cells,
-                this.window()
-        );
-    }
-
-    private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
-                                                            final SpreadsheetViewportWindows window) {
-        return SpreadsheetDeltaWindowed.withWindowed(
-                this.viewport(),
-                cells,
-                this.columns(),
-                this.labels(),
-                this.rows(),
-                this.references(),
-                this.deletedCells(),
-                this.deletedColumns(),
-                this.deletedRows(),
-                this.deletedLabels(),
-                this.matchedCells(),
-                this.columnWidths(),
-                this.rowHeights(),
-                this.columnCount(),
-                this.rowCount(),
-                window
-        );
-    }
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetDeltaWindowed> type() {
