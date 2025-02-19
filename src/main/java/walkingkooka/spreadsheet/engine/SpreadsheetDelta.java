@@ -268,10 +268,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
             if (false == hidden.isEmpty()) {
                 predicate = (c) -> {
-                    final SpreadsheetCellReference cellReference = c.reference();
-                    return !(
-                            hidden.contains(cellReference.column()) ||
-                                    hidden.contains(cellReference.row())
+                    final SpreadsheetCellReference cell = c.reference();
+                    return false == (
+                            hidden.contains(cell.column()) ||
+                                    hidden.contains(cell.row())
                     );
                 };
             }
@@ -301,12 +301,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Finds a {@link SpreadsheetCell} matching the given {@link SpreadsheetCellReference}.
      */
-    public Optional<SpreadsheetCell> cell(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
+    public Optional<SpreadsheetCell> cell(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
 
         return this.cells()
                 .stream()
-                .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(cell))
                 .findFirst();
     }
 
@@ -1186,13 +1186,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * }
      * </pre>
      */
-    public SpreadsheetDelta patchCells(final SpreadsheetCellReferenceOrRange cellReferenceOrRange,
+    public SpreadsheetDelta patchCells(final SpreadsheetCellReferenceOrRange cellOrCellRange,
                                        final JsonNode json,
                                        final JsonNodeUnmarshallContext context) {
-        Objects.requireNonNull(cellReferenceOrRange, "cellReferenceOrRange");
+        Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
 
         return this.patch0(
-                cellReferenceOrRange, // technically only required by patchFormat & patchStyle
+                cellOrCellRange, // technically only required by patchFormat & patchStyle
                 json,
                 PATCH_CELL_PROPERTIES_PREDICATE,
                 context
@@ -1836,15 +1836,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final List<JsonNode> resolved = Lists.array();
 
         for (final Map.Entry<JsonPropertyName, JsonNode> child : cells.objectOrFail().asMap().entrySet()) {
-            final SpreadsheetExpressionReference cellReferenceOrLabelName = SpreadsheetSelection.parseCellOrLabel(child.getKey().value());
+            final SpreadsheetExpressionReference cellOrLabelName = SpreadsheetSelection.parseCellOrLabel(
+                    child.getKey()
+                            .value()
+            );
 
             final JsonNode value = child.getValue();
             resolved.add(
-                    cellReferenceOrLabelName.isLabelName() ?
+                    cellOrLabelName.isLabelName() ?
                             value.setName(
                                     JsonPropertyName.with(
                                             labelToCell.apply(
-                                                    cellReferenceOrLabelName.toLabelName()
+                                                    cellOrLabelName.toLabelName()
                                             ).toString()
                                     )
                             ) :
