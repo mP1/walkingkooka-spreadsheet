@@ -981,14 +981,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     static <T> Set<T> filter(final Set<T> values,
                              final Predicate<T> windowTester,
                              final Function<T, T> mapper) {
-        return SortedSets.immutable(
-                values.stream()
-                        .filter(windowTester)
-                        .map(mapper)
-                        .collect(
-                                Collectors.toCollection(SortedSets::tree)
-                        )
-        );
+        return values.stream()
+                .filter(windowTester)
+                .map(mapper)
+                .collect(
+                        ImmutableSortedSet.collector()
+                );
     }
 
     static Map<SpreadsheetColumnReference, Double> filterColumnWidths0(final Map<SpreadsheetColumnReference, Double> columnWidths,
