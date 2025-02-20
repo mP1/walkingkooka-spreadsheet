@@ -116,16 +116,25 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     extractSavedOrUpdated(this.rows)
             );
         }
+
         if (this.shouldSaveUpdateCells) {
             delta = delta.setCells(
                     extractSavedOrUpdated(this.cells)
             );
         }
+
         if (this.shouldSaveUpdateLabels) {
             delta = delta.setLabels(
                     extractSavedOrUpdated(this.labels)
             );
         }
+
+        if(this.deltaProperties.contains(SpreadsheetDeltaProperties.REFERENCES)) {
+            delta = delta.setReferences(
+                    this.changes.cellToReferences
+            );
+        }
+
         if (this.shouldDeleteCells) {
             delta = delta.setDeletedCells(
                     extractDeleted(this.cells)

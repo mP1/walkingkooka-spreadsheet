@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -548,31 +549,69 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                                 cell
                         )
                 );
-    }
 
+        this.cellToReferences.remove(cell);
+    }
 
     private void addCellExternalReferences(final SpreadsheetCellReference cell) {
         final SpreadsheetStoreRepository repository = this.repository;
 
-        repository.cellReferences()
+        for (final SpreadsheetCellReference cellReference : repository.cellReferences()
                 .load(cell)
-                .orElse(Sets.empty())
-                .forEach(this::refreshCellExternalReference);
+                .orElse(Sets.empty())) {
+            this.refreshCellExternalReference(cellReference);
 
-        repository.labels()
-                .labels(cell)
-                .forEach(m -> this.refreshSavedLabel(m.label()));
+            this.addCellExternalReferences(
+                    cell,
+                    cellReference
+            );
+        }
 
-        repository.rangeToCells()
-                .findCellRangesIncludingCell(cell)
-                .forEach(this::refreshRange);
+        for (final SpreadsheetLabelMapping labelMapping : repository.labels().labels(cell)) {
+            final SpreadsheetLabelName labelName = labelMapping.label();
+
+            this.refreshSavedLabel(labelName);
+
+            this.addCellExternalReferences(
+                    cell,
+                    labelName
+            );
+        }
+
+        for (final SpreadsheetCellRangeReference cellRange : repository.rangeToCells()
+                .findCellRangesIncludingCell(cell)) {
+            this.refreshRange(cellRange);
+
+            this.addCellExternalReferences(
+                    cell,
+                    cellRange
+            );
+        }
     }
 
-    private void refreshCellExternalReference(final SpreadsheetCellReference cell) {
-        this.getOrCreateCellCache(cell)
+    private void addCellExternalReferences(final SpreadsheetCellReference cell,
+                                           final SpreadsheetExpressionReference externalReference) {
+        Set<SpreadsheetExpressionReference> references = this.cellToReferences.get(cell);
+        if (null == references) {
+            references = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+
+            this.cellToReferences.put(
+                    cell,
+                    references
+            );
+        }
+        references.add(
+                externalReference.toRelative()
+        );
+    }
+
+    private void refreshCellExternalReference(final SpreadsheetCellReference reference) {
+        this.getOrCreateCellCache(reference)
                 .load()
                 .setCommitted(false);
     }
+
+    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellToReferences = Maps.sorted();
 
     // FORMULA REFERENCES...............................................................................................
 

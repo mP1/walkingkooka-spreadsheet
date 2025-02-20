@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -135,6 +136,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -232,6 +234,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static SpreadsheetCellReference LABEL_CELL = SpreadsheetSelection.parseCell("Z99");
 
     private final static double COLUMN_WIDTH = 50;
+
+    /**
+     * Helper that converts a references string into a map.
+     * <pre>
+     * A1=B2,C3:D4,Label5;
+     * </pre>
+     */
+    private static Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references(final String references) {
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellToReferences = Maps.sorted();
+
+        for (final String entry : references.split(";")) {
+            final int equalsSign = entry.indexOf('=');
+            if (-1 == equalsSign) {
+                throw new IllegalArgumentException("Missing '=' within " + CharSequences.quoteAndEscape(entry));
+            }
+
+            cellToReferences.put(
+                    SpreadsheetSelection.parseCell(entry.substring(0, equalsSign)),
+                    Arrays.stream(
+                                    entry.substring(equalsSign + 1)
+                                            .split(",")
+                            ).map(SpreadsheetSelection::parseExpressionReference)
+                            .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)))
+            );
+        }
+
+        return cellToReferences;
+    }
 
     private final static Map<SpreadsheetColumnReference, Double> COLUMN_A_WIDTH = columnWidths("A");
     private static final AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://server123");
@@ -1763,6 +1793,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(a1Formatted)
+                        ).setReferences(references("A1=A1")
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
@@ -2263,6 +2294,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 )
                                         )
                                 )
+                        ).setReferences(references("A1=Label123")
                         ).setLabels(
                                 Sets.of(mapping)
                         ).setColumnWidths(
@@ -2308,6 +2340,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 )
                                         )
                                 )
+                        ).setReferences(references("A1=LABEL123")
                         ).setLabels(
                                 Sets.of(mapping)
                         ).setColumnWidths(
@@ -2482,6 +2515,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 10
                                         )
                                 )
+                        ).setReferences(references("A1=B2;C3=A1")
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
                         ).setRowHeights(
@@ -2620,6 +2654,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         a1Formatted,
                                         b2Formatted
                                 )
+                        ).setReferences(references("A1=B2;B2=A1")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -2702,6 +2737,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 0
                                         )
                                 )
+                        ).setReferences(references("B2=A1")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -2750,6 +2786,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         b2Formatted,
                                         c3Formatted
                                 )
+                        ).setReferences(references("A1=C3;B2=A1;C3=B2")
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
                         ).setRowHeights(
@@ -2815,6 +2852,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 1 + 2
                                         )
                                 )
+                        ).setReferences(references("B2=A1")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -2961,6 +2999,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Sets.of(
                                 labelB2.setLabelMappingReference(b2.reference())
                         )
+                ).setReferences(references("B2=LABELB2")
                 ).setColumnWidths(
                         columnWidths("A,B")
                 ).setRowHeights(
@@ -3591,6 +3630,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         a1Formatted,
                                         b2Formatted
                                 )
+                        ).setReferences(references("A1=B2;B2=A1")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -3671,6 +3711,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         b2Formatted,
                                         c3Formatted
                                 )
+                        ).setReferences(references("A1=C3;B2=A1;C3=B2")
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
                         ).setRowHeights(
@@ -3789,6 +3830,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         a1Formatted,
                                         b2Formatted
                                 )
+                        ).setReferences(references("B2=A1")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -3859,6 +3901,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         b2Formatted,
                                         c3Formatted
                                 )
+                        ).setReferences(references("A1=C3;B2=A1")
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
                         ).setRowHeights(
@@ -4107,6 +4150,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 1 // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
                                         )
                                 )
+                        ).setReferences(references("B2=A1")
                         ).setDeletedCells(
                                 Sets.of(
                                         b2.reference()
@@ -4306,6 +4350,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setLabels(
                                 Sets.of(labelMapping)
+                        ).setReferences(references("B2=LABELB2")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -5121,6 +5166,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         LABEL.setLabelMappingReference(SpreadsheetSelection.parseCell("$N$10"))
                                 )
+                        ).setReferences(references("N10=Label123")
                         ).setDeletedCells(
                                 Sets.of(c1, n9, o10)
                         ).setColumnWidths(
@@ -5260,6 +5306,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 5 + 2
                                         )
                                 )
+                        ).setReferences(references("M9=A1")
                         ).setDeletedCells(
                                 Sets.of(k1, n9, o10)
                         ).setColumnWidths(
@@ -5348,6 +5395,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 5 + 2
                                         )
                                 )
+                        ).setReferences(references("L9=A1")
                         ).setDeletedCells(
                                 Sets.of(k1, n9, o10)
                         ).setColumnWidths(
@@ -6134,6 +6182,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         LABEL.setLabelMappingReference(SpreadsheetSelection.parseCell("$A$4"))
                                 )
+                        ).setReferences(references("A4=Label123")
                         ).setDeletedCells(
                                 Sets.of(a6)
                         ).setColumnWidths(
@@ -6304,6 +6353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 5 + 2
                                         )
                                 )
+                        ).setReferences(references("I13=A1")
                         ).setDeletedCells(
                                 Sets.of(a11, i14, j15)
                         ).setColumnWidths(
@@ -6430,6 +6480,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 5 + 2
                                         )
                                 )
+                        ).setReferences(references("I12=A1")
                         ).setDeletedCells(
                                 Sets.of(a11, i14, j15)
                         ).setColumnWidths(
@@ -6883,6 +6934,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetSelection.parseCellRange("$A$10:$A$15")
                                         )
                                 )
+                        ).setReferences(references("A10=Label123")
                         ).setDeletedCells(
                                 Sets.of(a16)
                         ).setColumnWidths(
@@ -7554,6 +7606,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         LABEL.setLabelMappingReference(SpreadsheetSelection.parseCell("$C$1"))
                                 )
+                        ).setReferences(references("C1=Label123")
                         ).setDeletedCells(
                                 Sets.of(e1)
                         ).setColumnWidths(
@@ -7735,6 +7788,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 5 + 2
                                         )
                                 )
+                        ).setReferences(references("M9=A1")
                         ).setDeletedCells(
                                 Sets.of(k1, n9, o10)
                         ).setColumnWidths(
@@ -7858,6 +7912,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 5 + 2
                                         )
                                 )
+                        ).setReferences(references("L9=A1")
                         ).setDeletedCells(
                                 Sets.of(k1, n9, o10)
                         ).setColumnWidths(
@@ -8292,6 +8347,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetSelection.parseCellRange("$J$1:$O$1")
                                         )
                                 )
+                        ).setReferences(references("J1=Label123")
                         ).setDeletedCells(
                                 Sets.of(p1)
                         ).setColumnWidths(
@@ -8875,6 +8931,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 99 + 0
                                         )
                                 )
+                        ).setReferences(references("O9=Label123")
                         ).setLabels(
                                 Sets.of(
                                         LABEL.setLabelMappingReference(
@@ -9088,6 +9145,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 99 + 0
                                         )
                                 )
+                        ).setReferences(references("P1=Label123")
                         ).setLabels(
                                 Sets.of(
                                         LABEL.setLabelMappingReference(
@@ -9205,6 +9263,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 4 + 0 + 2 + 0
                                         )
                                 )
+                        ).setReferences(references("O9=A1")
                         ).setDeletedCells(
                                 Sets.of(k1, n9)
                         ).setColumnWidths(
@@ -9325,8 +9384,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 4 + 0 + 2 + 0
                                         )
                                 )
-                        )
-                        .setDeletedCells(
+                        ).setReferences(references("P9=A1")
+                        ).setDeletedCells(
                                 Sets.of(k1, n9)
                         ).setColumnWidths(
                                 columnWidths("A,K,M,N,P")
@@ -10071,6 +10130,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetSelection.parseCell("$I$15")
                                         )
                                 )
+                        ).setReferences(references("I15=Label123")
                         ).setDeletedCells(
                                 Sets.of(a2, i14)
                         ).setColumnWidths(
@@ -10296,6 +10356,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetSelection.parseCellRange("$A$16:$A$21")
                                         )
                                 )
+                        ).setReferences(references("A16=Label123")
                         ).setDeletedCells(
                                 Sets.of(a11)
                         ).setColumnWidths(
@@ -10407,6 +10468,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 4 + 0 + 2 + 0
                                         )// $c insert
                                 )
+                        ).setReferences(references("I15=A1")
                         ).setDeletedCells(
                                 Sets.of(a11, i14)
                         ).setColumnWidths(
@@ -10515,6 +10577,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formatCell("$A$13", "=3+0", 3 + 0),
                                         this.formatCell("$I$16", "=4+0+" + a2, 4 + 0 + 2 + 0)  // $c insert
                                 )
+                        ).setReferences(references("I16=A1")
                         ).setDeletedCells(
                                 Sets.of(a11, i14)
                         ).setColumnWidths(
@@ -11358,6 +11421,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         label.setLabelMappingReference(d4.reference())
                                 )
+                        ).setReferences(
+                                references("D4=LabelD4")
                         ).setColumnWidths(
                                 columnWidths("C,D")
                         ).setRowHeights(
@@ -13076,6 +13141,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 1 + 0
                                         )
                                 )
+                        ).setReferences(references("$K$21=AE41")
                         ).setColumnWidths(
                                 columnWidths("K,AE")
                         ).setRowHeights(
@@ -13198,6 +13264,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 2 + 0
                                         )
                                 )
+                        ).setReferences(references("C1=A1")
                         ).setColumnWidths(
                                 columnWidths("A,C")
                         ).setRowHeights(
@@ -13570,6 +13637,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         "BBB"
                                 )
                         )
+                ).setReferences(references("A1=B1;A2=B2")
                 ).setColumnWidths(
                         columnWidths("A,B")
                 ).setRowHeights(
@@ -13638,6 +13706,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         "BBB"
                                 )
                         )
+                ).setReferences(references("A1=B1;A2=B2")
                 ).setColumnWidths(
                         columnWidths("A,B")
                 ).setRowHeights(
@@ -13698,6 +13767,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Sets.of(
                                 label.setLabelMappingReference(SpreadsheetSelection.A1)
                         )
+                ).setReferences(references("A1=Label123")
                 ).setColumnWidths(
                         columnWidths("A")
                 ).setRowHeights(
