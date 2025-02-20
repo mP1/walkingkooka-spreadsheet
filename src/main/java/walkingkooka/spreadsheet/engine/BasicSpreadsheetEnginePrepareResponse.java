@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -98,166 +97,12 @@ final class BasicSpreadsheetEnginePrepareResponse {
     private SpreadsheetDelta go() {
         this.changes.commit();
 
-        // columns......................................................................................................
-        if (this.shouldSaveUpdateColumns || this.shouldDeleteColumns) {
-            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetColumnReference, SpreadsheetColumn> referenceAndColumn : this.changes.columns.values()) {
-                final SpreadsheetColumnReference columnReference = referenceAndColumn.reference;
-                //final SpreadsheetColumn column = referenceAndColumn.value();
+        this.columns();
+        this.rows();
+        this.labels();
+        this.cells();
 
-                //if (null != column) {
-                if (referenceAndColumn.isSave()) {
-                    if (this.shouldSaveUpdateColumns) {
-                        this.columns.put(
-                                columnReference,
-                                //column
-                                referenceAndColumn.value()
-                        );
-                    }
-                } else {
-                    if (referenceAndColumn.isDelete()) {
-                        if (this.shouldDeleteColumns) {
-                            this.columns.put(
-                                    columnReference,
-                                    null
-                            );
-                        }
-                    }
-                }
-            }
-        }
-
-        // rows.........................................................................................................
-
-        if (this.shouldSaveUpdateRows || this.shouldDeleteRows) {
-            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetRowReference, SpreadsheetRow> referenceAndRow : this.changes.rows.values()) {
-                final SpreadsheetRowReference rowReference = referenceAndRow.reference;
-
-                if (referenceAndRow.isSave()) {
-                    if (this.shouldSaveUpdateRows) {
-                        this.rows.put(
-                                rowReference,
-                                // row
-                                referenceAndRow.value()
-                        );
-                    }
-                } else {
-                    if (referenceAndRow.isDelete()) {
-                        if (this.shouldDeleteRows) {
-                            this.rows.put(
-                                    rowReference,
-                                    null
-                            );
-                        }
-                    }
-                }
-            }
-        }
-
-        // labels.......................................................................................................
-        if (this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateCells) {
-            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> nameAndMapping : this.changes.labels.values()) {
-                final SpreadsheetLabelName labelName = nameAndMapping.reference;
-
-                if (nameAndMapping.isLoadOrSave()) {
-                    final SpreadsheetLabelMapping labelMapping = nameAndMapping.value();
-                    if (this.shouldSaveUpdateLabels) {
-                        this.labels.put(
-                                labelName,
-                                labelMapping
-                        );
-                    }
-                    this.addLabelMappingCells(labelMapping);
-                } else {
-                    if (nameAndMapping.isDelete()) {
-                        if (this.shouldDeleteLabels) {
-                            this.labels.put(
-                                    labelName,
-                                    null
-                            );
-                        }
-                    }
-                }
-            }
-        }
-
-        // cells........................................................................................................
-        if (this.shouldSaveUpdateCells || this.shouldDeleteCells || this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateColumns || this.shouldDeleteColumns || this.shouldSaveUpdateRows || this.shouldDeleteRows) {
-            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> referenceAndCell : this.changes.cells.values()) {
-                final SpreadsheetCellReference cellReference = referenceAndCell.reference;
-
-                // dont want to include cells loaded because they are referenced in a formula
-                if (referenceAndCell.isLoadOrSave()) {
-                    if (this.shouldSaveUpdateCells) {
-                        this.cells.put(
-                                cellReference,
-                                //cell
-                                referenceAndCell.value()
-                        );
-                    }
-
-                    this.addLabelMappingCells(cellReference);
-                } else {
-                    if (referenceAndCell.isDelete() && this.shouldDeleteCells) {
-                        this.cells.put(
-                                cellReference,
-                                null
-                        );
-                    }
-                    this.addColumn(
-                            cellReference.column()
-                    );
-                    this.addRow(
-                            cellReference.row()
-                    );
-                }
-            }
-
-            // each cell might have additional labels...................................................................
-
-            for (final Map.Entry<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell : this.cells.entrySet()) {
-                final SpreadsheetCellReference cellReference = cellReferenceToCell.getKey();
-                final SpreadsheetCell cell = cellReferenceToCell.getValue();
-
-                if (null != cell) {
-                    this.addLabelMappingCells(cellReference);
-                }
-            }
-        }
-
-        // add labels within the range of the given window.
-        if (this.window.isNotEmpty()) {
-            // if not adding columns/rows/labels theres no point looping over ranges for their cells
-            if (this.shouldSaveUpdateCells && (this.shouldSaveUpdateColumns || this.shouldSaveUpdateRows || this.shouldSaveUpdateLabels)) {
-                final Set<SpreadsheetCellReference> cellReferences = Sets.hash();
-
-
-                for (final SpreadsheetCellRangeReference range : this.window.cellRanges()) {
-
-                    // include all columns and rows within the window.
-                    range.cellStream()
-                            .forEach(c -> {
-                                        if (cellReferences.add(c)) {
-                                            addColumn(
-                                                    c.column()
-                                            );
-                                            addRow(
-                                                    c.row()
-                                            );
-                                        }
-                                    }
-                            );
-
-                    if (this.shouldSaveUpdateLabels) {
-                        for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(range)) {
-                            this.labels.put(
-                                    labelMapping.label(),
-                                    labelMapping
-                            );
-                        }
-                    }
-                }
-            }
-        }
+        this.extractedLabelsWithinWindow();
 
         // order is important because labels and cells for hidden columns/rows are filtered.
         SpreadsheetDelta delta = SpreadsheetDelta.EMPTY;
@@ -302,30 +147,14 @@ final class BasicSpreadsheetEnginePrepareResponse {
             );
         }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
-            final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
-
-            for (final SpreadsheetCellReference cell : this.cells.keySet()) {
-                this.addColumnWidth(
-                        cell.column()
-                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
-                        columnsWidths
-                );
-            }
-
-            delta = delta.setColumnWidths(columnsWidths);
+            delta = delta.setColumnWidths(
+                    this.columnsWidths()
+            );
         }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.ROW_HEIGHTS)) {
-            final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
-
-            for (final SpreadsheetCellReference cell : this.cells.keySet()) {
-                this.addRowHeight(
-                        cell.row()
-                                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE),
-                        rowsHeights
-                );
-            }
-
-            delta = delta.setRowHeights(rowsHeights);
+            delta = delta.setRowHeights(
+                    this.rowHeights()
+            );
         }
 
         final boolean hasColumnCount = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_COUNT);
@@ -350,6 +179,181 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
         return delta;
     }
+
+    private void columns() {
+        if (this.shouldSaveUpdateColumns || this.shouldDeleteColumns) {
+            final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = this.columns;
+
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetColumnReference, SpreadsheetColumn> referenceAndColumn : this.changes.columns.values()) {
+                final SpreadsheetColumnReference column = referenceAndColumn.reference;
+
+                if (referenceAndColumn.isSave()) {
+                    if (this.shouldSaveUpdateColumns) {
+                        columns.put(
+                                column,
+                                //column
+                                referenceAndColumn.value()
+                        );
+                    }
+                } else {
+                    if (referenceAndColumn.isDelete()) {
+                        if (this.shouldDeleteColumns) {
+                            columns.put(
+                                    column,
+                                    null
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted();
+
+    private void rows() {
+        if (this.shouldSaveUpdateRows || this.shouldDeleteRows) {
+            final Map<SpreadsheetRowReference, SpreadsheetRow> rows = this.rows;
+
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetRowReference, SpreadsheetRow> referenceAndRow : this.changes.rows.values()) {
+                final SpreadsheetRowReference row = referenceAndRow.reference;
+
+                if (referenceAndRow.isSave()) {
+                    if (this.shouldSaveUpdateRows) {
+                        rows.put(
+                                row,
+                                // row
+                                referenceAndRow.value()
+                        );
+                    }
+                } else {
+                    if (referenceAndRow.isDelete()) {
+                        if (this.shouldDeleteRows) {
+                            rows.put(
+                                    row,
+                                    null
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted();
+
+    private void labels() {
+        if (this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateCells) {
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> nameAndMapping : this.changes.labels.values()) {
+                final SpreadsheetLabelName labelName = nameAndMapping.reference;
+
+                if (nameAndMapping.isLoadOrSave()) {
+                    final SpreadsheetLabelMapping labelMapping = nameAndMapping.value();
+                    if (this.shouldSaveUpdateLabels) {
+                        this.labels.put(
+                                labelName,
+                                labelMapping
+                        );
+                    }
+                    this.addLabelMappingCells(labelMapping);
+                } else {
+                    if (nameAndMapping.isDelete()) {
+                        if (this.shouldDeleteLabels) {
+                            this.labels.put(
+                                    labelName,
+                                    null
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void extractedLabelsWithinWindow() {
+        // add labels within the range of the given window.
+        if (this.window.isNotEmpty()) {
+            // if not adding columns/rows/labels theres no point looping over ranges for their cells
+            if (this.shouldSaveUpdateCells && (this.shouldSaveUpdateColumns || this.shouldSaveUpdateRows || this.shouldSaveUpdateLabels)) {
+                final Set<SpreadsheetCellReference> cells = Sets.hash();
+
+                for (final SpreadsheetCellRangeReference cellRange : this.window.cellRanges()) {
+
+                    // include all columns and rows within the window.
+                    cellRange.cellStream()
+                            .forEach(c -> {
+                                        if (cells.add(c)) {
+                                            addColumn(
+                                                    c.column()
+                                            );
+                                            addRow(
+                                                    c.row()
+                                            );
+                                        }
+                                    }
+                            );
+
+                    if (this.shouldSaveUpdateLabels) {
+                        for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cellRange)) {
+                            this.labels.put(
+                                    labelMapping.label(),
+                                    labelMapping
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> labels = Maps.ordered();
+
+    private void cells() {
+        if (this.shouldSaveUpdateCells || this.shouldDeleteCells || this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateColumns || this.shouldDeleteColumns || this.shouldSaveUpdateRows || this.shouldDeleteRows) {
+
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> referenceAndCell : this.changes.cells.values()) {
+                final SpreadsheetCellReference cell = referenceAndCell.reference;
+
+                // dont want to include cells loaded because they are referenced in a formula
+                if (referenceAndCell.isLoadOrSave()) {
+                    if (this.shouldSaveUpdateCells) {
+                        this.cells.put(
+                                cell,
+                                referenceAndCell.value()
+                        );
+                    }
+
+                    this.addLabelMappingCells(cell);
+                } else {
+                    if (referenceAndCell.isDelete() && this.shouldDeleteCells) {
+                        this.cells.put(
+                                cell,
+                                null
+                        );
+                    }
+                    this.addColumn(
+                            cell.column()
+                    );
+                    this.addRow(
+                            cell.row()
+                    );
+                }
+            }
+
+            // each cell might have additional labels...................................................................
+
+            for (final Map.Entry<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell : this.cells.entrySet()) {
+                final SpreadsheetCellReference cellReference = cellReferenceToCell.getKey();
+                final SpreadsheetCell cell = cellReferenceToCell.getValue();
+
+                if (null != cell) {
+                    this.addLabelMappingCells(cellReference);
+                }
+            }
+        }
+    }
+
+    private final Map<SpreadsheetCellReference, SpreadsheetCell> cells = Maps.sorted();
 
     private void addCell(final SpreadsheetCellReference cell) {
         if (this.window.test(cell)) {
@@ -378,22 +382,28 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private void addColumnWidth(final SpreadsheetColumnReference column,
-                                final Map<SpreadsheetColumnReference, Double> columnsWidths) {
-        if (false == columnsWidths.containsKey(column)) {
-            final double width = this.engine.columnWidth(
-                    column,
-                    this.context
-            );
-            if (width > 0) {
-                columnsWidths.put(column, width);
+    private Map<SpreadsheetColumnReference, Double> columnsWidths() {
+        final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+
+        for (final SpreadsheetCellReference cell : this.cells.keySet()) {
+            final SpreadsheetColumnReference column = cell.column().toRelative();
+
+            if (false == columnsWidths.containsKey(column)) {
+                final double width = this.engine.columnWidth(
+                        column,
+                        this.context
+                );
+                if (width > 0) {
+                    columnsWidths.put(column, width);
+                }
             }
         }
+        return columnsWidths;
     }
 
-    private void addLabelMappingCells(final SpreadsheetCellReference cellReference) {
+    private void addLabelMappingCells(final SpreadsheetCellReference cell) {
         if (this.shouldSaveUpdateLabels) {
-            for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cellReference)) {
+            for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cell)) {
 
                 final SpreadsheetLabelName labelName = labelMapping.label();
                 if (false == this.labels.containsKey(labelName)) {
@@ -410,25 +420,24 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
     private void addLabelMappingCells(final SpreadsheetLabelMapping labelMapping) {
         if (this.shouldSaveUpdateCells) {
-            SpreadsheetExpressionReference target;
+            SpreadsheetExpressionReference reference;
             do {
-                target = labelMapping.reference();
-                if (target instanceof SpreadsheetLabelName) {
-                    target = this.labelStore.load(
-                                    target.toLabelName()
+                reference = labelMapping.reference();
+                if (reference.isLabelName()) {
+                    reference = this.labelStore.load(
+                                    reference.toLabelName()
                             ).map(SpreadsheetLabelMapping::reference)
                             .orElse(null);
                 }
-            } while (target instanceof SpreadsheetLabelName);
+            } while (null != reference && reference.isLabelName());
 
-            if (target instanceof SpreadsheetCellReference) {
+            if (null != reference && reference.isCell()) {
                 this.addCell(
-                        target.toCell()
+                        reference.toCell()
                 );
             }
         }
     }
-
 
     private void addRow(final SpreadsheetRowReference row) {
         if (this.shouldSaveUpdateRows) {
@@ -440,17 +449,23 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private void addRowHeight(final SpreadsheetRowReference row,
-                              final Map<SpreadsheetRowReference, Double> rowsHeights) {
-        if (false == rowsHeights.containsKey(row)) {
-            final double height = this.engine.rowHeight(
-                    row,
-                    this.context
-            );
-            if (height > 0) {
-                rowsHeights.put(row, height);
+    private Map<SpreadsheetRowReference, Double> rowHeights() {
+        final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+
+        for (final SpreadsheetCellReference cell : this.cells.keySet()) {
+            final SpreadsheetRowReference row = cell.row()
+                    .toRelative();
+            if (false == rowsHeights.containsKey(row)) {
+                final double height = this.engine.rowHeight(
+                        row,
+                        this.context
+                );
+                if (height > 0) {
+                    rowsHeights.put(row, height);
+                }
             }
         }
+        return rowsHeights;
     }
 
     private <R extends SpreadsheetSelection & Comparable<R>, H extends HasSpreadsheetReference<R>> boolean add(final R reference,
@@ -526,19 +541,11 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
     private final boolean shouldDeleteCells;
 
-    private final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted();
-
     private final SpreadsheetColumnStore columnStore;
-
-    private final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted();
 
     private final SpreadsheetRowStore rowStore;
 
-    private final Map<SpreadsheetCellReference, SpreadsheetCell> cells = Maps.sorted();
-
     private final SpreadsheetCellStore cellStore;
-
-    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> labels = Maps.ordered();
 
     private final SpreadsheetLabelStore labelStore;
 }
