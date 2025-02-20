@@ -983,7 +983,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode cellsPatch(final Set<SpreadsheetCell> cells,
                                       final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cells, "cells");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return JsonNode.object()
                 .set(
@@ -1001,7 +1001,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode cellsFormulaPatch(final Map<SpreadsheetCellReference, SpreadsheetFormula> cellToFormulas,
                                              final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToFormulas, "cellToFormulas");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return cellsPatchFromMap(
                 cellToFormulas,
@@ -1016,7 +1016,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode cellsFormatterPatch(final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> cellToFormatters,
                                                final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToFormatters, "cellToFormatters");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToFormatters,
@@ -1031,7 +1031,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode cellsParserPatch(final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> cellToParser,
                                             final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToParser, "cellToParser");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return SpreadsheetDelta.cellsPatchFromMap(
                 cellToParser,
@@ -1046,7 +1046,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode cellsStylePatch(final Map<SpreadsheetCellReference, TextStyle> cellToStyles,
                                            final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToStyles, "cellToStyles");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return cellsPatchFromMap(
                 cellToStyles,
@@ -1100,7 +1100,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode formulaPatch(final SpreadsheetFormula formula,
                                         final JsonNodeMarshallContext context) {
         Objects.requireNonNull(formula, "formula");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return makePatch(
                 FORMULA_PROPERTY,
@@ -1114,7 +1114,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode formatterPatch(final Optional<SpreadsheetFormatterSelector> formatter,
                                           final JsonNodeMarshallContext context) {
         Objects.requireNonNull(formatter, "formatter");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return makePatch(
                 FORMATTER_PROPERTY,
@@ -1130,7 +1130,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public static JsonNode parserPatch(final Optional<SpreadsheetParserSelector> parser,
                                        final JsonNodeMarshallContext context) {
         Objects.requireNonNull(parser, "parser");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return makePatch(
                 PARSER_PROPERTY,
@@ -1159,10 +1159,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                         propertyName,
                         value
                 );
-    }
-
-    private static JsonNodeMarshallContext checkContext(final JsonNodeMarshallContext context) {
-        return Objects.requireNonNull(context, "context");
     }
 
     // Patchable.......................................................................................................
