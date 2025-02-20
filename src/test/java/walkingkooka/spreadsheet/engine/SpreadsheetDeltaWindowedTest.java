@@ -913,7 +913,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 ),
                 "SpreadsheetDelta\n" +
                         "  references:\n" +
-                        "    A1\n" +
+                        "    A1:\n" +
                         "      B2,C3:D4,LabelA1A\n" +
                         "  window:\n" +
                         "    A1:E5\n"
