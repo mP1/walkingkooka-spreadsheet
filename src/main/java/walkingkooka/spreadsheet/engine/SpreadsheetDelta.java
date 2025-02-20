@@ -63,7 +63,6 @@ import walkingkooka.tree.text.TextStyle;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -214,7 +213,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Objects.requireNonNull(cells, "cells");
 
         final Set<SpreadsheetCell> copy = this.filterCells(cells);
-        return equals(this.cells, copy) ?
+        return this.cells.equals(copy) ?
                 this :
                 this.replaceCells(copy);
     }
@@ -335,7 +334,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 columns,
                 this.window()
         );
-        return equals(this.columns, copy) ?
+        return this.columns.equals(copy) ?
                 this :
                 this.replaceColumns(copy);
     }
@@ -387,7 +386,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 labels,
                 this.window()
         );
-        return equals(this.labels, copy) ?
+        return this.labels.equals(copy) ?
                 this :
                 this.replaceLabels(copy);
     }
@@ -440,7 +439,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 rows,
                 this.window()
         );
-        return equals(this.rows, copy) ?
+        return this.rows.equals(copy) ?
                 this :
                 this.replaceRows(copy);
     }
@@ -2614,6 +2613,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     static {
         // force static initializers to run, preventing Json type name lookup failures.
         SpreadsheetViewport.SEPARATOR.toString();
+        SpreadsheetViewportWindows.EMPTY.toString();
         SpreadsheetFunctionName.with("forceJsonRegister");
 
         JsonNodeContext.register(
@@ -2657,10 +2657,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private boolean equals0(final SpreadsheetDelta other) {
         return this.viewport.equals(other.viewport) &&
-                equals(this.cells, other.cells) &&
-                equals(this.columns, other.columns) &&
-                equals(this.labels, other.labels) &&
-                equals(this.rows, other.rows) &&
+                this.cells.equals(other.cells) &&
+                this.columns.equals(other.columns) &&
+                this.labels.equals(other.labels) &&
+                this.rows.equals(other.rows) &&
                 this.references.equals(other.references) &&
                 this.deletedCells.equals(other.deletedCells) &&
                 this.deletedColumns.equals(other.deletedColumns) &&
@@ -2672,30 +2672,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.columnCount.equals(other.columnCount) &&
                 this.rowCount.equals(other.rowCount) &&
                 this.window().equals(other.window());
-    }
-
-    /**
-     * The {@link Set sets} holding cells, columns, labels and rows are sorted and each class only uses its
-     * {@link SpreadsheetSelection} to determine equality. This means {@link Sets#equals(Object)} will return true for
-     * entries with the same {@link SpreadsheetSelection} but other different properties.
-     */
-    private static <T> boolean equals(final Set<T> left,
-                                      final Set<T> right) {
-        boolean equals = left.size() == right.size();
-
-        if (equals) {
-            final Iterator<T> leftIterator = left.iterator();
-            final Iterator<T> rightIterator = right.iterator();
-            while (equals && leftIterator.hasNext()) {
-                equals = rightIterator.hasNext() &&
-                        leftIterator.next()
-                                .equals(
-                                        rightIterator.next()
-                                );
-            }
-        }
-
-        return equals;
     }
 
     /**
