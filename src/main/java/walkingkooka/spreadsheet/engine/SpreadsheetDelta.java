@@ -401,7 +401,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 labels,
                 window.isEmpty() ?
                         Predicates.always() :
-                        m -> {
+                        (final SpreadsheetLabelMapping m) -> {
+                            // added type to lambda parameter to help GWTC
                             final SpreadsheetExpressionReference r = m.reference();
 
                             return r.isLabelName() ||
