@@ -912,7 +912,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         this.window()
                 ),
                 "SpreadsheetDelta\n" +
-                        "  References:\n" +
+                        "  references:\n" +
                         "    A1\n" +
                         "      B2,C3:D4,LabelA1A\n" +
                         "  window:\n" +

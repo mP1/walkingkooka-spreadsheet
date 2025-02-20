@@ -1152,7 +1152,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_TOTAL_HEIGHT
                 ),
                 "SpreadsheetDelta\n" +
-                        "  References:\n" +
+                        "  references:\n" +
                         "    A1\n" +
                         "      B2,C3:D4,LabelA1A\n"
         );
