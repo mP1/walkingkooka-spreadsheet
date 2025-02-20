@@ -522,6 +522,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         cache.committed = true;
     }
 
+    // CELL EXTERNAL REFERENCES.........................................................................................
+
     private void removeCellExternalReferences(final SpreadsheetCellReference cell) {
         final SpreadsheetStoreRepository repository = this.repository;
 
@@ -548,25 +550,6 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                 );
     }
 
-    private void removeFormulaReferences(final SpreadsheetCellReference cell) {
-        this.repository.cellReferences()
-                .removeReferencesWithCell(cell);
-    }
-
-    /**
-     * Records any {@link walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference} within the given {@link SpreadsheetFormula}.
-     */
-    private void addFormulaReferences(final SpreadsheetCell spreadsheetCell) {
-        final SpreadsheetCellReference cell = spreadsheetCell.reference();
-
-        spreadsheetCell.formula()
-                .consumeSpreadsheetExpressionReferences(
-                        BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor.with(
-                                cell,
-                                this.repository
-                        )::accept
-                );
-    }
 
     private void addCellExternalReferences(final SpreadsheetCellReference cell) {
         final SpreadsheetStoreRepository repository = this.repository;
@@ -589,6 +572,28 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         this.getOrCreateCellCache(cell)
                 .load()
                 .setCommitted(false);
+    }
+
+    // FORMULA REFERENCES...............................................................................................
+
+    private void removeFormulaReferences(final SpreadsheetCellReference cell) {
+        this.repository.cellReferences()
+                .removeReferencesWithCell(cell);
+    }
+
+    /**
+     * Records any {@link walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference} within the given {@link SpreadsheetFormula}.
+     */
+    private void addFormulaReferences(final SpreadsheetCell spreadsheetCell) {
+        final SpreadsheetCellReference cell = spreadsheetCell.reference();
+
+        spreadsheetCell.formula()
+                .consumeSpreadsheetExpressionReferences(
+                        BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor.with(
+                                cell,
+                                this.repository
+                        )::accept
+                );
     }
 
     // COMMIT...........................................................................................................
