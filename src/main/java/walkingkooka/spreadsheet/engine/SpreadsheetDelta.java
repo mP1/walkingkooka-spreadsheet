@@ -1175,7 +1175,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     @Override
     public SpreadsheetDelta patch(final JsonNode json,
                                   final JsonNodeUnmarshallContext context) {
-        return this.patch0(
+        return this.patchValidateAndApply(
                 null,
                 json,
                 Predicates.always(),
@@ -1236,7 +1236,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                        final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
 
-        return this.patch0(
+        return this.patchValidateAndApply(
                 cellOrCellRange, // technically only required by patchFormat & patchStyle
                 json,
                 PATCH_CELL_PROPERTIES_PREDICATE,
@@ -1272,7 +1272,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     public SpreadsheetDelta patchColumns(final JsonNode json,
                                          final JsonNodeUnmarshallContext context) {
-        return this.patch0(
+        return this.patchValidateAndApply(
                 null, // dont care now will matter when patchColumns supports format&style
                 json,
                 Predicates.is(SpreadsheetDelta.COLUMNS_PROPERTY_STRING),
@@ -1298,7 +1298,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     public SpreadsheetDelta patchRows(final JsonNode json,
                                       final JsonNodeUnmarshallContext context) {
-        return this.patch0(
+        return this.patchValidateAndApply(
                 null, // dont care now will matter when patchRows supports format&style
                 json,
                 Predicates.is(SpreadsheetDelta.ROWS_PROPERTY_STRING),
@@ -1308,10 +1308,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // two pass patch, first validate valid properties are being patched
     // also want to verify not an invalid combo like cells and style, before actually patching.
-    private SpreadsheetDelta patch0(final SpreadsheetSelection selection,
-                                    final JsonNode json,
-                                    final Predicate<String> patchableProperties,
-                                    final JsonNodeUnmarshallContext context) {
+    private SpreadsheetDelta patchValidateAndApply(final SpreadsheetSelection selection,
+                                                   final JsonNode json,
+                                                   final Predicate<String> patchableProperties,
+                                                   final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(json, "json");
         Objects.requireNonNull(context, "context");
 
