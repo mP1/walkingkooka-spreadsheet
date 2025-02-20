@@ -1926,7 +1926,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             {
                 final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = this.references();
                 if (false == references.isEmpty()) {
-                    printer.println("References:");
+                    printer.println("references:");
                     printer.indent();
                     {
                         for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellAndReferences : references.entrySet()) {
