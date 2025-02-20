@@ -1153,7 +1153,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 ),
                 "SpreadsheetDelta\n" +
                         "  references:\n" +
-                        "    A1\n" +
+                        "    A1:\n" +
                         "      B2,C3:D4,LabelA1A\n"
         );
     }

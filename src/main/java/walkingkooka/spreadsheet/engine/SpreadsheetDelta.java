@@ -1930,16 +1930,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     printer.indent();
                     {
                         for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellAndReferences : references.entrySet()) {
-                            printer.println(cellAndReferences.getKey().toString());
-
-                            printer.indent();
-
                             this.printTreeCollectionCsv(
-                                    cellAndReferences.getValue(),
+                                    cellAndReferences.getKey().toString(), // label
+                                    cellAndReferences.getValue(), // collection
                                     printer
                             );
-
-                            printer.outdent();
                         }
                     }
                     printer.outdent();
