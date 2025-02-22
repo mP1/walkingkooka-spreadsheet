@@ -217,12 +217,22 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference selection) {
+    public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference selection,
+                                                                final int offset,
+                                                                final int count) {
         Objects.requireNonNull(selection, "selection");
+        if (offset < 0) {
+            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Invalid count " + count + " < 0");
+        }
 
         return TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor.gather(
                 this.mappings,
-                selection
+                selection,
+                offset,
+                count
         );
     }
 

@@ -182,7 +182,9 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         this.findLabelsWithReferenceAndCheck(
                 store,
-                reference
+                reference,
+                0, // offset
+                1 // count
         );
     }
 
@@ -215,6 +217,8 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
+                0, // offset
+                2, // count
                 mapping
         );
     }
@@ -229,7 +233,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     @Test
     public void testFindLabelsWithReferenceWhereSomeWithCellRange2() {
         this.findLabelsWithReferenceWhereSomeAndCheck2(
-                SpreadsheetSelection.parseCellRange("a2:a3")
+                SpreadsheetSelection.parseCellRange("b2:b3")
         );
     }
 
@@ -240,15 +244,170 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         final SpreadsheetLabelName label2 = this.label2();
 
         final SpreadsheetCellReference a1 = this.a1();
-        final SpreadsheetCellRangeReference a2 = SpreadsheetSelection.parseCellRange("a2:b3");
+        final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("b2:c3");
 
         store.save(label1.setLabelMappingReference(a1));
-        final SpreadsheetLabelMapping mapping = store.save(label2.setLabelMappingReference(a2));
+        final SpreadsheetLabelMapping mapping = store.save(label2.setLabelMappingReference(b2c3));
 
         this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
+                0, // offset
+                2, // count
                 mapping
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithReferenceWhereSomeWithCellAndOffset() {
+        this.findLabelsWithReferenceWhereSomeAndOffsetAndCheck(
+                this.b2()
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithReferenceWhereSomeWithCellRangeAndOffset() {
+        this.findLabelsWithReferenceWhereSomeAndOffsetAndCheck(
+                SpreadsheetSelection.parseCellRange("b2:b3")
+        );
+    }
+
+    private void findLabelsWithReferenceWhereSomeAndOffsetAndCheck(final SpreadsheetExpressionReference reference) {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+        final SpreadsheetLabelName label3 = this.label3();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("b2:c3");
+        final SpreadsheetCellRangeReference b2d4 = SpreadsheetSelection.parseCellRange("b2:d4");
+
+        store.save(
+                label1.setLabelMappingReference(a1)
+        );
+        final SpreadsheetLabelMapping mapping1 = store.save(
+                label2.setLabelMappingReference(b2c3)
+        );
+        final SpreadsheetLabelMapping mapping2= store.save(
+                label3.setLabelMappingReference(b2d4)
+        );
+
+        this.findLabelsWithReferenceAndCheck(
+                store,
+                reference,
+                1, // offset
+                2, // count
+                mapping2
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithReferenceWhereSomeWithCellAndCount() {
+        this.findLabelsWithReferenceWhereSomeAndCountAndCheck(
+                this.b2()
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithReferenceWhereSomeWithCellRangeAndCount() {
+        this.findLabelsWithReferenceWhereSomeAndCountAndCheck(
+                SpreadsheetSelection.parseCellRange("b2:b3")
+        );
+    }
+
+    private void findLabelsWithReferenceWhereSomeAndCountAndCheck(final SpreadsheetExpressionReference reference) {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+        final SpreadsheetLabelName label3 = this.label3();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("b2:c3");
+        final SpreadsheetCellRangeReference b2d4 = SpreadsheetSelection.parseCellRange("b2:d4");
+
+        store.save(
+                label1.setLabelMappingReference(a1)
+        );
+        final SpreadsheetLabelMapping mapping1 = store.save(
+                label2.setLabelMappingReference(b2c3)
+        );
+        final SpreadsheetLabelMapping mapping2= store.save(
+                label3.setLabelMappingReference(b2d4)
+        );
+
+        this.findLabelsWithReferenceAndCheck(
+                store,
+                reference,
+                0, // offset
+                1, // count
+                mapping1
+        );
+    }
+
+
+    @Test
+    public void testFindLabelsWithReferenceWhereSomeWithCellAndOffsetAndCount() {
+        this.findLabelsWithReferenceWhereSomeAndOffsetAndCountAndCheck(
+                this.b2()
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithReferenceWhereSomeWithCellRangeAndOffsetAndCount() {
+        this.findLabelsWithReferenceWhereSomeAndOffsetAndCountAndCheck(
+                SpreadsheetSelection.parseCellRange("b2:b3")
+        );
+    }
+
+    private void findLabelsWithReferenceWhereSomeAndOffsetAndCountAndCheck(final SpreadsheetExpressionReference reference) {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+        final SpreadsheetLabelName label3 = this.label3();
+        final SpreadsheetLabelName label4 = this.label4();
+        final SpreadsheetLabelName label5 = this.label5();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellRangeReference b2c3 = SpreadsheetSelection.parseCellRange("b2:c3");
+        final SpreadsheetCellRangeReference b2d4 = SpreadsheetSelection.parseCellRange("b2:d4");
+        final SpreadsheetCellRangeReference b2e5 = SpreadsheetSelection.parseCellRange("b2:e5");
+        final SpreadsheetCellRangeReference b2f6 = SpreadsheetSelection.parseCellRange("b2:f6");
+
+        // not matched by reference
+        store.save(
+                label1.setLabelMappingReference(a1)
+        );
+
+        // offset=0
+        final SpreadsheetLabelMapping mapping1 = store.save(
+                label2.setLabelMappingReference(b2c3)
+        );
+
+        // offset=1
+        final SpreadsheetLabelMapping mapping2= store.save(
+                label3.setLabelMappingReference(b2d4)
+        );
+
+        // offset=2
+        final SpreadsheetLabelMapping mapping3= store.save(
+                label4.setLabelMappingReference(b2e5)
+        );
+
+        // offset=3
+        final SpreadsheetLabelMapping mapping4= store.save(
+                label5.setLabelMappingReference(b2f6)
+        );
+
+        this.findLabelsWithReferenceAndCheck(
+                store,
+                reference,
+                1, // offset
+                2, // count
+                mapping2,
+                mapping3 // skips mapping1, mapping4 after
         );
     }
 
@@ -514,12 +673,24 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         return SpreadsheetSelection.labelName("label3");
     }
 
+    private SpreadsheetLabelName label4() {
+        return SpreadsheetSelection.labelName("label4");
+    }
+
+    private SpreadsheetLabelName label5() {
+        return SpreadsheetSelection.labelName("label5");
+    }
+
     private SpreadsheetCellReference a1() {
         return SpreadsheetSelection.A1;
     }
 
     private SpreadsheetCellReference a2() {
         return SpreadsheetSelection.parseCell("A2");
+    }
+
+    private SpreadsheetCellReference b2() {
+        return SpreadsheetSelection.parseCell("B2");
     }
 
     private SpreadsheetCellRangeReference range1() {

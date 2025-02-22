@@ -108,8 +108,14 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference reference) {
-        return this.store.findLabelsWithReference(reference);
+    public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference reference,
+                                                                final int offset,
+                                                                final int count) {
+        return this.store.findLabelsWithReference(
+                reference,
+                offset,
+                count
+        );
     }
 
     private final SpreadsheetLabelStore store;

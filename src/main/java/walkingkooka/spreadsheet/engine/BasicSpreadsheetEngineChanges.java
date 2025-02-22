@@ -567,7 +567,13 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
             );
         }
 
-        for (final SpreadsheetLabelMapping labelMapping : repository.labels().findLabelsWithReference(cell)) {
+        for (final SpreadsheetLabelMapping labelMapping : repository.labels()
+                .findLabelsWithReference(
+                        cell,
+                        0,
+                        BasicSpreadsheetEngine.FIND_LABELS_WITH_REFERENCE_COUNT
+                )
+        ) {
             final SpreadsheetLabelName labelName = labelMapping.label();
 
             this.refreshSavedLabel(labelName);
