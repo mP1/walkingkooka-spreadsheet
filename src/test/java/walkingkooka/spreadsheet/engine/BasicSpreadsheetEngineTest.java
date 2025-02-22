@@ -13391,6 +13391,849 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellStore, 1 + 1);
     }
 
+    // filterCells......................................................................................................
+
+    @Test
+    public void testFilterCells() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("true")
+                );
+        final SpreadsheetCell b2 = SpreadsheetSelection.A1
+                .setFormula(
+                        SpreadsheetFormula.EMPTY.setText("false")
+                );
+
+        this.filterCellsAndCheck(
+                this.createSpreadsheetEngine(),
+                Sets.of(
+                        a1,
+                        b2
+                ),
+                SpreadsheetValueType.ANY,
+                Expression.call(
+                        Expression.namedFunction(
+                                ExpressionFunctionName.with(TEST_FILTER_CELLS_PREDICATE)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                        ),
+                        Expression.NO_CHILDREN
+                ),
+                this.createContext(),
+                a1
+        );
+    }
+
+    // findCells........................................................................................................
+
+    @Test
+    public void testFindCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                10, // count
+                SpreadsheetValueType.ANY,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get(),
+                                        saved.cell(a3).get(),
+                                        saved.cell(b3).get(),
+                                        saved.cell(c3).get(),
+                                        saved.cell(a4).get(),
+                                        saved.cell(b4).get(),
+                                        saved.cell(c4).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2,3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
+    @Test
+    public void testFindCellsSkipsMissingCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A1:C2"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                20, // count
+                SpreadsheetValueType.ANY,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(2))
+        );
+    }
+
+    @Test
+    public void testFindCellsSkipsEmptyCells() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A1:C2"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                20, // count
+                SpreadsheetValueType.ANY,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setColumnWidths(columnWidths("B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(2))
+        );
+    }
+
+    @Test
+    public void testFindCellsWithCount() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                3, // count
+                SpreadsheetValueType.ANY,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
+    @Test
+    public void testFindCellsWithValueTypeFiltering() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                                .setValue(
+                                                        Optional.of(999)
+                                                )
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                                        .setValue(
+                                                Optional.of(1)
+                                        )
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
+                                        .setValue(
+                                                Optional.of("Hello2")
+                                        )
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
+                                        .setValue(
+                                                Optional.of("Hello3")
+                                        )
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                                        .setValue(
+                                                Optional.of(4)
+                                        )
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                                        .setValue(
+                                                Optional.of(6)
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                                        .setValue(
+                                                Optional.of(8)
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                10, // count
+                SpreadsheetValueType.NUMBER,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(a3).get(),
+                                        saved.cell(b3).get(),
+                                        saved.cell(c3).get(),
+                                        saved.cell(a4).get(),
+                                        saved.cell(b4).get(),
+                                        saved.cell(c4).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2,3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
+    @Test
+    public void testFindCellsWithValueTypeFilteringAndCount() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                                .setValue(
+                                                        Optional.of(999)
+                                                )
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                                        .setValue(
+                                                Optional.of(1)
+                                        )
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
+                                        .setValue(
+                                                Optional.of("Hello2")
+                                        )
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
+                                        .setValue(
+                                                Optional.of("Hello3")
+                                        )
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                                        .setValue(
+                                                Optional.of(4)
+                                        )
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                                        .setValue(
+                                                Optional.of(6)
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                                        .setValue(
+                                                Optional.of(8)
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                3, //count
+                SpreadsheetValueType.NUMBER,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(a3).get(),
+                                        saved.cell(b3).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B"))
+                        .setRowHeights(rowHeights("2,3"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
+    @Test
+    public void testFindCellsWithValueTypeFilteringAndCount2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.parseCell("B1")
+                                .setFormula(
+                                        SpreadsheetFormula.EMPTY.setText("=-999")
+                                                .setValue(
+                                                        Optional.of(999)
+                                                )
+                                ),
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello1\"")
+                                        .setValue(
+                                                Optional.of("Hello1")
+                                        )
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
+                                        .setValue(
+                                                Optional.of("Hello2")
+                                        )
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
+                                        .setValue(
+                                                Optional.of("Hello3")
+                                        )
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                                        .setValue(
+                                                Optional.of(4)
+                                        )
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=6")
+                                        .setValue(
+                                                Optional.of(6)
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=8")
+                                        .setValue(
+                                                Optional.of(8)
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                3, // max
+                SpreadsheetValueType.NUMBER,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a3).get(),
+                                        saved.cell(b3).get(),
+                                        saved.cell(c3).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("3"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
+    @Test
+    public void testFindCellsWithPathRlbuValueTypeFilteringAndCount2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello6\"")
+                                        .setValue(
+                                                Optional.of("Hello6")
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello8\"")
+                                        .setValue(
+                                                Optional.of("Hello8")
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.RLBU,
+                0, // offset
+                3, // count
+                SpreadsheetValueType.NUMBER,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(c4).get(),
+                                        saved.cell(a4).get(),
+                                        saved.cell(b3).get()
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
+    @Test
+    public void testFindCellsWithPathRlbuValueTypeFilteringOffsetAndCount() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
+        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+
+        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
+        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
+        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        ),
+                        a3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=4")
+                        ),
+                        b3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=5")
+                                        .setValue(
+                                                Optional.of(5)
+                                        )
+                        ),
+                        c3.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello6\"")
+                                        .setValue(
+                                                Optional.of("Hello6")
+                                        )
+                        ),
+                        a4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=7")
+                                        .setValue(
+                                                Optional.of(7)
+                                        )
+                        ),
+                        b4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=\"Hello8\"")
+                                        .setValue(
+                                                Optional.of("Hello8")
+                                        )
+                        ),
+                        c4.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=9")
+                                        .setValue(
+                                                Optional.of(9)
+                                        )
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.RLBU,
+                0, // offset
+                3, // count
+                SpreadsheetValueType.NUMBER,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(c4).get(), // 0
+                                        saved.cell(a4).get(), // 1
+                                        saved.cell(b3).get() // 2
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.RLBU,
+                1, // offset
+                2, // count
+                SpreadsheetValueType.NUMBER,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a4).get(), // 1
+                                        saved.cell(b3).get() // 2
+                                )
+                        ).setColumnWidths(columnWidths("A,B"))
+                        .setRowHeights(rowHeights("3,4"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.RLBU,
+                2, // offset
+                1, // count
+                SpreadsheetValueType.NUMBER,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(b3).get() // 2
+                                )
+                        ).setColumnWidths(columnWidths("B"))
+                        .setRowHeights(rowHeights("3"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A2:C4"),
+                SpreadsheetCellRangeReferencePath.RLBU,
+                3, // offset
+                0, // count
+                SpreadsheetValueType.NUMBER,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(4))
+        );
+    }
+
     // sortCells........................................................................................................
 
     @Test
@@ -17597,849 +18440,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 .setDefaultAnchor()
                                 )
                         )
-        );
-    }
-
-    // filterCells......................................................................................................
-
-    @Test
-    public void testFilterCells() {
-        final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("true")
-                );
-        final SpreadsheetCell b2 = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("false")
-                );
-
-        this.filterCellsAndCheck(
-                this.createSpreadsheetEngine(),
-                Sets.of(
-                        a1,
-                        b2
-                ),
-                SpreadsheetValueType.ANY,
-                Expression.call(
-                        Expression.namedFunction(
-                                ExpressionFunctionName.with(TEST_FILTER_CELLS_PREDICATE)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
-                        ),
-                        Expression.NO_CHILDREN
-                ),
-                this.createContext(),
-                a1
-        );
-    }
-
-    // findCells........................................................................................................
-
-    @Test
-    public void testFindCells() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
-        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-
-        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
-        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
-        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        SpreadsheetSelection.parseCell("B1")
-                                .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=-999")
-                                ),
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=1")
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2")
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=3")
-                        ),
-                        a3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=4")
-                        ),
-                        b3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=5")
-                        ),
-                        c3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=6")
-                        ),
-                        a4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=7")
-                        ),
-                        b4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=8")
-                        ),
-                        c4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=9")
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                10, // count
-                SpreadsheetValueType.ANY,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(a2).get(),
-                                        saved.cell(b2).get(),
-                                        saved.cell(c2).get(),
-                                        saved.cell(a3).get(),
-                                        saved.cell(b3).get(),
-                                        saved.cell(c3).get(),
-                                        saved.cell(a4).get(),
-                                        saved.cell(b4).get(),
-                                        saved.cell(c4).get()
-                                )
-                        ).setColumnWidths(columnWidths("A,B,C"))
-                        .setRowHeights(rowHeights("2,3,4"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-    }
-
-    @Test
-    public void testFindCellsSkipsMissingCells() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=1")
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2")
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=3")
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A1:C2"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                20, // count
-                SpreadsheetValueType.ANY,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(a2).get(),
-                                        saved.cell(b2).get(),
-                                        saved.cell(c2).get()
-                                )
-                        ).setColumnWidths(columnWidths("A,B,C"))
-                        .setRowHeights(rowHeights("2"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(2))
-        );
-    }
-
-    @Test
-    public void testFindCellsSkipsEmptyCells() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("")
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2")
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=3")
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A1:C2"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                20, // count
-                SpreadsheetValueType.ANY,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(b2).get(),
-                                        saved.cell(c2).get()
-                                )
-                        ).setColumnWidths(columnWidths("B,C"))
-                        .setRowHeights(rowHeights("2"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(2))
-        );
-    }
-
-    @Test
-    public void testFindCellsWithCount() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
-        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-
-        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
-        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
-        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        SpreadsheetSelection.parseCell("B1")
-                                .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=-999")
-                                ),
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=1")
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2")
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=3")
-                        ),
-                        a3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=4")
-                        ),
-                        b3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=5")
-                        ),
-                        c3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=6")
-                        ),
-                        a4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=7")
-                        ),
-                        b4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=8")
-                        ),
-                        c4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=9")
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                3, // count
-                SpreadsheetValueType.ANY,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(a2).get(),
-                                        saved.cell(b2).get(),
-                                        saved.cell(c2).get()
-                                )
-                        ).setColumnWidths(columnWidths("A,B,C"))
-                        .setRowHeights(rowHeights("2"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-    }
-
-    @Test
-    public void testFindCellsWithValueTypeFiltering() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
-        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-
-        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
-        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
-        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        SpreadsheetSelection.parseCell("B1")
-                                .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=-999")
-                                                .setValue(
-                                                        Optional.of(999)
-                                                )
-                                ),
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=1")
-                                        .setValue(
-                                                Optional.of(1)
-                                        )
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
-                                        .setValue(
-                                                Optional.of("Hello2")
-                                        )
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
-                                        .setValue(
-                                                Optional.of("Hello3")
-                                        )
-                        ),
-                        a3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=4")
-                                        .setValue(
-                                                Optional.of(4)
-                                        )
-                        ),
-                        b3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
-                        ),
-                        c3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=6")
-                                        .setValue(
-                                                Optional.of(6)
-                                        )
-                        ),
-                        a4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setValue(
-                                                Optional.of(7)
-                                        )
-                        ),
-                        b4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=8")
-                                        .setValue(
-                                                Optional.of(8)
-                                        )
-                        ),
-                        c4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setValue(
-                                                Optional.of(9)
-                                        )
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                10, // count
-                SpreadsheetValueType.NUMBER,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(a2).get(),
-                                        saved.cell(a3).get(),
-                                        saved.cell(b3).get(),
-                                        saved.cell(c3).get(),
-                                        saved.cell(a4).get(),
-                                        saved.cell(b4).get(),
-                                        saved.cell(c4).get()
-                                )
-                        ).setColumnWidths(columnWidths("A,B,C"))
-                        .setRowHeights(rowHeights("2,3,4"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-    }
-
-    @Test
-    public void testFindCellsWithValueTypeFilteringAndCount() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
-        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-
-        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
-        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
-        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        SpreadsheetSelection.parseCell("B1")
-                                .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=-999")
-                                                .setValue(
-                                                        Optional.of(999)
-                                                )
-                                ),
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=1")
-                                        .setValue(
-                                                Optional.of(1)
-                                        )
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
-                                        .setValue(
-                                                Optional.of("Hello2")
-                                        )
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
-                                        .setValue(
-                                                Optional.of("Hello3")
-                                        )
-                        ),
-                        a3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=4")
-                                        .setValue(
-                                                Optional.of(4)
-                                        )
-                        ),
-                        b3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
-                        ),
-                        c3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=6")
-                                        .setValue(
-                                                Optional.of(6)
-                                        )
-                        ),
-                        a4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setValue(
-                                                Optional.of(7)
-                                        )
-                        ),
-                        b4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=8")
-                                        .setValue(
-                                                Optional.of(8)
-                                        )
-                        ),
-                        c4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setValue(
-                                                Optional.of(9)
-                                        )
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                3, //count
-                SpreadsheetValueType.NUMBER,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(a2).get(),
-                                        saved.cell(a3).get(),
-                                        saved.cell(b3).get()
-                                )
-                        ).setColumnWidths(columnWidths("A,B"))
-                        .setRowHeights(rowHeights("2,3"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-    }
-
-    @Test
-    public void testFindCellsWithValueTypeFilteringAndCount2() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
-        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-
-        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
-        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
-        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        SpreadsheetSelection.parseCell("B1")
-                                .setFormula(
-                                        SpreadsheetFormula.EMPTY.setText("=-999")
-                                                .setValue(
-                                                        Optional.of(999)
-                                                )
-                                ),
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello1\"")
-                                        .setValue(
-                                                Optional.of("Hello1")
-                                        )
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello2\"")
-                                        .setValue(
-                                                Optional.of("Hello2")
-                                        )
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello3\"")
-                                        .setValue(
-                                                Optional.of("Hello3")
-                                        )
-                        ),
-                        a3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=4")
-                                        .setValue(
-                                                Optional.of(4)
-                                        )
-                        ),
-                        b3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
-                        ),
-                        c3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=6")
-                                        .setValue(
-                                                Optional.of(6)
-                                        )
-                        ),
-                        a4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setValue(
-                                                Optional.of(7)
-                                        )
-                        ),
-                        b4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=8")
-                                        .setValue(
-                                                Optional.of(8)
-                                        )
-                        ),
-                        c4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setValue(
-                                                Optional.of(9)
-                                        )
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.LRTD,
-                0, // offset
-                3, // max
-                SpreadsheetValueType.NUMBER,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(a3).get(),
-                                        saved.cell(b3).get(),
-                                        saved.cell(c3).get()
-                                )
-                        ).setColumnWidths(columnWidths("A,B,C"))
-                        .setRowHeights(rowHeights("3"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-    }
-
-    @Test
-    public void testFindCellsWithPathRlbuValueTypeFilteringAndCount2() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
-        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-
-        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
-        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
-        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=1")
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2")
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=3")
-                        ),
-                        a3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=4")
-                        ),
-                        b3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
-                        ),
-                        c3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello6\"")
-                                        .setValue(
-                                                Optional.of("Hello6")
-                                        )
-                        ),
-                        a4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setValue(
-                                                Optional.of(7)
-                                        )
-                        ),
-                        b4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello8\"")
-                                        .setValue(
-                                                Optional.of("Hello8")
-                                        )
-                        ),
-                        c4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setValue(
-                                                Optional.of(9)
-                                        )
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.RLBU,
-                0, // offset
-                3, // count
-                SpreadsheetValueType.NUMBER,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(c4).get(),
-                                        saved.cell(a4).get(),
-                                        saved.cell(b3).get()
-                                )
-                        ).setColumnWidths(columnWidths("A,B,C"))
-                        .setRowHeights(rowHeights("3,4"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-    }
-
-    @Test
-    public void testFindCellsWithPathRlbuValueTypeFilteringOffsetAndCount() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
-
-        final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("a3");
-        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("b3");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-
-        final SpreadsheetCellReference a4 = SpreadsheetSelection.parseCell("a4");
-        final SpreadsheetCellReference b4 = SpreadsheetSelection.parseCell("b4");
-        final SpreadsheetCellReference c4 = SpreadsheetSelection.parseCell("c4");
-
-        final SpreadsheetDelta saved = engine.saveCells(
-                Sets.of(
-                        a2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=1")
-                        ),
-                        b2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=2")
-                        ),
-                        c2.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=3")
-                        ),
-                        a3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=4")
-                        ),
-                        b3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=5")
-                                        .setValue(
-                                                Optional.of(5)
-                                        )
-                        ),
-                        c3.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello6\"")
-                                        .setValue(
-                                                Optional.of("Hello6")
-                                        )
-                        ),
-                        a4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=7")
-                                        .setValue(
-                                                Optional.of(7)
-                                        )
-                        ),
-                        b4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=\"Hello8\"")
-                                        .setValue(
-                                                Optional.of("Hello8")
-                                        )
-                        ),
-                        c4.setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=9")
-                                        .setValue(
-                                                Optional.of(9)
-                                        )
-                        )
-                ),
-                context
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.RLBU,
-                0, // offset
-                3, // count
-                SpreadsheetValueType.NUMBER,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(c4).get(), // 0
-                                        saved.cell(a4).get(), // 1
-                                        saved.cell(b3).get() // 2
-                                )
-                        ).setColumnWidths(columnWidths("A,B,C"))
-                        .setRowHeights(rowHeights("3,4"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.RLBU,
-                1, // offset
-                2, // count
-                SpreadsheetValueType.NUMBER,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(a4).get(), // 1
-                                        saved.cell(b3).get() // 2
-                                )
-                        ).setColumnWidths(columnWidths("A,B"))
-                        .setRowHeights(rowHeights("3,4"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.RLBU,
-                2, // offset
-                1, // count
-                SpreadsheetValueType.NUMBER,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        saved.cell(b3).get() // 2
-                                )
-                        ).setColumnWidths(columnWidths("B"))
-                        .setRowHeights(rowHeights("3"))
-                        .setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
-        );
-
-        this.findCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange("A2:C4"),
-                SpreadsheetCellRangeReferencePath.RLBU,
-                3, // offset
-                0, // count
-                SpreadsheetValueType.NUMBER,
-                Expression.value(true), // match everything
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setColumnCount(OptionalInt.of(3))
-                        .setRowCount(OptionalInt.of(4))
         );
     }
 
