@@ -132,22 +132,22 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     // labels...........................................................................................................
 
     @Test
-    default void testLabelsNullSpreadsheetCellReferenceFails() {
+    default void testFindLabelsWithReferenceWithNullSpreadsheetExpressionReferenceFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore()
-                        .labels(null)
+                        .findLabelsWithReference(null)
         );
     }
 
     @Test
-    default void testLabelsWithUnknownCellReference() {
+    default void testFindLabelsWithReferenceWithUnknownCell() {
         final S store = this.createStore();
-        this.labelsAndCheck(store, SpreadsheetSelection.parseCell("Z99"));
+        this.findLabelsWithReferenceAndCheck(store, SpreadsheetSelection.parseCell("Z99"));
     }
 
     @Test
-    default void testLabelsWithCellReference() {
+    default void testFindLabelsWithReferenceWithCell() {
         final S store = this.createStore();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LabelZ99");
@@ -156,7 +156,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         store.save(SpreadsheetLabelMapping.with(label, reference));
         store.save(SpreadsheetLabelMapping.with(SpreadsheetSelection.labelName("DifferentLabel"), SpreadsheetSelection.A1));
 
-        this.labelsAndCheck(
+        this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
                 label.setLabelMappingReference(reference)
@@ -164,7 +164,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     }
 
     @Test
-    default void testLabelsWithCellReference2() {
+    default void testFindLabelsWithReferenceWithCell2() {
         final S store = this.createStore();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("LabelZ991");
@@ -177,7 +177,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         final SpreadsheetLabelMapping mapping2 = store.save(SpreadsheetLabelMapping.with(label2, reference));
         final SpreadsheetLabelMapping mapping3 = store.save(SpreadsheetLabelMapping.with(label3, reference));
 
-        this.labelsAndCheck(
+        this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
                 mapping1,
@@ -187,7 +187,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     }
 
     @Test
-    default void testLabelsWithCellIndirectReference() {
+    default void testFindLabelsWithReferenceWithCellIndirectReference() {
         final S store = this.createStore();
 
         final SpreadsheetLabelName indirect = SpreadsheetSelection.labelName("IndirectLabelZ99");
@@ -197,7 +197,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         final SpreadsheetLabelMapping mapping1 = store.save(SpreadsheetLabelMapping.with(indirect, reference));
         final SpreadsheetLabelMapping mapping2 = store.save(SpreadsheetLabelMapping.with(label, indirect));
 
-        this.labelsAndCheck(
+        this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
                 mapping1,
@@ -205,22 +205,22 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         );
     }
 
-    default void labelsAndCheck(final SpreadsheetLabelStore store,
-                                final SpreadsheetExpressionReference reference,
-                                final SpreadsheetLabelMapping... labels) {
-        this.labelsAndCheck(
+    default void findLabelsWithReferenceAndCheck(final SpreadsheetLabelStore store,
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final SpreadsheetLabelMapping... labels) {
+        this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
                 Sets.of(labels)
         );
     }
 
-    default void labelsAndCheck(final SpreadsheetLabelStore store,
-                                final SpreadsheetExpressionReference reference,
-                                final Set<SpreadsheetLabelMapping> labels) {
+    default void findLabelsWithReferenceAndCheck(final SpreadsheetLabelStore store,
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final Set<SpreadsheetLabelMapping> labels) {
         this.checkEquals(
                 labels,
-                store.labels(reference),
+                store.findLabelsWithReference(reference),
                 () -> "labels for " + reference
         );
     }

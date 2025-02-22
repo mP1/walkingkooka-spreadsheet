@@ -155,20 +155,20 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     // labels..........................................................................................................
 
     @Test
-    public void testLabelsNoneWithCell() {
-        this.labelsNoneAndCheck(
+    public void testFindLabelsWithReferenceWhereNoneWithCell() {
+        this.findLabelsWithReferenceWhereNoneAndCheck(
                 SpreadsheetSelection.parseCellRange("a3")
         );
     }
 
     @Test
-    public void testLabelsNoneWithCellRange() {
-        this.labelsNoneAndCheck(
+    public void testFindLabelsWithReferenceWhereNoneWithCellRange() {
+        this.findLabelsWithReferenceWhereNoneAndCheck(
                 SpreadsheetSelection.parseCellRange("a3:a4")
         );
     }
 
-    private void labelsNoneAndCheck(final SpreadsheetExpressionReference selection) {
+    private void findLabelsWithReferenceWhereNoneAndCheck(final SpreadsheetExpressionReference selection) {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label1 = this.label1();
@@ -180,27 +180,27 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         store.save(label1.setLabelMappingReference(a1));
         store.save(label2.setLabelMappingReference(a2));
 
-        this.labelsAndCheck(
+        this.findLabelsWithReferenceAndCheck(
                 store,
                 selection
         );
     }
 
     @Test
-    public void testLabelsSomeWithCell() {
-        this.labelsSomeAndCheck(
+    public void testFindLabelsWithReferenceWhereSomeWithCell() {
+        this.findLabelsWithReferenceWhereSomeAndCheck(
                 this.a2()
         );
     }
 
     @Test
-    public void testLabelsSomeWithCellRange() {
-        this.labelsSomeAndCheck(
+    public void testFindLabelsWithReferenceWhereSomeWithCellRange() {
+        this.findLabelsWithReferenceWhereSomeAndCheck(
                 SpreadsheetSelection.parseCellRange("a2:a3")
         );
     }
 
-    private void labelsSomeAndCheck(final SpreadsheetExpressionReference selection) {
+    private void findLabelsWithReferenceWhereSomeAndCheck(final SpreadsheetExpressionReference selection) {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label1 = this.label1();
@@ -212,7 +212,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         store.save(label1.setLabelMappingReference(a1));
         final SpreadsheetLabelMapping mapping = store.save(label2.setLabelMappingReference(a2));
 
-        this.labelsAndCheck(
+        this.findLabelsWithReferenceAndCheck(
                 store,
                 selection,
                 mapping
@@ -220,20 +220,20 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     @Test
-    public void testLabelsSomeWithCell2() {
-        this.labelsSomeAndCheck(
+    public void testFindLabelsWithReferenceWhereSomeWithCell2() {
+        this.findLabelsWithReferenceWhereSomeAndCheck(
                 this.a2()
         );
     }
 
     @Test
-    public void testLabelsSomeWithCellRange2() {
-        this.labelsSomeAndCheck2(
+    public void testFindLabelsWithReferenceWhereSomeWithCellRange2() {
+        this.findLabelsWithReferenceWhereSomeAndCheck2(
                 SpreadsheetSelection.parseCellRange("a2:a3")
         );
     }
 
-    private void labelsSomeAndCheck2(final SpreadsheetExpressionReference selection) {
+    private void findLabelsWithReferenceWhereSomeAndCheck2(final SpreadsheetExpressionReference selection) {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label1 = this.label1();
@@ -245,7 +245,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         store.save(label1.setLabelMappingReference(a1));
         final SpreadsheetLabelMapping mapping = store.save(label2.setLabelMappingReference(a2));
 
-        this.labelsAndCheck(
+        this.findLabelsWithReferenceAndCheck(
                 store,
                 selection,
                 mapping

@@ -130,17 +130,16 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     public void testValuesWindow() {
     }
 
-    @Override
-    public void testLabelsWithCellReference() {
+    public void testFindLabelsWithReferenceWithCell() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LabelZ99");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(reference);
 
-        this.labelsAndCheck(
+        this.findLabelsWithReferenceAndCheck(
                 ReadOnlySpreadsheetLabelStore.with(
                         new FakeSpreadsheetLabelStore() {
                             @Override
-                            public Set<SpreadsheetLabelMapping> labels(final SpreadsheetExpressionReference r) {
+                            public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference r) {
                                 checkEquals(reference, r);
                                 return Sets.of(mapping);
                             }
@@ -150,14 +149,12 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         );
     }
 
-    @Override
     @SuppressWarnings("unused")
-    public void testLabelsWithCellReference2() {
+    public void testFindLabelsWithReferenceWithCell2() {
     }
 
-    @Override
     @SuppressWarnings("unused")
-    public void testLabelsWithCellIndirectReference() {
+    public void testFindLabelsWithReferenceWithCellIndirectReference() {
     }
 
     @Test

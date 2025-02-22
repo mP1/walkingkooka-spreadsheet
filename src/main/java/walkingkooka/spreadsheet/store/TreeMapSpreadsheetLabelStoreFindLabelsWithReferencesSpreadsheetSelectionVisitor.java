@@ -31,11 +31,11 @@ import java.util.Set;
 /**
  * A {@link SpreadsheetSelectionVisitor} that visits all mappings, and aims to return only {@link SpreadsheetLabelName} that map to the given {@link SpreadsheetCellReference}.
  */
-final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Set<SpreadsheetLabelMapping> gather(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
                                                final SpreadsheetExpressionReference selection) {
-        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(
+        final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
                 mappings,
                 selection
         );
@@ -47,8 +47,8 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor extend
     }
 
     // VisibleForTesting
-    TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
-                                                                  final SpreadsheetExpressionReference selection) {
+    TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
+                                                                                    final SpreadsheetExpressionReference selection) {
         super();
 
         this.filter = selection;

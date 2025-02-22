@@ -217,10 +217,10 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelMapping> labels(final SpreadsheetExpressionReference selection) {
+    public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference selection) {
         Objects.requireNonNull(selection, "selection");
 
-        return TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor.gather(
+        return TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor.gather(
                 this.mappings,
                 selection
         );

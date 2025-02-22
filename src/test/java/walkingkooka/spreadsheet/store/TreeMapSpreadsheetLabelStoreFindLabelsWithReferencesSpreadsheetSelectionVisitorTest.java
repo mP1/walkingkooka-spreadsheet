@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
 import java.util.Map;
 
-public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor> {
+public final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor> {
 
     @Test
     public void testToString() {
@@ -43,7 +43,7 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor
                 label2, label2.setLabelMappingReference(a1)
         );
 
-        final TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(
+        final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
                 mappings,
                 a1
         );
@@ -58,8 +58,8 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor
     }
 
     @Override
-    public TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor createVisitor() {
-        return new TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor(null, null);
+    public TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor createVisitor() {
+        return new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(null, null);
     }
 
     @Override
@@ -73,7 +73,7 @@ public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor
     }
 
     @Override
-    public Class<TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor> type() {
-        return TreeMapSpreadsheetLabelStoreLabelsSpreadsheetSelectionVisitor.class;
+    public Class<TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor> type() {
+        return TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor.class;
     }
 }

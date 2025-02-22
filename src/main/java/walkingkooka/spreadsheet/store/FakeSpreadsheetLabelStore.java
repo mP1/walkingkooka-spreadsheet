@@ -40,7 +40,7 @@ public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, S
     }
 
     @Override
-    public Set<SpreadsheetLabelMapping> labels(final SpreadsheetExpressionReference reference) {
+    public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 }
