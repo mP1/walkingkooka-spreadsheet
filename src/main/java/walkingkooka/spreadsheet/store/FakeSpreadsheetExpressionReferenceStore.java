@@ -67,7 +67,9 @@ public class FakeSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
     }
 
     @Override
-    public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell) {
+    public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell,
+                                         final int offset,
+                                         final int count) {
         Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();

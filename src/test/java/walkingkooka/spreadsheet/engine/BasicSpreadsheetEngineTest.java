@@ -18794,7 +18794,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 final SpreadsheetCellReference... expected) {
         this.checkEquals(
                 Sets.of(expected),
-                store.findReferencesWithCell(cell),
+                store.findReferencesWithCell(
+                        cell,
+                        0, // offset
+                        Integer.MAX_VALUE // count
+                ),
                 () -> "findReferences with " + cell
         );
     }

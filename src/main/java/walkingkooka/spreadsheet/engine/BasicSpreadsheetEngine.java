@@ -95,6 +95,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     final static int FIND_LABELS_WITH_REFERENCE_COUNT = Integer.MAX_VALUE;
 
     /**
+     * A safe maximum to limit finding of references when satisfying {@link SpreadsheetDeltaProperties#REFERENCES}.
+     */
+    final static int FIND_REFERENCES_COUNT = Integer.MAX_VALUE;
+
+    /**
      * Private ctor.
      */
     private BasicSpreadsheetEngine() {
@@ -703,7 +708,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferenceStore.loadReferences(SpreadsheetCellReference, int offset, int count)
             for (final SpreadsheetCellReference reference : repository.cellReferences()
-                    .findReferencesWithCell(cell)) {
+                    .findReferencesWithCell(
+                            cell,
+                            0, // offset
+                            FIND_REFERENCES_COUNT // count
+                    )) {
                 if(skipCount < offset) {
                     skipCount++;
                     continue;

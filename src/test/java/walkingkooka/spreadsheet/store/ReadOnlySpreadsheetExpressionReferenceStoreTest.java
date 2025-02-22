@@ -43,10 +43,21 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         final ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference> readOnly = ReadOnlySpreadsheetExpressionReferenceStore.with(store);
 
         this.loadAndCheck(readOnly, a1, b1); // a1 --> b1
-        this.findReferencesWithCellAndCheck(readOnly, b1, a1); // b1 --> a1
+        this.findReferencesWithCellAndCheck(
+                readOnly,
+                b1,
+                0, // offset
+                2, // count
+                a1
+        ); // b1 --> a1
 
         this.loadAndCheck(readOnly, b1); // b1 -> nothing
-        this.findReferencesWithCellAndCheck(readOnly, a1); // a1 --> nothing
+        this.findReferencesWithCellAndCheck(
+                readOnly,
+                a1,
+                0, // offset
+                1 // count
+        ); // a1 --> nothing
     }
 
     @Override

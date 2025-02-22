@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -277,12 +278,23 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     private final Watchers<ReferenceAndSpreadsheetCellReference<T>> removeCellWatchers = Watchers.create();
 
     @Override
-    public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell) {
+    public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell,
+                                         final int offset,
+                                         final int count) {
         Objects.requireNonNull(cell, "cell");
+        if (offset < 0) {
+            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Invalid count " + count + " < 0");
+        }
 
         final SortedSet<T> references = this.cellToReferences.get(cell);
         return null != references ?
-                SortedSets.immutable(references) :
+                references.stream()
+                        .skip(offset)
+                        .limit(count)
+                        .collect(ImmutableSortedSet.collector()) :
                 SortedSets.empty();
     }
 
