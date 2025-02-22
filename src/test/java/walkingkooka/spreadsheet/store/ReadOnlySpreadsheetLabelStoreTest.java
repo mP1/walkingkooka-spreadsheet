@@ -130,6 +130,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     public void testValuesWindow() {
     }
 
+    @Override
     public void testFindLabelsWithReferenceWithCell() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LabelZ99");
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z99");
@@ -149,10 +150,12 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         );
     }
 
+    @Override
     @SuppressWarnings("unused")
     public void testFindLabelsWithReferenceWithCell2() {
     }
 
+    @Override
     @SuppressWarnings("unused")
     public void testFindLabelsWithReferenceWithCellIndirectReference() {
     }
