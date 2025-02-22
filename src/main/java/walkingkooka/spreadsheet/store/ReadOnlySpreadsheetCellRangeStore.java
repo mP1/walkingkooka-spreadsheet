@@ -72,14 +72,21 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<SpreadsheetCellRangeReference> ids(final int from, final int count) {
-        return store.ids(from, count);
+    public Set<SpreadsheetCellRangeReference> ids(final int offset,
+                                                  final int count) {
+        return store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<List<V>> values(final int from,
+    public List<List<V>> values(final int offset,
                                 final int count) {
-        return store.values(from, count);
+        return store.values(
+                offset,
+                count
+        );
     }
 
     @Override

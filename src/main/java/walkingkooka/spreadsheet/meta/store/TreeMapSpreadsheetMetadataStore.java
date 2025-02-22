@@ -154,15 +154,21 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     }
 
     @Override
-    public Set<SpreadsheetId> ids(final int from,
+    public Set<SpreadsheetId> ids(final int offset,
                                   final int count) {
-        return this.store.ids(from, count);
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<SpreadsheetMetadata> values(final int from,
+    public List<SpreadsheetMetadata> values(final int offset,
                                             final int count) {
-        return this.store.values(from, count);
+        return this.store.values(
+                offset,
+                count
+        );
     }
 
     @Override

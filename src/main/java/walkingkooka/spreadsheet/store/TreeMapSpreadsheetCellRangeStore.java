@@ -320,9 +320,9 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
     }
 
     @Override
-    public Set<SpreadsheetCellRangeReference> ids(final int from,
+    public Set<SpreadsheetCellRangeReference> ids(final int offset,
                                                   final int count) {
-        Store.checkOffsetAndCount(from, count);
+        Store.checkOffsetAndCount(offset, count);
 
         final Set<SpreadsheetCellRangeReference> ids = Sets.ordered();
         int i = 0;
@@ -330,7 +330,7 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
         Exit:
         for (final TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
             for (final SpreadsheetCellRangeReference range : entry.ranges()) {
-                if (i >= from) {
+                if (i >= offset) {
                     ids.add(range);
 
                     if (ids.size() == count) {

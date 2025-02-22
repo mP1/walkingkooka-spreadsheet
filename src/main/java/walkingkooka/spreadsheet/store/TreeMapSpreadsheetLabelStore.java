@@ -107,13 +107,13 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelName> ids(final int from,
+    public Set<SpreadsheetLabelName> ids(final int offset,
                                          final int count) {
-        Store.checkOffsetAndCount(from, count);
+        Store.checkOffsetAndCount(offset, count);
 
         return this.mappings.keySet()
                 .stream()
-                .skip(from)
+                .skip(offset)
                 .limit(count)
                 .collect(Collectors.toCollection(Sets::ordered));
     }
