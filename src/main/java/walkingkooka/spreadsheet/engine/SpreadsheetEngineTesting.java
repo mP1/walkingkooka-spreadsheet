@@ -542,6 +542,31 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                 null));
     }
 
+    default void saveCellAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetCell save,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.saveCell(save, context),
+                () -> "saveCell " + save
+        );
+    }
+
+    default void saveCellsAndCheck(final SpreadsheetEngine engine,
+                                   final Set<SpreadsheetCell> save,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.saveCells(
+                        save,
+                        context
+                ),
+                () -> "saveCells " + save
+        );
+    }
+
     // deleteCells......................................................................................................
 
     @Test
@@ -567,211 +592,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    // saveColumn.......................................................................................................
-
-    @Test
-    default void testSaveColumnNullColumnFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .saveColumn(
-                                null,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testSaveColumnNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .saveColumn(
-                                SpreadsheetColumn.with(COLUMN),
-                                null
-                        )
-        );
-    }
-
-    // deleteColumns....................................................................................................
-
-    @Test
-    default void testDeleteColumnsNullColumnFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .deleteColumns(
-                                null,
-                                1,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testDeleteColumnsNegativeCountFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSpreadsheetEngine()
-                        .deleteColumns(
-                                COLUMN,
-                                -1,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testDeleteColumnsNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteColumns(COLUMN, 1, null));
-    }
-
-    // saveRow...........................................................................................................
-
-    @Test
-    default void testSaveRowNullRowFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .saveRow(
-                                null,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testSaveRowNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .saveRow(
-                                ROW.row(),
-                                null
-                        )
-        );
-    }
-
-    // deleteRows.......................................................................................................
-
-    @Test
-    default void testDeleteRowsNullRowFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .deleteRows(
-                                null,
-                                1,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testDeleteRowsNegativeCountFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSpreadsheetEngine()
-                        .deleteRows(
-                                ROW,
-                                -1,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testDeleteRowsNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .deleteRows(
-                                ROW,
-                                1,
-                                null
-                        )
-        );
-    }
-
-    // insertColumns....................................................................................................
-
-    @Test
-    default void testInsertColumnsNullColumnFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .insertColumns(
-                                null,
-                                1,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testInsertColumnsNegativeCountFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSpreadsheetEngine()
-                        .insertColumns(
-                                COLUMN,
-                                -1,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testInsertColumnsNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .insertColumns(
-                                COLUMN,
-                                1,
-                                null
-                        )
-        );
-    }
-
-    // insertRows.......................................................................................................
-
-    @Test
-    default void testInsertRowsNullRowFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .insertRows(
-                                null,
-                                1,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testInsertRowsNegativeCountFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSpreadsheetEngine()
-                        .insertRows(
-                                ROW,
-                                -1,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testInsertRowsNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .insertRows(
-                                ROW,
-                                1,
-                                null
-                        )
+    default void deleteCellAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetSelection delete,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.deleteCells(
+                        delete,
+                        context
+                ),
+                () -> "deleteCell " + delete
         );
     }
 
@@ -825,9 +656,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> this.createSpreadsheetEngine()
                         .fillCells(
                                 Lists.of(spreadsheetCell),
-                range,
-                null,
-                this.createContext()
+                                range,
+                                null,
+                                this.createContext()
                         )
         );
     }
@@ -977,655 +808,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         checkMessage(
                 thrown,
                 "Several cells [B2 1, E5 4] are outside the range C3:D4"
-        );
-    }
-
-    // saveLabel........................................................................................................
-
-    @Test
-    default void testSaveLabelNullMappingFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .saveLabel(
-                                null,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testSaveLabelNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .saveLabel(
-                                SpreadsheetLabelMapping.with(
-                                        SpreadsheetSelection.labelName("LABEL123"),
-                                        SpreadsheetSelection.A1
-                                ),
-                                null
-                        )
-        );
-    }
-
-    default void saveLabelAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetLabelMapping label,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetCell... cells) {
-        this.saveLabelAndCheck(
-                engine,
-                label,
-                context,
-                Sets.of(cells)
-        );
-    }
-
-    default void saveLabelAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetLabelMapping label,
-                                   final SpreadsheetEngineContext context,
-                                   final Set<SpreadsheetCell> cells) {
-        final SpreadsheetDelta result = engine.saveLabel(
-                label,
-                context
-        );
-
-        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(cells)
-                .setColumnCount(
-                        OptionalInt.of(
-                                engine.columnCount(context)
-                        )
-                ).setRowCount(
-                        OptionalInt.of(
-                                engine.rowCount(context)
-                        )
-                ).setLabels(
-                        Sets.of(label)
-                );
-        this.checkEquals(
-                expected,
-                result,
-                () -> "saveLabel " + label
-        );
-    }
-
-    default void saveLabelAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetLabelMapping label,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta delta) {
-        this.checkEquals(delta,
-                engine.saveLabel(label, context),
-                () -> "saveLabel " + label);
-    }
-
-    // deleteLabel......................................................................................................
-
-    @Test
-    default void testDeleteLabelNullMappingFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .deleteLabel(
-                                null,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testDeleteLabelNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .deleteLabel(
-                                SpreadsheetSelection.labelName("label"),
-                                null
-                        )
-        );
-    }
-
-    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
-                                     final SpreadsheetLabelName label,
-                                     final SpreadsheetEngineContext context,
-                                     final SpreadsheetCell... cells) {
-        this.deleteLabelAndCheck(
-                engine,
-                label,
-                context,
-                Sets.of(cells)
-        );
-    }
-
-    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
-                                     final SpreadsheetLabelName label,
-                                     final SpreadsheetEngineContext context,
-                                     final Set<SpreadsheetCell> cells) {
-        final SpreadsheetDelta result = engine.deleteLabel(
-                label,
-                context
-        );
-
-
-        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(cells)
-                .setDeletedLabels(
-                        Sets.of(label)
-                )
-                .setColumnCount(
-                        OptionalInt.of(
-                                engine.columnCount(context)
-                        )
-                ).setRowCount(
-                        OptionalInt.of(
-                                engine.rowCount(context)
-                        )
-                );
-        this.checkEquals(
-                expected,
-                result,
-                () -> "deleteLabel " + label
-        );
-    }
-
-    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
-                                     final SpreadsheetLabelName label,
-                                     final SpreadsheetEngineContext context,
-                                     final SpreadsheetDelta delta) {
-        this.checkEquals(
-                delta,
-                engine.deleteLabel(label, context),
-                () -> "deleteLabel " + label
-        );
-    }
-    
-    // loadLabel........................................................................................................
-
-    @Test
-    default void testLoadLabelNullMappingFails() {
-        assertThrows(
-                NullPointerException.class, 
-                () -> this.createSpreadsheetEngine()
-                        .loadLabel(
-                                null, 
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    default void loadLabelAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetLabelName label,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetLabelMapping mapping) {
-        this.loadLabelAndCheck(
-                engine,
-                label,
-                context,
-                SpreadsheetDelta.EMPTY.setLabels(
-                        Sets.of(mapping)
-                )
-        );
-    }
-
-    default void loadLabelAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetLabelName label,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta expected) {
-        this.checkEquals(
-                expected,
-                engine.loadLabel(label, context),
-                () -> "loadLabel " + label
-        );
-    }
-
-    default void loadLabelAndFailCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetLabelName label,
-                                       final SpreadsheetEngineContext context) {
-        this.checkEquals(
-                SpreadsheetDelta.EMPTY,
-                engine.loadLabel(label, context),
-                () -> "loadLabel " + label
-        );
-    }
-
-    // columnCount......................................................................................................
-
-    @Test
-    default void testColumnCountNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .columnCount(null)
-        );
-    }
-
-    default void columnCountAndCheck(final SpreadsheetEngine engine,
-                                     final SpreadsheetEngineContext context,
-                                     final int expected) {
-        this.checkEquals(
-                expected,
-                engine.columnCount(context),
-                () -> "columnCount " + engine
-        );
-    }
-
-    // rowCount......................................................................................................
-
-    @Test
-    default void testRowCountNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .rowCount(null)
-        );
-    }
-
-    default void rowCountAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetEngineContext context,
-                                  final int expected) {
-        this.checkEquals(
-                expected,
-                engine.rowCount(context),
-                () -> "rowCount " + engine
-        );
-    }
-
-    // navigate.........................................................................................................
-
-    @Test
-    default void testNavigateNullSelectionFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .navigate(
-                                null,
-                                this.createContext()
-                        )
-        );
-    }
-
-    @Test
-    default void testNavigateNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .navigate(
-                                SpreadsheetSelection.A1
-                                        .viewportRectangle(100, 500)
-                                        .viewport(),
-                                null
-                        )
-        );
-    }
-
-    E createSpreadsheetEngine();
-
-    SpreadsheetEngineContext createContext();
-
-    // loadLabel........................................................................................................
-
-    @Test
-    default void testLoadLabelWithNullNameFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .loadLabel(
-                                null,
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testLoadLabelWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .loadLabel(
-                                SpreadsheetSelection.labelName("Label123"),
-                                null
-                        )
-        );
-    }
-
-    default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
-                                   final SpreadsheetLabelName label,
-                                   final SpreadsheetExpressionReference reference) {
-        this.loadLabelAndCheck(labelStore,
-                label,
-                SpreadsheetLabelMapping.with(label, reference));
-    }
-
-    default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
-                                   final SpreadsheetLabelName label,
-                                   final SpreadsheetLabelMapping mapping) {
-        this.checkEquals(Optional.of(mapping),
-                labelStore.load(label),
-                () -> "label " + label + " loaded");
-    }
-
-    default void loadLabelFailCheck(final SpreadsheetLabelStore labelStore,
-                                    final SpreadsheetLabelName label) {
-        this.checkEquals(Optional.empty(),
-                labelStore.load(label),
-                "label loaded failed");
-    }
-
-    // findLabelsWithReference..........................................................................................
-
-    @Test
-    default void testFindLabelsWithReferenceWithNullReferenceFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .findLabelsWithReference(
-                                null,
-                                0, // offset
-                                0, // count,
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testFindLabelsWithReferenceWithNegativeOffsetFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSpreadsheetEngine()
-                        .findLabelsWithReference(
-                                SpreadsheetSelection.A1,
-                                -1, // offset
-                                0, // count,
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testFindLabelsWithReferenceWithNegativeCountFails() {
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> this.createSpreadsheetEngine()
-                        .findLabelsWithReference(
-                                SpreadsheetSelection.A1,
-                                0, // offset
-                                -1, // count,
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testFindLabelsWithReferenceWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .findLabelsWithReference(
-                                SpreadsheetSelection.A1,
-                                0, // offset
-                                0, // count,
-                                null
-                        )
-        );
-    }
-
-    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
-                                                 final SpreadsheetExpressionReference reference,
-                                                 final int offset,
-                                                 final int count,
-                                                 final SpreadsheetEngineContext context,
-                                                 final SpreadsheetLabelMapping... expected) {
-        this.findLabelsWithReferenceAndCheck(
-                engine,
-                reference,
-                offset,
-                count,
-                context,
-                Sets.of(expected)
-        );
-    }
-
-    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
-                                                 final SpreadsheetExpressionReference reference,
-                                                 final int offset,
-                                                 final int count,
-                                                 final SpreadsheetEngineContext context,
-                                                 final Set<SpreadsheetLabelMapping> expected) {
-        this.findLabelsWithReferenceAndCheck(
-                engine,
-                reference,
-                offset,
-                count,
-                context,
-                SpreadsheetDelta.EMPTY.setLabels(expected)
-        );
-    }
-
-    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
-                                                 final SpreadsheetExpressionReference reference,
-                                                 final int offset,
-                                                 final int count,
-                                                 final SpreadsheetEngineContext context,
-                                                 final SpreadsheetDelta expected) {
-        this.checkEquals(
-                expected,
-                engine.findLabelsWithReference(
-                        reference,
-                        offset,
-                        count,
-                        context
-                ),
-                () -> "findLabelsWithReference " + reference + " offset=" + offset + " count=" + count
-        );
-    }
-
-    // saveCell.........................................................................................................
-
-    default void saveCellAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetCell save,
-                                  final SpreadsheetEngineContext context,
-                                  final SpreadsheetDelta delta) {
-        checkEquals(
-                delta,
-                engine.saveCell(save, context),
-                () -> "saveCell " + save
-        );
-    }
-
-    default void saveCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Set<SpreadsheetCell> save,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta delta) {
-        checkEquals(
-                delta,
-                engine.saveCells(save, context),
-                () -> "saveCells " + save
-        );
-    }
-
-    default void deleteCellAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetSelection delete,
-                                    final SpreadsheetEngineContext context,
-                                    final SpreadsheetDelta delta) {
-        checkEquals(
-                delta,
-                engine.deleteCells(delete, context),
-                () -> "deleteCell " + delete
-        );
-    }
-
-    default void countAndCheck(final Store<?, ?> store, final int count) {
-        this.checkEquals(count,
-                store.count(),
-                "record count in " + store);
-    }
-
-    default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetColumnReference column,
-                                       final int count,
-                                       final SpreadsheetEngineContext context,
-                                       final SpreadsheetCell... updated) {
-        final SpreadsheetDelta result = engine.deleteColumns(
-                column,
-                count,
-                context
-        );
-
-        this.checkEquals(
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(updated)
-                        ).setColumnCount(
-                                OptionalInt.of(
-                                        engine.columnCount(context)
-                                )
-                        )
-                        .setRowCount(
-                                OptionalInt.of(
-                                        engine.rowCount(context)
-                                )
-                        ),
-                result,
-                () -> "deleteColumns column: " + column + " count: " + count
-        );
-    }
-
-    default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetColumnReference column,
-                                       final int count,
-                                       final SpreadsheetEngineContext context,
-                                       final SpreadsheetDelta delta) {
-        checkEquals(
-                delta,
-                engine.deleteColumns(column, count, context),
-                () -> "deleteColumns column: " + column + " count: " + count
-        );
-    }
-
-    default void deleteRowsAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetRowReference row,
-                                    final int count,
-                                    final SpreadsheetEngineContext context,
-                                    final SpreadsheetCell... updated) {
-        final SpreadsheetDelta result = engine.deleteRows(row, count, context);
-
-        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(updated)
-
-                ).setColumnCount(
-                        OptionalInt.of(
-                                engine.columnCount(context)
-                        )
-                )
-                .setRowCount(
-                        OptionalInt.of(
-                                engine.rowCount(context)
-                        )
-                );
-        this.checkEquals(
-                expected,
-                result,
-                () -> "deleteRows row: " + row + " count: " + count
-        );
-    }
-
-    default void deleteRowsAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetRowReference row,
-                                    final int count,
-                                    final SpreadsheetEngineContext context,
-                                    final SpreadsheetDelta delta) {
-        checkEquals(
-                delta,
-                engine.deleteRows(row, count, context),
-                () -> "deleteRows row: " + row + " count: " + count
-        );
-    }
-
-    default void insertColumnsAndCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetColumnReference column,
-                                       final int count,
-                                       final SpreadsheetEngineContext context,
-                                       final SpreadsheetCell... updated) {
-        final SpreadsheetDelta result = engine.insertColumns(
-                column,
-                count,
-                context
-        );
-
-        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(updated)
-                ).setColumnCount(
-                        OptionalInt.of(
-                                engine.columnCount(context)
-                        )
-                )
-                .setRowCount(
-                        OptionalInt.of(
-                                engine.rowCount(context)
-                        )
-                );
-
-        this.checkEquals(
-                expected,
-                result,
-                () -> "insertColumns column: " + column + " count: " + count
-        );
-    }
-
-    default void insertColumnsAndCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetColumnReference column,
-                                       final int count,
-                                       final SpreadsheetEngineContext context,
-                                       final SpreadsheetDelta delta) {
-        checkEquals(
-                delta,
-                engine.insertColumns(column, count, context),
-                () -> "insertColumns column: " + column + " count: " + count
-        );
-    }
-
-    default void insertRowsAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetRowReference row,
-                                    final int count,
-                                    final SpreadsheetEngineContext context,
-                                    final SpreadsheetCell... updated) {
-        final SpreadsheetDelta result = engine.insertRows(
-                row,
-                count,
-                context
-        );
-
-        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(updated)
-                ).setColumnCount(
-                        OptionalInt.of(
-                                engine.columnCount(context)
-                        )
-                )
-                .setRowCount(
-                        OptionalInt.of(
-                                engine.rowCount(context)
-                        )
-                );
-
-        this.checkEquals(
-                expected,
-                result,
-                () -> "insertRows row: " + row + " count: " + count
-        );
-    }
-
-    default void insertRowsAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetRowReference row,
-                                    final int count,
-                                    final SpreadsheetEngineContext context,
-                                    final SpreadsheetDelta delta) {
-        checkEquals(
-                delta,
-                engine.insertRows(row, count, context),
-                () -> "insertRows row: " + row + " count: " + count
         );
     }
 
@@ -1953,98 +1135,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    // sortCells........................................................................................................
-
-    @Test
-    default void testSortCellsWithNullCellRangeFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .sortCells(
-                                null,
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList("1=string"),
-                                Sets.empty(), // deltaProperties
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testSortCellsWithNullComparatorsFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .sortCells(
-                                SpreadsheetSelection.A1.toCellRange(),
-                                null,
-                                Sets.empty(), // deltaProperties
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testSortCellsWithNullDeltaPropertiesFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .sortCells(
-                                SpreadsheetSelection.A1.toCellRange(),
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList("1=string"),
-                                null, // deltaProperties
-                                SpreadsheetEngineContexts.fake()
-                        )
-        );
-    }
-
-    @Test
-    default void testSortCellsWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine()
-                        .sortCells(
-                                SpreadsheetSelection.A1.toCellRange(),
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList("1=string"),
-                                Sets.empty(), // deltaProperties
-                                null
-                        )
-        );
-    }
-
-    default void sortCellsAndCheck(final SpreadsheetEngine engine,
-                                   final String cellRange,
-                                   final String comparators,
-                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta expected) {
-        this.sortCellsAndCheck(
-                engine,
-                SpreadsheetSelection.parseCellRange(cellRange),
-                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(comparators),
-                deltaProperties,
-                context,
-                expected
-        );
-    }
-
-    default void sortCellsAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetCellRangeReference cellRange,
-                                   final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
-                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta expected) {
-        this.checkEquals(
-                expected,
-                engine.sortCells(
-                        cellRange,
-                        comparators,
-                        deltaProperties,
-                        context
-                ),
-                () -> cellRange + " " + comparators + " " + deltaProperties
-        );
-    }
-
     // loadFormulaReferences............................................................................................
 
     @Test
@@ -2142,6 +1232,857 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // sortCells........................................................................................................
+
+    @Test
+    default void testSortCellsWithNullCellRangeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                null,
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList("1=string"),
+                                Sets.empty(), // deltaProperties
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSortCellsWithNullComparatorsFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                SpreadsheetSelection.A1.toCellRange(),
+                                null,
+                                Sets.empty(), // deltaProperties
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSortCellsWithNullDeltaPropertiesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                SpreadsheetSelection.A1.toCellRange(),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList("1=string"),
+                                null, // deltaProperties
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testSortCellsWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .sortCells(
+                                SpreadsheetSelection.A1.toCellRange(),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList("1=string"),
+                                Sets.empty(), // deltaProperties
+                                null
+                        )
+        );
+    }
+
+    default void sortCellsAndCheck(final SpreadsheetEngine engine,
+                                   final String cellRange,
+                                   final String comparators,
+                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta expected) {
+        this.sortCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange(cellRange),
+                SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(comparators),
+                deltaProperties,
+                context,
+                expected
+        );
+    }
+
+    default void sortCellsAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetCellRangeReference cellRange,
+                                   final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
+                                   final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.sortCells(
+                        cellRange,
+                        comparators,
+                        deltaProperties,
+                        context
+                ),
+                () -> cellRange + " " + comparators + " " + deltaProperties
+        );
+    }
+
+    // saveColumn.......................................................................................................
+
+    @Test
+    default void testSaveColumnNullColumnFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveColumn(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSaveColumnNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveColumn(
+                                SpreadsheetColumn.with(COLUMN),
+                                null
+                        )
+        );
+    }
+
+    // deleteColumns....................................................................................................
+
+    @Test
+    default void testDeleteColumnsNullColumnFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteColumns(
+                                null,
+                                1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testDeleteColumnsNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteColumns(
+                                COLUMN,
+                                -1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testDeleteColumnsNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteColumns(
+                                COLUMN,
+                                1,
+                                null
+                        )
+        );
+    }
+
+    default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final SpreadsheetCell... updated) {
+        final SpreadsheetDelta result = engine.deleteColumns(
+                column,
+                count,
+                context
+        );
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(updated)
+                        ).setColumnCount(
+                                OptionalInt.of(
+                                        engine.columnCount(context)
+                                )
+                        )
+                        .setRowCount(
+                                OptionalInt.of(
+                                        engine.rowCount(context)
+                                )
+                        ),
+                result,
+                () -> "deleteColumns column: " + column + " count: " + count
+        );
+    }
+
+    default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.deleteColumns(column, count, context),
+                () -> "deleteColumns column: " + column + " count: " + count
+        );
+    }
+
+    // saveRow...........................................................................................................
+
+    @Test
+    default void testSaveRowNullRowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveRow(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSaveRowNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveRow(
+                                ROW.row(),
+                                null
+                        )
+        );
+    }
+
+    // deleteRows.......................................................................................................
+
+    @Test
+    default void testDeleteRowsNullRowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteRows(
+                                null,
+                                1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testDeleteRowsNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteRows(
+                                ROW,
+                                -1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testDeleteRowsNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteRows(
+                                ROW,
+                                1,
+                                null
+                        )
+        );
+    }
+
+
+    default void deleteRowsAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetRowReference row,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetCell... updated) {
+        final SpreadsheetDelta result = engine.deleteRows(row, count, context);
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(updated)
+
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                )
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "deleteRows row: " + row + " count: " + count
+        );
+    }
+
+    default void deleteRowsAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetRowReference row,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.deleteRows(row, count, context),
+                () -> "deleteRows row: " + row + " count: " + count
+        );
+    }
+
+    // insertColumns....................................................................................................
+
+    @Test
+    default void testInsertColumnsNullColumnFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .insertColumns(
+                                null,
+                                1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testInsertColumnsNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .insertColumns(
+                                COLUMN,
+                                -1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testInsertColumnsNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .insertColumns(
+                                COLUMN,
+                                1,
+                                null
+                        )
+        );
+    }
+
+    default void insertColumnsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final SpreadsheetCell... updated) {
+        final SpreadsheetDelta result = engine.insertColumns(
+                column,
+                count,
+                context
+        );
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(updated)
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                )
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                );
+
+        this.checkEquals(
+                expected,
+                result,
+                () -> "insertColumns column: " + column + " count: " + count
+        );
+    }
+
+    default void insertColumnsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.insertColumns(column, count, context),
+                () -> "insertColumns column: " + column + " count: " + count
+        );
+    }
+
+    // insertRows.......................................................................................................
+
+    @Test
+    default void testInsertRowsNullRowFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .insertRows(
+                                null,
+                                1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testInsertRowsNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .insertRows(
+                                ROW,
+                                -1,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testInsertRowsNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .insertRows(
+                                ROW,
+                                1,
+                                null
+                        )
+        );
+    }
+
+    default void insertRowsAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetRowReference row,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetCell... updated) {
+        final SpreadsheetDelta result = engine.insertRows(
+                row,
+                count,
+                context
+        );
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(updated)
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                )
+                .setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                );
+
+        this.checkEquals(
+                expected,
+                result,
+                () -> "insertRows row: " + row + " count: " + count
+        );
+    }
+
+    default void insertRowsAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetRowReference row,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetDelta delta) {
+        checkEquals(
+                delta,
+                engine.insertRows(row, count, context),
+                () -> "insertRows row: " + row + " count: " + count
+        );
+    }
+
+    // saveLabel........................................................................................................
+
+    @Test
+    default void testSaveLabelNullMappingFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveLabel(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSaveLabelNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveLabel(
+                                SpreadsheetLabelMapping.with(
+                                        SpreadsheetSelection.labelName("LABEL123"),
+                                        SpreadsheetSelection.A1
+                                ),
+                                null
+                        )
+        );
+    }
+
+    default void saveLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelMapping label,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetCell... cells) {
+        this.saveLabelAndCheck(
+                engine,
+                label,
+                context,
+                Sets.of(cells)
+        );
+    }
+
+    default void saveLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelMapping label,
+                                   final SpreadsheetEngineContext context,
+                                   final Set<SpreadsheetCell> cells) {
+        final SpreadsheetDelta result = engine.saveLabel(
+                label,
+                context
+        );
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(cells)
+                .setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                ).setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                ).setLabels(
+                        Sets.of(label)
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "saveLabel " + label
+        );
+    }
+
+    default void saveLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelMapping label,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta delta) {
+        this.checkEquals(delta,
+                engine.saveLabel(label, context),
+                () -> "saveLabel " + label);
+    }
+
+    // deleteLabel......................................................................................................
+
+    @Test
+    default void testDeleteLabelNullMappingFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteLabel(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testDeleteLabelNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .deleteLabel(
+                                SpreadsheetSelection.labelName("label"),
+                                null
+                        )
+        );
+    }
+
+    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetLabelName label,
+                                     final SpreadsheetEngineContext context,
+                                     final SpreadsheetCell... cells) {
+        this.deleteLabelAndCheck(
+                engine,
+                label,
+                context,
+                Sets.of(cells)
+        );
+    }
+
+    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetLabelName label,
+                                     final SpreadsheetEngineContext context,
+                                     final Set<SpreadsheetCell> cells) {
+        final SpreadsheetDelta result = engine.deleteLabel(
+                label,
+                context
+        );
+
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(cells)
+                .setDeletedLabels(
+                        Sets.of(label)
+                )
+                .setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                ).setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "deleteLabel " + label
+        );
+    }
+
+    default void deleteLabelAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetLabelName label,
+                                     final SpreadsheetEngineContext context,
+                                     final SpreadsheetDelta delta) {
+        this.checkEquals(
+                delta,
+                engine.deleteLabel(label, context),
+                () -> "deleteLabel " + label
+        );
+    }
+    
+    // loadLabel........................................................................................................
+
+    @Test
+    default void testLoadLabelWithNullNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadLabel(
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadLabelWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadLabel(
+                                SpreadsheetSelection.labelName("Label123"),
+                                null
+                        )
+        );
+    }
+
+    default void loadLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelName label,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetLabelMapping mapping) {
+        this.loadLabelAndCheck(
+                engine,
+                label,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                )
+        );
+    }
+
+    default void loadLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelName label,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.loadLabel(label, context),
+                () -> "loadLabel " + label
+        );
+    }
+
+    default void loadLabelAndFailCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetLabelName label,
+                                       final SpreadsheetEngineContext context) {
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY,
+                engine.loadLabel(label, context),
+                () -> "loadLabel " + label
+        );
+    }
+
+    default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
+                                   final SpreadsheetLabelName label,
+                                   final SpreadsheetExpressionReference reference) {
+        this.loadLabelAndCheck(labelStore,
+                label,
+                SpreadsheetLabelMapping.with(label, reference));
+    }
+
+    default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
+                                   final SpreadsheetLabelName label,
+                                   final SpreadsheetLabelMapping mapping) {
+        this.checkEquals(Optional.of(mapping),
+                labelStore.load(label),
+                () -> "label " + label + " loaded");
+    }
+
+    default void loadLabelFailCheck(final SpreadsheetLabelStore labelStore,
+                                    final SpreadsheetLabelName label) {
+        this.checkEquals(
+                Optional.empty(),
+                labelStore.load(label),
+                "label loaded failed");
+    }
+
+    // findLabelsWithReference..........................................................................................
+
+    @Test
+    default void testFindLabelsWithReferenceWithNullReferenceFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findLabelsWithReference(
+                                null,
+                                0, // offset
+                                0, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindLabelsWithReferenceWithNegativeOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findLabelsWithReference(
+                                SpreadsheetSelection.A1,
+                                -1, // offset
+                                0, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindLabelsWithReferenceWithNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findLabelsWithReference(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                -1, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindLabelsWithReferenceWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findLabelsWithReference(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                0, // count,
+                                null
+                        )
+        );
+    }
+
+    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
+                                                 final SpreadsheetEngineContext context,
+                                                 final SpreadsheetLabelMapping... expected) {
+        this.findLabelsWithReferenceAndCheck(
+                engine,
+                reference,
+                offset,
+                count,
+                context,
+                Sets.of(expected)
+        );
+    }
+
+    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
+                                                 final SpreadsheetEngineContext context,
+                                                 final Set<SpreadsheetLabelMapping> expected) {
+        this.findLabelsWithReferenceAndCheck(
+                engine,
+                reference,
+                offset,
+                count,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(expected)
+        );
+    }
+
+    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
+                                                 final SpreadsheetEngineContext context,
+                                                 final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.findLabelsWithReference(
+                        reference,
+                        offset,
+                        count,
+                        context
+                ),
+                () -> "findLabelsWithReference " + reference + " offset=" + offset + " count=" + count
+        );
+    }
+
+    // columnCount......................................................................................................
+
+    @Test
+    default void testColumnCountNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .columnCount(null)
+        );
+    }
+
+    default void columnCountAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetEngineContext context,
+                                     final int expected) {
+        this.checkEquals(
+                expected,
+                engine.columnCount(context),
+                () -> "columnCount " + engine
+        );
+    }
+
     // columnWidth......................................................................................................
 
     @Test
@@ -2167,7 +2108,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         )
         );
     }
-    
+
     default void columnWidthAndCheck(final SpreadsheetColumnReference column,
                                      final SpreadsheetEngineContext context,
                                      final double expected) {
@@ -2178,10 +2119,34 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                      final SpreadsheetColumnReference column,
                                      final SpreadsheetEngineContext context,
                                      final double expected) {
-        this.checkEquals(expected,
+        this.checkEquals(
+                expected,
                 engine.columnWidth(column, context),
-                () -> "columnWidth " + column + " of " + engine);
+                () -> "columnWidth " + column + " of " + engine
+        );
     }
+
+    // rowCount......................................................................................................
+
+    @Test
+    default void testRowCountNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .rowCount(null)
+        );
+    }
+
+    default void rowCountAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetEngineContext context,
+                                  final int expected) {
+        this.checkEquals(
+                expected,
+                engine.rowCount(context),
+                () -> "rowCount " + engine
+        );
+    }
+
 
     // rowHeight........................................................................................................
 
@@ -2222,6 +2187,60 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.checkEquals(expected,
                 engine.rowHeight(row, context),
                 () -> "rowHeight " + row + " of " + engine);
+    }
+
+    // navigate.........................................................................................................
+
+    @Test
+    default void testNavigateWithNullViewportFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .navigate(
+                        null,
+                        SpreadsheetEngineContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    default void testNavigateWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine().navigate(
+                        SpreadsheetViewport.with(
+                                SpreadsheetViewportRectangle.with(
+                                        SpreadsheetSelection.A1,
+                                        1,
+                                        2
+                                )
+                        ),
+                        null
+                )
+        );
+    }
+
+    default void navigateAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetViewport viewport,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetViewport expected) {
+        this.navigateAndCheck(
+                engine,
+                viewport,
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void navigateAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetViewport viewport,
+                                  final SpreadsheetEngineContext context,
+                                  final Optional<SpreadsheetViewport> expected) {
+        this.checkEquals(
+                expected,
+                engine.navigate(viewport, context),
+                () -> "navigate " + viewport
+        );
     }
 
     // window...........................................................................................................
@@ -2333,57 +2352,15 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    // navigate.........................................................................................................
+    E createSpreadsheetEngine();
 
-    @Test
-    default void testNavigateWithNullViewportFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine().navigate(
-                        null,
-                        SpreadsheetEngineContexts.fake()
-                )
-        );
-    }
+    SpreadsheetEngineContext createContext();
 
-    @Test
-    default void testNavigateWithNullContextFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSpreadsheetEngine().navigate(
-                        SpreadsheetViewport.with(
-                                SpreadsheetViewportRectangle.with(
-                                        SpreadsheetSelection.A1,
-                                        1,
-                                        2
-                                )
-                        ),
-                        null
-                )
-        );
-    }
-
-    default void navigateAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetViewport viewport,
-                                  final SpreadsheetEngineContext context,
-                                  final SpreadsheetViewport expected) {
-        this.navigateAndCheck(
-                engine,
-                viewport,
-                context,
-                Optional.of(expected)
-        );
-    }
-
-    default void navigateAndCheck(final SpreadsheetEngine engine,
-                                  final SpreadsheetViewport viewport,
-                                  final SpreadsheetEngineContext context,
-                                  final Optional<SpreadsheetViewport> expected) {
-        this.checkEquals(
-                expected,
-                engine.navigate(viewport, context),
-                () -> "navigate " + viewport
-        );
+    default void countAndCheck(final Store<?, ?> store,
+                               final int count) {
+        this.checkEquals(count,
+                store.count(),
+                "record count in " + store);
     }
 
     // helpers..........................................................................................................
