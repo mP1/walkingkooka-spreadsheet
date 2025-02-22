@@ -152,7 +152,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         );
     }
 
-    // labels..........................................................................................................
+    // findLabelsWithReference..........................................................................................
 
     @Test
     public void testFindLabelsWithReferenceWhereNoneWithCell() {
@@ -168,7 +168,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         );
     }
 
-    private void findLabelsWithReferenceWhereNoneAndCheck(final SpreadsheetExpressionReference selection) {
+    private void findLabelsWithReferenceWhereNoneAndCheck(final SpreadsheetExpressionReference reference) {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label1 = this.label1();
@@ -182,7 +182,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         this.findLabelsWithReferenceAndCheck(
                 store,
-                selection
+                reference
         );
     }
 
@@ -200,7 +200,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         );
     }
 
-    private void findLabelsWithReferenceWhereSomeAndCheck(final SpreadsheetExpressionReference selection) {
+    private void findLabelsWithReferenceWhereSomeAndCheck(final SpreadsheetExpressionReference reference) {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label1 = this.label1();
@@ -214,7 +214,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         this.findLabelsWithReferenceAndCheck(
                 store,
-                selection,
+                reference,
                 mapping
         );
     }
@@ -233,7 +233,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         );
     }
 
-    private void findLabelsWithReferenceWhereSomeAndCheck2(final SpreadsheetExpressionReference selection) {
+    private void findLabelsWithReferenceWhereSomeAndCheck2(final SpreadsheetExpressionReference reference) {
         final TreeMapSpreadsheetLabelStore store = this.createStore();
 
         final SpreadsheetLabelName label1 = this.label1();
@@ -247,7 +247,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         this.findLabelsWithReferenceAndCheck(
                 store,
-                selection,
+                reference,
                 mapping
         );
     }
@@ -294,7 +294,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         this.findSimilarAndCheck(
                 store,
                 label.value(),
-                2,
+                2, // count
                 mapping
         );
     }
@@ -313,7 +313,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         this.findSimilarAndCheck(
                 store,
                 label.value(),
-                2,
+                2, // count
                 mapping
         );
     }
@@ -328,7 +328,12 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
 
         store.save(mapping);
 
-        this.findSimilarAndCheck(store, "123", 2, mapping);
+        this.findSimilarAndCheck(
+                store,
+                "123",
+                2, // count
+                mapping
+        );
     }
 
     @Test
@@ -497,25 +502,6 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         );
     }
 
-    @Test
-    public void testToString() {
-        final TreeMapSpreadsheetLabelStore store = this.createStore();
-        store.save(
-                SpreadsheetLabelMapping.with(
-                        this.label1(),
-                        this.range1()
-                )
-        );
-        store.save(
-                SpreadsheetLabelMapping.with(
-                        this.label2(),
-                        this.a2()
-                )
-        );
-
-        this.toStringAndCheck(store, "[label1=A1:A3, label2=A2]");
-    }
-
     private SpreadsheetLabelName label1() {
         return SpreadsheetSelection.labelName("label1");
     }
@@ -545,12 +531,36 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         return TreeMapSpreadsheetLabelStore.create();
     }
 
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label1(),
+                        this.range1()
+                )
+        );
+        store.save(
+                SpreadsheetLabelMapping.with(
+                        this.label2(),
+                        this.a2()
+                )
+        );
+
+        this.toStringAndCheck(
+                store,
+                "[label1=A1:A3, label2=A2]"
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     public Class<TreeMapSpreadsheetLabelStore> type() {
         return TreeMapSpreadsheetLabelStore.class;
     }
-
-    // TypeNameTesting..................................................................
 
     @Override
     public String typeNamePrefix() {
