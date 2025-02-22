@@ -221,17 +221,20 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
-    public Set<SpreadsheetCellReference> ids(final int from,
+    public Set<SpreadsheetCellReference> ids(final int offset,
                                              final int count) {
-        return this.store.ids(from, count);
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<SpreadsheetCell> values(final int from,
+    public List<SpreadsheetCell> values(final int offset,
                                         final int count) {
         return this.fixFormulaTextList(
                 this.store.values(
-                        from,
+                        offset,
                         count
                 )
         );

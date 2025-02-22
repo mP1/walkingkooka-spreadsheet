@@ -86,15 +86,21 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     }
 
     @Override
-    public Set<SpreadsheetColumnReference> ids(final int from,
+    public Set<SpreadsheetColumnReference> ids(final int offset,
                                                final int count) {
-        return this.store.ids(from, count);
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<SpreadsheetColumn> values(final int from,
+    public List<SpreadsheetColumn> values(final int offset,
                                           final int count) {
-        return this.store.values(from, count);
+        return this.store.values(
+                offset,
+                count
+        );
     }
 
     @Override

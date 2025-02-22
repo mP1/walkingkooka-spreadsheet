@@ -270,15 +270,21 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public Set<SpreadsheetCellReference> ids(final int from,
+    public Set<SpreadsheetCellReference> ids(final int offset,
                                              final int count) {
-        return this.store.ids(from, count);
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<SpreadsheetCell> values(final int from,
+    public List<SpreadsheetCell> values(final int offset,
                                         final int count) {
-        return this.store.values(from, count);
+        return this.store.values(
+                offset,
+                count
+        );
     }
 
     @Override

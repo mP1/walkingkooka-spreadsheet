@@ -77,14 +77,21 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<SpreadsheetLabelName> ids(final int from, final int count) {
-        return this.store.ids(from, count);
+    public Set<SpreadsheetLabelName> ids(final int offset,
+                                         final int count) {
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<SpreadsheetLabelMapping> values(final int from,
+    public List<SpreadsheetLabelMapping> values(final int offset,
                                                 final int count) {
-        return this.store.values(from, count);
+        return this.store.values(
+                offset,
+                count
+        );
     }
 
     @Override

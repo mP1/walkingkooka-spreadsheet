@@ -71,14 +71,21 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
-    public Set<T> ids(final int from, final int count) {
-        return this.store.ids(from, count);
+    public Set<T> ids(final int offset,
+                      final int count) {
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<Set<SpreadsheetCellReference>> values(final int from,
+    public List<Set<SpreadsheetCellReference>> values(final int offset,
                                                       final int count) {
-        return this.store.values(from, count);
+        return this.store.values(
+                offset,
+                count
+        );
     }
 
     @Override
