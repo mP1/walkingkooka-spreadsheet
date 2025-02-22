@@ -34,39 +34,53 @@ import java.util.Set;
 final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Set<SpreadsheetLabelMapping> gather(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
-                                               final SpreadsheetExpressionReference selection) {
+                                               final SpreadsheetExpressionReference selection,
+                                               final int offset,
+                                               final int count) {
         final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
                 mappings,
-                selection
+                selection,
+                offset,
+                count
         );
 
         mappings.values()
-                .forEach(visitor::acceptAndUpdateLabels);
+                .forEach(visitor::gatherMapping);
 
         return Sets.readOnly(visitor.labels);
     }
 
     // VisibleForTesting
     TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
-                                                                                    final SpreadsheetExpressionReference selection) {
+                                                                                    final SpreadsheetExpressionReference selection,
+                                                                                    final int offset,
+                                                                                    final int count) {
         super();
 
         this.filter = selection;
+        this.offset = offset;
+        this.count = count;
         this.mappings = mappings;
     }
 
     // VisibleForTesting
-    void acceptAndUpdateLabels(final SpreadsheetLabelMapping mapping) {
-        this.add = false;
-        this.accept(mapping.reference());
-        if (this.add) {
-            this.labels.add(mapping);
+    void gatherMapping(final SpreadsheetLabelMapping mapping) {
+        if(this.shouldGather()) {
+
+            this.add = false;
+            this.accept(mapping.reference());
+            if (this.add) {
+                this.addLabel(mapping);
+            }
+
         }
     }
 
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
-        this.add = this.filter.testCell(cell);
+        if(this.shouldGather()) {
+            this.add = this.filter.testCell(cell);
+        }
     }
 
     @Override
@@ -94,6 +108,29 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
      * This filter will match label mappings as they are visited.
      */
     private final SpreadsheetExpressionReference filter;
+
+    /**
+     * Returns true when {@link #labels} has elements than {@link #count}.
+     */
+    private boolean shouldGather() {
+        return this.labels.size() < this.count;
+    }
+
+    /**
+     * The maximum number of elements allowed in {@link #labels} before visiting should STOP
+     */
+    private final int count;
+
+    private void addLabel(final SpreadsheetLabelMapping mapping) {
+        if(--this.offset < 0) {
+            this.labels.add(mapping);
+        }
+    }
+
+    /**
+     * Used a countdown before adding to {@link #labels}.
+     */
+    private int offset;
 
     /**
      * The result being built.

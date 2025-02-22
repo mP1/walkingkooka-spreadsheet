@@ -140,12 +140,18 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
                 ReadOnlySpreadsheetLabelStore.with(
                         new FakeSpreadsheetLabelStore() {
                             @Override
-                            public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference r) {
+                            public Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference r,
+                                                                                        final int offset,
+                                                                                        final int count) {
                                 checkEquals(reference, r);
+                                checkEquals(0, offset, "offset");
+                                checkEquals(2, count, "count");
                                 return Sets.of(mapping);
                             }
                         }),
                 reference,
+                0,
+                2,
                 mapping
         );
     }

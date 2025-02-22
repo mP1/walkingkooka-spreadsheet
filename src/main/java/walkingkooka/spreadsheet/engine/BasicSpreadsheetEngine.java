@@ -88,6 +88,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     final static BasicSpreadsheetEngine INSTANCE = new BasicSpreadsheetEngine();
 
     /**
+     * A safe maximum to query labels for a {@link walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference}.
+     * Maybe this should be moved into context or made a variable somewhere
+     */
+    final static int FIND_LABELS_WITH_REFERENCE_COUNT = Integer.MAX_VALUE;
+
+    /**
      * Private ctor.
      */
     private BasicSpreadsheetEngine() {
@@ -177,7 +183,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         continue;
                     }
                     labels.addAll(
-                            labelStore.findLabelsWithReference(cell)
+                            labelStore.findLabelsWithReference(
+                                    cell,
+                                    0,
+                                    FIND_LABELS_WITH_REFERENCE_COUNT
+                            )
                     );
                     allDeleted.add(cell);
                 }

@@ -136,14 +136,49 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore()
-                        .findLabelsWithReference(null)
+                        .findLabelsWithReference(
+                                null,
+                                0, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindLabelsWithReferenceWithNegativeOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findLabelsWithReference(
+                                SpreadsheetSelection.A1,
+                                -1, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindLabelsWithReferenceWithNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findLabelsWithReference(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                -1 // count
+                        )
         );
     }
 
     @Test
     default void testFindLabelsWithReferenceWithUnknownCell() {
         final S store = this.createStore();
-        this.findLabelsWithReferenceAndCheck(store, SpreadsheetSelection.parseCell("Z99"));
+        this.findLabelsWithReferenceAndCheck(
+                store,
+                SpreadsheetSelection.parseCell("Z99"),
+                0,
+                1
+        );
     }
 
     @Test
@@ -159,6 +194,8 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
+                0, // offset
+                1, // count
                 label.setLabelMappingReference(reference)
         );
     }
@@ -180,6 +217,8 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
+                0, // offset
+                4, // count
                 mapping1,
                 mapping2,
                 mapping3
@@ -200,6 +239,8 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
+                0, // offset
+                3, // count
                 mapping1,
                 mapping2
         );
@@ -207,21 +248,31 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
 
     default void findLabelsWithReferenceAndCheck(final SpreadsheetLabelStore store,
                                                  final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
                                                  final SpreadsheetLabelMapping... labels) {
         this.findLabelsWithReferenceAndCheck(
                 store,
                 reference,
+                offset,
+                count,
                 Sets.of(labels)
         );
     }
 
     default void findLabelsWithReferenceAndCheck(final SpreadsheetLabelStore store,
                                                  final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
                                                  final Set<SpreadsheetLabelMapping> labels) {
         this.checkEquals(
                 labels,
-                store.findLabelsWithReference(reference),
-                () -> "labels for " + reference
+                store.findLabelsWithReference(
+                        reference,
+                        offset,
+                        count
+                ),
+                () -> "findLabelsWithReferenceAndCheck for " + reference + " offset=" + offset + " count=" + count
         );
     }
 

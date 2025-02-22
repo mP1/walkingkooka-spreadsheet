@@ -47,7 +47,9 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
      * Returns all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetExpressionReference}.
      * This includes resolving labels to other labels and eventually a {@link SpreadsheetExpressionReference}.
      */
-    Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference reference);
+    Set<SpreadsheetLabelMapping> findLabelsWithReference(final SpreadsheetExpressionReference reference,
+                                                         final int offset,
+                                                         final int count);
 
     /**
      * Attempts to resolve the given {@link SpreadsheetExpressionReference} when it is a label to a {@link SpreadsheetCellReferenceOrRange}.

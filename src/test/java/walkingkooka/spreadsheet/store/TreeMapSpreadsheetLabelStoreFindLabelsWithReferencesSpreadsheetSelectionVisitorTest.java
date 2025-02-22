@@ -45,11 +45,13 @@ public final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadshe
 
         final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
                 mappings,
-                a1
+                a1,
+                0, // offset
+                100 // count
         );
 
         mappings.values()
-                .forEach(visitor::acceptAndUpdateLabels);
+                .forEach(visitor::gatherMapping);
 
         this.toStringAndCheck(
                 visitor,
@@ -59,8 +61,15 @@ public final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadshe
 
     @Override
     public TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor createVisitor() {
-        return new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(null, null);
+        return new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
+                null, // mappings
+                null, // selection
+                0, // offset
+                0 // count
+        );
     }
+
+    // class............................................................................................................
 
     @Override
     public JavaVisibility typeVisibility() {
