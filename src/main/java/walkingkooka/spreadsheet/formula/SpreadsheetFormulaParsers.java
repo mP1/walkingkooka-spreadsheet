@@ -700,7 +700,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     /**
      * Handles matching boolean literals "true" or "false".
      */
-    private static Parser<SpreadsheetParserContext> BOOLEAN = symbol(
+    private final static Parser<SpreadsheetParserContext> BOOLEAN = symbol(
             "true",
             SpreadsheetFormulaParsers::transformBoolean
     ).or(
