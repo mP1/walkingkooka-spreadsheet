@@ -177,7 +177,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         continue;
                     }
                     labels.addAll(
-                            labelStore.labels(cell)
+                            labelStore.findLabelsWithReference(cell)
                     );
                     allDeleted.add(cell);
                 }

@@ -303,7 +303,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                             );
 
                     if (this.shouldSaveUpdateLabels) {
-                        for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cellRange)) {
+                        for (final SpreadsheetLabelMapping labelMapping : this.labelStore.findLabelsWithReference(cellRange)) {
                             this.labels.put(
                                     labelMapping.label(),
                                     labelMapping
@@ -412,7 +412,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
     private void addLabelMappingCells(final SpreadsheetCellReference cell) {
         if (this.shouldSaveUpdateLabels) {
-            for (final SpreadsheetLabelMapping labelMapping : this.labelStore.labels(cell)) {
+            for (final SpreadsheetLabelMapping labelMapping : this.labelStore.findLabelsWithReference(cell)) {
 
                 final SpreadsheetLabelName labelName = labelMapping.label();
                 if (false == this.labels.containsKey(labelName)) {
