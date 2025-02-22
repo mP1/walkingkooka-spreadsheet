@@ -141,6 +141,21 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         this.checkMetadataUpdated(context);
     }
 
+    @Override
+    public void testLoadMultipleCellRangesWithNullCellRangesFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testLoadMultipleCellRangesWithNullSpreadsheetExpressionEvaluationFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testLoadMultipleCellRangesWithNullDeltaPropertiesFails() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     public void testSaveCellStamped() {
         final SpreadsheetMetadataStampingSpreadsheetEngine engine = this.createSpreadsheetEngine();
