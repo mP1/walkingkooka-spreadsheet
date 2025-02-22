@@ -64,7 +64,7 @@ public final class OptionalSpreadsheetValueTest implements ClassTesting<Optional
                 "Hello123"
         );
 
-        final OptionalSpreadsheetValue optional = OptionalSpreadsheetValue.with(value);
+        final OptionalSpreadsheetValue<?> optional = OptionalSpreadsheetValue.with(value);
 
         assertSame(
                 value,

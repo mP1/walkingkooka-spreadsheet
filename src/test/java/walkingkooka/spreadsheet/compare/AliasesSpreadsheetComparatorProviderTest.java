@@ -36,13 +36,13 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
 
     private final static SpreadsheetComparatorName ALIAS2 = SpreadsheetComparatorName.with("alias2");
 
-    private final static SpreadsheetComparator COMPARATOR1 = SpreadsheetComparators.fake();
+    private final static SpreadsheetComparator<?> COMPARATOR1 = SpreadsheetComparators.fake();
 
     private final static String NAME2_STRING = "comparator2";
 
     private final static SpreadsheetComparatorName NAME2 = SpreadsheetComparatorName.with(NAME2_STRING);
 
-    private final static SpreadsheetComparator COMPARATOR2 = SpreadsheetComparators.fake();
+    private final static SpreadsheetComparator<?> COMPARATOR2 = SpreadsheetComparators.fake();
 
     private final static SpreadsheetComparatorInfo INFO2 = SpreadsheetComparatorInfo.parse("https://example.com/comparator2 " + NAME2);
 
@@ -50,7 +50,7 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
 
     private final static SpreadsheetComparatorName NAME3 = SpreadsheetComparatorName.with(NAME3_STRING);
 
-    private final static SpreadsheetComparator COMPARATOR3 = SpreadsheetComparators.fake();
+    private final static SpreadsheetComparator<?> COMPARATOR3 = SpreadsheetComparators.fake();
 
     private final static SpreadsheetComparatorInfo INFO3 = SpreadsheetComparatorInfo.parse("https://example.com/comparator3 " + NAME3);
 
@@ -156,7 +156,7 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
                 SpreadsheetComparatorAliasSet.parse(aliases),
                 new FakeSpreadsheetComparatorProvider() {
                     @Override
-                    public SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorSelector selector,
+                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                                        final ProviderContext context) {
                         return selector.evaluateValueText(
                                 this,
@@ -165,10 +165,10 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
                     }
 
                     @Override
-                    public SpreadsheetComparator spreadsheetComparator(final SpreadsheetComparatorName name,
+                    public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
                                                                        final List<?> values,
                                                                        final ProviderContext context) {
-                        SpreadsheetComparator comparator;
+                        SpreadsheetComparator<?> comparator;
 
                         switch (name.toString()) {
                             case NAME1_STRING:

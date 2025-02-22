@@ -47,7 +47,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         ParserTesting,
         HasLocaleTesting,
         SpreadsheetProviderTesting<C>,
-        SpreadsheetLabelNameResolverTesting {
+        SpreadsheetLabelNameResolverTesting<C> {
 
     // SpreadsheetLabelNameResolverTesting..............................................................................
 

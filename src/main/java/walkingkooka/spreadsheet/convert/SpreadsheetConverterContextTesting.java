@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.tree.expression.ExpressionNumberConverterContextTesting;
 
 public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends ExpressionNumberConverterContextTesting<C>,
-        SpreadsheetLabelNameResolverTesting {
+        SpreadsheetLabelNameResolverTesting<C> {
 
     @Override
     default C createSpreadsheetLabelNameResolver() {

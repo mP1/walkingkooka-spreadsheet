@@ -201,7 +201,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
                            final BiFunction<ParserToken, SpreadsheetParserContext, ParserToken> transformer) {
         this.appendDecimalSeparatorMillisecondsIfNecessary();
 
-        Parser parser = this.parser;
+        Parser<SpreadsheetParserContext> parser = this.parser;
         if (null != transformer) {
             parser = parser.transform(transformer);
         }

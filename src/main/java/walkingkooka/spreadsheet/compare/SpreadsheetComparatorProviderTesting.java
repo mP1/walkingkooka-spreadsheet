@@ -98,7 +98,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
 
     default void spreadsheetComparatorAndCheck(final String selector,
                                                final ProviderContext context,
-                                               final SpreadsheetComparator expected) {
+                                               final SpreadsheetComparator<?> expected) {
         this.spreadsheetComparatorAndCheck(
                 this.createSpreadsheetComparatorProvider(),
                 SpreadsheetComparatorSelector.parse(selector),
@@ -110,7 +110,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final String selector,
                                                final ProviderContext context,
-                                               final SpreadsheetComparator expected) {
+                                               final SpreadsheetComparator<?> expected) {
         this.spreadsheetComparatorAndCheck(
                 provider,
                 SpreadsheetComparatorSelector.parse(selector),
@@ -121,7 +121,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
 
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorSelector selector,
                                                final ProviderContext context,
-                                               final SpreadsheetComparator expected) {
+                                               final SpreadsheetComparator<?> expected) {
         this.spreadsheetComparatorAndCheck(
                 this.createSpreadsheetComparatorProvider(),
                 selector,
@@ -133,7 +133,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorProvider provider,
                                                final SpreadsheetComparatorSelector selector,
                                                final ProviderContext context,
-                                               final SpreadsheetComparator expected) {
+                                               final SpreadsheetComparator<?> expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetComparator(
@@ -215,7 +215,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
     default void spreadsheetComparatorAndCheck(final SpreadsheetComparatorName name,
                                                final List<?> values,
                                                final ProviderContext context,
-                                               final SpreadsheetComparator expected) {
+                                               final SpreadsheetComparator<?> expected) {
         this.spreadsheetComparatorAndCheck(
                 this.createSpreadsheetComparatorProvider(),
                 name,
@@ -229,7 +229,7 @@ public interface SpreadsheetComparatorProviderTesting<T extends SpreadsheetCompa
                                                final SpreadsheetComparatorName name,
                                                final List<?> values,
                                                final ProviderContext context,
-                                               final SpreadsheetComparator expected) {
+                                               final SpreadsheetComparator<?> expected) {
         this.checkEquals(
                 expected,
                 provider.spreadsheetComparator(
