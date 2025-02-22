@@ -203,7 +203,7 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
         this.checkNotEquals(
                 SpreadsheetNonNumberParsePatternParserString.with(
                         (c) -> Lists.of("AM/PM"),
-                        (i, s) -> SpreadsheetFormulaParserToken.amPm(i, s),
+                        SpreadsheetFormulaParserToken::amPm,
                         "AM/PM"
                 )
         );
@@ -213,7 +213,7 @@ public final class SpreadsheetNonNumberParsePatternParserStringTest extends Spre
     public SpreadsheetNonNumberParsePatternParserString createObject() {
         return SpreadsheetNonNumberParsePatternParserString.with(
                 (c) -> Lists.of("am/pm"),
-                (i, s) -> SpreadsheetFormulaParserToken.amPm(i, s),
+                SpreadsheetFormulaParserToken::amPm,
                 "am/pm"
         );
     }

@@ -76,7 +76,7 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
 
     // TODO Missing GWT JRE Optional#stream
     private Stream<SpreadsheetText> optionalStream(final Optional<SpreadsheetText> optional) {
-        return optional.map(v -> Stream.of(v))
+        return optional.map(Stream::of)
                 .orElse(Stream.of());
     }
 
