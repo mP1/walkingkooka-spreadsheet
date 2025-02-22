@@ -224,6 +224,16 @@ public interface SpreadsheetEngine {
                                              final SpreadsheetEngineContext context);
 
     /**
+     * Finds all the {@link SpreadsheetExpressionReference references} for the given {@link SpreadsheetCellReference}.
+     * Note the {@link SpreadsheetDelta#cells()} should not include the {@link SpreadsheetCellReference} unless its formula
+     * contains a cycle.
+     */
+    SpreadsheetDelta findReferencesWithCell(final SpreadsheetCellReference cell,
+                                            final int offset,
+                                            final int count,
+                                            final SpreadsheetEngineContext context);
+
+    /**
      * Returns the column width for the given {@link SpreadsheetColumnReference}, if none is present,
      * defaulting to {@link walkingkooka.tree.text.TextStylePropertyName#WIDTH} parse the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata}.
      * If the column is hidden this will return 0.
