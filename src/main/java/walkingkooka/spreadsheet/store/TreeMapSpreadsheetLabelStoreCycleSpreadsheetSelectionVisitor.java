@@ -51,7 +51,7 @@ final class TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor extends
     // @VisibleForTesting
     TreeMapSpreadsheetLabelStoreCycleSpreadsheetSelectionVisitor(final SpreadsheetLabelStore store) {
         super();
-        this.store = store;;
+        this.store = store;
     }
 
     private static CharSequence quote(final SpreadsheetSelection selection) {
