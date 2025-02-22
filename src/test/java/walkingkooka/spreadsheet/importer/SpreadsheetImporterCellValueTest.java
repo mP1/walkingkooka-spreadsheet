@@ -260,7 +260,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
 
     @Test
     public void testValue() {
-        final OptionalSpreadsheetValue value = OptionalSpreadsheetValue.with(
+        final OptionalSpreadsheetValue<?> value = OptionalSpreadsheetValue.with(
                 Optional.of(
                         "Hello"
                 )

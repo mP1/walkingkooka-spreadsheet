@@ -676,7 +676,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private Set<SpreadsheetLabelName> filterDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels) {
         return SortedSets.immutable(
                 deletedLabels instanceof SortedSet ?
-                        (SortedSet) deletedLabels :
+                        (SortedSet<SpreadsheetLabelName>) deletedLabels :
                         new TreeSet<>(deletedLabels)
         );
     }

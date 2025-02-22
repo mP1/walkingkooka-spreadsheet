@@ -738,6 +738,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * A raw {@link List} holding the cached patterns, initially set to null, and lazily populated. A raw List is used
      * to enable sub-classes to return the list without casting.
      */
+    @SuppressWarnings("rawtypes")
     List patterns;
 
     // formatter........................................................................................................
