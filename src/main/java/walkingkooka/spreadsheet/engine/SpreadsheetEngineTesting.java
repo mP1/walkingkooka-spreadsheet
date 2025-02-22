@@ -1206,6 +1206,116 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 "label loaded failed");
     }
 
+    // findLabelsWithReference..........................................................................................
+
+    @Test
+    default void testFindLabelsWithReferenceWithNullReferenceFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findLabelsWithReference(
+                                null,
+                                0, // offset
+                                0, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindLabelsWithReferenceWithNegativeOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findLabelsWithReference(
+                                SpreadsheetSelection.A1,
+                                -1, // offset
+                                0, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindLabelsWithReferenceWithNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findLabelsWithReference(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                -1, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindLabelsWithReferenceWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findLabelsWithReference(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                0, // count,
+                                null
+                        )
+        );
+    }
+
+    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
+                                                 final SpreadsheetEngineContext context,
+                                                 final SpreadsheetLabelMapping... expected) {
+        this.findLabelsWithReferenceAndCheck(
+                engine,
+                reference,
+                offset,
+                count,
+                context,
+                Sets.of(expected)
+        );
+    }
+
+    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
+                                                 final SpreadsheetEngineContext context,
+                                                 final Set<SpreadsheetLabelMapping> expected) {
+        this.findLabelsWithReferenceAndCheck(
+                engine,
+                reference,
+                offset,
+                count,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(expected)
+        );
+    }
+
+    default void findLabelsWithReferenceAndCheck(final SpreadsheetEngine engine,
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
+                                                 final SpreadsheetEngineContext context,
+                                                 final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.findLabelsWithReference(
+                        reference,
+                        offset,
+                        count,
+                        context
+                ),
+                () -> "findLabelsWithReference " + reference + " offset=" + offset + " count=" + count
+        );
+    }
+
+    // saveCell.........................................................................................................
+
     default void saveCellAndCheck(final SpreadsheetEngine engine,
                                   final SpreadsheetCell save,
                                   final SpreadsheetEngineContext context,

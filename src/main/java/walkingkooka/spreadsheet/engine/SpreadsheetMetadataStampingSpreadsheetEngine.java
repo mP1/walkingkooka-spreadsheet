@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -295,6 +296,19 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                         final SpreadsheetEngineContext context) {
         return this.stamp(
                 () -> this.engine.deleteLabel(label, context),
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
+                                                    final int offset,
+                                                    final int count,
+                                                    final SpreadsheetEngineContext context) {
+        return this.engine.findLabelsWithReference(
+                reference,
+                offset,
+                count,
                 context
         );
     }

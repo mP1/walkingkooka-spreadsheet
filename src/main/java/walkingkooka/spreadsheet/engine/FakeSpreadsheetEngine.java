@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -189,6 +190,14 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     @Override
     public SpreadsheetDelta loadLabel(final SpreadsheetLabelName name,
                                       final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
+                                                    final int offset,
+                                                    final int count,
+                                                    final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

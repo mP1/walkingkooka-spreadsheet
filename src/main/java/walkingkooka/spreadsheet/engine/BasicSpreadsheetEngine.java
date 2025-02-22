@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -1026,6 +1027,31 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         .load(label)
                         .map(Sets::of)
                         .orElse(Sets.empty())
+        );
+    }
+
+    @Override
+    public SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
+                                                    final int offset,
+                                                    final int count,
+                                                    final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(reference, "reference");
+        if (offset < 0) {
+            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Invalid count " + count + " < 0");
+        }
+        checkContext(context);
+
+        return SpreadsheetDelta.EMPTY.setLabels(
+                context.storeRepository()
+                        .labels()
+                        .findLabelsWithReference(
+                                reference,
+                                offset,
+                                count
+                        )
         );
     }
 
