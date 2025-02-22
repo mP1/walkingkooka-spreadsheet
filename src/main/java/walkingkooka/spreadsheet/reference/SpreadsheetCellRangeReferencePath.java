@@ -413,7 +413,7 @@ public enum SpreadsheetCellRangeReferencePath {
                         CharSequences.quoteAndEscape(text) +
                         " expected one of " +
                         Arrays.stream(values)
-                                .map(v -> v.name())
+                                .map(Enum::name)
                                 .collect(Collectors.joining(", ")
                                 )
         );

@@ -225,7 +225,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                 .stream()
                 .filter(i -> i.name().equals(name))
                 .map(i -> this.SpreadsheetFormatterSelector(i.url(), text))
-                .filter(s -> null != s)
+                .filter(Objects::nonNull)
                 .findFirst();
     }
 

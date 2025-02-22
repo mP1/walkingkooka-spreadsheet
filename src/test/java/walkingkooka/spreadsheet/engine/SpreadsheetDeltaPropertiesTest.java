@@ -131,7 +131,7 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
 
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> properties.clear()
+                properties::clear
         );
     }
 
@@ -222,7 +222,7 @@ public final class SpreadsheetDeltaPropertiesTest implements ParseStringTesting<
                 SpreadsheetDeltaProperties.extract(
                         parameters
                 ),
-                () -> parameters.toString()
+                parameters::toString
         );
     }
 

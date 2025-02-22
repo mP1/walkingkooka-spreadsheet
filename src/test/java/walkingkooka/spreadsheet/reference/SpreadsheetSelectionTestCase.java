@@ -278,7 +278,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         } else {
             final UnsupportedOperationException thrown = assertThrows(
                     UnsupportedOperationException.class,
-                    () -> selection.toCellOrCellRange()
+                    selection::toCellOrCellRange
             );
             this.checkEquals(
                     selection.toString(),

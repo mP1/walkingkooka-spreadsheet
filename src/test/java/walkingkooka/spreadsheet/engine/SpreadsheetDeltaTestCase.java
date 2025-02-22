@@ -495,7 +495,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         assertThrows(
                 UnsupportedOperationException.class,
-                () -> references.clear()
+                references::clear
         );
 
         this.referencesAndCheck(

@@ -75,7 +75,7 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
 
     // TODO Missing GWT JRE Optional#stream
     private Stream<TextNode> optionalStream(final Optional<TextNode> optional) {
-        return optional.map(v -> Stream.of(v))
+        return optional.map(Stream::of)
                 .orElse(Stream.of());
     }
 
