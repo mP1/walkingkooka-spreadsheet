@@ -109,7 +109,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     @Override
     public Set<SpreadsheetLabelName> ids(final int from,
                                          final int count) {
-        Store.checkFromAndCount(from, count);
+        Store.checkOffsetAndCount(from, count);
 
         return this.mappings.keySet()
                 .stream()
@@ -122,13 +122,13 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
      * Find the first mapping at or after the parse {@link SpreadsheetLabelName} and then gather the required count.
      */
     @Override
-    public List<SpreadsheetLabelMapping> values(final int from,
+    public List<SpreadsheetLabelMapping> values(final int offset,
                                                 final int count) {
-        Store.checkFromAndCount(from, count);
+        Store.checkOffsetAndCount(offset, count);
 
         return this.mappings.values()
                 .stream()
-                .skip(from)
+                .skip(offset)
                 .limit(count)
                 .collect(Collectors.toCollection(Lists::array));
     }

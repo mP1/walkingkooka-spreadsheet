@@ -112,7 +112,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     @Override
     public Set<T> ids(final int from,
                       final int count) {
-        Store.checkFromAndCount(from, count);
+        Store.checkOffsetAndCount(from, count);
 
         return this.referenceToCells.keySet()
                 .stream()
@@ -124,7 +124,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     @Override
     public List<Set<SpreadsheetCellReference>> values(final int from,
                                                       final int count) {
-        Store.checkFromAndCount(from, count);
+        Store.checkOffsetAndCount(from, count);
 
         return this.referenceToCells.values()
                 .stream()
