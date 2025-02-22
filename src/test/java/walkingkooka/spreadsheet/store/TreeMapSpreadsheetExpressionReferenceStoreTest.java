@@ -227,6 +227,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.findReferencesWithCellAndCheck(
                 store,
                 b1,
+                0, // offset
+                2, // count
                 a1
         ); // b1 --> a1
 
@@ -236,7 +238,9 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         ); // b1 -> nothing
         this.findReferencesWithCellAndCheck(
                 store,
-                a1
+                a1,
+                0, // offset
+                1 // count
         ); // a1 --> nothing
     }
 
@@ -275,11 +279,15 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.findReferencesWithCellAndCheck(
                 store,
                 b1,
+                0, // offset
+                2, // count
                 a1
         );
         this.findReferencesWithCellAndCheck(
                 store,
                 c1,
+                0, // offset
+                2, // count
                 b1
         );
     }
@@ -316,11 +324,17 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
 
         this.findReferencesWithCellAndCheck(
                 store,
-                b1, a1
+                b1,
+                0, // offset
+                2, // count
+                a1
         );
         this.findReferencesWithCellAndCheck(
                 store,
-                c1, a1, b1
+                c1,
+                0, // offset
+                3, // count
+                a1, b1
         );
     }
 
@@ -364,16 +378,23 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
 
         this.findReferencesWithCellAndCheck(
                 store,
-                b1, a1
+                b1,
+                0, // offset
+                2, // count
+                a1
         );
         this.findReferencesWithCellAndCheck(
                 store,
                 absoluteB1,
+                0, // offset
+                2, // count
                 a1
         );
         this.findReferencesWithCellAndCheck(
                 store,
                 c1,
+                0, // offset
+                2, // count
                 a1, b1
         );
     }
@@ -424,16 +445,22 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.findReferencesWithCellAndCheck(
                 store,
                 b1,
+                0, // offset
+                2, // count
                 a1
         );
         this.findReferencesWithCellAndCheck(
                 store,
                 absoluteB1,
+                0, // offset
+                1, // count
                 a1
         );
         this.findReferencesWithCellAndCheck(
                 store,
                 c1,
+                0, // offset
+                3, // count
                 a1, b1
         );
     }
@@ -641,10 +668,21 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveCells(a1, Sets.of(b1));
 
         this.loadAndCheck(store, a1, b1); // a1 --> b1
-        this.findReferencesWithCellAndCheck(store, b1, a1); // b1 --> a1
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                2, // count
+                a1
+        ); // b1 --> a1
 
         this.loadAndCheck(store, b1); // b1 -> nothing
-        this.findReferencesWithCellAndCheck(store, a1); // a1 --> nothing
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                1 // count
+        ); // a1 --> nothing
 
         this.idsAndCheck(store, 0, 2, a1); // b1 doesnt exist because it has 0 references to it
     }
@@ -744,10 +782,21 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         store.saveCells(a1, Sets.of(b1));
 
         this.loadAndCheck(store, a1, b1); // a1 --> b1
-        this.findReferencesWithCellAndCheck(store, b1, a1); // b1 --> a1
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                2, // count
+                a1
+        ); // b1 --> a1
 
         this.loadAndCheck(store, b1); // b1 -> nothing
-        this.findReferencesWithCellAndCheck(store, a1); // a1 --> nothing
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                2 // count
+        ); // a1 --> nothing
 
         //noinspection unchecked
         this.valuesAndCheck(
@@ -1151,9 +1200,26 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, b1);
         this.loadFailCheck(store, c1);
 
-        this.findReferencesWithCellAndCheck(store, a1);
-        this.findReferencesWithCellAndCheck(store, b1, a1);
-        this.findReferencesWithCellAndCheck(store, c1, a1);
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                1 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                2, // count
+                a1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                c1,
+                0, // offset
+                2, // count
+                a1
+        );
     }
 
     @Test
@@ -1174,10 +1240,34 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadAndCheck(store, a1, b1, c1);
         this.loadAndCheck(store, d1, a1, b1, c1, e1);
 
-        this.findReferencesWithCellAndCheck(store, a1, d1);
-        this.findReferencesWithCellAndCheck(store, b1, a1, d1);
-        this.findReferencesWithCellAndCheck(store, c1, a1, d1);
-        this.findReferencesWithCellAndCheck(store, e1, d1);
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                2, // count
+                d1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                2, // count
+                a1, d1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                c1,
+                0, // offset
+                3, // count
+                a1, d1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                e1,
+                0, // offset
+                2, // count
+                d1
+        );
     }
 
     // removeCell.......................................................................................................
@@ -1362,9 +1452,25 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, b1);
         this.loadFailCheck(store, c1);
 
-        this.findReferencesWithCellAndCheck(store, a1);
-        this.findReferencesWithCellAndCheck(store, b1, a1);
-        this.findReferencesWithCellAndCheck(store, c1);
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                2 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                2, // count
+                a1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                c1,
+                0, // offset
+                2 // count
+        );
     }
 
     @Test
@@ -1387,9 +1493,25 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, b1);
         this.loadFailCheck(store, c1);
 
-        this.findReferencesWithCellAndCheck(store, a1);
-        this.findReferencesWithCellAndCheck(store, b1, a1);
-        this.findReferencesWithCellAndCheck(store, c1);
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                1 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                2, // count
+                a1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                c1,
+                0, // offset
+                2 // count
+        );
     }
 
     // addCell & removeCell..............................................................................................
@@ -1422,11 +1544,39 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, d1);
         this.loadFailCheck(store, e1);
 
-        this.findReferencesWithCellAndCheck(store, a1);
-        this.findReferencesWithCellAndCheck(store, b1);
-        this.findReferencesWithCellAndCheck(store, c1, a1);
-        this.findReferencesWithCellAndCheck(store, d1, a1);
-        this.findReferencesWithCellAndCheck(store, e1, a1);
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                1 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                1 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                c1,
+                0, // offset
+                2, // count
+                a1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                d1,
+                0, // offset
+                2, // count
+                a1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                e1,
+                0, // offset
+                2, // count
+                a1
+        );
     }
 
     @Test
@@ -1453,11 +1603,39 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, d1);
         this.loadFailCheck(store, e1);
 
-        this.findReferencesWithCellAndCheck(store, a1);
-        this.findReferencesWithCellAndCheck(store, b1);
-        this.findReferencesWithCellAndCheck(store, c1, a1, b1);
-        this.findReferencesWithCellAndCheck(store, d1, a1, b1);
-        this.findReferencesWithCellAndCheck(store, e1, b1);
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                1 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                1 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                c1,
+                0, // offset
+                2, // count
+                a1, b1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                d1,
+                0, // offset
+                3, // count
+                a1, b1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                e1,
+                0, // offset
+                2, // count
+                b1
+        );
     }
 
     @Test
@@ -1480,11 +1658,37 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.loadFailCheck(store, d1);
         this.loadFailCheck(store, e1);
 
-        this.findReferencesWithCellAndCheck(store, a1);
-        this.findReferencesWithCellAndCheck(store, b1);
-        this.findReferencesWithCellAndCheck(store, c1, a1);
-        this.findReferencesWithCellAndCheck(store, d1);
-        this.findReferencesWithCellAndCheck(store, e1);
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                1 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                b1,
+                0, // offset
+                2 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                c1,
+                0, // offset
+                2, // count
+                a1
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                d1,
+                0, // offset
+                1 // count
+        );
+        this.findReferencesWithCellAndCheck(
+                store,
+                e1,
+                0, // offset
+                2 // count
+        );
     }
 
     // findReferencesWithCell...........................................................................................
@@ -1507,6 +1711,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.findReferencesWithCellAndCheck(
                 store,
                 a1,
+                0, // offset
+                2, // count
                 b1, c1
         );
 
@@ -1533,6 +1739,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.findReferencesWithCellAndCheck(
                 store,
                 a1,
+                0, // offset
+                2, // count
                 b1, c1
         );
 

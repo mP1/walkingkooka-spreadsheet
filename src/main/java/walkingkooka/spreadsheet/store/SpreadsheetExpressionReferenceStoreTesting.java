@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.StoreTesting;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -151,9 +150,13 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         }
 
         for (SpreadsheetCellReference cell : expected) {
-            final Set<TT> referred = store.findReferencesWithCell(cell);
-            if (!referred.contains(id)) {
-                fail(store + " load " + cell + " didnt return id " + id + ", actual: " + referred);
+            final Set<TT> references = store.findReferencesWithCell(
+                    cell,
+                    0,
+                    Integer.MAX_VALUE
+            );
+            if (!references.contains(id)) {
+                fail(store + " load " + cell + " didnt return id " + id + ", actual: " + references);
             }
         }
     }
@@ -413,36 +416,70 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore()
-                        .findReferencesWithCell(null)
+                        .findReferencesWithCell(
+                                null,
+                                0, // offset
+                                0 // count
+                        )
         );
     }
+    
+    @Test
+    default void testFindReferencesWithCellWithNegativeOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findReferencesWithCell(
+                                SpreadsheetSelection.A1,
+                                -1, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindReferencesWithCellWithNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findReferencesWithCell(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                -1 // count
+                        )
+        );
+    }
+    
 
     @SuppressWarnings("unchecked")
     default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
                                                                                             final SpreadsheetCellReference cell,
+                                                                                            final int offset,
+                                                                                            final int count,
                                                                                             final TT... expected) {
         this.findReferencesWithCellAndCheck(
                 store,
                 cell,
+                offset,
+                count,
                 Sets.of(expected)
         );
     }
 
     default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
                                                                                             final SpreadsheetCellReference cell,
+                                                                                            final int offset,
+                                                                                            final int count,
                                                                                             final Set<TT> expected) {
         this.checkEquals(
                 expected,
-                store.findReferencesWithCell(cell),
-                "findReferencesWithCell " + cell
+                store.findReferencesWithCell(
+                        cell,
+                        offset,
+                        count
+                ),
+                "findReferencesWithCell " + cell + " offset=" + offset + ", count=" + count
         );
-
-        for (TT id : expected) {
-            final Optional<Set<SpreadsheetCellReference>> references = store.load(id);
-            if (false == references.isPresent() && references.get().contains(cell)) {
-                fail(store + " load " + id + " didnt return cell " + cell + ", actual: " + references);
-            }
-        }
     }
 
     // removeReferencesWithCell.........................................................................................
@@ -460,9 +497,12 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                                                                                               final SpreadsheetCellReference cell) {
         store.removeReferencesWithCell(cell);
 
+        // just deleted references so find should not find it
         this.findReferencesWithCellAndCheck(
                 store,
-                cell
+                cell,
+                0, // offset
+                1 // count
         );
     }
 
