@@ -46,11 +46,6 @@ final class SpreadsheetDateParsePatternSpreadsheetFormatParserTokenVisitor exten
     }
 
     @Override
-    protected void endVisit(final DateSpreadsheetFormatParserToken token) {
-        // nop
-    }
-
-    @Override
     protected Visiting startVisit(final DateTimeSpreadsheetFormatParserToken token) {
         return this.failInvalid();
     }

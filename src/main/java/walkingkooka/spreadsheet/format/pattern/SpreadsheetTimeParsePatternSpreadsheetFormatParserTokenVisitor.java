@@ -63,11 +63,6 @@ final class SpreadsheetTimeParsePatternSpreadsheetFormatParserTokenVisitor exten
     }
 
     @Override
-    protected void endVisit(final TimeSpreadsheetFormatParserToken token) {
-        // nop
-    }
-
-    @Override
     protected void visit(final CurrencySpreadsheetFormatParserToken token) {
         this.failInvalid();
     }
