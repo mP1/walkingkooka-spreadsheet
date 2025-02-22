@@ -118,7 +118,10 @@ final class SpreadsheetTemplateContextTemplateContext implements TemplateContext
         );
 
         formula.error()
-                .ifPresent(e -> new IllegalArgumentException(e.message()));
+                .ifPresent(e -> {
+                            throw new IllegalArgumentException(e.message());
+                        }
+                );
 
         return formula.token()
                 .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"))
