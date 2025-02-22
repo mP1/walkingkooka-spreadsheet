@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -213,6 +214,14 @@ public interface SpreadsheetEngine {
      */
     SpreadsheetDelta loadLabel(final SpreadsheetLabelName name,
                                final SpreadsheetEngineContext context);
+
+    /**
+     * Finds all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetExpressionReference}.
+     */
+    SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
+                                             final int offset,
+                                             final int count,
+                                             final SpreadsheetEngineContext context);
 
     /**
      * Returns the column width for the given {@link SpreadsheetColumnReference}, if none is present,

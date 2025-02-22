@@ -15018,6 +15018,62 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // findLabelsWithReferenceWithNullReference.........................................................................
+
+    @Test
+    public void testFindLabelsWithReference() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        engine.saveLabel(
+                SpreadsheetSelection.labelName("Label1")
+                        .setLabelMappingReference(SpreadsheetSelection.A1),
+                context
+        );
+
+        engine.saveLabel(
+                SpreadsheetSelection.labelName("Label2")
+                        .setLabelMappingReference(
+                                SpreadsheetSelection.parseCell("B2")
+                        ),
+                context
+        );
+
+        final SpreadsheetLabelMapping mapping3 = SpreadsheetSelection.labelName("Label3")
+                .setLabelMappingReference(
+                        SpreadsheetSelection.parseCell("C3")
+                );
+        engine.saveLabel(
+                mapping3,
+                context
+        );
+
+        engine.saveLabel(
+                SpreadsheetSelection.labelName("Label4")
+                        .setLabelMappingReference(
+                                SpreadsheetSelection.parseCell("D4")
+                        ),
+                context
+        );
+
+        engine.saveLabel(
+                SpreadsheetSelection.labelName("Label5")
+                        .setLabelMappingReference(
+                                SpreadsheetSelection.parseCellRange("E5:F6")
+                        ),
+                context
+        );
+
+        this.findLabelsWithReferenceAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("B2:E5"),
+                1, // offset skips mapping 2
+                1, // count
+                context,
+                mapping3
+        );
+    }
+
     // columnWidth, rowHeight...........................................................................................
 
     @Test
