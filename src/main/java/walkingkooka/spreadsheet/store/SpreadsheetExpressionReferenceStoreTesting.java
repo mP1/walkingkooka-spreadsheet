@@ -480,6 +480,28 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                 "findCellsWithReference " + reference + " offset=" + offset + ", count=" + count
         );
     }
+
+    // countCellsWithReference..........................................................................................
+
+    @Test
+    default void testCountCellsWithReferenceWithNullReferenceFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .countCellsWithReference(null)
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    default <TT extends SpreadsheetExpressionReference> void countCellsWithReferenceAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+                                                                                             final TT reference,
+                                                                                             final int expected) {
+        this.checkEquals(
+                expected,
+                store.countCellsWithReference(reference),
+                "countCellsWithReference " + reference
+        );
+    }
     
     // findReferencesWithCell...........................................................................................
 

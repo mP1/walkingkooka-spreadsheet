@@ -1890,6 +1890,39 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         );
     }
 
+    // countCellsWithReference..........................................................................................
+
+    @Test
+    public void testCountCellsWithReference() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(a1, b1)
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(a1, c1)
+        );
+
+        this.countCellsWithReferenceAndCheck(
+                store,
+                a1,
+                2
+        );
+    }
+
+    @Test
+    public void testCountCellsWithReferenceWithMissingCell() {
+        this.countCellsWithReferenceAndCheck(
+                this.createStore(),
+                SpreadsheetSelection.A1,
+                0
+        );
+    }
+
     // findReferencesWithCell...........................................................................................
 
     @Test
