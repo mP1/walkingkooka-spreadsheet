@@ -49,7 +49,7 @@ final class SpreadsheetSelectionToCellRangeSpreadsheetSelectionVisitor extends S
 
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
-        this.cellRange = cell.cellRange(cell); // toCellRangeResolvingLabels will result in StackOverflowError
+        this.cellRange = cell.cellRange(cell);
     }
 
     @Override
