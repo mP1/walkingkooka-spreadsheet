@@ -266,37 +266,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // toCellOrCellRange................................................................................................
 
-    @Test
-    public final void testToCellOrCellRange() {
-        final SpreadsheetSelection selection = this.createSelection();
-
-        if (selection.isCell() || selection.isCellRange()) {
-            assertSame(
-                    selection,
-                    selection.toCellOrCellRange()
-            );
-        } else {
-            final UnsupportedOperationException thrown = assertThrows(
-                    UnsupportedOperationException.class,
-                    selection::toCellOrCellRange
-            );
-            this.checkEquals(
-                    selection.toString(),
-                    thrown.getMessage()
-            );
-        }
-    }
-
-    // toCellRange......................................................................................................
-
-    final void toCellRangeAndCheck() {
-        final S selection = this.createSelection();
-        assertSame(
-                selection,
-                selection.toCellOrCellRange()
-        );
-    }
-
     final void toCellOrCellRangeFails() {
         assertThrows(
                 UnsupportedOperationException.class,
@@ -304,6 +273,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         .toCellOrCellRange()
         );
     }
+
+    // toCellRange......................................................................................................
 
     final void toCellRangeAndCheck(final String selection,
                                    final String expected) {

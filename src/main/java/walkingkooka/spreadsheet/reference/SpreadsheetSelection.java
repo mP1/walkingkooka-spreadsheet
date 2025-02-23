@@ -975,11 +975,11 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * A cell or cell ranges will return this otherwise a {@link UnsupportedOperationException} will be thrown.
      */
-    public final SpreadsheetSelection toCellOrCellRange() {
+    public final SpreadsheetCellReferenceOrRange toCellOrCellRange() {
         if (false == this.isCell() && false == this.isCellRange()) {
             throw new UnsupportedOperationException(this.toString());
         }
-        return this;
+        return (SpreadsheetCellReferenceOrRange)this;
     }
 
     /**
