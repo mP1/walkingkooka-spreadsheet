@@ -20,10 +20,25 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public abstract class SpreadsheetCellReferenceOrRangeTestCase<R extends SpreadsheetCellReferenceOrRange> extends SpreadsheetExpressionReferenceTestCase<R> {
 
     SpreadsheetCellReferenceOrRangeTestCase() {
         super();
+    }
+
+    // toCellOrCellRange................................................................................................
+
+    @Test
+    public final void testToCellOrCellRange() {
+        final R selection = this.createSelection();
+        final SpreadsheetCellReferenceOrRange cellOrCellRange = selection.toCellOrCellRange();
+
+        assertSame(
+                selection,
+                cellOrCellRange
+        );
     }
 
     // toRange.........................................................................................................
