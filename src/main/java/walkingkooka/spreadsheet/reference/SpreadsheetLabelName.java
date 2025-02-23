@@ -268,22 +268,22 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
      * Always throws {@link UnsupportedOperationException}.
      */
     @Override
-    boolean testCell0(final SpreadsheetCellReference reference) {
+    boolean testCellNonNull(final SpreadsheetCellReference reference) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    boolean testCellRange0(final SpreadsheetCellRangeReference range) {
+    boolean testCellRangeNonNull(final SpreadsheetCellRangeReference range) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    boolean testColumn0(final SpreadsheetColumnReference column) {
+    boolean testColumnNonNull(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    boolean testRow0(final SpreadsheetRowReference row) {
+    boolean testRowNonNull(final SpreadsheetRowReference row) {
         throw new UnsupportedOperationException();
     }
 

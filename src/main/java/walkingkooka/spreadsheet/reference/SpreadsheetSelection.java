@@ -847,47 +847,47 @@ public abstract class SpreadsheetSelection implements HasText,
      * Tests if this {@link SpreadsheetSelection} includes the given {@link SpreadsheetCellReference}
      */
     public final boolean testCell(final SpreadsheetCellReference cell) {
-        return this.testCell0(
+        return this.testCellNonNull(
                 checkCellReference(cell)
         );
     }
 
-    abstract boolean testCell0(final SpreadsheetCellReference cell);
+    abstract boolean testCellNonNull(final SpreadsheetCellReference cell);
 
     /**
      * Tests if the selection be it a column, row or cell is within the given range.
      */
     public final boolean testCellRange(final SpreadsheetCellRangeReference range) {
-        return this.testCellRange0(
+        return this.testCellRangeNonNull(
                 checkCellRange(range)
         );
     }
 
-    abstract boolean testCellRange0(final SpreadsheetCellRangeReference range);
+    abstract boolean testCellRangeNonNull(final SpreadsheetCellRangeReference range);
 
     /**
      * Tests if the selection includes the given {@link SpreadsheetColumnReference}.<br>
      * {@link SpreadsheetRowReference} and {@link SpreadsheetRowRangeReference} both return false.
      */
     public final boolean testColumn(final SpreadsheetColumnReference column) {
-        return this.testColumn0(
+        return this.testColumnNonNull(
                 checkColumnReference(column)
         );
     }
 
-    abstract boolean testColumn0(final SpreadsheetColumnReference column);
+    abstract boolean testColumnNonNull(final SpreadsheetColumnReference column);
 
     /**
      * Tests if the selection includes the given {@link SpreadsheetRowReference}.<br>
      * {@link SpreadsheetColumnReference} and {@link SpreadsheetColumnRangeReference} both return false.
      */
     public final boolean testRow(final SpreadsheetRowReference row) {
-        return this.testRow0(
+        return this.testRowNonNull(
                 checkRowReference(row)
         );
     }
 
-    abstract boolean testRow0(final SpreadsheetRowReference row);
+    abstract boolean testRowNonNull(final SpreadsheetRowReference row);
 
     // containsAll(SpreadsheetViewportWidget)...........................................................................
 
@@ -1523,7 +1523,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     static SpreadsheetCellRangeReference unmarshallCellRange(final JsonNode node,
                                                              final JsonNodeUnmarshallContext context) {
-        return unmarshall0(
+        return unmarshall(
                 node, SpreadsheetExpressionReference::parseCellRange
         );
     }
@@ -1533,7 +1533,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     static SpreadsheetCellReference unmarshallCellReference(final JsonNode node,
                                                             final JsonNodeUnmarshallContext context) {
-        return unmarshall0(
+        return unmarshall(
                 node,
                 SpreadsheetSelection::parseCell
         );
@@ -1560,7 +1560,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     static SpreadsheetExpressionReference unmarshallExpressionReference(final JsonNode node,
                                                                         final JsonNodeUnmarshallContext context) {
-        return unmarshall0(
+        return unmarshall(
                 node,
                 SpreadsheetExpressionReference::parseExpressionReference
         );
@@ -1571,7 +1571,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     static SpreadsheetLabelName unmarshallLabelName(final JsonNode node,
                                                     final JsonNodeUnmarshallContext context) {
-        return unmarshall0(
+        return unmarshall(
                 node,
                 SpreadsheetExpressionReference::labelName
         );
@@ -1596,8 +1596,8 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Generic helper that tries to convert the node into a string and call a parse method.
      */
-    private static <R extends ExpressionReference> R unmarshall0(final JsonNode node,
-                                                                 final Function<String, R> parse) {
+    private static <R extends ExpressionReference> R unmarshall(final JsonNode node,
+                                                                final Function<String, R> parse) {
         Objects.requireNonNull(node, "node");
 
         return parse.apply(node.stringOrFail());
