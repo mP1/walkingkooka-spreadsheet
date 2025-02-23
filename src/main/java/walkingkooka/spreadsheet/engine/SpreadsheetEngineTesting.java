@@ -2062,6 +2062,82 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // findReferencesWithCell..........................................................................................
+
+    @Test
+    default void testFindReferencesWithCellWithNullCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findReferencesWithCell(
+                                null,
+                                0, // offset
+                                0, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindReferencesWithCellWithNegativeOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findReferencesWithCell(
+                                SpreadsheetSelection.A1,
+                                -1, // offset
+                                0, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindReferencesWithCellWithNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findReferencesWithCell(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                -1, // count,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testFindReferencesWithCellWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .findReferencesWithCell(
+                                SpreadsheetSelection.A1,
+                                0, // offset
+                                0, // count,
+                                null
+                        )
+        );
+    }
+
+    default void findReferencesWithCellAndCheck(final SpreadsheetEngine engine,
+                                                final SpreadsheetCellReference cell,
+                                                final int offset,
+                                                final int count,
+                                                final SpreadsheetEngineContext context,
+                                                final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.findReferencesWithCell(
+                        cell,
+                        offset,
+                        count,
+                        context
+                ),
+                () -> "findReferencesWithCell " + cell + " offset=" + offset + " count=" + count
+        );
+    }
+    
     // columnCount......................................................................................................
 
     @Test

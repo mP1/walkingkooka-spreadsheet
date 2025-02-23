@@ -314,6 +314,19 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta findReferencesWithCell(final SpreadsheetCellReference cell,
+                                                   final int offset,
+                                                   final int count,
+                                                   final SpreadsheetEngineContext context) {
+        return this.engine.findReferencesWithCell(
+                cell,
+                offset,
+                count,
+                context
+        );
+    }
+
+    @Override
     public double columnWidth(final SpreadsheetColumnReference column,
                               final SpreadsheetEngineContext context) {
         return this.engine.columnWidth(column, context);

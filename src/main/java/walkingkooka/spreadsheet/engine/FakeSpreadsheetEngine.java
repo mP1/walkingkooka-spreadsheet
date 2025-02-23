@@ -202,6 +202,14 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public SpreadsheetDelta findReferencesWithCell(final SpreadsheetCellReference cell,
+                                                   final int offset,
+                                                   final int count,
+                                                   final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public double columnWidth(final SpreadsheetColumnReference column,
                               final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

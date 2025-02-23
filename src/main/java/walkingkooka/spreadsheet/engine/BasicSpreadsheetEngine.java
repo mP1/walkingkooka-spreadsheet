@@ -1064,6 +1064,67 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
+    // findReferencesWithCell...........................................................................................
+
+    @Override
+    public SpreadsheetDelta findReferencesWithCell(final SpreadsheetCellReference cell,
+                                                   final int offset,
+                                                   final int count,
+                                                   final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        if (offset < 0) {
+            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("Invalid count " + count + " < 0");
+        }
+        checkContext(context);
+
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+                this,
+                FIND_REFERENCES_DELTA_PROPERTIES,
+                context
+        );
+
+        try {
+            final SpreadsheetCellStore store = context.storeRepository()
+                    .cells();
+
+            for (final SpreadsheetCellReference reference : context.storeRepository()
+                    .cellReferences()
+                    .findCellsWithReference(
+                            cell,
+                            offset,
+                            count
+                    )) {
+                if (false == changes.isCellLoaded(reference)) {
+                    final Optional<SpreadsheetCell> loaded = store.load(reference);
+                    if (loaded.isPresent()) {
+                        final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
+                                loaded.get(),
+                                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                                changes, // SpreadsheetExpressionReferenceLoader
+                                context
+                        );
+                        changes.onCellLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                    }
+                }
+            }
+
+            return this.prepareResponse(
+                    changes,
+                    context
+            );
+        } finally {
+            changes.close();
+        }
+    }
+
+    private final static Set<SpreadsheetDeltaProperties> FIND_REFERENCES_DELTA_PROPERTIES = Sets.of(
+            SpreadsheetDeltaProperties.CELLS,
+            SpreadsheetDeltaProperties.REFERENCES
+    );
+
     // cell eval........................................................................................................
 
     /**
