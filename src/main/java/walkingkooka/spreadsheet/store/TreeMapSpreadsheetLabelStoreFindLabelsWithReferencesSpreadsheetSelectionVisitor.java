@@ -34,12 +34,12 @@ import java.util.Set;
 final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Set<SpreadsheetLabelMapping> gather(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
-                                               final SpreadsheetExpressionReference selection,
+                                               final SpreadsheetExpressionReference reference,
                                                final int offset,
                                                final int count) {
         final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
                 mappings,
-                selection,
+                reference,
                 offset,
                 count
         );
@@ -52,12 +52,12 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
 
     // VisibleForTesting
     TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
-                                                                                    final SpreadsheetExpressionReference selection,
+                                                                                    final SpreadsheetExpressionReference reference,
                                                                                     final int offset,
                                                                                     final int count) {
         super();
 
-        this.filter = selection;
+        this.filter = reference;
         this.offset = offset;
         this.count = count;
         this.mappings = mappings;
