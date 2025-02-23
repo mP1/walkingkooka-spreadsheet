@@ -67,6 +67,13 @@ public class FakeSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
     }
 
     @Override
+    public Set<SpreadsheetCellReference> findCellsWithReference(final T reference,
+                                                                final int offset,
+                                                                final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell,
                                          final int offset,
                                          final int count) {
