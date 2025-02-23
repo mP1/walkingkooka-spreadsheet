@@ -135,6 +135,17 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
+    public Set<SpreadsheetCellReference> findCellsWithReference(final T reference,
+                                                                final int offset,
+                                                                final int count) {
+        return this.store.findCellsWithReference(
+                reference,
+                offset,
+                count
+        );
+    }
+
+    @Override
     public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell,
                                          final int offset,
                                          final int count) {

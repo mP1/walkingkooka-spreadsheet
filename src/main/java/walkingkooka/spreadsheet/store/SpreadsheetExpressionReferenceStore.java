@@ -70,6 +70,13 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
     void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell);
 
     /**
+     * Finds any {@link SpreadsheetCellReference} with the provided reference.
+     */
+    Set<SpreadsheetCellReference> findCellsWithReference(final T reference,
+                                                         final int offset,
+                                                         final int count);
+
+    /**
      * Adds a {@link Consumer watcher} which receives all removed reference events.
      */
     Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher);

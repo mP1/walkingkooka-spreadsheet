@@ -1691,6 +1691,205 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         );
     }
 
+    // findCellsWithReference...........................................................................................
+
+    @Test
+    public void testFindCellsWithReference() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(a1, b1)
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(a1, c1)
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                a1,
+                0, // offset
+                2, // count
+                b1, c1
+        );
+
+        store.removeCell(ReferenceAndSpreadsheetCellReference.with(b1, a1));
+    }
+
+    @Test
+    public void testFindCellsWithReference2() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferenceStore.create();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
+        final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        a1
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        b2
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label3,
+                        c3
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label1,
+                0, // offset
+                3, // count
+                a1
+        );
+    }
+
+    @Test
+    public void testFindCellsWithReferenceAndOffset() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferenceStore.create();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        a1
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        b2
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        c3
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label1,
+                1, // offset
+                2, // count
+                b2
+        );
+    }
+
+    @Test
+    public void testFindCellsWithReferenceAndCount() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferenceStore.create();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        a1
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        b2
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        c3
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label1,
+                0, // offset
+                1, // count
+                a1
+        );
+    }
+
+    @Test
+    public void testFindCellsWithReferenceAndOffsetAndCount() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferenceStore.create();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("D4");
+        final SpreadsheetCellReference e5 = SpreadsheetSelection.parseCell("E5");
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        a1
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        b2
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        c3
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label1,
+                        d4
+                )
+        );
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        label2,
+                        e5
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                label1,
+                1, // offset
+                2, // count
+                b2, c3
+        );
+    }
+
     // findReferencesWithCell...........................................................................................
 
     @Test

@@ -409,6 +409,78 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
+    // findCellsWithReference...........................................................................................
+
+    @Test
+    default void testFindCellsWithReferenceWithNullReferenceFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .findCellsWithReference(
+                                null, // reference
+                                0, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithReferenceWithNegativeOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findCellsWithReference(
+                                this.id(), // reference
+                                -1, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithReferenceWithNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findCellsWithReference(
+                                this.id(), // reference
+                                0, // offset
+                                -1 // count
+                        )
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    default <TT extends SpreadsheetExpressionReference> void findCellsWithReferenceAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+                                                                                            final TT reference,
+                                                                                            final int offset,
+                                                                                            final int count,
+                                                                                            final SpreadsheetCellReference... expected) {
+        this.findCellsWithReferenceAndCheck(
+                store,
+                reference,
+                offset,
+                count,
+                Sets.of(expected)
+        );
+    }
+
+    default <TT extends SpreadsheetExpressionReference> void findCellsWithReferenceAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+                                                                                            final TT reference,
+                                                                                            final int offset,
+                                                                                            final int count,
+                                                                                            final Set<SpreadsheetCellReference> expected) {
+        this.checkEquals(
+                expected,
+                store.findCellsWithReference(
+                        reference,
+                        offset,
+                        count
+                ),
+                "findCellsWithReference " + reference + " offset=" + offset + ", count=" + count
+        );
+    }
+    
     // findReferencesWithCell...........................................................................................
 
     @Test
