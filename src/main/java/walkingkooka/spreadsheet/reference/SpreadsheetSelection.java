@@ -889,7 +889,7 @@ public abstract class SpreadsheetSelection implements HasText,
 
     abstract boolean testRowNonNull(final SpreadsheetRowReference row);
 
-    // containsAll(SpreadsheetViewportWidget)...........................................................................
+    // containsAll(SpreadsheetViewportWindows)..........................................................................
 
     /**
      * Can only return true for {@link SpreadsheetCell} or {@link SpreadsheetCellRangeReference} if they contain all the given
