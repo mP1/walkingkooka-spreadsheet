@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -39,25 +40,31 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
                                                final int count) {
         final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
                 mappings,
-                reference,
                 offset,
                 count
         );
 
-        mappings.values()
-                .forEach(visitor::gatherMapping);
+        if (reference.isLabelName()) {
+            visitor.accept(reference);
+        } else {
+            visitor.filter = reference.toCellOrCellRange();
+        }
+
+        // reference could be a label to another label and never resolves to a cell or cell-range
+        if (null != visitor.filter) {
+            mappings.values()
+                    .forEach(visitor::gatherMapping);
+        }
 
         return Sets.readOnly(visitor.labels);
     }
 
     // VisibleForTesting
     TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings,
-                                                                                    final SpreadsheetExpressionReference reference,
                                                                                     final int offset,
                                                                                     final int count) {
         super();
 
-        this.filter = reference;
         this.offset = offset;
         this.count = count;
         this.mappings = mappings;
@@ -65,38 +72,44 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
 
     // VisibleForTesting
     void gatherMapping(final SpreadsheetLabelMapping mapping) {
-        if(this.shouldGather()) {
+        if (this.shouldGather()) {
 
-            this.add = false;
             this.accept(mapping.reference());
             if (this.add) {
                 this.addLabel(mapping);
             }
-
         }
     }
 
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
-        if(this.shouldGather()) {
-            this.add = this.filter.testCell(cell);
-        }
-    }
-
-    @Override
-    protected void visit(final SpreadsheetLabelName label) {
-        if (false == this.add) {
-            final SpreadsheetLabelMapping mapping = this.mappings.get(label);
-            if (null != mapping) {
-                this.accept(mapping.reference());
+        if (this.shouldGather()) {
+            final SpreadsheetCellReferenceOrRange filter = this.filter;
+            if (null == filter) {
+                this.filter = cell;
+            } else {
+                this.add = filter.testCell(cell);
             }
         }
     }
 
     @Override
+    protected void visit(final SpreadsheetLabelName label) {
+        final SpreadsheetLabelMapping mapping = this.mappings.get(label);
+        if (null != mapping) {
+            this.accept(mapping.reference());
+        }
+    }
+
+    @Override
     protected void visit(final SpreadsheetCellRangeReference cellRange) {
-        this.add = this.add | cellRange.cellStream()
-                .anyMatch(this.filter::testCell);
+        final SpreadsheetCellReferenceOrRange filter = this.filter;
+        if (null == filter) {
+            this.filter = cellRange;
+        } else {
+            this.add = this.add | cellRange.cellStream()
+                    .anyMatch(this.filter::testCell);
+        }
     }
 
     /**
@@ -105,9 +118,11 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
     private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings;
 
     /**
-     * This filter will match label mappings as they are visited.
+     * This filter will match label mappings as they are visited. Initially this is null when resolving a reference of
+     * {@link SpreadsheetLabelName}.
      */
-    private final SpreadsheetExpressionReference filter;
+    // @VisibleForTesting
+    SpreadsheetCellReferenceOrRange filter;
 
     /**
      * Returns true when {@link #labels} has elements than {@link #count}.
@@ -122,7 +137,7 @@ final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelec
     private final int count;
 
     private void addLabel(final SpreadsheetLabelMapping mapping) {
-        if(--this.offset < 0) {
+        if (--this.offset < 0) {
             this.labels.add(mapping);
         }
     }

@@ -224,6 +224,82 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     @Test
+    public void testFindLabelsWithReferenceWhereSomeWithCellAndLabelToLabels() {
+        this.findLabelsWithReferenceWhereSomeAndLabelsToLabelsCheck(
+                this.a2()
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithReferenceWhereSomeWithCellRangeAndLabelToLabels() {
+        this.findLabelsWithReferenceWhereSomeAndLabelsToLabelsCheck(
+                SpreadsheetSelection.parseCellRange("a2:a3")
+        );
+    }
+
+    private void findLabelsWithReferenceWhereSomeAndLabelsToLabelsCheck(final SpreadsheetExpressionReference reference) {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+        final SpreadsheetLabelName label3 = this.label3();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a2 = this.a2();
+
+        store.save(
+                label1.setLabelMappingReference(a1)
+        );
+        final SpreadsheetLabelMapping mapping = store.save(
+                label2.setLabelMappingReference(a2)
+        );
+        final SpreadsheetLabelMapping mapping2 = store.save(
+                label3.setLabelMappingReference(label2)
+        );
+
+        this.findLabelsWithReferenceAndCheck(
+                store,
+                reference,
+                0, // offset
+                3, // count
+                mapping,
+                mapping2
+        );
+    }
+
+    @Test
+    public void testFindLabelsWithReferenceWhereSomeWithLabel() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+
+        final SpreadsheetLabelName label1 = this.label1();
+        final SpreadsheetLabelName label2 = this.label2();
+        final SpreadsheetLabelName label3 = this.label3();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference a2 = this.a2();
+
+        store.save(
+                label1.setLabelMappingReference(a1)
+        );
+        final SpreadsheetLabelMapping mapping = store.save(
+                label2.setLabelMappingReference(a2)
+        );
+        final SpreadsheetLabelMapping mapping2 = store.save(
+                label3.setLabelMappingReference(label2)
+        );
+
+        // label3 -> label2 -> a2
+        this.findLabelsWithReferenceAndCheck(
+                store,
+                label3,
+                0, // offset
+                2, // count
+                mapping,
+                mapping2
+        );
+    }
+
+    @Test
     public void testFindLabelsWithReferenceWhereSomeWithCell2() {
         this.findLabelsWithReferenceWhereSomeAndCheck(
                 this.a2()

@@ -45,10 +45,11 @@ public final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadshe
 
         final TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
                 mappings,
-                a1,
                 0, // offset
                 100 // count
         );
+
+        visitor.filter = a1;
 
         mappings.values()
                 .forEach(visitor::gatherMapping);
@@ -63,7 +64,6 @@ public final class TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadshe
     public TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor createVisitor() {
         return new TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor(
                 null, // mappings
-                null, // selection
                 0, // offset
                 0 // count
         );
