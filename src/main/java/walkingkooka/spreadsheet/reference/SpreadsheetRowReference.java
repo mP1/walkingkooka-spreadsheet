@@ -245,12 +245,12 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
      * Returns true if the given {@link SpreadsheetCellReference} has this row.
      */
     @Override
-    boolean testCell0(final SpreadsheetCellReference cell) {
-        return this.testRow0(cell.row());
+    boolean testCellNonNull(final SpreadsheetCellReference cell) {
+        return this.testRowNonNull(cell.row());
     }
 
     @Override
-    boolean testCellRange0(final SpreadsheetCellRangeReference range) {
+    boolean testCellRangeNonNull(final SpreadsheetCellRangeReference range) {
         checkCellRange(range);
 
         return this.compareTo(range.begin().row()) >= 0 &&
@@ -258,12 +258,12 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     }
 
     @Override
-    boolean testColumn0(final SpreadsheetColumnReference column) {
+    boolean testColumnNonNull(final SpreadsheetColumnReference column) {
         return false;
     }
 
     @Override
-    boolean testRow0(final SpreadsheetRowReference row) {
+    boolean testRowNonNull(final SpreadsheetRowReference row) {
         return this.equalsIgnoreReferenceKind(row);
     }
 

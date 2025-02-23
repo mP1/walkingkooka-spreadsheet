@@ -834,9 +834,9 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
      * Tests if this range contains the given {@link SpreadsheetCellReference}.
      */
     @Override
-    boolean testCell0(final SpreadsheetCellReference cell) {
-        return this.testColumn0(cell.column()) &&
-                this.testRow0(cell.row());
+    boolean testCellNonNull(final SpreadsheetCellReference cell) {
+        return this.testColumnNonNull(cell.column()) &&
+                this.testRowNonNull(cell.row());
     }
 
     /**
@@ -844,29 +844,29 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
      * {@link SpreadsheetCellRangeReference} that overlaps and contain cells inside and outside this range will return true.
      */
     @Override
-    boolean testCellRange0(final SpreadsheetCellRangeReference range) {
+    boolean testCellRangeNonNull(final SpreadsheetCellRangeReference range) {
         checkCellRange(range);
 
-        return this.columnRange().testCellRange0(range) &&
-                this.rowRange().testCellRange0(range);
+        return this.columnRange().testCellRangeNonNull(range) &&
+                this.rowRange().testCellRangeNonNull(range);
     }
 
     /**
      * Returns true if the column is within this range.
      */
     @Override
-    boolean testColumn0(final SpreadsheetColumnReference column) {
+    boolean testColumnNonNull(final SpreadsheetColumnReference column) {
         return this.columnRange()
-                .testColumn0(column);
+                .testColumnNonNull(column);
     }
 
     /**
      * Returns true if the row is within this range.
      */
     @Override
-    boolean testRow0(final SpreadsheetRowReference row) {
+    boolean testRowNonNull(final SpreadsheetRowReference row) {
         return this.rowRange()
-                .testRow0(row);
+                .testRowNonNull(row);
     }
 
     // containsAll......................................................................................................
@@ -890,9 +890,9 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     public boolean containsAll(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
-        return this.testCell0(
+        return this.testCellNonNull(
                 range.begin()
-        ) && this.testCell0(
+        ) && this.testCellNonNull(
                 range.end()
         );
     }

@@ -158,18 +158,18 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
     // testXXX.........................................................................................................
 
     @Override
-    boolean testCell0(final SpreadsheetCellReference cell) {
-        return this.testRow0(cell.row());
+    boolean testCellNonNull(final SpreadsheetCellReference cell) {
+        return this.testRowNonNull(cell.row());
     }
 
     @Override
-    boolean testCellRange0(final SpreadsheetCellRangeReference range) {
+    boolean testCellRangeNonNull(final SpreadsheetCellRangeReference range) {
         return this.end().compareTo(range.begin().row()) >= 0 &&
                 this.begin().compareTo(range.end().row()) <= 0;
     }
 
     @Override
-    boolean testColumn0(final SpreadsheetColumnReference column) {
+    boolean testColumnNonNull(final SpreadsheetColumnReference column) {
         return false;
     }
 
@@ -177,7 +177,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
      * Tests if the given {@link SpreadsheetRowReference} is within this {@link SpreadsheetRowRangeReference}.
      */
     @Override
-    boolean testRow0(final SpreadsheetRowReference row) {
+    boolean testRowNonNull(final SpreadsheetRowReference row) {
         return this.range.test(row);
     }
 
