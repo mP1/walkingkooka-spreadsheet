@@ -221,12 +221,10 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
                                                                 final int offset,
                                                                 final int count) {
         Objects.requireNonNull(selection, "selection");
-        if (offset < 0) {
-            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-        }
-        if (count < 0) {
-            throw new IllegalArgumentException("Invalid count " + count + " < 0");
-        }
+        Store.checkOffsetAndCount(
+                offset,
+                count
+        );
 
         return TreeMapSpreadsheetLabelStoreFindLabelsWithReferencesSpreadsheetSelectionVisitor.gather(
                 this.mappings,

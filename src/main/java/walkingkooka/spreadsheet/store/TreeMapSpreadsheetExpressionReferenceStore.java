@@ -282,12 +282,10 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                                          final int offset,
                                          final int count) {
         Objects.requireNonNull(cell, "cell");
-        if (offset < 0) {
-            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-        }
-        if (count < 0) {
-            throw new IllegalArgumentException("Invalid count " + count + " < 0");
-        }
+        Store.checkOffsetAndCount(
+                offset,
+                count
+        );
 
         final SortedSet<T> references = this.cellToReferences.get(cell);
         return null != references ?
