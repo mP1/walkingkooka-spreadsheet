@@ -132,7 +132,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     // labels...........................................................................................................
 
     @Test
-    default void testFindLabelsWithReferenceWithNullSpreadsheetExpressionReferenceFails() {
+    default void testFindLabelsWithReferenceWithNullReferenceFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore()
