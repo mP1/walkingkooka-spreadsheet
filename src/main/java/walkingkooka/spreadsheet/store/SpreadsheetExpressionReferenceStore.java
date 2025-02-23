@@ -77,6 +77,11 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
                                                          final int count);
 
     /**
+     * Counts the number of cells with the given reference.
+     */
+    int countCellsWithReference(final T reference);
+
+    /**
      * Adds a {@link Consumer watcher} which receives all removed reference events.
      */
     Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher);

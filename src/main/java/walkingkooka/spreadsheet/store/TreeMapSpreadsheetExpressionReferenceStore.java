@@ -297,6 +297,16 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     @Override
+    public int countCellsWithReference(final T reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        final SortedSet<SpreadsheetCellReference> cells = this.referenceToCells.get(reference);
+        return null != cells ?
+                cells.size() :
+                0;
+    }
+
+    @Override
     public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell,
                                          final int offset,
                                          final int count) {
