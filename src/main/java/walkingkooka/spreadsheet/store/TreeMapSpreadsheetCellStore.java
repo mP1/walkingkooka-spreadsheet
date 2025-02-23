@@ -131,10 +131,10 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                                               final int count) {
         checkCellRange(range);
         Objects.requireNonNull(path, "path");
-        if (offset < 0) {
-            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-        }
-        Store.checkCount(count);
+        Store.checkOffsetAndCount(
+                offset,
+                count
+        );
 
         return 0 == count || offset >= range.count() ?
                 Sets.empty() :
