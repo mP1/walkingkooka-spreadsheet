@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
 
@@ -143,6 +144,18 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
                                                                     final int offset,
                                                                     final int count) {
             Objects.requireNonNull(reference, "reference");
+            Store.checkOffsetAndCount(
+                    offset,
+                    count
+            );
+            return Set.of();
+        }
+
+        @Override
+        public Set<SpreadsheetCellReference> findCellsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                          final int offset,
+                                                                          final int count) {
+            Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
             Store.checkOffsetAndCount(
                     offset,
                     count

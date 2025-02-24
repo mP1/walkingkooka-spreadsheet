@@ -17,9 +17,15 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.store.Store;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -77,6 +83,55 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
+    public Set<SpreadsheetCellReference> findCellsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                      final int offset,
+                                                                      final int count) {
+        Objects.requireNonNull(cellOrCellRange, "cellOrCellRange");
+        Store.checkOffsetAndCount(
+                offset,
+                count
+        );
+
+        return 0 == count ?
+                Sets.empty() :
+                this.findCellsWithCellOrCellRangeNonZeroCount(
+                        cellOrCellRange,
+                        offset,
+                        count
+                );
+    }
+
+    private Set<SpreadsheetCellReference> findCellsWithCellOrCellRangeNonZeroCount(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                                   final int offset,
+                                                                                   final int count) {
+        int skipCountDown = offset;
+
+        final Set<SpreadsheetCellReference> references = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+
+        // potentially slow for large ranges with gaps.
+        for (final SpreadsheetCellReference reference : cellOrCellRange.toCellRange()) {
+            System.out.println("Reference: " + reference + " " + this);
+            for (final SpreadsheetCellReference referenceForCell : this.findCellsWithReference(
+                    reference,
+                    0,
+                    count - references.size()
+            )) {
+
+                System.out.println("\treferenceForCell: " + referenceForCell + " skipCountDown: " + skipCountDown);
+
+                if (--skipCountDown < 0) {
+                    references.add(referenceForCell);
+                    if (references.size() >= count) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return Sets.readOnly(references);
+    }
+
+    @Override
     public int countCellsWithReference(final SpreadsheetCellReference reference) {
         return this.store.countCellsWithReference(reference);
     }
@@ -125,9 +180,12 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public Set<SpreadsheetCellReference> ids(final int i,
-                                             final int i1) {
-        return this.store.ids(i, i1);
+    public Set<SpreadsheetCellReference> ids(final int offset,
+                                             final int count) {
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
@@ -136,11 +194,11 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public List<Set<SpreadsheetCellReference>> values(final int from, 
-                                                      final int to) {
+    public List<Set<SpreadsheetCellReference>> values(final int offset,
+                                                      final int count) {
         return this.store.values(
-                from,
-                to
+                offset,
+                count
         );
     }
 

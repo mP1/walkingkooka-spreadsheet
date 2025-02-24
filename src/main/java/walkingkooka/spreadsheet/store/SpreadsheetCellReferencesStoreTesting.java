@@ -17,7 +17,14 @@
 
 package walkingkooka.spreadsheet.store;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCellReferencesStore> extends SpreadsheetExpressionReferenceStoreTesting<S, SpreadsheetCellReference> {
 
@@ -34,6 +41,78 @@ public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCell
     @Override
     default void testAddDeleteWatcherAndDelete() {
         throw new UnsupportedOperationException();
+    }
+
+    // findCellsWithCellOrCellRange.....................................................................................
+
+    @Test
+    default void testFindCellsWithCellOrCellRangeWithNullCellOrCellRangesFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createStore()
+                        .findCellsWithCellOrCellRange(
+                                null, // reference
+                                0, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithCellOrCellRangeWithNegativeOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findCellsWithCellOrCellRange(
+                                this.id(), // reference
+                                -1, // offset
+                                0 // count
+                        )
+        );
+    }
+
+    @Test
+    default void testFindCellsWithCellOrCellRangeWithNegativeCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createStore()
+                        .findCellsWithCellOrCellRange(
+                                this.id(), // reference
+                                0, // offset
+                                -1 // count
+                        )
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    default void findCellsWithCellOrCellRangeAndCheck(final SpreadsheetCellReferencesStore store,
+                                                      final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                      final int offset,
+                                                      final int count,
+                                                      final SpreadsheetCellReference... expected) {
+        this.findCellsWithCellOrCellRangeAndCheck(
+                store,
+                cellOrCellRange,
+                offset,
+                count,
+                Sets.of(expected)
+        );
+    }
+
+    default void findCellsWithCellOrCellRangeAndCheck(final SpreadsheetCellReferencesStore store,
+                                                      final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                      final int offset,
+                                                      final int count,
+                                                      final Set<SpreadsheetCellReference> expected) {
+        this.checkEquals(
+                expected,
+                store.findCellsWithCellOrCellRange(
+                        cellOrCellRange,
+                        offset,
+                        count
+                ),
+                "findCellsWithCellOrCellRange " + cellOrCellRange + " offset=" + offset + ", count=" + count
+        );
     }
 
     // TypeNameTesting..................................................................................................
