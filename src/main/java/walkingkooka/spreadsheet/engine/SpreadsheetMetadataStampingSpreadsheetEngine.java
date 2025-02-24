@@ -314,12 +314,12 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta findReferencesWithCell(final SpreadsheetCellReference cell,
-                                                   final int offset,
-                                                   final int count,
-                                                   final SpreadsheetEngineContext context) {
-        return this.engine.findReferencesWithCell(
-                cell,
+    public SpreadsheetDelta findReferences(final SpreadsheetExpressionReference reference,
+                                           final int offset,
+                                           final int count,
+                                           final SpreadsheetEngineContext context) {
+        return this.engine.findReferences(
+                reference,
                 offset,
                 count,
                 context

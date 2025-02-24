@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.reference.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -1055,17 +1056,30 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // findReferencesWithCell...........................................................................................
 
     @Override
-    public SpreadsheetDelta findReferencesWithCell(final SpreadsheetCellReference cell,
-                                                   final int offset,
-                                                   final int count,
-                                                   final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(cell, "cell");
+    public SpreadsheetDelta findReferences(final SpreadsheetExpressionReference reference,
+                                           final int offset,
+                                           final int count,
+                                           final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(reference, "reference");
         SpreadsheetEngine.checkOffsetAndCount(
                 offset,
                 count
         );
         Objects.requireNonNull(context, "context");
 
+        return this.findReferencesWithCellOrCellRange(
+                context.resolveIfLabel(reference)
+                        .toCellOrCellRange(),
+                offset,
+                count,
+                context
+        );
+    }
+
+    private SpreadsheetDelta findReferencesWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                               final int offset,
+                                                               final int count,
+                                                               final SpreadsheetEngineContext context) {
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
                 FIND_REFERENCES_DELTA_PROPERTIES,
@@ -1078,8 +1092,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             for (final SpreadsheetCellReference reference : context.storeRepository()
                     .cellReferences()
-                    .findCellsWithReference(
-                            cell,
+                    .findCellsWithCellOrCellRange(
+                            cellOrCellRange,
                             offset,
                             count
                     )) {

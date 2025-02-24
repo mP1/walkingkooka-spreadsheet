@@ -2062,14 +2062,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    // findReferencesWithCell..........................................................................................
+    // findReferences...................................................................................................
 
     @Test
-    default void testFindReferencesWithCellWithNullCellFails() {
+    default void testFindReferencesWithNullReferencesFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .findReferencesWithCell(
+                        .findReferences(
                                 null,
                                 0, // offset
                                 0, // count,
@@ -2079,11 +2079,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testFindReferencesWithCellWithNegativeOffsetFails() {
+    default void testFindReferencesWithNegativeOffsetFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
-                        .findReferencesWithCell(
+                        .findReferences(
                                 SpreadsheetSelection.A1,
                                 -1, // offset
                                 0, // count,
@@ -2093,11 +2093,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testFindReferencesWithCellWithNegativeCountFails() {
+    default void testFindReferencesWithNegativeCountFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createSpreadsheetEngine()
-                        .findReferencesWithCell(
+                        .findReferences(
                                 SpreadsheetSelection.A1,
                                 0, // offset
                                 -1, // count,
@@ -2107,11 +2107,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testFindReferencesWithCellWithNullContextFails() {
+    default void testFindReferencesWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
-                        .findReferencesWithCell(
+                        .findReferences(
                                 SpreadsheetSelection.A1,
                                 0, // offset
                                 0, // count,
@@ -2120,21 +2120,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default void findReferencesWithCellAndCheck(final SpreadsheetEngine engine,
-                                                final SpreadsheetCellReference cell,
-                                                final int offset,
-                                                final int count,
-                                                final SpreadsheetEngineContext context,
-                                                final SpreadsheetDelta expected) {
+    default void findReferencesAndCheck(final SpreadsheetEngine engine,
+                                        final SpreadsheetExpressionReference reference,
+                                        final int offset,
+                                        final int count,
+                                        final SpreadsheetEngineContext context,
+                                        final SpreadsheetDelta expected) {
         this.checkEquals(
                 expected,
-                engine.findReferencesWithCell(
-                        cell,
+                engine.findReferences(
+                        reference,
                         offset,
                         count,
                         context
                 ),
-                () -> "findReferencesWithCell " + cell + " offset=" + offset + " count=" + count
+                () -> "findReferences " + reference + " offset=" + offset + " count=" + count
         );
     }
     
