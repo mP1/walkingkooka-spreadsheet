@@ -20,4 +20,26 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCellReferencesStore> extends SpreadsheetExpressionReferenceStoreTesting<S, SpreadsheetCellReference> {
+
+    @Override
+    default void testAddSaveWatcherAndSave() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testAddDeleteWatcherAndDelete() {
+        throw new UnsupportedOperationException();
+    }
+
+    // TypeNameTesting..................................................................................................
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetCellReferencesStore.class.getSimpleName();
+    }
 }
