@@ -72,6 +72,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStores;
@@ -370,7 +371,7 @@ public class JunitTest {
 
             private final SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.basic(
                     SpreadsheetCellStores.treeMap(),
-                    SpreadsheetExpressionReferenceStores.treeMap(),
+                    SpreadsheetCellReferencesStores.treeMap(),
                     SpreadsheetColumnStores.treeMap(),
                     SpreadsheetGroupStores.fake(),
                     SpreadsheetLabelStores.treeMap(),

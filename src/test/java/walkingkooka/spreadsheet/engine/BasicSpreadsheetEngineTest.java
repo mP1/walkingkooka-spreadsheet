@@ -80,6 +80,8 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
@@ -1766,7 +1768,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
@@ -1808,7 +1810,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
@@ -1846,7 +1848,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
@@ -1931,7 +1933,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
@@ -1971,7 +1973,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
@@ -1986,7 +1988,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell(
                 "a1",
@@ -2165,7 +2167,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         final SpreadsheetCell a1 = this.cell(
                 "$A$1",
@@ -2390,7 +2392,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
@@ -2443,7 +2445,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
+        final SpreadsheetCellReferencesStore cellReferenceStore = context.storeRepository()
                 .cellReferences();
 
         this.loadReferencesAndCheck(
@@ -2669,7 +2671,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(
                 cellStore,
@@ -2801,7 +2803,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(
                 cellStore,
@@ -2864,7 +2866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
+        final SpreadsheetCellReferencesStore cellReferenceStore = context.storeRepository()
                 .cellReferences();
 
         this.loadReferencesAndCheck(
@@ -2970,7 +2972,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
         this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
@@ -3065,7 +3067,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context
+        final SpreadsheetCellReferencesStore cellReferenceStore = context
                 .storeRepository()
                 .cellReferences();
 
@@ -3095,7 +3097,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
         final SpreadsheetLabelStore labelStore = repository.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
@@ -3201,7 +3203,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
         final SpreadsheetLabelStore labelStore = repository.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
@@ -3579,7 +3581,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(
                 cellStore,
@@ -3645,7 +3647,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(
                 cellStore,
@@ -3726,7 +3728,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(
                 cellStore,
@@ -3790,7 +3792,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(
                 cellStore,
@@ -3845,7 +3847,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(
                 cellStore,
@@ -3916,7 +3918,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetCellStore cellStore = repository.cells();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
         this.loadCellStoreAndCheck(
                 cellStore,
@@ -4092,7 +4094,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
+        final SpreadsheetCellReferencesStore cellReferenceStore = context.storeRepository()
                 .cellReferences();
 
         this.loadReferencesAndCheck(
@@ -4166,7 +4168,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = context.storeRepository()
+        final SpreadsheetCellReferencesStore cellReferenceStore = context.storeRepository()
                 .cellReferences();
 
         this.loadReferencesAndCheck(
@@ -4238,7 +4240,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
@@ -4316,7 +4318,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
         final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = repository.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
@@ -14250,7 +14252,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     public SpreadsheetStoreRepository storeRepository() {
                                         return SpreadsheetStoreRepositories.basic(
                                                 SpreadsheetCellStores.treeMap(),
-                                                SpreadsheetExpressionReferenceStores.treeMap(),
+                                                SpreadsheetCellReferencesStores.treeMap(),
                                                 SpreadsheetColumnStores.treeMap(),
                                                 SpreadsheetGroupStores.fake(),
                                                 SpreadsheetLabelStores.treeMap(),
@@ -18683,7 +18685,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 SpreadsheetStoreRepositories.basic(
                         SpreadsheetCellStores.treeMap(),
-                        SpreadsheetExpressionReferenceStores.treeMap(),
+                        SpreadsheetCellReferencesStores.treeMap(),
                         SpreadsheetColumnStores.treeMap(),
                         SpreadsheetGroupStores.fake(),
                         SpreadsheetLabelStores.treeMap(),
@@ -18953,7 +18955,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store,
+    private void findReferencesWithCellAndCheck(final SpreadsheetCellReferencesStore store,
                                                 final SpreadsheetCellReference cell,
                                                 final SpreadsheetCellReference... expected) {
         this.checkEquals(

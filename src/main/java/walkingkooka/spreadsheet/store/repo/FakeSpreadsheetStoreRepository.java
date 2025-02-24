@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
@@ -43,7 +44,7 @@ public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     @Override
-    public SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
+    public SpreadsheetCellReferencesStore cellReferences() {
         throw new UnsupportedOperationException();
     }
 
