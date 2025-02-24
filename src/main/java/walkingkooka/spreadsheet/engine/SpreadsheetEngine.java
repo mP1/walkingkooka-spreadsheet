@@ -46,6 +46,14 @@ import java.util.Set;
  */
 public interface SpreadsheetEngine {
 
+    static void checkOffsetAndCount(final int offset,
+                                    final int count) {
+        Store.checkOffsetAndCount(
+                offset,
+                count
+        );
+    }
+
     static int checkCount(final int count) {
         return Store.checkCount(count);
     }
