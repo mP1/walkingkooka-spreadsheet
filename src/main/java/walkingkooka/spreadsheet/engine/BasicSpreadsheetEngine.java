@@ -118,10 +118,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
-        checkSelection(selection);
+        Objects.requireNonNull(selection, "selection");
         Objects.requireNonNull(evaluation, "evaluation");
-        checkDeltaProperties(deltaProperties);
-        checkContext(context);
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
+        Objects.requireNonNull(context, "context");
 
         return this.loadCellRange(
                         context.resolveIfLabel(selection)
@@ -228,9 +228,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                    final Set<SpreadsheetDeltaProperties> deltaProperties,
                                                    final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cellRanges, "cellRanges");
-        checkEvaluation(evaluation);
-        checkDeltaProperties(deltaProperties);
-        checkContext(context);
+        Objects.requireNonNull(evaluation, "evaluation");
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
                 this,
@@ -282,7 +282,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
                                      final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
                 this,
@@ -315,7 +315,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public SpreadsheetDelta saveCells(final Set<SpreadsheetCell> cells,
                                       final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return cells.isEmpty() ?
                 SpreadsheetDelta.EMPTY :
@@ -359,8 +359,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public SpreadsheetDelta deleteCells(final SpreadsheetSelection selection,
                                         final SpreadsheetEngineContext context) {
-        checkSelection(selection);
-        checkContext(context);
+        Objects.requireNonNull(selection, "selection");
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
                 this,
@@ -394,7 +394,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(from, "parse");
         Objects.requireNonNull(to, "to");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
@@ -424,9 +424,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
-        checkValueType(valueType);
+        CharSequences.failIfNullOrEmpty(valueType, "valueType");
         Objects.requireNonNull(expression, "expression");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
@@ -461,7 +461,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                       final Expression expression,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
-        checkCellRange(cellRange);
+        Objects.requireNonNull(cellRange, "cellRange");
         Objects.requireNonNull(path, "path");
         if (offset < 0) {
             throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
@@ -469,10 +469,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (count < 0) {
             throw new IllegalArgumentException("Invalid count " + count + " < 0");
         }
-        checkValueType(valueType);
-        checkExpression(expression);
+        CharSequences.failIfNullOrEmpty(valueType, "valueType");
+        Objects.requireNonNull(expression, "expression");
         Objects.requireNonNull(deltaProperties, "deltaProperties");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
@@ -552,10 +552,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                       final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparators,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
-        checkCellRange(cellRange);
+        Objects.requireNonNull(cellRange, "cellRange");
         Objects.requireNonNull(comparators, "comparators");
-        checkDeltaProperties(deltaProperties);
-        checkContext(context);
+        Objects.requireNonNull(deltaProperties, "deltaProperties");
+        Objects.requireNonNull(context, "context");
 
         return this.sortCells0(
                 cellRange,
@@ -776,7 +776,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public SpreadsheetDelta saveColumn(final SpreadsheetColumn column,
                                        final SpreadsheetEngineContext context) {
         Objects.requireNonNull(column, "column");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
                 this,
@@ -828,7 +828,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public SpreadsheetDelta saveRow(final SpreadsheetRow row,
                                     final SpreadsheetEngineContext context) {
         Objects.requireNonNull(row, "row");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
                 this,
@@ -862,9 +862,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
                                           final int count,
                                           final SpreadsheetEngineContext context) {
-        checkColumn(column);
+        Objects.requireNonNull(column, "column");
         checkCount(count);
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
@@ -888,9 +888,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public SpreadsheetDelta deleteRows(final SpreadsheetRowReference row,
                                        final int count,
                                        final SpreadsheetEngineContext context) {
-        checkRow(row);
+        Objects.requireNonNull(row, "row");
         checkCount(count);
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
@@ -915,9 +915,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public SpreadsheetDelta insertColumns(final SpreadsheetColumnReference column,
                                           final int count,
                                           final SpreadsheetEngineContext context) {
-        checkColumn(column);
+        Objects.requireNonNull(column, "column");
         checkCount(count);
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
@@ -942,9 +942,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
                                        final int count,
                                        final SpreadsheetEngineContext context) {
-        checkRow(row);
+        Objects.requireNonNull(row, "row");
         checkCount(count);
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
@@ -976,8 +976,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
                                       final SpreadsheetEngineContext context) {
-        checkMapping(mapping);
-        checkContext(context);
+        Objects.requireNonNull(mapping, "mapping");
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
                 this,
@@ -1003,8 +1003,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
                                         final SpreadsheetEngineContext context) {
-        checkLabel(label);
-        checkContext(context);
+        Objects.requireNonNull(label, "name");
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
                 this,
@@ -1027,8 +1027,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public SpreadsheetDelta loadLabel(final SpreadsheetLabelName label,
                                       final SpreadsheetEngineContext context) {
-        checkLabel(label);
-        checkContext(context);
+        Objects.requireNonNull(label, "name");
+        Objects.requireNonNull(context, "context");
 
         return SpreadsheetDelta.EMPTY.setLabels(
                 context.storeRepository()
@@ -1051,7 +1051,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (count < 0) {
             throw new IllegalArgumentException("Invalid count " + count + " < 0");
         }
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return SpreadsheetDelta.EMPTY.setLabels(
                 context.storeRepository()
@@ -1078,7 +1078,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (count < 0) {
             throw new IllegalArgumentException("Invalid count " + count + " < 0");
         }
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
@@ -1451,7 +1451,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public int columnCount(final SpreadsheetEngineContext context) {
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return context.storeRepository()
                 .cells()
@@ -1460,7 +1460,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public int rowCount(final SpreadsheetEngineContext context) {
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return context.storeRepository()
                 .cells()
@@ -1476,7 +1476,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                              final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewportRectangle, "viewportRectangle");
         Objects.requireNonNull(selection, "selection");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         return this.window0(
                 viewportRectangle,
@@ -1887,7 +1887,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Optional<SpreadsheetViewport> navigate(final SpreadsheetViewport viewport,
                                                   final SpreadsheetEngineContext context) {
         Objects.requireNonNull(viewport, "viewport");
-        checkContext(context);
+        Objects.requireNonNull(context, "context");
 
         Optional<SpreadsheetViewport> result = Optional.empty();
 
@@ -2015,52 +2015,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
         return Optional.ofNullable(result);
-    }
-
-    // checkers.........................................................................................................
-
-    private static SpreadsheetCellRangeReference checkCellRange(final SpreadsheetCellRangeReference cellRange) {
-        return Objects.requireNonNull(cellRange, "cellRange");
-    }
-
-    private static String checkValueType(final String valueType) {
-        return CharSequences.failIfNullOrEmpty(valueType, "valueType");
-    }
-
-    private static Expression checkExpression(final Expression expression) {
-        return Objects.requireNonNull(expression, "expression");
-    }
-
-    private static SpreadsheetLabelName checkLabel(final SpreadsheetLabelName name) {
-        return Objects.requireNonNull(name, "name");
-    }
-
-    private static SpreadsheetLabelMapping checkMapping(final SpreadsheetLabelMapping mapping) {
-        return Objects.requireNonNull(mapping, "mapping");
-    }
-
-    private static SpreadsheetColumnReference checkColumn(final SpreadsheetColumnReference column) {
-        return Objects.requireNonNull(column, "column");
-    }
-
-    private static SpreadsheetRowReference checkRow(final SpreadsheetRowReference row) {
-        return Objects.requireNonNull(row, "row");
-    }
-
-    private static SpreadsheetSelection checkSelection(final SpreadsheetSelection selection) {
-        return Objects.requireNonNull(selection, "selection");
-    }
-
-    private static SpreadsheetEngineEvaluation checkEvaluation(final SpreadsheetEngineEvaluation evaluation) {
-        return Objects.requireNonNull(evaluation, "evaluation");
-    }
-
-    private static Set<SpreadsheetDeltaProperties> checkDeltaProperties(final Set<SpreadsheetDeltaProperties> deltaProperties) {
-        return Objects.requireNonNull(deltaProperties, "deltaProperties");
-    }
-
-    private static SpreadsheetEngineContext checkContext(final SpreadsheetEngineContext context) {
-        return Objects.requireNonNull(context, "context");
     }
 
     // j2cl helpers....................................................................................................
