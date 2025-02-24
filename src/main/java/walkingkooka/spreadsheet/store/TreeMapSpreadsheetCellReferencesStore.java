@@ -110,15 +110,11 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
 
         // potentially slow for large ranges with gaps.
         for (final SpreadsheetCellReference reference : cellOrCellRange.toCellRange()) {
-            System.out.println("Reference: " + reference + " " + this);
             for (final SpreadsheetCellReference referenceForCell : this.findCellsWithReference(
                     reference,
                     0,
                     count - references.size()
             )) {
-
-                System.out.println("\treferenceForCell: " + referenceForCell + " skipCountDown: " + skipCountDown);
-
                 if (--skipCountDown < 0) {
                     references.add(referenceForCell);
                     if (references.size() >= count) {
