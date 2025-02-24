@@ -202,10 +202,10 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta findReferences(final SpreadsheetExpressionReference reference,
-                                           final int offset,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta findCellsWithReferences(final SpreadsheetExpressionReference reference,
+                                                    final int offset,
+                                                    final int count,
+                                                    final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

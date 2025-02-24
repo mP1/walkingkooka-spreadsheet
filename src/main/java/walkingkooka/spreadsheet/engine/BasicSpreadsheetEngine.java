@@ -1056,10 +1056,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // findReferencesWithCell...........................................................................................
 
     @Override
-    public SpreadsheetDelta findReferences(final SpreadsheetExpressionReference reference,
-                                           final int offset,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta findCellsWithReferences(final SpreadsheetExpressionReference reference,
+                                                    final int offset,
+                                                    final int count,
+                                                    final SpreadsheetEngineContext context) {
         Objects.requireNonNull(reference, "reference");
         SpreadsheetEngine.checkOffsetAndCount(
                 offset,
@@ -1067,7 +1067,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
         Objects.requireNonNull(context, "context");
 
-        return this.findReferencesWithCellOrCellRange(
+        return this.findCellsWithReferencesWithCellOrCellRange(
                 context.resolveIfLabel(reference)
                         .toCellOrCellRange(),
                 offset,
@@ -1076,10 +1076,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    private SpreadsheetDelta findReferencesWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
-                                                               final int offset,
-                                                               final int count,
-                                                               final SpreadsheetEngineContext context) {
+    private SpreadsheetDelta findCellsWithReferencesWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                        final int offset,
+                                                                        final int count,
+                                                                        final SpreadsheetEngineContext context) {
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
                 this,
                 FIND_REFERENCES_DELTA_PROPERTIES,
