@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
+import walkingkooka.store.Store;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Collection;
@@ -44,6 +45,10 @@ import java.util.Set;
  * The engine or host for the active spreadsheet.
  */
 public interface SpreadsheetEngine {
+
+    static int checkCount(final int count) {
+        return Store.checkCount(count);
+    }
 
     /**
      * Loads the requested {@link SpreadsheetColumnReference} which may include parsing the formula as necessary and then
