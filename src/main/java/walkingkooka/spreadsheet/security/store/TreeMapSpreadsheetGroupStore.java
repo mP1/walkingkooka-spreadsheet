@@ -84,15 +84,21 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     }
 
     @Override
-    public Set<GroupId> ids(final int from,
+    public Set<GroupId> ids(final int offset,
                             final int count) {
-        return this.store.ids(from, count);
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<Group> values(final int from,
+    public List<Group> values(final int offset,
                               final int count) {
-        return this.store.values(from, count);
+        return this.store.values(
+                offset,
+                count
+        );
     }
 
     @Override
