@@ -81,15 +81,21 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     }
 
     @Override
-    public Set<UserId> ids(final int from,
+    public Set<UserId> ids(final int offset,
                            final int count) {
-        return this.store.ids(from, count);
+        return this.store.ids(
+                offset,
+                count
+        );
     }
 
     @Override
-    public List<User> values(final int from,
+    public List<User> values(final int offset,
                              final int count) {
-        return this.store.values(from, count);
+        return this.store.values(
+                offset,
+                count
+        );
     }
 
     @Override
