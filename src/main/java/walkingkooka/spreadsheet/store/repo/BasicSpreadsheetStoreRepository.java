@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
@@ -39,7 +40,7 @@ import java.util.Objects;
 final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepository {
 
     static BasicSpreadsheetStoreRepository with(final SpreadsheetCellStore cells,
-                                                final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
+                                                final SpreadsheetCellReferencesStore cellReferences,
                                                 final SpreadsheetColumnStore columns,
                                                 final SpreadsheetGroupStore groups,
                                                 final SpreadsheetLabelStore labels,
@@ -77,7 +78,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     private BasicSpreadsheetStoreRepository(final SpreadsheetCellStore cells,
-                                            final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
+                                            final SpreadsheetCellReferencesStore cellReferences,
                                             final SpreadsheetColumnStore columns,
                                             final SpreadsheetGroupStore groups,
                                             final SpreadsheetLabelStore labels,
@@ -108,11 +109,11 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetCellStore cells;
 
     @Override
-    public SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
+    public SpreadsheetCellReferencesStore cellReferences() {
         return this.cellReferences;
     }
 
-    private final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences;
+    private final SpreadsheetCellReferencesStore cellReferences;
 
     @Override
     public SpreadsheetColumnStore columns() {

@@ -29,6 +29,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
@@ -77,8 +79,8 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                             }
 
                             @Override
-                            public SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
-                                return SpreadsheetExpressionReferenceStores.treeMap();
+                            public SpreadsheetCellReferencesStore cellReferences() {
+                                return SpreadsheetCellReferencesStores.treeMap();
                             }
 
                             @Override

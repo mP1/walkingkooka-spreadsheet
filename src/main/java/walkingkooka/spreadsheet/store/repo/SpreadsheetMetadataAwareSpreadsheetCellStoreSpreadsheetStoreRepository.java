@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
@@ -113,7 +114,7 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     private SpreadsheetCellStore cells; // TODO AtomicReference
 
     @Override
-    public SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
+    public SpreadsheetCellReferencesStore cellReferences() {
         return this.repository.cellReferences();
     }
 

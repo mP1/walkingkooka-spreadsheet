@@ -29,6 +29,8 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
@@ -229,7 +231,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     }
 
     private void withFails(final SpreadsheetCellStore cells,
-                           final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
+                           final SpreadsheetCellReferencesStore cellReferences,
                            final SpreadsheetColumnStore columns,
                            final SpreadsheetGroupStore groups,
                            final SpreadsheetLabelStore labels,
@@ -260,7 +262,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testToString() {
         final SpreadsheetCellStore cells = this.cells();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences = this.cellReferences();
+        final SpreadsheetCellReferencesStore cellReferences = this.cellReferences();
         final SpreadsheetColumnStore columns = this.columns();
         final SpreadsheetGroupStore groups = this.groups();
         final SpreadsheetLabelStore labels = this.labels();
@@ -309,8 +311,8 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         return SpreadsheetCellStores.fake();
     }
 
-    private SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
-        return SpreadsheetExpressionReferenceStores.fake();
+    private SpreadsheetCellReferencesStore cellReferences() {
+        return SpreadsheetCellReferencesStores.fake();
     }
 
     private SpreadsheetColumnStore columns() {
