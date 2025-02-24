@@ -15957,7 +15957,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findReferencesWithCellAndCheck(
+        this.findReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
                 0, // offset
@@ -16003,6 +16003,70 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "d4",
                 "=1000+a1"
         );
+        final SpreadsheetCell e5 = this.cell(
+                "e5",
+                "=10000+a1"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2,
+                        c3,
+                        d4,
+                        e5,
+                        this.cell(
+                                "z99",
+                                "=999"
+                        )
+                ),
+                context
+        );
+
+        // b2 skipped by offset, d4= not included by count
+        this.findReferencesAndCheck(
+                engine,
+                SpreadsheetSelection.A1,
+                1, // offset
+                3, // count
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                // skips b2 because of offset=1, c3, d4 appear in results, e5 ignored because of count
+                                this.formatCell(
+                                        c3,
+                                        100 + 1
+                                ),
+                                this.formatCell(
+                                        d4,
+                                        1000 + 1
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testFindReferencesWithCellRange() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCell a1 = this.cell(
+                "a1",
+                "=1"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "b2",
+                "=10"
+        );
+        final SpreadsheetCell c3 = this.cell(
+                "c3",
+                "=100+a1"
+        );
+        final SpreadsheetCell d4 = this.cell(
+                "d4",
+                "=1000+b2"
+        );
 
         engine.saveCells(
                 Sets.of(
@@ -16018,18 +16082,85 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        // b2 skipped by offset, d4= not included by count
-        this.findReferencesWithCellAndCheck(
+        this.findReferencesAndCheck(
                 engine,
-                SpreadsheetSelection.A1,
-                1, // offset
-                1, // count
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                0, // offset
+                3, // count
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
                                 this.formatCell(
                                         c3,
                                         100 + 1
+                                ),
+                                this.formatCell(
+                                        d4,
+                                        1000 + 1
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testFindReferencesWithLabelToCellRange() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCell a1 = this.cell(
+                "a1",
+                "=1"
+        );
+        final SpreadsheetCell b2 = this.cell(
+                "b2",
+                "=10"
+        );
+        final SpreadsheetCell c3 = this.cell(
+                "c3",
+                "=100+a1"
+        );
+        final SpreadsheetCell d4 = this.cell(
+                "d4",
+                "=1000+b2"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1,
+                        b2,
+                        c3,
+                        d4,
+                        this.cell(
+                                "e5",
+                                "=999"
+                        )
+                ),
+                context
+        );
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        engine.saveLabel(
+                label.setLabelMappingReference(SpreadsheetSelection.parseCellRange("A1:B2")),
+                context
+        );
+
+        this.findReferencesAndCheck(
+                engine,
+                label,
+                0, // offset
+                3, // count
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        c3,
+                                        100 + 1
+                                ),
+                                this.formatCell(
+                                        d4,
+                                        1000 + 1
                                 )
                         )
                 )
@@ -16062,11 +16193,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findReferencesWithCellAndCheck(
+        this.findReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
                 0, // offset
-                10, // count
+                3, // count
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
