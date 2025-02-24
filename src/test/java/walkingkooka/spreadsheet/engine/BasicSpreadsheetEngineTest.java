@@ -15922,7 +15922,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // findReferencesWithCell...........................................................................................
 
     @Test
-    public void testFindReferencesWithCell() {
+    public void testFindReferencesWithCellWithCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -15957,7 +15957,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findReferencesAndCheck(
+        this.findCellsWithReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
                 0, // offset
@@ -15983,7 +15983,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindReferencesWithCellAndOffsetAndCount() {
+    public void testFindReferencesWithCellWithCellAndOffsetAndCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16024,7 +16024,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         // b2 skipped by offset, d4= not included by count
-        this.findReferencesAndCheck(
+        this.findCellsWithReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
                 1, // offset
@@ -16047,7 +16047,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindReferencesWithCellRange() {
+    public void testFindReferencesWithCellWithCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16082,7 +16082,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findReferencesAndCheck(
+        this.findCellsWithReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 0, // offset
@@ -16104,7 +16104,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindReferencesWithLabelToCellRange() {
+    public void testFindReferencesWithCellWithLabelToCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16146,7 +16146,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findReferencesAndCheck(
+        this.findCellsWithReferencesAndCheck(
                 engine,
                 label,
                 0, // offset
@@ -16168,7 +16168,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFindReferencesWithCellWhereFormulaIncludesCycle() {
+    public void testFindReferencesWithCellWithCellWhereFormulaIncludesCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16193,7 +16193,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.findReferencesAndCheck(
+        this.findCellsWithReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
                 0, // offset
