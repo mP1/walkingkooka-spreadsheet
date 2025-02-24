@@ -463,12 +463,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                       final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cellRange, "cellRange");
         Objects.requireNonNull(path, "path");
-        if (offset < 0) {
-            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-        }
-        if (count < 0) {
-            throw new IllegalArgumentException("Invalid count " + count + " < 0");
-        }
+        SpreadsheetEngine.checkOffsetAndCount(
+                offset,
+                count
+        );
         CharSequences.failIfNullOrEmpty(valueType, "valueType");
         Objects.requireNonNull(expression, "expression");
         Objects.requireNonNull(deltaProperties, "deltaProperties");
@@ -684,12 +682,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                   final Set<SpreadsheetDeltaProperties> properties,
                                                   final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
-        if (offset < 0) {
-            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-        }
-        if (count < 0) {
-            throw new IllegalArgumentException("Invalid count " + count + " < 0");
-        }
+        SpreadsheetEngine.checkOffsetAndCount(
+                offset,
+                count
+        );
         Objects.requireNonNull(properties, "properties");
         Objects.requireNonNull(context, "context");
 
@@ -1039,12 +1035,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                     final int count,
                                                     final SpreadsheetEngineContext context) {
         Objects.requireNonNull(reference, "reference");
-        if (offset < 0) {
-            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-        }
-        if (count < 0) {
-            throw new IllegalArgumentException("Invalid count " + count + " < 0");
-        }
+        SpreadsheetEngine.checkOffsetAndCount(
+                offset,
+                count
+        );
         Objects.requireNonNull(context, "context");
 
         return SpreadsheetDelta.EMPTY.setLabels(
@@ -1066,12 +1060,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                    final int count,
                                                    final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
-        if (offset < 0) {
-            throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
-        }
-        if (count < 0) {
-            throw new IllegalArgumentException("Invalid count " + count + " < 0");
-        }
+        SpreadsheetEngine.checkOffsetAndCount(
+                offset,
+                count
+        );
         Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
