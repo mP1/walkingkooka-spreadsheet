@@ -863,7 +863,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                           final int count,
                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(column, "column");
-        checkCount(count);
+        SpreadsheetEngine.checkCount(count);
         Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
@@ -889,7 +889,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                        final int count,
                                        final SpreadsheetEngineContext context) {
         Objects.requireNonNull(row, "row");
-        checkCount(count);
+        SpreadsheetEngine.checkCount(count);
         Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
@@ -916,7 +916,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                           final int count,
                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(column, "column");
-        checkCount(count);
+        SpreadsheetEngine.checkCount(count);
         Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
@@ -943,7 +943,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                        final int count,
                                        final SpreadsheetEngineContext context) {
         Objects.requireNonNull(row, "row");
-        checkCount(count);
+        SpreadsheetEngine.checkCount(count);
         Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
@@ -962,12 +962,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             return this.prepareResponse(changes, context);
         } finally {
             changes.close();
-        }
-    }
-
-    private static void checkCount(final int count) {
-        if (count < 0) {
-            throw new IllegalArgumentException("Count " + count + " < 0");
         }
     }
 
