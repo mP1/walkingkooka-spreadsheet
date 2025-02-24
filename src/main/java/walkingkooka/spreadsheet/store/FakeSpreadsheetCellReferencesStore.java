@@ -18,10 +18,20 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+
+import java.util.Set;
 
 public class FakeSpreadsheetCellReferencesStore extends FakeSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> implements SpreadsheetCellReferencesStore {
 
     public FakeSpreadsheetCellReferencesStore() {
         super();
+    }
+
+    @Override
+    public Set<SpreadsheetCellReference> findCellsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                                      final int offset,
+                                                                      final int count) {
+        throw new UnsupportedOperationException();
     }
 }

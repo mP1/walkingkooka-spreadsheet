@@ -18,6 +18,16 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+
+import java.util.Set;
 
 public interface SpreadsheetCellReferencesStore extends SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> {
+
+    /**
+     * Finds any {@link SpreadsheetCellReference} with the provided {@link SpreadsheetCellReferenceOrRange}.
+     */
+    Set<SpreadsheetCellReference> findCellsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
+                                                               final int offset,
+                                                               final int count);
 }

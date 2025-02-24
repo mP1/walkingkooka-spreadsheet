@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -24,6 +25,309 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetCellReferencesStoreTest implements SpreadsheetCellReferencesStoreTesting<TreeMapSpreadsheetCellReferencesStore> {
+
+    // findCellsWithCellOrCellRange.....................................................................................
+
+    @Test
+    public void testFindCellsWithCellOrCellRangeWithZeroCount() {
+        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference,
+                        cell
+                )
+        );
+
+        this.findCellsWithCellOrCellRangeAndCheck(
+                store,
+                cell,
+                0,
+                0
+        );
+    }
+
+    @Test
+    public void testFindCellsWithCellOrCellRangeWhereCellWithReference() {
+        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference,
+                        cell
+                )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                store,
+                reference,
+                0,
+                2,
+                cell
+        );
+
+        this.findCellsWithCellOrCellRangeAndCheck(
+                store,
+                reference,
+                0,
+                2,
+                cell
+        );
+    }
+
+    @Test
+    public void testFindCellsWithCellOrCellRangeWhereCellWithReferences() {
+        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference,
+                        cell
+                )
+        );
+
+        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("C3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference,
+                        cell2
+                )
+        );
+
+        // ignored
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        cell,
+                        reference
+                )
+        );
+
+        this.findCellsWithCellOrCellRangeAndCheck(
+                store,
+                reference,
+                0,
+                3,
+                cell,
+                cell2
+        );
+    }
+
+    @Test
+    public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithOffset() {
+        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z9");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference,
+                        cell
+                )
+        );
+
+        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("B2");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference,
+                        cell2
+                )
+        );
+
+        // ignored
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        cell,
+                        reference
+                )
+        );
+
+        this.findCellsWithCellOrCellRangeAndCheck(
+                store,
+                reference,
+                1,
+                3,
+                // cell1 skipped by offset=1
+                cell2
+        );
+    }
+
+    @Test
+    public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRange() {
+        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+
+        final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference1,
+                        cell1
+                )
+        );
+
+        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference2,
+                        cell2
+                )
+        );
+
+        // ignored
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        cell1,
+                        reference1
+                )
+        );
+
+        this.findCellsWithCellOrCellRangeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("F6:G7"),
+                0,
+                3,
+                cell1,
+                cell2
+        );
+    }
+
+    @Test
+    public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRange2() {
+        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+
+        final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference1,
+                        cell1
+                )
+        );
+
+        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference1,
+                        cell2
+                )
+        );
+
+        final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
+        final SpreadsheetCellReference cell3 = SpreadsheetSelection.parseCell("c3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference2,
+                        cell3
+                )
+        );
+
+        final SpreadsheetCellReference cell4 = SpreadsheetSelection.parseCell("d4");
+        final SpreadsheetCellReference reference3 = SpreadsheetSelection.parseCell("H8");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference3,
+                        cell4
+                )
+        );
+
+        // ignored
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        cell1,
+                        reference1
+                )
+        );
+
+        this.findCellsWithCellOrCellRangeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("F6:I9"),
+                0,
+                5,
+                cell1,
+                cell2,
+                cell3,
+                cell4
+        );
+    }
+
+    @Test
+    public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRangeAndOffsetAndCount() {
+        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+
+        final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference1,
+                        cell1
+                )
+        );
+
+        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference1,
+                        cell2
+                )
+        );
+
+        final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
+        final SpreadsheetCellReference cell3 = SpreadsheetSelection.parseCell("c3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference2,
+                        cell3
+                )
+        );
+
+        final SpreadsheetCellReference cell4 = SpreadsheetSelection.parseCell("d4");
+        final SpreadsheetCellReference reference3 = SpreadsheetSelection.parseCell("H8");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        reference3,
+                        cell4
+                )
+        );
+
+        // ignored
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(
+                        cell1,
+                        reference1
+                )
+        );
+
+        this.findCellsWithCellOrCellRangeAndCheck(
+                store,
+                SpreadsheetSelection.parseCellRange("F6:I9"),
+                1,
+                2,
+                //cell1, skipped by offset 1
+                cell2,
+                cell3
+                //cell4 less than count
+        );
+    }
 
     @Override
     public TreeMapSpreadsheetCellReferencesStore createStore() {
