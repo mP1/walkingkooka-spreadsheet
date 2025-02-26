@@ -15629,6 +15629,130 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    //  loadLabels......................................................................................................
+
+    @Test
+    public void testLoadLabels() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("LABEL111");
+        final SpreadsheetLabelMapping mapping1 = SpreadsheetLabelMapping.with(
+                label1,
+                SpreadsheetSelection.A1
+        );
+
+        engine.saveLabel(
+                mapping1,
+                context
+        );
+
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("LABEL222");
+        final SpreadsheetLabelMapping mapping2 = SpreadsheetLabelMapping.with(
+                label2,
+                SpreadsheetSelection.A1
+        );
+
+        engine.saveLabel(
+                mapping2,
+                context
+        );
+
+        final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("LABEL333");
+        final SpreadsheetLabelMapping mapping3 = SpreadsheetLabelMapping.with(
+                label3,
+                SpreadsheetSelection.parseCell("c3")
+        );
+
+        engine.saveLabel(
+                mapping3,
+                context
+        );
+
+        final SpreadsheetLabelName label4 = SpreadsheetSelection.labelName("LABEL444");
+        final SpreadsheetLabelMapping mapping4 = SpreadsheetLabelMapping.with(
+                label4,
+                SpreadsheetSelection.parseCell("d4")
+        );
+
+        engine.saveLabel(
+                mapping4,
+                context
+        );
+
+        this.loadLabelsAndCheck(
+                engine,
+                0, // offset
+                4, // count
+                context,
+                mapping1,
+                mapping2,
+                mapping3,
+                mapping4
+        );
+    }
+
+    @Test
+    public void testLoadLabelsWithOffsetAndCount() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("LABEL111");
+        final SpreadsheetLabelMapping mapping1 = SpreadsheetLabelMapping.with(
+                label1,
+                SpreadsheetSelection.A1
+        );
+
+        engine.saveLabel(
+                mapping1,
+                context
+        );
+
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("LABEL222");
+        final SpreadsheetLabelMapping mapping2 = SpreadsheetLabelMapping.with(
+                label2,
+                SpreadsheetSelection.A1
+        );
+
+        engine.saveLabel(
+                mapping2,
+                context
+        );
+
+        final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("LABEL333");
+        final SpreadsheetLabelMapping mapping3 = SpreadsheetLabelMapping.with(
+                label3,
+                SpreadsheetSelection.parseCell("c3")
+        );
+
+        engine.saveLabel(
+                mapping3,
+                context
+        );
+
+        final SpreadsheetLabelName label4 = SpreadsheetSelection.labelName("LABEL444");
+        final SpreadsheetLabelMapping mapping4 = SpreadsheetLabelMapping.with(
+                label4,
+                SpreadsheetSelection.parseCell("d4")
+        );
+
+        engine.saveLabel(
+                mapping4,
+                context
+        );
+
+        this.loadLabelsAndCheck(
+                engine,
+                1, // offset
+                2, // count
+                context,
+                // mapping1 offset=1 skips,
+                mapping2,
+                mapping3
+                //mapping4 // skipped because of count=2
+        );
+    }
+
     //  deleteLabel.......................................................................................................
 
     @Test

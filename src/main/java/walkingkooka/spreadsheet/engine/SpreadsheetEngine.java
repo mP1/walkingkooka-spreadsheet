@@ -229,6 +229,12 @@ public interface SpreadsheetEngine {
                                final SpreadsheetEngineContext context);
 
     /**
+     * Loads the given range of labels.
+     */
+    SpreadsheetDelta loadLabels(final int offset,
+                                final int count,
+                                final SpreadsheetEngineContext context);
+    /**
      * Finds all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetExpressionReference}.
      */
     SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,

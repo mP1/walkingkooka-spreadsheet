@@ -1954,6 +1954,79 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 "label loaded failed");
     }
 
+    // loadLabels.......................................................................................................
+
+    @Test
+    default void testLoadLabelsWithInvalidOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadLabels(
+                                -1, // offset
+                                0, // count
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadLabelsWithInvalidCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadLabels(
+                                0, // offset
+                                -1, // count
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadLabelsWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadLabels(
+                                0, // offset
+                                1, // count
+                                null
+                        )
+        );
+    }
+
+    default void loadLabelsAndCheck(final SpreadsheetEngine engine,
+                                    final int offset,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetLabelMapping...mappings) {
+        this.loadLabelsAndCheck(
+                engine,
+                offset,
+                count,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mappings)
+                )
+        );
+    }
+
+    default void loadLabelsAndCheck(final SpreadsheetEngine engine,
+                                    final int offset,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.loadLabels(
+                        offset,
+                        count,
+                        context
+                ),
+                () -> "loadLabels offset=" + offset + " count=" + count
+        );
+    }
+
     // findLabelsWithReference..........................................................................................
 
     @Test
