@@ -74,6 +74,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -1027,6 +1028,30 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         .load(label)
                         .map(Sets::of)
                         .orElse(Sets.empty())
+        );
+    }
+
+    @Override
+    public SpreadsheetDelta loadLabels(final int offset,
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
+        SpreadsheetEngine.checkOffsetAndCount(
+                offset,
+                count
+        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.EMPTY.setLabels(
+                SortedSets.immutable(
+                        new TreeSet<>(
+                                context.storeRepository()
+                                        .labels()
+                                        .values(
+                                                offset,
+                                                count
+                                        )
+                        )
+                )
         );
     }
 
