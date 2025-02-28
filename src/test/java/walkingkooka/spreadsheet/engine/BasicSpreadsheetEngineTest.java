@@ -31,7 +31,6 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
@@ -41,7 +40,6 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -1657,24 +1655,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 delta.rowHeights(),
                 () -> "rowHeights, " + deltaProperties
         );
-    }
-
-    private SpreadsheetConditionalFormattingRule rule(final boolean result,
-                                                      final int priority,
-                                                      final TextStyle style) {
-
-
-        return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with(priority + "=" + result),
-                priority,
-                SpreadsheetFormula.EMPTY
-                        .setText(
-                                String.valueOf(result)
-                        ).setExpression(
-                                Optional.of(
-                                        Expression.value(result)
-                                )
-                        ),
-                (c) -> style);
     }
 
     @Test
