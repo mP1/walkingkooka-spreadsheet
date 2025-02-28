@@ -526,6 +526,32 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
+    public void testParseOnlyWhitespaceWithDateParser() {
+        final String text = "   ";
+
+        this.parseAndCheck(
+                text,
+                SpreadsheetPattern.parseDateParsePattern(text)
+                        .parser(),
+                SpreadsheetFormula.EMPTY
+                        .setText(text)
+                        .setToken(
+                                Optional.of(
+                                        SpreadsheetFormulaParserToken.date(
+                                                Lists.of(
+                                                     SpreadsheetFormulaParserToken.textLiteral(
+                                                             text,
+                                                             text
+                                                     )
+                                                ),
+                                                text
+                                        )
+                                )
+                        )
+        );
+    }
+
+    @Test
     public void testParseInvalidParsePattern() {
         final String text = "=2A";
 
