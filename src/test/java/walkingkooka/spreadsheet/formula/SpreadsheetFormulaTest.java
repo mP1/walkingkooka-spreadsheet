@@ -750,7 +750,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testIsEmptyWithOnlyWhitespace() {
         this.parseAndIsEmptyCheck(
                 "  ",
-                true
+                false
         );
     }
 
@@ -783,6 +783,17 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.isEmptyAndCheck(
                 this.parseFormula(text),
                 expected
+        );
+    }
+
+    @Test
+    public void testIsEmptyWhenTextEmptyAndNonEmptyValue() {
+        this.isEmptyAndCheck(
+                SpreadsheetFormula.EMPTY
+                        .setValue(
+                                Optional.of("Hello")
+                        ),
+                false
         );
     }
 
