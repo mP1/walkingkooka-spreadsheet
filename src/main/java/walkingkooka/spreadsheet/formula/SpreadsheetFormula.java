@@ -642,14 +642,14 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // CanBeEmpty.......................................................................................................
 
     /**
-     * Returns true if this {@link SpreadsheetFormula#text} is empty, which also means the {@link #value()} will be
-     * empty and without errors.
+     * Returns true if this {@link SpreadsheetFormula#text} and {@link #value()} are both empty.
      */
     @Override
     public boolean isEmpty() {
         return this.text()
-                .trim()
-                .isEmpty();
+                .isEmpty() &&
+                false == this.value()
+                        .isPresent();
     }
 }
 
