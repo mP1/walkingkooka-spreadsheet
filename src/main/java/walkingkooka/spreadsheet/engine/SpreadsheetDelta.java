@@ -1807,7 +1807,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                       final Function<SpreadsheetCell, SpreadsheetCell> patcher,
                                                       final Function<SpreadsheetCellReference, SpreadsheetCell> creator) {
         final Set<SpreadsheetCell> patched = SortedSets.tree();
-        final Set<SpreadsheetCellReference> patchedCellReferences = SortedSets.tree();
+        final Set<SpreadsheetCellReference> patchedCellReferences = SortedSets.tree(
+                SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
+        );
 
         for (final SpreadsheetCell cell : cells) {
             patched.add(
