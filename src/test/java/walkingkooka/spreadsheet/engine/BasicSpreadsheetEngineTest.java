@@ -1658,6 +1658,122 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellWhenFormulaEmptyTextAndValueWhenSkipEvaluate() {
+        final String value = "Hello";
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(value)
+                )
+        ).setStyle(STYLE);
+
+        this.loadCellAndCheck(
+                cell,
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                cell // doesnt format
+        );
+    }
+
+    @Test
+    public void testLoadCellWhenFormulaEmptyTextAndValueWhenSkipEvaluateAlreadyFormatted() {
+        final String value = "Hello";
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(value)
+                )
+        ).setFormattedValue(
+                Optional.of(TextNode.text("Formatted Hello"))
+        ).setStyle(STYLE);
+
+        this.loadCellAndCheck(
+                cell,
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                cell // doesnt format
+        );
+    }
+
+    @Test
+    public void testLoadCellWhenFormulaEmptyTextAndValueWhenComputeIfNecessary() {
+        final String value = "Hello";
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(value)
+                )
+        ).setStyle(STYLE);
+
+        this.loadCellAndCheck(
+                cell,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                this.formatCell(cell)
+        );
+    }
+
+    @Test
+    public void testLoadCellWhenFormulaEmptyTextAndValueWhenForceRecompute() {
+        final String value = "Hello";
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(value)
+                )
+        ).setFormattedValue(
+                Optional.of(TextNode.text("This Formatted must be replaced!"))
+        ).setStyle(STYLE);
+
+        this.loadCellAndCheck(
+                cell,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                this.formatCell(cell)
+        );
+    }
+
+    @Test
+    public void testLoadCellWhenFormulaEmptyTextAndValueWhenClearValueErrorSkipEvaluate() {
+        final String value = "Hello";
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(value)
+                )
+        ).setStyle(STYLE);
+
+        this.loadCellAndCheck(
+                cell,
+                SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
+                cell
+        );
+    }
+
+    private void loadCellAndCheck(final SpreadsheetCell cell,
+                                  final SpreadsheetEngineEvaluation evaluation,
+                                  final SpreadsheetCell expected) {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        context.storeRepository()
+                .cells()
+                .save(cell);
+
+        final SpreadsheetDelta delta = engine.loadCells(
+                cell.reference(),
+                evaluation,
+                Sets.of(
+                        SpreadsheetDeltaProperties.CELLS
+                ),
+                context
+        );
+
+        this.checkEquals(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(expected)
+                ),
+                delta
+        );
+    }
+
+    @Test
     public void testLoadMultipleCellRangesWithCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3451,6 +3567,53 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellStoreAndCheck(
                 cellStore,
                 a1Formatted
+        );
+    }
+
+    @Test
+    public void testSaveCellWithEmptyFormulaTextAndValue() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final String value = "Hello";
+
+        final SpreadsheetCell a1 = SpreadsheetCell.with(
+                SpreadsheetSelection.A1,
+                SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of(value)
+                )
+        ).setStyle(STYLE);
+
+        final SpreadsheetDelta result = engine.saveCell(
+                a1,
+                context
+        );
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1,
+                                        value
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                ).setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "saveCell " + a1
         );
     }
 
@@ -19023,7 +19186,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetCell formatCell(final SpreadsheetCell cell) {
         return this.formatCell(
                 cell,
-                Optional.empty(),
+                cell.formula()
+                        .value(),
                 STYLE
         );
     }

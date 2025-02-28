@@ -1204,56 +1204,57 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     SpreadsheetCell parseFormulaIfNecessary(final SpreadsheetCell cell,
                                             final Function<SpreadsheetFormulaParserToken, SpreadsheetFormulaParserToken> parsed,
                                             final SpreadsheetEngineContext context) {
-        SpreadsheetCell result;
+        SpreadsheetCell result = cell;
         SpreadsheetFormula formula = cell.formula();
 
         try {
-            // if a token is NOT present parse the formula text
-            SpreadsheetFormulaParserToken token = formula.token()
-                    .orElse(null);
-            if (null == token) {
-                final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+            final String formulaText = formula.text();
+            if(false == formulaText.isEmpty()) {
 
-                formula = SpreadsheetFormula.parse(
-                        TextCursors.charSequence(
-                                cell.formula()
-                                        .text()
-                        ),
-                        cell.parser()
-                                .map(p -> context.spreadsheetParser(
-                                                p,
-                                                context
-                                        )
-                                ).orElseGet(
-                                        () -> SpreadsheetFormulaParsers.valueOrExpression(
-                                                metadata.spreadsheetParser(
-                                                        context, // SpreadsheetParserProvider
-                                                        context // ProviderContext
-                                                ) // SpreadsheetEngineContext implements SpreadsheetParserProvider
-                                        )
-                                ),
-                        metadata.spreadsheetParserContext(context)
-                );
-
-                token = formula.token()
+                // if a token is NOT present parse the formula text
+                SpreadsheetFormulaParserToken token = formula.token()
                         .orElse(null);
-            }
-            if (null != token) {
-                token = parsed.apply(token);
-                formula = formula.setToken(
-                        Optional.of(token)
-                );
-            }
-            // if expression is absent, convert token into expression
-            if (null != token && false == formula.expression().isPresent()) {
-                formula = formula.setExpression(
-                        context.toExpression(token)
-                );
-            }
+                if (null == token) {
+                    final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
 
-            result = cell.setFormula(
-                    formula
-            );
+                    formula = SpreadsheetFormula.parse(
+                            TextCursors.charSequence(formulaText),
+                            cell.parser()
+                                    .map(p -> context.spreadsheetParser(
+                                                    p,
+                                                    context
+                                            )
+                                    ).orElseGet(
+                                            () -> SpreadsheetFormulaParsers.valueOrExpression(
+                                                    metadata.spreadsheetParser(
+                                                            context, // SpreadsheetParserProvider
+                                                            context // ProviderContext
+                                                    ) // SpreadsheetEngineContext implements SpreadsheetParserProvider
+                                            )
+                                    ),
+                            metadata.spreadsheetParserContext(context)
+                    );
+
+                    token = formula.token()
+                            .orElse(null);
+                }
+                if (null != token) {
+                    token = parsed.apply(token);
+                    formula = formula.setToken(
+                            Optional.of(token)
+                    );
+                }
+                // if expression is absent, convert token into expression
+                if (null != token && false == formula.expression().isPresent()) {
+                    formula = formula.setExpression(
+                            context.toExpression(token)
+                    );
+                }
+
+                result = cell.setFormula(
+                        formula
+                );
+            }
 
             //if error formatValueAndStyle
             if (formula.error().isPresent()) {
@@ -1286,19 +1287,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetCell result = cell;
 
         try {
-            // ask enum to dispatch
-            final Optional<Expression> maybeExpression = formula.expression();
-            if (maybeExpression.isPresent()) {
-                result = cell.setFormula(
-                        formula.setValue(
-                                evaluation.evaluate(
-                                        this,
-                                        cell,
-                                        loader,
-                                        context
-                                )
-                        ).replaceErrorWithValueIfPossible(context)
-                );
+            // special case formula.text is empty but value is present
+            if(false == formula.text().isEmpty()) {
+
+                // ask enum to dispatch
+                final Optional<Expression> maybeExpression = formula.expression();
+                if (maybeExpression.isPresent()) {
+                    result = cell.setFormula(
+                            formula.setValue(
+                                    evaluation.evaluate(
+                                            this,
+                                            cell,
+                                            loader,
+                                            context
+                                    )
+                            ).replaceErrorWithValueIfPossible(context)
+                    );
+                }
             }
 
             result = context.formatValueAndStyle(
