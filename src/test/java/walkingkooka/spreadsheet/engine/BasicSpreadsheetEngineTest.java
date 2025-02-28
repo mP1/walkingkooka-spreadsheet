@@ -78,7 +78,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationList;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
@@ -1658,14 +1657,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 delta.rowHeights(),
                 () -> "rowHeights, " + deltaProperties
         );
-    }
-
-    private void saveRule(final boolean result,
-                          final int priority,
-                          final TextStyle style,
-                          final SpreadsheetCellReference cell,
-                          final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rules) {
-        rules.addValue(cell.cellRange(cell), rule(result, priority, style));
     }
 
     private SpreadsheetConditionalFormattingRule rule(final boolean result,
