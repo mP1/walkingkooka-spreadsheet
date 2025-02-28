@@ -414,7 +414,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         printer.indent();
 
         final String text = this.text;
-        if (null != text) {
+        if (false == CharSequences.isNullOrEmpty(text)) {
             printer.println("text: " + CharSequences.quoteAndEscape(text));
         } else {
             this.printTree0(
