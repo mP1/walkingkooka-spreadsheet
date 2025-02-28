@@ -1122,10 +1122,21 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
+    public void testTreePrintTreeValueString() {
+        this.treePrintAndCheck(
+                SpreadsheetFormula.EMPTY.setValue(
+                                Optional.of("Hello123")
+                        ),
+                "Formula\n" +
+                        "  value: \"Hello123\" (java.lang.String)\n"
+        );
+    }
+
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/1893
 
     @Test
-    public void testTreePrintTreeValueImplementsTreePrintable() {
+    public void testTreePrintTreeTextTokenExpressionValueImplementsTreePrintable() {
         this.treePrintAndCheck(
                 formula("1+2")
                         .setToken(this.token())
@@ -1177,7 +1188,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         )
                 ),
                 "Formula\n" +
-                        "  text: \"\"\n" +
                         "  value: #DIV/0!\n"
         );
     }
