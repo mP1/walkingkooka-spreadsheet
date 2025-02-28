@@ -63,6 +63,7 @@ import walkingkooka.tree.text.TextStyle;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -213,7 +214,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Objects.requireNonNull(cells, "cells");
 
         final Set<SpreadsheetCell> copy = this.filterCells(cells);
-        return this.cells.equals(copy) ?
+
+        return setElementEquals(this.cells, copy) ?
                 this :
                 this.replaceCells(copy);
     }
@@ -334,7 +336,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 columns,
                 this.window()
         );
-        return this.columns.equals(copy) ?
+        return setElementEquals(this.columns, copy) ?
                 this :
                 this.replaceColumns(copy);
     }
@@ -386,7 +388,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 labels,
                 this.window()
         );
-        return this.labels.equals(copy) ?
+        return setElementEquals(this.labels, copy) ?
                 this :
                 this.replaceLabels(copy);
     }
@@ -439,7 +441,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 rows,
                 this.window()
         );
-        return this.rows.equals(copy) ?
+        return setElementEquals(this.rows, copy) ?
                 this :
                 this.replaceRows(copy);
     }
@@ -2650,10 +2652,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private boolean equals0(final SpreadsheetDelta other) {
         return this.viewport.equals(other.viewport) &&
-                this.cells.equals(other.cells) &&
-                this.columns.equals(other.columns) &&
-                this.labels.equals(other.labels) &&
-                this.rows.equals(other.rows) &&
+                setElementEquals(this.cells, other.cells) &&
+                setElementEquals(this.columns, other.columns) &&
+                setElementEquals(this.labels, other.labels) &&
+                setElementEquals(this.rows, other.rows) &&
                 this.references.equals(other.references) &&
                 this.deletedCells.equals(other.deletedCells) &&
                 this.deletedColumns.equals(other.deletedColumns) &&
@@ -2665,6 +2667,34 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.columnCount.equals(other.columnCount) &&
                 this.rowCount.equals(other.rowCount) &&
                 this.window().equals(other.window());
+    }
+
+    /**
+     * The {@link SortedSet} holding {@link SpreadsheetCell}, {@link SpreadsheetColumn}, {@link SpreadsheetLabelMapping},
+     * {@link SpreadsheetRow} are all sorted by only the {@link SpreadsheetSelection}.
+     * <p>
+     * This means that equals checks within tests will pass even if the other properties of a cell are different.
+     * <p>
+     * Therefore after taking a defensive copy or comparing two {@link SpreadsheetDelta} for equality,
+     * this should be used rather than {@link Object#equals(Object)}.
+     */
+    private static <T> boolean setElementEquals(final Set<T> left,
+                                                final Set<T> right) {
+        boolean equals = left.size() == right.size();
+
+        if (equals) {
+            final Iterator<T> leftIterator = left.iterator();
+            final Iterator<T> rightIterator = right.iterator();
+            while (equals && leftIterator.hasNext()) {
+                equals = rightIterator.hasNext() &&
+                        leftIterator.next()
+                                .equals(
+                                        rightIterator.next()
+                                );
+            }
+        }
+
+        return equals;
     }
 
     /**
