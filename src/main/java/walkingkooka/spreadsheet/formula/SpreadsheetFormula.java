@@ -319,15 +319,23 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 );
     }
 
-    // clear ....................................................................................................
+    // clear ...........................................................................................................
 
     /**
      * Clears the expression, value or error if any are present. The {@link SpreadsheetFormula} returned will only
      * have text and possibly a token (if one already was presented)
      */
     public SpreadsheetFormula clear() {
-        return this.expression().isPresent() || this.value().isPresent() ?
-                new SpreadsheetFormula(this.text, this.token, NO_EXPRESSION, NO_VALUE) :
+        final String text = this.text;
+
+        // text will be cleared when token is present
+        return (null == text || false == text.isEmpty()) && (this.expression().isPresent() || this.value().isPresent()) ?
+                new SpreadsheetFormula(
+                        text,
+                        this.token,
+                        NO_EXPRESSION,
+                        NO_VALUE
+                ) :
                 this;
     }
 

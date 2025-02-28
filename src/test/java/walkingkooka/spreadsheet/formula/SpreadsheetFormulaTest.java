@@ -420,7 +420,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // clear............................................................................................................
 
     @Test
-    public void testClearText() {
+    public void testClearNonEmptyText() {
         final SpreadsheetFormula formula = formula("1+99");
         final SpreadsheetFormula cleared = formula.clear();
         assertSame(
@@ -431,7 +431,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testClearTextAndToken() {
+    public void testClearNonEmptyTextAndToken() {
         final SpreadsheetFormula formula = formula("1+99")
                 .setToken(this.token());
         final SpreadsheetFormula cleared = formula.clear();
@@ -443,7 +443,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testClearTextTokenExpression() {
+    public void testClearNonEmptyTextTokenExpression() {
         final SpreadsheetFormula formula = formula("1+99")
                 .setToken(this.token())
                 .setExpression(this.expression());
@@ -457,7 +457,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testClearTextTokenExpressionValue() {
+    public void testClearNonEmptyTextTokenExpressionValue() {
         final SpreadsheetFormula formula = formula("1+99")
                 .setToken(this.token())
                 .setExpression(this.expression())
@@ -475,6 +475,19 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionAndCheck(formula);
         this.valueAndCheck(formula);
         this.errorAndCheck(formula);
+    }
+
+    @Test
+    public void testClearEmptyTextAndValue() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(123)
+        );
+
+        final SpreadsheetFormula cleared = formula.clear();
+        assertSame(
+                formula,
+                cleared
+        );
     }
 
     // parse............................................................................................................
