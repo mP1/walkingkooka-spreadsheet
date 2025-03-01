@@ -169,6 +169,14 @@ public final class SpreadsheetSelectionIgnoresReferenceKindComparatorTest implem
     }
 
     @Test
+    public void testCompareCellAndCellLess3() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseCell("D2"),
+                SpreadsheetSelection.parseCell("C3")
+        );
+    }
+
+    @Test
     public void testCompareCellRangeAndCellRangeEqualDifferentKind() {
         this.compareAndCheckEquals(
                 SpreadsheetSelection.A1.toRange(),
@@ -205,6 +213,25 @@ public final class SpreadsheetSelectionIgnoresReferenceKindComparatorTest implem
         this.compareAndCheckLess(
                 SpreadsheetSelection.parseCellRange("A1:B2"),
                 SpreadsheetSelection.parseCellRange("A1:B3")
+        );
+    }
+
+    @Test
+    public void testCompareColumnsRowsThenColumns() {
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("A2");
+        final SpreadsheetCellReference b1 = SpreadsheetSelection.parseCell("B1");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+
+        this.comparatorArraySortAndCheck(
+                b1,
+                b2,
+                a1,
+                a2, // expected below
+                a1,
+                b1,
+                a2,
+                b2
         );
     }
 

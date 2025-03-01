@@ -114,12 +114,20 @@ final class SpreadsheetSelectionIgnoresReferenceKindComparator implements Compar
         return compare;
     }
 
+    // sort by rows then columns
+    // this supports sorting cells by column then row
+    // a1
+    // b1
+    // a2
+    // b2
+    //
+    // a1, b1, a2, b2
     private static int compareCells(final SpreadsheetCellReference left,
                                     final SpreadsheetCellReference right) {
-        int compare = left.column.value - right.column.value;
+        int compare = left.row.value - right.row.value;
 
         if (Comparators.EQUAL == compare) {
-            compare = left.row.value - right.row.value;
+            compare = left.column.value - right.column.value;
         }
 
         return compare;
