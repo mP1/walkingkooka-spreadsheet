@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Value;
 
-import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Set;
@@ -29,16 +28,6 @@ import java.util.Set;
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelection implements Value<Integer> {
-
-    /**
-     * A {@link Comparator} which may be used to sort a combination of columns or rows ignoring their {@link SpreadsheetReferenceKind}.
-     * This means columns will appear before rows and is useful when creating a single {@link java.util.Set} of all
-     * hidden columns or rows.
-     * <br>
-     * This means a map with a key of $A will match a get with just "A" and return the value.
-     */
-    public final static Comparator<SpreadsheetColumnOrRowReference> COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR =
-            SpreadsheetColumnOrRowReference::compareSpreadsheetColumnOrRowReference;
 
     /**
      * Package private to limit sub classing.
@@ -211,16 +200,4 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     static void checkOther(final SpreadsheetColumnOrRowReference other) {
         Objects.requireNonNull(other, "other");
     }
-
-    // COLUMN_OR_ROW_REFERENCE_COMPARATOR..............................................................................
-
-    /**
-     * sub-classes must call other.compareSpreadsheetColumnOrRowReference0(this).
-     * This allows polymorphic dispatch in reverse on this.
-     */
-    abstract int compareSpreadsheetColumnOrRowReference(final SpreadsheetColumnOrRowReference other);
-
-    abstract int compareSpreadsheetColumnOrRowReference0(final SpreadsheetColumnReference other);
-
-    abstract int compareSpreadsheetColumnOrRowReference0(final SpreadsheetRowReference other);
 }

@@ -62,7 +62,7 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
     public void testComparatorMixed1() {
         this.sortAndCheck(
                 A, ROW1,
-                A, ROW1
+                ROW1, A
         );
     }
 
@@ -70,7 +70,7 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
     public void testComparatorMixed2() {
         this.sortAndCheck(
                 ROW1, A,
-                A, ROW1
+                ROW1, A
         );
     }
 
@@ -78,28 +78,28 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
     public void testComparatorMixed3() {
         this.sortAndCheck(
                 ROW2, ROW3, ROW1, A,
-                A, ROW1, ROW2, ROW3
-        );
+                ROW1, ROW2, ROW3, A
+                );
     }
 
     @Test
     public void testComparatorMixed4() {
         this.sortAndCheck(
                 B, ROW2, C, ROW3, ROW1, A,
-                A, B, C, ROW1, ROW2, ROW3
+                ROW1, ROW2, ROW3, A, B, C
         );
     }
 
     private void sortAndCheck(final SpreadsheetColumnOrRowReference... columnOrRowReferences) {
         this.comparatorArraySortAndCheck(
-                SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR,
+                SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR,
                 columnOrRowReferences
         );
     }
 
     @Test
     public void testMapComparatorGet() {
-        final Map<SpreadsheetColumnOrRowReference, Object> referenceToValue = Maps.sorted(SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+        final Map<SpreadsheetColumnOrRowReference, Object> referenceToValue = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         final Object a = "!" + A;
         final Object row1 = "!" + ROW1;
@@ -122,7 +122,7 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
 
     @Test
     public void testMapComparatorGetRow() {
-        final Map<SpreadsheetColumnOrRowReference, Object> referenceToValue = Maps.sorted(SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+        final Map<SpreadsheetColumnOrRowReference, Object> referenceToValue = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         final Object a = "!" + A;
         final Object row1 = "!" + ROW1;

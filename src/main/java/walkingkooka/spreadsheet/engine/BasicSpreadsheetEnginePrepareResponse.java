@@ -396,7 +396,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private Map<SpreadsheetColumnReference, Double> columnsWidths() {
-        final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+        final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         for (final SpreadsheetCellReference cell : this.cells.keySet()) {
             final SpreadsheetColumnReference column = cell.column().toRelative();
@@ -467,7 +467,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private Map<SpreadsheetRowReference, Double> rowHeights() {
-        final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR);
+        final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         for (final SpreadsheetCellReference cell : this.cells.keySet()) {
             final SpreadsheetRowReference row = cell.row()

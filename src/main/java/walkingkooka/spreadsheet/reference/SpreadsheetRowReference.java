@@ -577,21 +577,4 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         checkOther(other);
         return this.value - other.value;
     }
-
-    // COLUMN_OR_ROW_REFERENCE_COMPARATOR..............................................................................
-
-    @Override
-    int compareSpreadsheetColumnOrRowReference(final SpreadsheetColumnOrRowReference other) {
-        return other.compareSpreadsheetColumnOrRowReference0(this);
-    }
-
-    @Override
-    int compareSpreadsheetColumnOrRowReference0(final SpreadsheetColumnReference other) {
-        return -1; // rows are more than columns, but because of dispatch this is reversed
-    }
-
-    @Override
-    int compareSpreadsheetColumnOrRowReference0(final SpreadsheetRowReference other) {
-        return other.value - this.value;
-    }
 }
