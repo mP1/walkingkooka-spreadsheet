@@ -134,7 +134,7 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     abstract SpreadsheetColumnOrRowReference setReferenceKind(final SpreadsheetReferenceKind referenceKind);
 
     final SpreadsheetColumnOrRowReference setReferenceKind0(final SpreadsheetReferenceKind referenceKind) {
-        checkReferenceKind(referenceKind);
+        Objects.requireNonNull(referenceKind, "referenceKind");
 
         return this.referenceKind == referenceKind ?
                 this :

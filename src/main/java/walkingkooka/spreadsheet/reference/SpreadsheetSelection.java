@@ -675,6 +675,10 @@ public abstract class SpreadsheetSelection implements HasText,
         return selection;
     }
 
+    private static String checkText(final String text) {
+        return CharSequences.failIfNullOrEmpty(text, "text");
+    }
+
     // cache............................................................................................................
 
     final static int CACHE_SIZE = 100;
@@ -848,7 +852,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean testCell(final SpreadsheetCellReference cell) {
         return this.testCellNonNull(
-                checkCellReference(cell)
+                Objects.requireNonNull(cell, "cell")
         );
     }
 
@@ -859,7 +863,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean testCellRange(final SpreadsheetCellRangeReference range) {
         return this.testCellRangeNonNull(
-                checkCellRange(range)
+                Objects.requireNonNull(range, "range")
         );
     }
 
@@ -871,7 +875,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean testColumn(final SpreadsheetColumnReference column) {
         return this.testColumnNonNull(
-                checkColumnReference(column)
+                Objects.requireNonNull(column, "column")
         );
     }
 
@@ -883,7 +887,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final boolean testRow(final SpreadsheetRowReference row) {
         return this.testRowNonNull(
-                checkRowReference(row)
+                Objects.requireNonNull(row, "row")
         );
     }
 
@@ -1662,39 +1666,5 @@ public abstract class SpreadsheetSelection implements HasText,
                 SpreadsheetSelection::marshall,
                 type
         );
-    }
-
-    // guards............................................................................................................
-
-    static SpreadsheetCellRangeReference checkCellRange(final SpreadsheetCellRangeReference range) {
-        return Objects.requireNonNull(range, "range");
-    }
-
-    static SpreadsheetCellReference checkCellReference(final SpreadsheetCellReference cell) {
-        return Objects.requireNonNull(cell, "cell");
-    }
-
-    static SpreadsheetColumnReference checkColumnReference(final SpreadsheetColumnReference column) {
-        return Objects.requireNonNull(column, "column");
-    }
-
-    static SpreadsheetColumnRangeReference checkColumnRangeReference(final SpreadsheetColumnRangeReference columnRangeReference) {
-        return Objects.requireNonNull(columnRangeReference, "columnRangeReference");
-    }
-
-    static void checkReferenceKind(final SpreadsheetReferenceKind referenceKind) {
-        Objects.requireNonNull(referenceKind, "referenceKind");
-    }
-
-    static SpreadsheetRowReference checkRowReference(final SpreadsheetRowReference row) {
-        return Objects.requireNonNull(row, "row");
-    }
-
-    static void checkRowRangeReference(final SpreadsheetRowRangeReference rowRangeReference) {
-        Objects.requireNonNull(rowRangeReference, "rowRangeReference");
-    }
-
-    static String checkText(final String text) {
-        return CharSequences.failIfNullOrEmpty(text, "text");
     }
 }

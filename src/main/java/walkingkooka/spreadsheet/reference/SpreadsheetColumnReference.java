@@ -87,7 +87,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
      */
     static SpreadsheetColumnReference with(final int value, final SpreadsheetReferenceKind referenceKind) {
         checkValue(value);
-        checkReferenceKind(referenceKind);
+        Objects.requireNonNull(referenceKind, "referenceKind");
 
         return value < CACHE_SIZE ?
                 referenceKind.columnFromCache(value) :
@@ -112,7 +112,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
      */
     @Override
     public SpreadsheetColumnReference setReferenceKind(final SpreadsheetReferenceKind referenceKind) {
-        checkReferenceKind(referenceKind);
+        Objects.requireNonNull(referenceKind, "referenceKind");
 
         return this.setReferenceKind0(referenceKind)
                 .toColumn();
@@ -257,7 +257,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     @Override
     boolean testCellRangeNonNull(final SpreadsheetCellRangeReference range) {
-        checkCellRange(range);
+        Objects.requireNonNull(range, "range");
 
         return this.compareTo(range.begin().column()) >= 0 &&
                 this.compareTo(range.end().column()) <= 0;
