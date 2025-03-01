@@ -22,6 +22,7 @@ import walkingkooka.collect.RangeBound;
 import walkingkooka.text.CharSequences;
 
 import java.util.EnumSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -71,7 +72,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
      * Creates a {@link SpreadsheetCellRangeReference} combining this column range and the given row range.
      */
     public SpreadsheetCellRangeReference setRowRange(final SpreadsheetRowRangeReference row) {
-        checkRowRangeReference(row);
+        Objects.requireNonNull(row, "rowRangeReference");
 
         final SpreadsheetColumnReference columnBegin = this.begin();
         final SpreadsheetRowReference rowBegin = row.begin();
