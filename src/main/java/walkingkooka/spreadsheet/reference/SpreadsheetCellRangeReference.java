@@ -973,4 +973,11 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                 this.end().compareTo(other.end()) :
                 compare;
     }
+
+    // SpreadsheetSelectionIgnoresReferenceKindComparator...............................................................
+
+    @Override
+    int spreadsheetSelectionIgnoresReferenceKindComparatorPriority() {
+        return SpreadsheetSelectionIgnoresReferenceKindComparator.CELL_RANGE;
+    }
 }
