@@ -250,9 +250,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         if (columnCount + rowCount > 0) {
             // Any columns or rows within this Set are hidden and matches by a cell will be removed.
-            final Set<SpreadsheetColumnOrRowReference> hidden = SortedSets.tree(
-                    SpreadsheetColumnOrRowReference.COLUMN_OR_ROW_REFERENCE_KIND_IGNORED_COMPARATOR
-            );
+            final Set<SpreadsheetColumnOrRowReference> hidden = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
             if (columnCount > 0) {
                 for (final SpreadsheetColumn column : columns) {
