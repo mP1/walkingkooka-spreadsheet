@@ -504,4 +504,11 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
         }
         return result;
     }
+
+    // SpreadsheetSelectionIgnoresReferenceKindComparator...............................................................
+
+    @Override
+    int spreadsheetSelectionIgnoresReferenceKindComparatorPriority() {
+        return SpreadsheetSelectionIgnoresReferenceKindComparator.ROW_RANGE;
+    }
 }

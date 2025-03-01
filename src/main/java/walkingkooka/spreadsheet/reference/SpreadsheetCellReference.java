@@ -98,7 +98,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                 this.replace(this.column, row);
     }
 
-    private final SpreadsheetRowReference row;
+    final SpreadsheetRowReference row;
 
     private static void checkRow(final SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
@@ -144,7 +144,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                 this.replace(column, this.row);
     }
 
-    private final SpreadsheetColumnReference column;
+    final SpreadsheetColumnReference column;
 
     private static void checkColumn(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
@@ -731,5 +731,12 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         return Comparators.EQUAL != result ?
                 result :
                 this.column.value - other.column.value;
+    }
+
+    // SpreadsheetSelectionIgnoresReferenceKindComparator...............................................................
+
+    @Override
+    int spreadsheetSelectionIgnoresReferenceKindComparatorPriority() {
+        return SpreadsheetSelectionIgnoresReferenceKindComparator.CELL;
     }
 }

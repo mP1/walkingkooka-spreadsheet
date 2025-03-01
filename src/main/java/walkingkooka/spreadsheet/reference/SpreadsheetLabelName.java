@@ -480,4 +480,11 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     public final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
+
+    // SpreadsheetSelectionIgnoresReferenceKindComparator...............................................................
+
+    @Override
+    int spreadsheetSelectionIgnoresReferenceKindComparatorPriority() {
+        return SpreadsheetSelectionIgnoresReferenceKindComparator.LABEL;
+    }
 }

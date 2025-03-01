@@ -607,4 +607,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         checkOther(other);
         return this.value - other.value;
     }
+
+    // SpreadsheetSelectionIgnoresReferenceKindComparator...............................................................
+
+    @Override
+    int spreadsheetSelectionIgnoresReferenceKindComparatorPriority() {
+        return SpreadsheetSelectionIgnoresReferenceKindComparator.COLUMN;
+    }
 }

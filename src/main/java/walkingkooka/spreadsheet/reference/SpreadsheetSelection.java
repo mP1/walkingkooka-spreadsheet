@@ -1667,4 +1667,20 @@ public abstract class SpreadsheetSelection implements HasText,
                 type
         );
     }
+
+    // SpreadsheetSelectionIgnoresReferenceKindComparator...............................................................
+
+    /**
+     * Used to determine the order different {@link SpreadsheetSelection} are ordered.
+     * <ol>
+     *     <li>{@link SpreadsheetColumnReference}</li>
+     *     <li>{@link SpreadsheetColumnRangeReference}</li>
+     *     <li>{@link SpreadsheetRowReference}</li>
+     *     <li>{@link SpreadsheetRowRangeReference}</li>
+     *     <li>{@link SpreadsheetCellReference}</li>
+     *     <li>{@link SpreadsheetCellRangeReference}</li>
+     *     <li>{@link SpreadsheetLabelName}</li>
+     * </ol>
+     */
+    abstract int spreadsheetSelectionIgnoresReferenceKindComparatorPriority();
 }

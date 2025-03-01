@@ -41,10 +41,170 @@ public final class SpreadsheetSelectionIgnoresReferenceKindComparatorTest implem
     }
 
     @Test
+    public void testCompareLabelAndLabelLess() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.labelName("A"),
+                SpreadsheetSelection.labelName("B")
+        );
+    }
+
+    @Test
+    public void testCompareLabelAndLabelLessDifferentCase() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.labelName("a"),
+                SpreadsheetSelection.labelName("B")
+        );
+    }
+
+    @Test
+    public void testCompareColumnAndColumnLess() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("B")
+        );
+    }
+
+    @Test
+    public void testCompareColumnAndColumnEqualDifferentKind() {
+        this.compareAndCheckEquals(
+                SpreadsheetSelection.parseColumn("$C"),
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+
+    @Test
+    public void testCompareRowAndRowLess() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseRow("4"),
+                SpreadsheetSelection.parseRow("5")
+        );
+    }
+
+    @Test
+    public void testCompareRowAndRowEqualDifferentKind() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseRow("$6"),
+                SpreadsheetSelection.parseRow("7")
+        );
+    }
+
+    @Test
+    public void testCompareColumnAndRow() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetSelection.parseRow("1")
+        );
+    }
+
+    @Test
+    public void testCompareColumnRangeAndColumnRangeLess() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseColumnRange("A:B"),
+                SpreadsheetSelection.parseColumnRange("B:C")
+        );
+    }
+
+    @Test
+    public void testCompareColumnRangeAndColumnRangeEqualDifferentKind() {
+        this.compareAndCheckEquals(
+                SpreadsheetSelection.parseColumnRange("$C:$D"),
+                SpreadsheetSelection.parseColumnRange("C:D")
+        );
+    }
+
+    @Test
+    public void testCompareRowRangeAndRowRangeLess() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseRowRange("4:5"),
+                SpreadsheetSelection.parseRowRange("5:6")
+        );
+    }
+
+    @Test
+    public void testCompareRowRangeAndRowRangeEqualDifferentKind() {
+        this.compareAndCheckEquals(
+                SpreadsheetSelection.parseRowRange("$8:$9"),
+                SpreadsheetSelection.parseRowRange("8:9")
+        );
+    }
+
+    @Test
     public void testCompareColumnAndCell() {
         this.compareAndCheckLess(
                 SpreadsheetSelection.parseColumn("A"),
                 SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testCompareCellAndCellEqual() {
+        this.compareAndCheckEquals(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testCompareCellAndCellEqualDifferentKind() {
+        this.compareAndCheckEquals(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.A1.toAbsolute()
+        );
+    }
+
+    @Test
+    public void testCompareCellAndCellLess() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCell("A2")
+        );
+    }
+
+    @Test
+    public void testCompareCellAndCellLess2() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCell("B1")
+        );
+    }
+
+    @Test
+    public void testCompareCellRangeAndCellRangeEqualDifferentKind() {
+        this.compareAndCheckEquals(
+                SpreadsheetSelection.A1.toRange(),
+                SpreadsheetSelection.A1.toAbsolute().toRange()
+        );
+    }
+
+    @Test
+    public void testCompareCellRangeAndCellRangeLess() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.A1.toRange(),
+                SpreadsheetSelection.parseCellRange("A2")
+        );
+    }
+
+    @Test
+    public void testCompareCellRangeAndCellRangeLess2() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.A1.toRange(),
+                SpreadsheetSelection.parseCellRange("B1")
+        );
+    }
+
+    @Test
+    public void testCompareCellRangeAndCellRangeLess3() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseCellRange("A1:C2")
+        );
+    }
+
+    @Test
+    public void testCompareCellRangeAndCellRangeLess4() {
+        this.compareAndCheckLess(
+                SpreadsheetSelection.parseCellRange("A1:B2"),
+                SpreadsheetSelection.parseCellRange("A1:B3")
         );
     }
 
@@ -63,8 +223,8 @@ public final class SpreadsheetSelectionIgnoresReferenceKindComparatorTest implem
                 a,
                 a1, // expected below
                 a,
-                a1,
                 b,
+                a1,
                 b2,
                 b2c3
         );

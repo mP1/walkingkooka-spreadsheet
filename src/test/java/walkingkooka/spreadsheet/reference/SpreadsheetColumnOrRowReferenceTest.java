@@ -62,7 +62,7 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
     public void testComparatorMixed1() {
         this.sortAndCheck(
                 A, ROW1,
-                ROW1, A
+                A, ROW1
         );
     }
 
@@ -70,7 +70,7 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
     public void testComparatorMixed2() {
         this.sortAndCheck(
                 ROW1, A,
-                ROW1, A
+                A, ROW1
         );
     }
 
@@ -78,15 +78,15 @@ public final class SpreadsheetColumnOrRowReferenceTest implements ClassTesting<S
     public void testComparatorMixed3() {
         this.sortAndCheck(
                 ROW2, ROW3, ROW1, A,
-                ROW1, ROW2, ROW3, A
-                );
+                A, ROW1, ROW2, ROW3
+        );
     }
 
     @Test
     public void testComparatorMixed4() {
         this.sortAndCheck(
                 B, ROW2, C, ROW3, ROW1, A,
-                ROW1, ROW2, ROW3, A, B, C
+                A, B, C, ROW1, ROW2, ROW3
         );
     }
 
