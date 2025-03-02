@@ -443,13 +443,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetLabelName;
-    }
-
-    @Override
-    boolean equals0(final Object other,
-                    final boolean includeKind) {
+    boolean equalsNotSameAndNotNull(final Object other,
+                                    final boolean includeKind) {
         return this.equals1(
                 (SpreadsheetLabelName) other
         );

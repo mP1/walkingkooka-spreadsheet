@@ -181,8 +181,8 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     }
 
     @Override
-    boolean equals0(final Object other,
-                    final boolean includeKind) {
+    boolean equalsNotSameAndNotNull(final Object other,
+                                    final boolean includeKind) {
         return this.equals1(
                 (SpreadsheetColumnOrRowReference) other,
                 includeKind

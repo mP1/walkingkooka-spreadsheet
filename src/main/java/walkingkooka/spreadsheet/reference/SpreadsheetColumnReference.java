@@ -572,11 +572,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     // Object...........................................................................................................
 
     @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetColumnReference;
-    }
-
-    @Override
     public String toString() {
         return toString0(this.value, this.referenceKind());
     }

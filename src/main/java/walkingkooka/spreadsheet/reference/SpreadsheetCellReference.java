@@ -696,13 +696,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetCellReference;
-    }
-
-    @Override
-    boolean equals0(final Object other,
-                    final boolean includeKind) {
+    boolean equalsNotSameAndNotNull(final Object other,
+                                    final boolean includeKind) {
         return this.equals1(
                 (SpreadsheetCellReference) other,
                 includeKind

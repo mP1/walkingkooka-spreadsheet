@@ -560,11 +560,6 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     // Object...........................................................................................................
 
     @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetRowReference;
-    }
-
-    @Override
     public String toString() {
         // in text form columns start at 1 but internally are zero based.
         return this.referenceKind().prefix() + (this.value + 1);
