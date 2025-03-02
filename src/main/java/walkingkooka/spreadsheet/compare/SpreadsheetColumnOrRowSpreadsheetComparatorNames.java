@@ -448,7 +448,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                                                                         final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
 
         return new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
-                checkColumnOrRows(columnOrRow),
+                Objects.requireNonNull(columnOrRow, "columnOrRows"),
                 checkComparatorNameAndDirections(comparatorNameAndDirections)
         );
     }
@@ -469,7 +469,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
      * Would be setter that returns a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} with the given {@link SpreadsheetColumnOrRowReference} creating a new instance if necessary.
      */
     public SpreadsheetColumnOrRowSpreadsheetComparatorNames setColumnOrRow(final SpreadsheetColumnOrRowReference columnOrRow) {
-        checkColumnOrRows(columnOrRow);
+        Objects.requireNonNull(columnOrRow, "columnOrRows");
 
         return this.columnOrRow.equals(columnOrRow) ?
                 this :
@@ -477,10 +477,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         columnOrRow,
                         this.comparatorNameAndDirections
                 );
-    }
-
-    private static SpreadsheetColumnOrRowReference checkColumnOrRows(final SpreadsheetColumnOrRowReference columnOrRow) {
-        return Objects.requireNonNull(columnOrRow, "columnOrRows");
     }
 
     private final SpreadsheetColumnOrRowReference columnOrRow;
