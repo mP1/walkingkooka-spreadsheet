@@ -197,7 +197,4 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
 
     // Comparable.......................................................................................................
 
-    static void checkOther(final SpreadsheetColumnOrRowReference other) {
-        Objects.requireNonNull(other, "other");
-    }
 }
