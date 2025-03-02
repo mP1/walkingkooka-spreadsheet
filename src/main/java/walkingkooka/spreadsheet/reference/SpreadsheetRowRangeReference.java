@@ -489,11 +489,6 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
 
     // Object...........................................................................................................
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetRowRangeReference;
-    }
-
     // Comparable.......................................................................................................
 
     @Override

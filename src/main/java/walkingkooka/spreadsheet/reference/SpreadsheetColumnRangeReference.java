@@ -478,11 +478,6 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
 
     // Object...........................................................................................................
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetColumnRangeReference;
-    }
-
     // Comparable.......................................................................................................
 
     @Override

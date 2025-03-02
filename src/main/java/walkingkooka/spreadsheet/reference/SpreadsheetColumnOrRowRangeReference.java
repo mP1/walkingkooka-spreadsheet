@@ -220,8 +220,8 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
     }
 
     @Override
-    boolean equals0(final Object other,
-                    final boolean includeKind) {
+    boolean equalsNotSameAndNotNull(final Object other,
+                                    final boolean includeKind) {
         return this.equals1(
                 (SpreadsheetColumnOrRowRangeReference<?>) other,
                 includeKind
@@ -230,8 +230,8 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
 
     private boolean equals1(final SpreadsheetColumnOrRowRangeReference<?> other,
                             final boolean includeKind) {
-        return this.begin().equals0(other.begin(), includeKind) &&
-                this.end().equals0(other.end(), includeKind);
+        return this.begin().equalsNotSameAndNotNull(other.begin(), includeKind) &&
+                this.end().equalsNotSameAndNotNull(other.end(), includeKind);
     }
 
     // toString........................................................................................................

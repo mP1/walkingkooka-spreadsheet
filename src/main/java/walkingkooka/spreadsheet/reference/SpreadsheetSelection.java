@@ -1422,30 +1422,39 @@ public abstract class SpreadsheetSelection implements HasText,
     @Override
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
-        return this == other ||
-                this.canBeEqual(other) &&
-                        this.equals0(
-                                other,
-                                true
-                        );
+        return this.equalsWithReferenceKind(
+                other,
+                true // includeKind = true
+        );
     }
 
     /**
      * Tests if two {@link SpreadsheetSelection} are equal ignoring the {@link SpreadsheetReferenceKind} if one is present.
      */
     public final boolean equalsIgnoreReferenceKind(final Object other) {
+        return this.equalsWithReferenceKind(
+                other,
+                false // includeKind = false
+        );
+    }
+
+    private boolean equalsWithReferenceKind(final Object other,
+                                            final boolean includeKind) {
         return this == other ||
-                this.canBeEqual(other) &&
-                        this.equals0(
+                null != other &&
+                        this.getClass() == other.getClass() &&
+                        this.equalsNotSameAndNotNull(
                                 other,
-                                false
+                                includeKind
                         );
     }
 
-    abstract boolean canBeEqual(final Object other);
-
-    abstract boolean equals0(final Object other,
-                             final boolean includeKind);
+    /**
+     * Sub-classes should test their important individual properties for equality, assuming the other parameter is
+     * not the same instance and the same class type.
+     */
+    abstract boolean equalsNotSameAndNotNull(final Object other,
+                                             final boolean includeKind);
 
     // Object...........................................................................................................
 

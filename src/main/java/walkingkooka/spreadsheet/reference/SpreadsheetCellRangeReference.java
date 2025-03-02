@@ -920,13 +920,8 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     }
 
     @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetCellRangeReference;
-    }
-
-    @Override
-    boolean equals0(final Object other,
-                    final boolean includeKind) {
+    boolean equalsNotSameAndNotNull(final Object other,
+                                    final boolean includeKind) {
         return this.equals1(
                 (SpreadsheetCellRangeReference) other,
                 includeKind
@@ -935,8 +930,8 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
 
     private boolean equals1(final SpreadsheetCellRangeReference other,
                             final boolean includeKind) {
-        return this.begin().equals0(other.begin(), includeKind) &&
-                this.end().equals0(other.end(), includeKind);
+        return this.begin().equalsNotSameAndNotNull(other.begin(), includeKind) &&
+                this.end().equalsNotSameAndNotNull(other.end(), includeKind);
     }
 
     // toString........................................................................................................
