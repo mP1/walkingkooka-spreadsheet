@@ -604,7 +604,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     @Override
     public int compareTo(final SpreadsheetColumnReference other) {
-        checkOther(other);
+        Objects.requireNonNull(other, "other");
+
         return this.value - other.value;
     }
 
