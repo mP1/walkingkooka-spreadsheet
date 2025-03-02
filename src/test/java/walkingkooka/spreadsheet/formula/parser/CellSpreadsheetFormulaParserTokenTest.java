@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.formula.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -81,7 +80,10 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
     }
 
     private ColumnSpreadsheetFormulaParserToken column(final int value) {
-        return SpreadsheetFormulaParserToken.column(SpreadsheetColumnOrRowReference.column(value, SpreadsheetReferenceKind.RELATIVE), String.valueOf(value));
+        return SpreadsheetFormulaParserToken.column(
+                SpreadsheetReferenceKind.RELATIVE.column(value),
+                String.valueOf(value)
+        );
     }
 
     private RowSpreadsheetFormulaParserToken row() {
@@ -89,7 +91,10 @@ public final class CellSpreadsheetFormulaParserTokenTest extends ParentSpreadshe
     }
 
     private RowSpreadsheetFormulaParserToken row(final int value, final String text) {
-        return SpreadsheetFormulaParserToken.row(SpreadsheetColumnOrRowReference.row(value, SpreadsheetReferenceKind.RELATIVE), text);
+        return SpreadsheetFormulaParserToken.row(
+                SpreadsheetReferenceKind.RELATIVE.row(value),
+                text
+        );
     }
 
     private void checkCell(final CellSpreadsheetFormulaParserToken cell,
