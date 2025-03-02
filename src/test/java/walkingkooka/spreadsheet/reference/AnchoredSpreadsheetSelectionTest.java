@@ -28,6 +28,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<AnchoredSpreadsheetSelection>,
@@ -96,6 +97,86 @@ public final class AnchoredSpreadsheetSelectionTest implements ClassTesting<Anch
                 anchor,
                 anchored.anchor(),
                 "anchor"
+        );
+    }
+
+    // setSelection.....................................................................................................
+
+    @Test
+    public void testSetSelectionWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> AnchoredSpreadsheetSelection.with(
+                        SELECTION,
+                        ANCHOR
+                ).setSelection(null)
+        );
+    }
+
+    @Test
+    public void testSetSelectionWithSame() {
+        final AnchoredSpreadsheetSelection anchoredSpreadsheetSelection = AnchoredSpreadsheetSelection.with(
+                SELECTION,
+                ANCHOR
+        );
+        assertSame(
+                anchoredSpreadsheetSelection,
+                anchoredSpreadsheetSelection.setSelection(SELECTION)
+        );
+    }
+
+    @Test
+    public void testSetSelectionWithDifferentSelectionButSameType() {
+        final SpreadsheetSelection different = SpreadsheetSelection.parseCell("B2");
+
+        this.setSelectionAndCheck(
+                AnchoredSpreadsheetSelection.with(
+                        SpreadsheetSelection.A1,
+                        SpreadsheetSelection.A1.defaultAnchor()
+                ),
+                different,
+                AnchoredSpreadsheetSelection.with(
+                        different,
+                        different.defaultAnchor()
+                )
+        );
+    }
+
+    @Test
+    public void testSetSelectionWithDifferentSelectionButSameType2() {
+        final SpreadsheetSelection different = SpreadsheetSelection.parseCellRange("X1:Y2");
+        final SpreadsheetViewportAnchor anchor = different.defaultAnchor()
+                .opposite();
+
+        this.setSelectionAndCheck(
+                SpreadsheetSelection.parseCellRange("C3:D4")
+                        .setAnchor(anchor),
+                different,
+                AnchoredSpreadsheetSelection.with(
+                        different,
+                        anchor
+                )
+        );
+    }
+
+    @Test
+    public void testSetSelectionWithDifferentSelectionButDifferentType() {
+        final SpreadsheetSelection different = SpreadsheetSelection.parseColumnRange("A:B");
+
+        this.setSelectionAndCheck(
+                SpreadsheetSelection.parseCellRange("E5:F6")
+                        .setDefaultAnchor(),
+                different,
+                different.setDefaultAnchor()
+        );
+    }
+
+    private void setSelectionAndCheck(final AnchoredSpreadsheetSelection anchored,
+                                      final SpreadsheetSelection selection,
+                                      final AnchoredSpreadsheetSelection expected) {
+        this.checkEquals(
+                expected,
+                anchored.setSelection(selection)
         );
     }
 
