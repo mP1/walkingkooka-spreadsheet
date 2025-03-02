@@ -76,7 +76,6 @@ import walkingkooka.spreadsheet.formula.parser.TextSpreadsheetFormulaParserToken
 import walkingkooka.spreadsheet.formula.parser.YearSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
@@ -4346,17 +4345,11 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                                                    final int row) {
         return cell(
                 SpreadsheetFormulaParserToken.column(
-                        SpreadsheetColumnOrRowReference.column(
-                                column,
-                                SpreadsheetReferenceKind.RELATIVE
-                        ),
+                        SpreadsheetReferenceKind.RELATIVE.column(column),
                         columnText
                 ),
                 SpreadsheetFormulaParserToken.row(
-                        SpreadsheetColumnOrRowReference.row(
-                                row,
-                                SpreadsheetReferenceKind.RELATIVE
-                        ),
+                        SpreadsheetReferenceKind.RELATIVE.row(row),
                         String.valueOf(1 + row)
                 )
         );
