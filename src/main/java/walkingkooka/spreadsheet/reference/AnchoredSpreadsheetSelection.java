@@ -57,6 +57,24 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
         return this.selection;
     }
 
+    /**
+     * Would be setter that returns a {@link AnchoredSpreadsheetSelection} with a new selection, keeping the old anchor
+     * if the selection types are the same.
+     */
+    public AnchoredSpreadsheetSelection setSelection(final SpreadsheetSelection selection) {
+        Objects.requireNonNull(selection, "selection");
+
+        final SpreadsheetSelection old = this.selection;
+        return old.equals(selection) ?
+                this :
+                new AnchoredSpreadsheetSelection(
+                        selection,
+                        selection.getClass() == old.getClass() ?
+                                this.anchor :
+                                selection.defaultAnchor()
+                );
+    }
+
     private final SpreadsheetSelection selection;
 
     public SpreadsheetViewportAnchor anchor() {
