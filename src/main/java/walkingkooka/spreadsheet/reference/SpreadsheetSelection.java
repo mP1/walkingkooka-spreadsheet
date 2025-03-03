@@ -1374,6 +1374,15 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Returns a human friendly name or label for this {@link SpreadsheetSelection} which can be useful when
      * producing error messages etc.
+     * <pre>
+     * {@link SpreadsheetCellReference} -> Cell
+     * {@link SpreadsheetCellRangeReference} -> Cell Range
+     * {@link SpreadsheetColumnReference} -> Column
+     * {@link SpreadsheetColumnRangeReference} -> Column Range
+     * {@link SpreadsheetLabelName} -> Label
+     * {@link SpreadsheetRowReference} -> Row
+     * {@link SpreadsheetRowRangeReference} -> Row Range
+     * </pre>
      */
     public final String textLabel() {
         return this.getClass()
