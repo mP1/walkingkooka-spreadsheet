@@ -24,7 +24,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadataPropertyName<String> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameString(final String name) {
         super(name);

@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.formula.parser;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 
 /**
- * Holds the actual expression name within a expression token.
+ * Holds the actual expression name within an expression token.
  */
 public final class FunctionNameSpreadsheetFormulaParserToken extends NonSymbolSpreadsheetFormulaParserToken<SpreadsheetFunctionName> {
 

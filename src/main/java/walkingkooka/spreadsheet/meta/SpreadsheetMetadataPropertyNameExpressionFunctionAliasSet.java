@@ -28,7 +28,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet(final String name) {
         super(name);

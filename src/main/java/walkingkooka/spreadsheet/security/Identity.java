@@ -51,7 +51,7 @@ public abstract class Identity<I extends IdentityId> implements Value<Optional<I
     }
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     Identity(final Optional<I> id) {
         super();
@@ -95,7 +95,7 @@ public abstract class Identity<I extends IdentityId> implements Value<Optional<I
     }
 
     /**
-     * sub-classes should do an instanceof test.
+     * subclasses should do an instanceof test.
      */
     abstract boolean canBeEqual(final Object other);
 

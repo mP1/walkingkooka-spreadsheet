@@ -446,7 +446,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                         this.getClass()
                                 .getSimpleName()
                                 .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
-                                .replace("Spreadsheet", ""), // handles sub-classes like SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText
+                                .replace("Spreadsheet", ""), // handles subclasses like SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText
                         CaseKind.KEBAB
                 ) :
                 name;
@@ -591,7 +591,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     abstract T parseUrlFragmentSaveValue0(final String value);
 
     /**
-     * This common method should be called by sub-classes to indicate {@link #parseUrlFragmentSaveValue(String)} is not supported.
+     * This common method should be called by subclasses to indicate {@link #parseUrlFragmentSaveValue(String)} is not supported.
      */
     final T failParseUrlFragmentSaveValueUnsupported() {
         throw new UnsupportedOperationException("UrlFragment save value not supported for " + CharSequences.quoteAndEscape(this.value()));

@@ -23,7 +23,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * A expression which includes its name and any parameters if any. Each parameter will be separated by a comma.
+ * An expression which includes its name and any parameters if any. Each parameter will be separated by a comma.
  * <br>
  * SUM(A10:A20)
  */

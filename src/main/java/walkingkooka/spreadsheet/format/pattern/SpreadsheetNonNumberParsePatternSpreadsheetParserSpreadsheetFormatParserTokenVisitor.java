@@ -603,7 +603,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
 
     /**
      * Adds a required parser to the sequence. This sequence wil eventually be transformed into either a
-     * {@link SpreadsheetFormulaParserToken} sub class like {@link DateSpreadsheetFormulaParserToken}.
+     * {@link SpreadsheetFormulaParserToken} subclass like {@link DateSpreadsheetFormulaParserToken}.
      */
     private void addParser(final Parser<SpreadsheetParserContext> parser) {
         if (null == this.parser) {

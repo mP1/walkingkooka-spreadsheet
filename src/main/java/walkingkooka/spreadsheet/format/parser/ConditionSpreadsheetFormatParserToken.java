@@ -28,7 +28,7 @@ import java.util.Optional;
 abstract public class ConditionSpreadsheetFormatParserToken extends ParentSpreadsheetFormatParserToken {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     ConditionSpreadsheetFormatParserToken(final List<ParserToken> value, final String text) {
         super(value, text);

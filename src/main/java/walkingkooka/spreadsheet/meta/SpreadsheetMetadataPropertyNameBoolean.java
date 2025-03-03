@@ -26,7 +26,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadataPropertyName<Boolean> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameBoolean(final String name) {
         super(name);

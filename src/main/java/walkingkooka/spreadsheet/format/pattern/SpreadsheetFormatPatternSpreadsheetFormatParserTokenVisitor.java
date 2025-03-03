@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} for all {@link SpreadsheetFormatPattern} that is used to validate a pattern
- * includes only supported tokens. Each sub class will call {@link SpreadsheetPatternSpreadsheetFormatParserTokenVisitor#failInvalid()} for invalid tokens.
+ * includes only supported tokens. Each subclass will call {@link SpreadsheetPatternSpreadsheetFormatParserTokenVisitor#failInvalid()} for invalid tokens.
  */
 abstract class SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor {
 

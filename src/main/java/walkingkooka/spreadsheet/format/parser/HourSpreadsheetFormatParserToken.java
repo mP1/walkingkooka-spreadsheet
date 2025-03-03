@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.parser;
 import java.util.Optional;
 
 /**
- * Represents a hour placeholder.
+ * Represents an hour placeholder.
  */
 public final class HourSpreadsheetFormatParserToken extends NonSymbolSpreadsheetFormatParserToken<String> {
 

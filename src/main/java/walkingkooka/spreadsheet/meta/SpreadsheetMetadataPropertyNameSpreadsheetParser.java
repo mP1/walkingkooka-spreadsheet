@@ -30,7 +30,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameSpreadsheetParser extends SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameSpreadsheetParser(final String name,
                                                      final SpreadsheetPatternKind spreadsheetPatternKind) {

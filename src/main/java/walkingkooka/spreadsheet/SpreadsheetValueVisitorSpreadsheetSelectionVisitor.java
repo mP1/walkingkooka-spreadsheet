@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
 /**
- * This visitor is used by {@link SpreadsheetValueVisitor} to visit sub-classes of {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection}.
+ * This visitor is used by {@link SpreadsheetValueVisitor} to visit subclasses of {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection}.
  */
 final class SpreadsheetValueVisitorSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 

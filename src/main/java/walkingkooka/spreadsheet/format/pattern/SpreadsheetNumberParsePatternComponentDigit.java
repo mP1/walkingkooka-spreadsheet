@@ -27,7 +27,7 @@ import walkingkooka.text.cursor.TextCursor;
 abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNumberParsePatternComponent {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetNumberParsePatternComponentDigit(final SpreadsheetNumberParsePatternComponentDigitMode mode,
                                                 final int max) {

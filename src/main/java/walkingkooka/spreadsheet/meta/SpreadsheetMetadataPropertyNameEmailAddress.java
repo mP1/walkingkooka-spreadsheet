@@ -25,7 +25,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMetadataPropertyName<EmailAddress> {
 
     /**
-     * Package private constructor to limit sub classing.
+     * Package private constructor to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameEmailAddress(final String name) {
         super(name);

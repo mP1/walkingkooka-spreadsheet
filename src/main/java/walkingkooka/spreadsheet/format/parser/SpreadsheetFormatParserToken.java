@@ -447,7 +447,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Package private ctor to limit sub classing.
+     * Package private ctor to limit subclassing.
      */
     SpreadsheetFormatParserToken(final String text) {
         super();
@@ -525,7 +525,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * All sub-classes of {@link ConditionSpreadsheetFormatParserToken} return true
+     * All subclasses of {@link ConditionSpreadsheetFormatParserToken} return true
      */
     public final boolean isCondition() {
         return this instanceof ConditionSpreadsheetFormatParserToken;
@@ -707,7 +707,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Returns true for sub-classes of {@link SpreadsheetFormatLeafParserToken}.
+     * Returns true for subclasses of {@link SpreadsheetFormatLeafParserToken}.
      */
     @Override
     public final boolean isLeaf() {
@@ -779,7 +779,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Returns true for sub-classes of {@link ParentSpreadsheetFormatParserToken}.
+     * Returns true for subclasses of {@link ParentSpreadsheetFormatParserToken}.
      */
     @Override
     public final boolean isParent() {
@@ -822,7 +822,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Only sub-classes of {@link SymbolSpreadsheetFormatParserToken} return true
+     * Only subclasses of {@link SymbolSpreadsheetFormatParserToken} return true
      */
     @Override
     public final boolean isSymbol() {
@@ -1459,7 +1459,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetFormatLeafParserToken}
+     * Helper that knows how to unmarshall a subclass of {@link SpreadsheetFormatLeafParserToken}
      */
     static <T extends SymbolSpreadsheetFormatParserToken> T unmarshallSymbolParserToken(final JsonNode node,
                                                                                         final JsonNodeUnmarshallContext context,
@@ -1494,7 +1494,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetFormatLeafParserToken}
+     * Helper that knows how to unmarshall a subclass of {@link SpreadsheetFormatLeafParserToken}
      */
     private static <V, T extends SpreadsheetFormatLeafParserToken<V>> T unmarshallLeafParserToken(final JsonNode node,
                                                                                                   final Class<V> valueType,
@@ -1771,7 +1771,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetFormatLeafParserToken}
+     * Helper that knows how to unmarshall a subclass of {@link SpreadsheetFormatLeafParserToken}
      */
     private static <T extends ParentSpreadsheetFormatParserToken> T unmarshallParentParserToken(final JsonNode node,
                                                                                                 final JsonNodeUnmarshallContext context,

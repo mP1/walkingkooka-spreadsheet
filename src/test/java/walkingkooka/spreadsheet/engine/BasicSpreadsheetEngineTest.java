@@ -2112,7 +2112,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
         this.loadLabelStoreAndCheck(labelStore);
 
-        // verify references all ways are present in the store.
+        // verify references always are present in the store.
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
         this.loadReferencesAndCheck(

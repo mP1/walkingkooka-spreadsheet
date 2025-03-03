@@ -25,7 +25,7 @@ import java.util.Objects;
 abstract class SpreadsheetDataValidatorTemplate<T> implements SpreadsheetDataValidator<T> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetDataValidatorTemplate() {
         super();

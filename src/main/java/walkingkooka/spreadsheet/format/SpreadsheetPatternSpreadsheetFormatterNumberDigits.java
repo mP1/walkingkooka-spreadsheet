@@ -50,7 +50,7 @@ abstract class SpreadsheetPatternSpreadsheetFormatterNumberDigits implements Use
     }
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetPatternSpreadsheetFormatterNumberDigits(final String text) {
         super();

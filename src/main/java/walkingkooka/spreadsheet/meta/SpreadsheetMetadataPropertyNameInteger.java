@@ -23,7 +23,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadataPropertyName<Integer> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameInteger(final String name) {
         super(name);

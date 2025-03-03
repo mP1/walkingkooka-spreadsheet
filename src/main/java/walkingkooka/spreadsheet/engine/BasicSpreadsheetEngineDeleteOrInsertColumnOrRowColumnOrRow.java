@@ -49,7 +49,7 @@ import java.util.Optional;
 abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow(final int value,
                                                                final int count,
@@ -202,13 +202,13 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     /**
      * Handles a column {@link ColumnSpreadsheetFormulaParserToken} within an expression.
-     * It may be returned unmodified, replaced by a expression if the reference was deleted or simply have the reference adjusted.
+     * It may be returned unmodified, replaced by an expression if the reference was deleted or simply have the reference adjusted.
      */
     abstract Optional<ColumnSpreadsheetFormulaParserToken> fixColumnReferenceParserToken(final ColumnSpreadsheetFormulaParserToken token);
 
     /**
      * Handles a column {@link RowSpreadsheetFormulaParserToken} within an expression.
-     * It may be returned unmodified, replaced by a expression if the reference was deleted or simply have the reference adjusted.
+     * It may be returned unmodified, replaced by an expression if the reference was deleted or simply have the reference adjusted.
      */
     abstract Optional<RowSpreadsheetFormulaParserToken> fixRowReferenceParserToken(final RowSpreadsheetFormulaParserToken token);
 

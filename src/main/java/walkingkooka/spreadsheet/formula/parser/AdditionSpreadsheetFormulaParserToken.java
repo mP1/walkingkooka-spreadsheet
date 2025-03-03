@@ -23,7 +23,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * Represents a addition operation with its parameters.
+ * Represents an addition operation with its parameters.
  */
 public final class AdditionSpreadsheetFormulaParserToken extends ArithmeticSpreadsheetFormulaParserToken {
 

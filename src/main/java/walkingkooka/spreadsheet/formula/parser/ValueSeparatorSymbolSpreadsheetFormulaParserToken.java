@@ -21,7 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 /**
- * Represents a comma symbol token which is used to separate parameters to a expression.
+ * Represents a comma symbol token which is used to separate parameters to an expression.
  */
 public final class ValueSeparatorSymbolSpreadsheetFormulaParserToken extends SymbolSpreadsheetFormulaParserToken {
 

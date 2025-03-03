@@ -21,7 +21,7 @@ import java.util.Objects;
 
 /**
  * A SAM interface that defines a single method to resolve any {@link SpreadsheetLabelName} selections to a NON
- * {@link SpreadsheetSelection}. In the cases of an unknown label, a {@link RuntimeException} will be thrown.
+ * {@link SpreadsheetSelection}. In the cases of a unknown label, a {@link RuntimeException} will be thrown.
  */
 public interface SpreadsheetLabelNameResolver {
 

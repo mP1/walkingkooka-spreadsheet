@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.parser;
 import java.util.Optional;
 
 /**
- * Represents a am/pm placeholder.
+ * Represents an am/pm placeholder.
  */
 public final class AmPmSpreadsheetFormatParserToken extends NonSymbolSpreadsheetFormatParserToken<String> {
 

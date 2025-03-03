@@ -30,7 +30,7 @@ abstract public class ConditionSpreadsheetFormulaParserToken extends BinarySprea
     }
 
     /**
-     * Returns a sub-class of {@link ConditionRightSpreadsheetFormulaParserToken} from the RHS argument of this condition.
+     * Returns a subclass of {@link ConditionRightSpreadsheetFormulaParserToken} from the RHS argument of this condition.
      */
     public final ConditionRightSpreadsheetFormulaParserToken toConditionRightSpreadsheetFormulaParserToken() {
         // find symbol, return  the symbol and tokens following it to the factory method.
