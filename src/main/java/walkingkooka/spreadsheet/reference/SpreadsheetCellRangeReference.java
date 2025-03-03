@@ -159,12 +159,12 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
 
     @Override
     public boolean isFirst() {
-        return this.begin().isFirst() && this.isSingleCell();
+        return this.begin().isFirst() && this.isUnit();
     }
 
     @Override
     public boolean isLast() {
-        return this.begin().isLast() && this.isSingleCell();
+        return this.begin().isLast() && this.isUnit();
     }
 
     /**
@@ -246,14 +246,6 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                                 Range.lessThanEquals(this.end().column().setRow(rowRange.end()))
                         )
         );
-    }
-
-    /**
-     * Returns true only if this range covers a single cell.
-     */
-    public boolean isSingleCell() {
-        return this.begin()
-                .equalsIgnoreReferenceKind(this.end());
     }
 
     /**
@@ -706,7 +698,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
 
     @Override
     SpreadsheetSelection toScalarIfUnit() {
-        return this.isSingleCell() ?
+        return this.isUnit() ?
                 this.begin() :
                 this;
     }
@@ -933,7 +925,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
 
     @Override
     public String toString() {
-        return this.isSingleCell() ?
+        return this.isUnit() ?
                 this.begin().toString() :
                 this.begin() + SEPARATOR.string() + this.end();
     }
