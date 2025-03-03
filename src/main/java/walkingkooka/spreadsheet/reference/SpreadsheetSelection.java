@@ -1118,15 +1118,6 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public abstract boolean isLast();
 
-    // pick.............................................................................................................
-
-    /**
-     * Picks one of the three given values (which may be null) depending on the type of this {@link SpreadsheetSelection}.
-     */
-    public abstract <T> T pick(final T cellOrCellRangeOrLabel,
-                               final T columnOrColumnRange,
-                               final T rowOrRowRange);
-
     // SpreadsheetViewport.....................................................................................
 
     /**

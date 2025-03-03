@@ -863,19 +863,6 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
-    // pick.............................................................................................................
-
-    @Test
-    public void testPick() {
-        this.pickAndCheck(
-                this.createSelection(),
-                1, // cell
-                2, // columns
-                3,// rows
-                3
-        );
-    }
-
     // TreePrintable....................................................................................................
 
     @Test

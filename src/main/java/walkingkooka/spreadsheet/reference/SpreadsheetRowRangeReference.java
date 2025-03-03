@@ -222,15 +222,6 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
                 relative;
     }
 
-    // pick.............................................................................................................
-
-    @Override
-    public <T> T pick(final T cellOrCellRangeOrLabel,
-                      final T columnOrColumnRange,
-                      final T rowOrRowRange) {
-        return rowOrRowRange;
-    }
-
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override

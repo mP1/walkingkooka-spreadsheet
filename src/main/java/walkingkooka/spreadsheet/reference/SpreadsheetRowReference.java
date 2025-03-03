@@ -334,15 +334,6 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return this.setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
     }
 
-    // pick.............................................................................................................
-
-    @Override
-    public <T> T pick(final T cellOrCellRangeOrLabel,
-                      final T columnOrColumnRange,
-                      final T rowOrRowRange) {
-        return rowOrRowRange;
-    }
-
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override
