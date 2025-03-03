@@ -1362,6 +1362,16 @@ public abstract class SpreadsheetSelection implements HasText,
 
     /**
      * Returns either cell for cell/cell-range/label, column for column/column-range and row for row/row-range.
+     * Note this never returns Label.
+     * <pre>
+     * {@link SpreadsheetCellReference} -> cell
+     * {@link SpreadsheetCellRangeReference} -> cell
+     * {@link SpreadsheetColumnReference} -> column
+     * {@link SpreadsheetColumnRangeReference} -> column
+     * {@link SpreadsheetLabelName} -> cell
+     * {@link SpreadsheetRowReference} -> row
+     * {@link SpreadsheetRowRangeReference} -> row
+     * </pre>
      */
     public final String cellColumnOrRowText() {
         return this.isColumn() || this.isColumnRange() ? "column" :
