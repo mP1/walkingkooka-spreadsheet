@@ -57,10 +57,10 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.
      */
     static SpreadsheetCellReference with(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
-        checkColumn(column);
-        checkRow(row);
-
-        return new SpreadsheetCellReference(column, row);
+        return new SpreadsheetCellReference(
+                checkColumn(column),
+                checkRow(row)
+        );
     }
 
     private SpreadsheetCellReference(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
@@ -92,16 +92,18 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     public SpreadsheetCellReference setRow(final SpreadsheetRowReference row) {
-        checkRow(row);
         return this.row.equals(row) ?
                 this :
-                this.replace(this.column, row);
+                this.replace(
+                        this.column,
+                        checkRow(row)
+                );
     }
 
     final SpreadsheetRowReference row;
 
-    private static void checkRow(final SpreadsheetRowReference row) {
-        Objects.requireNonNull(row, "row");
+    private static SpreadsheetRowReference checkRow(final SpreadsheetRowReference row) {
+        return Objects.requireNonNull(row, "row");
     }
 
     /**
@@ -115,7 +117,10 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      * Adds with saturation a delta to the row, performing a would be updated if the row value is not zero.
      */
     public SpreadsheetCellReference addRowSaturated(final int row) {
-        return this.setRow(this.row().addSaturated(row));
+        return this.setRow(
+                this.row()
+                        .addSaturated(row)
+        );
     }
 
     /**
@@ -138,16 +143,18 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     public SpreadsheetCellReference setColumn(final SpreadsheetColumnReference column) {
-        checkColumn(column);
         return this.column.equals(column) ?
                 this :
-                this.replace(column, this.row);
+                this.replace(
+                        checkColumn(column),
+                        this.row
+                );
     }
 
     final SpreadsheetColumnReference column;
 
-    private static void checkColumn(final SpreadsheetColumnReference column) {
-        Objects.requireNonNull(column, "column");
+    private static SpreadsheetColumnReference checkColumn(final SpreadsheetColumnReference column) {
+        return Objects.requireNonNull(column, "column");
     }
 
     /**
@@ -169,26 +176,41 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      * Returns a {@link SpreadsheetCellReference} with both the column and row set to {@link SpreadsheetReferenceKind#RELATIVE}.
      */
     private SpreadsheetCellReference setSpreadsheetReferenceKind(final SpreadsheetReferenceKind kind) {
-        return this.setColumn(this.column().setReferenceKind(kind))
-                .setRow(this.row().setReferenceKind(kind));
+        return this.setColumn(
+                this.column()
+                        .setReferenceKind(kind)
+                ).setRow(
+                        this.row()
+                                .setReferenceKind(kind)
+        );
     }
 
     /**
      * Adds a delta to the column, performing a would be updated if the column value is not zero.
      */
     public SpreadsheetCellReference addColumn(final int column) {
-        return this.setColumn(this.column().add(column));
+        return this.setColumn(
+                this.column()
+                        .add(column)
+        );
     }
 
     /**
      * Adds with saturation a delta to the column, performing a would be updated if the column value is not zero
      */
     public SpreadsheetCellReference addColumnSaturated(final int column) {
-        return this.setColumn(this.column().addSaturated(column));
+        return this.setColumn(
+                this.column()
+                        .addSaturated(column)
+        );
     }
 
-    private SpreadsheetCellReference replace(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
-        return new SpreadsheetCellReference(column, row);
+    private SpreadsheetCellReference replace(final SpreadsheetColumnReference column,
+                                             final SpreadsheetRowReference row) {
+        return new SpreadsheetCellReference(
+                column,
+                row
+        );
     }
 
     @Override
@@ -198,12 +220,17 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     public boolean isFirst() {
-        return this.column().isFirst() && this.row().isFirst();
+        return this.column()
+                .isFirst() &&
+                this.row()
+                        .isFirst();
     }
 
     @Override
     public boolean isLast() {
-        return this.column().isLast() && this.row().isLast();
+        return this.column()
+                .isLast() &&
+                this.row().isLast();
     }
 
     @Override
@@ -218,7 +245,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     public SpreadsheetColumnRangeReference toColumnRange() {
-        return this.toColumn().toColumnRange();
+        return this.toColumn()
+                .toColumnRange();
     }
 
     @Override
@@ -228,7 +256,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     public SpreadsheetRowRangeReference toRowRange() {
-        return this.row().toRowRange();
+        return this.row()
+                .toRowRange();
     }
 
     @Override
@@ -298,7 +327,11 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      */
     public SpreadsheetViewportRectangle viewportRectangle(final double width,
                                                           final double height) {
-        return SpreadsheetViewportRectangle.with(this, width, height);
+        return SpreadsheetViewportRectangle.with(
+                this,
+                width,
+                height
+        );
     }
 
     // setFormula.......................................................................................................
@@ -331,12 +364,14 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     @Override
     boolean testColumnNonNull(final SpreadsheetColumnReference column) {
-        return this.column().equalsIgnoreReferenceKind(column);
+        return this.column()
+                .equalsIgnoreReferenceKind(column);
     }
 
     @Override
     boolean testRowNonNull(final SpreadsheetRowReference row) {
-        return this.row().equalsIgnoreReferenceKind(row);
+        return this.row()
+                .equalsIgnoreReferenceKind(row);
     }
 
     // range/cellRange.......................................................................................
@@ -369,7 +404,9 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      * Creates a {@link SpreadsheetCellRangeReference} with the given {@link SpreadsheetCellReference}.
      */
     public SpreadsheetCellRangeReference cellRange(final SpreadsheetCellReference other) {
-        return SpreadsheetCellRangeReference.with(this.range(other));
+        return SpreadsheetCellRangeReference.with(
+                this.range(other)
+        );
     }
 
     // HateosResource...................................................................................................
@@ -404,8 +441,16 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     @Override
     public boolean isHidden(final Predicate<SpreadsheetColumnReference> hiddenColumnTester,
                             final Predicate<SpreadsheetRowReference> hiddenRowTester) {
-        return this.column().isHidden(hiddenColumnTester, hiddenRowTester) ||
-                this.row().isHidden(hiddenColumnTester, hiddenRowTester);
+        return this.column()
+                .isHidden(
+                        hiddenColumnTester,
+                        hiddenRowTester
+                ) ||
+                this.row()
+                        .isHidden(
+                                hiddenColumnTester,
+                                hiddenRowTester
+                        );
     }
 
     @Override
@@ -696,13 +741,20 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
 
     private boolean equals1(final SpreadsheetCellReference other,
                             final boolean includeKind) {
-        return this.column.equals1(other.column, includeKind) &&
-                this.row.equals1(other.row, includeKind);
+        return this.column.equals1(
+                other.column,
+                includeKind
+        ) &&
+                this.row.equals1(
+                        other.row,
+                        includeKind
+                );
     }
 
     @Override
     public String toString() {
-        return "" + this.column + this.row;
+        return this.column.toString()
+                .concat(this.row.toString());
     }
 
     // Comparable ......................................................................................................
