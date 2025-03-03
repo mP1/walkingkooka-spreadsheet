@@ -202,7 +202,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         if (false == duplicates.isEmpty()) {
                             duplicates.iterator()
                                     .next()
-                                    .ifDifferentReferenceTypeFail(columnOrRow);
+                                    .ifDifferentColumnOrRowTypeFail(columnOrRow);
                         }
 
                         if (false == duplicates.add(columnOrRow)) {

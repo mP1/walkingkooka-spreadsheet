@@ -74,7 +74,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
             if (false == duplicates.isEmpty()) {
                 duplicates.iterator()
                         .next()
-                        .ifDifferentReferenceTypeFail(columnOrRow);
+                        .ifDifferentColumnOrRowTypeFail(columnOrRow);
             }
 
             if (false == duplicates.add(columnOrRow)) {

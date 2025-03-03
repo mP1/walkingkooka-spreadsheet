@@ -982,6 +982,22 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
+     * Complains by throwing a {#@link IllegalArgumentException} if the given {@link SpreadsheetSelection} is
+     * a different {@link SpreadsheetColumnOrRowReferenceKind}.
+     * <pre>
+     * AB vs 123
+     * Got row 123 expected column
+     * </pre>
+     */
+    public final void ifDifferentColumnOrRowTypeFail(final SpreadsheetSelection columnOrRow) {
+        Objects.requireNonNull(columnOrRow, "columnOrRow");
+
+        if (false == this.columnOrRowReferenceKind().equals(columnOrRow.columnOrRowReferenceKind())) {
+            throw new IllegalArgumentException("Got " + columnOrRow.textLabel() + " " + columnOrRow + " expected " + this.textLabel());
+        }
+    }
+
+    /**
      * Not really a cast operation but only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRangeReference} will
      * succeed all other types will throw {@link UnsupportedOperationException}.
      */
