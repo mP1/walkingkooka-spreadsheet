@@ -77,7 +77,11 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
             case 0:
                 throw new IllegalArgumentException("Cells empty");
             case 1:
-                range = with(Range.singleton(copy.get(0)));
+                range = with(
+                        Range.singleton(
+                                copy.get(0)
+                        )
+                );
                 break;
             default:
                 range = computeEnclosingBounds(copy);
@@ -252,15 +256,31 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
      * Returns the width of this range.
      */
     public int width() {
-        return this.end().column().value() - this.begin().column().value() + 1;
+        return this.end()
+                .column()
+                .value()
+                -
+                this.begin()
+                        .column()
+                        .value()
+                + 1;
     }
 
     /**
      * Returns the height of this range.
      */
     public int height() {
-        return this.end().row().value() - this.begin().row().value() + 1;
+        return this.end()
+                .row()
+                .value()
+                -
+                this.begin()
+                        .row()
+                        .value()
+                + 1;
     }
+
+    // toXXX............................................................................................................
 
     @Override
     public SpreadsheetCellReference toCell() {
@@ -286,6 +306,8 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     public SpreadsheetRowRangeReference toRowRange() {
         return this.rowRange();
     }
+
+    // xxxStream........................................................................................................
 
     /**
      * A stream that provides all {@link SpreadsheetColumnReference}.
@@ -677,7 +699,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
         );
     }
 
-    // focused...........................................................................................................
+    // focused..........................................................................................................
 
     @Override
     public SpreadsheetCellReference focused(final SpreadsheetViewportAnchor anchor) {
@@ -721,7 +743,8 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     // add column/row...................................................................................................
 
     @Override
-    public SpreadsheetCellRangeReference add(final int column, final int row) {
+    public SpreadsheetCellRangeReference add(final int column,
+                                             final int row) {
         return this.setColumnRange(
                 this.columnRange().add(column)
         ).setRowRange(
@@ -827,8 +850,10 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     boolean testCellRangeNonNull(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
 
-        return this.columnRange().testCellRangeNonNull(range) &&
-                this.rowRange().testCellRangeNonNull(range);
+        return this.columnRange()
+                .testCellRangeNonNull(range) &&
+                this.rowRange()
+                        .testCellRangeNonNull(range);
     }
 
     /**
@@ -867,13 +892,13 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     /**
      * Only returns true if the given {@link SpreadsheetCellRangeReference} is entirely within this {@link SpreadsheetCellRangeReference}.
      */
-    public boolean containsAll(final SpreadsheetCellRangeReference range) {
-        Objects.requireNonNull(range, "range");
+    public boolean containsAll(final SpreadsheetCellRangeReference cellRange) {
+        Objects.requireNonNull(cellRange, "cellRange");
 
         return this.testCellNonNull(
-                range.begin()
+                cellRange.begin()
         ) && this.testCellNonNull(
-                range.end()
+                cellRange.end()
         );
     }
 
@@ -892,7 +917,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
         );
     }
 
-    // HashCodeEqualsDefined.......................................................................................
+    // HashCodeEqualsDefined............................................................................................
 
     @Override
     public int hashCode() {
@@ -914,7 +939,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                 this.end().equalsNotSameAndNotNull(other.end(), includeKind);
     }
 
-    // toString........................................................................................................
+    // toString.........................................................................................................
 
     @Override
     public String toString() {
@@ -936,7 +961,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                 relative;
     }
 
-    // Comparable......................................................................................................
+    // Comparable.......................................................................................................
 
     /**
      * Compares two {@link SpreadsheetCellRangeReference} where the {@link SpreadsheetReferenceKind} is irrelevant.
