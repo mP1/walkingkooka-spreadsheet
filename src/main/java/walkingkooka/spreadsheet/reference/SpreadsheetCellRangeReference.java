@@ -696,13 +696,6 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
         return this.begin();
     }
 
-    @Override
-    SpreadsheetSelection toScalarIfUnit() {
-        return this.isUnit() ?
-                this.begin() :
-                this;
-    }
-
     // toRange..........................................................................................................
 
     @Override

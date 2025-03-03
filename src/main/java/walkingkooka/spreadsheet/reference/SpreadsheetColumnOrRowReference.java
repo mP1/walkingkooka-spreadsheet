@@ -163,11 +163,6 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return this;
     }
 
-    @Override
-    final SpreadsheetSelection toScalarIfUnit() {
-        return this;
-    }
-
     // Object...........................................................................................................
 
     @Override

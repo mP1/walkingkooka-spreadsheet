@@ -203,11 +203,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         return this;
     }
 
-    @Override
-    SpreadsheetSelection toScalarIfUnit() {
-        return this;
-    }
-
     // toRange..........................................................................................................
 
     @Override

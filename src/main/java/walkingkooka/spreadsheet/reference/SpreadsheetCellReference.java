@@ -236,11 +236,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
         return this;
     }
 
-    @Override
-    SpreadsheetSelection toScalarIfUnit() {
-        return this;
-    }
-
     // toRange..........................................................................................................
 
     @Override

@@ -1093,9 +1093,38 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetSelection toScalar();
 
     /**
-     * If a non range selection returns this, ranges if they have a coubt of 1 returns the begin, otherwise they return this..
+     * If a non range selection returns this, ranges if they have a count of 1 returns the begin, otherwise they return this..
      */
-    abstract SpreadsheetSelection toScalarIfUnit();
+    public final SpreadsheetSelection toScalarIfUnit() {
+        final SpreadsheetSelection scalar;
+
+        switch (this.getClass().getSimpleName()) {
+            case "SpreadsheetCellRangeReference":
+                scalar = this.isUnit() ?
+                        this.toCellRange()
+                                .begin():
+                        this;
+                break;
+            case "SpreadsheetColumnRangeReference":
+                scalar = this.isUnit() ?
+                        this.toColumnRange()
+                                .begin():
+                        this;
+                break;
+            case "SpreadsheetRowRangeReference":
+                scalar = this.isUnit() ?
+                        this.toRowRange()
+                                .begin():
+                        this;
+                break;
+            default:
+                // labels are considered scalar
+                scalar = this;
+                break;
+        }
+
+        return scalar;
+    }
 
     /**
      * Converts this {@link SpreadsheetSelection} into a range. A {@link SpreadsheetCellReference} will return {@link SpreadsheetCellRangeReference},
