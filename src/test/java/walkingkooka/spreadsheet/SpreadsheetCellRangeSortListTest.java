@@ -24,7 +24,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -37,7 +36,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
 
     @Test
     public void testWithColumnA() {
-        final SpreadsheetColumnReference a = SpreadsheetColumnOrRowReference.parseColumn("A");
+        final SpreadsheetColumnReference a = SpreadsheetSelection.parseColumn("A");
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 a,
@@ -62,7 +61,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
 
     @Test
     public void testWithColumnB() {
-        final SpreadsheetColumnReference b = SpreadsheetColumnOrRowReference.parseColumn("B");
+        final SpreadsheetColumnReference b = SpreadsheetSelection.parseColumn("B");
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 b,
@@ -87,7 +86,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
 
     @Test
     public void testWithRow1() {
-        final SpreadsheetRowReference row1 = SpreadsheetColumnOrRowReference.parseRow("1");
+        final SpreadsheetRowReference row1 = SpreadsheetSelection.parseRow("1");
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 row1,
@@ -112,7 +111,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
 
     @Test
     public void testWithRow2() {
-        final SpreadsheetRowReference row2 = SpreadsheetColumnOrRowReference.parseRow("2");
+        final SpreadsheetRowReference row2 = SpreadsheetSelection.parseRow("2");
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
                 row2,
@@ -138,7 +137,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testSize() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseRow("2"),
+                SpreadsheetSelection.parseRow("2"),
                 4
         );
 
@@ -161,7 +160,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
                 .setFormula(SpreadsheetFormula.EMPTY);
 
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
 
@@ -189,7 +188,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testSet() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
 
@@ -216,7 +215,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testSetNull() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
 
@@ -245,7 +244,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testSetThatReplaced() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
 
@@ -285,7 +284,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> SpreadsheetCellRangeSortList.with(
-                        SpreadsheetColumnOrRowReference.parseColumn("A"),
+                        SpreadsheetSelection.parseColumn("A"),
                         4
                 ).add(null)
         );
@@ -296,7 +295,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> SpreadsheetCellRangeSortList.with(
-                        SpreadsheetColumnOrRowReference.parseColumn("A"),
+                        SpreadsheetSelection.parseColumn("A"),
                         4
                 ).add(1, null)
         );
@@ -305,7 +304,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testRemoveElementFails() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
 
@@ -332,7 +331,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testRemoveIndexFails() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
 
@@ -362,7 +361,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     public void testEqualsDifferentSize() {
         this.checkNotEquals(
                 SpreadsheetCellRangeSortList.with(
-                        SpreadsheetColumnOrRowReference.parseColumn("A"),
+                        SpreadsheetSelection.parseColumn("A"),
                         4
                 )
         );
@@ -371,7 +370,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Test
     public void testEqualsDifferentElementsSameSize() {
         final SpreadsheetCellRangeSortList list = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
         list.set(
@@ -382,7 +381,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
         );
 
         final SpreadsheetCellRangeSortList other = SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
         other.set(
@@ -402,7 +401,7 @@ public final class SpreadsheetCellRangeSortListTest implements ListTesting,
     @Override
     public SpreadsheetCellRangeSortList createObject() {
         return SpreadsheetCellRangeSortList.with(
-                SpreadsheetColumnOrRowReference.parseColumn("A"),
+                SpreadsheetSelection.parseColumn("A"),
                 3
         );
     }
