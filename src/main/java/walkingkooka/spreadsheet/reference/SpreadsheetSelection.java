@@ -533,9 +533,9 @@ public abstract class SpreadsheetSelection implements HasText,
      * Note the caught {@link ParserException#getCause()} has some special handling with the
      * original {@link String text} parameter appended when possible.
      * <pre>
-     * Invalid row value 1048576 expected between 0 and 1048576
+     * Invalid row=1048576 not between 0 and 1048576
      * becomes
-     * Invalid row value 1048576 expected between 0 and 1048576 got "B1048577"
+     * Invalid row=1048576 between 0 and 1048576 got "B1048577"
      * </pre>
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
