@@ -47,11 +47,6 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return 1;
     }
 
-    @Override
-    public final boolean isAll() {
-        return false;
-    }
-
     /**
      * Only returns true if this is the first column or row.
      */
