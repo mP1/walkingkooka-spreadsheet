@@ -87,12 +87,12 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
 
     @Override
     public final boolean isFirst() {
-        return this.begin().isFirst() && this.isSingle();
+        return this.begin().isFirst() && this.isUnit();
     }
 
     @Override
     public final boolean isLast() {
-        return this.begin().isLast() && this.isSingle();
+        return this.begin().isLast() && this.isUnit();
     }
 
     /**
@@ -152,14 +152,7 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
      */
     public abstract SpreadsheetColumnOrRowRangeReference<?> addIfRelative(final int delta);
 
-    // isSingle.........................................................................................................
-
-    /**
-     * Returns true only if this range covers a single column/row.
-     */
-    public final boolean isSingle() {
-        return this.begin().equalsIgnoreReferenceKind(this.end());
-    }
+    // toXXX............................................................................................................
 
     @Override
     public SpreadsheetSelection toScalar() {
@@ -223,7 +216,7 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
 
     @Override
     public final String toString() {
-        return this.isSingle() ?
+        return this.isUnit() ?
                 this.begin().toString() :
                 this.begin() + SEPARATOR.string() + this.end();
     }

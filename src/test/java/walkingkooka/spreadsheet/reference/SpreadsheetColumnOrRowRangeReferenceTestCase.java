@@ -144,13 +144,4 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
     public final boolean compareAndEqualsMatch() {
         return false;
     }
-
-    final void isSingleAndCheck(final String range,
-                                final boolean expected) {
-        this.checkEquals(
-                expected,
-                this.parseString(range).isSingle(),
-                () -> range + "  isSingle"
-        );
-    }
 }
