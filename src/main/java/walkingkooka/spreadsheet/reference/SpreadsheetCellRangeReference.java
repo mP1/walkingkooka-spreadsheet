@@ -590,7 +590,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                         )),
                         anchor
                 ).map(s -> s.setAnchorOrDefault(
-                        columnRange.isSingle() ?
+                        columnRange.isUnit() ?
                                 singleColumnAnchor.get() :
                                 anchor
                 ));
@@ -683,7 +683,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
                         )),
                         anchor
                 ).map(s -> s.setAnchorOrDefault(
-                        rowRange.isSingle() ?
+                        rowRange.isUnit() ?
                                 singleRowAnchor.get() :
                                 anchor
                 ));

@@ -1420,7 +1420,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
 
     @Test
     public void testIsSingleTrue() {
-        this.isSingleAndCheck(
+        this.isUnitAndCheck(
                 "1:1",
                 true
         );
@@ -1428,7 +1428,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
 
     @Test
     public void testIsSingleDifferentReferenceKindTrue() {
-        this.isSingleAndCheck(
+        this.isUnitAndCheck(
                 "1:$1",
                 true
         );
@@ -1436,7 +1436,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
 
     @Test
     public void testIsSingleFalse() {
-        this.isSingleAndCheck(
+        this.isUnitAndCheck(
                 "1:$2",
                 false
         );

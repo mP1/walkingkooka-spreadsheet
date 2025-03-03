@@ -392,7 +392,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
     Optional<AnchoredSpreadsheetSelection> extendUpRow(final SpreadsheetViewportAnchor anchor,
                                                        final SpreadsheetViewportNavigationContext context) {
         return this.extendRow(
-                this.isSingle() ? SpreadsheetViewportAnchor.BOTTOM : anchor,
+                this.isUnit() ? SpreadsheetViewportAnchor.BOTTOM : anchor,
                 r -> Cast.to(
                         r.upRow(
                                 anchor,
@@ -407,7 +407,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
                                                           final int count,
                                                           final SpreadsheetViewportNavigationContext context) {
         return this.extendRow(
-                this.isSingle() ? SpreadsheetViewportAnchor.BOTTOM : anchor,
+                this.isUnit() ? SpreadsheetViewportAnchor.BOTTOM : anchor,
                 r -> Cast.to(
                         r.upPixels(
                                 anchor,
@@ -422,7 +422,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
     Optional<AnchoredSpreadsheetSelection> extendDownRow(final SpreadsheetViewportAnchor anchor,
                                                          final SpreadsheetViewportNavigationContext context) {
         return this.extendRow(
-                this.isSingle() ? SpreadsheetViewportAnchor.TOP : anchor,
+                this.isUnit() ? SpreadsheetViewportAnchor.TOP : anchor,
                 r -> Cast.to(
                         r.downRow(
                                 anchor,
@@ -437,7 +437,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
                                                             final int count,
                                                             final SpreadsheetViewportNavigationContext context) {
         return this.extendRow(
-                this.isSingle() ? SpreadsheetViewportAnchor.TOP : anchor,
+                this.isUnit() ? SpreadsheetViewportAnchor.TOP : anchor,
                 r -> Cast.to(
                         r.downPixels(
                                 anchor,

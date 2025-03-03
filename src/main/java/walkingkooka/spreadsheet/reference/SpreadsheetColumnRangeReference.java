@@ -344,7 +344,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
     Optional<AnchoredSpreadsheetSelection> extendLeftColumn(final SpreadsheetViewportAnchor anchor,
                                                             final SpreadsheetViewportNavigationContext context) {
         return this.extendColumn(
-                this.isSingle() ? SpreadsheetViewportAnchor.RIGHT : anchor,
+                this.isUnit() ? SpreadsheetViewportAnchor.RIGHT : anchor,
                 context::leftColumn
         );
     }
@@ -354,7 +354,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
                                                             final int count,
                                                             final SpreadsheetViewportNavigationContext context) {
         return this.extendColumn(
-                this.isSingle() ? SpreadsheetViewportAnchor.RIGHT : anchor,
+                this.isUnit() ? SpreadsheetViewportAnchor.RIGHT : anchor,
                 c -> context.leftPixels(
                         c,
                         count
@@ -366,7 +366,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
     Optional<AnchoredSpreadsheetSelection> extendRightColumn(final SpreadsheetViewportAnchor anchor,
                                                              final SpreadsheetViewportNavigationContext context) {
         return this.extendColumn(
-                this.isSingle() ? SpreadsheetViewportAnchor.LEFT : anchor,
+                this.isUnit() ? SpreadsheetViewportAnchor.LEFT : anchor,
                 context::rightColumn
         );
     }
@@ -376,7 +376,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
                                                              final int count,
                                                              final SpreadsheetViewportNavigationContext context) {
         return this.extendColumn(
-                this.isSingle() ? SpreadsheetViewportAnchor.LEFT : anchor,
+                this.isUnit() ? SpreadsheetViewportAnchor.LEFT : anchor,
                 c -> context.rightPixels(
                         c,
                         count

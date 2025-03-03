@@ -492,7 +492,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetSelection parseColumnOrColumnRange(final String text) {
         final SpreadsheetColumnRangeReference range = parseColumnRange(text);
-        return range.isSingle() ?
+        return range.isUnit() ?
                 range.begin() :
                 range;
     }
@@ -584,7 +584,7 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public static SpreadsheetSelection parseRowOrRowRange(final String text) {
         final SpreadsheetRowRangeReference range = parseRowRange(text);
-        return range.isSingle() ?
+        return range.isUnit() ?
                 range.begin() :
                 range;
     }
