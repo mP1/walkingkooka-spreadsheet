@@ -82,12 +82,12 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
 
     @Override
     public SpreadsheetRowRangeReference add(final int value) {
-        return this.add0(value)
-                .toRowRange();
+        return 0 == value ?
+                this :
+                this.addNonZero(value);
     }
 
-    @Override
-    SpreadsheetRowRangeReference addNonZero(final int value) {
+    private SpreadsheetRowRangeReference addNonZero(final int value) {
         return this.setRange(
                 Range.with(
                         RangeBound.inclusive(
@@ -104,12 +104,12 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
 
     @Override
     public SpreadsheetRowRangeReference addSaturated(final int value) {
-        return this.addSaturated0(value)
-                .toRowRange();
+        return 0 == value ?
+                this :
+                this.addSaturatedNonZero(value);
     }
 
-    @Override
-    SpreadsheetRowRangeReference addSaturatedNonZero(final int value) {
+    private SpreadsheetRowRangeReference addSaturatedNonZero(final int value) {
         return this.setRange(
                 Range.with(
                         RangeBound.inclusive(
