@@ -86,7 +86,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
     private SpreadsheetColumnOrRowSpreadsheetComparators(final SpreadsheetColumnOrRowReference columnOrRow,
                                                          final List<SpreadsheetComparator<?>> comparators) {
         if (comparators.isEmpty()) {
-            throw new IllegalArgumentException("Expected at least 1 comparator got none");
+            throw new IllegalArgumentException("Empty comparators");
         }
 
         this.columnOrRow = columnOrRow;
