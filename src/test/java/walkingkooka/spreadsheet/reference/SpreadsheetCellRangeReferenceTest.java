@@ -99,7 +99,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         assertSame(range, spreadsheetCellRangeReference.range(), "range");
         this.checkEquals(begin, spreadsheetCellRangeReference.begin(), "begin");
         this.checkEquals(end, spreadsheetCellRangeReference.end(), "end");
-        this.isSingleCellAndCheck(spreadsheetCellRangeReference, false);
+        this.isUnitAndCheck(spreadsheetCellRangeReference, false);
     }
 
     @Test
@@ -111,7 +111,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row1, column1, row2, 99 - 3 + 1, 4 - 2 + 1);
-        this.isSingleCellAndCheck(range, false);
+        this.isUnitAndCheck(range, false);
     }
 
     @Test
@@ -123,7 +123,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.check(range, column1, row2, column2, row1, 3 - 1 + 1, 99 - 4 + 1);
-        this.isSingleCellAndCheck(range, false);
+        this.isUnitAndCheck(range, false);
     }
 
     @Test
@@ -135,7 +135,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row2, column1, row1, 88 - 3 + 1, 99 - 4 + 1);
-        this.isSingleCellAndCheck(range, false);
+        this.isUnitAndCheck(range, false);
     }
 
     // notFound.........................................................................................................
@@ -148,11 +148,11 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         );
     }
 
-    // isSingleCell.....................................................................................................
+    // isUnit.....................................................................................................
 
     @SuppressWarnings("UnnecessaryLocalVariable")
     @Test
-    public void testIsSingleCellTrue() {
+    public void testIsUnitTrue() {
         final int column1 = 88;
         final int row1 = 99;
         final int column2 = column1;
@@ -160,18 +160,18 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
 
         final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
         this.check(range, column1, row1, column2, row2, 1, 1);
-        this.isSingleCellAndCheck(range, true);
+        this.isUnitAndCheck(range, true);
     }
 
     @Test
-    public void testIsSingleCellFalse() {
+    public void testIsUnitFalse() {
         final int column1 = 66;
         final int row1 = 77;
         final int column2 = 88;
         final int row2 = 99;
 
         final SpreadsheetCellRangeReference range = this.range(column1, row1, column2, row2);
-        this.isSingleCellAndCheck(range, false);
+        this.isUnitAndCheck(range, false);
     }
 
     // text............................................................................................................
@@ -1899,54 +1899,37 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         );
     }
 
-    // isSingleCell.....................................................................................................
+    // isUnit.....................................................................................................
 
     @Test
-    public void testIsSingleCellSame() {
-        this.isSingleCellAndCheck(
+    public void testIsUnitSame() {
+        this.isUnitAndCheck(
                 "A1:A1",
                 true
         );
     }
 
     @Test
-    public void testIsSingleCellDifferentReferenceKind() {
-        this.isSingleCellAndCheck(
+    public void testIsUnitDifferentReferenceKind() {
+        this.isUnitAndCheck(
                 "A1:$A$1",
                 true
         );
     }
 
     @Test
-    public void testIsSingleCellDifferentReferenceKind2() {
-        this.isSingleCellAndCheck(
+    public void testIsUnitDifferentReferenceKind2() {
+        this.isUnitAndCheck(
                 "$A$1:A1",
                 true
         );
     }
 
     @Test
-    public void testIsSingleCellDifferent() {
-        this.isSingleCellAndCheck(
+    public void testIsUnitDifferent() {
+        this.isUnitAndCheck(
                 "A1:B2",
                 false
-        );
-    }
-
-    private void isSingleCellAndCheck(final String range,
-                                      final boolean expected) {
-        this.isSingleCellAndCheck(
-                this.parseString(range),
-                expected
-        );
-    }
-
-    private void isSingleCellAndCheck(final SpreadsheetCellRangeReference range,
-                                      final boolean expected) {
-        this.checkEquals(
-                expected,
-                range.isSingleCell(),
-                () -> range + "  isSingleCell"
         );
     }
 

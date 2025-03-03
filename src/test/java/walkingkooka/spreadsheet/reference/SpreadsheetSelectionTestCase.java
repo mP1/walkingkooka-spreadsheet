@@ -2004,7 +2004,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         "isScalar",
                         "isCellOrCellRange",
                         "isColumnOrColumnRange",
-                        "isRowOrRowRange"
+                        "isRowOrRowRange",
+                        "isUnit"
                 )
         );
     }
@@ -2021,6 +2022,25 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         1,
                         clean.length()
                 );
+    }
+
+    // isUnit...........................................................................................................
+
+    final void isUnitAndCheck(final String selection,
+                              final boolean expected) {
+        this.isUnitAndCheck(
+                this.parseString(selection),
+                expected
+        );
+    }
+
+    final void isUnitAndCheck(final S selection,
+                              final boolean expected) {
+        this.checkEquals(
+                expected,
+                selection.isUnit(),
+                () -> selection + "  isUnit"
+        );
     }
 
     // JsonNodeTesting..................................................................................................

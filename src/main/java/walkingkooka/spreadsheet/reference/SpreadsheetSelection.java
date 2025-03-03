@@ -1104,6 +1104,13 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetSelection toRange();
 
     /**
+     * Returns true if this selection is a unit or has a count of 1.
+     */
+    public final boolean isUnit() {
+        return this.count() == 1;
+    }
+
+    /**
      * Returns true if this selection matches everything. Non range selections will always return false.
      */
     public final boolean isAll() {
