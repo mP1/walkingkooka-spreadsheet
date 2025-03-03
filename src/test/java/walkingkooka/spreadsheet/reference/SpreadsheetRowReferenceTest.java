@@ -1424,8 +1424,34 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Override
-    SpreadsheetRowReference createReference(final int value, final SpreadsheetReferenceKind kind) {
-        return SpreadsheetColumnOrRowReference.row(value, kind);
+    SpreadsheetRowReference createReference(final int value,
+                                            final SpreadsheetReferenceKind kind) {
+        return SpreadsheetColumnOrRowReference.row(
+                value,
+                kind
+        );
+    }
+
+    @Override
+    SpreadsheetRowReference setReferenceKind(final SpreadsheetRowReference reference,
+                                             final SpreadsheetReferenceKind kind) {
+        return reference.setReferenceKind(kind);
+    }
+
+    @Override
+    SpreadsheetRowReference setValue(final SpreadsheetRowReference reference,
+                                     final int value) {
+        return reference.setValue(value);
+    }
+
+    @Override
+    int value(final SpreadsheetRowReference reference) {
+        return reference.value();
+    }
+
+    @Override
+    SpreadsheetReferenceKind referenceKind(final SpreadsheetRowReference reference) {
+        return reference.referenceKind();
     }
 
     @Override

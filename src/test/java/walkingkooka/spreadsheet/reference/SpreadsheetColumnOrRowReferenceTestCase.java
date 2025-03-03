@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference & Comparable<R>>
+public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetSelection & Comparable<R>>
         extends SpreadsheetSelectionTestCase<R>
         implements ComparableTesting2<R> {
 
@@ -40,7 +40,10 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     public final void testWithNegativeValueFails() {
         assertThrows(
                 this.invalidValueExceptionType(),
-                () -> this.createReference(-1, SpreadsheetReferenceKind.RELATIVE)
+                () -> this.createReference(
+                        -1,
+                        SpreadsheetReferenceKind.RELATIVE
+                )
         );
     }
 
@@ -48,37 +51,59 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     public final void testWithInvalidValueFails() {
         assertThrows(
                 this.invalidValueExceptionType(),
-                () -> this.createReference(this.maxValue() + 1, SpreadsheetReferenceKind.RELATIVE)
+                () -> this.createReference(
+                        this.maxValue() + 1,
+                        SpreadsheetReferenceKind.RELATIVE
+                )
         );
     }
 
     @Test
     public final void testWithNullKindFails() {
-        assertThrows(NullPointerException.class, () -> this.createReference(0, null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createReference(0, null)
+        );
     }
 
     @Test
     public final void testWithAbsolute() {
-        this.withAndCacheCheck(0, SpreadsheetReferenceKind.RELATIVE);
+        this.withAndCacheCheck(
+                0,
+                SpreadsheetReferenceKind.RELATIVE
+        );
     }
 
     @Test
     public final void testWithAbsolute2() {
-        this.withAndCacheCheck(SpreadsheetColumnOrRowReference.CACHE_SIZE - 1, SpreadsheetReferenceKind.RELATIVE);
+        this.withAndCacheCheck(
+                SpreadsheetColumnOrRowReference.CACHE_SIZE - 1,
+                SpreadsheetReferenceKind.RELATIVE
+        );
     }
 
     @Test
     public final void testWithRelative() {
-        this.withAndCacheCheck(0, SpreadsheetReferenceKind.RELATIVE);
+        this.withAndCacheCheck(
+                0,
+                SpreadsheetReferenceKind.RELATIVE
+        );
     }
 
     @Test
     public final void testWithRelative2() {
-        this.withAndCacheCheck(SpreadsheetColumnOrRowReference.CACHE_SIZE - 1, SpreadsheetReferenceKind.RELATIVE);
+        this.withAndCacheCheck(
+                SpreadsheetColumnOrRowReference.CACHE_SIZE - 1,
+                SpreadsheetReferenceKind.RELATIVE
+        );
     }
 
-    private void withAndCacheCheck(final int value, final SpreadsheetReferenceKind kind) {
-        final R reference = this.createReference(value, kind);
+    private void withAndCacheCheck(final int value,
+                                   final SpreadsheetReferenceKind kind) {
+        final R reference = this.createReference(
+                value,
+                kind
+        );
         this.checkValue(reference, value);
         this.checkKind(reference, kind);
 
@@ -195,20 +220,35 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testSetReferenceKindNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSelection().setReferenceKind(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.setReferenceKind(
+                        this.createSelection(),
+                        null
+                )
+        );
     }
 
     @Test
     public final void testSetReferenceKindSame() {
         final R reference = this.createSelection();
-        assertSame(reference, reference.setReferenceKind(reference.referenceKind()));
+        assertSame(
+                reference,
+                this.setReferenceKind(
+                        reference,
+                        REFERENCE_KIND
+                )
+        );
     }
 
     @Test
     public final void testSetReferenceKindDifferent() {
         final R reference = this.createSelection();
 
-        final SpreadsheetColumnOrRowReference different = reference.setReferenceKind(DIFFERENT_REFERENCE_KIND);
+        final R different = this.setReferenceKind(
+                reference,
+                DIFFERENT_REFERENCE_KIND
+        );
         assertNotSame(reference, different);
 
         this.checkValue(different, VALUE);
@@ -217,7 +257,13 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkValue(reference, VALUE);
         this.checkKind(reference, REFERENCE_KIND);
 
-        this.checkEquals(reference, different.setReferenceKind(REFERENCE_KIND));
+        this.checkEquals(
+                reference,
+                this.setReferenceKind(
+                        different,
+                        REFERENCE_KIND
+                )
+        );
     }
 
     // addIfRelative....................................................................................................
@@ -233,8 +279,10 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testAddIfRelativeAbsolute() {
-        final R reference = (R) this.createReference(123)
-                .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE);
+        final R reference = this.setReferenceKind(
+                this.createReference(123),
+                SpreadsheetReferenceKind.ABSOLUTE
+        );
         assertSame(
                 reference,
                 reference.addIfRelative(1)
@@ -243,13 +291,18 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testAddIfRelativeAbsolute2() {
-        final R reference = (R) this.createReference(123)
-                .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE);
+        final R reference = this.setReferenceKind(
+                this.createReference(123),
+                SpreadsheetReferenceKind.ABSOLUTE
+        );
         assertSame(
                 reference,
                 reference.addIfRelative(-1)
         );
     }
+
+    abstract R setReferenceKind(final R reference,
+                                final SpreadsheetReferenceKind kind);
 
     // setValue.........................................................................................................
 
@@ -257,22 +310,37 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     public final void testSetValueInvalidFails() {
         assertThrows(
                 this.invalidValueExceptionType(),
-                () -> this.createSelection().setValue(-1)
+                () -> this.setValue(
+                        this.createSelection(),
+                        -1
+                )
         );
     }
 
     @Test
     public final void testSetValueSame() {
         final R reference = this.createSelection();
-        assertSame(reference, reference.setValue(VALUE));
+        assertSame(
+                reference,
+                this.setValue(
+                        reference,
+                        VALUE
+                )
+        );
     }
 
     @Test
     public final void testSetValueDifferent() {
         final R reference = this.createSelection();
         final int differentValue = 999;
-        final SpreadsheetColumnOrRowReference different = reference.setValue(differentValue);
-        assertNotSame(reference, different);
+        final SpreadsheetSelection different = this.setValue(
+                reference,
+                differentValue
+        );
+        assertNotSame(
+                reference,
+                different
+        );
         this.checkValue(different, differentValue);
         this.checkKind(different, REFERENCE_KIND);
     }
@@ -282,12 +350,19 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         final SpreadsheetReferenceKind kind = SpreadsheetReferenceKind.RELATIVE;
         final R reference = this.createReference(VALUE, kind);
         final int differentValue = 999;
-        final SpreadsheetColumnOrRowReference different = reference.setValue(differentValue);
+
+        final SpreadsheetSelection different = this.setValue(
+                reference,
+                differentValue
+        );
         assertNotSame(reference, different);
         this.checkValue(different, differentValue);
         this.checkKind(different, kind);
         this.checkType(different);
     }
+
+    abstract R setValue(final R reference,
+                        final int value);
 
     // add..............................................................................................................
 
@@ -312,7 +387,10 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testAddZero() {
         final R reference = this.createSelection();
-        assertSame(reference, reference.add(0));
+        assertSame(
+                reference,
+                reference.add(0)
+        );
     }
 
     @Test
@@ -339,40 +417,58 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testAddSaturatedUnderflow1() {
         final R reference = this.createReference(0);
-        this.checkEquals(reference, reference.addSaturated(-1));
+        this.checkEquals(
+                reference,
+                reference.addSaturated(-1)
+        );
     }
 
     @Test
     public final void testAddSaturatedUnderflow2() {
         final R reference = this.createReference(1);
-        this.checkEquals(this.createReference(0), reference.addSaturated(-1));
+        this.checkEquals(
+                this.createReference(0),
+                reference.addSaturated(-1)
+        );
     }
 
     @Test
     public final void testAddSaturatedUnderflow3() {
         final R reference = this.createReference(2);
-        this.checkEquals(this.createReference(0), reference.addSaturated(-3));
+        this.checkEquals(
+                this.createReference(0),
+                reference.addSaturated(-3)
+        );
     }
 
     @Test
     public final void testAddSaturatedOverflow1() {
         final int max = this.maxValue();
         final R reference = this.createReference(max);
-        this.checkEquals(reference, reference.addSaturated(+1));
+        this.checkEquals(
+                reference,
+                reference.addSaturated(+1)
+        );
     }
 
     @Test
     public final void testAddSaturatedOverflow2() {
         final int max = this.maxValue();
         final R reference = this.createReference(max);
-        this.checkEquals(reference, reference.addSaturated(+1));
+        this.checkEquals(
+                reference,
+                reference.addSaturated(+1)
+        );
     }
 
     @Test
     public final void testAddSaturatedOverflow3() {
         final int max = this.maxValue();
         final R reference = this.createReference(max);
-        this.checkEquals(this.createReference(max), reference.addSaturated(+2));
+        this.checkEquals(
+                this.createReference(max),
+                reference.addSaturated(+2)
+        );
     }
 
     // toStringMaybeStar................................................................................................
@@ -388,31 +484,64 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Override
     final R createSelection() {
-        return this.createReference(VALUE, REFERENCE_KIND);
+        return this.createReference(
+                VALUE,
+                REFERENCE_KIND
+        );
     }
 
     final R createReference(final int value) {
-        return this.createReference(value, REFERENCE_KIND);
+        return this.createReference(
+                value,
+                REFERENCE_KIND
+        );
     }
 
     abstract Class<? extends IllegalArgumentException> invalidValueExceptionType();
 
-    abstract R createReference(final int value, final SpreadsheetReferenceKind kind);
+    abstract R createReference(final int value,
+                               final SpreadsheetReferenceKind kind);
 
-    private void checkValue(final SpreadsheetColumnOrRowReference reference, final Integer value) {
-        this.checkEquals(value, reference.value(), "value");
+    private void checkValue(final SpreadsheetSelection reference,
+                            final Integer value) {
+        this.checkEquals(
+                value,
+                value((R)reference),
+                "value"
+        );
     }
 
-    private void checkKind(final SpreadsheetColumnOrRowReference reference, final SpreadsheetReferenceKind kind) {
-        assertSame(kind, reference.referenceKind(), "referenceKind");
+    abstract int value(final R reference);
+
+    private void checkKind(final SpreadsheetSelection reference,
+                           final SpreadsheetReferenceKind kind) {
+        assertSame(
+                kind,
+                this.referenceKind((R) reference),
+                "referenceKind"
+        );
     }
 
-    private void checkType(final SpreadsheetColumnOrRowReference reference) {
-        this.checkEquals(this.type(), reference.getClass(), "same type");
+    abstract SpreadsheetReferenceKind referenceKind(final R reference);
+
+    private void checkType(final SpreadsheetSelection reference) {
+        this.checkEquals(
+                this.type(),
+                reference.getClass(),
+                "same type"
+        );
     }
 
-    final void checkToString(final int value, final SpreadsheetReferenceKind kind, final String toString) {
-        this.checkEquals(toString, this.createReference(value, kind).toString());
+    final void checkToString(final int value,
+                             final SpreadsheetReferenceKind kind,
+                             final String toString) {
+        this.checkEquals(
+                toString,
+                this.createReference(
+                        value,
+                        kind
+                ).toString()
+        );
     }
 
     abstract int maxValue();
