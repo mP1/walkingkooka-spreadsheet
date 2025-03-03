@@ -120,10 +120,10 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         );
     }
 
-    private static <T extends SpreadsheetColumnOrRowReference> Optional<T> move(final T start,
-                                                                                final Predicate<T> stop,
-                                                                                final Predicate<T> hidden,
-                                                                                final int delta) {
+    private static <T extends SpreadsheetSelection> Optional<T> move(final T start,
+                                                                     final Predicate<T> stop,
+                                                                     final Predicate<T> hidden,
+                                                                     final int delta) {
         T result = start;
 
         do {
@@ -206,12 +206,12 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     private final Function<SpreadsheetRowReference, Double> rowHeights;
 
 
-    private static <T extends SpreadsheetColumnOrRowReference> Optional<T> movePixels(final T start,
-                                                                                      final Predicate<T> stop,
-                                                                                      final Predicate<T> hidden,
-                                                                                      final int delta,
-                                                                                      final Function<T, Double> widthOrHeight,
-                                                                                      final int pixels) {
+    private static <T extends SpreadsheetSelection> Optional<T> movePixels(final T start,
+                                                                           final Predicate<T> stop,
+                                                                           final Predicate<T> hidden,
+                                                                           final int delta,
+                                                                           final Function<T, Double> widthOrHeight,
+                                                                           final int pixels) {
         if (pixels < 0) {
             throw new IllegalArgumentException("Invalid pixels " + pixels + " <= 0");
         }

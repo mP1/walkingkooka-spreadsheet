@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends SpreadsheetSelection & Comparable<S>,
-        R extends SpreadsheetColumnOrRowReference & Comparable<R>>
+        R extends SpreadsheetSelection & Comparable<R>>
         extends SpreadsheetSelectionTestCase<S>
         implements ComparableTesting2<S> {
 

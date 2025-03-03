@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.Value;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserToken;
@@ -34,7 +35,9 @@ import java.util.function.Predicate;
  * Represents a column reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
  * only comparing the value.
  */
-public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowReference implements Comparable<SpreadsheetColumnReference> {
+public final class SpreadsheetColumnReference extends SpreadsheetSelection
+        implements Value<Integer>,
+        Comparable<SpreadsheetColumnReference> {
 
     /**
      * The maximum value, columns -1.

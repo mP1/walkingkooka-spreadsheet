@@ -22,7 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -66,10 +66,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
             throw new IllegalArgumentException("Expected several sorted column/rows got 0");
         }
 
-        final Set<SpreadsheetColumnOrRowReference> duplicates = SortedSets.tree();
+        final Set<SpreadsheetSelection> duplicates = SortedSets.tree();
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
-            final SpreadsheetColumnOrRowReference columnOrRow = columnOrRowComparators.columnOrRow();
+            final SpreadsheetSelection columnOrRow = columnOrRowComparators.columnOrRow();
 
             if (false == duplicates.isEmpty()) {
                 duplicates.iterator()

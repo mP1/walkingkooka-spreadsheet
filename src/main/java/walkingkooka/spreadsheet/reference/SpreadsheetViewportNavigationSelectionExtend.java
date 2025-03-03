@@ -211,8 +211,8 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
         );
     }
 
-    private static <TT extends SpreadsheetColumnOrRowReference & Comparable<TT>> Range<TT> range(final TT left,
-                                                                                                 final TT right) {
+    private static <TT extends SpreadsheetSelection & Comparable<TT>> Range<TT> range(final TT left,
+                                                                                      final TT right) {
         return Range.greaterThanEquals(left)
                 .and(
                         Range.lessThanEquals(right)

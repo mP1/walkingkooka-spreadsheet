@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.collect.list.ImmutableListDefaults;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasText;
 
 import java.util.AbstractList;
@@ -55,7 +55,7 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
         int i = 0;
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparators columnOrRowComparators : columnOrRows) {
-            final SpreadsheetColumnOrRowReference columnOrRow = columnOrRowComparators.columnOrRow();
+            final SpreadsheetSelection columnOrRow = columnOrRowComparators.columnOrRow();
             if (null == first) {
                 first = columnOrRow.columnOrRowReferenceKind();
             } else {

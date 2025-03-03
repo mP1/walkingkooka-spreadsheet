@@ -22,7 +22,6 @@ import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -39,7 +38,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * A selection of {@link SpreadsheetComparatorName names} for a given {@link SpreadsheetColumnOrRowReference}.
+ * A selection of {@link SpreadsheetComparatorName names} for a given {@link SpreadsheetSelection}.
  */
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements HasText {
 
@@ -60,15 +59,15 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     public final static CharacterConstant COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR = CharacterConstant.with(COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR);
 
     /**
-     * Tries to extract the {@link SpreadsheetColumnOrRowReference} from the text form of a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
+     * Tries to extract the {@link SpreadsheetSelection} from the text form of a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      * Useful when parsing text from a user which may be incomplete or syntactically wrong.
      */
-    public static Optional<SpreadsheetColumnOrRowReference> tryParseColumnOrRow(final String text) {
+    public static Optional<SpreadsheetSelection> tryParseColumnOrRow(final String text) {
         Objects.requireNonNull(text, "text");
 
         final int assignment = text.indexOf(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.character());
 
-        SpreadsheetColumnOrRowReference columnOrRow;
+        SpreadsheetSelection columnOrRow;
 
         try {
             columnOrRow = SpreadsheetSelection.parseColumnOrRow(
@@ -159,10 +158,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
         final int length = text.length();
 
-        final Set<SpreadsheetColumnOrRowReference> duplicates = SortedSets.tree();
+        final Set<SpreadsheetSelection> duplicates = SortedSets.tree();
         int mode = 0;
         int tokenStart = 0;
-        SpreadsheetColumnOrRowReference columnOrRow = null;
+        SpreadsheetSelection columnOrRow = null;
         SpreadsheetComparatorName comparatorName = null;
         List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections = null;
 
@@ -444,7 +443,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     /**
      * Factory that creates a new {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      */
-    public static SpreadsheetColumnOrRowSpreadsheetComparatorNames with(final SpreadsheetColumnOrRowReference columnOrRow,
+    public static SpreadsheetColumnOrRowSpreadsheetComparatorNames with(final SpreadsheetSelection columnOrRow,
                                                                         final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
 
         return new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
@@ -453,7 +452,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         );
     }
 
-    private SpreadsheetColumnOrRowSpreadsheetComparatorNames(final SpreadsheetColumnOrRowReference columnOrRow,
+    private SpreadsheetColumnOrRowSpreadsheetComparatorNames(final SpreadsheetSelection columnOrRow,
                                                              final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
 
 
@@ -461,14 +460,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         this.comparatorNameAndDirections = comparatorNameAndDirections;
     }
 
-    public SpreadsheetColumnOrRowReference columnOrRow() {
+    public SpreadsheetSelection columnOrRow() {
         return this.columnOrRow;
     }
 
     /**
-     * Would be setter that returns a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} with the given {@link SpreadsheetColumnOrRowReference} creating a new instance if necessary.
+     * Would be setter that returns a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} with the given {@link SpreadsheetSelection} creating a new instance if necessary.
      */
-    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setColumnOrRow(final SpreadsheetColumnOrRowReference columnOrRow) {
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setColumnOrRow(final SpreadsheetSelection columnOrRow) {
         Objects.requireNonNull(columnOrRow, "columnOrRows");
 
         return this.columnOrRow.equals(columnOrRow) ?
@@ -479,7 +478,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                 );
     }
 
-    private final SpreadsheetColumnOrRowReference columnOrRow;
+    private final SpreadsheetSelection columnOrRow;
 
     // comparatorNameAndDirections......................................................................................
 

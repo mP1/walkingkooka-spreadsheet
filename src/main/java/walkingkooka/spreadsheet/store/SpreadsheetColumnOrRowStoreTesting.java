@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public interface SpreadsheetColumnOrRowStoreTesting<S extends SpreadsheetColumnOrRowStore<R, V>, R extends SpreadsheetColumnOrRowReference, V extends SpreadsheetColumnOrRow<R>> extends SpreadsheetStoreTesting<S, R, V> {
+public interface SpreadsheetColumnOrRowStoreTesting<S extends SpreadsheetColumnOrRowStore<R, V>, R extends SpreadsheetSelection, V extends SpreadsheetColumnOrRow<R>> extends SpreadsheetStoreTesting<S, R, V> {
 
     default void isHiddenAndCheck(final S store, final R reference, final boolean expected) {
         this.checkEquals(

@@ -30,7 +30,6 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -85,7 +84,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
 
     @Test
     public void testWith() {
-        final SpreadsheetColumnOrRowReference column = SpreadsheetSelection.parseColumn("D");
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("D");
         final List<SpreadsheetComparator<?>> comparators = Lists.of(
                 SpreadsheetComparators.dayOfMonth()
         );
@@ -138,7 +137,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
         );
     }
 
-    private final static SpreadsheetColumnOrRowReference COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("B");
+    private final static SpreadsheetSelection COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("B");
 
     private final static List<SpreadsheetComparator<?>> COMPARATORS = Lists.of(
             SpreadsheetComparators.dayOfMonth()
@@ -1103,7 +1102,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     }
 
     private void columnOrRowAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparators columnOrRowComparators,
-                                     final SpreadsheetColumnOrRowReference columnOrRow) {
+                                     final SpreadsheetSelection columnOrRow) {
         this.checkEquals(
                 columnOrRow,
                 columnOrRowComparators.columnOrRow(),

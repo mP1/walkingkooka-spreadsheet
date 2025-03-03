@@ -1584,7 +1584,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 10);
         this.checkStream(range,
                 range.columnStream()
-                        .map(SpreadsheetColumnOrRowReference::value)
+                        .map(SpreadsheetColumnReference::value)
                         .filter(c -> c >= 6),
                 6, 7);
     }
@@ -1603,7 +1603,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         final SpreadsheetCellRangeReference range = this.range(5, 10, 8, 20);
         this.checkStream(range,
                 range.rowStream()
-                        .map(SpreadsheetColumnOrRowReference::value)
+                        .map(SpreadsheetRowReference::value)
                         .filter(r -> r < 13),
                 10, 11, 12);
     }

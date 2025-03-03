@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.Value;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
@@ -34,7 +35,9 @@ import java.util.function.Predicate;
  * Represents a row reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
  * only comparing the value.
  */
-public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReference implements Comparable<SpreadsheetRowReference> {
+public final class SpreadsheetRowReference extends SpreadsheetSelection
+        implements Value<Integer>,
+        Comparable<SpreadsheetRowReference> {
 
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
     public final static int MAX_VALUE = 1_048_576 - 1; // max value inclusive
