@@ -77,7 +77,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testWithAbsolute2() {
         this.withAndCacheCheck(
-                SpreadsheetColumnOrRowReference.CACHE_SIZE - 1,
+                SpreadsheetSelection.CACHE_SIZE - 1,
                 SpreadsheetReferenceKind.RELATIVE
         );
     }
@@ -93,7 +93,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testWithRelative2() {
         this.withAndCacheCheck(
-                SpreadsheetColumnOrRowReference.CACHE_SIZE - 1,
+                SpreadsheetSelection.CACHE_SIZE - 1,
                 SpreadsheetReferenceKind.RELATIVE
         );
     }
@@ -112,7 +112,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testWithNotCached() {
-        final int value = SpreadsheetColumnOrRowReference.CACHE_SIZE;
+        final int value = SpreadsheetSelection.CACHE_SIZE;
         final R reference = this.createReference(value);
         this.checkValue(reference, value);
         this.checkKind(reference, REFERENCE_KIND);

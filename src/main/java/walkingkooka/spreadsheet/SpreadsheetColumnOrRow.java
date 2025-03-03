@@ -22,7 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -35,11 +35,11 @@ import java.util.Optional;
 /**
  * Base class for both column and row.
  */
-public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetColumnOrRowReference> implements HateosResource<R>,
+public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection> implements HateosResource<R>,
         TreePrintable,
         UsesToStringBuilder {
 
-    static void checkReference(final SpreadsheetColumnOrRowReference reference) {
+    static void checkReference(final SpreadsheetSelection reference) {
         Objects.requireNonNull(reference, "reference");
     }
 

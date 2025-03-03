@@ -43,7 +43,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -2050,7 +2049,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // j2cl helpers....................................................................................................
 
     // The J2CL Optional does not support map.
-    static <V extends SpreadsheetColumnOrRow<R>, R extends SpreadsheetColumnOrRowReference> Set<V> toSet(final Optional<V> columnOrRow) {
+    static <V extends SpreadsheetColumnOrRow<R>, R extends SpreadsheetSelection> Set<V> toSet(final Optional<V> columnOrRow) {
         return columnOrRow.isPresent() ?
                 Sets.of(columnOrRow.get()) :
                 Sets.empty();

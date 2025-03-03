@@ -630,7 +630,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     }
 
     private void parseColumnOrRowAndCheck(final String text,
-                                          final SpreadsheetColumnOrRowReference expected) {
+                                          final SpreadsheetSelection expected) {
         this.checkEquals(
                 expected,
                 SpreadsheetSelection.parseColumnOrRow(text),

@@ -23,14 +23,14 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.Optional;
 
-public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumnOrRow<R> & Comparable<T>, R extends SpreadsheetColumnOrRowReference>
+public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumnOrRow<R> & Comparable<T>, R extends SpreadsheetSelection>
         implements ClassTesting2<T>,
         ComparableTesting2<T>,
         JsonNodeMarshallingTesting<T>,

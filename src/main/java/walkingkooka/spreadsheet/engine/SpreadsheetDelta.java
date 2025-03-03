@@ -39,7 +39,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -250,7 +249,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         if (columnCount + rowCount > 0) {
             // Any columns or rows within this Set are hidden and matches by a cell will be removed.
-            final Set<SpreadsheetColumnOrRowReference> hidden = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+            final Set<SpreadsheetSelection> hidden = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
             if (columnCount > 0) {
                 for (final SpreadsheetColumn column : columns) {
@@ -958,8 +957,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 );
     }
 
-    static <R extends SpreadsheetColumnOrRowReference> Map<R, Double> filterMap(final Map<R, Double> source,
-                                                                                final Predicate<R> keep) {
+    static <R extends SpreadsheetSelection> Map<R, Double> filterMap(final Map<R, Double> source,
+                                                                     final Predicate<R> keep) {
         final Map<R, Double> filtered = Maps.ordered();
 
         for (final Map.Entry<R, Double> keyAndValue : source.entrySet()) {
@@ -2056,13 +2055,13 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     private void printTreeMap(final String label,
-                              final Map<? extends SpreadsheetColumnOrRowReference, Double> columnOrRowAndDoubleValue,
+                              final Map<? extends SpreadsheetSelection, Double> columnOrRowAndDoubleValue,
                               final IndentingPrinter printer) {
         if (false == columnOrRowAndDoubleValue.isEmpty()) {
             printer.println(label + ":");
             printer.indent();
             {
-                for (final Map.Entry<? extends SpreadsheetColumnOrRowReference, Double> referenceAndWidth : columnOrRowAndDoubleValue.entrySet()) {
+                for (final Map.Entry<? extends SpreadsheetSelection, Double> referenceAndWidth : columnOrRowAndDoubleValue.entrySet()) {
                     printer.println(referenceAndWidth.getKey() + ": " + referenceAndWidth.getValue());
                 }
             }

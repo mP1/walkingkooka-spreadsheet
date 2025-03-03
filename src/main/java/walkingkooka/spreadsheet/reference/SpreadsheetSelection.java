@@ -470,7 +470,7 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Parses the text as a column or row.
      */
-    public static SpreadsheetColumnOrRowReference parseColumnOrRow(final String text) {
+    public static SpreadsheetSelection parseColumnOrRow(final String text) {
         return Cast.to(
                 parseTextOrFail(
                         text,
@@ -684,9 +684,10 @@ public abstract class SpreadsheetSelection implements HasText,
     final static int CACHE_SIZE = 100;
 
     /**
-     * Fills an array with what will become a cache of {@link SpreadsheetColumnOrRowReference}.
+     * Fills an array with what will become a cache of {@link SpreadsheetSelection}.
      */
-    static <R extends SpreadsheetColumnOrRowReference> R[] fillCache(final IntFunction<R> reference, final R[] array) {
+    static <R extends SpreadsheetSelection> R[] fillCache(final IntFunction<R> reference,
+                                                          final R[] array) {
         for (int i = 0; i < CACHE_SIZE; i++) {
             array[i] = reference.apply(i);
         }
@@ -796,7 +797,7 @@ public abstract class SpreadsheetSelection implements HasText,
                     .map(Object::toString)
                     .collect(Collectors.joining(", "));
             if (false == outOfBounds.isEmpty()) {
-                final SpreadsheetColumnOrRowReference first = comparatorNames.get(0).columnOrRow();
+                final SpreadsheetSelection first = comparatorNames.get(0).columnOrRow();
 
                 // Invalid column(s) C are not within D1:E1
                 // Invalid column(s) C, D are not within D1:E1

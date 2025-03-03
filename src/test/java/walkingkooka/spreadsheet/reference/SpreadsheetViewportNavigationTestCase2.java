@@ -235,8 +235,8 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         );
     }
 
-    private static <T extends SpreadsheetColumnOrRowReference> Predicate<T> hiddenPredicate(final String columnOrRows,
-                                                                                            final Function<String, T> parser) {
+    private static <T extends SpreadsheetSelection> Predicate<T> hiddenPredicate(final String columnOrRows,
+                                                                                 final Function<String, T> parser) {
         return (columnOrRow) -> CharacterConstant.COMMA.parse(
                 columnOrRows,
                 parser

@@ -1185,8 +1185,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private static <T extends SpreadsheetColumnOrRowReference> Predicate<T> hiddenPredicate(final String columnOrRows,
-                                                                                            final Function<String, T> parser) {
+    private static <T extends SpreadsheetSelection> Predicate<T> hiddenPredicate(final String columnOrRows,
+                                                                                 final Function<String, T> parser) {
         return (columnOrRow) -> CharacterConstant.COMMA.parse(
                 columnOrRows,
                 parser
@@ -1207,8 +1207,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private <T extends SpreadsheetColumnOrRowReference> Function<T, Double> columnOrRowToWidthOrHeight(final Map<String, Double> columnOrRowToWidthOrHeight,
-                                                                                                       final Function<String, T> parser) {
+    private <T extends SpreadsheetSelection> Function<T, Double> columnOrRowToWidthOrHeight(final Map<String, Double> columnOrRowToWidthOrHeight,
+                                                                                            final Function<String, T> parser) {
         final Map<T, Double> map = columnOrRowToWidthOrHeight.entrySet()
                 .stream()
                 .collect(

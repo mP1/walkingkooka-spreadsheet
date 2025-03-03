@@ -26,7 +26,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -54,7 +53,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         TreePrintableTesting {
 
-    private final static SpreadsheetColumnOrRowReference COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("A");
+    private final static SpreadsheetSelection COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("A");
 
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("text-123");
 
@@ -101,7 +100,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
     @Test
     public void testWith() {
-        final SpreadsheetColumnOrRowReference column = SpreadsheetSelection.parseColumn("D");
+        final SpreadsheetSelection column = SpreadsheetSelection.parseColumn("D");
         final List<SpreadsheetComparatorNameAndDirection> namesAndDirections = Lists.of(
                 NAME.setDirection(DIRECTION)
         );
@@ -389,7 +388,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     private void tryParseColumnOrRowAndCheck(final String text,
-                                             final SpreadsheetColumnOrRowReference expected) {
+                                             final SpreadsheetSelection expected) {
         this.tryParseColumnOrRowAndCheck(
                 text,
                 Optional.of(expected)
@@ -397,7 +396,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     private void tryParseColumnOrRowAndCheck(final String text,
-                                             final Optional<SpreadsheetColumnOrRowReference> expected) {
+                                             final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseColumnOrRow(text)
@@ -1404,7 +1403,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     private void columnOrRowAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators,
-                                     final SpreadsheetColumnOrRowReference columnOrRow) {
+                                     final SpreadsheetSelection columnOrRow) {
         this.checkEquals(
                 columnOrRow,
                 columnOrRowComparators.columnOrRow(),
