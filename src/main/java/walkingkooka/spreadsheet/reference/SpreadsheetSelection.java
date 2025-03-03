@@ -960,6 +960,27 @@ public abstract class SpreadsheetSelection implements HasText,
         return this.isCell() || this.isColumn() || this.isRow();
     }
 
+
+    /**
+     * Returns the matching {@link SpreadsheetColumnOrRowReferenceKind} for this {@link SpreadsheetColumnReference} or
+     * {@link SpreadsheetRowReference} all other types will fail.
+     */
+    public final SpreadsheetColumnOrRowReferenceKind columnOrRowReferenceKind() {
+        final SpreadsheetColumnOrRowReferenceKind kind;
+
+        if (this.isColumn()) {
+            kind = SpreadsheetColumnOrRowReferenceKind.COLUMN;
+        } else {
+            if (this.isRow()) {
+                kind = SpreadsheetColumnOrRowReferenceKind.ROW;
+            } else {
+                throw new UnsupportedOperationException(this.toString());
+            }
+        }
+
+        return kind;
+    }
+
     /**
      * Not really a cast operation but only {@link SpreadsheetCellReference} and {@link SpreadsheetCellRangeReference} will
      * succeed all other types will throw {@link UnsupportedOperationException}.
