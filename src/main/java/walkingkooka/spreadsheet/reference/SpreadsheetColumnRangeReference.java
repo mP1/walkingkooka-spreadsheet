@@ -453,15 +453,6 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
                 .column(this);
     }
 
-    // pick.............................................................................................................
-
-    @Override
-    public <T> T pick(final T cellOrCellRangeOrLabel,
-                      final T columnOrColumnRange,
-                      final T rowOrRowRange) {
-        return columnOrColumnRange;
-    }
-
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override

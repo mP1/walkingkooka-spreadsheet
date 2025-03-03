@@ -63,13 +63,4 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      */
     @Override
     abstract public SpreadsheetExpressionReference toRelative();
-
-    // pick.............................................................................................................
-
-    @Override
-    public final <T> T pick(final T cellOrCellRangeOrLabel,
-                            final T columnOrColumnRange,
-                            final T rowOrRowRange) {
-        return cellOrCellRangeOrLabel;
-    }
 }

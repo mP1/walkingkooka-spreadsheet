@@ -854,33 +854,6 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    // pick.............................................................................................................
-
-    public final void testPickNull() {
-        this.pickAndCheck(
-                this.createSelection(),
-                null,
-                null,
-                null,
-                null
-        );
-    }
-
-    final <TT> void pickAndCheck(final SpreadsheetSelection selection,
-                                 final TT cell,
-                                 final TT columns, final TT rows,
-                                 final TT expected) {
-        this.checkEquals(
-                expected,
-                selection.pick(
-                        cell,
-                        columns,
-                        rows
-                ),
-                () -> selection + " pick " + cell + ", " + columns + ", " + rows
-        );
-    }
-
     // leftColumn.......................................................................................................
 
     final void leftColumnAndCheck(final String selection,
