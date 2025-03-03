@@ -119,32 +119,6 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
 
     abstract SpreadsheetColumnOrRowRangeReference<?> replace(final Range<T> range);
 
-    // add..............................................................................................................
-
-    final SpreadsheetColumnOrRowRangeReference<?> add0(final int value) {
-        return 0 == value ?
-                this :
-                this.addNonZero(value);
-    }
-
-    abstract SpreadsheetColumnOrRowRangeReference<?> addNonZero(final int value);
-
-    // addSaturated.....................................................................................................
-
-    /**
-     * Adds a delta to the value and returns an instance with the result.
-     */
-    @Override
-    public abstract SpreadsheetColumnOrRowRangeReference<?> addSaturated(final int value);
-
-    final SpreadsheetColumnOrRowRangeReference<?> addSaturated0(final int value) {
-        return 0 == value ?
-                this :
-                this.addSaturatedNonZero(value);
-    }
-
-    abstract SpreadsheetColumnOrRowRangeReference<?> addSaturatedNonZero(final int value);
-
     // addIfRelative....................................................................................................
 
     /**
