@@ -95,27 +95,6 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         assertNotSame(reference, this.createReference(value));
     }
 
-    // ifDifferentColumnOrRowTypeFail...................................................................................
-
-    final void ifDifferentColumnOrRowTypeFail(final SpreadsheetColumnOrRowReference selection,
-                                              final SpreadsheetColumnOrRowReference other) {
-        selection.ifDifferentColumnOrRowTypeFail(other);
-    }
-
-    final void ifDifferentColumnOrRowTypeFail(final SpreadsheetColumnOrRowReference selection,
-                                              final SpreadsheetColumnOrRowReference other,
-                                              final String expected) {
-        final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> selection.ifDifferentColumnOrRowTypeFail(other)
-        );
-        this.checkEquals(
-                expected,
-                thrown.getMessage(),
-                () -> selection + " ifDifferentColumnOrRowTypeFail " + other
-        );
-    }
-
     // toExpressionReference............................................................................................
 
     @Test
