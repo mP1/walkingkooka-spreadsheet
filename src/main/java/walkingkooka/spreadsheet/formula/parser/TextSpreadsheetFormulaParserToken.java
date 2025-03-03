@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Holds a text expression in both forms an apostrophe prefixed string literal and a double quoted string.
+ * Holds a text expression in both forms an apostrophe prefixed string literal and a double-quoted string.
  */
 public final class TextSpreadsheetFormulaParserToken extends ValueSpreadsheetFormulaParserToken {
 

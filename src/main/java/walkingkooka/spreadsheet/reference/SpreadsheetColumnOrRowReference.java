@@ -30,7 +30,7 @@ import java.util.Set;
 abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelection implements Value<Integer> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetColumnOrRowReference(final int value, final SpreadsheetReferenceKind referenceKind) {
         this.value = value;

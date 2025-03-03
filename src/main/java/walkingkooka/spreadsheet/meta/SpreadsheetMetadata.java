@@ -156,7 +156,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public static final String ENVIRONMENT_VALUE_NAME_PREFIX = "spreadsheet.";
 
     /**
-     * Private ctor to limit sub-classes.
+     * Private ctor to limit subclasses.
      */
     SpreadsheetMetadata(final SpreadsheetMetadata defaults) {
         super();
@@ -241,7 +241,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     /**
-     * sub-classes will fetch the property returning the value.
+     * subclasses will fetch the property returning the value.
      */
     public final <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
         Objects.requireNonNull(propertyName, "propertyName");
@@ -345,7 +345,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     /**
      * Handle the special case where a property is being set with the same effective value,
-     * which could be the current or default value. sub-classes need to test.
+     * which could be the current or default value. subclasses need to test.
      */
     abstract <V> SpreadsheetMetadata setSameValue(final SpreadsheetMetadataPropertyName<V> propertyName,
                                                   final V value);
@@ -1227,7 +1227,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     /**
-     * sub-classes will test if ALL their values are equal
+     * subclasses will test if ALL their values are equal
      */
     abstract boolean equalsValues(final SpreadsheetMetadata other);
 
@@ -1264,7 +1264,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     static final JsonPropertyName DEFAULTS = JsonPropertyName.with("_defaults");
 
     /**
-     * sub-classes must marshall their properties but not the defaults.
+     * subclasses must marshall their properties but not the defaults.
      */
     abstract void marshallProperties(final List<JsonNode> children,
                                      final JsonNodeMarshallContext context);

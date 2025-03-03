@@ -28,7 +28,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameConverterSelector extends SpreadsheetMetadataPropertyName<ConverterSelector> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameConverterSelector(final String name) {
         super(name);

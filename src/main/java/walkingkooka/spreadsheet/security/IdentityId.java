@@ -28,7 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 public abstract class IdentityId implements Value<Long> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     IdentityId(final long value) {
         super();
@@ -67,7 +67,7 @@ public abstract class IdentityId implements Value<Long> {
     }
 
     /**
-     * sub-classes should do an instanceof test.
+     * subclasses should do an instanceof test.
      */
     abstract boolean canBeEqual(final Object other);
 

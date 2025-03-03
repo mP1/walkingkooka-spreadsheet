@@ -125,7 +125,7 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
      * <ul>
      * <li>{@link SpreadsheetComparatorName}</li>
      * <li>double literals including negative or leading minus signs.</li>
-     * <li>a double quoted string literal</li>
+     * <li>a double-quoted string literal</li>
      * </ul>
      * Sample text.
      * <pre>

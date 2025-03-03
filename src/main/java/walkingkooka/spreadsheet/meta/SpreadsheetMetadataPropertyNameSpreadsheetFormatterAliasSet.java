@@ -28,7 +28,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSet extends SpreadsheetMetadataPropertyName<SpreadsheetFormatterAliasSet> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSet(final String name) {
         super(name);

@@ -32,12 +32,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A parser that handles double quoted strings within a formula, including support for embedding a double quote by inserting
+ * A parser that handles double-quoted strings within a formula, including support for embedding a double quote by inserting
  * two double quotes.
  * <a href="https://exceljet.net/formula/double-quotes-inside-a-formula">Double quotes inside a formula</a>
  * <pre>
  * Summary
- * To include double quotes inside a formula, you can use additional double quotes. In the example shown, the formula in C5 is:
+ * To include double quotes inside a formula, you ca use additional double quotes. In the example shown, the formula in C5 is:
  *
  *  ="The movie """ &B5 &""" is good."
  * </pre>

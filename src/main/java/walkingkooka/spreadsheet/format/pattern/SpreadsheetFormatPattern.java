@@ -66,7 +66,7 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
     // toFormat.........................................................................................................
 
     /**
-     * Sub-classes of {@link SpreadsheetFormatPattern} always return this.
+     * subclasses of {@link SpreadsheetFormatPattern} always return this.
      */
     @Override
     public final SpreadsheetFormatPattern toFormat() {
@@ -86,7 +86,7 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
     }
 
     /**
-     * All sub-classes will return the given {@link SpreadsheetFormatter} except for number which will add a condition
+     * All subclasses will return the given {@link SpreadsheetFormatter} except for number which will add a condition
      * depending on the index and total.
      */
     abstract void missingCondition(final int index,

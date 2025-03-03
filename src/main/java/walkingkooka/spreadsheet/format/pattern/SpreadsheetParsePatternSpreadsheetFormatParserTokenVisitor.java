@@ -41,7 +41,7 @@ import walkingkooka.spreadsheet.format.parser.TextPlaceholderSpreadsheetFormatPa
 import walkingkooka.spreadsheet.format.parser.UnderscoreSpreadsheetFormatParserToken;
 
 /**
- * A base {@link SpreadsheetFormatParserTokenVisitor} where most (almost all overrides fail when an unexpected or invalid
+ * A base {@link SpreadsheetFormatParserTokenVisitor} where most (almost all overrides fail when a unexpected or invalid
  * {@link SpreadsheetFormatParserToken} is found.
  */
 abstract class SpreadsheetParsePatternSpreadsheetFormatParserTokenVisitor<T extends SpreadsheetFormatParserToken> extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor {

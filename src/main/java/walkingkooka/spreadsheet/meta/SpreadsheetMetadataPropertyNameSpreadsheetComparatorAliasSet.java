@@ -29,7 +29,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSet extends SpreadsheetMetadataPropertyName<SpreadsheetComparatorAliasSet> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSet(final String name) {
         super(name);

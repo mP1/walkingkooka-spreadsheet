@@ -39,7 +39,7 @@ import java.util.function.Predicate;
 /**
  * A label or {@link Name} is a name to a cell reference, range and so on.
  * <pre>
- * A Defined Name must begin with a letter or an underscore ( _ ) and consist of only letters, numbers, or underscores.
+ * A Defined Name must begin with a letter or a underscore ( _ ) and consist of only letters, numbers, or underscores.
  * Spaces are not permitted in a Defined Name. Moreover, a Defined Name may not be the same as a valid cell reference.
  * For example, the name AB11 is invalid because AB11 is a valid cell reference. Names are not case sensitive.
  * </pre>

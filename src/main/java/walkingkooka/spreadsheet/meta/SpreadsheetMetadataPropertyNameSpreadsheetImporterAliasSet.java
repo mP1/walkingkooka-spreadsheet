@@ -29,7 +29,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet extends SpreadsheetMetadataPropertyName<SpreadsheetImporterAliasSet> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet(final String name) {
         super(name);

@@ -21,7 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 /**
- * Represents a equals symbol token.
+ * Represents an equals symbol token.
  */
 public final class NotEqualsSymbolSpreadsheetFormulaParserToken extends SymbolSpreadsheetFormulaParserToken {
 

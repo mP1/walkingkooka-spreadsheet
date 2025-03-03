@@ -98,7 +98,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * A expression that creates a {@link ExpressionEvaluationReferenceException}.
+     * An expression that creates a {@link ExpressionEvaluationReferenceException}.
      */
     public static Function<ExpressionReference, ExpressionEvaluationException> referenceNotFound() {
         return (r) -> {

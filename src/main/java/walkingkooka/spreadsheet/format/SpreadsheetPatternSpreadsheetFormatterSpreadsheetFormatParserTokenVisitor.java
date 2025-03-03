@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 abstract class SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor() {
         super();

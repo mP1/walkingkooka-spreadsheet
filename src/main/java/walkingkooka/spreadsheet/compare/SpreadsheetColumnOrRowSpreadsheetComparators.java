@@ -37,7 +37,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
 
     /**
      * Creates a list of compatible {@link SpreadsheetColumnOrRowSpreadsheetComparators}, which means all {@link SpreadsheetColumnOrRowSpreadsheetComparators}
-     * are for eithre {@link walkingkooka.spreadsheet.reference.SpreadsheetColumnReference} or {@link walkingkooka.spreadsheet.reference.SpreadsheetRowReference}.
+     * are for either {@link walkingkooka.spreadsheet.reference.SpreadsheetColumnReference} or {@link walkingkooka.spreadsheet.reference.SpreadsheetRowReference}.
      */
     public static List<SpreadsheetColumnOrRowSpreadsheetComparators> list(final List<SpreadsheetColumnOrRowSpreadsheetComparators> list) {
         return SpreadsheetColumnOrRowSpreadsheetComparatorsList.with(list);

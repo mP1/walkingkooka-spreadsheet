@@ -555,7 +555,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     );
 
     /**
-     * Note fractions literals are slightly different too number literals, eg percentage-symbol
+     * Note fractions literals are slightly different to number literals, eg percentage-symbol
      */
     private static final EbnfIdentifierName FRACTION_LITERAL_IDENTIFIER = EbnfIdentifierName.with("FRACTION_LITERAL");
     private static final Parser<SpreadsheetFormatParserContext> FRACTION_LITERAL = literal(

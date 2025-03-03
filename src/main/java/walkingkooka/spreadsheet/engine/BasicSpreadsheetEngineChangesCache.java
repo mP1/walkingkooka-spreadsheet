@@ -167,7 +167,7 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
     }
 
     /**
-     * Indicates an unsaved or undeleted entity.
+     * Indicates a unsaved or undeleted entity.
      */
     boolean committed = false;
 

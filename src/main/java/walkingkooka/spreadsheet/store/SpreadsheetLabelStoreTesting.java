@@ -296,7 +296,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
             }
         }
 
-        this.checkEquals(true, tested, () -> "Unable to find an unknown label");
+        this.checkEquals(true, tested, () -> "Unable to find a unknown label");
     }
 
     @Override

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A token that contains an fraction.
+ * A token that contains a fraction.
  */
 public final class FractionSpreadsheetFormatParserToken extends ParentSpreadsheetFormatParserToken {
 

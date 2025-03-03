@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import java.util.Optional;
 
 /**
- * Sub-classes represent scrolling of the viewport in either the horizontal or vertical directions. These are measured
+ * subclasses represent scrolling of the viewport in either the horizontal or vertical directions. These are measured
  * in pixels, which will be used to skip non hidden columns or rows.
  */
 abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNavigation {

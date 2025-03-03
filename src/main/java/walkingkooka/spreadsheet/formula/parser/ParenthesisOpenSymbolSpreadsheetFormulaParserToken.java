@@ -21,7 +21,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 /**
- * Represents a open / left parens symbol token.
+ * Represents an open / left parens symbol token.
  */
 public final class ParenthesisOpenSymbolSpreadsheetFormulaParserToken extends SymbolSpreadsheetFormulaParserToken {
 

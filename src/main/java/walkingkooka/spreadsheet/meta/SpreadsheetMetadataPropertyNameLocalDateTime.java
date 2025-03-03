@@ -24,7 +24,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetMetadataPropertyName<LocalDateTime> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameLocalDateTime(final String name) {
         super(name);

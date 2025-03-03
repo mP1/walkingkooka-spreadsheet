@@ -128,7 +128,7 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     /**
      * Parses the text which hopefully is acceptable for this pattern returning the value.
      * <br>
-     * Different sub-classes return a different value type, eg {@link SpreadsheetNumberParsePattern} returns a {@link walkingkooka.tree.expression.ExpressionNumber}
+     * Different subclasses return a different value type, eg {@link SpreadsheetNumberParsePattern} returns a {@link walkingkooka.tree.expression.ExpressionNumber}
      * if the text is compatible with the pattern.
      */
     public abstract Object parse(final String text,

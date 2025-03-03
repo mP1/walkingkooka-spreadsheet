@@ -43,7 +43,7 @@ import java.util.Optional;
 
 /**
  * This {@link SpreadsheetValueVisitor} attempts to use the provided pattern to format the value except for
- * some values like {@link Character}, {@link String} and sub-classes of {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection}
+ * some values like {@link Character}, {@link String} and subclasses of {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection}
  * which ignore the pattern and simply converted using {@link Object#toString()}.
  * <br>
  * Note it is possible for this fail if the pattern is invalid and parsing of the pattern fails.
@@ -244,7 +244,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
     }
 
     /**
-     * A pattern, depending on the value this will be used to create a sub class of {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern}.
+     * A pattern, depending on the value this will be used to create a subclass of {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern}.
      */
     private final String pattern;
 

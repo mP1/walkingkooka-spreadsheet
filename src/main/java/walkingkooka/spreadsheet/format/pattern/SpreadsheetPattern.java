@@ -340,7 +340,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     /**
      * Aggregates all the patterns for each and every {@link DateFormat}. The flags date and time may be used
      * to filter or control which pattern tokens in each {@link DateFormat} are actually recorded in the final
-     * pattern and then used to create a {@link SpreadsheetFormatPattern} sub-class.
+     * pattern and then used to create a {@link SpreadsheetFormatPattern} subclass.
      */
     private static <P extends SpreadsheetPattern> P javaTextDateFormat(final Iterable<DateFormat> dateFormats,
                                                                        final boolean date,
@@ -711,8 +711,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     // toFormat.........................................................................................................
 
     /**
-     * If necessary returns a {@link SpreadsheetFormatPattern} with the same pattern. For sub-classes of {@link SpreadsheetFormatPattern}
-     * this is always returned, for sub-classes of {@link SpreadsheetParsePattern} an equivalent {@link SpreadsheetFormatPattern}
+     * If necessary returns a {@link SpreadsheetFormatPattern} with the same pattern. For subclasses of {@link SpreadsheetFormatPattern}
+     * this is always returned, for subclasses of {@link SpreadsheetParsePattern} an equivalent {@link SpreadsheetFormatPattern}
      * is returned with the same pattern.
      */
     public abstract SpreadsheetFormatPattern toFormat();
@@ -736,7 +736,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     /**
      * A raw {@link List} holding the cached patterns, initially set to null, and lazily populated. A raw List is used
-     * to enable sub-classes to return the list without casting.
+     * to enable subclasses to return the list without casting.
      */
     @SuppressWarnings("rawtypes")
     List patterns;
@@ -890,7 +890,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     public abstract SpreadsheetPattern setColorName(final SpreadsheetColorName name);
 
     /**
-     * Helper intended to be called by {@link SpreadsheetFormatPattern} sub-classes.
+     * Helper intended to be called by {@link SpreadsheetFormatPattern} subclasses.
      */
     final <T extends SpreadsheetPattern> T setColorName0(final SpreadsheetColorName name,
                                                          final Function<String, T> parser) {
@@ -909,7 +909,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     public abstract SpreadsheetPattern setColorNumber(final int colorNumber);
 
     /**
-     * Helper intended to be called by {@link SpreadsheetFormatPattern} sub-classes.
+     * Helper intended to be called by {@link SpreadsheetFormatPattern} subclasses.
      */
     final <T extends SpreadsheetPattern> T setColorNumber0(final int colorNumber,
                                                            final Function<String, T> parser) {

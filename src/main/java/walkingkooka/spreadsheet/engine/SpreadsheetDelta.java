@@ -133,7 +133,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     );
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetDelta(final Optional<SpreadsheetViewport> viewport,
                      final Set<SpreadsheetCell> cells,
@@ -198,7 +198,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // cells............................................................................................................
 
     /**
-     * Return interesting cells, such as cells referencing an update cell or loading all cells within a viewport (window).
+     * Return interesting cells, such as cells referencing a update cell or loading all cells within a viewport (window).
      */
     public final Set<SpreadsheetCell> cells() {
         return this.cells;
@@ -413,7 +413,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     }
 
     /**
-     * sub-classes only need to call the right constructor, the map is already immutable and has been filtered by {#link #cells}
+     * subclasses only need to call the right constructor, the map is already immutable and has been filtered by {#link #cells}
      */
     abstract SpreadsheetDelta replaceLabels(final Set<SpreadsheetLabelMapping> labels);
 
@@ -1166,7 +1166,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Patches the given {@link SpreadsheetDelta}.
      * Note only some properties may be patched (viewport, cell and window) others will throw an exception as invalid.
-     * Attempts to patch an unknown cell will fail with an {@link IllegalArgumentException} being thrown.
+     * Attempts to patch a unknown cell will fail with an {@link IllegalArgumentException} being thrown.
      */
     @Override
     public SpreadsheetDelta patch(final JsonNode json,
@@ -1255,7 +1255,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Patches the given {@link SpreadsheetDelta} assuming only columns have been patched.
      * Note only some properties may be patched (viewport, column and window) others will throw an exception as invalid.
-     * Attempts to patch an unknown column will fail with an {@link IllegalArgumentException} being thrown.
+     * Attempts to patch a unknown column will fail with an {@link IllegalArgumentException} being thrown.
      * <pre>
      * {
      *   "columns": {
@@ -1281,7 +1281,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Patches the given {@link SpreadsheetDelta} assuming only rows have been patched.
      * Note only some properties may be patched (viewport, row and window) others will throw an exception as invalid.
-     * Attempts to patch an unknown row will fail with an {@link IllegalArgumentException} being thrown.
+     * Attempts to patch a unknown row will fail with an {@link IllegalArgumentException} being thrown.
      * <pre>
      * {
      *   "rows": {

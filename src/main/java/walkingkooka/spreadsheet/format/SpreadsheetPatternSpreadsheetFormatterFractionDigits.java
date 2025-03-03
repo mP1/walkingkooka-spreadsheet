@@ -40,7 +40,7 @@ abstract class SpreadsheetPatternSpreadsheetFormatterFractionDigits implements U
     }
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetPatternSpreadsheetFormatterFractionDigits(final String text) {
         super();

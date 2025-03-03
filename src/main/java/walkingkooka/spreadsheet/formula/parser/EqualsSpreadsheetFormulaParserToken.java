@@ -23,7 +23,7 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * Represents a equals test with its parameters.
+ * Represents an equals test with its parameters.
  */
 public final class EqualsSpreadsheetFormulaParserToken extends ConditionSpreadsheetFormulaParserToken {
 

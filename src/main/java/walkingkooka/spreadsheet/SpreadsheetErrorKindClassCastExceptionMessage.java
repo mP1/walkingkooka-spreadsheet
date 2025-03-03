@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet;
 
 /**
- * TODO create a sub class that extracts the source and destination types parse a {@link ClassCastException#getMessage()}.
+ * TODO create a subclass that extracts the source and destination types parse a {@link ClassCastException#getMessage()}.
  * <br>
  * <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/2302">issues/2302</a>
  */

@@ -30,7 +30,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector extends SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector(final String name,
                                                                 final SpreadsheetPatternKind spreadsheetPatternKind) {

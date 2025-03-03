@@ -26,7 +26,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 abstract public class SpreadsheetExpressionReference extends SpreadsheetSelection implements ExpressionReference {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetExpressionReference() {
         super();

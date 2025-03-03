@@ -44,7 +44,7 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
     /**
-     * The maximum valid length of a expression name.
+     * The maximum valid length of an expression name.
      */
     private final static int MAX_LENGTH = 255;
 

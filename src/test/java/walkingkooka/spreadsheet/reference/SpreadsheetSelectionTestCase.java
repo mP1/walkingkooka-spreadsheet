@@ -2073,7 +2073,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     public final Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
         assertTrue(
                 IllegalArgumentException.class.isAssignableFrom(expected),
-                expected.getName() + " not a sub class of " + IllegalArgumentException.class
+                expected.getName() + " not a subclass of " + IllegalArgumentException.class
         );
         return expected;
     }
@@ -2082,7 +2082,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     public final RuntimeException parseStringFailedExpected(final RuntimeException expected) {
         assertTrue(
                 expected instanceof IllegalArgumentException,
-                expected.getClass().getName() + "=" + expected + " not a sub class of " + IllegalArgumentException.class
+                expected.getClass().getName() + "=" + expected + " not a subclass of " + IllegalArgumentException.class
         );
         return expected;
     }

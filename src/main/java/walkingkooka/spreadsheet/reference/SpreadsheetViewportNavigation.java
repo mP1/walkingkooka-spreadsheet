@@ -209,7 +209,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
                                                                     final SpreadsheetViewportNavigationContext context);
 
     /**
-     * Takes an updated {@link AnchoredSpreadsheetSelection} and also updates the {@link SpreadsheetViewport},
+     * Takes a updated {@link AnchoredSpreadsheetSelection} and also updates the {@link SpreadsheetViewport},
      * which may involve moving the home as necessary so the viewport includes the new selection.
      */
     final SpreadsheetViewport updateViewport(final AnchoredSpreadsheetSelection anchoredSelection,
@@ -275,7 +275,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     abstract boolean isOpposite(final SpreadsheetViewportNavigation other);
 
     /**
-     * Returns true if a extend {@link SpreadsheetViewportNavigation}.
+     * Returns true if an extend {@link SpreadsheetViewportNavigation}.
      */
     public final boolean isExtend() {
         return this.getClass().getSimpleName().contains("Extend");

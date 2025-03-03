@@ -29,7 +29,7 @@ import java.util.Optional;
 abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetadataPropertyName<Character> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private to limit subclassing.
      */
     SpreadsheetMetadataPropertyNameCharacter(final String name) {
         super(name);
@@ -55,7 +55,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     }
 
     /**
-     * Template method that supports sub classing retrieving a single property parse the {@link DecimalFormatSymbols}
+     * Template method that supports subclassing retrieving a single property parse the {@link DecimalFormatSymbols}
      */
     abstract Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols);
 

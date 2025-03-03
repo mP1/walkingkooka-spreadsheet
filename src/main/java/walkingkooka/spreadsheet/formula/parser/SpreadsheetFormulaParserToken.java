@@ -626,7 +626,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Package private ctor to limit sub classing.
+     * Package private ctor to limit subclassing.
      */
     SpreadsheetFormulaParserToken(final String text) {
         super();
@@ -970,7 +970,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Returns true for sub-classes of {@link LeafSpreadsheetFormulaParserToken}.
+     * Returns true for subclasses of {@link LeafSpreadsheetFormulaParserToken}.
      */
     @Override
     public final boolean isLeaf() {
@@ -1112,7 +1112,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Returns true for sub-classes of {@link ParentSpreadsheetFormulaParserToken}.
+     * Returns true for subclasses of {@link ParentSpreadsheetFormulaParserToken}.
      */
     @Override
     public final boolean isParent() {
@@ -1264,7 +1264,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     public final static int HIGHEST_PRIORITY = RANGE_BETWEEN_PRIORITY;
 
     /**
-     * Factory that creates the {@link BinarySpreadsheetFormulaParserToken} sub class using the provided tokens and text.
+     * Factory that creates the {@link BinarySpreadsheetFormulaParserToken} subclass using the provided tokens and text.
      */
     public abstract SpreadsheetFormulaParserToken binaryOperand(final List<ParserToken> tokens,
                                                                 final String text);
@@ -1287,7 +1287,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     // HasExpression................................................................................................
 
     /**
-     * Converts this token to its {@link Expression} equivalent. Token sub-classes that represent a complete value
+     * Converts this token to its {@link Expression} equivalent. Token subclasses that represent a complete value
      * typically have a {@link Expression} equivalent, while those holding symbols or tokens such as a decimal-point
      * are not.
      */
@@ -1659,7 +1659,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
     }
 
-    // SymbolSpreadsheetFormulaParserToken sub-classes.........................................................................
+    // SymbolSpreadsheetFormulaParserToken subclasses.........................................................................
 
     static {
         registerLeaf(
@@ -1987,7 +1987,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link LeafSpreadsheetFormulaParserToken}
+     * Helper that knows how to unmarshall a subclass of {@link LeafSpreadsheetFormulaParserToken}
      */
     static <T extends SymbolSpreadsheetFormulaParserToken> T unmarshallSymbol(final JsonNode node,
                                                                               final JsonNodeUnmarshallContext context,
@@ -2001,7 +2001,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetFormulaParserToken}
+     * Helper that knows how to unmarshall a subclass of {@link SpreadsheetFormulaParserToken}
      */
     private static <V, T extends LeafSpreadsheetFormulaParserToken<V>> T unmarshallLeaf(final JsonNode node,
                                                                                         final Class<V> valueType,
@@ -2488,7 +2488,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
     }
 
     /**
-     * Helper that knows how to unmarshall a sub class of {@link ParentSpreadsheetFormulaParserToken}
+     * Helper that knows how to unmarshall a subclass of {@link ParentSpreadsheetFormulaParserToken}
      */
     private static <T extends ParentSpreadsheetFormulaParserToken> T unmarshallParent(final JsonNode node,
                                                                                       final JsonNodeUnmarshallContext context,

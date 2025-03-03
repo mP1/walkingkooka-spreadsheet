@@ -94,7 +94,7 @@ public enum SpreadsheetComparatorDirection {
 
 
     /**
-     * Turns an UP to DOWN and vice versa.
+     * Turns a UP to DOWN and vice versa.
      */
     abstract public SpreadsheetComparatorDirection flip();
 

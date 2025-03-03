@@ -350,14 +350,14 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
     private final UrlFragment urlFragment;
 
     /**
-     * Returns true if this {@link SpreadsheetPatternKind} identifies a pattern that is a sub-class of {@link SpreadsheetFormatPattern}.
+     * Returns true if this {@link SpreadsheetPatternKind} identifies a pattern that is a subclass of {@link SpreadsheetFormatPattern}.
      */
     public boolean isFormatPattern() {
         return this.name().contains("FORMAT");
     }
 
     /**
-     * Returns true if this {@link SpreadsheetPatternKind} identifies a pattern that is a sub-class of {@link SpreadsheetParsePattern}.
+     * Returns true if this {@link SpreadsheetPatternKind} identifies a pattern that is a subclass of {@link SpreadsheetParsePattern}.
      */
     public boolean isParsePattern() {
         return false == this.isFormatPattern();

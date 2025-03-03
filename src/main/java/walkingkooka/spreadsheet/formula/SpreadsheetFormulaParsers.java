@@ -202,7 +202,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName CONDITION_RIGHT_PARSER_IDENTIFIER = EbnfIdentifierName.with("CONDITION_RIGHT");
 
     /**
-     * Expects a {@link SequenceParserToken} then tests the symbol and creates the matching sub-classes of {@link ConditionRightSpreadsheetFormulaParserToken}.
+     * Expects a {@link SequenceParserToken} then tests the symbol and creates the matching subclasses of {@link ConditionRightSpreadsheetFormulaParserToken}.
      */
     private static ParserToken transformConditionRight(final ParserToken conditionRight, final SpreadsheetParserContext context) {
         final SequenceParserToken sequenceParserToken = conditionRight.cast(SequenceParserToken.class)
@@ -572,7 +572,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     );
 
     /**
-     * A {@link SpreadsheetParser} that parses excel style double quoted text, including escaped (triple) double quotes.
+     * A {@link SpreadsheetParser} that parses excel style double-quoted text, including escaped (triple) double quotes.
      */
     public static Parser<SpreadsheetParserContext> text() {
         return TEXT;

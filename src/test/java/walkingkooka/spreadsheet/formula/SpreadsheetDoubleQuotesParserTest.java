@@ -30,7 +30,7 @@ public final class SpreadsheetDoubleQuotesParserTest implements ParserTesting2<S
 
     @Test
     public void testParseNotDoubleQuote() {
-        this.parseFailAndCheck("not a double quoted string/text");
+        this.parseFailAndCheck("not a double-quoted string/text");
     }
 
     @Test

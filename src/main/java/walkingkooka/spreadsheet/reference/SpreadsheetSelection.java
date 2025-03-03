@@ -207,7 +207,7 @@ public abstract class SpreadsheetSelection implements HasText,
         return SpreadsheetLabelName.isLabelText0(text);
     }
 
-    // sub class factories..............................................................................................
+    // subclass factories..............................................................................................
 
     /**
      * {@see SpreadsheetCellRangeReference}
@@ -347,7 +347,7 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Parsers the given text into one of the sub-classes of {@link SpreadsheetExpressionReference}.
+     * Parsers the given text into one of the subclasses of {@link SpreadsheetExpressionReference}.
      */
     public static SpreadsheetExpressionReference parseExpressionReference(final String text) {
         checkText(text);
@@ -1081,8 +1081,8 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
-     * The sub class {@link SpreadsheetLabelName} will always return <code>this</code>.
+     * If the subclass has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
+     * The subclass {@link SpreadsheetLabelName} will always return <code>this</code>.
      */
     public abstract SpreadsheetSelection toRelative();
 
@@ -1516,7 +1516,7 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Sub-classes should test their important individual properties for equality, assuming the other parameter is
+     * subclasses should test their important individual properties for equality, assuming the other parameter is
      * not the same instance and the same class type.
      */
     abstract boolean equalsNotSameAndNotNull(final Object other,
@@ -1583,7 +1583,7 @@ public abstract class SpreadsheetSelection implements HasText,
     // UsesToStringBuilder..............................................................................................
 
     // this is necessary otherwise ToStringBuilder will expand SpreadsheetCellRangeReference etc because they implement Iterable
-    // rather than using their compact toString.
+    // rather tha using their compact toString.
     @Override
     public final void buildToString(final ToStringBuilder builder) {
         builder.disable(ToStringBuilderOption.QUOTE);
