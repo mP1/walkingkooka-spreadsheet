@@ -48,25 +48,21 @@ final class SpreadsheetSelectionIgnoresReferenceKindComparator implements Compar
         if (Comparators.EQUAL == compare) {
             switch (leftPriority) {
                 case COLUMN:
-                    compare = compareColumnOrRows(
-                            left.toColumn(),
-                            right.toColumn()
-                    );
+                    compare = left.toColumn().value -
+                            right.toColumn().value;
                     break;
                 case ROW:
-                    compare = compareColumnOrRows(
-                            left.toRow(),
-                            right.toRow()
-                    );
+                    compare = left.toRow().value -
+                            right.toRow().value;
                     break;
                 case COLUMN_RANGE:
-                    compare = compareColumnOrRowRanges(
+                    compare = compareColumnRanges(
                             left.toColumnRange(),
                             right.toColumnRange()
                     );
                     break;
                 case ROW_RANGE:
-                    compare = compareColumnOrRowRanges(
+                    compare = compareRowRanges(
                             left.toRowRange(),
                             right.toRowRange()
                     );
@@ -98,13 +94,19 @@ final class SpreadsheetSelectionIgnoresReferenceKindComparator implements Compar
         return compare;
     }
 
-    private static int compareColumnOrRows(final SpreadsheetColumnOrRowReference left,
-                                           final SpreadsheetColumnOrRowReference right) {
-        return left.value - right.value;
+    private static int compareColumnRanges(final SpreadsheetColumnRangeReference left,
+                                           final SpreadsheetColumnRangeReference right) {
+        int compare = left.begin().value - right.begin().value;
+
+        if (Comparators.EQUAL == compare) {
+            compare = left.end().value - right.end().value;
+        }
+
+        return compare;
     }
 
-    private static int compareColumnOrRowRanges(final SpreadsheetColumnOrRowRangeReference<?> left,
-                                                final SpreadsheetColumnOrRowRangeReference<?> right) {
+    private static int compareRowRanges(final SpreadsheetRowRangeReference left,
+                                        final SpreadsheetRowRangeReference right) {
         int compare = left.begin().value - right.begin().value;
 
         if (Comparators.EQUAL == compare) {

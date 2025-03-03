@@ -191,11 +191,6 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
         return anchored;
     }
 
-    static <TT extends SpreadsheetColumnOrRowReference> int diff(final TT a,
-                                                                 final TT b) {
-        return Math.abs(a.value - b.value);
-    }
-
     private static SpreadsheetColumnRangeReference columnRange(final SpreadsheetColumnReference left,
                                                                final SpreadsheetColumnReference right) {
         return SpreadsheetSelection.columnRange(

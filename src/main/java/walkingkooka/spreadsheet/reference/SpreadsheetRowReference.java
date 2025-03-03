@@ -23,8 +23,10 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 
+import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -84,29 +86,69 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
                 new SpreadsheetRowReference(value, referenceKind);
     }
 
-    private static String invalidRowValue(final int value) {
-        return "Invalid row value " + value + " expected between 0 and " + (MAX_VALUE + 1);
+    private SpreadsheetRowReference(final int value,
+                                       final SpreadsheetReferenceKind referenceKind) {
+        super();
+
+        this.value = value;
+        this.referenceKind = referenceKind;
     }
 
-    private SpreadsheetRowReference(final int value, final SpreadsheetReferenceKind referenceKind) {
-        super(value, referenceKind);
+    @Override
+    public Integer value() {
+        return this.value;
     }
+
+    final int value;
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetRowReference} with the given value creating a new
+     * instance if it is different.
+     */
+    public SpreadsheetRowReference setValue(final int value) {
+        checkValue(value);
+        return this.value == value ?
+                this :
+                new SpreadsheetRowReference(value, this.referenceKind());
+    }
+
+    private static void checkValue(final int value) {
+        if (value < 0 || value > MAX_VALUE) {
+            throw new IllegalRowArgumentException(
+                    "Invalid row value " + value + " expected between 0 and " + (MAX_VALUE + 1)
+            );
+        }
+    }
+
+    public SpreadsheetReferenceKind referenceKind() {
+        return this.referenceKind;
+    }
+
+    private final SpreadsheetReferenceKind referenceKind;
 
     /**
      * Would be setter that returns a {@link SpreadsheetRowReference} with the given {@link SpreadsheetReferenceKind}
      * creating a new instance if necessary.
      */
-    @Override
     public SpreadsheetRowReference setReferenceKind(final SpreadsheetReferenceKind referenceKind) {
         Objects.requireNonNull(referenceKind, "referenceKind");
 
-        return this.setReferenceKind0(referenceKind).toRow();
+        return this.referenceKind == referenceKind ?
+                this :
+                new SpreadsheetRowReference(
+                        this.value,
+                        referenceKind
+                );
     }
 
     @Override
-    SpreadsheetRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind) {
-        return new SpreadsheetRowReference(this.value, referenceKind);
+    Set<SpreadsheetViewportAnchor> anchors() {
+        return ANCHORS;
     }
+
+    private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
+
+    // addXXX...........................................................................................................
 
     @Override
     public SpreadsheetRowReference add(final int value) {
@@ -170,29 +212,8 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
     // max..............................................................................................................
 
-    @Override
     int max() {
         return MAX_VALUE;
-    }
-
-    /**
-     * Would be setter that returns a {@link SpreadsheetRowReference} with the given value creating a new
-     * instance if it is different.
-     */
-    @Override
-    public SpreadsheetRowReference setValue(final int value) {
-        checkValue(value);
-        return this.value == value ?
-                this :
-                new SpreadsheetRowReference(value, this.referenceKind());
-    }
-
-    private static void checkValue(final int value) {
-        if (value < 0 || value > MAX_VALUE) {
-            throw new IllegalRowArgumentException(
-                    invalidRowValue(value)
-            );
-        }
     }
 
     /**
@@ -288,7 +309,30 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return SpreadsheetRowRangeReference.with(this.range(other));
     }
 
-    // toCell............................................................................................................
+    // isXXX............................................................................................................
+
+    @Override
+    public long count() {
+        return 1;
+    }
+
+    /**
+     * Only returns true if this is the first column or row.
+     */
+    @Override
+    public boolean isFirst() {
+        return this.value == 0;
+    }
+
+    /**
+     * Only returns true if this is the last column or row.
+     */
+    @Override
+    public boolean isLast() {
+        return this.value == this.max();
+    }
+
+    // toXXX............................................................................................................
 
     @Override
     public SpreadsheetCellReference toCell() {
@@ -318,6 +362,14 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     @Override
     public SpreadsheetRowRangeReference toRowRange() {
         return SpreadsheetRowRangeReference.with(Range.singleton(this));
+    }
+
+    /**
+     * A column or row is already simplified.
+     */
+    @Override
+    public SpreadsheetSelection toScalar() {
+        return this;
     }
 
     // toRange..........................................................................................................
@@ -546,6 +598,28 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
                 this,
                 this.text()
         );
+    }
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.value, this.referenceKind);
+    }
+
+    @Override
+    boolean equalsNotSameAndNotNull(final Object other,
+                                    final boolean includeKind) {
+        return this.equals1(
+                (SpreadsheetRowReference) other,
+                includeKind
+        );
+    }
+
+    boolean equals1(final SpreadsheetRowReference other,
+                    final boolean includeKind) {
+        return this.value == other.value &&
+                (includeKind ? this.referenceKind == other.referenceKind : true);
     }
 
     // Object...........................................................................................................

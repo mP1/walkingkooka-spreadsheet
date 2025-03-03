@@ -19,117 +19,15 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Value;
 
-import java.util.EnumSet;
-import java.util.Objects;
-import java.util.Set;
-
 /**
  * Captures the common features shared by a row or column.
  */
-@SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelection implements Value<Integer> {
 
     /**
      * Package private to limit subclassing.
      */
-    SpreadsheetColumnOrRowReference(final int value, final SpreadsheetReferenceKind referenceKind) {
-        this.value = value;
-        this.referenceKind = referenceKind;
+    SpreadsheetColumnOrRowReference() {
+        super();
     }
-
-    @Override
-    public final long count() {
-        return 1;
-    }
-
-    /**
-     * Only returns true if this is the first column or row.
-     */
-    @Override
-    public final boolean isFirst() {
-        return this.value == 0;
-    }
-
-    /**
-     * Only returns true if this is the last column or row.
-     */
-    @Override
-    public final boolean isLast() {
-        return this.value == this.max();
-    }
-
-    /**
-     * Returns the maximum valid value, this is used during {@link #addSaturated(int)}
-     */
-    abstract int max();
-
-    abstract SpreadsheetColumnOrRowReference setValue(final int value);
-
-    @Override
-    public final Integer value() {
-        return this.value;
-    }
-
-    final int value;
-
-    public final SpreadsheetReferenceKind referenceKind() {
-        return this.referenceKind;
-    }
-
-    abstract SpreadsheetColumnOrRowReference setReferenceKind(final SpreadsheetReferenceKind referenceKind);
-
-    final SpreadsheetColumnOrRowReference setReferenceKind0(final SpreadsheetReferenceKind referenceKind) {
-        Objects.requireNonNull(referenceKind, "referenceKind");
-
-        return this.referenceKind == referenceKind ?
-                this :
-                this.replaceReferenceKind(referenceKind);
-    }
-
-    private final SpreadsheetReferenceKind referenceKind;
-
-    /**
-     * Unconditionally creates a new {@link SpreadsheetColumnOrRowReference} with the given {@link SpreadsheetReferenceKind}.
-     */
-    abstract SpreadsheetColumnOrRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
-
-    @Override
-    final Set<SpreadsheetViewportAnchor> anchors() {
-        return ANCHORS;
-    }
-
-    private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
-
-    /**
-     * A column or row is already simplified.
-     */
-    @Override
-    public final SpreadsheetSelection toScalar() {
-        return this;
-    }
-
-    // Object...........................................................................................................
-
-    @Override
-    public final int hashCode() {
-        return Objects.hash(this.value, this.referenceKind);
-    }
-
-    @Override
-    boolean equalsNotSameAndNotNull(final Object other,
-                                    final boolean includeKind) {
-        return this.equals1(
-                (SpreadsheetColumnOrRowReference) other,
-                includeKind
-        );
-    }
-
-    boolean equals1(final SpreadsheetColumnOrRowReference other,
-                    final boolean includeKind) {
-        return this.value == other.value &&
-                (includeKind ? this.referenceKind == other.referenceKind : true);
-    }
-
-    // Comparable.......................................................................................................
-
 }
