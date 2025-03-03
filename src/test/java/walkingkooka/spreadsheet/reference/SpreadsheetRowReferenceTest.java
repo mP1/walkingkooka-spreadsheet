@@ -99,19 +99,19 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
-    // ifDifferentReferenceTypeFail.....................................................................................
+    // IfDifferentColumnOrRowTypeFail...................................................................................
 
     @Test
-    public void testIfDifferentReferenceTypeFailRow() {
-        this.ifDifferentReferenceTypeFailAndCheck(
+    public void testIfDifferentColumnOrRowTypeFailWithRow() {
+        this.ifDifferentColumnOrRowTypeFail(
                 SpreadsheetSelection.parseRow("12"),
                 SpreadsheetSelection.parseRow("34")
         );
     }
 
     @Test
-    public void testIfDifferentReferenceTypeFailColumn() {
-        this.ifDifferentReferenceTypeFailAndCheck(
+    public void testIfDifferentColumnOrRowTypeFailWithColumnFails() {
+        this.ifDifferentColumnOrRowTypeFail(
                 SpreadsheetSelection.parseRow("56"),
                 SpreadsheetSelection.parseColumn("AB"),
                 "Got Column AB expected Row"
