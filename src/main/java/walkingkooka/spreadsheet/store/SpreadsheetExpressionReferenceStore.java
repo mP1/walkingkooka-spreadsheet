@@ -21,6 +21,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.store.Store;
 
 import java.util.Objects;
@@ -29,7 +30,7 @@ import java.util.function.Consumer;
 
 /**
  * A {@link Store} that tracks cells and labels references for a single {@link SpreadsheetCellReference} within its formula.
- * Note that all operations ignore the {@link walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind} and treat
+ * Note that all operations ignore the {@link SpreadsheetReferenceKind} and treat
  * absolute and relative references as equivalent.
  */
 public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference> extends SpreadsheetStore<T, Set<SpreadsheetCellReference>> {
