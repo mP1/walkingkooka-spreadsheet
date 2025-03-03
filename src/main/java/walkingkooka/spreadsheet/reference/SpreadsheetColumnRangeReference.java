@@ -17,23 +17,31 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.collect.HasRange;
+import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
+import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CharSequences;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 /**
  * Holds a column range.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRowRangeReference<SpreadsheetColumnReference>
-        implements Comparable<SpreadsheetColumnRangeReference> {
+public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRowRangeReference
+        implements Comparable<SpreadsheetColumnRangeReference>,
+        HasRange<SpreadsheetColumnReference>,
+        HasRangeBounds<SpreadsheetColumnReference>,
+        Iterable<SpreadsheetColumnReference> {
 
     /**
      * A {@link SpreadsheetColumnRangeReference} that includes all columns.
@@ -56,16 +64,46 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
      * Private ctor
      */
     private SpreadsheetColumnRangeReference(final Range<SpreadsheetColumnReference> range) {
-        super(range);
+        super();
+        this.range = range;
     }
 
-    public SpreadsheetColumnRangeReference setRange(final Range<SpreadsheetColumnReference> range) {
-        return this.setRange0(range);
+    /**
+     * Returns the top left column/row reference.
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Override
+    public SpreadsheetColumnReference begin() {
+        return this.range.lowerBound()
+                .value()
+                .get(); // must exist
+    }
+
+    /**
+     * Returns the bottom right column/row reference.
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Override
+    public SpreadsheetColumnReference end() {
+        return this.range.upperBound()
+                .value()
+                .get(); // must exist
     }
 
     @Override
-    SpreadsheetColumnRangeReference replace(final Range<SpreadsheetColumnReference> range) {
-        return with(range);
+    public Range<SpreadsheetColumnReference> range() {
+        return this.range;
+    }
+
+    private final Range<SpreadsheetColumnReference> range;
+
+
+    public SpreadsheetColumnRangeReference setRange(final Range<SpreadsheetColumnReference> range) {
+        Objects.requireNonNull(range, "range");
+
+        return this.range.equals(range) ?
+                        this :
+                        with(range);
     }
 
     /**
@@ -176,6 +214,40 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
         return false;
     }
 
+    // count............................................................................................................
+
+    /**
+     * Returns the number of columns in this range.
+     */
+    @Override
+    public long count() {
+        return this.end()
+                .value()
+                - this.begin()
+                .value()
+                + 1;
+    }
+
+    // isXXX............................................................................................................
+
+    @Override
+    public boolean isFirst() {
+        return this.begin().isFirst() && this.isUnit();
+    }
+
+    @Override
+    public boolean isLast() {
+        return this.begin().isLast() && this.isUnit();
+    }
+
+    // toXXX............................................................................................................
+
+    @Override
+    public SpreadsheetCellReference toCell() {
+        return this.toScalar()
+                .toCell();
+    }
+
     @Override
     public SpreadsheetColumnReference toColumn() {
         return this.begin();
@@ -194,6 +266,13 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
     @Override
     public SpreadsheetRowRangeReference toRowRange() {
         throw new UnsupportedOperationException(this.toString());
+    }
+
+    // toScalar.........................................................................................................
+
+    @Override
+    public SpreadsheetColumnReference toScalar() {
+        return this.begin();
     }
 
     // toRange..........................................................................................................
@@ -441,6 +520,14 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
                 .column(this);
     }
 
+    // replaceReferencesMapper..........................................................................................
+
+    @Override
+    Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
+        return this.toScalar()
+                .replaceReferencesMapper0(movedTo);
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override
@@ -451,11 +538,53 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
     // Iterable.........................................................................................................
 
     @Override
-    SpreadsheetColumnReference iteratorIntToReference(final int value) {
-        return SpreadsheetReferenceKind.RELATIVE.column(value);
+    public Iterator<SpreadsheetColumnReference> iterator() {
+        return IntStream.rangeClosed(
+                        this.begin().value(),
+                        this.end().value()
+                )
+                .boxed()
+                .map(SpreadsheetReferenceKind.RELATIVE::column)
+                .iterator();
     }
 
-    // Object...........................................................................................................
+    // HasParserToken...................................................................................................
+
+    @Override
+    public SpreadsheetFormulaParserToken toParserToken() {
+        throw new UnsupportedOperationException();
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.range.hashCode();
+    }
+
+    @Override
+    boolean equalsNotSameAndNotNull(final Object other,
+                                    final boolean includeKind) {
+        return this.equals1(
+                (SpreadsheetColumnRangeReference) other,
+                includeKind
+        );
+    }
+
+    private boolean equals1(final SpreadsheetColumnRangeReference other,
+                            final boolean includeKind) {
+        return this.begin().equalsNotSameAndNotNull(other.begin(), includeKind) &&
+                this.end().equalsNotSameAndNotNull(other.end(), includeKind);
+    }
+
+    // toString.........................................................................................................
+
+    @Override
+    public String toString() {
+        return this.isUnit() ?
+                this.begin().toString() :
+                this.begin() + SEPARATOR.string() + this.end();
+    }
 
     // Comparable.......................................................................................................
 

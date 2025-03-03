@@ -486,7 +486,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
 
     private void columnOrRowRangeAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
                                           final SpreadsheetSelection selection,
-                                          final SpreadsheetColumnOrRowRangeReference<?> expected) {
+                                          final SpreadsheetColumnOrRowRangeReference expected) {
         this.checkEquals(
                 expected,
                 kind.columnOrRowRange(selection),
@@ -528,7 +528,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                                  final SpreadsheetSelection selection,
                                                  final List<SpreadsheetSelection> expected) {
         final List<SpreadsheetSelection> actual = Lists.array();
-        for (final SpreadsheetColumnOrRowReference columnOrRowReference : kind.columnOrRowRange(selection)) {
+        for (final SpreadsheetSelection columnOrRowReference : (Iterable<SpreadsheetSelection>)kind.columnOrRowRange(selection)) {
             actual.add(columnOrRowReference);
         }
 
