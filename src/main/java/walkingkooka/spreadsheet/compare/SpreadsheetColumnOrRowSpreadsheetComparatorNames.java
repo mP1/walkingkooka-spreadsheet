@@ -508,7 +508,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                 Objects.requireNonNull(comparatorNameAndDirections, "comparatorNameAndDirections")
         );
         if (comparatorNameAndDirections.isEmpty()) {
-            throw new IllegalArgumentException("Expected at least 1 comparator got none");
+            throw new IllegalArgumentException("Empty comparators");
         }
         return copy;
     }
