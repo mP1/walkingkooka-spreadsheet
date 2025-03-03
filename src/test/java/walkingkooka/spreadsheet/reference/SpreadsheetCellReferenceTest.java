@@ -1390,15 +1390,15 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testParseCellReferenceRelative() {
         this.parseStringAndCheck("A98",
-                SpreadsheetColumnOrRowReference.column(0, SpreadsheetReferenceKind.RELATIVE)
-                        .setRow(SpreadsheetColumnOrRowReference.row(97, SpreadsheetReferenceKind.RELATIVE)));
+                SpreadsheetSelection.column(0, SpreadsheetReferenceKind.RELATIVE)
+                        .setRow(SpreadsheetSelection.row(97, SpreadsheetReferenceKind.RELATIVE)));
     }
 
     @Test
     public void testParseCellReferenceAbsolute() {
         this.parseStringAndCheck("$A$98",
-                SpreadsheetColumnOrRowReference.column(0, SpreadsheetReferenceKind.ABSOLUTE)
-                        .setRow(SpreadsheetColumnOrRowReference.row(97, SpreadsheetReferenceKind.ABSOLUTE)));
+                SpreadsheetSelection.column(0, SpreadsheetReferenceKind.ABSOLUTE)
+                        .setRow(SpreadsheetSelection.row(97, SpreadsheetReferenceKind.ABSOLUTE)));
     }
 
     @Test
@@ -2184,7 +2184,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     private SpreadsheetColumnReference column(final int value) {
-        return SpreadsheetColumnOrRowReference.column(value, SpreadsheetReferenceKind.ABSOLUTE);
+        return SpreadsheetSelection.column(value, SpreadsheetReferenceKind.ABSOLUTE);
     }
 
     private SpreadsheetRowReference row() {
@@ -2192,7 +2192,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     private SpreadsheetRowReference row(final int value) {
-        return SpreadsheetColumnOrRowReference.row(value, SpreadsheetReferenceKind.ABSOLUTE);
+        return SpreadsheetSelection.row(value, SpreadsheetReferenceKind.ABSOLUTE);
     }
 
     private void checkColumn(final SpreadsheetCellReference cell, final SpreadsheetColumnReference column) {

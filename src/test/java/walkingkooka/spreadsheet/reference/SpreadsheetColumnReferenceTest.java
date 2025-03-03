@@ -1525,7 +1525,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Override
     SpreadsheetColumnReference createReference(final int value,
                                                final SpreadsheetReferenceKind kind) {
-        return SpreadsheetColumnOrRowReference.column(
+        return SpreadsheetSelection.column(
                 value,
                 kind
         );

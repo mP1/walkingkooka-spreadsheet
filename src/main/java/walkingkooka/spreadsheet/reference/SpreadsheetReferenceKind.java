@@ -90,7 +90,7 @@ public enum SpreadsheetReferenceKind {
     private SpreadsheetColumnReference lastColumn;
 
     public final SpreadsheetColumnReference column(final int value) {
-        return SpreadsheetColumnOrRowReference.column(value, this);
+        return SpreadsheetSelection.column(value, this);
     }
 
     abstract SpreadsheetColumnReference columnFromCache(final int column);
@@ -120,7 +120,7 @@ public enum SpreadsheetReferenceKind {
     private SpreadsheetRowReference lastRow;
 
     public final SpreadsheetRowReference row(final int value) {
-        return SpreadsheetColumnOrRowReference.row(value, this);
+        return SpreadsheetSelection.row(value, this);
     }
 
     abstract SpreadsheetRowReference rowFromCache(final int column);
