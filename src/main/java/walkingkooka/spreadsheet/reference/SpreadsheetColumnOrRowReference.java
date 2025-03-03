@@ -37,11 +37,6 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         this.referenceKind = referenceKind;
     }
 
-    /**
-     * Returns the matching {@link SpreadsheetColumnOrRowReferenceKind} for this {@link SpreadsheetColumnOrRowReference}.
-     */
-    public abstract SpreadsheetColumnOrRowReferenceKind columnOrRowReferenceKind();
-
     @Override
     public final long count() {
         return 1;

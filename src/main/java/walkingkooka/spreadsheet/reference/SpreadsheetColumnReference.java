@@ -101,11 +101,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         super(value, referenceKind);
     }
 
-    @Override
-    public SpreadsheetColumnOrRowReferenceKind columnOrRowReferenceKind() {
-        return SpreadsheetColumnOrRowReferenceKind.COLUMN;
-    }
-
     /**
      * Would be setter that returns a {@link SpreadsheetColumnReference} with the given {@link SpreadsheetReferenceKind}
      * creating a new instance if necessary.
