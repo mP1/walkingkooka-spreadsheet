@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
@@ -297,7 +298,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         );
 
         final Set<SpreadsheetCell> newCells = SortedSets.tree();
-        SpreadsheetColumnOrRowReference actualY = heightKind.columnOrRow(home);
+        SpreadsheetSelection actualY = heightKind.columnOrRow(home);
 
         for (final SpreadsheetCellRangeSortList yCells : allCells) {
             final SpreadsheetColumnOrRowReference y = yCells.columnOrRow;

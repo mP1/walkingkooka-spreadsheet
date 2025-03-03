@@ -328,7 +328,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testAddNonZeroPositive() {
         final R reference = this.createSelection();
-        final SpreadsheetColumnOrRowReference different = reference.add(100);
+        final R different = (R)reference.add(100);
         assertNotSame(reference, different);
         this.checkValue(different, VALUE + 100);
         this.checkType(different);
@@ -337,7 +337,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testAddNonZeroNegative() {
         final R reference = this.createSelection();
-        final SpreadsheetColumnOrRowReference different = reference.add(-100);
+        final R different = (R)reference.add(-100);
         assertNotSame(reference, different);
         this.checkValue(different, VALUE - 100);
         this.checkKind(different, SpreadsheetReferenceKind.ABSOLUTE);

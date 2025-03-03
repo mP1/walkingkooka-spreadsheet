@@ -61,33 +61,6 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
     // add..............................................................................................................
 
     /**
-     * Adds a delta to the value and returns an instance with the result.
-     */
-    @Override
-    public abstract SpreadsheetColumnOrRowReference add(final int value);
-
-    final SpreadsheetColumnOrRowReference add0(final int value) {
-        return 0 == value ?
-                this :
-                this.setValue(this.value + value);
-    }
-
-    /**
-     * A saturated adds of delta to the value and returns an instance with the result.
-     */
-    @Override
-    public abstract SpreadsheetColumnOrRowReference addSaturated(final int value);
-
-    final SpreadsheetColumnOrRowReference addSaturated0(final int value) {
-        return this.setValue(
-                Math.min(
-                        Math.max(this.value + value, 0),
-                        this.max()
-                )
-        );
-    }
-
-    /**
      * If this column or row is a relative reference add the given delta or return this if absolute.
      */
     public abstract SpreadsheetColumnOrRowReference addIfRelative(final int delta);

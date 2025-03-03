@@ -120,14 +120,19 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
 
     @Override
     public SpreadsheetColumnReference add(final int value) {
-        return this.add0(value)
-                .toColumn();
+        return this.setValue(
+                this.value + value
+        );
     }
 
     @Override
     public SpreadsheetColumnReference addSaturated(final int value) {
-        return this.addSaturated0(value)
-                .toColumn();
+        return this.setValue(
+                Math.min(
+                        Math.max(this.value + value, 0),
+                        this.max()
+                )
+        );
     }
 
     @Override
