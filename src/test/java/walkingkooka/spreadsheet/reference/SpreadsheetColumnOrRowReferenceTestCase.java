@@ -251,16 +251,6 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         );
     }
 
-    final void addIfRelativeAndCheck(final R reference,
-                                     final int delta,
-                                     final R expected) {
-        this.checkEquals(
-                expected,
-                reference.addIfRelative(delta),
-                () -> reference + " addIfRelative " + delta
-        );
-    }
-
     // setValue.........................................................................................................
 
     @Test

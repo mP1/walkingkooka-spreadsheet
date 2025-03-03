@@ -58,13 +58,6 @@ abstract public class SpreadsheetColumnOrRowReference extends SpreadsheetSelecti
         return this.value == this.max();
     }
 
-    // add..............................................................................................................
-
-    /**
-     * If this column or row is a relative reference add the given delta or return this if absolute.
-     */
-    public abstract SpreadsheetColumnOrRowReference addIfRelative(final int delta);
-
     /**
      * Returns the maximum valid value, this is used during {@link #addSaturated(int)}
      */

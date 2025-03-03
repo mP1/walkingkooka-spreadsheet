@@ -42,6 +42,11 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
         throw new UnsupportedOperationException(this.toString());
     }
 
+    @Override
+    public final SpreadsheetSelection addIfRelative(final int delta) {
+        throw new UnsupportedOperationException(this.toString());
+    }
+
     /**
      * Adds the given deltas to the relative tokens of this {@link SpreadsheetExpressionReference} returning
      * the result.

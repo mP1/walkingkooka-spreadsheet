@@ -141,9 +141,9 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
     @Override
     public SpreadsheetRowReference addIfRelative(final int delta) {
-        return 0 == delta || this.referenceKind() == SpreadsheetReferenceKind.ABSOLUTE ?
-                this :
-                this.add(delta);
+        return this.referenceKind() == SpreadsheetReferenceKind.RELATIVE ?
+                this.add(delta) :
+                this;
     }
 
     // replaceReferencesMapper..........................................................................................
