@@ -119,13 +119,6 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
 
     abstract SpreadsheetColumnOrRowRangeReference<?> replace(final Range<T> range);
 
-    // addIfRelative....................................................................................................
-
-    /**
-     * If this column or row is a relative reference add the given delta or return this if absolute.
-     */
-    public abstract SpreadsheetColumnOrRowRangeReference<?> addIfRelative(final int delta);
-
     // toXXX............................................................................................................
 
     @Override

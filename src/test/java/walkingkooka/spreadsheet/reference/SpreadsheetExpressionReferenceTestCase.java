@@ -51,6 +51,15 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     // addIfRelative....................................................................................................
 
     @Test
+    public final void testAddIfRelativeFails() {
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> this.createSelection()
+                        .addIfRelative(0)
+        );
+    }
+
+    @Test
     public final void testAddIfRelative() {
         this.addIfRelativeAndCheck(
                 this.createSelection(),

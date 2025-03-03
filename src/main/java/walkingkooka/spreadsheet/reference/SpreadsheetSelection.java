@@ -739,6 +739,11 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract SpreadsheetSelection addSaturated(final int column,
                                                       final int row);
 
+    /**
+     * If this column or row is a relative reference add the given delta or return this if absolute.
+     */
+    public abstract SpreadsheetSelection addIfRelative(final int delta);
+
     static void checkColumnDeltaIsZero(final int column) {
         if (0 != column) {
             throw new IllegalArgumentException("Invalid non zero column delta " + column);
