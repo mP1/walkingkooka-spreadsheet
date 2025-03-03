@@ -1354,7 +1354,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testParseInvalidRowFails() {
         this.parseStringFails(
                 "B1048577",
-                new IllegalRowArgumentException("Invalid row value 1048576 expected between 0 and 1048576")
+                new IllegalRowArgumentException("Invalid row=1048576 not between 0 and 1048576")
         );
     }
 
@@ -1362,7 +1362,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testParseInvalidRowFails2() {
         this.parseStringFails(
                 "B12345678",
-                new IllegalRowArgumentException("Invalid row value 12345677 expected between 0 and 1048576")
+                new IllegalRowArgumentException("Invalid row=12345677 not between 0 and 1048576")
         );
     }
 

@@ -89,13 +89,13 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
     @Test
     public void testParseRelativeReferenceInvalid() {
         final int value = SpreadsheetRowReference.MAX_VALUE + 1 + 1;
-        this.parseThrows("" + value, "Invalid row value 1048576 expected between 0 and 1048576");
+        this.parseThrows("" + value, "Invalid row=1048576 not between 0 and 1048576");
     }
 
     @Test
     public void testParseAbsoluteReferenceInvalid() {
         final int value = SpreadsheetRowReference.MAX_VALUE + 1 + 1;
-        this.parseThrows("$" + value, "Invalid row value 1048576 expected between 0 and 1048576");
+        this.parseThrows("$" + value, "Invalid row=1048576 not between 0 and 1048576");
     }
 
     @Test

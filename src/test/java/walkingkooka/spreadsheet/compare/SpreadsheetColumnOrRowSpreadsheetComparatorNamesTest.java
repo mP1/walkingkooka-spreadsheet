@@ -549,7 +549,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.parseStringFails(
                 text,
-                new IllegalArgumentException("Invalid row value 1912276170 expected between 0 and 1048576")
+                new IllegalArgumentException("Invalid row=1912276170 not between 0 and 1048576")
         );
     }
 

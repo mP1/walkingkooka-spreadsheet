@@ -115,7 +115,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     private static void checkValue(final int value) {
         if (value < 0 || value > MAX_VALUE) {
             throw new IllegalRowArgumentException(
-                    "Invalid row value " + value + " expected between 0 and " + (MAX_VALUE + 1)
+                    "Invalid row=" + value + " not between 0 and " + (MAX_VALUE + 1)
             );
         }
     }
