@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.AbstractList;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 final class SpreadsheetCellRangeSortList extends AbstractList<SpreadsheetCell> {
 
-    static SpreadsheetCellRangeSortList with(final SpreadsheetColumnOrRowReference columnOrRow,
+    static SpreadsheetCellRangeSortList with(final SpreadsheetSelection columnOrRow,
                                              final int size) {
         return new SpreadsheetCellRangeSortList(
                 columnOrRow,
@@ -35,7 +35,7 @@ final class SpreadsheetCellRangeSortList extends AbstractList<SpreadsheetCell> {
         );
     }
 
-    private SpreadsheetCellRangeSortList(final SpreadsheetColumnOrRowReference columnOrRow,
+    private SpreadsheetCellRangeSortList(final SpreadsheetSelection columnOrRow,
                                          final int size) {
         this.columnOrRow = columnOrRow;
         this.cells = new SpreadsheetCell[size];
@@ -44,7 +44,7 @@ final class SpreadsheetCellRangeSortList extends AbstractList<SpreadsheetCell> {
     /**
      * The original column/row for the given cells. Once sorted this will be used to calculate how many column/rows this has moved.
      */
-    final SpreadsheetColumnOrRowReference columnOrRow;
+    final SpreadsheetSelection columnOrRow;
 
     @Override
     public SpreadsheetCell get(final int index) {

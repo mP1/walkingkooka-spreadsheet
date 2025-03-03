@@ -44,7 +44,6 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -248,14 +247,13 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         );
 
         final SpreadsheetCellReference home = cellRange.toCell();
-        final int base = widthKind.columnOrRow(home)
-                .value();
+        final int base = widthKind.value(home);
 
         final int width = widthKind.length(cellRange);
 
         final SpreadsheetColumnOrRowReferenceKind heightKind = widthKind.flip();
 
-        final Map<SpreadsheetColumnOrRowReference, SpreadsheetCellRangeSortList> yToCells = Maps.sorted();
+        final Map<SpreadsheetSelection, SpreadsheetCellRangeSortList> yToCells = Maps.sorted();
 
         // when sorting columns this will hold rows of cells
         // when sorting rows this will hold columns of cells
@@ -263,7 +261,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         final List<SpreadsheetCellRangeSortList> allCells = Lists.array(); // this will the list that is sorted.
 
         for (final SpreadsheetCell cell : this.value) {
-            final SpreadsheetColumnOrRowReference y = heightKind.columnOrRow(
+            final SpreadsheetSelection y = heightKind.columnOrRow(
                     cell.reference()
             );
             SpreadsheetCellRangeSortList cells = yToCells.get(y);
@@ -279,12 +277,12 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
                 allCells.add(cells);
             }
 
-            final SpreadsheetColumnOrRowReference x = widthKind.columnOrRow(
+            final SpreadsheetSelection x = widthKind.columnOrRow(
                     cell.reference()
             );
 
             cells.set(
-                    x.value() - base,
+                    widthKind.value(x) - base,
                     cell
             );
         }
@@ -301,7 +299,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         SpreadsheetSelection actualY = heightKind.columnOrRow(home);
 
         for (final SpreadsheetCellRangeSortList yCells : allCells) {
-            final SpreadsheetColumnOrRowReference y = yCells.columnOrRow;
+            final SpreadsheetSelection y = yCells.columnOrRow;
 
             final Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> referenceMapper = y.replaceReferencesMapper(actualY);
 

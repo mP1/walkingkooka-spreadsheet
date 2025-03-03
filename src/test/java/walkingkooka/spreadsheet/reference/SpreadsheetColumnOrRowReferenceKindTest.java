@@ -29,7 +29,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesting2<SpreadsheetColumnOrRowReferenceKind>,
-        ParseStringTesting<SpreadsheetColumnOrRowReference> {
+        ParseStringTesting<SpreadsheetSelection> {
 
     // firstAbsolute....................................................................................................
 
@@ -135,6 +135,45 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         );
     }
 
+    // value............................................................................................................
+
+    @Test
+    public void testValueColumnRelative() {
+        this.valueAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.COLUMN,
+                SpreadsheetSelection.parseColumn("B"),
+                1
+        );
+    }
+
+    @Test
+    public void testValueRowRelative() {
+        this.valueAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetSelection.parseRow("3"),
+                2
+        );
+    }
+
+    @Test
+    public void testValueRowAbsolute() {
+        this.valueAndCheck(
+                SpreadsheetColumnOrRowReferenceKind.ROW,
+                SpreadsheetSelection.parseRow("$4"),
+                3
+        );
+    }
+
+    private void valueAndCheck(final SpreadsheetColumnOrRowReferenceKind kind,
+                               final SpreadsheetSelection reference,
+                               final int expected) {
+        this.checkEquals(
+                expected,
+                kind.value(reference),
+                () -> kind + " value " + reference
+        );
+    }
+    
     // setValue.........................................................................................................
 
     @Test
@@ -637,7 +676,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
     // parseColumnOrRow.................................................................................................
 
     @Override
-    public SpreadsheetColumnOrRowReference parseString(final String text) {
+    public SpreadsheetSelection parseString(final String text) {
         return SpreadsheetColumnOrRowReferenceKind.parseColumnOrRow(text);
     }
 

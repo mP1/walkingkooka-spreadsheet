@@ -46,6 +46,12 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         }
 
         @Override
+        public int value(final SpreadsheetSelection selection) {
+            return selection.toColumn()
+                    .value;
+        }
+
+        @Override
         public SpreadsheetColumnReference setValue(final SpreadsheetReferenceKind kind,
                                                    final int value) {
             return kind.column(value);
@@ -102,6 +108,12 @@ public enum SpreadsheetColumnOrRowReferenceKind {
         }
 
         @Override
+        public int value(final SpreadsheetSelection selection) {
+            return selection.toRow()
+                    .value;
+        }
+
+        @Override
         public SpreadsheetRowReference setValue(final SpreadsheetReferenceKind kind,
                                                 final int value) {
             return kind.row(value);
@@ -138,38 +150,43 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     /**
      * Returns the first ABSOLUTE column or row.
      */
-    public abstract SpreadsheetColumnOrRowReference firstAbsolute();
+    public abstract SpreadsheetSelection firstAbsolute();
 
     /**
      * Returns the first RELATIVE column or row.
      */
-    public abstract SpreadsheetColumnOrRowReference firstRelative();
+    public abstract SpreadsheetSelection firstRelative();
 
     /**
      * Returns the last ABSOLUTE column or row.
      */
-    public abstract SpreadsheetColumnOrRowReference lastAbsolute();
+    public abstract SpreadsheetSelection lastAbsolute();
 
     /**
      * Returns the last RELATIVE column or row.
      */
-    public abstract SpreadsheetColumnOrRowReference lastRelative();
+    public abstract SpreadsheetSelection lastRelative();
+
+    /**
+     * Getter that returns the value for the column or row.
+     */
+    public abstract int value(final SpreadsheetSelection selection);
 
     /**
      * Creates a column or row for example a value of 0 returns the first column for {@link #COLUMN}.
      */
-    public abstract SpreadsheetColumnOrRowReference setValue(final SpreadsheetReferenceKind kind,
-                                                             final int value);
+    public abstract SpreadsheetSelection setValue(final SpreadsheetReferenceKind kind,
+                                                  final int value);
 
     /**
      * Parses the text into a {@link SpreadsheetColumnReference} for {@link #COLUMN} and {@link SpreadsheetRowReference} for {@link #ROW}.
      */
-    public abstract SpreadsheetColumnOrRowReference parse(final String text);
+    public abstract SpreadsheetSelection parse(final String text);
 
     /**
      * Parses the given text as a column or row.
      */
-    public static SpreadsheetColumnOrRowReference parseColumnOrRow(final String text) {
+    public static SpreadsheetSelection parseColumnOrRow(final String text) {
         return SpreadsheetSelection.parseColumnOrRow(text);
     }
 
@@ -181,12 +198,12 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     /**
      * Extracts either the column or row reference from the given {@link SpreadsheetSelection}.
      */
-    public abstract SpreadsheetColumnOrRowReference columnOrRow(final SpreadsheetSelection selection);
+    public abstract SpreadsheetSelection columnOrRow(final SpreadsheetSelection selection);
 
     /**
      * Extracts either the column or row range reference from the given {@link SpreadsheetSelection}.
      */
-    public abstract SpreadsheetColumnOrRowRangeReference columnOrRowRange(final SpreadsheetSelection selection);
+    public abstract SpreadsheetSelection columnOrRowRange(final SpreadsheetSelection selection);
 
     /**
      * Returns the width or height for the given {@link SpreadsheetSelection}. For {@link #COLUMN} it will return the width.
