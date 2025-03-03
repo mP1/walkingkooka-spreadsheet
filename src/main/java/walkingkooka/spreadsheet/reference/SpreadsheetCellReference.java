@@ -197,11 +197,6 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public boolean isAll() {
-        return false;
-    }
-
-    @Override
     public boolean isFirst() {
         return this.column().isFirst() && this.row().isFirst();
     }

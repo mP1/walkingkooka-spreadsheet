@@ -157,11 +157,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     // SpreadsheetSelection............................................................................................
 
     @Override
-    public boolean isAll() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean isFirst() {
         throw new UnsupportedOperationException();
     }

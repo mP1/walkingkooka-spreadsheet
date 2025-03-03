@@ -85,14 +85,6 @@ abstract class SpreadsheetColumnOrRowRangeReference<T extends SpreadsheetColumnO
                 + 1;
     }
 
-    /**
-     * Returns true only if this range spans the entire column or row.
-     */
-    @Override
-    public final boolean isAll() {
-        return this.begin().isFirst() && this.end().isLast();
-    }
-
     @Override
     public final boolean isFirst() {
         return this.begin().isFirst() && this.isSingle();

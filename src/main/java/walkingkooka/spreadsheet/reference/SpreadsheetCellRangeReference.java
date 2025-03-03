@@ -158,11 +158,6 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     }
 
     @Override
-    public boolean isAll() {
-        return this.begin().isFirst() && this.end().isLast();
-    }
-
-    @Override
     public boolean isFirst() {
         return this.begin().isFirst() && this.isSingleCell();
     }
