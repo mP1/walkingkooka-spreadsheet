@@ -186,7 +186,7 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     /**
      * Extracts either the column or row range reference from the given {@link SpreadsheetSelection}.
      */
-    public abstract SpreadsheetColumnOrRowRangeReference<?> columnOrRowRange(final SpreadsheetSelection selection);
+    public abstract SpreadsheetColumnOrRowRangeReference columnOrRowRange(final SpreadsheetSelection selection);
 
     /**
      * Returns the width or height for the given {@link SpreadsheetSelection}. For {@link #COLUMN} it will return the width.

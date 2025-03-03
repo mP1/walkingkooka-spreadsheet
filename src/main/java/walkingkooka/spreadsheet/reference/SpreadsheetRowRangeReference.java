@@ -18,23 +18,31 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.HasRange;
+import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.RangeBound;
+import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CharSequences;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 /**
  * Holds a row range.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRangeReference<SpreadsheetRowReference>
-        implements Comparable<SpreadsheetRowRangeReference> {
+public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRangeReference
+        implements Comparable<SpreadsheetRowRangeReference>,
+        HasRange<SpreadsheetRowReference>,
+        HasRangeBounds<SpreadsheetRowReference>,
+        Iterable<SpreadsheetRowReference> {
 
     /**
      * A {@link SpreadsheetRowRangeReference} that includes all rows.
@@ -53,13 +61,49 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
         return new SpreadsheetRowRangeReference(range);
     }
 
-    /**
-     * Private ctor
-     */
     private SpreadsheetRowRangeReference(final Range<SpreadsheetRowReference> range) {
-        super(range);
+        super();
+        this.range = range;
     }
 
+    /**
+     * Returns the top left row/row reference.
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Override
+    public SpreadsheetRowReference begin() {
+        return this.range.lowerBound()
+                .value()
+                .get(); // must exist
+    }
+
+    /**
+     * Returns the bottom right row/row reference.
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @Override
+    public SpreadsheetRowReference end() {
+        return this.range.upperBound()
+                .value()
+                .get(); // must exist
+    }
+
+    @Override
+    public Range<SpreadsheetRowReference> range() {
+        return this.range;
+    }
+
+    private final Range<SpreadsheetRowReference> range;
+
+
+    public SpreadsheetRowRangeReference setRange(final Range<SpreadsheetRowReference> range) {
+        Objects.requireNonNull(range, "range");
+
+        return this.range.equals(range) ?
+                this :
+                with(range);
+    }
+    
     /**
      * Creates a {@link SpreadsheetCellRangeReference} combining this row range and the given column range.
      */
@@ -67,15 +111,6 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
         Objects.requireNonNull(columnRangeReference, "columnRangeReference");
 
         return columnRangeReference.setRowRange(this);
-    }
-
-    public SpreadsheetRowRangeReference setRange(final Range<SpreadsheetRowReference> range) {
-        return this.setRange0(range);
-    }
-
-    @Override
-    SpreadsheetRowRangeReference replace(final Range<SpreadsheetRowReference> range) {
-        return with(range);
     }
 
     // add..............................................................................................................
@@ -170,6 +205,40 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
         return this.range.test(row);
     }
 
+    // count............................................................................................................
+
+    /**
+     * Returns the number of rows in this range.
+     */
+    @Override
+    public long count() {
+        return this.end()
+                .value()
+                - this.begin()
+                .value()
+                + 1;
+    }
+
+    // isXXX............................................................................................................
+
+    @Override
+    public boolean isFirst() {
+        return this.begin().isFirst() && this.isUnit();
+    }
+
+    @Override
+    public boolean isLast() {
+        return this.begin().isLast() && this.isUnit();
+    }
+
+    // toXXX............................................................................................................
+
+    @Override
+    public SpreadsheetCellReference toCell() {
+        return this.toScalar()
+                .toCell();
+    }
+
     @Override
     public SpreadsheetColumnReference toColumn() {
         throw new UnsupportedOperationException(this.toString());
@@ -188,6 +257,13 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
     @Override
     public SpreadsheetRowRangeReference toRowRange() {
         return this;
+    }
+
+    // toScalar.........................................................................................................
+
+    @Override
+    public SpreadsheetRowReference toScalar() {
+        return this.begin();
     }
 
     // toRange..........................................................................................................
@@ -210,18 +286,19 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
                 relative;
     }
 
+    // replaceReferencesMapper..........................................................................................
+
+    @Override
+    Optional<Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>> replaceReferencesMapper0(final SpreadsheetSelection movedTo) {
+        return this.toScalar()
+                .replaceReferencesMapper0(movedTo);
+    }
+
     // SpreadsheetSelectionVisitor......................................................................................
 
     @Override
     void accept(final SpreadsheetSelectionVisitor visitor) {
         visitor.visit(this);
-    }
-
-    // Iterable.........................................................................................................
-
-    @Override
-    SpreadsheetRowReference iteratorIntToReference(final int value) {
-        return SpreadsheetReferenceKind.RELATIVE.row(value);
     }
 
     // SpreadsheetViewportNavigation...........................................................................
@@ -466,7 +543,56 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetColumnOrRowRa
                 .row(this);
     }
 
-    // Object...........................................................................................................
+    // Iterable.........................................................................................................
+
+    @Override
+    public Iterator<SpreadsheetRowReference> iterator() {
+        return IntStream.rangeClosed(
+                        this.begin().value(),
+                        this.end().value()
+                )
+                .boxed()
+                .map(SpreadsheetReferenceKind.RELATIVE::row)
+                .iterator();
+    }
+
+    // HasParserToken...................................................................................................
+
+    @Override
+    public SpreadsheetFormulaParserToken toParserToken() {
+        throw new UnsupportedOperationException();
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.range.hashCode();
+    }
+
+    @Override
+    boolean equalsNotSameAndNotNull(final Object other,
+                                    final boolean includeKind) {
+        return this.equals1(
+                (SpreadsheetRowRangeReference) other,
+                includeKind
+        );
+    }
+
+    private boolean equals1(final SpreadsheetRowRangeReference other,
+                            final boolean includeKind) {
+        return this.begin().equalsNotSameAndNotNull(other.begin(), includeKind) &&
+                this.end().equalsNotSameAndNotNull(other.end(), includeKind);
+    }
+
+    // toString.........................................................................................................
+
+    @Override
+    public String toString() {
+        return this.isUnit() ?
+                this.begin().toString() :
+                this.begin() + SEPARATOR.string() + this.end();
+    }
 
     // Comparable.......................................................................................................
 
