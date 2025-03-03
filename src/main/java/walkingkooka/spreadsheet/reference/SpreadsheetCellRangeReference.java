@@ -242,7 +242,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
      * returning a {@link SpreadsheetCellRangeReference} with the result.
      */
     public SpreadsheetCellRangeReference setRowRange(final SpreadsheetRowRangeReference rowRange) {
-        Objects.requireNonNull(rowRange, "rowRangeReference");
+        Objects.requireNonNull(rowRange, "rowRange");
 
         return this.setRange(
                 Range.greaterThanEquals(this.begin().column().setRow(rowRange.begin()))

@@ -110,7 +110,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnOrRo
      * Creates a {@link SpreadsheetCellRangeReference} combining this column range and the given row range.
      */
     public SpreadsheetCellRangeReference setRowRange(final SpreadsheetRowRangeReference row) {
-        Objects.requireNonNull(row, "rowRangeReference");
+        Objects.requireNonNull(row, "row");
 
         final SpreadsheetColumnReference columnBegin = this.begin();
         final SpreadsheetRowReference rowBegin = row.begin();
