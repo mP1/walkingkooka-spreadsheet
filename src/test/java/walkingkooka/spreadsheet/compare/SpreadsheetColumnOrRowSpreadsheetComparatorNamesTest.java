@@ -26,6 +26,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -53,7 +54,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
         TreePrintableTesting {
 
-    private final static SpreadsheetSelection COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("A");
+    private final static SpreadsheetColumnOrRowReferenceOrRange COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("A");
 
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("text-123");
 

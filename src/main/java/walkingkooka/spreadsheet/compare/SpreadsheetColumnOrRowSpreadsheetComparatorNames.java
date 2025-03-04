@@ -22,6 +22,7 @@ import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
@@ -62,12 +63,12 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
      * Tries to extract the {@link SpreadsheetSelection} from the text form of a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      * Useful when parsing text from a user which may be incomplete or syntactically wrong.
      */
-    public static Optional<SpreadsheetSelection> tryParseColumnOrRow(final String text) {
+    public static Optional<SpreadsheetColumnOrRowReferenceOrRange> tryParseColumnOrRow(final String text) {
         Objects.requireNonNull(text, "text");
 
         final int assignment = text.indexOf(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.character());
 
-        SpreadsheetSelection columnOrRow;
+        SpreadsheetColumnOrRowReferenceOrRange columnOrRow;
 
         try {
             columnOrRow = SpreadsheetSelection.parseColumnOrRow(

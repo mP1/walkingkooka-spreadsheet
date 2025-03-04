@@ -470,7 +470,7 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Parses the text as a column or row.
      */
-    public static SpreadsheetSelection parseColumnOrRow(final String text) {
+    public static SpreadsheetColumnOrRowReferenceOrRange parseColumnOrRow(final String text) {
         return Cast.to(
                 parseTextOrFail(
                         text,
@@ -490,7 +490,7 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Parses the text into a {@link SpreadsheetColumnReference} or {@link SpreadsheetColumnRangeReference}.
      */
-    public static SpreadsheetSelection parseColumnOrColumnRange(final String text) {
+    public static SpreadsheetColumnOrRowReferenceOrRange parseColumnOrColumnRange(final String text) {
         final SpreadsheetColumnRangeReference range = parseColumnRange(text);
         return range.isUnit() ?
                 range.begin() :
