@@ -17,30 +17,18 @@
 
 package walkingkooka.spreadsheet.reference;
 
-public abstract class SpreadsheetColumnReferenceOrRange extends SpreadsheetColumnOrRowReferenceOrRange {
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
-    SpreadsheetColumnReferenceOrRange() {
-        super();
-    }
+public final class SpreadsheetColumnOrRowReferenceOrRangeTest implements ClassTesting<SpreadsheetColumnOrRowReferenceOrRange> {
 
-    static void checkRowDeltaIsZero(final int row) {
-        if (0 != row) {
-            throw new IllegalArgumentException("Invalid non zero row delta " + row);
-        }
+    @Override
+    public Class<SpreadsheetColumnOrRowReferenceOrRange> type() {
+        return SpreadsheetColumnOrRowReferenceOrRange.class;
     }
 
     @Override
-    final boolean testRowNonNull(final SpreadsheetRowReference row) {
-        return false;
-    }
-
-    @Override
-    public final SpreadsheetRowReference toRow() {
-        throw new UnsupportedOperationException(this.toString());
-    }
-
-    @Override
-    public final SpreadsheetRowRangeReference toRowRange() {
-        throw new UnsupportedOperationException(this.toString());
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }

@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference;
 /**
  * Base class for {@link SpreadsheetRowReference} and {@link SpreadsheetRowRangeReference}.
  */
-public abstract class SpreadsheetRowReferenceOrRange extends SpreadsheetSelection {
+public abstract class SpreadsheetRowReferenceOrRange extends SpreadsheetColumnOrRowReferenceOrRange {
 
     SpreadsheetRowReferenceOrRange() {
         super();
