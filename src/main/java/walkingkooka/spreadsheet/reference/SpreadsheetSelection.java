@@ -745,12 +745,6 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public abstract SpreadsheetSelection addIfRelative(final int delta);
 
-    static void checkColumnDeltaIsZero(final int column) {
-        if (0 != column) {
-            throw new IllegalArgumentException("Invalid non zero column delta " + column);
-        }
-    }
-
     // replaceReferencesMapper..........................................................................................
 
     /**

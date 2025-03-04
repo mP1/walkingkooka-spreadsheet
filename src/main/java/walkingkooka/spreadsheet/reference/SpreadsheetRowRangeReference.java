@@ -38,7 +38,7 @@ import java.util.stream.IntStream;
  * Holds a row range.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetRowRangeReference extends SpreadsheetSelection
+public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceOrRange
         implements Comparable<SpreadsheetRowRangeReference>,
         HasRange<SpreadsheetRowReference>,
         HasRangeBounds<SpreadsheetRowReference>,

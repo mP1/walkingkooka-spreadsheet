@@ -35,7 +35,7 @@ import java.util.function.Predicate;
  * Represents a row reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
  * only comparing the value.
  */
-public final class SpreadsheetRowReference extends SpreadsheetSelection
+public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRange
         implements Value<Integer>,
         Comparable<SpreadsheetRowReference> {
 
@@ -282,11 +282,6 @@ public final class SpreadsheetRowReference extends SpreadsheetSelection
     }
 
     @Override
-    boolean testColumnNonNull(final SpreadsheetColumnReference column) {
-        return false;
-    }
-
-    @Override
     boolean testRowNonNull(final SpreadsheetRowReference row) {
         return this.equalsIgnoreReferenceKind(row);
     }
@@ -342,16 +337,6 @@ public final class SpreadsheetRowReference extends SpreadsheetSelection
         return this.setColumn(
                 SpreadsheetReferenceKind.RELATIVE.firstColumn()
         );
-    }
-
-    @Override
-    public SpreadsheetColumnReference toColumn() {
-        throw new UnsupportedOperationException(this.toString());
-    }
-
-    @Override
-    public SpreadsheetColumnRangeReference toColumnRange() {
-        throw new UnsupportedOperationException(this.toString());
     }
 
     @Override
