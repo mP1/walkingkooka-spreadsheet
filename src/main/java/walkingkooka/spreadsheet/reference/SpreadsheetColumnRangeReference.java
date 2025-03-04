@@ -37,7 +37,7 @@ import java.util.stream.IntStream;
  * Holds a column range.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetColumnRangeReference extends SpreadsheetSelection
+public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnReferenceOrRange
         implements Comparable<SpreadsheetColumnRangeReference>,
         HasRange<SpreadsheetColumnReference>,
         HasRangeBounds<SpreadsheetColumnReference>,
@@ -209,11 +209,6 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetSelection
         return this.range.test(column);
     }
 
-    @Override
-    boolean testRowNonNull(final SpreadsheetRowReference row) {
-        return false;
-    }
-
     // count............................................................................................................
 
     /**
@@ -256,16 +251,6 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetSelection
     @Override
     public SpreadsheetColumnRangeReference toColumnRange() {
         return this;
-    }
-
-    @Override
-    public SpreadsheetRowReference toRow() {
-        throw new UnsupportedOperationException(this.toString());
-    }
-
-    @Override
-    public SpreadsheetRowRangeReference toRowRange() {
-        throw new UnsupportedOperationException(this.toString());
     }
 
     // toScalar.........................................................................................................

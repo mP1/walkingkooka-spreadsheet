@@ -751,12 +751,6 @@ public abstract class SpreadsheetSelection implements HasText,
         }
     }
 
-    static void checkRowDeltaIsZero(final int row) {
-        if (0 != row) {
-            throw new IllegalArgumentException("Invalid non zero row delta " + row);
-        }
-    }
-
     // replaceReferencesMapper..........................................................................................
 
     /**
