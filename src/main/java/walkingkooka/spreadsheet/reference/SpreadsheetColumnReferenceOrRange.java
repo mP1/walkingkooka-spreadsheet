@@ -35,12 +35,12 @@ public abstract class SpreadsheetColumnReferenceOrRange extends SpreadsheetSelec
     }
 
     @Override
-    public SpreadsheetRowReference toRow() {
+    public final SpreadsheetRowReference toRow() {
         throw new UnsupportedOperationException(this.toString());
     }
 
     @Override
-    public SpreadsheetRowRangeReference toRowRange() {
+    public final SpreadsheetRowRangeReference toRowRange() {
         throw new UnsupportedOperationException(this.toString());
     }
 }
