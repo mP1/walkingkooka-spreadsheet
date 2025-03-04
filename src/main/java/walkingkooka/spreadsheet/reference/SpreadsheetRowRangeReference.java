@@ -192,11 +192,6 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
                 this.begin().compareTo(range.end().row()) <= 0;
     }
 
-    @Override
-    boolean testColumnNonNull(final SpreadsheetColumnReference column) {
-        return false;
-    }
-
     /**
      * Tests if the given {@link SpreadsheetRowReference} is within this {@link SpreadsheetRowRangeReference}.
      */
@@ -237,16 +232,6 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
     public SpreadsheetCellReference toCell() {
         return this.toScalar()
                 .toCell();
-    }
-
-    @Override
-    public SpreadsheetColumnReference toColumn() {
-        throw new UnsupportedOperationException(this.toString());
-    }
-
-    @Override
-    public SpreadsheetColumnRangeReference toColumnRange() {
-        throw new UnsupportedOperationException(this.toString());
     }
 
     @Override
