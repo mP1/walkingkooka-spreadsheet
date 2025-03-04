@@ -101,7 +101,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
     @Test
     public void testWith() {
-        final SpreadsheetSelection column = SpreadsheetSelection.parseColumn("D");
+        final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("D");
         final List<SpreadsheetComparatorNameAndDirection> namesAndDirections = Lists.of(
                 NAME.setDirection(DIRECTION)
         );
@@ -1404,7 +1404,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     private void columnOrRowAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators,
-                                     final SpreadsheetSelection columnOrRow) {
+                                     final SpreadsheetColumnOrRowReferenceOrRange columnOrRow) {
         this.checkEquals(
                 columnOrRow,
                 columnOrRowComparators.columnOrRow(),
