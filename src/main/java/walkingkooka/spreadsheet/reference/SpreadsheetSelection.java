@@ -983,7 +983,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * Got row 123 expected column
      * </pre>
      */
-    public final void ifDifferentColumnOrRowTypeFail(final SpreadsheetSelection columnOrRow) {
+    public final void ifDifferentColumnOrRowTypeFail(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow) {
         Objects.requireNonNull(columnOrRow, "columnOrRow");
 
         if (false == this.columnOrRowReferenceKind().equals(columnOrRow.columnOrRowReferenceKind())) {

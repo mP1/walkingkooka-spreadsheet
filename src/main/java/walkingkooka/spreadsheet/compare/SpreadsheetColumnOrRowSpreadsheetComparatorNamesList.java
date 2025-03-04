@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.json.JsonNode;
@@ -69,7 +70,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
         final Set<SpreadsheetSelection> duplicates = SortedSets.tree();
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
-            final SpreadsheetSelection columnOrRow = columnOrRowComparators.columnOrRow();
+            final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = columnOrRowComparators.columnOrRow();
 
             if (false == duplicates.isEmpty()) {
                 duplicates.iterator()
