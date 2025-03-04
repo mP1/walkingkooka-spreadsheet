@@ -23,7 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 
 import java.util.List;
 import java.util.Objects;
@@ -72,7 +72,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         );
     }
 
-    public static SpreadsheetColumnOrRowSpreadsheetComparators with(final SpreadsheetSelection columnOrRow,
+    public static SpreadsheetColumnOrRowSpreadsheetComparators with(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
                                                                     final List<SpreadsheetComparator<?>> comparators) {
 
         return new SpreadsheetColumnOrRowSpreadsheetComparators(
@@ -83,7 +83,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         );
     }
 
-    private SpreadsheetColumnOrRowSpreadsheetComparators(final SpreadsheetSelection columnOrRow,
+    private SpreadsheetColumnOrRowSpreadsheetComparators(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
                                                          final List<SpreadsheetComparator<?>> comparators) {
         if (comparators.isEmpty()) {
             throw new IllegalArgumentException("Empty comparators");
@@ -152,11 +152,11 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                         .orElse(null);
     }
 
-    public SpreadsheetSelection columnOrRow() {
+    public SpreadsheetColumnOrRowReferenceOrRange columnOrRow() {
         return this.columnOrRow;
     }
 
-    private final SpreadsheetSelection columnOrRow;
+    private final SpreadsheetColumnOrRowReferenceOrRange columnOrRow;
 
     public List<SpreadsheetComparator<?>> comparators() {
         return this.comparators;

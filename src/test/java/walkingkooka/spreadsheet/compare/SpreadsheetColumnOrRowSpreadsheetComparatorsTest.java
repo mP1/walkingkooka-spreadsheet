@@ -1103,7 +1103,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     }
 
     private void columnOrRowAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparators columnOrRowComparators,
-                                     final SpreadsheetSelection columnOrRow) {
+                                     final SpreadsheetColumnOrRowReferenceOrRange columnOrRow) {
         this.checkEquals(
                 columnOrRow,
                 columnOrRowComparators.columnOrRow(),

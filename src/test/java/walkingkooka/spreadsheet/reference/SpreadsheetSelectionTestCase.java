@@ -1851,13 +1851,13 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // ifDifferentColumnOrRowTypeFail...................................................................................
 
-    final void ifDifferentColumnOrRowTypeFail(final SpreadsheetSelection columnOrRow,
-                                              final SpreadsheetSelection other) {
+    final void ifDifferentColumnOrRowTypeFail(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
+                                              final SpreadsheetColumnOrRowReferenceOrRange other) {
         columnOrRow.ifDifferentColumnOrRowTypeFail(other);
     }
 
-    final void ifDifferentColumnOrRowTypeFail(final SpreadsheetSelection columnOrRow,
-                                              final SpreadsheetSelection other,
+    final void ifDifferentColumnOrRowTypeFail(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
+                                              final SpreadsheetColumnOrRowReferenceOrRange other,
                                               final String expected) {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,

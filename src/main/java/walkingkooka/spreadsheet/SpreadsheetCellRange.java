@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -261,7 +262,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         final List<SpreadsheetCellRangeSortList> allCells = Lists.array(); // this will the list that is sorted.
 
         for (final SpreadsheetCell cell : this.value) {
-            final SpreadsheetSelection y = heightKind.columnOrRow(
+            final SpreadsheetColumnOrRowReferenceOrRange y = heightKind.columnOrRow(
                     cell.reference()
             );
             SpreadsheetCellRangeSortList cells = yToCells.get(y);

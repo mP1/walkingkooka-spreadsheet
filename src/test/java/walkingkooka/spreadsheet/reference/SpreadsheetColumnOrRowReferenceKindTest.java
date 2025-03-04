@@ -567,7 +567,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
                                                  final SpreadsheetSelection selection,
                                                  final List<SpreadsheetColumnOrRowReferenceOrRange> expected) {
         final List<SpreadsheetSelection> actual = Lists.array();
-        for (final SpreadsheetSelection columnOrRowReference : (Iterable<SpreadsheetSelection>)kind.columnOrRowRange(selection)) {
+        for (final SpreadsheetColumnOrRowReferenceOrRange columnOrRowReference : (Iterable<SpreadsheetColumnOrRowReferenceOrRange>)kind.columnOrRowRange(selection)) {
             actual.add(columnOrRowReference);
         }
 

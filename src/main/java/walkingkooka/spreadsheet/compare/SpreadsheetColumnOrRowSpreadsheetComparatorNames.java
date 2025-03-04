@@ -162,7 +162,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         final Set<SpreadsheetSelection> duplicates = SortedSets.tree();
         int mode = 0;
         int tokenStart = 0;
-        SpreadsheetSelection columnOrRow = null;
+        SpreadsheetColumnOrRowReferenceOrRange columnOrRow = null;
         SpreadsheetComparatorName comparatorName = null;
         List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections = null;
 
@@ -444,7 +444,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     /**
      * Factory that creates a new {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      */
-    public static SpreadsheetColumnOrRowSpreadsheetComparatorNames with(final SpreadsheetSelection columnOrRow,
+    public static SpreadsheetColumnOrRowSpreadsheetComparatorNames with(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
                                                                         final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
 
         return new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
@@ -453,7 +453,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         );
     }
 
-    private SpreadsheetColumnOrRowSpreadsheetComparatorNames(final SpreadsheetSelection columnOrRow,
+    private SpreadsheetColumnOrRowSpreadsheetComparatorNames(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
                                                              final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
 
 
@@ -461,14 +461,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         this.comparatorNameAndDirections = comparatorNameAndDirections;
     }
 
-    public SpreadsheetSelection columnOrRow() {
+    public SpreadsheetColumnOrRowReferenceOrRange columnOrRow() {
         return this.columnOrRow;
     }
 
     /**
      * Would be setter that returns a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} with the given {@link SpreadsheetSelection} creating a new instance if necessary.
      */
-    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setColumnOrRow(final SpreadsheetSelection columnOrRow) {
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setColumnOrRow(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow) {
         Objects.requireNonNull(columnOrRow, "columnOrRows");
 
         return this.columnOrRow.equals(columnOrRow) ?
@@ -479,7 +479,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                 );
     }
 
-    private final SpreadsheetSelection columnOrRow;
+    private final SpreadsheetColumnOrRowReferenceOrRange columnOrRow;
 
     // comparatorNameAndDirections......................................................................................
 
