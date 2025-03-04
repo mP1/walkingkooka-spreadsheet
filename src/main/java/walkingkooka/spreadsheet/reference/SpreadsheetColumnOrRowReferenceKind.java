@@ -150,22 +150,22 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     /**
      * Returns the first ABSOLUTE column or row.
      */
-    public abstract SpreadsheetSelection firstAbsolute();
+    public abstract SpreadsheetColumnOrRowReferenceOrRange firstAbsolute();
 
     /**
      * Returns the first RELATIVE column or row.
      */
-    public abstract SpreadsheetSelection firstRelative();
+    public abstract SpreadsheetColumnOrRowReferenceOrRange firstRelative();
 
     /**
      * Returns the last ABSOLUTE column or row.
      */
-    public abstract SpreadsheetSelection lastAbsolute();
+    public abstract SpreadsheetColumnOrRowReferenceOrRange lastAbsolute();
 
     /**
      * Returns the last RELATIVE column or row.
      */
-    public abstract SpreadsheetSelection lastRelative();
+    public abstract SpreadsheetColumnOrRowReferenceOrRange lastRelative();
 
     /**
      * Getter that returns the value for the column or row.
@@ -175,18 +175,18 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     /**
      * Creates a column or row for example a value of 0 returns the first column for {@link #COLUMN}.
      */
-    public abstract SpreadsheetSelection setValue(final SpreadsheetReferenceKind kind,
-                                                  final int value);
+    public abstract SpreadsheetColumnOrRowReferenceOrRange setValue(final SpreadsheetReferenceKind kind,
+                                                                    final int value);
 
     /**
      * Parses the text into a {@link SpreadsheetColumnReference} for {@link #COLUMN} and {@link SpreadsheetRowReference} for {@link #ROW}.
      */
-    public abstract SpreadsheetSelection parse(final String text);
+    public abstract SpreadsheetColumnOrRowReferenceOrRange parse(final String text);
 
     /**
      * Parses the given text as a column or row.
      */
-    public static SpreadsheetSelection parseColumnOrRow(final String text) {
+    public static SpreadsheetColumnOrRowReferenceOrRange parseColumnOrRow(final String text) {
         return SpreadsheetSelection.parseColumnOrRow(text);
     }
 
@@ -198,12 +198,12 @@ public enum SpreadsheetColumnOrRowReferenceKind {
     /**
      * Extracts either the column or row reference from the given {@link SpreadsheetSelection}.
      */
-    public abstract SpreadsheetSelection columnOrRow(final SpreadsheetSelection selection);
+    public abstract SpreadsheetColumnOrRowReferenceOrRange columnOrRow(final SpreadsheetSelection selection);
 
     /**
      * Extracts either the column or row range reference from the given {@link SpreadsheetSelection}.
      */
-    public abstract SpreadsheetSelection columnOrRowRange(final SpreadsheetSelection selection);
+    public abstract SpreadsheetColumnOrRowReferenceOrRange columnOrRowRange(final SpreadsheetSelection selection);
 
     /**
      * Returns the width or height for the given {@link SpreadsheetSelection}. For {@link #COLUMN} it will return the width.
