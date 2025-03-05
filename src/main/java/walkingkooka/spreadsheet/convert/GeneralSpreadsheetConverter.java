@@ -118,8 +118,10 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         // LocalDate ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> dateTo = mapping(
                 Converters.localDateToNumber()
-                        .to(Integer.class, Converters.numberToBoolean())
-                        .cast(SpreadsheetConverterContext.class),
+                        .to(
+                                Integer.class,
+                                Converters.numberToBoolean()
+                        ).cast(SpreadsheetConverterContext.class),
                 Converters.simple(), // date -> date
                 Converters.localDateToLocalDateTime(),
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
@@ -133,8 +135,10 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         // LocalDateTime ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> dateTimeTo = mapping(
                 Converters.localDateTimeToNumber()
-                        .to(Integer.class, Converters.numberToBoolean())
-                        .cast(SpreadsheetConverterContext.class),
+                        .to(
+                                Integer.class,
+                                Converters.numberToBoolean()
+                        ).cast(SpreadsheetConverterContext.class),
                 Converters.localDateTimeToLocalDate(),
                 Converters.simple(), // dateTime -> dateTime
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
@@ -185,7 +189,10 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         // String|Character ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> stringTo = GeneralSpreadsheetConverterMapping.with(
                 characterOrStringTo(
-                        toBoolean(String.class, TRUE_TO_STRING)
+                        toBoolean(
+                                String.class,
+                                TRUE_TO_STRING
+                        )
                 ), // string -> boolean
                 characterOrStringTo(
                         SpreadsheetConverters.stringToDate(dateParser)
@@ -217,7 +224,10 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
         // LocalTime ->
         final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> timeTo = mapping(
-                toBoolean(LocalTime.class, TRUE_TO_TIME),
+                toBoolean(
+                        LocalTime.class,
+                        TRUE_TO_TIME
+                ),
                 null, // time -> date invalid
                 Converters.localTimeToLocalDateTime(),
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
@@ -334,31 +344,50 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
     public boolean canConvert(final Object value,
                               final Class<?> targetType,
                               final SpreadsheetConverterContext context) {
-        return isNonNullAndValueIsInstanceofType(value, targetType) ||
-                isSupportedValueAndType(value, targetType) ||
-                StringToSpreadsheetSelectionConverter.INSTANCE.canConvert(value, targetType, context);
+        return isNonNullAndValueIsInstanceofType(
+                value,
+                targetType
+        ) ||
+                isSupportedValueAndType(
+                        value,
+                        targetType
+                ) ||
+                StringToSpreadsheetSelectionConverter.INSTANCE.canConvert(
+                        value,
+                        targetType,
+                        context
+                );
     }
 
     private static boolean isNonNullAndValueIsInstanceofType(final Object value,
                                                              final Class<?> targetType) {
-        return null != value && value.getClass() == targetType;
+        return null != value &&
+                value.getClass() == targetType;
     }
 
     private static boolean isSupportedValueAndType(final Object value,
                                                    final Class<?> targetType) {
         return isSupportedType(targetType) &&
-                false == isDateToTime(value, targetType) &&
-                false == isTimeToDate(value, targetType);
+                false == isDateToTime(
+                        value,
+                        targetType
+                ) &&
+                false == isTimeToDate(
+                        value,
+                        targetType
+                );
     }
 
     private static boolean isDateToTime(final Object value,
                                         final Class<?> targetType) {
-        return value instanceof LocalTime && targetType == LocalDate.class;
+        return value instanceof LocalTime &&
+                targetType == LocalDate.class;
     }
 
     private static boolean isTimeToDate(final Object value,
                                         final Class<?> targetType) {
-        return value instanceof LocalTime && targetType == LocalDate.class;
+        return value instanceof LocalTime &&
+                targetType == LocalDate.class;
     }
 
     private static boolean isSupportedType(final Class<?> type) {
@@ -381,11 +410,24 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         // special case if targetType = Object just return value.
         return this.canConvert(value, targetType, context) ?
                 Object.class == targetType ?
-                        this.successfulConversion(value, targetType) :
+                        this.successfulConversion(
+                                value,
+                                targetType
+                        ) :
                         null == value ?
-                                this.convertNull(targetType, context) :
-                                this.convertNonNull(value, targetType, context) :
-                this.failConversion(value, targetType);
+                                this.convertNull(
+                                        targetType,
+                                        context
+                                ) :
+                                this.convertNonNull(
+                                        value,
+                                        targetType,
+                                        context
+                                ) :
+                this.failConversion(
+                        value,
+                        targetType
+                );
     }
 
     private <T> Either<T, String> convertNull(final Class<T> targetType,
@@ -393,7 +435,11 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
         return GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor.converter(
                 this.booleanConverter,
                 targetType
-        ).convert(null, targetType, context);
+        ).convert(
+                null,
+                targetType,
+                context
+        );
     }
 
     private final GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>> booleanConverter;
@@ -402,7 +448,10 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                                                  final Class<T> targetType,
                                                  final SpreadsheetConverterContext context) {
         return value.getClass() == targetType ?
-                this.successfulConversion(value, targetType) :
+                this.successfulConversion(
+                        value,
+                        targetType
+                ) :
                 convertNonNull0(
                         value instanceof HasText && false == value instanceof SpreadsheetSelection ?
                                 ((HasText) value).text() :
@@ -421,8 +470,15 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
                 this.mapping
         );
         return null != converter ?
-                converter.convert(value, targetType, context) :
-                this.failConversion(value, targetType);
+                converter.convert(
+                        value,
+                        targetType,
+                        context
+                ) :
+                this.failConversion(
+                        value,
+                        targetType
+                );
     }
 
     private final GeneralSpreadsheetConverterMapping<GeneralSpreadsheetConverterMapping<Converter<SpreadsheetConverterContext>>> mapping;
