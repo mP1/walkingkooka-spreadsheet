@@ -520,8 +520,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToTime() {
         this.convertAndCheck(
                 null,
-                LocalTime.class,
-                TIME_FALSE
+                LocalTime.class
         );
     }
 
@@ -529,7 +528,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToExpressionNumber() {
         this.convertAndCheck(
                 null,
-                ExpressionNumber.class
+                ExpressionNumber.class,
+                EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
@@ -537,7 +537,8 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToNumber() {
         this.convertAndCheck(
                 null,
-                Number.class
+                Number.class,
+                EXPRESSION_NUMBER_KIND.zero()
         );
     }
 
@@ -545,8 +546,7 @@ public final class GeneralSpreadsheetConverterTest extends GeneralSpreadsheetCon
     public void testConvertNullToString() {
         this.convertAndCheck(
                 null,
-                String.class,
-                "falsetext-literal-123"
+                String.class
         );
     }
 

@@ -432,13 +432,12 @@ final class GeneralSpreadsheetConverter implements Converter<SpreadsheetConverte
 
     private <T> Either<T, String> convertNull(final Class<T> targetType,
                                               final SpreadsheetConverterContext context) {
-        return GeneralSpreadsheetConverterSpreadsheetValueTypeVisitor.converter(
-                this.booleanConverter,
-                targetType
-        ).convert(
-                null,
-                targetType,
-                context
+        return Either.left(
+                (T)
+                        GeneralSpreadsheetConverterNullSpreadsheetValueTypeVisitor.convertNull(
+                        targetType,
+                        context
+                )
         );
     }
 
