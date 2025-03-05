@@ -1774,6 +1774,42 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellWithLabels() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final SpreadsheetCell savedCell = context.storeRepository()
+                .cells()
+                .save(a1.setFormula(SpreadsheetFormula.EMPTY));
+
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(a1);
+        engine.saveLabel(
+                mapping,
+                context
+        );
+
+        this.loadCellAndCheck(
+                engine,
+                a1,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(savedCell)
+                        )
+                ).setLabels(
+                        Sets.of(mapping)
+                ).setColumnWidths(columnWidths("A")
+                ).setRowHeights(rowHeights("1")
+                ).setColumnCount(OptionalInt.of(1)
+                ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
     public void testLoadMultipleCellRangesWithCellRange() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
