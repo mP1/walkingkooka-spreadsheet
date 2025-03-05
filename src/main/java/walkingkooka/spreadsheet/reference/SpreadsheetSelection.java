@@ -63,6 +63,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -1235,6 +1236,11 @@ public abstract class SpreadsheetSelection implements HasText,
             }
         }
     }
+
+    /**
+     * Constant used by several scalar {@link SpreadsheetSelection}.
+     */
+    final static Set<SpreadsheetViewportAnchor> NONE_ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
 
     /**
      * Returns the possible or allowed {@link SpreadsheetViewportAnchor} for each type of {@link SpreadsheetSelection}.

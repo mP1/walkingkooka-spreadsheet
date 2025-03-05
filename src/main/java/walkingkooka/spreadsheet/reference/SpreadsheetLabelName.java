@@ -29,7 +29,6 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
-import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -214,10 +213,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
 
     @Override
     Set<SpreadsheetViewportAnchor> anchors() {
-        return ANCHORS;
+        return NONE_ANCHORS;
     }
-
-    private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
 
     // SpreadsheetSelectionVisitor......................................................................................
 
