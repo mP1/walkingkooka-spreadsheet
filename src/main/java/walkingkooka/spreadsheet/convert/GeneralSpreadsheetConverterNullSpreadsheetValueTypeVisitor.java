@@ -197,6 +197,7 @@ final class GeneralSpreadsheetConverterNullSpreadsheetValueTypeVisitor extends S
 
     private Object value;
 
+    @Override
     public String toString() {
         return String.valueOf(this.value);
     }
