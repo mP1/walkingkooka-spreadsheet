@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 
-import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -159,10 +158,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
 
     @Override
     Set<SpreadsheetViewportAnchor> anchors() {
-        return ANCHORS;
+        return NONE_ANCHORS;
     }
-
-    private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
 
     // add..............................................................................................................
 
