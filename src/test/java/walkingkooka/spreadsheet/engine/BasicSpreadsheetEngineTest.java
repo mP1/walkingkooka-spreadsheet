@@ -13738,6 +13738,81 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testFindCellsWithLabels() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3")
+                        )
+                ),
+                context
+        );
+
+        final SpreadsheetLabelMapping mapping1 = LABEL.setLabelMappingReference(a2);
+        engine.saveLabel(
+                mapping1,
+                context
+        );
+
+        final SpreadsheetLabelMapping mapping2 = SpreadsheetSelection.labelName("Label222")
+                .setLabelMappingReference(b2);
+
+        engine.saveLabel(
+                mapping2,
+                context
+        );
+
+        final SpreadsheetLabelMapping mapping3 = SpreadsheetSelection.labelName("Label333")
+                .setLabelMappingReference(c2);
+
+        engine.saveLabel(
+                mapping3,
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A1:C2"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                20, // count
+                SpreadsheetValueType.ANY,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setLabels(
+                                Sets.of(
+                                        mapping1,
+                                        mapping2,
+                                        mapping3
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(2))
+        );
+    }
+
+    @Test
     public void testFindCellsWithCount() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
