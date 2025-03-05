@@ -217,7 +217,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
         return ANCHORS;
     }
 
-    private final Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
+    private final static Set<SpreadsheetViewportAnchor> ANCHORS = EnumSet.of(SpreadsheetViewportAnchor.NONE);
 
     // SpreadsheetSelectionVisitor......................................................................................
 
