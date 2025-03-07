@@ -65,18 +65,22 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     /**
      * Add a single value to the given {@link SpreadsheetCellRangeReference}. If the mapping exists nothing happens.
      */
-    void addValue(final SpreadsheetCellRangeReference range, final V value);
+    void addValue(final SpreadsheetCellRangeReference range,
+                  final V value);
 
     /**
      * If the old value exists replace it with the new value. If old does not exist the replace fails.
      */
     @SuppressWarnings("UnusedReturnValue")
-    boolean replaceValue(final SpreadsheetCellRangeReference range, final V newValue, final V oldValue);
+    boolean replaceValue(final SpreadsheetCellRangeReference range,
+                         final V newValue,
+                         final V oldValue);
 
     /**
      * Removes a single value if it exists for the given {@link SpreadsheetCellRangeReference}
      */
-    void removeValue(final SpreadsheetCellRangeReference range, final V value);
+    void removeValue(final SpreadsheetCellRangeReference range,
+                     final V value);
 
     /**
      * Returns all the {@link SpreadsheetCellRangeReference ranges} containing the given value.
