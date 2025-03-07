@@ -162,10 +162,10 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
         final Set<SpreadsheetCellReference> previous = this.referenceToCells.get(reference);
         if (null == previous) {
-            cells.forEach(r -> this.addCellNonNull(
+            cells.forEach(cell -> this.addCellNonNull(
                             ReferenceAndSpreadsheetCellReference.with(
                                     reference,
-                                    r
+                                    cell
                             )
                     )
             );
@@ -175,21 +175,21 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
             cells.stream()
                     .map(SpreadsheetCellReference::toRelative)
-                    .filter(r -> !copy.contains(r))
-                    .forEach(r -> this.addCellNonNull(
+                    .filter(cell -> false == copy.contains(cell))
+                    .forEach(cell -> this.addCellNonNull(
                                     ReferenceAndSpreadsheetCellReference.with(
                                             reference,
-                                            r
+                                            cell
                                     )
                             )
                     );
 
             copy.stream()
-                    .filter(r -> !cells.contains(r))
-                    .forEach(r -> this.removeCellNonNull(
+                    .filter(cell -> false == cells.contains(cell))
+                    .forEach(cell -> this.removeCellNonNull(
                                     ReferenceAndSpreadsheetCellReference.with(
                                             reference,
-                                            r
+                                            cell
                                     )
                             )
                     );
