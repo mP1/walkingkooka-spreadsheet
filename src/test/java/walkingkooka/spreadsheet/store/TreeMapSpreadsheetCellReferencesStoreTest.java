@@ -329,6 +329,57 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         );
     }
 
+    // SpreadsheetEngine................................................................................................
+
+    @Test
+    public void testAddValuesAndRemoveReferencesWithCellAndCount() {
+        final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(b2, a1)
+        );
+
+        store.addCell(
+                ReferenceAndSpreadsheetCellReference.with(c3, a1)
+        );
+
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                3, // count
+                b2, c3
+        );
+
+        store.delete(a1);
+
+        this.countAndCheck(
+                store,
+                2
+        );
+
+        store.removeReferencesWithCell(a1);
+
+        this.findReferencesWithCellAndCheck(
+                store,
+                a1,
+                0, // offset
+                3 // count
+        );
+
+        this.countAndCheck(
+                store,
+                0
+        );
+    }
+
+    // SpreadsheetCellReferencesStoreTesting............................................................................
+
     @Override
     public TreeMapSpreadsheetCellReferencesStore createStore() {
         return TreeMapSpreadsheetCellReferencesStore.empty();
