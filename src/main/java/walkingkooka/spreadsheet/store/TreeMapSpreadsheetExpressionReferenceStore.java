@@ -140,12 +140,17 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
         return this.referenceToCells.entrySet()
                 .stream()
-                .filter(e -> comparable(e.getKey()).compareTo(from) >= 0 && comparable(e.getKey()).compareTo(to) <= 0)
-                .map(Map.Entry::getValue)
+                .filter(e -> castToComparable(
+                        e.getKey()
+                ).compareTo(from) >= 0 &&
+                        castToComparable(
+                                e.getKey()
+                        ).compareTo(to) <= 0
+                ).map(Map.Entry::getValue)
                 .collect(Collectors.toCollection(Lists::array));
     }
 
-    private Comparable<T> comparable(final T cellOrLabel) {
+    private Comparable<T> castToComparable(final T cellOrLabel) {
         return Cast.to(cellOrLabel);
     }
 
@@ -157,7 +162,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
         final Set<SpreadsheetCellReference> previous = this.referenceToCells.get(reference);
         if (null == previous) {
-            cells.forEach(r -> this.addCell0(
+            cells.forEach(r -> this.addCellNonNull(
                             ReferenceAndSpreadsheetCellReference.with(
                                     reference,
                                     r
@@ -171,7 +176,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
             cells.stream()
                     .map(SpreadsheetCellReference::toRelative)
                     .filter(r -> !copy.contains(r))
-                    .forEach(r -> this.addCell0(
+                    .forEach(r -> this.addCellNonNull(
                                     ReferenceAndSpreadsheetCellReference.with(
                                             reference,
                                             r
@@ -181,7 +186,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
             copy.stream()
                     .filter(r -> !cells.contains(r))
-                    .forEach(r -> this.removeCell0(
+                    .forEach(r -> this.removeCellNonNull(
                                     ReferenceAndSpreadsheetCellReference.with(
                                             reference,
                                             r
@@ -193,12 +198,12 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     @Override
     public void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
-        this.addCell0(
-                referenceAndSpreadsheetCellReferenceCheck(referenceAndCell)
+        this.addCellNonNull(
+                Objects.requireNonNull(referenceAndCell, "referenceAndCell")
         );
     }
 
-    private void addCell0(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
+    private void addCellNonNull(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
         final T reference = referenceAndCell.reference();
         final SpreadsheetCellReference cell = referenceAndCell.cell()
                 .toRelative();
@@ -238,12 +243,12 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
 
     @Override
     public void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
-        this.removeCell0(
-                referenceAndSpreadsheetCellReferenceCheck(referenceAndCell)
+        this.removeCellNonNull(
+                Objects.requireNonNull(referenceAndCell, "referenceAndCell")
         );
     }
 
-    private void removeCell0(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
+    private void removeCellNonNull(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
         final T reference = referenceAndCell.reference();
         final SpreadsheetCellReference cell = referenceAndCell.cell();
 
@@ -330,7 +335,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         Objects.requireNonNull(cell, "cell");
 
         for(final T reference : new TreeSet<>(this.referenceToCells.keySet())) {
-            this.removeCell0(
+            this.removeCellNonNull(
                 ReferenceAndSpreadsheetCellReference.with(
                         reference,
                         cell
@@ -340,10 +345,6 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     // helpers..........................................................................................................
-
-    private ReferenceAndSpreadsheetCellReference<T> referenceAndSpreadsheetCellReferenceCheck(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
-        return Objects.requireNonNull(referenceAndCell, "referenceAndCell");
-    }
 
     /**
      * Something like labels and the cell references expressions containing the label.
