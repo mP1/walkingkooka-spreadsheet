@@ -22,6 +22,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 
 import java.util.Set;
 
+/**
+ * A {@link walkingkooka.store.Store} that holds external cell references for cells.
+ * This is used to find cells that need to be recomputed when the external reference changes. In the example below
+ * A1 would need to be recomputed when either A2 or A3 change values.
+ * <pre>
+ * A1=A2+A3+1 // A1=A2, A3
+ * </pre>
+ */
 public interface SpreadsheetCellReferencesStore extends SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> {
 
     /**
