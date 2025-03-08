@@ -40,7 +40,14 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
     @Test
     default void testFormatNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.createFormatter().format(this.value(), null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createFormatter()
+                        .format(
+                                this.value(),
+                                null
+                        )
+        );
     }
 
     // helper...........................................................................................................
