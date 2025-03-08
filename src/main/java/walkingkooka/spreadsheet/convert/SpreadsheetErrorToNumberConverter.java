@@ -46,7 +46,10 @@ final class SpreadsheetErrorToNumberConverter extends SpreadsheetErrorConverter<
     boolean canConvertSpreadsheetError(final SpreadsheetError error,
                                        final Class<?> type) {
         return ExpressionNumber.isClass(type) &&
-                error.isMissingCell();
+                (
+                        error.isMissingCell() ||
+                                error.kind() == SpreadsheetErrorKind.NULL
+                );
     }
 
     @Override

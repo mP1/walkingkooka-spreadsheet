@@ -92,6 +92,25 @@ public final class SpreadsheetErrorToNumberConverterTest implements ConverterTes
         );
     }
 
+    @Test
+    public void testConvertErrorNullToExpressionNumber() {
+        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.NULL;
+
+        this.convertAndCheck(
+                kind.setMessage("Message will be ignored !!!"),
+                ExpressionNumber.class,
+                EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testConvertErrorNullToStringFails() {
+        this.convertFails(
+                SpreadsheetErrorKind.NULL.setMessageAndValue("Message will be ignored !!!", null),
+                String.class
+        );
+    }
+
     @Override
     public SpreadsheetErrorToNumberConverter createConverter() {
         return SpreadsheetErrorToNumberConverter.INSTANCE;
