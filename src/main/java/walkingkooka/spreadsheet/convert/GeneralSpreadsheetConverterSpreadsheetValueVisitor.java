@@ -184,6 +184,11 @@ final class GeneralSpreadsheetConverterSpreadsheetValueVisitor extends Spreadshe
         // fail!
     }
 
+    @Override
+    protected void visitNull() {
+        // fail
+    }
+
     /**
      * The target type to convert the value to.
      */

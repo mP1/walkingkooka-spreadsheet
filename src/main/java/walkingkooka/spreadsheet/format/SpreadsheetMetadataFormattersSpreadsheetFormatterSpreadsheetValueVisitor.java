@@ -170,6 +170,11 @@ final class SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVis
         this.number();
     }
 
+    @Override
+    protected void visitNull() {
+        this.text();
+    }
+
     private void number() {
         this.formatter = this.automaticSpreadsheetFormatter.number;
     }

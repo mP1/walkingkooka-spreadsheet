@@ -193,6 +193,11 @@ final class UnformattedNumberSpreadsheetConverterSpreadsheetValueVisitor extends
         this.converted = value;
     }
 
+    @Override
+    protected void visitNull() {
+        this.converted = null;
+    }
+
     private Object converted;
 
     @Override

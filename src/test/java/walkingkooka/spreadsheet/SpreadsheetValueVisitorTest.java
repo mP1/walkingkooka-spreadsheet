@@ -933,6 +933,34 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
         private final static long serialVersionUID = 1L;
     }
 
+    @Test
+    public void testAcceptWithNull() {
+        final StringBuilder b = new StringBuilder();
+        final Object value = null;
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitNull() {
+                b.append("3");
+            }
+        }.accept(value);
+
+        this.checkEquals("132", b.toString());
+    }
+
     @Override
     public void testCheckToStringOverridden() {
         // using FakeSpreadsheetValueVisitor disable test

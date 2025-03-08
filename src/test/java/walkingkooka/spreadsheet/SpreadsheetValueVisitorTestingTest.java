@@ -279,7 +279,23 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
 
     @Override
     public SpreadsheetValueVisitor createVisitor() {
-        return new FakeSpreadsheetValueVisitor();
+        return new FakeSpreadsheetValueVisitor() {
+
+            @Override
+            protected Visiting startVisit(final Object value) {
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object value) {
+                // nop
+            }
+
+            @Override
+            protected void visitNull() {
+                // nop
+            }
+        };
     }
 
     @Override
