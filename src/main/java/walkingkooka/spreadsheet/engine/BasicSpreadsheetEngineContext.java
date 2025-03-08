@@ -306,29 +306,27 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 .formula();
         final Optional<Object> value = formula.value();
 
-        return value.isPresent() ?
-                this.applyConditionalRules(
-                        cell.setFormattedValue(
-                                Optional.of(
-                                        this.formatValue(
-                                                        value,
-                                                        formatter.orElse(
-                                                                this.spreadsheetMetadata()
-                                                                        .spreadsheetFormatter(
-                                                                                this.spreadsheetProvider, // SpreadsheetFormatterProvider,
-                                                                                this // ProviderContext
-                                                                        )
-                                                        )
+        return this.applyConditionalRules(
+                cell.setFormattedValue(
+                        Optional.of(
+                                this.formatValue(
+                                                value,
+                                                formatter.orElse(
+                                                        this.spreadsheetMetadata()
+                                                                .spreadsheetFormatter(
+                                                                        this.spreadsheetProvider, // SpreadsheetFormatterProvider,
+                                                                        this // ProviderContext
+                                                                )
                                                 )
-                                                .map(
-                                                        f -> cell.style()
-                                                                .replace(f)
-                                                )
-                                                .orElse(TextNode.EMPTY_TEXT)
-                                )
+                                        )
+                                        .map(
+                                                f -> cell.style()
+                                                        .replace(f)
+                                        )
+                                        .orElse(TextNode.EMPTY_TEXT)
                         )
-                ) :
-                cell;
+                )
+        );
     }
 
     /**
