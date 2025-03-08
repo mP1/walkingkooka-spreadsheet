@@ -254,13 +254,23 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                 NullPointerException.class,
                 () -> this.createContext()
                         .formatValue(
-                                "1",
+                                Optional.of("1"),
                                 null
                         )
         );
     }
 
     default void formatValueAndCheck(final Object value,
+                                     final SpreadsheetFormatter formatter,
+                                     final SpreadsheetText expected) {
+        this.formatValueAndCheck(
+                Optional.of(value),
+                formatter,
+                expected
+        );
+    }
+
+    default void formatValueAndCheck(final Optional<Object> value,
                                      final SpreadsheetFormatter formatter,
                                      final SpreadsheetText expected) {
         this.formatValueAndCheck(
@@ -274,6 +284,16 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final SpreadsheetFormatter formatter,
                                      final TextNode expected) {
         this.formatValueAndCheck(
+                Optional.of(value),
+                formatter,
+                expected
+        );
+    }
+
+    default void formatValueAndCheck(final Optional<Object> value,
+                                     final SpreadsheetFormatter formatter,
+                                     final TextNode expected) {
+        this.formatValueAndCheck(
                 value,
                 formatter,
                 Optional.of(expected)
@@ -281,6 +301,16 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void formatValueAndCheck(final Object value,
+                                     final SpreadsheetFormatter formatter,
+                                     final Optional<TextNode> expected) {
+        this.formatValueAndCheck(
+                Optional.of(value),
+                formatter,
+                expected
+        );
+    }
+
+    default void formatValueAndCheck(final Optional<Object> value,
                                      final SpreadsheetFormatter formatter,
                                      final Optional<TextNode> expected) {
         this.formatValueAndCheck(
@@ -297,6 +327,18 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final TextNode expected) {
         this.formatValueAndCheck(
                 context,
+                Optional.of(value),
+                formatter,
+                expected
+        );
+    }
+
+    default void formatValueAndCheck(final SpreadsheetEngineContext context,
+                                     final Optional<Object> value,
+                                     final SpreadsheetFormatter formatter,
+                                     final TextNode expected) {
+        this.formatValueAndCheck(
+                context,
                 value,
                 formatter,
                 Optional.of(expected)
@@ -304,12 +346,15 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void formatValueAndCheck(final SpreadsheetEngineContext context,
-                                     final Object value,
+                                     final Optional<Object> value,
                                      final SpreadsheetFormatter formatter,
                                      final Optional<TextNode> expected) {
         this.checkEquals(
                 expected,
-                context.formatValue(value, formatter),
+                context.formatValue(
+                        value,
+                        formatter
+                ),
                 () -> "formatValue " + CharSequences.quoteIfChars(value) + " " + formatter
         );
     }

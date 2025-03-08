@@ -37,6 +37,16 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
                                 final SpreadsheetFormatterContext context) {
         this.formatAndCheck(
                 formatter,
+                Optional.of(value),
+                context
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Optional<Object> value,
+                                final SpreadsheetFormatterContext context) {
+        this.formatAndCheck(
+                formatter,
                 value,
                 context,
                 Optional.empty()
@@ -47,14 +57,40 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
                                 final String text) {
-        this.formatAndCheck(formatter,
+        this.formatAndCheck(
+                formatter,
+                Optional.of(value),
+                context,
+                text
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Optional<Object> value,
+                                final SpreadsheetFormatterContext context,
+                                final String text) {
+        this.formatAndCheck(
+                formatter,
                 value,
                 context,
-                SpreadsheetText.with(text));
+                SpreadsheetText.with(text)
+        );
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
+                                final SpreadsheetFormatterContext context,
+                                final SpreadsheetText text) {
+        this.formatAndCheck(
+                formatter,
+                Optional.of(value),
+                context,
+                text
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Optional<Object> value,
                                 final SpreadsheetFormatterContext context,
                                 final SpreadsheetText text) {
         this.formatAndCheck(
@@ -71,6 +107,18 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
                                 final TextNode text) {
         this.formatAndCheck(
                 formatter,
+                Optional.of(value),
+                context,
+                text
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Optional<Object> value,
+                                final SpreadsheetFormatterContext context,
+                                final TextNode text) {
+        this.formatAndCheck(
+                formatter,
                 value,
                 context,
                 Optional.of(text)
@@ -79,6 +127,18 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting {
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
+                                final SpreadsheetFormatterContext context,
+                                final Optional<TextNode> text) {
+        this.formatAndCheck(
+                formatter,
+                Optional.of(value),
+                context,
+                text
+        );
+    }
+
+    default void formatAndCheck(final SpreadsheetFormatter formatter,
+                                final Optional<Object> value,
                                 final SpreadsheetFormatterContext context,
                                 final Optional<TextNode> text) {
         this.checkEquals(

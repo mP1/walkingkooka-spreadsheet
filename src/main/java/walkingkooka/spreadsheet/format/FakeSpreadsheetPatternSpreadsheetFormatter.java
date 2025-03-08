@@ -31,7 +31,7 @@ public class FakeSpreadsheetPatternSpreadsheetFormatter extends FakeSpreadsheetF
     }
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         throw new UnsupportedOperationException();
     }

@@ -129,7 +129,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     // format...........................................................................................................
 
     @Override
-    public Optional<TextNode> format(final Object value) {
+    public Optional<TextNode> format(final Optional<Object> value) {
         return this.formatter.format(
                 value,
                 this

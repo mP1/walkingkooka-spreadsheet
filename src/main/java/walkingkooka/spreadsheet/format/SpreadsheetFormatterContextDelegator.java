@@ -54,13 +54,13 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     }
 
     @Override
-    default Optional<TextNode> format(final Object value) {
+    default Optional<TextNode> format(final Optional<Object> value) {
         return this.spreadsheetFormatterContext()
                 .format(value);
     }
 
     @Override
-    default TextNode formatOrEmptyText(final Object value) {
+    default TextNode formatOrEmptyText(final Optional<Object> value) {
         return this.spreadsheetFormatterContext()
                 .formatOrEmptyText(value);
     }

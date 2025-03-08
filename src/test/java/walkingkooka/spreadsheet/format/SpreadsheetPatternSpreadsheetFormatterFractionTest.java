@@ -32,6 +32,7 @@ import walkingkooka.text.cursor.parser.ParserReporterException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -158,6 +159,17 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
             fail("Expected " + ParserReporterException.class.getSimpleName() + " to be thrown with pattern " + CharSequences.quote(pattern));
         } catch (final ParserReporterException expected) {
         }
+    }
+
+    // format...........................................................................................................
+
+    @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                this.createFormatter("#/#"), // format
+                Optional.empty(), // value
+                Optional.empty() // expected
+        );
     }
 
     // fraction space. space dot space ...................................................................................
@@ -452,8 +464,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     }
 
     @Override
-    public BigDecimal value() {
-        return new BigDecimal(123);
+    public Optional<BigDecimal> value() {
+        return Optional.of(
+                new BigDecimal(123)
+        );
     }
 
     @Override

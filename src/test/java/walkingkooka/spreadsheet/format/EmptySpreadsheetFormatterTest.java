@@ -20,10 +20,20 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 
+import java.util.Optional;
+
 public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<EmptySpreadsheetFormatter> {
 
     @Test
-    public void testFormat() {
+    public void testFormatNull() {
+        this.formatAndCheck(
+                Optional.empty(),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testFormatNonNull() {
         this.formatAndCheck(
                 "Hello2"
         );

@@ -50,12 +50,20 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     default void formatAndCheck(final Object value,
                                 final SpreadsheetText expected) {
         this.formatAndCheck(
+                Optional.of(value),
+                expected
+        );
+    }
+
+    default void formatAndCheck(final Optional<Object> value,
+                                final SpreadsheetText expected) {
+        this.formatAndCheck(
                 value,
                 expected.toTextNode()
         );
     }
 
-    default void formatAndCheck(final Object value,
+    default void formatAndCheck(final Optional<Object> value,
                                 final TextNode expected) {
         this.formatAndCheck(
                 value,
@@ -63,7 +71,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
         );
     }
 
-    default void formatAndCheck(final Object value,
+    default void formatAndCheck(final Optional<Object> value,
                                 final Optional<TextNode> expected) {
         this.formatAndCheck(
                 this.createContext(),
@@ -73,7 +81,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     }
 
     default void formatAndCheck(final SpreadsheetFormatterContext context,
-                                final Object value,
+                                final Optional<Object> value,
                                 final Optional<TextNode> expected) {
         this.checkEquals(expected,
                 context.format(value),

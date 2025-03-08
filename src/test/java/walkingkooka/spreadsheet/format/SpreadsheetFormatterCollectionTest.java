@@ -65,6 +65,14 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
         this.formatAndCheck(VALUE2, TEXT2);
     }
 
+    @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                Optional.empty(),
+                Optional.empty()
+        );
+    }
+
     @Override
     public SpreadsheetFormatterCollection createFormatter() {
         return Cast.to(SpreadsheetFormatterCollection.with(Lists.of(this.formatter1(), this.formatter2())));
@@ -78,17 +86,18 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
         return this.formatter(VALUE2, TEXT2);
     }
 
-    private SpreadsheetFormatter formatter(final Object value, final String text) {
+    private SpreadsheetFormatter formatter(final Object value,
+                                           final String text) {
         return new FakeSpreadsheetFormatter() {
 
             @Override
-            public Optional<TextNode> format(final Object v,
+            public Optional<TextNode> format(final Optional<Object> v,
                                              final SpreadsheetFormatterContext context) {
                 Objects.requireNonNull(v, "value");
                 Objects.requireNonNull(context, "context");
 
                 return Optional.ofNullable(
-                        v.equals(value) ?
+                                value.equals(v.orElse(null)) ?
                                 SpreadsheetText.with(text)
                                         .toTextNode()
                                 :

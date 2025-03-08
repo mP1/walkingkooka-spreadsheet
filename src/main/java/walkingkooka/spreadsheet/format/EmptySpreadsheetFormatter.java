@@ -38,7 +38,8 @@ final class EmptySpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public Optional<TextNode> format(final Object value, final SpreadsheetFormatterContext context) {
+    public Optional<TextNode> format(final Optional<Object> value,
+                                     final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 

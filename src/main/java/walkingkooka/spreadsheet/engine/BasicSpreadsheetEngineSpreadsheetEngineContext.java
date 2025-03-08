@@ -100,7 +100,7 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     private final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
 
     @Override
-    public Optional<TextNode> formatValue(final Object value,
+    public Optional<TextNode> formatValue(final Optional<Object> value,
                                           final SpreadsheetFormatter formatter) {
         return this.spreadsheetEngineContext.formatValue(
                 value,

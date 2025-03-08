@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.parser.FractionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken;
@@ -67,15 +68,28 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     }
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
+        final Either<BigDecimal, String> converted = context.convert(
+                value.orElse(null),
+                BigDecimal.class
+        );
+        final BigDecimal bigDecimal = converted.isLeft() ?
+                converted.leftValue() :
+                null;
+
         return Optional.ofNullable(
-                context.convert(value, BigDecimal.class)
-                        .mapLeft(v -> SpreadsheetText.with(this.format1(v, context)))
-                        .orElseLeft(null)
+                null != bigDecimal ?
+                        SpreadsheetText.with(
+                                this.format1(
+                                        bigDecimal,
+                                        context
+                                )
+                        ) :
+                        null
         );
     }
 

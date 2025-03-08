@@ -63,14 +63,17 @@ final class SpreadsheetPatternSpreadsheetFormatterDateTime implements Spreadshee
     private final Class<? extends Temporal> valueType;
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
-        final Either<LocalDateTime, String> valueAsDateTime = value.getClass() == this.valueType ?
+        final Object valueOrNull = value.orElse(null);
+
+        final Either<LocalDateTime, String> valueAsDateTime = null != valueOrNull &&
+                valueOrNull.getClass() == this.valueType ?
                 context.convert(
-                        value,
+                        valueOrNull,
                         LocalDateTime.class
                 ) :
                 null;

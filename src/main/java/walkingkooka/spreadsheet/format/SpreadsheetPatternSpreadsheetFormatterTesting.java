@@ -22,7 +22,7 @@ import java.util.Optional;
 public interface SpreadsheetPatternSpreadsheetFormatterTesting extends SpreadsheetFormatterTesting {
 
     default void formatSpreadsheetTextAndCheck(final SpreadsheetPatternSpreadsheetFormatter formatter,
-                                               final Object value,
+                                               final Optional<Object> value,
                                                final SpreadsheetFormatterContext context) {
         this.formatSpreadsheetTextAndCheck(
                 formatter,
@@ -33,7 +33,7 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting extends Spreadshe
     }
 
     default void formatSpreadsheetTextAndCheck(final SpreadsheetPatternSpreadsheetFormatter formatter,
-                                               final Object value,
+                                               final Optional<Object> value,
                                                final SpreadsheetFormatterContext context,
                                                final SpreadsheetText expected) {
         this.formatSpreadsheetTextAndCheck(
@@ -45,7 +45,7 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting extends Spreadshe
     }
 
     default void formatSpreadsheetTextAndCheck(final SpreadsheetPatternSpreadsheetFormatter formatter,
-                                               final Object value,
+                                               final Optional<Object> value,
                                                final SpreadsheetFormatterContext context,
                                                final Optional<SpreadsheetText> expected) {
         this.checkEquals(

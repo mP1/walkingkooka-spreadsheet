@@ -68,7 +68,7 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
     }
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         return this.formatter.formatSpreadsheetText(
                 value,

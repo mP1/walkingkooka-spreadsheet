@@ -41,11 +41,16 @@ public final class SpreadsheetFormatterContextTest implements ClassTesting<Sprea
                 expected,
                 new FakeSpreadsheetFormatterContext() {
                     @Override
-                    public Optional<TextNode> format(final Object v) {
-                        checkEquals(value, v);
+                    public Optional<TextNode> format(final Optional<Object> v) {
+                        checkEquals(
+                                Optional.of(value),
+                                v
+                        );
                         return Optional.of(expected);
                     }
-                }.formatOrEmptyText(value)
+                }.formatOrEmptyText(
+                        Optional.of(value)
+                )
         );
     }
 

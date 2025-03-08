@@ -43,9 +43,13 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
 
     private final SpreadsheetFormatter DATE_FORMATTER = new FakeSpreadsheetFormatter() {
         @Override
-        public Optional<TextNode> format(final Object value,
+        public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
-            checkEquals(DATE, value, "value");
+            checkEquals(
+                    DATE,
+                    value.orElse(null),
+                    "value"
+            );
             return DATE_FORMATTED;
         }
     };
@@ -58,19 +62,26 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
 
     private final SpreadsheetFormatter DATE_TIME_FORMATTER = new FakeSpreadsheetFormatter() {
         @Override
-        public Optional<TextNode> format(final Object value,
+        public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
-            checkEquals(DATE_TIME, value, "value");
+            checkEquals(
+                    DATE_TIME,
+                    value.orElse(null),
+                    "value"
+            );
             return DATE_TIME_FORMATTED;
         }
     };
 
     private final SpreadsheetFormatter NUMBER_FORMATTER = new FakeSpreadsheetFormatter() {
         @Override
-        public Optional<TextNode> format(final Object value,
+        public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             return Optional.of(
-                    TextNode.text("number-formatted " + value.toString())
+                    TextNode.text(
+                            "number-formatted " +
+                                    value.orElse("")
+                    )
             );
         }
     };
@@ -83,7 +94,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
 
     private final SpreadsheetFormatter TEXT_FORMATTER = new FakeSpreadsheetFormatter() {
         @Override
-        public Optional<TextNode> format(final Object value,
+        public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
             return TEXT_FORMATTED;
         }
@@ -97,9 +108,13 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
 
     private final SpreadsheetFormatter TIME_FORMATTER = new FakeSpreadsheetFormatter() {
         @Override
-        public Optional<TextNode> format(final Object value,
+        public Optional<TextNode> format(final Optional<Object> value,
                                          final SpreadsheetFormatterContext context) {
-            checkEquals(TIME, value, "value");
+            checkEquals(
+                    TIME,
+                    value.orElse(null),
+                    "value"
+            );
             return TIME_FORMATTED;
         }
     };
@@ -190,6 +205,8 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         );
     }
 
+    // format...........................................................................................................
+
     @Test
     public void testFormatByte() {
         this.formatNumberAndCheck(
@@ -257,6 +274,14 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         this.formatAndCheck(
                 number,
                 TextNode.text("number-formatted " + number)
+        );
+    }
+
+    @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                Optional.empty(),
+                TEXT_FORMATTED
         );
     }
 

@@ -275,7 +275,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // formatValue......................................................................................................
 
     @Override
-    public Optional<TextNode> formatValue(final Object value,
+    public Optional<TextNode> formatValue(final Optional<Object> value,
                                           final SpreadsheetFormatter formatter) {
         Objects.requireNonNull(formatter, "formatter");
 
@@ -311,7 +311,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         cell.setFormattedValue(
                                 Optional.of(
                                         this.formatValue(
-                                                        value.get(),
+                                                        value,
                                                         formatter.orElse(
                                                                 this.spreadsheetMetadata()
                                                                         .spreadsheetFormatter(

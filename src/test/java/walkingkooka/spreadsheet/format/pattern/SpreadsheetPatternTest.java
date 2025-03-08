@@ -1590,7 +1590,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     .toFormat()
                     .formatter()
                     .format(
-                            number,
+                            Optional.of(number),
                             context
                     );
         }
@@ -1632,7 +1632,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     .toFormat()
                     .formatter()
                     .format(
-                            number,
+                            Optional.of(number),
                             context
                     );
         }
@@ -1679,7 +1679,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     .toFormat()
                     .formatter()
                     .format(
-                            number,
+                            Optional.of(number),
                             context
                     );
         }
@@ -1749,7 +1749,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     .toFormat()
                     .formatter()
                     .format(
-                            number,
+                            Optional.of(number),
                             context
                     );
         }

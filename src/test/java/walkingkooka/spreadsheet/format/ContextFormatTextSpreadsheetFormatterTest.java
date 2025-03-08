@@ -35,6 +35,14 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     private final static String LOCAL_DATE_TIME_STRING = "999D00Text";
 
     @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                Optional.empty(),
+                ""
+        );
+    }
+
+    @Test
     public void testFormatText() {
         final String text = "abc123";
         this.formatAndCheck(text, text);
@@ -138,23 +146,30 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
             }
 
             @Override
-            public Optional<TextNode> format(final Object value) {
-                if (value instanceof String) {
-                    return this.formattedText(value.toString());
+            public Optional<TextNode> format(final Optional<Object> value) {
+                final Object valueOrNull = value.orElse(null);
+
+                if (valueOrNull instanceof String) {
+                    return this.formattedText(valueOrNull.toString());
                 }
-                if (BIG_DECIMAL.equals(value)) {
+                if (BIG_DECIMAL.equals(valueOrNull)) {
                     return this.formattedText(BIGDECIMAL_STRING);
                 }
-                if (LOCAL_DATE_TIME.equals(value)) {
+                if (LOCAL_DATE_TIME.equals(valueOrNull)) {
                     return this.formattedText(LOCAL_DATE_TIME_STRING);
                 }
-                return this.formattedText(value.toString());
+                return this.formattedText(
+                        (String)valueOrNull
+                );
             }
 
             private Optional<TextNode> formattedText(final String text) {
                 return Optional.of(
-                        SpreadsheetText.with(text)
-                                .toTextNode()
+                        SpreadsheetText.with(
+                                null == text ?
+                                        "" :
+                                        text
+                        ).toTextNode()
                 );
             }
         };

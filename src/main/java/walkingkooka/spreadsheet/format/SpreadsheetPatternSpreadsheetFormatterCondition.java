@@ -57,10 +57,12 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
     }
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
-        return context.convert(value, BigDecimal.class)
-                .mapLeft(this.predicate::test)
+        return context.convert(
+                        value.orElse(null),
+                        BigDecimal.class
+                ).mapLeft(v -> null != v && this.predicate.test(v))
                 .orElseLeft(false) ?
                 this.formatter.formatSpreadsheetText(
                         value,

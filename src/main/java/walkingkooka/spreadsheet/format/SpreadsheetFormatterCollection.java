@@ -66,11 +66,16 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
     // SpreadsheetFormatter.............................................................................................
 
     @Override
-    public Optional<TextNode> format(final Object value,
+    public Optional<TextNode> format(final Optional<Object> value,
                                      final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
-                .flatMap(f -> optionalStream(f.format(value, context)))
-                .findFirst();
+                .flatMap(f -> optionalStream(
+                                f.format(
+                                        value,
+                                        context
+                                )
+                        )
+                ).findFirst();
     }
 
     // TODO Missing GWT JRE Optional#stream

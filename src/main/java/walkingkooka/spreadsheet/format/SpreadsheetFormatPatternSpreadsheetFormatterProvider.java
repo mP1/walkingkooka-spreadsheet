@@ -531,7 +531,9 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
         return SpreadsheetFormatterSample.with(
                 "General",
                 SpreadsheetFormatterName.GENERAL.setValueText(""),
-                context.formatOrEmptyText(value)
+                context.formatOrEmptyText(
+                        Optional.ofNullable(value)
+                )
         );
     }
 
@@ -580,7 +582,7 @@ final class SpreadsheetFormatPatternSpreadsheetFormatterProvider implements Spre
                 formatPattern.spreadsheetFormatterSelector(),
                 formatPattern.formatter()
                         .formatOrEmptyText(
-                                value,
+                                Optional.of(value),
                                 context
                         )
         );

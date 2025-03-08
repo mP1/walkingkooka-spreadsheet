@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.text.TextNode;
 
@@ -42,16 +43,25 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public Optional<TextNode> format(final Object value,
+    public Optional<TextNode> format(final Optional<Object> value,
                                      final SpreadsheetFormatterContext context) {
-        final Either<String, String> converted = this.converter.convert(value, String.class, context);
-        return converted.isLeft() ?
-                Optional.of(
-                        SpreadsheetText.with(
-                                converted.leftValue()
-                        ).toTextNode()
-                ) :
-                Optional.empty();
+        final Either<String, String> converted = this.converter.convert(
+                value.orElse(null),
+                String.class,
+                context
+        );
+        return Optional.ofNullable(
+                converted.isLeft() ?
+                        toTextNode(converted.leftValue()) :
+                       null
+        );
+    }
+
+    private TextNode toTextNode(final String value) {
+        return CharSequences.isNullOrEmpty(value) ?
+                null :
+                SpreadsheetText.with(value)
+                        .toTextNode();
     }
 
     @Override

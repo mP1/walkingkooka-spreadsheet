@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -48,30 +49,26 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     }
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
-        return this.canFormat(
-                value,
-                context
-        ) ? this.formatNumber(
-                context.convertOrFail(
-                        value,
-                        ExpressionNumber.class
-                ),
-                context
-        ) :
-                SpreadsheetFormatter.EMPTY;
-    }
-
-    private boolean canFormat(final Object value,
-                              final SpreadsheetFormatterContext context) {
-        return context.canConvert(
-                value,
+        final Either<ExpressionNumber, String> converted = context.convert(
+                value.orElse(null),
                 ExpressionNumber.class
         );
+
+        final ExpressionNumber number = converted.isLeft() ?
+                converted.leftValue() :
+                null;
+
+        return null != number ?
+                this.formatNumber(
+                        number,
+                        context
+                ) :
+                SpreadsheetFormatter.EMPTY;
     }
 
     private Optional<SpreadsheetText> formatNumber(final ExpressionNumber number,
@@ -81,10 +78,15 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
                 context
         ) ?
                 this.scientificFormatter(context)
-                        .formatSpreadsheetText(number, context) :
+                        .formatSpreadsheetText(
+                                Optional.ofNullable(number),
+                                context
+                        ) :
                 this.nonScientificFormatter(context)
-                        .formatSpreadsheetText(number, context)
-                        .map(t -> removeTrailingDecimalPlaceIfNecessary(t, context));
+                        .formatSpreadsheetText(
+                                Optional.ofNullable(number),
+                                context
+                        ).map(t -> removeTrailingDecimalPlaceIfNecessary(t, context));
     }
 
     /**
