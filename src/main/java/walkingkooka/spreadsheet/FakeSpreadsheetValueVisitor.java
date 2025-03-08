@@ -153,4 +153,9 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
     protected void visit(final Object value) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    protected void visitNull() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.visit.VisitorTesting;
 
 /**
@@ -26,6 +27,18 @@ public interface SpreadsheetValueVisitorTesting<V extends SpreadsheetValueVisito
 
     @Override
     default void testSinglePublicAcceptMethod() {
+    }
+
+    // null values should not fail.
+    @Override
+    default void testAcceptNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Test
+    default void testAcceptWithNull() {
+        this.createVisitor()
+                .accept(null);
     }
 
     @Override

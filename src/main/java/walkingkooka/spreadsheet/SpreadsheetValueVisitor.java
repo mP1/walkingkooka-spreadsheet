@@ -34,11 +34,11 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Objects;
 
 /**
  * A {@link Visitor} for all supported value types belonging to a {@link SpreadsheetCell}. If the type is not one of the
- * supported types a default {@link #visit(Object)} is invoked.
+ * supported types a default {@link #visit(Object)} is invoked. Note that null values can be passed and will not fail
+ * any guard.
  */
 public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
 
@@ -48,10 +48,12 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
 
     @Override
     public final void accept(final Object value) {
-        Objects.requireNonNull(value, "value");
-
         if (Visiting.CONTINUE == this.startVisit(value)) {
             do {
+                if (null == value) {
+                    this.visitNull();
+                    break;
+                }
                 if (value instanceof String) {
                     this.visit((String) value);
                     break;
@@ -200,6 +202,10 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
      * This is called when the value is not one of the supported types.
      */
     protected void visit(final Object value) {
+        // nop
+    }
+
+    protected void visitNull() {
         // nop
     }
 }

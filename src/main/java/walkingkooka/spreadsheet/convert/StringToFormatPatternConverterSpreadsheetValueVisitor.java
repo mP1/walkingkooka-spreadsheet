@@ -195,6 +195,11 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
         this.formatText(value);
     }
 
+    @Override
+    protected void visitNull() {
+        this.formatText("");
+    }
+
     private void formatNumber(final Number number) {
         this.formatNumber(this.context.expressionNumberKind().create(number));
     }
