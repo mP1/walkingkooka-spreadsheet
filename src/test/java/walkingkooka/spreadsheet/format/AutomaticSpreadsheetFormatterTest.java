@@ -130,7 +130,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     }
 
     @Override
-    public void testFormatNullContextFails() {
+    public void testFormatWithNullContextFails() {
         throw new UnsupportedOperationException();
     }
 
