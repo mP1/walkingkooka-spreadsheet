@@ -122,7 +122,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     // setColor.........................................................................................................
 
     @Test
-    public final void testSetColorNameNullFails() {
+    public final void testSetColorNameWithNullFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createPattern()
@@ -131,7 +131,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     }
 
     @Test
-    public final void testSetColorNumberInvalidFails() {
+    public final void testSetColorNumberWithLessThanMinFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createPattern()
@@ -140,7 +140,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     }
 
     @Test
-    public final void testSetColorNumberInvalidFails2() {
+    public final void testSetColorNumberWithGreaterThanMaxFails2() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createPattern()
