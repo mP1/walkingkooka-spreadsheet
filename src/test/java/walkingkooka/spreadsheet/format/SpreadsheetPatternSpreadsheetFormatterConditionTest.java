@@ -39,6 +39,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -53,6 +54,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
     }
 
     // EQ...............................................................................................................
+
+    @Test
+    public void testFormatEQWithNullValue() {
+        this.formatAndCheck(
+                this.createFormatter("[=50]"),
+                Optional.empty(), // value
+                Optional.empty() // expected
+        ); // pass
+    }
 
     @Test
     public void testFormatEQ() {

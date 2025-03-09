@@ -305,12 +305,14 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return new FakeSpreadsheetFormatter() {
 
             @Override
-            public Optional<TextNode> format(final Object value,
+            public Optional<TextNode> format(final Optional<Object> value,
                                              final SpreadsheetFormatterContext context) {
                 return Optional.of(
                         SpreadsheetText.with(
                                 new DecimalFormat("000.000")
-                                        .format(value)
+                                        .format(
+                                                value.orElse(null)
+                                        )
                         ).toTextNode()
                 );
             }

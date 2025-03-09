@@ -39,6 +39,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber> {
 
@@ -71,7 +72,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
 
         final String formatted = pattern.formatter()
                 .format(
-                        number,
+                        Optional.of(number),
                         spreadsheetFormatterContext()
                 ).get()
                 .text();

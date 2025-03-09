@@ -219,7 +219,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
         this.formatText(
                 pattern.formatter()
                         .formatOrEmptyText(
-                                value,
+                                Optional.of(value),
                                 SpreadsheetFormatterContexts.basic(
                                         this::numberToColor,
                                         this::nameToColor,

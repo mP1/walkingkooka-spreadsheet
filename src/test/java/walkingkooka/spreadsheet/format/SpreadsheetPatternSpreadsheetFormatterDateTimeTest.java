@@ -56,6 +56,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     // tests.............................................................................................................
 
     @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                this.createFormatter("dd/mm/yyyy"),
+                Optional.empty(), // value,
+                Optional.empty() // expected
+        );
+    }
+
+    @Test
     public void testFormatDateFails() {
         this.formatAndCheck(
                 this.createFormatter("dd/mm/yyyy"),
@@ -674,7 +683,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeTest extends Sp
     private void parseFormatAndCheck(final String pattern,
                                      final LocalDateTime value,
                                      final String text) {
-        this.formatAndCheck(this.createFormatter(pattern),
+        this.formatAndCheck(
+                this.createFormatter(pattern),
                 value,
                 this.createContext(),
                 SpreadsheetText.with(text)

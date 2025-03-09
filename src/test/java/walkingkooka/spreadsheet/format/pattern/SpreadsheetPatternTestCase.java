@@ -39,6 +39,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -472,7 +473,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
                 () -> this.createPattern()
                         .createFormatter()
                         .formatSpreadsheetText(
-                                "Value",
+                                Optional.of("Value"),
                                 null
                         )
         );

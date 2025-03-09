@@ -91,6 +91,28 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     // format...........................................................................................................
 
     @Test
+    public void testFormatNullValue() {
+        final Optional<Color> color = Optional.of(Color.BLACK);
+
+        this.formatAndCheck(
+                this.createFormatter("[BLACK]"),
+                Optional.empty(), // value
+                new TestSpreadsheetFormatterContext() {
+                    @Override
+                    public Optional<Color> colorName(final SpreadsheetColorName name) {
+                        checkEquals(
+                                SpreadsheetColorName.with("BLACK"),
+                                name,
+                                "color name"
+                        );
+                        return color;
+                    }
+                },
+                Optional.empty()
+        );
+    }
+
+    @Test
     public void testFormatColorNameAndTextFormatted() {
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);

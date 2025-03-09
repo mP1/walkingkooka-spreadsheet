@@ -45,6 +45,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     // format...........................................................................................................
 
     @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                this.createFormatter("\"Hello \"@@@"),
+                Optional.empty(),
+                SpreadsheetText.EMPTY.setText("Hello ")
+        );
+    }
+
+    @Test
     public void testFormatPlaceholder() {
         this.parseFormatAndCheck("@", TEXT, TEXT);
     }
@@ -138,7 +147,12 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
                                      final String value,
                                      final SpreadsheetFormatterContext context,
                                      final SpreadsheetText text) {
-        this.formatAndCheck(this.createFormatter(pattern), value, context, text);
+        this.formatAndCheck(
+                this.createFormatter(pattern),
+                value,
+                context,
+                text
+        );
     }
 
     @Override
@@ -175,14 +189,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         @Override
         public boolean canConvert(final Object value,
                                   final Class<?> target) {
-            return value instanceof String && String.class == target;
+            return (null == value || value instanceof String) && String.class == target;
         }
 
         @Override
         public <T> Either<T, String> convert(final Object value, final Class<T> target) {
             return this.canConvert(value, target) ?
                     this.successfulConversion(
-                            value.toString(),
+                            target.cast(value),
                             target
                     ) :
                     this.failConversion(

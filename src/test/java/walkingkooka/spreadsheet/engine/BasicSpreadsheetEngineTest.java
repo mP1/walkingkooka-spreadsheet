@@ -19340,7 +19340,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     SPREADSHEET_FORMATTER_PROVIDER,
                     PROVIDER_CONTEXT
             ).format(
-                    value.get(),
+                    value,
                     SPREADSHEET_TEXT_FORMAT_CONTEXT
             ).orElseThrow(
                     () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))

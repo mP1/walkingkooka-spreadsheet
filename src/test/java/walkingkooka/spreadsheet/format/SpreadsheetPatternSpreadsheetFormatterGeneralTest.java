@@ -31,10 +31,20 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends SpreadsheetPatternSpreadsheetFormatterTestCase<SpreadsheetPatternSpreadsheetFormatterGeneral, GeneralSpreadsheetFormatParserToken> {
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
+
+    @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE, // formatter
+                Optional.empty(), // value
+                Optional.empty() // expected
+        );
+    }
 
     @Test
     public void testFormatZeroBigDecimal() {

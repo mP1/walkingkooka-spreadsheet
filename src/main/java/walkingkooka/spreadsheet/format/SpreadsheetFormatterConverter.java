@@ -22,6 +22,8 @@ import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.text.CharSequences;
 
+import java.util.Optional;
+
 /**
  * A {@link Converter} which formats a value to {@link String text} using the given {@link SpreadsheetFormatter}.
  */
@@ -53,7 +55,7 @@ final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConver
                                          final Class<T> type,
                                          final SpreadsheetConverterContext context) {
         return this.formatter.format(
-                        value,
+                        Optional.ofNullable(value),
                         SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
                 .map(
                         t -> this.successfulConversion(

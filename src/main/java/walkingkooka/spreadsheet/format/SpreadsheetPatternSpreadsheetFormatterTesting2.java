@@ -44,13 +44,13 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting2<F extends Spread
                 NullPointerException.class,
                 () -> this.createFormatter()
                         .formatSpreadsheetText(
-                                "Value",
+                                Optional.of("Value"),
                                 null
                         )
         );
     }
 
-    default void formatSpreadsheetTextAndCheck(final Object value,
+    default void formatSpreadsheetTextAndCheck(final Optional<Object> value,
                                                final SpreadsheetFormatterContext context) {
         this.formatSpreadsheetTextAndCheck(
                 this.createFormatter(),
@@ -59,7 +59,7 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting2<F extends Spread
         );
     }
 
-    default void formatSpreadsheetTextAndCheck(final Object value,
+    default void formatSpreadsheetTextAndCheck(final Optional<Object> value,
                                                final SpreadsheetFormatterContext context,
                                                final SpreadsheetText expected) {
         this.formatSpreadsheetTextAndCheck(
@@ -70,7 +70,7 @@ public interface SpreadsheetPatternSpreadsheetFormatterTesting2<F extends Spread
         );
     }
 
-    default void formatSpreadsheetTextAndCheck(final Object value,
+    default void formatSpreadsheetTextAndCheck(final Optional<Object> value,
                                                final SpreadsheetFormatterContext context,
                                                final Optional<SpreadsheetText> expected) {
         this.formatSpreadsheetTextAndCheck(

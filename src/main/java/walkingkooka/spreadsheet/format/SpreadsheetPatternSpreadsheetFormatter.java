@@ -28,7 +28,7 @@ import java.util.Optional;
 public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter {
 
     @Override
-    default Optional<TextNode> format(final Object value,
+    default Optional<TextNode> format(final Optional<Object> value,
                                       final SpreadsheetFormatterContext context) {
         return this.formatSpreadsheetText(
                 value,
@@ -40,7 +40,7 @@ public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetForma
      * Implementors should implement this method and only produce a {@link SpreadsheetText} rather than the richer
      * {@link TextNode}.
      */
-    Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                     final SpreadsheetFormatterContext context);
 }
 

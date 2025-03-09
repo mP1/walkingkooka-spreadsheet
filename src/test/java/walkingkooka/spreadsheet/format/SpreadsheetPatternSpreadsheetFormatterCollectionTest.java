@@ -78,6 +78,14 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
         this.formatAndCheck(VALUE2, TEXT2);
     }
 
+    @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                Optional.empty(),
+                Optional.empty()
+        );
+    }
+
     @Override
     String pattern() {
         return "General";
@@ -111,13 +119,13 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
         return new FakeSpreadsheetPatternSpreadsheetFormatter() {
 
             @Override
-            public Optional<SpreadsheetText> formatSpreadsheetText(final Object v,
+            public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> v,
                                                                    final SpreadsheetFormatterContext context) {
                 Objects.requireNonNull(v, "value");
                 Objects.requireNonNull(context, "context");
 
                 return Optional.ofNullable(
-                        value.equals(v) ?
+                        value.equals(v.orElse(null)) ?
                                 spreadsheetText(text) :
                                 null
                 );
@@ -135,8 +143,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
     }
 
     @Override
-    public Object value() {
-        return VALUE1;
+    public Optional<Object> value() {
+        return Optional.of(VALUE1);
     }
 
     @Override

@@ -51,13 +51,13 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
     /**
      * Accepts a value and returns a {@link TextNode} if it could format the value.
      */
-    Optional<TextNode> format(final Object value,
+    Optional<TextNode> format(final Optional<Object> value,
                               final SpreadsheetFormatterContext context);
 
     /**
      * Formats the given {@link Object value} or returns {@link SpreadsheetText#EMPTY}.
      */
-    default TextNode formatOrEmptyText(final Object value,
+    default TextNode formatOrEmptyText(final Optional<Object> value,
                                        final SpreadsheetFormatterContext context) {
         return this.format(
                 value,

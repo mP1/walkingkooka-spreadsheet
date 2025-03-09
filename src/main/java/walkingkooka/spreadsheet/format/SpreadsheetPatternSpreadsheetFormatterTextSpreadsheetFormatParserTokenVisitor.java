@@ -102,7 +102,10 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
 
     @Override
     protected void visit(final TextPlaceholderSpreadsheetFormatParserToken token) {
-        this.append(this.value);
+        final String value = this.value;
+        if(null != value) {
+            this.append(value);
+        }
     }
 
     private final String value;

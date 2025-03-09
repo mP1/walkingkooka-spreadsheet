@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime>
         implements SpreadsheetMetadataTesting {
@@ -50,7 +51,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
         final LocalDateTime date = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
         final String formatted = pattern.formatter()
                 .format(
-                        date,
+                        Optional.of(date),
                         SPREADSHEET_FORMATTER_CONTEXT
                 )
                 .get()

@@ -65,23 +65,26 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     }
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
         final Either<ExpressionNumber, String> valueAsNumber = context.convert(
-                value,
+                value.orElse(null),
                 ExpressionNumber.class
         );
 
+        final ExpressionNumber expressionNumber = valueAsNumber.isLeft() ?
+                valueAsNumber.leftValue() :
+                null;
+
         return Optional.ofNullable(
-                valueAsNumber.isLeft() ?
+                null != expressionNumber ?
                         SpreadsheetText.with(
                                 this.format1(
                                         this.normalOrScientific.context(
-                                                valueAsNumber.leftValue()
-                                                        .bigDecimal(),
+                                                expressionNumber.bigDecimal(),
                                                 this,
                                                 context
                                         )

@@ -57,11 +57,11 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
     }
 
     @Override
-    public Optional<TextNode> format(final Object value,
+    public Optional<TextNode> format(final Optional<Object> value,
                                      final SpreadsheetFormatterContext context) {
         final SpreadsheetFormatter formatter = SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVisitor.select(
                 this,
-                value
+                value.orElse(null)
         );
         // if the formatter didnt work format with text
         return or(
@@ -69,7 +69,10 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
                         value,
                         context
                 ),
-                () -> this.text.format(value, context)
+                () -> this.text.format(
+                        value,
+                        context
+                )
         );
     }
 

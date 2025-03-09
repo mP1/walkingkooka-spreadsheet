@@ -65,11 +65,14 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
     // SpreadsheetFormatter.............................................................................................
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
                 .flatMap(f -> optionalStream(
-                                f.formatSpreadsheetText(value, context)
+                                f.formatSpreadsheetText(
+                                        value,
+                                        context
+                                )
                         )
                 ).findFirst();
     }

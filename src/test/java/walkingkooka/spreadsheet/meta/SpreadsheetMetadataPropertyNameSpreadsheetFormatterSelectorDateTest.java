@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Locale;
+import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate>
         implements SpreadsheetMetadataTesting {
@@ -44,7 +45,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
         final LocalDate date = LocalDate.of(1999, 12, 31);
         final String formatted = pattern.formatter()
                 .format(
-                        date,
+                        Optional.of(date),
                         SPREADSHEET_FORMATTER_CONTEXT
                 ).get()
                 .text();

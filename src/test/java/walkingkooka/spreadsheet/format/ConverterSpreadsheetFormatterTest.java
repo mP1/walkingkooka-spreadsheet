@@ -23,8 +23,17 @@ import walkingkooka.convert.Converters;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Optional;
 
 public final class ConverterSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ConverterSpreadsheetFormatter> {
+
+    @Test
+    public void testFormatNullValue() {
+        this.formatAndCheck(
+                Optional.empty(),
+                Optional.empty()
+        );
+    }
 
     @Test
     public void testFormatConvertedValue() {

@@ -25,6 +25,7 @@ import java.util.Optional;
 
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that formats values after converting them to a {@link String}.
+ * Note that null {@link String} values are supported but any placeholders in the pattern will be skipped.
  */
 final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPatternSpreadsheetFormatter {
 
@@ -47,16 +48,24 @@ final class SpreadsheetPatternSpreadsheetFormatterText implements SpreadsheetPat
     }
 
     @Override
-    public Optional<SpreadsheetText> formatSpreadsheetText(final Object value,
+    public Optional<SpreadsheetText> formatSpreadsheetText(final Optional<Object> value,
                                                            final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
+        final Object valueOrNull = value.orElse(null);
+
         return Optional.ofNullable(
-                context.canConvert(value, String.class) ?
+                context.canConvert(
+                        valueOrNull,
+                        String.class
+                ) ?
                         SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor.format(
                                 this.token,
-                                context.convertOrFail(value, String.class),
+                                context.convertOrFail(
+                                        valueOrNull,
+                                        String.class
+                                ),
                                 context
                         ) :
                         null

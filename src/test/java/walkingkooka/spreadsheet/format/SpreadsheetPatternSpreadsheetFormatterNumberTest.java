@@ -53,6 +53,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         NumberSpreadsheetFormatParserToken> {
 
     @Test
+    public void testFormatNull() {
+        this.formatAndCheck(
+                this.createFormatter("0.00"),
+                Optional.empty(), // value
+                Optional.empty() // expected
+        );
+    }
+
+    @Test
     public void testFormatDateFails() {
         this.formatAndCheck(
                 this.createFormatter("0.00"),

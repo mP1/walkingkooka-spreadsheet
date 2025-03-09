@@ -99,7 +99,7 @@ public interface SpreadsheetEngineContext extends Context,
     /**
      * Formats the given value using the provided formatter.
      */
-    Optional<TextNode> formatValue(final Object value,
+    Optional<TextNode> formatValue(final Optional<Object> value,
                                    final SpreadsheetFormatter formatter);
 
     /**

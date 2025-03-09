@@ -83,7 +83,7 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default Optional<TextNode> formatValue(final Object value,
+    default Optional<TextNode> formatValue(final Optional<Object> value,
                                            final SpreadsheetFormatter formatter) {
         return this.spreadsheetEngineContext()
                 .formatValue(

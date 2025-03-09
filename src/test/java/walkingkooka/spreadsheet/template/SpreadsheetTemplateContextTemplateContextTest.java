@@ -91,7 +91,9 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
                         TextNode.text("111.")
                 ),
                 SPREADSHEET_FORMATTER_CONTEXT.format(
-                        EXPRESSION_NUMBER_KIND.create(111)
+                        Optional.of(
+                                EXPRESSION_NUMBER_KIND.create(111)
+                        )
                 )
         );
     }

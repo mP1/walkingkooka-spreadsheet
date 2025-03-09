@@ -38,7 +38,7 @@ public final class SpreadsheetFormatterTest implements SpreadsheetFormatterTesti
                 ).toTextNode(),
                 new FakeSpreadsheetFormatter() {
                     @Override
-                    public Optional<TextNode> format(final Object value,
+                    public Optional<TextNode> format(final Optional<Object> value,
                                                      final SpreadsheetFormatterContext context) {
                         return Optional.of(
                                 SpreadsheetText.EMPTY
@@ -49,7 +49,7 @@ public final class SpreadsheetFormatterTest implements SpreadsheetFormatterTesti
                         );
                     }
                 }.formatOrEmptyText(
-                        text,
+                        Optional.of(text),
                         SpreadsheetFormatterContexts.fake()
                 )
         );
