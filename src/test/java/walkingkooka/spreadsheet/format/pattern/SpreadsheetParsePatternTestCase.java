@@ -91,8 +91,20 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     SpreadsheetParsePatternTestCase() {
         super();
-        this.checkEquals(this.decimalNumberContext().currencySymbol(), currencyDollarSign().text(), "currencySymbol");
-        this.checkEquals(this.decimalNumberContext().exponentSymbol(), e().text(), "exponentSymbol");
+        this.checkEquals(
+                this.decimalNumberContext()
+                        .currencySymbol(),
+                currencyDollarSign()
+                        .text(),
+                "currencySymbol"
+        );
+        this.checkEquals(
+                this.decimalNumberContext()
+                        .exponentSymbol(),
+                e()
+                        .text(),
+                "exponentSymbol"
+        );
     }
 
     @Test
@@ -125,17 +137,32 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     @Test
     public final void testWithBracketOpenFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.bracketOpenSymbol(
+                        "[",
+                        "["
+                )
+        );
     }
 
     @Test
     public final void testWithBracketCloseFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.bracketCloseSymbol(
+                        "]",
+                        "]"
+                )
+        );
     }
 
     @Test
     public final void testWithColorLiteralSymbolFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.colorLiteralSymbol("#123", "#123"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.colorLiteralSymbol(
+                        "#123",
+                        "#123"
+                )
+        );
     }
 
     @Test
@@ -145,17 +172,32 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     @Test
     public final void testWithColorNumberFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.colorNumber(1, "1"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.colorNumber(
+                        1,
+                        "1"
+                )
+        );
     }
 
     @Test
     public final void testWithConditionNumberFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.conditionNumber(BigDecimal.TEN, "10"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.conditionNumber(
+                        BigDecimal.TEN,
+                        "10"
+                )
+        );
     }
 
     @Test
     public final void testWithEqualsSymbolFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.equalsSymbol("=", "="));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.equalsSymbol(
+                        "=",
+                        "="
+                )
+        );
     }
 
     @Test
@@ -176,42 +218,82 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     @Test
     public final void testWithGeneralFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.generalSymbol("GENERAL", "GENERAL"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.generalSymbol(
+                        "GENERAL",
+                        "GENERAL"
+                )
+        );
     }
 
     @Test
     public final void testWithGreaterThanSymbolFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.greaterThanSymbol(">", ">"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.greaterThanSymbol(
+                        ">",
+                        ">"
+                )
+        );
     }
 
     @Test
     public final void testWithGreaterThanEqualsSymbolFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">="));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.greaterThanEqualsSymbol(
+                        ">=",
+                        ">="
+                )
+        );
     }
 
     @Test
     public final void testWithLessThanSymbolFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.lessThanSymbol("<", "<"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.lessThanSymbol(
+                        "<",
+                        "<"
+                )
+        );
     }
 
     @Test
     public final void testWithLessThanEqualsSymbolFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.lessThanEqualsSymbol("<=", "<="));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.lessThanEqualsSymbol(
+                        "<=",
+                        "<="
+                )
+        );
     }
 
     @Test
     public final void testWithNotEqualsSymbolFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.notEqualsSymbol("!=", "!="));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.notEqualsSymbol(
+                        "!=",
+                        "!="
+                )
+        );
     }
 
     @Test
     public final void testWithStarFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.star('*', "*"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.star(
+                        '*',
+                        "*"
+                )
+        );
     }
 
     @Test
     public final void testWithTextPlaceholderFails() {
-        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.textPlaceholder("@", "@"));
+        this.withInvalidCharacterFails(
+                SpreadsheetFormatParserToken.textPlaceholder(
+                        "@",
+                        "@"
+                )
+        );
     }
 
     @Test
@@ -244,7 +326,9 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         final String patternText = this.patternText();
 
         final List<ParserToken> tokens = Lists.array();
-        tokens.add(this.parseFormatParserToken(patternText));
+        tokens.add(
+                this.parseFormatParserToken(patternText)
+        );
 
         final String patternText2 = patternText + token.text();
         tokens.add(token);
@@ -255,7 +339,11 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                 InvalidCharacterException.class,
                 () -> this.createPattern(parent)
         );
-        this.checkEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
+        this.checkEquals(
+                patternText.length(),
+                thrown.position(),
+                () -> "position pattern=" + patternText2
+        );
     }
 
     // toFormat.........................................................................................................
@@ -316,7 +404,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
         );
     }
 
-    // removeColor..................................................................................................
+    // removeColor......................................................................................................
 
     @Test
     public final void testRemoveColorName() {
@@ -347,28 +435,6 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Test
     public final void testRemoveConditionName() {
         this.removeConditionAndCheck(this.createPattern());
-    }
-
-    // JsonNodeMarshallingTesting.......................................................................................
-
-    @Test
-    public final void testJsonRoundtripMultiplePatterns() {
-        final ParserToken first = this.parseFormatParserToken(this.patternText());
-        final ParserToken second = this.parseFormatParserToken("\"text-literal-2\"");
-
-        final List<ParserToken> tokens = Lists.of(
-                first,
-                second
-        );
-
-        this.marshallRoundTripTwiceAndCheck(
-                this.createPattern(
-                        ParserTokens.sequence(
-                                tokens,
-                                ParserToken.text(tokens)
-                        )
-                )
-        );
     }
 
     // helpers..........................................................................................................
@@ -481,11 +547,17 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     @Test
     public final void testParserToString() {
         final P pattern = this.createPattern();
-        this.toStringAndCheck(pattern.parser(), pattern.toString());
+        this.toStringAndCheck(
+                pattern.parser(),
+                pattern.toString()
+        );
     }
 
     static AmPmSpreadsheetFormulaParserToken am() {
-        return SpreadsheetFormulaParserToken.amPm(0, "AM");
+        return SpreadsheetFormulaParserToken.amPm(
+                0,
+                "AM"
+        );
     }
 
     static TextLiteralSpreadsheetFormulaParserToken colon() {
@@ -497,15 +569,24 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     }
 
     static CurrencySymbolSpreadsheetFormulaParserToken currencyDollarSign() {
-        return SpreadsheetFormulaParserToken.currencySymbol(CURRENCY, CURRENCY);
+        return SpreadsheetFormulaParserToken.currencySymbol(
+                CURRENCY,
+                CURRENCY
+        );
     }
 
     static DayNumberSpreadsheetFormulaParserToken day31() {
-        return SpreadsheetFormulaParserToken.dayNumber(31, "31");
+        return SpreadsheetFormulaParserToken.dayNumber(
+                31,
+                "31"
+        );
     }
 
     static DecimalSeparatorSymbolSpreadsheetFormulaParserToken decimalSeparator() {
-        return SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL);
+        return SpreadsheetFormulaParserToken.decimalSeparatorSymbol(
+                "" + DECIMAL,
+                "" + DECIMAL
+        );
     }
 
     static DigitsSpreadsheetFormulaParserToken digit0() {
@@ -533,11 +614,17 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     }
 
     private static DigitsSpreadsheetFormulaParserToken digits(final String text) {
-        return SpreadsheetFormulaParserToken.digits(text, text);
+        return SpreadsheetFormulaParserToken.digits(
+                text,
+                text
+        );
     }
 
     static ExponentSymbolSpreadsheetFormulaParserToken e() {
-        return SpreadsheetFormulaParserToken.exponentSymbol("" + EXPONENT, "" + EXPONENT);
+        return SpreadsheetFormulaParserToken.exponentSymbol(
+                "" + EXPONENT,
+                "" + EXPONENT
+        );
     }
 
     static GroupSeparatorSymbolSpreadsheetFormulaParserToken groupSymbol() {
@@ -548,59 +635,102 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     }
 
     static HourSpreadsheetFormulaParserToken hour9() {
-        return SpreadsheetFormulaParserToken.hour(9, "9");
+        return SpreadsheetFormulaParserToken.hour(
+                9,
+                "9"
+        );
     }
 
     static HourSpreadsheetFormulaParserToken hour11() {
-        return SpreadsheetFormulaParserToken.hour(11, "11");
+        return SpreadsheetFormulaParserToken.hour(
+                11,
+                "11"
+        );
     }
 
     static HourSpreadsheetFormulaParserToken hour13() {
-        return SpreadsheetFormulaParserToken.hour(13, "13");
+        return SpreadsheetFormulaParserToken.hour(
+                13,
+                "13"
+        );
     }
 
-    static MillisecondSpreadsheetFormulaParserToken milli(final int value, final String text) {
-        return SpreadsheetFormulaParserToken.millisecond(value, text);
+    static MillisecondSpreadsheetFormulaParserToken milli(final int value,
+                                                          final String text) {
+        return SpreadsheetFormulaParserToken.millisecond(
+                value,
+                text
+        );
     }
 
     static MinusSymbolSpreadsheetFormulaParserToken minus() {
-        return SpreadsheetFormulaParserToken.minusSymbol("" + MINUS, "" + MINUS);
+        return SpreadsheetFormulaParserToken.minusSymbol(
+                "" + MINUS,
+                "" + MINUS
+        );
     }
 
     static MinuteSpreadsheetFormulaParserToken minute58() {
-        return SpreadsheetFormulaParserToken.minute(58, "58");
+        return SpreadsheetFormulaParserToken.minute(
+                58,
+                "58"
+        );
     }
 
     static MonthNumberSpreadsheetFormulaParserToken month12() {
-        return SpreadsheetFormulaParserToken.monthNumber(12, "12");
+        return SpreadsheetFormulaParserToken.monthNumber(
+                12,
+                "12"
+        );
     }
 
     static MonthNameAbbreviationSpreadsheetFormulaParserToken monthDec() {
-        return SpreadsheetFormulaParserToken.monthNameAbbreviation(12, "Dec");
+        return SpreadsheetFormulaParserToken.monthNameAbbreviation(
+                12,
+                "Dec"
+        );
     }
 
     static PlusSymbolSpreadsheetFormulaParserToken plus() {
-        return SpreadsheetFormulaParserToken.plusSymbol("" + PLUS, "" + PLUS);
+        return SpreadsheetFormulaParserToken.plusSymbol(
+                "" + PLUS,
+                "" + PLUS
+        );
     }
 
     static AmPmSpreadsheetFormulaParserToken pm() {
-        return SpreadsheetFormulaParserToken.amPm(12, "PM");
+        return SpreadsheetFormulaParserToken.amPm(
+                12,
+                "PM"
+        );
     }
 
     static SecondsSpreadsheetFormulaParserToken second9() {
-        return SpreadsheetFormulaParserToken.seconds(9, "9");
+        return SpreadsheetFormulaParserToken.seconds(
+                9,
+                "9"
+        );
     }
 
     static SecondsSpreadsheetFormulaParserToken second59() {
-        return SpreadsheetFormulaParserToken.seconds(59, "59");
+        return SpreadsheetFormulaParserToken.seconds(
+                59,
+                "59"
+        );
     }
 
     static TextLiteralSpreadsheetFormulaParserToken slash() {
-        return SpreadsheetFormulaParserToken.textLiteral("/", "/");
+        return SpreadsheetFormulaParserToken.textLiteral(
+                "/",
+                "/"
+        );
     }
 
     static TextLiteralSpreadsheetFormulaParserToken textLiteral(final String text) {
-        return SpreadsheetFormulaParserToken.textLiteral(text, text);
+        return SpreadsheetFormulaParserToken.textLiteral(
+                text,
+                text
+        );
     }
 
     static WhitespaceSpreadsheetFormulaParserToken whitespace1() {
@@ -712,6 +842,28 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                                         this.decimalNumberContext()
                                 ),
                                 EXPRESSION_NUMBER_KIND
+                        )
+                )
+        );
+    }
+
+    // JsonNodeMarshallingTesting.......................................................................................
+
+    @Test
+    public final void testJsonRoundtripMultiplePatterns() {
+        final ParserToken first = this.parseFormatParserToken(this.patternText());
+        final ParserToken second = this.parseFormatParserToken("\"text-literal-2\"");
+
+        final List<ParserToken> tokens = Lists.of(
+                first,
+                second
+        );
+
+        this.marshallRoundTripTwiceAndCheck(
+                this.createPattern(
+                        ParserTokens.sequence(
+                                tokens,
+                                ParserToken.text(tokens)
                         )
                 )
         );
