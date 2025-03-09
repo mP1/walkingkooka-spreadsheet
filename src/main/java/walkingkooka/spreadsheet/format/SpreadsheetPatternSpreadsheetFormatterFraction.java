@@ -84,7 +84,7 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
         return Optional.ofNullable(
                 null != bigDecimal ?
                         SpreadsheetText.with(
-                                this.format1(
+                                this.formatSpreadsheetTextBigDecimal(
                                         bigDecimal,
                                         context
                                 )
@@ -97,9 +97,15 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
      * Compute the fraction of the {@link BigDecimal value}, and if the denominator is too many places, perform some
      * rounding until its the right number of digits.
      */
-    private String format1(final BigDecimal value, final SpreadsheetFormatterContext context) {
-        final BigDecimal rounded = value.multiply(this.multiplier, context.mathContext())
-                .setScale(this.denominatorDigitSymbolCount, RoundingMode.HALF_UP);
+    private String formatSpreadsheetTextBigDecimal(final BigDecimal value,
+                                                   final SpreadsheetFormatterContext context) {
+        final BigDecimal rounded = value.multiply(
+                this.multiplier,
+                context.mathContext()
+        ).setScale(
+                this.denominatorDigitSymbolCount,
+                RoundingMode.HALF_UP
+        );
 
         final Fraction fraction = this.fractioner.apply(rounded);
 
@@ -113,15 +119,26 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
 
         final int places = decimalPlaces(denominator);
         for (int i = this.denominatorDigitSymbolCount; i < places; i++) {
-            numerator = numerator.add(FIVE).divide(BigInteger.TEN);
-            denominator = denominator.add(FIVE).divide(BigInteger.TEN);
+            numerator = numerator.add(FIVE)
+                    .divide(BigInteger.TEN);
+            denominator = denominator.add(FIVE)
+                    .divide(BigInteger.TEN);
         }
 
-        return this.format2(SpreadsheetPatternSpreadsheetFormatterFractionContext.with(SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign.fromSignum(sign),
-                SpreadsheetPatternSpreadsheetFormatterFractionDigits.numerator(numerator.toString()),
-                SpreadsheetPatternSpreadsheetFormatterFractionDigits.denominator(denominator.toString()),
+        final SpreadsheetPatternSpreadsheetFormatterFractionContext context2 = SpreadsheetPatternSpreadsheetFormatterFractionContext.with(
+                SpreadsheetPatternSpreadsheetFormatterFractionNegativeSign.fromSignum(sign),
+                SpreadsheetPatternSpreadsheetFormatterFractionDigits.numerator(
+                        numerator.toString()
+                ),
+                SpreadsheetPatternSpreadsheetFormatterFractionDigits.denominator(
+                        denominator.toString()
+                ),
                 this,
-                context));
+                context
+        );
+
+        this.components.forEach(c -> c.append(context2));
+        return context2.formattedText();
     }
 
     @Override
@@ -152,14 +169,6 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     private final static BigInteger FIVE = BigInteger.valueOf(5);
 
     /**
-     * Applies the pattern and value into text.
-     */
-    private String format2(final SpreadsheetPatternSpreadsheetFormatterFractionContext context) {
-        this.components.forEach(c -> c.append(context));
-        return context.formattedText();
-    }
-
-    /**
      * Components for each symbol in the original pattern.
      */
     private final List<SpreadsheetPatternSpreadsheetFormatterFractionComponent> components;
@@ -177,7 +186,8 @@ final class SpreadsheetPatternSpreadsheetFormatterFraction implements Spreadshee
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetPatternSpreadsheetFormatterFraction && this.equals0((SpreadsheetPatternSpreadsheetFormatterFraction) other);
+                other instanceof SpreadsheetPatternSpreadsheetFormatterFraction &&
+                        this.equals0((SpreadsheetPatternSpreadsheetFormatterFraction) other);
     }
 
     private boolean equals0(final SpreadsheetPatternSpreadsheetFormatterFraction other) {
