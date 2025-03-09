@@ -55,25 +55,36 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
 
     @Test
     public void testFormatPlaceholder() {
-        this.parseFormatAndCheck("@", TEXT, TEXT);
+        this.parseFormatAndCheck(
+                "@",
+                TEXT,
+                TEXT
+        );
     }
 
     @Test
     public void testFormatQuotedTextAndPlaceholder() {
         final String quoted = "Quoted456";
-        this.parseFormatAndCheck("@\"" + quoted + "\"@", TEXT, TEXT + quoted + TEXT);
+        this.parseFormatAndCheck(
+                "@\"" + quoted + "\"@",
+                TEXT,
+                TEXT + quoted + TEXT
+        );
     }
 
     @Test
     public void testFormatTextAndUnderscore() {
-        this.parseFormatAndCheck("@_A",
+        this.parseFormatAndCheck(
+                "@_A",
                 TEXT,
-                TEXT + "A");
+                TEXT + "A"
+        );
     }
 
     @Test
     public void testFormatTextAndStar() {
-        this.parseFormatAndCheck("@*A",
+        this.parseFormatAndCheck(
+                "@*A",
                 TEXT,
                 new TestSpreadsheetFormatterContext() {
 
@@ -82,21 +93,26 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
                         return TEXT.length() + 3;
                     }
                 },
-                TEXT + "AAA");
+                TEXT + "AAA"
+        );
     }
 
     @Test
     public void testFormatTextAndLeftAndRightParens() {
-        this.parseFormatAndCheck("(@)",
+        this.parseFormatAndCheck(
+                "(@)",
                 TEXT,
-                "(" + TEXT + ")");
+                "(" + TEXT + ")"
+        );
     }
 
     @Test
     public void testFormatTextAndEscaped() {
-        this.parseFormatAndCheck("@\\B",
+        this.parseFormatAndCheck(
+                "@\\B",
                 TEXT,
-                TEXT + "B");
+                TEXT + "B"
+        );
     }
 
     @Test
@@ -108,7 +124,9 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
 
                 },
                 SpreadsheetText.with(TEXT)
-                        .setColor(Optional.of(RED))
+                        .setColor(
+                                Optional.of(RED)
+                        )
         );
     }
 
@@ -230,7 +248,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         }
     }
 
-    // tokens ..................................................................................................
+    // tokens ..........................................................................................................
 
     @Test
     public void testTokensTextWithPlaceholder() {
@@ -290,6 +308,16 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
         );
     }
 
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentToken() {
+        this.checkNotEquals(
+                this.createFormatter("@"),
+                this.createFormatter("@@")
+        );
+    }
+
     // toString ........................................................................................................
 
     @Test
@@ -302,15 +330,5 @@ public final class SpreadsheetPatternSpreadsheetFormatterTextTest extends Spread
     @Override
     public Class<SpreadsheetPatternSpreadsheetFormatterText> type() {
         return SpreadsheetPatternSpreadsheetFormatterText.class;
-    }
-
-    // equals...........................................................................................................
-
-    @Test
-    public void testEqualsDifferentToken() {
-        this.checkNotEquals(
-                this.createFormatter("@"),
-                this.createFormatter("@@")
-        );
     }
 }
