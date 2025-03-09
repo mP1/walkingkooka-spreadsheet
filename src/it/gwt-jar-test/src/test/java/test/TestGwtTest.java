@@ -318,8 +318,7 @@ public class TestGwtTest extends GWTTestCase {
                         Optional.of(
                                 this.formatValue(
                                         cell.formula()
-                                                .value()
-                                                .get(),
+                                                .value(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
                                                         .spreadsheetFormatter(
@@ -336,9 +335,13 @@ public class TestGwtTest extends GWTTestCase {
             }
 
             @Override
-            public Optional<TextNode> formatValue(final Object value,
+            public Optional<TextNode> formatValue(final Optional<Object> value,
                                                   final SpreadsheetFormatter formatter) {
-                checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
+                checkEquals(
+                        false,
+                        value.orElse(null) instanceof Optional,
+                        "Value must not be optional" + value
+                );
 
                 return formatter.format(
                         value,
