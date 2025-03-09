@@ -452,6 +452,32 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         );
     }
 
+    @Test
+    public final void testFormatSpreadsheetTextWithNullValueFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .createFormatter()
+                        .formatSpreadsheetText(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    public final void testFormatSpreadsheetTextWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createPattern()
+                        .createFormatter()
+                        .formatSpreadsheetText(
+                                "Value",
+                                null
+                        )
+        );
+    }
+
     abstract SpreadsheetFormatterContext createContext();
 
     // hashCode/equals..................................................................................................
