@@ -82,7 +82,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
         return Optional.ofNullable(
                 null != expressionNumber ?
                         SpreadsheetText.with(
-                                this.format1(
+                                this.formatSpreadsheetTextExpressionNumber(
                                         this.normalOrScientific.context(
                                                 expressionNumber.bigDecimal(),
                                                 this,
@@ -121,7 +121,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
     /**
      * Executes each of the format tokens eventually resulting in a {@link String}.
      */
-    private String format1(final SpreadsheetPatternSpreadsheetFormatterNumberContext context) {
+    private String formatSpreadsheetTextExpressionNumber(final SpreadsheetPatternSpreadsheetFormatterNumberContext context) {
         this.components.forEach(c -> c.append(context));
         return context.formattedText();
     }
