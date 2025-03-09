@@ -42,7 +42,10 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     @Test
     public final void testWithNullParserTokenFails() {
-        assertThrows(NullPointerException.class, () -> createPattern((T) null));
+        assertThrows(
+                NullPointerException.class,
+                () -> createPattern((T) null)
+        );
     }
 
     @Test
@@ -52,14 +55,29 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         );
 
         final P patterns = this.createPattern(token);
-        this.checkEquals(patterns.value(), token, "value");
+        this.checkEquals(
+                patterns.value(),
+                token,
+                "value"
+        );
     }
 
     @Test
     public final void testWithEscape() {
-        final T tokens = this.createFormatParserToken(Lists.of(SpreadsheetFormatParserToken.escape('\t', "\\t")));
+        final T tokens = this.createFormatParserToken(
+                Lists.of(
+                        SpreadsheetFormatParserToken.escape(
+                                '\t',
+                                "\\t"
+                        )
+                )
+        );
         final P patterns = this.createPattern(tokens);
-        this.checkEquals(patterns.value(), tokens, "value");
+        this.checkEquals(
+                patterns.value(),
+                tokens,
+                "value"
+        );
     }
 
     final void withInvalidCharacterFails(final ParserToken token) {
@@ -71,7 +89,10 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
         final String patternText2 = patternText + token.text();
         tokens.add(token);
 
-        final T parent = this.createFormatParserToken(tokens, patternText2);
+        final T parent = this.createFormatParserToken(
+                tokens,
+                patternText2
+        );
 
         final InvalidCharacterException thrown = assertThrows(
                 InvalidCharacterException.class,
@@ -88,7 +109,11 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     public final void testWithWhitespace() {
         final T token = this.createFormatParserToken(Lists.of(whitespace()));
         final P patterns = this.createPattern(token);
-        this.checkEquals(patterns.value(), token, "value");
+        this.checkEquals(
+                patterns.value(),
+                token,
+                "value"
+        );
     }
 
     // toFormat.........................................................................................................
@@ -96,7 +121,10 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     @Test
     public final void testToFormat() {
         final P pattern = this.createPattern();
-        assertSame(pattern, pattern.toFormat());
+        assertSame(
+                pattern,
+                pattern.toFormat()
+        );
     }
 
     // helpers..........................................................................................................
@@ -113,10 +141,14 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     abstract ParserToken parseFormatParserToken(final String text);
 
     private T createFormatParserToken(final List<ParserToken> tokens) {
-        return this.createFormatParserToken(tokens, ParserToken.text(tokens));
+        return this.createFormatParserToken(
+                tokens,
+                ParserToken.text(tokens)
+        );
     }
 
-    abstract T createFormatParserToken(final List<ParserToken> tokens, final String text);
+    abstract T createFormatParserToken(final List<ParserToken> tokens,
+                                       final String text);
 
     // Parse............................................................................................................
 
@@ -124,8 +156,12 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     public final void testParseString() {
         final String patternText = this.patternText();
 
-        this.parseStringAndCheck(patternText,
-                this.createPattern(this.parseFormatParserToken(patternText)));
+        this.parseStringAndCheck(
+                patternText,
+                this.createPattern(
+                        this.parseFormatParserToken(patternText)
+                )
+        );
     }
 
     // removeColor..................................................................................................
