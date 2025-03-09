@@ -64,16 +64,16 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
                 null;
 
         return null != number ?
-                this.formatNumber(
+                this.formatSpreadsheetTextExpressionNumber(
                         number,
                         context
                 ) :
                 SpreadsheetFormatter.EMPTY;
     }
 
-    private Optional<SpreadsheetText> formatNumber(final ExpressionNumber number,
-                                                   final SpreadsheetFormatterContext context) {
-        return this.shouldScientificFormat(
+    private Optional<SpreadsheetText> formatSpreadsheetTextExpressionNumber(final ExpressionNumber number,
+                                                                            final SpreadsheetFormatterContext context) {
+        return this.isScientificFormat(
                 number,
                 context
         ) ?
@@ -95,21 +95,21 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
      * <br>
      * The digit count should probably be a method on SpreadsheetFormatterContext#shouldScientificFormat
      */
-    private boolean shouldScientificFormat(final ExpressionNumber number,
-                                           final SpreadsheetFormatterContext context) {
+    private boolean isScientificFormat(final ExpressionNumber number,
+                                       final SpreadsheetFormatterContext context) {
         return number.isBigDecimal() ?
-                this.shouldScientificFormatBigDecimal(
+                this.isScientificFormatBigDecimal(
                         number.bigDecimal(),
                         context
                 ) :
-                this.shouldScientificFormatDouble(
+                this.isScientificFormatDouble(
                         number.doubleValue(),
                         context
                 );
     }
 
-    private boolean shouldScientificFormatBigDecimal(final BigDecimal number,
-                                                     final SpreadsheetFormatterContext context) {
+    private boolean isScientificFormatBigDecimal(final BigDecimal number,
+                                                 final SpreadsheetFormatterContext context) {
         final int digitCount = context.generalFormatNumberDigitCount();
         final Map<Integer, BigDecimal> map = this.generalNumberFormatDigitCountToMaxBigDouble;
 
@@ -129,8 +129,8 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
 
     private final Map<Integer, BigDecimal> generalNumberFormatDigitCountToMaxBigDouble = Maps.concurrent();
 
-    private boolean shouldScientificFormatDouble(final double number,
-                                                 final SpreadsheetFormatterContext context) {
+    private boolean isScientificFormatDouble(final double number,
+                                             final SpreadsheetFormatterContext context) {
         final int digitCount = context.generalFormatNumberDigitCount();
         final Map<Integer, Double> map = this.generalNumberFormatDigitCountToMaxDouble;
         Double value = map.get(digitCount);
