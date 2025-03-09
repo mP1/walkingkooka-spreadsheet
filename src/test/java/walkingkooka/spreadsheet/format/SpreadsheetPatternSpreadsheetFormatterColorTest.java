@@ -46,7 +46,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
 
     @Test
     public void testWithNullWrappedFormatterFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetPatternSpreadsheetFormatterColor.with(this.parsePatternOrFail(this.pattern()), null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetPatternSpreadsheetFormatterColor.with(
+                        this.parsePatternOrFail(
+                                this.pattern()
+                        ),
+                        null
+                )
+        );
     }
 
     @Test
@@ -76,7 +84,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     }
 
     @Test
-    public void testWrappedFormatterFails() {
+    public void testWithWrappedFormatterFails() {
         this.formatAndCheck(
                 SpreadsheetPatternSpreadsheetFormatterColor.with(
                         this.parsePatternOrFail(
@@ -85,7 +93,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
                         SpreadsheetFormatters.general()
                 ),
                 "Ignored text",
-                this.createContext());
+                this.createContext()
+        );
     }
 
     // format...........................................................................................................
@@ -116,7 +125,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     public void testFormatColorNameAndTextFormatted() {
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
-        this.formatAndCheck(
+        this.parsePatternFormatAndCheck(
                 "[RED]",
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -135,7 +144,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     public void testFormatColorNameAndTextFormattedAbsent() {
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
-        this.formatAndCheck(
+        this.parsePatternFormatAndCheck(
                 "[RED]",
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -154,7 +163,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     public void testFormatColorNumberAndTextFormatted() {
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
-        this.formatAndCheck(
+        this.parsePatternFormatAndCheck(
                 "[COLOR 15]",
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -174,7 +183,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         final String text = "abc123";
         final Optional<Color> color = Optional.of(Color.BLACK);
 
-        this.formatAndCheck(
+        this.parsePatternFormatAndCheck(
                 SpreadsheetPatternSpreadsheetFormatterColor.with(
                         this.parsePatternOrFail("[COLOR 2]"),
                         SpreadsheetPatternSpreadsheetFormatterColor.with(
@@ -207,7 +216,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
     public void testFormatColorNumberAndTextFormattedAbsent() {
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
-        this.formatAndCheck(
+        this.parsePatternFormatAndCheck(
                 "[COLOR 15]",
                 text,
                 new TestSpreadsheetFormatterContext() {
@@ -222,11 +231,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         );
     }
 
-    private void formatAndCheck(final String pattern,
-                                final String value,
-                                final SpreadsheetFormatterContext context,
-                                final SpreadsheetText formattedText) {
-        this.formatAndCheck(
+    private void parsePatternFormatAndCheck(final String pattern,
+                                            final String value,
+                                            final SpreadsheetFormatterContext context,
+                                            final SpreadsheetText formattedText) {
+        this.parsePatternFormatAndCheck(
                 this.createFormatter(pattern),
                 value,
                 context,
@@ -234,10 +243,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         );
     }
 
-    private void formatAndCheck(final SpreadsheetPatternSpreadsheetFormatterColor formatter,
-                                final String value,
-                                final SpreadsheetFormatterContext context,
-                                final SpreadsheetText formattedText) {
+    private void parsePatternFormatAndCheck(final SpreadsheetPatternSpreadsheetFormatterColor formatter,
+                                            final String value,
+                                            final SpreadsheetFormatterContext context,
+                                            final SpreadsheetText formattedText) {
         this.formatAndCheck(
                 formatter,
                 value,
@@ -325,7 +334,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
         }
     }
 
-    // tokens...................................................................................................
+    // tokens...........................................................................................................
 
     @Test
     public void testTokensColorNumber() {
