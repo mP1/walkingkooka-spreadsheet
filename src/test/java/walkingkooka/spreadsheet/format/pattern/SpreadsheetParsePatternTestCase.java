@@ -74,7 +74,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParsePattern,
         T extends ParentSpreadsheetFormatParserToken,
         SPT extends ParentSpreadsheetFormulaParserToken,
-        V> extends SpreadsheetPatternTestCase<P, List<T>>
+        V> extends SpreadsheetPatternTestCase<P>
         implements ConverterTesting {
 
     final static int DEFAULT_YEAR = 1900;

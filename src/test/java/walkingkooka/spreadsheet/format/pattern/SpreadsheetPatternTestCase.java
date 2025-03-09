@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V>
+public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
         implements ClassTesting2<P>,
         SpreadsheetPatternSpreadsheetFormatterTesting,
         HashCodeEqualsDefinedTesting2<P>,
