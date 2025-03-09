@@ -37,14 +37,22 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     private final static String TEXT1 = "1st";
     private final static String TEXT2 = "2nd";
 
+    // with.............................................................................................................
+
     @Test
     public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetFormatterCollection.with(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormatterCollection.with(null)
+        );
     }
 
     @Test
     public void testWithEmptyFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetFormatterCollection.with(Lists.empty()));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetFormatterCollection.with(Lists.empty())
+        );
     }
 
     @Test
@@ -75,7 +83,14 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
 
     @Override
     public SpreadsheetFormatterCollection createFormatter() {
-        return Cast.to(SpreadsheetFormatterCollection.with(Lists.of(this.formatter1(), this.formatter2())));
+        return Cast.to(
+                SpreadsheetFormatterCollection.with(
+                        Lists.of(
+                                this.formatter1(),
+                                this.formatter2()
+                        )
+                )
+        );
     }
 
     private SpreadsheetFormatter formatter1() {
