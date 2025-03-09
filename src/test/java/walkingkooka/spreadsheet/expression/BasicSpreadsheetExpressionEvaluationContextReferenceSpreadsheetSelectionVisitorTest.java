@@ -124,7 +124,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                         return Optional.empty();
                     }
                 },
-                SpreadsheetExpressionEvaluationContext.REFERENCE_NOT_FOUND_VALUE
+                SpreadsheetExpressionEvaluationContext.REFERENCE_NULL_VALUE
         );
     }
 

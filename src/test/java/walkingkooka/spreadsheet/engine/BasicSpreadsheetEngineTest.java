@@ -629,7 +629,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                EXPRESSION_NUMBER_KIND.zero(),
+                null,
                 " " + FORMATTED_PATTERN_SUFFIX
         );
     }
@@ -734,10 +734,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                SpreadsheetError.selectionNotFound(
-                        SpreadsheetSelection.parseCell("A2")
-                ).setNameString(),
-                "#NAME? " + FORMATTED_PATTERN_SUFFIX
+                null,
+                " " + FORMATTED_PATTERN_SUFFIX
         );
     }
 
@@ -2776,7 +2774,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 a1,
-                                                0
+                                                null
                                         )
                                 )
                         ).setColumnWidths(
@@ -2867,7 +2865,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 a1,
-                                                0
+                                                null
                                         )
                                 )
                         ).setColumnWidths(
@@ -2895,11 +2893,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 a1,
-                                                0
+                                                null
                                         ),
                                         this.formatCell(
                                                 b2,
-                                                0
+                                                null
                                         )
                                 )
                         ).setReferences(references("B2=A1")
@@ -3049,6 +3047,102 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 b2.reference()
+        );
+    }
+
+    @Test
+    public void testSaveCellWithFormulaUnknownLabelReference() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName labelName = SpreadsheetSelection.labelName("UNKNOWNLABEL");
+
+        labelName.setLabelMappingReference(
+                SpreadsheetSelection.parseCell("B2")
+        );
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=10+UNKNOWNLABEL"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                SpreadsheetError.selectionNotFound(labelName)
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithFormulaLabelReferenceToMissingCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName labelName = SpreadsheetSelection.labelName("LABELB2");
+
+        final SpreadsheetLabelMapping labelMapping = labelName.setLabelMappingReference(
+                SpreadsheetSelection.parseCell("B2")
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                labelMapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setLabels(
+                                Sets.of(labelMapping)
+                        ).setColumnCount(
+                                OptionalInt.of(0)
+                        ).setRowCount(
+                                OptionalInt.of(0)
+                        )
+        );
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=10+LABELB2"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                10+0
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(labelMapping)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
         );
     }
 
@@ -4553,7 +4647,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 a1,
-                                                SpreadsheetError.selectionNotFound(labelB2)
+                                                1+0
                                         )
                                 )
                         ).setDeletedCells(

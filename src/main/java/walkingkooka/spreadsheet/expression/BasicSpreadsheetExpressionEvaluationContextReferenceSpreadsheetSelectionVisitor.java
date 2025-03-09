@@ -65,7 +65,7 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
                 this.context
         ).map(c -> Optional.of(
                 c.formula().value())
-        ).orElse(SpreadsheetExpressionEvaluationContext.REFERENCE_NOT_FOUND_VALUE);
+        ).orElse(SpreadsheetExpressionEvaluationContext.REFERENCE_NULL_VALUE);
     }
 
     @Override
