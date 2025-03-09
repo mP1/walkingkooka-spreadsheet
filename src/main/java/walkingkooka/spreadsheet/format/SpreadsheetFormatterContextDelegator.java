@@ -38,185 +38,220 @@ import java.util.Optional;
 public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatterContext {
     @Override
     default int cellCharacterWidth() {
-        return this.spreadsheetFormatterContext().cellCharacterWidth();
+        return this.spreadsheetFormatterContext()
+                .cellCharacterWidth();
     }
 
     @Override
     default Optional<Color> colorNumber(final int number) {
-        return this.spreadsheetFormatterContext().colorNumber(number);
+        return this.spreadsheetFormatterContext()
+                .colorNumber(number);
     }
 
     @Override
-    default Optional<Color> colorName(SpreadsheetColorName name) {
-        return this.spreadsheetFormatterContext().colorName(name);
+    default Optional<Color> colorName(final SpreadsheetColorName name) {
+        return this.spreadsheetFormatterContext()
+                .colorName(name);
     }
 
     @Override
-    default Optional<TextNode> format(Object value) {
-        return this.spreadsheetFormatterContext().format(value);
+    default Optional<TextNode> format(final Object value) {
+        return this.spreadsheetFormatterContext()
+                .format(value);
     }
 
     @Override
-    default TextNode formatOrEmptyText(Object value) {
-        return this.spreadsheetFormatterContext().formatOrEmptyText(value);
+    default TextNode formatOrEmptyText(final Object value) {
+        return this.spreadsheetFormatterContext()
+                .formatOrEmptyText(value);
     }
 
     @Override
     default int generalFormatNumberDigitCount() {
-        return this.spreadsheetFormatterContext().generalFormatNumberDigitCount();
+        return this.spreadsheetFormatterContext()
+                .generalFormatNumberDigitCount();
     }
 
     @Override
     default long dateOffset() {
-        return this.spreadsheetFormatterContext().dateOffset();
+        return this.spreadsheetFormatterContext()
+                .dateOffset();
     }
 
     @Override
     default boolean canConvert(final Object value,
                                final Class<?> type) {
-        return this.spreadsheetFormatterContext().canConvert(
-                value,
-                type
-        );
+        return this.spreadsheetFormatterContext()
+                .canConvert(
+                        value,
+                        type
+                );
     }
 
     @Override
     default <T> Either<T, String> convert(final Object value,
                                           final Class<T> type) {
-        return this.spreadsheetFormatterContext().convert(
-                value,
-                type
-        );
+        return this.spreadsheetFormatterContext()
+                .convert(
+                        value,
+                        type
+                );
     }
 
     @Override
     default List<String> ampms() {
-        return this.spreadsheetFormatterContext().ampms();
+        return this.spreadsheetFormatterContext()
+                .ampms();
     }
 
     @Override
     default String ampm(final int hourOfDay) {
-        return this.spreadsheetFormatterContext().ampm(hourOfDay);
+        return this.spreadsheetFormatterContext()
+                .ampm(hourOfDay);
     }
 
     @Override
     default List<String> monthNames() {
-        return this.spreadsheetFormatterContext().monthNames();
+        return this.spreadsheetFormatterContext()
+                .monthNames();
     }
 
     @Override
     default String monthName(final int month) {
-        return this.spreadsheetFormatterContext().monthName(month);
+        return this.spreadsheetFormatterContext()
+                .monthName(month);
     }
 
     @Override
     default List<String> monthNameAbbreviations() {
-        return this.spreadsheetFormatterContext().monthNameAbbreviations();
+        return this.spreadsheetFormatterContext()
+                .monthNameAbbreviations();
     }
 
     @Override
     default String monthNameAbbreviation(final int month) {
-        return this.spreadsheetFormatterContext().monthNameAbbreviation(month);
+        return this.spreadsheetFormatterContext()
+                .monthNameAbbreviation(month);
     }
 
     @Override
     default List<String> weekDayNames() {
-        return this.spreadsheetFormatterContext().weekDayNames();
+        return this.spreadsheetFormatterContext()
+                .weekDayNames();
     }
 
     @Override
     default String weekDayName(final int day) {
-        return this.spreadsheetFormatterContext().weekDayName(day);
+        return this.spreadsheetFormatterContext()
+                .weekDayName(day);
     }
 
     @Override
     default List<String> weekDayNameAbbreviations() {
-        return this.spreadsheetFormatterContext().weekDayNameAbbreviations();
+        return this.spreadsheetFormatterContext()
+                .weekDayNameAbbreviations();
     }
 
     @Override
     default String weekDayNameAbbreviation(final int day) {
-        return this.spreadsheetFormatterContext().weekDayNameAbbreviation(day);
+        return this.spreadsheetFormatterContext()
+                .weekDayNameAbbreviation(day);
     }
 
     @Override
     default int defaultYear() {
-        return this.spreadsheetFormatterContext().defaultYear();
+        return this.spreadsheetFormatterContext()
+                .defaultYear();
     }
 
     @Override
     default int twoDigitYear() {
-        return this.spreadsheetFormatterContext().twoDigitYear();
+        return this.spreadsheetFormatterContext()
+                .twoDigitYear();
     }
 
     @Override
     default int twoToFourDigitYear(final int year) {
-        return this.spreadsheetFormatterContext().twoToFourDigitYear(year);
+        return this.spreadsheetFormatterContext()
+                .twoToFourDigitYear(year);
     }
 
     @Override
     default Locale locale() {
-        return this.spreadsheetFormatterContext().locale();
+        return this.spreadsheetFormatterContext()
+                .locale();
     }
 
     @Override
     default LocalDateTime now() {
-        return this.spreadsheetFormatterContext().now();
+        return this.spreadsheetFormatterContext()
+                .now();
     }
 
     @Override
     default String currencySymbol() {
-        return this.spreadsheetFormatterContext().currencySymbol();
+        return this.spreadsheetFormatterContext()
+                .currencySymbol();
     }
 
     @Override
     default char decimalSeparator() {
-        return this.spreadsheetFormatterContext().decimalSeparator();
+        return this.spreadsheetFormatterContext()
+                .decimalSeparator();
     }
 
     @Override
     default String exponentSymbol() {
-        return this.spreadsheetFormatterContext().exponentSymbol();
+        return this.spreadsheetFormatterContext()
+                .exponentSymbol();
     }
 
     @Override
     default char groupSeparator() {
-        return this.spreadsheetFormatterContext().groupSeparator();
+        return this.spreadsheetFormatterContext()
+                .groupSeparator();
     }
 
     @Override
     default char percentageSymbol() {
-        return this.spreadsheetFormatterContext().percentageSymbol();
+        return this.spreadsheetFormatterContext()
+                .percentageSymbol();
     }
 
     @Override
     default char negativeSign() {
-        return this.spreadsheetFormatterContext().negativeSign();
+        return this.spreadsheetFormatterContext()
+                .negativeSign();
     }
 
     @Override
     default char positiveSign() {
-        return this.spreadsheetFormatterContext().positiveSign();
+        return this.spreadsheetFormatterContext()
+                .positiveSign();
     }
 
     @Override
     default MathContext mathContext() {
-        return this.spreadsheetFormatterContext().mathContext();
+        return this.spreadsheetFormatterContext()
+                .mathContext();
     }
 
     @Override
     default ExpressionNumberKind expressionNumberKind() {
-        return this.spreadsheetFormatterContext().expressionNumberKind();
+        return this.spreadsheetFormatterContext()
+                .expressionNumberKind();
     }
 
     @Override
     default Converter<SpreadsheetConverterContext> converter() {
-        return this.spreadsheetFormatterContext().converter();
+        return this.spreadsheetFormatterContext()
+                .converter();
     }
 
     @Override
     default SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.spreadsheetFormatterContext().resolveLabel(labelName);
+        return this.spreadsheetFormatterContext()
+                .resolveLabel(labelName);
     }
 
     SpreadsheetFormatterContext spreadsheetFormatterContext();
