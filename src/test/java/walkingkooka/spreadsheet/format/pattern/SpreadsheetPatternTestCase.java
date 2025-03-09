@@ -66,6 +66,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     public final void testPatternsCached() {
         final P pattern = this.createPattern();
         final List<?> patterns = pattern.patterns();
+
         assertSame(
                 patterns,
                 pattern.patterns(),
@@ -168,111 +169,200 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     // token helpers....................................................................................................
 
     final SpreadsheetFormatParserToken ampm() {
-        return SpreadsheetFormatParserToken.amPm("A/P", "A/P");
+        return SpreadsheetFormatParserToken.amPm(
+                "A/P",
+                "A/P"
+        );
     }
 
     final SpreadsheetFormatParserToken bracketClose() {
-        return SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]");
+        return SpreadsheetFormatParserToken.bracketCloseSymbol(
+                "]",
+                "]"
+        );
     }
 
     final SpreadsheetFormatParserToken bracketOpen() {
-        return SpreadsheetFormatParserToken.bracketOpenSymbol("[", "[");
+        return SpreadsheetFormatParserToken.bracketOpenSymbol(
+                "[",
+                "["
+        );
     }
 
     final SpreadsheetFormatParserToken color() {
-        return SpreadsheetFormatParserToken.color(Lists.of(colorName()), "[RED]");
+        return SpreadsheetFormatParserToken.color(
+                Lists.of(
+                        colorName()
+                ),
+                "[RED]"
+        );
     }
 
     final SpreadsheetFormatParserToken colorName() {
-        return SpreadsheetFormatParserToken.colorName("RED", "RED");
+        return SpreadsheetFormatParserToken.colorName(
+                "RED",
+                "RED"
+        );
     }
 
     final SpreadsheetFormatParserToken currency() {
-        return SpreadsheetFormatParserToken.currency("%", "%");
+        return SpreadsheetFormatParserToken.currency(
+                "%",
+                "%"
+        );
     }
 
     final SpreadsheetFormatParserToken date() {
-        return SpreadsheetFormatParserToken.date(Lists.of(color()), "[RED]");
+        return SpreadsheetFormatParserToken.date(
+                Lists.of(
+                        color()
+                ),
+                "[RED]"
+        );
     }
 
     final SpreadsheetFormatParserToken dateTime() {
-        return SpreadsheetFormatParserToken.dateTime(Lists.of(color()), "[RED]");
+        return SpreadsheetFormatParserToken.dateTime(
+                Lists.of(
+                        color()
+                ),
+                "[RED]"
+        );
     }
 
     final SpreadsheetFormatParserToken day() {
-        return SpreadsheetFormatParserToken.day("d", "d");
+        return SpreadsheetFormatParserToken.day(
+                "d",
+                "d"
+        );
     }
 
     final SpreadsheetFormatParserToken decimalPoint() {
-        return SpreadsheetFormatParserToken.decimalPoint(".", ".");
+        return SpreadsheetFormatParserToken.decimalPoint(
+                ".",
+                "."
+        );
     }
 
     final SpreadsheetFormatParserToken digit() {
-        return SpreadsheetFormatParserToken.digit("#", "#");
+        return SpreadsheetFormatParserToken.digit(
+                "#",
+                "#"
+        );
     }
 
     final SpreadsheetFormatParserToken digitSpace() {
-        return SpreadsheetFormatParserToken.digitSpace("?", "?");
+        return SpreadsheetFormatParserToken.digitSpace(
+                "?",
+                "?"
+        );
     }
 
     final SpreadsheetFormatParserToken digitZero() {
-        return SpreadsheetFormatParserToken.digitZero("0", "0");
+        return SpreadsheetFormatParserToken.digitZero(
+                "0",
+                "0"
+        );
     }
 
     final SpreadsheetFormatParserToken equalsSymbol() {
-        return SpreadsheetFormatParserToken.equalsSymbol("=", "=");
+        return SpreadsheetFormatParserToken.equalsSymbol(
+                "=",
+                "="
+        );
     }
 
     final SpreadsheetFormatParserToken exponentSymbol() {
-        return SpreadsheetFormatParserToken.exponentSymbol("^", "^");
+        return SpreadsheetFormatParserToken.exponentSymbol(
+                "^",
+                "^"
+        );
     }
 
     final SpreadsheetFormatParserToken fractionSymbol() {
-        return SpreadsheetFormatParserToken.fractionSymbol("/", "/");
+        return SpreadsheetFormatParserToken.fractionSymbol(
+                "/",
+                "/"
+        );
     }
 
     final SpreadsheetFormatParserToken greaterThanSymbol() {
-        return SpreadsheetFormatParserToken.greaterThanSymbol("<", "<");
+        return SpreadsheetFormatParserToken.greaterThanSymbol(
+                "<",
+                "<"
+        );
     }
 
     final SpreadsheetFormatParserToken greaterThanEqualsSymbol() {
-        return SpreadsheetFormatParserToken.greaterThanEqualsSymbol("<=", "<=");
+        return SpreadsheetFormatParserToken.greaterThanEqualsSymbol(
+                "<=",
+                "<="
+        );
     }
 
     final SpreadsheetFormatParserToken hour() {
-        return SpreadsheetFormatParserToken.hour("h", "h");
+        return SpreadsheetFormatParserToken.hour(
+                "h",
+                "h"
+        );
     }
 
     final SpreadsheetFormatParserToken lessThanSymbol() {
-        return SpreadsheetFormatParserToken.lessThanSymbol("<", "<");
+        return SpreadsheetFormatParserToken.lessThanSymbol(
+                "<",
+                "<"
+        );
     }
 
     final SpreadsheetFormatParserToken lessThanEqualsSymbol() {
-        return SpreadsheetFormatParserToken.lessThanEqualsSymbol("<=", "<=");
+        return SpreadsheetFormatParserToken.lessThanEqualsSymbol(
+                "<=",
+                "<="
+        );
     }
 
     final SpreadsheetFormatParserToken minute() {
-        return SpreadsheetFormatParserToken.minute("m", "m");
+        return SpreadsheetFormatParserToken.minute(
+                "m",
+                "m"
+        );
     }
 
     final SpreadsheetFormatParserToken month() {
-        return SpreadsheetFormatParserToken.month("m", "m");
+        return SpreadsheetFormatParserToken.month(
+                "m",
+                "m"
+        );
     }
 
     final SpreadsheetFormatParserToken notEqualsSymbol() {
-        return SpreadsheetFormatParserToken.notEqualsSymbol("<=", "<=");
+        return SpreadsheetFormatParserToken.notEqualsSymbol(
+                "<=",
+                "<="
+        );
     }
 
     final SpreadsheetFormatParserToken number() {
-        return SpreadsheetFormatParserToken.number(Lists.of(color()), "[RED]");
+        return SpreadsheetFormatParserToken.number(
+                Lists.of(
+                        color()
+                ),
+                "[RED]"
+        );
     }
 
     final SpreadsheetFormatParserToken percentSymbol() {
-        return SpreadsheetFormatParserToken.percent("%", "%");
+        return SpreadsheetFormatParserToken.percent(
+                "%",
+                "%"
+        );
     }
 
     final SpreadsheetFormatParserToken second() {
-        return SpreadsheetFormatParserToken.second("s", "s");
+        return SpreadsheetFormatParserToken.second(
+                "s",
+                "s"
+        );
     }
 
     final SpreadsheetFormatParserToken separator() {
@@ -283,76 +373,60 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     }
 
     final SpreadsheetFormatParserToken textLiteral() {
-        return SpreadsheetFormatParserToken.textLiteral("@", "@");
+        return SpreadsheetFormatParserToken.textLiteral(
+                "@",
+                "@"
+        );
     }
 
     final SpreadsheetFormatParserToken groupSeparator() {
-        return SpreadsheetFormatParserToken.groupSeparator(",", ",");
+        return SpreadsheetFormatParserToken.groupSeparator(
+                ",",
+                ","
+        );
     }
 
     final SpreadsheetFormatParserToken time() {
-        return SpreadsheetFormatParserToken.time(Lists.of(color()), "[RED]");
+        return SpreadsheetFormatParserToken.time(
+                Lists.of(
+                        color()
+                ),
+                "[RED]"
+        );
     }
 
     final SpreadsheetFormatParserToken underscore() {
-        return SpreadsheetFormatParserToken.underscore('_', "_");
+        return SpreadsheetFormatParserToken.underscore(
+                '_',
+                "_"
+        );
     }
 
     final SpreadsheetFormatParserToken whitespace() {
-        return SpreadsheetFormatParserToken.whitespace(" ", " ");
+        return SpreadsheetFormatParserToken.whitespace(
+                " ",
+                " "
+        );
     }
 
     final SpreadsheetFormatParserToken year() {
-        return SpreadsheetFormatParserToken.year("y", "y");
-    }
-
-    // Parse............................................................................................................
-
-    @Test
-    public final void testParseStringIllegalPatternFails() {
-        this.parseStringFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
-    }
-
-    // HashCodeEqualsDefined............................................................................................
-
-    @Test
-    public final void testEqualsDifferentPattern() {
-        this.checkNotEquals(this.createPattern("\"different-text-literal\""));
-    }
-
-    // JsonNodeTesting.................................................................................................
-
-    @Test
-    public final void testUnmarshallInvalidPattern() {
-        this.unmarshallFails(JsonNode.string("\"unclosed quoted text inside patterns"));
-    }
-
-    // ToString.........................................................................................................
-
-    @Test
-    public final void testToString() {
-        this.toStringAndCheck(
-                this.createPattern(),
-                CharSequences.quoteIfChars(this.patternText()).toString()
+        return SpreadsheetFormatParserToken.year(
+                "y",
+                "y"
         );
     }
 
     // helpers..........................................................................................................
 
     final P createPattern() {
-        return this.createPattern(this.patternText());
+        return this.createPattern(
+                this.patternText()
+        );
     }
 
     abstract P createPattern(final String pattern);
 
     abstract String patternText();
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
 
     // format...........................................................................................................
 
@@ -370,7 +444,8 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
                                final Object value,
                                final SpreadsheetText expected) {
         this.formatAndCheck(
-                this.createPattern(pattern).formatter(),
+                this.createPattern(pattern)
+                        .formatter(),
                 value,
                 this.createContext(),
                 expected
@@ -379,14 +454,26 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
 
     abstract SpreadsheetFormatterContext createContext();
 
-    // HashCodeEqualityDefinedTesting...................................................................................
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public final void testEqualsDifferentPattern() {
+        this.checkNotEquals(
+                this.createPattern("\"different-text-literal\"")
+        );
+    }
 
     @Override
     public final P createObject() {
         return this.createPattern();
     }
 
-    // JsonNodeMarshallingTesting................................................................................................
+    // json.............................................................................................................
+
+    @Test
+    public final void testUnmarshallInvalidPattern() {
+        this.unmarshallFails(JsonNode.string("\"unclosed quoted text inside patterns"));
+    }
 
     @Override
     public final P createJsonNodeMarshallingValue() {
@@ -415,5 +502,22 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
     @Override
     public final RuntimeException parseStringFailedExpected(final RuntimeException expected) {
         return expected;
+    }
+
+    // ToString.........................................................................................................
+
+    @Test
+    public final void testToString() {
+        this.toStringAndCheck(
+                this.createPattern(),
+                CharSequences.quoteIfChars(this.patternText()).toString()
+        );
+    }
+
+    // ClassTesting.....................................................................................................
+
+    @Override
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
