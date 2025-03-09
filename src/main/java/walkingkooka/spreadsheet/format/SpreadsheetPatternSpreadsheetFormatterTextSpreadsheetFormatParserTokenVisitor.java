@@ -55,7 +55,8 @@ final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTok
     /**
      * Private ctor use static method.
      */
-    SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(final String value, final SpreadsheetFormatterContext context) {
+    SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor(final String value,
+                                                                                  final SpreadsheetFormatterContext context) {
         super();
         this.context = context;
         this.value = value;
