@@ -1774,15 +1774,55 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellWithNullValue() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+
+        final SpreadsheetCell a1Cell = context.storeRepository()
+                .cells()
+                .save(
+                        a1.setFormula(
+                                SpreadsheetFormula.EMPTY.setValue(
+                                        Optional.empty() // null value
+                                )
+                        ).setStyle(STYLE)
+                );
+
+        this.loadCellAndCheck(
+                engine,
+                a1,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        null
+                                )
+                        )
+                ).setColumnWidths(columnWidths("A")
+                ).setRowHeights(rowHeights("1")
+                ).setColumnCount(OptionalInt.of(1)
+                ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
     public void testLoadCellWithLabels() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
-        final SpreadsheetCell savedCell = context.storeRepository()
+        final SpreadsheetCell a1Cell = context.storeRepository()
                 .cells()
-                .save(a1.setFormula(SpreadsheetFormula.EMPTY));
+                .save(
+                        a1.setFormula(SpreadsheetFormula.EMPTY)
+                                .setStyle(STYLE)
+                );
 
         final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(a1);
         engine.saveLabel(
@@ -1793,12 +1833,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellAndCheck(
                 engine,
                 a1,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formatCell(savedCell)
+                                this.formatCell(a1Cell)
                         )
                 ).setLabels(
                         Sets.of(mapping)
@@ -19317,7 +19357,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                        final TextStyle style) {
         return this.formatCell(
                 cell,
-                Optional.of(
+                Optional.ofNullable(
                         value instanceof Number ?
                         EXPRESSION_NUMBER_KIND.create((Number)value) :
                         value
@@ -19335,26 +19375,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ).setValue(value)
         );
 
-        if (value.isPresent()) {
-            final TextNode formattedText = METADATA.spreadsheetFormatter(
-                    SPREADSHEET_FORMATTER_PROVIDER,
-                    PROVIDER_CONTEXT
-            ).format(
-                    value,
-                    SPREADSHEET_TEXT_FORMAT_CONTEXT
-            ).orElseThrow(
-                    () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))
-            );
+        final TextNode formattedText = METADATA.spreadsheetFormatter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+        ).format(
+                value,
+                SPREADSHEET_TEXT_FORMAT_CONTEXT
+        ).orElseThrow(
+                () -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value.get()))
+        );
 
-            result = result.setFormattedValue(
-                    Optional.of(
-                            style.replace(formattedText)
-                                    .root()
-                    )
-            );
-        }
-
-        return result;
+        return result.setFormattedValue(
+                Optional.of(
+                        style.replace(formattedText)
+                                .root()
+                )
+        );
     }
 
     /**
