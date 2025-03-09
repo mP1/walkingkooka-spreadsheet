@@ -34,7 +34,7 @@ import walkingkooka.text.CharSequences;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatParserTokenVisitor} is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}
+ * A {@link SpreadsheetFormatParserTokenVisitor} is used exclusively by {@link SpreadsheetFormatter#format(Optional, SpreadsheetFormatterContext)}
  * to assemble a {@link SpreadsheetFormatter} that handles formatting text, all other tokens are ignored.
  */
 final class SpreadsheetPatternSpreadsheetFormatterTextSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
