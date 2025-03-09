@@ -45,30 +45,31 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     @Test
     public void testFormatText() {
         final String text = "abc123";
-        this.formatAndCheck(text, text);
+        this.formatAndCheck(
+                text,
+                text
+        );
     }
 
     @Test
     public void testFormatBigDecimal() {
-        this.formatAndCheck(BIG_DECIMAL, BIGDECIMAL_STRING);
+        this.formatAndCheck(
+                BIG_DECIMAL,
+                BIGDECIMAL_STRING
+        );
     }
 
     @Test
     public void testFormatLocalDateTime() {
-        this.formatAndCheck(LOCAL_DATE_TIME, LOCAL_DATE_TIME_STRING);
+        this.formatAndCheck(
+                LOCAL_DATE_TIME,
+                LOCAL_DATE_TIME_STRING
+        );
     }
 
     @Test
     public void testTokens() {
         this.tokensAndCheck();
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createFormatter(),
-                "format"
-        );
     }
 
     @Override
@@ -127,7 +128,8 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
             }
 
             @Override
-            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
                 if (BigDecimal.class == target) {
                     if (value instanceof BigDecimal) {
                         return this.successfulConversion(
@@ -174,6 +176,18 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
             }
         };
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createFormatter(),
+                "format"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<ContextFormatTextSpreadsheetFormatter> type() {
