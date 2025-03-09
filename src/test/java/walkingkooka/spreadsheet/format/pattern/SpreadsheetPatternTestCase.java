@@ -27,7 +27,7 @@ import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.test.ParseStringTesting;
@@ -47,7 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern, V>
         implements ClassTesting2<P>,
-        SpreadsheetFormatterTesting,
+        SpreadsheetPatternSpreadsheetFormatterTesting,
         HashCodeEqualsDefinedTesting2<P>,
         JsonNodeMarshallingTesting<P>,
         IsMethodTesting<P>,
