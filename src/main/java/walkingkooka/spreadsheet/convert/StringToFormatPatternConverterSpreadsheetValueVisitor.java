@@ -71,24 +71,24 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final BigDecimal value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
     protected void visit(final BigInteger value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
     protected void visit(final Boolean value) {
-        this.formatNumber(
+        this.formatExpressionNumber(
                 value ? 1 : 0
         );
     }
 
     @Override
     protected void visit(final Byte value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
@@ -98,27 +98,27 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final ExpressionNumber value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
     protected void visit(final Float value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
     protected void visit(final Double value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
     protected void visit(final Integer value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
     protected void visit(final LocalDate value) {
-        this.formatUsingPattern(
+        this.patternFormatterFormatOrEmptyText(
                 value,
                 SpreadsheetPattern.parseDateFormatPattern(this.pattern)
         );
@@ -126,7 +126,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final LocalDateTime value) {
-        this.formatUsingPattern(
+        this.patternFormatterFormatOrEmptyText(
                 value,
                 SpreadsheetPattern.parseDateTimeFormatPattern(this.pattern)
         );
@@ -134,7 +134,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final LocalTime value) {
-        this.formatUsingPattern(
+        this.patternFormatterFormatOrEmptyText(
                 value,
                 SpreadsheetPattern.parseTimeFormatPattern(this.pattern)
         );
@@ -142,7 +142,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final Long value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
@@ -182,7 +182,7 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
 
     @Override
     protected void visit(final Short value) {
-        this.formatNumber(value);
+        this.formatExpressionNumber(value);
     }
 
     @Override
@@ -200,22 +200,22 @@ final class StringToFormatPatternConverterSpreadsheetValueVisitor extends Spread
         this.formatText("");
     }
 
-    private void formatNumber(final Number number) {
-        this.formatNumber(this.context.expressionNumberKind().create(number));
+    private void formatExpressionNumber(final Number number) {
+        this.formatExpressionNumber(this.context.expressionNumberKind().create(number));
     }
 
     /**
      * Parses the pattern into a {@link SpreadsheetFormatter} and then formats the given number.
      */
-    private void formatNumber(final ExpressionNumber number) {
-        this.formatUsingPattern(
+    private void formatExpressionNumber(final ExpressionNumber number) {
+        this.patternFormatterFormatOrEmptyText(
                 number,
                 SpreadsheetPattern.parseNumberFormatPattern(this.pattern)
         );
     }
 
-    private void formatUsingPattern(final Object value,
-                                    final SpreadsheetPattern pattern) {
+    private void patternFormatterFormatOrEmptyText(final Object value,
+                                                   final SpreadsheetPattern pattern) {
         this.formatText(
                 pattern.formatter()
                         .formatOrEmptyText(
