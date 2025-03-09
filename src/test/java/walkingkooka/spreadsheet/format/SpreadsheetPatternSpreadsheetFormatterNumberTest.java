@@ -165,7 +165,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // integers ......................................................................................................
+    // integers ........................................................................................................
 
     @Test
     public void testFormatNumberWithPatternHash0() {
@@ -573,7 +573,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // fraction.......................................................................................................
+    // fraction.........................................................................................................
 
     @Test
     public void testFormatNumberWithPatternDecimal0_0() {
@@ -602,7 +602,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // fraction hash decimal hash dot............................................................................................
+    // fraction hash decimal hash dot...................................................................................
 
     @Test
     public void testFormatNumberWithPatternHashDecimal0_0() {
@@ -658,7 +658,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // fraction space. space dot............................................................................................
+    // fraction space. space dot........................................................................................
 
     @Test
     public void testFormatNumberWithPatternQuestionDecimal0_0() {
@@ -943,7 +943,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // fraction space. space dot space ...................................................................................
+    // fraction space. space dot space .................................................................................
 
     @Test
     public void testFormatNumberWithPatternQuestionDecimalQuestion0_0() {
@@ -1035,7 +1035,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // fraction zero. zero dot zero ...................................................................................
+    // fraction zero. zero dot zero ....................................................................................
 
     @Test
     public void testFormatNumberWithPatternZeroDecimalZero0_0() {
@@ -1194,9 +1194,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    //exponent .......................................................................................................
-
-    // zero exponent minus.......................................................................................
+    //exponent zero exponent minus......................................................................................
 
     @Test
     public void testFormatNumberWithPatternZeroExponentZero0() {
@@ -1261,7 +1259,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // hash exponent minus.......................................................................................
+    // hash exponent minus..............................................................................................
 
     @Test
     public void testFormatNumberWithPatternHashExponentHash0() {
@@ -1335,7 +1333,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // question exponent minus.......................................................................................
+    // question exponent minus..........................................................................................
 
     @Test
     public void testFormatNumberWithPatternQuestionExponentQuestion0() {
@@ -1409,7 +1407,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // zero decimal Exponent.......................................................................................
+    // zero decimal Exponent............................................................................................
 
     @Test
     public void testFormatNumberWithPatternZeroDecimalExponentZero0() {
@@ -1483,7 +1481,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // hash decimal Exponent.......................................................................................
+    // hash decimal Exponent............................................................................................
 
     @Test
     public void testFormatNumberWithPatternHashDecimalExponentHash0() {
@@ -1548,7 +1546,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // question decimal Exponent.......................................................................................
+    // question decimal Exponent........................................................................................
 
     @Test
     public void testFormatNumberWithPatternQuestionDecimalExponentQuestion0() {
@@ -1741,7 +1739,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // question decimal question Exponent.......................................................................................
+    // question decimal question Exponent...............................................................................
 
     @Test
     public void testFormatNumberWithPatternQuestionDecimalQuestionExponentQuestion0() {
@@ -1806,7 +1804,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // zero decimal zero Exponent plus.......................................................................................
+    // zero decimal zero Exponent plus..................................................................................
 
     @Test
     public void testFormatNumberWithPatternZeroDecimalZeroZeroExponentZero0() {
@@ -1936,7 +1934,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // question decimal question Exponent.......................................................................................
+    // question decimal question Exponent...............................................................................
 
     @Test
     public void testFormatNumberWithPatternQuestionDecimalQuestionQuestionExponentQuestion0() {
@@ -2003,7 +2001,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
 
     // exponent plus.
 
-    // currency .........................................................................................
+    // currency .........................................................................................................
 
     @Test
     public void testFormatNumberWithPatternCurrency() {
@@ -2014,7 +2012,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // percentage .........................................................................................
+    // percentage ......................................................................................................
 
     @Test
     public void testFormatNumberWithPatternPercentage0() {
@@ -2162,7 +2160,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         );
     }
 
-    // groupSeparator multiplier .........................................................................................
+    // groupSeparator multiplier .......................................................................................
 
     @Test
     public void testFormatNumberWithPatternGroupSeparatorDividerDigitComma0() {
@@ -2559,7 +2557,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
         };
     }
 
-    // tokens...................................................................................................
+    // tokens...........................................................................................................
 
     @Test
     public void testTokens() {
