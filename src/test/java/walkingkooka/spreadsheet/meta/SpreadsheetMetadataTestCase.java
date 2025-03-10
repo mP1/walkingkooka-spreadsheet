@@ -633,7 +633,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testSetDefaultsIncludesCreateDateTimeFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now());
+        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now());
     }
 
     @Test
@@ -665,12 +665,14 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata metadata = this.createObject();
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
-                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now());
+                .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now());
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
-        this.checkEquals("Defaults includes invalid default values: " + SpreadsheetMetadataPropertyName.CREATE_DATE_TIME + ", " + SpreadsheetMetadataPropertyName.CREATED_BY,
+        this.checkEquals(
+                "Defaults includes invalid default values: " + SpreadsheetMetadataPropertyName.CREATED_BY + ", " + SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 thrown.getMessage(),
-                () -> "defaults with " + defaults);
+                () -> "defaults with " + defaults
+        );
     }
 
     @Test
@@ -679,7 +681,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
-                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+                .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now())
                 .setDefaults(SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$UAD")
                 );

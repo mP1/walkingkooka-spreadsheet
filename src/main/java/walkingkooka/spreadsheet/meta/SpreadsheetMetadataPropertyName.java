@@ -135,9 +135,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<EmailAddress> CREATED_BY = registerConstant(SpreadsheetMetadataPropertyNameEmailAddressCreatedBy.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>creation {@link LocalDateTime}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>created-timestamp {@link LocalDateTime}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerConstant(SpreadsheetMetadataPropertyNameLocalDateTimeCreateDateTime.instance());
+    public static final SpreadsheetMetadataPropertyName<LocalDateTime> CREATED_TIMESTAMP = registerConstant(SpreadsheetMetadataPropertyNameLocalDateTimeCreateTimestamp.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency {@link String}</code>
@@ -613,8 +613,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 break;
 
             // authorship & timestamp
-            case "create-date-time":
             case "created-by":
+            case "created-timestamp":
             case "modified-date-time":
             case "modified-by":
                 action = SpreadsheetCellStoreAction.NONE;

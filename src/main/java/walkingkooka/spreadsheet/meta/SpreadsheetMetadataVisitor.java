@@ -122,7 +122,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitCreateDateTime(final LocalDateTime dateTime) {
+    protected void visitCreatedTimestamp(final LocalDateTime dateTime) {
         // nop
     }
 

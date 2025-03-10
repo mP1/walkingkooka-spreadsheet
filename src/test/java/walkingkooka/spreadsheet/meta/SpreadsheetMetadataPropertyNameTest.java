@@ -423,7 +423,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testSpreadsheetCellStoreActionCreateDateTime() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetCellStoreAction.NONE
         );
     }
@@ -617,7 +617,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Override
     public String nameText() {
-        return SpreadsheetMetadataPropertyName.CREATED_BY.name;
+        return SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP.name;
     }
 
     @Override
@@ -627,7 +627,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Override
     public String nameTextLess() {
-        return SpreadsheetMetadataPropertyName.CREATE_DATE_TIME.name;
+        return SpreadsheetMetadataPropertyName.CREATED_BY.name;
     }
 
     // HasSpreadsheetPatternKind........................................................................................

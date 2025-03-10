@@ -89,7 +89,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
                 SpreadsheetMetadataPropertyName.CREATED_BY,
                 creator
         ).setOrRemove(
-                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 timestamp
         ).set(
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,

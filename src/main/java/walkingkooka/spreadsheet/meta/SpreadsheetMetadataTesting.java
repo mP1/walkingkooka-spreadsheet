@@ -166,7 +166,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.CREATED_BY,
                     USER
             ).set(
-                    SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                    SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                     NOW.now()
             ).set(
                     SpreadsheetMetadataPropertyName.DATE_FORMATTER,

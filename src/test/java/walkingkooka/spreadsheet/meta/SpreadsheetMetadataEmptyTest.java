@@ -96,7 +96,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testMissingProperties() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY,
                 SpreadsheetMetadataPropertyName.CREATED_BY,
-                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
@@ -109,7 +109,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 SpreadsheetMetadataPropertyName.CREATED_BY,
-                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);

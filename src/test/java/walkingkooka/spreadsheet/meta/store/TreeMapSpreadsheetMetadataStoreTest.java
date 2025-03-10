@@ -62,7 +62,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         SpreadsheetMetadataPropertyName.CREATED_BY,
                         creator
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                        SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                         NOW
                 ).set(
                         SpreadsheetMetadataPropertyName.MODIFIED_BY,
@@ -95,7 +95,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         SpreadsheetMetadataPropertyName.CREATED_BY,
                         creator
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                        SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                         NOW
                 ).set(
                         SpreadsheetMetadataPropertyName.MODIFIED_BY,
@@ -129,15 +129,15 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
 
         this.toStringAndCheck(store, "[{\n" +
                 "  \"spreadsheet-id\": \"1\",\n" +
-                "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
                 "  \"created-by\": \"user1@example.com\",\n" +
+                "  \"created-timestamp\": \"1999-12-31T12:58:59\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
                 "  \"modified-date-time\": \"2000-01-02T12:58:59\"\n" +
                 "}, {\n" +
                 "  \"spreadsheet-id\": \"2\",\n" +
-                "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
                 "  \"created-by\": \"user2@example.com\",\n" +
+                "  \"created-timestamp\": \"1999-12-31T12:58:59\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
                 "  \"modified-date-time\": \"2000-01-02T12:58:59\"\n" +
