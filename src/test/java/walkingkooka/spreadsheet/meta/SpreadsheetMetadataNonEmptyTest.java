@@ -167,7 +167,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testGetActualNotDefault() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATED_BY;
         final EmailAddress value = EmailAddress.parse("creator111@example.com");
 
         final SpreadsheetMetadata notEmpty = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, value), SpreadsheetMetadata.EMPTY);
@@ -180,7 +180,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testGetOrFailPresent() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATED_BY;
         final EmailAddress email = EmailAddress.parse("creator123@example.com");
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, email), SpreadsheetMetadata.EMPTY);
@@ -430,7 +430,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 different,
                 "{\n" +
                         "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\"\n" +
                         "}"
         );
     }
@@ -451,7 +451,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 different,
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"different@example.com\"\n" +
+                        "  \"created-by\": \"different@example.com\"\n" +
                         "}"
         );
     }
@@ -472,7 +472,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value3,
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\",\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
                         "  \"modified-by\": \"different@example.com\"\n" +
                         "}");
     }
@@ -493,7 +493,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value1,
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\",\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
                         "  \"modified-by\": \"different@example.com\"\n" +
                         "}");
     }
@@ -795,7 +795,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetPropertyDefaultsCausesSwap3() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<EmailAddress> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
         final EmailAddress email = EmailAddress.parse("creator@example.com");
 
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
@@ -811,7 +811,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
-                        "  \"creator\": \"creator@example.com\",\n" +
+                        "  \"created-by\": \"creator@example.com\",\n" +
                         "  \"decimal-separator\": \",\",\n" +
                         "  \"group-separator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
@@ -824,7 +824,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testSetPropertyDefaultsCausesSwap4() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<EmailAddress> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
         final EmailAddress email = EmailAddress.parse("creator@example.com");
 
         final SpreadsheetMetadataPropertyName<Character> decimalSeparator = SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
@@ -840,7 +840,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 groupSeparator,
                 dot,
                 "{\n" +
-                        "  \"creator\": \"creator@example.com\",\n" +
+                        "  \"created-by\": \"creator@example.com\",\n" +
                         "  \"decimal-separator\": \",\",\n" +
                         "  \"group-separator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
@@ -987,7 +987,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value2,
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\"\n" +
                         "}"
         );
 
@@ -1022,7 +1022,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value2,
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\"\n" +
                         "}"
         );
 
@@ -1038,7 +1038,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value1,
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\"\n" +
                         "}"
         );
     }
@@ -2479,7 +2479,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testMissingProperties() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$"),
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
@@ -2492,7 +2492,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$");
 
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
@@ -2502,7 +2502,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testMissingPropertiesNonMissing() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
+                .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
                 .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
@@ -2512,7 +2512,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testMissingPropertiesSomeMissing() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
+                        .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
                         .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
                         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH),
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
@@ -2524,7 +2524,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("creator@example.com"))
                         .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now()),
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
                 SpreadsheetMetadataPropertyName.LOCALE);
     }
@@ -2541,7 +2541,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataNonEmpty.with(map, null),
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\"\n" +
                         "}"
         );
     }
@@ -2595,7 +2595,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ),
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\",\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"locale\": \"en\"\n" +
                         "  }\n" +
@@ -2680,7 +2680,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"color-medium\": 2,\n" +
                 "  \"color-small\": 3,\n" +
                 "  \"create-date-time\": \"2000-12-31T12:58:59\",\n" +
-                "  \"creator\": \"creator@example.com\",\n" +
+                "  \"created-by\": \"creator@example.com\",\n" +
                 "  \"currency-symbol\": \"$AUD\",\n" +
                 "  \"date-formatter\": \"date-format-pattern DD/MM/YYYY\",\n" +
                 "  \"date-parser\": \"date-parse-pattern DD/MM/YYYY;DDMMYYYY\",\n" +
@@ -2736,7 +2736,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterAliasSet.parse("general")
         );
         properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
-        properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
+        properties.put(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY").spreadsheetParserSelector());
@@ -2962,7 +2962,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<EmailAddress> property2() {
-        return SpreadsheetMetadataPropertyName.CREATOR;
+        return SpreadsheetMetadataPropertyName.CREATED_BY;
     }
 
     private EmailAddress value2() {

@@ -37,7 +37,7 @@ public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest 
     @Test
     public void testToString() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
+                .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("user@example.com"))
                 .set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
                 .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.parse("#89abcd"))
                 .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), 1)

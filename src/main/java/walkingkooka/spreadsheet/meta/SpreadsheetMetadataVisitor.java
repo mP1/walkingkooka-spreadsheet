@@ -126,7 +126,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitCreator(final EmailAddress emailAddress) {
+    protected void visitCreatedBy(final EmailAddress emailAddress) {
         // nop
     }
 

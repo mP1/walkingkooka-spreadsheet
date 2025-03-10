@@ -62,7 +62,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testSet() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATED_BY;
         final EmailAddress email = EmailAddress.parse("user@example.com");
 
         this.setAndCheck(
@@ -70,7 +70,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 propertyName,
                 email,
                 "{\n" +
-                        "  \"creator\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\"\n" +
                         "}"
         );
     }
@@ -95,7 +95,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testMissingProperties() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY,
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
@@ -108,7 +108,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$");
 
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
@@ -126,7 +126,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                                 EnvironmentContext.ANONYMOUS
                         )
                 ),
-                EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CREATOR)
+                EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CREATED_BY)
         );
     }
 

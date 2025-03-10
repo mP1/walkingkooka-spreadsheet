@@ -336,7 +336,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testShouldViewsRefreshSameDifferentCreator() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 EmailAddress.parse("different@example.com")
         );
 
@@ -913,7 +913,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(this.property2(), this.value2()),
                 "{\n" +
                         "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"creator\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\"\n" +
                         "}"
         );
     }
@@ -1166,7 +1166,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<EmailAddress> property2() {
-        return SpreadsheetMetadataPropertyName.CREATOR;
+        return SpreadsheetMetadataPropertyName.CREATED_BY;
     }
 
     private EmailAddress value2() {

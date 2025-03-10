@@ -59,7 +59,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                         SpreadsheetId.with(1)
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         creator
                 ).set(
                         SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
@@ -92,7 +92,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                         SpreadsheetId.with(1)
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         creator
                 ).set(
                         SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
@@ -130,14 +130,14 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
         this.toStringAndCheck(store, "[{\n" +
                 "  \"spreadsheet-id\": \"1\",\n" +
                 "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
-                "  \"creator\": \"user1@example.com\",\n" +
+                "  \"created-by\": \"user1@example.com\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
                 "  \"modified-date-time\": \"2000-01-02T12:58:59\"\n" +
                 "}, {\n" +
                 "  \"spreadsheet-id\": \"2\",\n" +
                 "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
-                "  \"creator\": \"user2@example.com\",\n" +
+                "  \"created-by\": \"user2@example.com\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
                 "  \"modified-date-time\": \"2000-01-02T12:58:59\"\n" +

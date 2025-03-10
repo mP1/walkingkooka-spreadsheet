@@ -40,13 +40,13 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testGetOrNullAbsent() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        this.checkEquals(null, components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR));
-        this.checkMissing(components, SpreadsheetMetadataPropertyName.CREATOR);
+        this.checkEquals(null, components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY));
+        this.checkMissing(components, SpreadsheetMetadataPropertyName.CREATED_BY);
     }
 
     @Test
     public void testGetOrNullPresent() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATED_BY;
         final EmailAddress value = EmailAddress.parse("user@example.com");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY.set(property, value));
@@ -59,14 +59,14 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testReportIfMissingMissingOne() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
 
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: creator",
+                "Metadata missing: created-by",
                 thrown.getMessage(),
                 "message"
         );
@@ -75,7 +75,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testReportIfMissingMissingTwo() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
         final IllegalStateException thrown = assertThrows(
@@ -83,7 +83,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: creator, decimal-separator",
+                "Metadata missing: created-by, decimal-separator",
                 thrown.getMessage(),
                 "message"
         );
@@ -93,7 +93,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     public void testReportIfMissingMissingSorted() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
         components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
@@ -102,7 +102,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: creator, decimal-separator, locale, rounding-mode",
+                "Metadata missing: created-by, decimal-separator, locale, rounding-mode",
                 thrown.getMessage(),
                 "message"
         );
@@ -111,16 +111,16 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testReportIfMissingMissingDuplicates() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
 
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: creator, rounding-mode",
+                "Metadata missing: created-by, rounding-mode",
                 thrown.getMessage(),
                 "message"
         );
@@ -128,7 +128,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
 
     @Test
     public void testReportIfMissingNone() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATED_BY;
         final EmailAddress value = EmailAddress.parse("user@example.com");
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY.set(property, value));
@@ -148,10 +148,10 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testToString() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
-        this.toStringAndCheck(components, Lists.of(SpreadsheetMetadataPropertyName.CREATOR, SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR).toString());
+        this.toStringAndCheck(components, Lists.of(SpreadsheetMetadataPropertyName.CREATED_BY, SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR).toString());
     }
 
     // ClassTesting.....................................................................................................

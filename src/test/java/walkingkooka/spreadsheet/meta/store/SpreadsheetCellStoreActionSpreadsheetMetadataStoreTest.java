@@ -202,7 +202,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
                                 .spreadsheetParserSelector()
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("different@example.com")
                 )
         );
@@ -519,7 +519,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
                         SpreadsheetMetadataPropertyName.LOCALE,
                         Locale.ENGLISH
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("creator@example")
                 ).set(
                         SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
