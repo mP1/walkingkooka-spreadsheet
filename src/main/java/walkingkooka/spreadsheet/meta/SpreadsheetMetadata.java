@@ -170,7 +170,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final Set<SpreadsheetMetadataPropertyName<?>> missing = SortedSets.tree();
 
         addIfMissing(SpreadsheetMetadataPropertyName.CREATED_BY, missing);
-        addIfMissing(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, missing);
+        addIfMissing(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, missing);
         addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_BY, missing);
         addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, missing);
 
@@ -1186,7 +1186,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             for (final SpreadsheetMetadataPropertyName<?> name : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
                 switch (name.name) {
                     case "creator":
-                    case "create-date-time":
+                    case "created-timestamp":
                     case "modified-by":
                     case "modified-date-time":
                     case "spreadsheet-name":

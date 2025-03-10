@@ -522,7 +522,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
                         SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("creator@example")
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                        SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                         yesterday
                 ).set(
                         SpreadsheetMetadataPropertyName.MODIFIED_BY,

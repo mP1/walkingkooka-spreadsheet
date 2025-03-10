@@ -182,13 +182,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitCreateDateTime() {
+    public void testVisitCreatedTimestamp() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitCreateDateTime(final LocalDateTime d) {
+            protected void visitCreatedTimestamp(final LocalDateTime d) {
                 this.visited = d;
             }
-        }.accept(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, this.dateTime());
+        }.accept(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, this.dateTime());
     }
 
     @Test

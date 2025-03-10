@@ -177,7 +177,7 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id)
                 .set(SpreadsheetMetadataPropertyName.CREATED_BY, creatorEmail)
-                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, createDateTime)
+                .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, createDateTime)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail)
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, modifiedDateTime);

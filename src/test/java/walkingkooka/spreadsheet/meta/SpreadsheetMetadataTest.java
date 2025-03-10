@@ -356,7 +356,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testShouldViewsRefreshSameDifferentCreateDateTime() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
-                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 LocalDateTime.now().plusDays(1)
         );
 
@@ -912,8 +912,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(this.property1(), this.value1())
                         .set(this.property2(), this.value2()),
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"created-by\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
                         "}"
         );
     }
@@ -1157,7 +1157,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<LocalDateTime> property1() {
-        return SpreadsheetMetadataPropertyName.CREATE_DATE_TIME;
+        return SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP;
     }
 
     private LocalDateTime value1() {

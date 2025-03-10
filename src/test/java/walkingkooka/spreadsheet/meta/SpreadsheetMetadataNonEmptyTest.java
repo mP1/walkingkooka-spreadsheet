@@ -429,8 +429,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 created,
                 different,
                 "{\n" +
-                        "  \"create-date-time\": \"1999-12-31T12:58:59\",\n" +
-                        "  \"created-by\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"1999-12-31T12:58:59\"\n" +
                         "}"
         );
     }
@@ -450,8 +450,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 creator,
                 different,
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"created-by\": \"different@example.com\"\n" +
+                        "  \"created-by\": \"different@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
                         "}"
         );
     }
@@ -471,8 +471,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 modified,
                 value3,
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
                         "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\",\n" +
                         "  \"modified-by\": \"different@example.com\"\n" +
                         "}");
     }
@@ -492,8 +492,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 created,
                 value1,
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
                         "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\",\n" +
                         "  \"modified-by\": \"different@example.com\"\n" +
                         "}");
     }
@@ -975,7 +975,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property1,
                 value1,
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\"\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
                         "}"
         );
 
@@ -986,8 +986,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property2,
                 value2,
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"created-by\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
                         "}"
         );
 
@@ -1010,19 +1010,20 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property1,
                 value1,
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\"\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
                         "}"
         );
 
         //set
         final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
         final EmailAddress value2 = this.value2();
-        final SpreadsheetMetadata metadata2 = this.setAndCheck(metadata1,
+        final SpreadsheetMetadata metadata2 = this.setAndCheck(
+                metadata1,
                 property2,
                 value2,
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"created-by\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
                         "}"
         );
 
@@ -1037,8 +1038,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property1,
                 value1,
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"created-by\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
                         "}"
         );
     }
@@ -2480,7 +2481,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testMissingProperties() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$"),
                 SpreadsheetMetadataPropertyName.CREATED_BY,
-                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
@@ -2493,7 +2494,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 SpreadsheetMetadataPropertyName.CREATED_BY,
-                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
@@ -2503,7 +2504,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testMissingPropertiesNonMissing() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
-                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+                .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now())
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now()));
@@ -2513,7 +2514,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testMissingPropertiesSomeMissing() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
-                        .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+                        .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now())
                         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH),
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
@@ -2525,7 +2526,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("creator@example.com"))
                         .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now()),
                 SpreadsheetMetadataPropertyName.CREATED_BY,
-                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE);
     }
 
@@ -2540,8 +2541,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(
                 SpreadsheetMetadataNonEmpty.with(map, null),
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
-                        "  \"created-by\": \"user@example.com\"\n" +
+                        "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
                         "}"
         );
     }
@@ -2594,8 +2595,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         )
                 ),
                 "{\n" +
-                        "  \"create-date-time\": \"2000-01-02T12:58:59\",\n" +
                         "  \"created-by\": \"user@example.com\",\n" +
+                        "  \"created-timestamp\": \"2000-01-02T12:58:59\",\n" +
                         "  \"_defaults\": {\n" +
                         "    \"locale\": \"en\"\n" +
                         "  }\n" +
@@ -2679,7 +2680,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"color-big\": 1,\n" +
                 "  \"color-medium\": 2,\n" +
                 "  \"color-small\": 3,\n" +
-                "  \"create-date-time\": \"2000-12-31T12:58:59\",\n" +
+                "  \"created-timestamp\": \"2000-12-31T12:58:59\",\n" +
                 "  \"created-by\": \"creator@example.com\",\n" +
                 "  \"currency-symbol\": \"$AUD\",\n" +
                 "  \"date-formatter\": \"date-format-pattern DD/MM/YYYY\",\n" +
@@ -2735,7 +2736,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.CONVERTERS,
                 ConverterAliasSet.parse("general")
         );
-        properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
+        properties.put(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
@@ -2953,7 +2954,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<LocalDateTime> property1() {
-        return SpreadsheetMetadataPropertyName.CREATE_DATE_TIME;
+        return SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP;
     }
 
     private LocalDateTime value1() {
