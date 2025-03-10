@@ -130,11 +130,11 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testPatchNonNullValue() {
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 EmailAddress.parse("user@example.com"),
                 JsonNode.object()
                         .set(
-                                JsonPropertyName.with("creator"),
+                                JsonPropertyName.with("created-by"),
                                 JsonNode.string("user@example.com")
                         )
         );
@@ -143,14 +143,14 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testPatchNonNullValue2() {
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 EmailAddress.parse("user@example.com"),
                 SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("user@patched-over.com")
                 ),
                 SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("user@example.com")
                 )
         );
@@ -162,14 +162,14 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 EmailAddress.parse("user@example.com"),
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("user@patched-over.com")
                 ),
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("user@example.com")
                 )
         );
@@ -178,11 +178,11 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testPatchNullValue() {
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 null,
                 JsonNode.object()
                         .set(
-                                JsonPropertyName.with("creator"),
+                                JsonPropertyName.with("created-by"),
                                 JsonNode.nullNode()
                         )
         );
@@ -191,10 +191,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testPatchNullValue2() {
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 null,
                 SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("user@patched-over.com")
                 ),
                 SpreadsheetMetadata.EMPTY
@@ -207,10 +207,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 null,
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.CREATOR,
+                        SpreadsheetMetadataPropertyName.CREATED_BY,
                         EmailAddress.parse("user@patched-over.com")
                 ),
                 metadata
@@ -252,7 +252,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testSortSpreadsheetIdFirst() {
-        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
         final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
         final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
@@ -266,7 +266,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testSortSpreadsheetIdFirst2() {
-        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
         final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
         final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
@@ -280,7 +280,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testSortNumberedColours() {
-        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
         final SpreadsheetMetadataPropertyName<?> color10 = SpreadsheetMetadataPropertyName.numberedColor(10);
         final SpreadsheetMetadataPropertyName<?> color2 = SpreadsheetMetadataPropertyName.numberedColor(2);
         final SpreadsheetMetadataPropertyName<?> color3 = SpreadsheetMetadataPropertyName.numberedColor(3);
@@ -295,7 +295,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testSortSpreadsheetIdNumberedColours() {
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
-        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
         final SpreadsheetMetadataPropertyName<?> color10 = SpreadsheetMetadataPropertyName.numberedColor(10);
         final SpreadsheetMetadataPropertyName<?> color2 = SpreadsheetMetadataPropertyName.numberedColor(2);
         final SpreadsheetMetadataPropertyName<?> color3 = SpreadsheetMetadataPropertyName.numberedColor(3);
@@ -323,7 +323,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testParseUrlFragmentSaveValueCreatorFails() {
         this.parseValueFails(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 EmailAddress.parse("creator@example.com")
         );
     }
@@ -413,9 +413,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionCreator() {
+    public void testSpreadsheetCellStoreActionCreatedBy() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 SpreadsheetCellStoreAction.NONE
         );
     }
@@ -617,7 +617,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Override
     public String nameText() {
-        return SpreadsheetMetadataPropertyName.CREATOR.name;
+        return SpreadsheetMetadataPropertyName.CREATED_BY.name;
     }
 
     @Override

@@ -103,7 +103,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitCreator(final EmailAddress emailAddress) {
+    protected void visitCreatedBy(final EmailAddress emailAddress) {
         throw new UnsupportedOperationException();
     }
 

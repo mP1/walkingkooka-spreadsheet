@@ -163,7 +163,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     CONVERTER_PROVIDER.converterInfos()
                             .aliasSet()
             ).set(
-                    SpreadsheetMetadataPropertyName.CREATOR,
+                    SpreadsheetMetadataPropertyName.CREATED_BY,
                     USER
             ).set(
                     SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,

@@ -132,7 +132,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creator {@link EmailAddress}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<EmailAddress> CREATOR = registerConstant(SpreadsheetMetadataPropertyNameEmailAddressCreator.instance());
+    public static final SpreadsheetMetadataPropertyName<EmailAddress> CREATED_BY = registerConstant(SpreadsheetMetadataPropertyNameEmailAddressCreatedBy.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creation {@link LocalDateTime}</code>
@@ -614,7 +614,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
             // authorship & timestamp
             case "create-date-time":
-            case "creator":
+            case "created-by":
             case "modified-date-time":
             case "modified-by":
                 action = SpreadsheetCellStoreAction.NONE;

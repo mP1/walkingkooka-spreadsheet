@@ -86,7 +86,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         final LocalDateTime timestamp = this.now.now();
 
         SpreadsheetMetadata unsaved = this.createTemplate.set(
-                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATED_BY,
                 creator
         ).setOrRemove(
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,

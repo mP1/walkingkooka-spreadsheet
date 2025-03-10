@@ -91,7 +91,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
 
     @Test
     public void testVisitSpreadsheetMetadataPropertyNameSkip() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATED_BY;
         final EmailAddress value = this.emailAddress();
         final SpreadsheetMetadata metadata = metadata(propertyName, value);
 
@@ -172,13 +172,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitCreator() {
+    public void testVisitCreatedBy() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitCreator(final EmailAddress e) {
+            protected void visitCreatedBy(final EmailAddress e) {
                 this.visited = e;
             }
-        }.accept(SpreadsheetMetadataPropertyName.CREATOR, this.emailAddress());
+        }.accept(SpreadsheetMetadataPropertyName.CREATED_BY, this.emailAddress());
     }
 
     @Test

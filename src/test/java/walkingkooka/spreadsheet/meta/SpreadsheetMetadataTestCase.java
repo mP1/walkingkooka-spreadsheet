@@ -237,13 +237,13 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testSetNullPropertyValueFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> this.createObject().set(SpreadsheetMetadataPropertyName.CREATOR, null));
+        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> this.createObject().set(SpreadsheetMetadataPropertyName.CREATED_BY, null));
     }
 
     @Test
     public final void testSetInvalidPropertyValueFails() {
         assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
+            final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.CREATED_BY;
             this.createObject().set(propertyName, Cast.to("invalid-expected-EmailAddress"));
         });
     }
@@ -628,7 +628,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testSetDefaultsIncludesCreatorFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
+        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"));
     }
 
     @Test
@@ -664,11 +664,11 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testSetDefaultsSeveralInvalidsFails() {
         final SpreadsheetMetadata metadata = this.createObject();
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
+                .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
                 .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now());
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
-        this.checkEquals("Defaults includes invalid default values: " + SpreadsheetMetadataPropertyName.CREATE_DATE_TIME + ", " + SpreadsheetMetadataPropertyName.CREATOR,
+        this.checkEquals("Defaults includes invalid default values: " + SpreadsheetMetadataPropertyName.CREATE_DATE_TIME + ", " + SpreadsheetMetadataPropertyName.CREATED_BY,
                 thrown.getMessage(),
                 () -> "defaults with " + defaults);
     }
@@ -678,7 +678,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata metadata = this.createObject();
 
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
+                .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
                 .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
                 .setDefaults(SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$UAD")

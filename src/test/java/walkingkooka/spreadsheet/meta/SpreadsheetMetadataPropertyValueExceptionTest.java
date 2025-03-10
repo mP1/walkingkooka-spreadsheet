@@ -38,7 +38,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
                 this.value());
         this.checkMessage(
                 throwable,
-                "Metadata creator=\"abc123\", message"
+                "Metadata created-by=\"abc123\", message"
         );
         this.checkPropertyNameAndValue(throwable);
     }
@@ -51,7 +51,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
                 CAUSE);
         this.checkMessage(
                 throwable,
-                "Metadata creator=\"abc123\", message"
+                "Metadata created-by=\"abc123\", message"
         );
         this.checkPropertyNameAndValue(throwable);
         this.checkCause(throwable, CAUSE);
@@ -74,7 +74,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
 
     @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<?> name() {
-        return SpreadsheetMetadataPropertyName.CREATOR;
+        return SpreadsheetMetadataPropertyName.CREATED_BY;
     }
 
     @SuppressWarnings("SameReturnValue")

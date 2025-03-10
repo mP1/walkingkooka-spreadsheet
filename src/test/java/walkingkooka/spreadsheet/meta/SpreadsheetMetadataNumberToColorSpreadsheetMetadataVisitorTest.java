@@ -39,7 +39,7 @@ public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTes
 
         visitor.accept(
                 SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))
+                        .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("user@example.com"))
                         .set(SpreadsheetMetadataPropertyName.numberedColor(12), Color.fromRgb(0x112233))
                         .set(SpreadsheetMetadataPropertyName.numberedColor(13), Color.fromRgb(0xffeedd))
         );
