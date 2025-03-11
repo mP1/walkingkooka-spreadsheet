@@ -181,7 +181,10 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(
                 delta,
-                Sets.of(a1, b2)
+                Sets.of(
+                        a1,
+                        b2
+                )
         );
         this.checkEquals(
                 Lists.of(a1, b2),
@@ -689,7 +692,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 delta,
                 Sets.of(a1, b2)
         );
-        this.checkEquals(Lists.of(a1, b2), new ArrayList<>(delta.deletedCells()));
+        this.checkEquals(
+                Lists.of(
+                        a1,
+                        b2
+                ),
+                new ArrayList<>(
+                        delta.deletedCells()
+                )
+        );
     }
 
     @Test
@@ -710,15 +721,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         c3.toRelative(),
                         d4.toRelative()
                 )
-        );
-        this.checkEquals(
-                Lists.of(
-                        a1.toRelative(),
-                        b2.toRelative(),
-                        c3.toRelative(),
-                        d4
-                ),
-                new ArrayList<>(delta.deletedCells())
         );
     }
 
@@ -793,10 +795,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 delta,
                 Sets.of(a, b)
         );
-        this.checkEquals(
-                Lists.of(a, b),
-                new ArrayList<>(delta.deletedColumns())
-        );
     }
 
     @Test
@@ -813,13 +811,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         a.toRelative(),
                         b
                 )
-        );
-        this.checkEquals(
-                Lists.of(
-                        a.toRelative(),
-                        b
-                ),
-                new ArrayList<>(delta.deletedColumns())
         );
     }
 
@@ -892,7 +883,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
         this.checkEquals(
                 Lists.of(a1, b2),
-                new ArrayList<>(delta.deletedRows())
+                new ArrayList<>(
+                        delta.deletedRows()
+                )
         );
     }
 
@@ -910,13 +903,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         row1.toRelative(),
                         row2.toRelative()
                 )
-        );
-        this.checkEquals(
-                Lists.of(
-                        row1.toRelative(),
-                        row2
-                ),
-                new ArrayList<>(delta.deletedRows())
         );
     }
 
@@ -1046,7 +1032,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 delta,
                 Sets.of(a1, b2)
         );
-        this.checkEquals(Lists.of(a1, b2), new ArrayList<>(delta.matchedCells()));
+        this.checkEquals(
+                Lists.of(
+                        a1,
+                        b2
+                ),
+                new ArrayList<>(
+                        delta.matchedCells()
+                )
+        );
     }
 
     @Test
@@ -1062,20 +1056,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.matchedCellsAndCheck(
                 delta,
                 Sets.of(
-                        a1.toRelative(),
-                        b2.toRelative(),
-                        c3.toRelative(),
-                        d4.toRelative()
-                )
-        );
-        this.checkEquals(
-                Lists.of(
-                        a1.toRelative(),
-                        b2.toRelative(),
-                        c3.toRelative(),
+                        a1,
+                        b2,
+                        c3,
                         d4
-                ),
-                new ArrayList<>(delta.matchedCells())
+                )
         );
     }
 
@@ -1961,14 +1946,9 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 "references"
         );
 
-        this.checkEquals(
-            Sets.empty(),
+        this.allRelativeAndCheck(
             delta.references()
                     .keySet()
-                    .stream()
-                    .filter(r -> false == r.toRelative().equals(r))
-                    .collect(Collectors.toCollection(SortedSets::tree)),
-                () -> "non relative cell references found"
         );
 
         assertThrows(
@@ -2027,10 +2007,21 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final void deletedCellsAndCheck(final SpreadsheetDelta delta,
                                     final Set<SpreadsheetCellReference> cells) {
-        this.checkEquals(cells,
+        this.checkEquals(
+                cells,
                 delta.deletedCells(),
-                "deletedCells");
-        assertThrows(UnsupportedOperationException.class, () -> delta.deletedCells().add(null));
+                "deletedCells"
+        );
+
+        this.allRelativeAndCheck(
+                delta.deletedColumns()
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.deletedCells()
+                        .add(null)
+        );
     }
 
     final JsonNode deletedCellsJson() {
@@ -2059,9 +2050,16 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final void deletedColumnsAndCheck(final SpreadsheetDelta delta,
                                       final Set<SpreadsheetColumnReference> columns) {
-        this.checkEquals(columns,
+        this.checkEquals(
+                columns,
                 delta.deletedColumns(),
-                "deletedColumns");
+                "deletedColumns"
+        );
+
+        this.allRelativeAndCheck(
+                delta.deletedColumns()
+        );
+
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> delta.deletedColumns().add(null)
@@ -2101,6 +2099,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 delta.deletedRows(),
                 "deletedRows"
         );
+
+        this.allRelativeAndCheck(
+                delta.deletedRows()
+        );
+
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> delta.deletedRows().add(null)
@@ -2168,12 +2171,25 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final void matchedCellsAndCheck(final SpreadsheetDelta delta,
+                                    final SpreadsheetCellReference... cells) {
+        this.matchedCellsAndCheck(
+                delta,
+                SortedSets.of(cells)
+        );
+    }
+
+    final void matchedCellsAndCheck(final SpreadsheetDelta delta,
                                     final Set<SpreadsheetCellReference> cells) {
         this.checkEquals(
                 cells,
                 delta.matchedCells(),
                 "matchedCells"
         );
+
+        this.allRelativeAndCheck(
+                delta.matchedCells()
+        );
+
         assertThrows(
                 UnsupportedOperationException.class,
                 () -> delta.matchedCells().add(null)
@@ -2216,6 +2232,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 delta.columnWidths(),
                 "columnWidths"
         );
+
+        this.allRelativeAndCheck(
+                delta.columnWidths()
+                        .keySet()
+        );
     }
 
     // rowHeights.......................................................................................................
@@ -2249,6 +2270,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 rowHeights,
                 delta.rowHeights(),
                 "rowHeights"
+        );
+
+        this.allRelativeAndCheck(
+                delta.rowHeights()
+                        .keySet()
         );
     }
 
@@ -2329,6 +2355,32 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 window,
                 delta.window(),
                 "window"
+        );
+    }
+
+    // equality.........................................................................................................
+
+    private <S extends SpreadsheetSelection> void checkEquals(final Set<S> expected,
+                                                              final Set<S> actual,
+                                                              final String message) {
+        final Set<S> ignoresKindExpected = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        ignoresKindExpected.addAll(expected);
+
+        this.checkEquals(
+                (Object) ignoresKindExpected,
+                (Object) actual,
+                message
+        );
+    }
+
+    private void allRelativeAndCheck(final Set<? extends SpreadsheetSelection> references) {
+        checkEquals(
+                Sets.empty(),
+                references
+                        .stream()
+                        .filter(r -> false == r.toRelative().equals(r))
+                        .collect(Collectors.toCollection(SortedSets::tree)),
+                () -> "non relative cell references found"
         );
     }
 
