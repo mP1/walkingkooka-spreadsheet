@@ -42,6 +42,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         HasNotFoundTextTesting,
         ParseStringTesting<SpreadsheetExpressionReference> {
 
+    // constants........................................................................................................
+
     @Test
     public void testA1Constant() {
         final SpreadsheetCellReference a1 = SpreadsheetCellReference.A1;
@@ -189,7 +191,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.isCellTextAndCheck("LABEL123", false);
     }
 
-    private void isCellTextAndCheck(final String text, final boolean expected) {
+    private void isCellTextAndCheck(final String text,
+                                    final boolean expected) {
         this.checkEquals(
                 expected,
                 SpreadsheetExpressionReference.isCellText(text),
@@ -384,7 +387,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // parseCell.......................................................................................................
+    // parseCell........................................................................................................
 
     @Test
     public void testParseCell() {
@@ -789,7 +792,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         final String reference = "A2";
         this.parseStringAndCheck(
                 reference,
-                SpreadsheetReferenceKind.RELATIVE.column(0).setRow(SpreadsheetReferenceKind.RELATIVE.row(1))
+                SpreadsheetReferenceKind.RELATIVE.column(0)
+                        .setRow(SpreadsheetReferenceKind.RELATIVE.row(1))
         );
     }
 
@@ -798,7 +802,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         final String reference = "C$4";
         this.parseStringAndCheck(
                 reference,
-                SpreadsheetReferenceKind.RELATIVE.column(2).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(3))
+                SpreadsheetReferenceKind.RELATIVE.column(2)
+                        .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(3))
         );
     }
 
@@ -807,7 +812,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         final String reference = "$E6";
         this.parseStringAndCheck(
                 reference,
-                SpreadsheetReferenceKind.ABSOLUTE.column(4).setRow(SpreadsheetReferenceKind.RELATIVE.row(5))
+                SpreadsheetReferenceKind.ABSOLUTE.column(4)
+                        .setRow(SpreadsheetReferenceKind.RELATIVE.row(5))
         );
     }
 
@@ -816,7 +822,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         final String reference = "$G$8";
         this.parseStringAndCheck(
                 reference,
-                SpreadsheetReferenceKind.ABSOLUTE.column(6).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(7))
+                SpreadsheetReferenceKind.ABSOLUTE.column(6)
+                        .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(7))
         );
     }
 
@@ -825,7 +832,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         final String reference = "i10";
         this.parseStringAndCheck(
                 reference,
-                SpreadsheetReferenceKind.RELATIVE.column(8).setRow(SpreadsheetReferenceKind.RELATIVE.row(9))
+                SpreadsheetReferenceKind.RELATIVE.column(8)
+                        .setRow(SpreadsheetReferenceKind.RELATIVE.row(9))
         );
     }
 
@@ -834,7 +842,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         final String reference = "$k12";
         this.parseStringAndCheck(
                 reference,
-                SpreadsheetReferenceKind.ABSOLUTE.column(10).setRow(SpreadsheetReferenceKind.RELATIVE.row(11))
+                SpreadsheetReferenceKind.ABSOLUTE.column(10)
+                        .setRow(SpreadsheetReferenceKind.RELATIVE.row(11))
         );
     }
 
@@ -873,10 +882,13 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseExpressionReferenceCellRange() {
         final String range = "A2:B2";
-        this.parseStringAndCheck(range, SpreadsheetSelection.parseCellRange(range));
+        this.parseStringAndCheck(
+                range,
+                SpreadsheetSelection.parseCellRange(range)
+        );
     }
 
-    // parseCellOrLabel....................................................................................
+    // parseCellOrLabel.................................................................................................
 
     @Test
     public void testParseCellOrLabelNullFails() {
@@ -1190,7 +1202,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // parseRowOrRowRange.........................................................................................
+    // parseRowOrRowRange...............................................................................................
 
     @Test
     public void testParseRowOrRowRangeWithColumnFails() {
@@ -1224,7 +1236,24 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // textLabel.......................................................................................................
+    // ParseStringTesting...............................................................................................
+
+    @Override
+    public SpreadsheetExpressionReference parseString(final String text) {
+        return SpreadsheetSelection.parseExpressionReference(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(Class<? extends RuntimeException> throwing) {
+        return throwing;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
+        return expected;
+    }
+
+    // textLabel........................................................................................................
 
     @Test
     public void testTextLabelCell() {
@@ -1726,22 +1755,5 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    // ParseStringTesting...............................................................................................
-
-    @Override
-    public SpreadsheetExpressionReference parseString(final String text) {
-        return SpreadsheetSelection.parseExpressionReference(text);
-    }
-
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(Class<? extends RuntimeException> throwing) {
-        return throwing;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
     }
 }
