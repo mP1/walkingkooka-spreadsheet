@@ -30,7 +30,7 @@ public enum SpreadsheetCellStoreAction {
     /**
      * Some {@link SpreadsheetMetadataPropertyName} changes do not require any action to be performed on the spreadsheet cells.
      * <br>
-     * An example of this would be a update to {@link SpreadsheetMetadataPropertyName#MODIFIED_DATE_TIME}.
+     * An example of this would be a update to {@link SpreadsheetMetadataPropertyName#MODIFIED_TIMESTAMP}.
      */
     NONE(0),
 

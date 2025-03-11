@@ -68,7 +68,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         SpreadsheetMetadataPropertyName.MODIFIED_BY,
                         creator
                 ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                        SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
                         NOW
                 ).set(
                         SpreadsheetMetadataPropertyName.LOCALE,
@@ -101,7 +101,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         SpreadsheetMetadataPropertyName.MODIFIED_BY,
                         creator
                 ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                        SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
                         NOW
                 ),
                 this.createStore()
@@ -133,14 +133,14 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                 "  \"created-timestamp\": \"1999-12-31T12:58:59\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
-                "  \"modified-date-time\": \"2000-01-02T12:58:59\"\n" +
+                "  \"modified-timestamp\": \"2000-01-02T12:58:59\"\n" +
                 "}, {\n" +
                 "  \"spreadsheet-id\": \"2\",\n" +
                 "  \"created-by\": \"user2@example.com\",\n" +
                 "  \"created-timestamp\": \"1999-12-31T12:58:59\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
-                "  \"modified-date-time\": \"2000-01-02T12:58:59\"\n" +
+                "  \"modified-timestamp\": \"2000-01-02T12:58:59\"\n" +
                 "}]");
     }
 

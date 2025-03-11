@@ -99,7 +99,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP);
     }
 
     @Test
@@ -112,7 +112,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP);
     }
 
     // EnvironmentContext...............................................................................................

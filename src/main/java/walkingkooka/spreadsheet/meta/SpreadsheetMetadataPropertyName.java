@@ -280,9 +280,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<EmailAddress> MODIFIED_BY = registerConstant(SpreadsheetMetadataPropertyNameEmailAddressModifiedBy.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>modified {@link LocalDateTime}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>modified-timestamp {@link LocalDateTime}</code>
      */
-    public static final SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerConstant(SpreadsheetMetadataPropertyNameLocalDateTimeModifiedDateTime.instance());
+    public static final SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_TIMESTAMP = registerConstant(SpreadsheetMetadataPropertyNameLocalDateTimeModifiedTimestamp.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>negative-sign {@link Character}</code>
@@ -615,8 +615,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             // authorship & timestamp
             case "created-by":
             case "created-timestamp":
-            case "modified-date-time":
             case "modified-by":
+            case "modified-timestamp":
                 action = SpreadsheetCellStoreAction.NONE;
                 break;
             // viewport

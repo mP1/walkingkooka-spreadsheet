@@ -464,13 +464,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitModifiedDateTime() {
+    public void testVisitModifiedTimestamp() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitModifiedDateTime(final LocalDateTime d) {
+            protected void visitModifiedTimestamp(final LocalDateTime d) {
                 this.visited = d;
             }
-        }.accept(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, this.dateTime());
+        }.accept(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, this.dateTime());
     }
 
     @Test

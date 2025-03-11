@@ -86,7 +86,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
             .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
             .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.of(1999, 12, 31, 12, 0))
             .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
-            .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 0))
+            .set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, LocalDateTime.of(1999, 12, 31, 12, 0))
             .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector());
 
     private final static LocalDateTime TIMESTAMP = LocalDateTime.now();
@@ -390,7 +390,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
     private Function<SpreadsheetMetadata, SpreadsheetMetadata> stamper() {
         return (m) -> {
             assertSame(BEFORE, m, "before stamp");
-            return m.set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, TIMESTAMP);
+            return m.set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, TIMESTAMP);
         };
     }
 

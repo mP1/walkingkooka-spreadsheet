@@ -643,7 +643,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testSetDefaultsIncludesModifiedDateTimeFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now());
+        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, LocalDateTime.now());
     }
 
     @Test

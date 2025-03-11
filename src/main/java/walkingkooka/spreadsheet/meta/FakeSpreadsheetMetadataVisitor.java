@@ -248,7 +248,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitModifiedDateTime(final LocalDateTime dateTime) {
+    protected void visitModifiedTimestamp(final LocalDateTime dateTime) {
         throw new UnsupportedOperationException();
     }
 

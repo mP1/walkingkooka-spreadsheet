@@ -396,7 +396,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testShouldViewsRefreshSameDifferentModifiedDateTime() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
-                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
                 LocalDateTime.now().plusDays(1)
         );
 
