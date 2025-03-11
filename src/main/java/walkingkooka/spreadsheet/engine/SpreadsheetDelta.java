@@ -519,13 +519,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                         spreadsheetExpressionReferences.stream()
                                 .map(SpreadsheetExpressionReference::toRelative)
                                 .collect(
-                                        Collectors.collectingAndThen(
-                                                Collectors.toCollection(
-                                                        () -> SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
-                                                        )
-                                                ),
-                                                SortedSets::immutable
-                                        )
+                                        SpreadsheetSelection.sortedSetIgnoresReferenceKindCollector()
                                 )
                 );
             }
@@ -576,7 +570,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private static Set<SpreadsheetCellReference> filterDeletedCells(final Set<SpreadsheetCellReference> deletedCells,
                                                                     final SpreadsheetViewportWindows window) {
-        return filter(
+        return filterSelectionSet(
                 deletedCells,
                 window::test,
                 SpreadsheetCellReference::toRelative
@@ -611,7 +605,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private static Set<SpreadsheetColumnReference> filterDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns,
                                                                         final SpreadsheetViewportWindows window) {
-        return filter(
+        return filterSelectionSet(
                 deletedColumns,
                 window::test,
                 SpreadsheetColumnReference::toRelative
@@ -649,7 +643,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private static Set<SpreadsheetRowReference> filterDeletedRows(final Set<SpreadsheetRowReference> deletedRows,
                                                                   final SpreadsheetViewportWindows window) {
-        return filter(
+        return filterSelectionSet(
                 deletedRows,
                 window::test,
                 SpreadsheetRowReference::toRelative
@@ -721,7 +715,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     private static Set<SpreadsheetCellReference> filterMatchedCells(final Set<SpreadsheetCellReference> matchedCells,
                                                                     final SpreadsheetViewportWindows window) {
-        return filter(
+        return filterSelectionSet(
                 matchedCells,
                 window::test,
                 SpreadsheetCellReference::toRelative
@@ -948,22 +942,26 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // filter...........................................................................................................
 
     static <T> Set<T> filter(final Set<T> values,
-                             final Predicate<T> keep) {
-        return filter(
-                values,
-                keep,
-                Function.identity()
-        );
+                             final Predicate<T> windowTester) {
+        return values.stream()
+                .filter(windowTester)
+                .collect(
+                        ImmutableSortedSet.collector()
+                );
     }
 
-    static <T> Set<T> filter(final Set<T> values,
-                             final Predicate<T> windowTester,
-                             final Function<T, T> mapper) {
-        return values.stream()
+    /**
+     * Filters and collects the {@link SpreadsheetSelection} into an {@link ImmutableSortedSet} using
+     * {@link SpreadsheetSelection#IGNORES_REFERENCE_KIND_COMPARATOR}.
+     */
+    static <T extends SpreadsheetSelection> Set<T> filterSelectionSet(final Set<T> selections,
+                                                                      final Predicate<T> windowTester,
+                                                                      final Function<T, T> mapper) {
+        return selections.stream()
                 .filter(windowTester)
                 .map(mapper)
                 .collect(
-                        ImmutableSortedSet.collector()
+                        SpreadsheetSelection.sortedSetIgnoresReferenceKindCollector()
                 );
     }
 
