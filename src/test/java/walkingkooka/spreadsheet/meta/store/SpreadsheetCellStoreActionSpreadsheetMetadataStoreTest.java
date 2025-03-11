@@ -76,7 +76,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                        SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
                         LocalDateTime.now()
                 )
         );
@@ -528,7 +528,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
                         SpreadsheetMetadataPropertyName.MODIFIED_BY,
                         EmailAddress.parse("creator@example")
                 ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                        SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
                         yesterday
                 );
     }

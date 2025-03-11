@@ -95,7 +95,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 creator
         ).set(
-                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
                 timestamp
         );
         if (locale.isPresent()) {

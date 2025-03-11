@@ -180,6 +180,6 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
                 .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, createDateTime)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail)
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, modifiedDateTime);
+                .set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, modifiedDateTime);
     }
 }

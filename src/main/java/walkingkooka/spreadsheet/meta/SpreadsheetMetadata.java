@@ -172,7 +172,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         addIfMissing(SpreadsheetMetadataPropertyName.CREATED_BY, missing);
         addIfMissing(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, missing);
         addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_BY, missing);
-        addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, missing);
+        addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, missing);
 
         addIfMissing(SpreadsheetMetadataPropertyName.LOCALE, missing);
 
@@ -1188,7 +1188,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     case "creator":
                     case "created-timestamp":
                     case "modified-by":
-                    case "modified-date-time":
+                    case "modified-timestamp":
                     case "spreadsheet-name":
                     case "viewport":
                         break;

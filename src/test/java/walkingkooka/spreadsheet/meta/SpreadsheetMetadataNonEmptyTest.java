@@ -2484,7 +2484,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP);
     }
 
     @Test
@@ -2497,7 +2497,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP);
     }
 
     @Test
@@ -2507,7 +2507,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now())
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now()));
+                .set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, LocalDateTime.now()));
     }
 
     @Test
@@ -2517,14 +2517,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now())
                         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH),
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP);
     }
 
     @Test
     public void testMissingPropertiesSomeMissing2() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("creator@example.com"))
-                        .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now()),
+                        .set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, LocalDateTime.now()),
                 SpreadsheetMetadataPropertyName.CREATED_BY,
                 SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
                 SpreadsheetMetadataPropertyName.LOCALE);
@@ -2695,7 +2695,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"hide-zero-values\": true,\n" +
                 "  \"locale\": \"en\",\n" +
                 "  \"modified-by\": \"modified@example.com\",\n" +
-                "  \"modified-date-time\": \"1999-12-31T12:58:59\",\n" +
+                "  \"modified-timestamp\": \"1999-12-31T12:58:59\",\n" +
                 "  \"negative-sign\": \"-\",\n" +
                 "  \"number-formatter\": \"number-format-pattern #0.0\",\n" +
                 "  \"number-parser\": \"number-parse-pattern #0.0;$#0.00\",\n" +
@@ -2801,7 +2801,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
-        properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
+        properties.put(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN);
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#0.0;$#0.00").spreadsheetParserSelector());

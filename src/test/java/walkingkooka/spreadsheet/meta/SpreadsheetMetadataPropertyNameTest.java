@@ -254,7 +254,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     public void testSortSpreadsheetIdFirst() {
         final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
         final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
-        final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
+        final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP;
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
 
         //noinspection unchecked
@@ -268,7 +268,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     public void testSortSpreadsheetIdFirst2() {
         final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
         final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
-        final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
+        final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP;
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
 
         //noinspection unchecked
@@ -439,7 +439,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testSpreadsheetCellStoreActionModifiedDateTime() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
                 SpreadsheetCellStoreAction.NONE
         );
     }

@@ -80,7 +80,7 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         );
 
         this.checkEquals(
-                "Metadata missing required properties: created-by, created-timestamp, locale, modified-by, modified-date-time",
+                "Metadata missing required properties: created-by, created-timestamp, locale, modified-by, modified-timestamp",
                 thrown.getMessage()
         );
     }
@@ -103,7 +103,7 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
                 .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, createDateTime)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail)
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, modifiedDateTime);
+                .set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, modifiedDateTime);
     }
 
     // TypeNameTesting..................................................................

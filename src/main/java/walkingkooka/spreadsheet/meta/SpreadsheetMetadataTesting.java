@@ -226,7 +226,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.MODIFIED_BY,
                     USER
             ).set(
-                    SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME,
+                    SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
                     NOW.now()
             ).set(
                     SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
