@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -1685,6 +1686,34 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 selection.urlFragment(),
                 () -> selection + " urlFragment"
         );
+    }
+
+    // sortedSetIgnoresReferenceKindCollector...........................................................................
+
+    @Test
+    public void testSortedSetIgnoresReferenceKindCollectorWithCell() {
+        Sets.of(
+                        SpreadsheetSelection.A1
+                ).stream()
+                .collect(SpreadsheetSelection.sortedSetIgnoresReferenceKindCollector());
+    }
+
+    @Test
+    public void testSortedSetIgnoresReferenceKindCollectorWithColumn() {
+        Sets.of(
+                        SpreadsheetSelection.parseColumn("A")
+                ).stream()
+                .collect(SpreadsheetSelection.sortedSetIgnoresReferenceKindCollector());
+    }
+
+    @Test
+    public void testSortedSetIgnoresReferenceKindCollectorWithExpressionReference() {
+        Sets.of(
+                        SpreadsheetSelection.A1,
+                        SpreadsheetSelection.parseCellRange("B2:C3"),
+                        SpreadsheetSelection.labelName("Label123")
+                ).stream()
+                .collect(SpreadsheetSelection.sortedSetIgnoresReferenceKindCollector());
     }
 
     // ClassTesting.....................................................................................................

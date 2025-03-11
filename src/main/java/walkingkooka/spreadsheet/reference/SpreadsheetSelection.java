@@ -25,6 +25,8 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.set.ImmutableSortedSet;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -67,10 +69,12 @@ import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -115,6 +119,19 @@ public abstract class SpreadsheetSelection implements HasText,
      * {@see SpreadsheetSelectionIgnoresReferenceKindComparator}
      */
     public final static Comparator<SpreadsheetSelection> IGNORES_REFERENCE_KIND_COMPARATOR = SpreadsheetSelectionIgnoresReferenceKindComparator.INSTANCE;
+
+    /**
+     * Returns a {@link Collector} that places all {@link SpreadsheetSelection} into a {@link SortedSet} that ignores {@link #IGNORES_REFERENCE_KIND_COMPARATOR}.
+     */
+    public static <SS extends SpreadsheetSelection> Collector<SS, ?, ImmutableSortedSet<SS>> sortedSetIgnoresReferenceKindCollector() {
+        return Collectors.collectingAndThen(
+                Collectors.toCollection(
+                        () -> SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
+                        )
+                ),
+                SortedSets::immutable
+        );
+    }
 
     /**
      * Separator by ranges between cells / columns/ rows.
