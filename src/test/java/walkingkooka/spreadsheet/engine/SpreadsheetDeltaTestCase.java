@@ -24,6 +24,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
@@ -557,6 +558,39 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.referencesAndCheck(
                 after,
                 different
+        );
+
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
+
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
+
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
+    }
+
+    @Test
+    public final void testSetReferencesWithDifferentMakesRelative() {
+        final D before = this.createSpreadsheetDelta();
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
+        final SpreadsheetDelta after = before.setReferences(
+                Maps.of(
+                        SpreadsheetSelection.A1.toAbsolute(),
+                        Sets.of(b2)
+                )
+        );
+        assertNotSame(before, after);
+        this.referencesAndCheck(
+                after,
+                Maps.of(
+                        SpreadsheetSelection.A1,
+                        Sets.of(b2.toRelative())
+                )
         );
 
         this.cellsAndCheck(after);
@@ -1925,6 +1959,16 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 references,
                 delta.references(),
                 "references"
+        );
+
+        this.checkEquals(
+            Sets.empty(),
+            delta.references()
+                    .keySet()
+                    .stream()
+                    .filter(r -> false == r.toRelative().equals(r))
+                    .collect(Collectors.toCollection(SortedSets::tree)),
+                () -> "non relative cell references found"
         );
 
         assertThrows(
