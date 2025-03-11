@@ -130,7 +130,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterAliasSet> CONVERTERS = registerConstant(SpreadsheetMetadataPropertyNameConverterAliasSetConverters.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>creator {@link EmailAddress}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>created-by {@link EmailAddress}</code>
      */
     public static final SpreadsheetMetadataPropertyName<EmailAddress> CREATED_BY = registerConstant(SpreadsheetMetadataPropertyNameEmailAddressCreatedBy.instance());
 
