@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeEqualsDefinedTesting2<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>>,
@@ -87,6 +89,52 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
                 cell
         );
     }
+
+    // setCell..........................................................................................................
+
+    @Test
+    public void testSetCellWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .setCell(null)
+        );
+    }
+
+    @Test
+    public void testSetCellWithSame() {
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference = this.createObject();
+        assertSame(
+                referenceAndSpreadsheetCellReference,
+                referenceAndSpreadsheetCellReference.setCell(this.cell())
+        );
+    }
+
+    @Test
+    public void testSetCellWithDifferent() {
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference = this.createObject();
+
+        final SpreadsheetCellReference differentCell = SpreadsheetSelection.parseCell("Z9");
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> different = referenceAndSpreadsheetCellReference.setCell(differentCell);
+
+        assertNotSame(
+                referenceAndSpreadsheetCellReference,
+                different
+        );
+
+        this.cellAndCheck(
+                referenceAndSpreadsheetCellReference
+        );
+        this.cellAndCheck(
+                different,
+                differentCell
+        );
+
+        this.referenceAndCheck(referenceAndSpreadsheetCellReference);
+        this.referenceAndCheck(different);
+    }
+
+    // property helpers.................................................................................................
 
     private void referenceAndCheck(final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference) {
         this.referenceAndCheck(

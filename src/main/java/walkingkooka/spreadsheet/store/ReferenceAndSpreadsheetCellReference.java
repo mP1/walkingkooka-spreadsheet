@@ -55,6 +55,15 @@ public final class ReferenceAndSpreadsheetCellReference<T extends SpreadsheetExp
         return this.cell;
     }
 
+    public ReferenceAndSpreadsheetCellReference<T> setCell(final SpreadsheetCellReference cell) {
+        return this.cell.equals(cell) ?
+                this :
+                new ReferenceAndSpreadsheetCellReference<>(
+                        this.reference,
+                        Objects.requireNonNull(cell, "cell")
+                );
+    }
+
     private final SpreadsheetCellReference cell;
 
     // Object...........................................................................................................
