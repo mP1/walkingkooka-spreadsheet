@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -56,40 +57,64 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
     public void testWith() {
         final SpreadsheetLabelName label = this.label();
         final SpreadsheetCellReference reference = this.cell();
-        final ReferenceAndSpreadsheetCellReference<?> and = ReferenceAndSpreadsheetCellReference.with(
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> and = ReferenceAndSpreadsheetCellReference.with(
                 label,
                 reference
         );
 
-        this.checkEquals(
-                label,
-                and.reference(),
-                "reference"
+        this.referenceAndCheck(
+                and
         );
-        this.checkEquals(
-                reference,
-                and.cell(),
-                "cell"
+        this.cellAndCheck(
+                and
         );
     }
 
     @Test
     public void testWithSelfCell() {
-        final SpreadsheetCellReference reference = this.cell();
-        final ReferenceAndSpreadsheetCellReference<?> and = ReferenceAndSpreadsheetCellReference.with(
-                reference,
-                reference
+        final SpreadsheetCellReference cell = this.cell();
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference> and = ReferenceAndSpreadsheetCellReference.with(
+                cell,
+                cell
         );
 
-        this.checkEquals(
-                reference,
-                and.reference(),
-                "reference"
+        this.referenceAndCheck(
+                and,
+                cell
         );
+        this.cellAndCheck(
+                and,
+                cell
+        );
+    }
+
+    private void referenceAndCheck(final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference) {
+        this.referenceAndCheck(
+                referenceAndSpreadsheetCellReference,
+                this.label()
+        );
+    }
+
+    private <TT extends SpreadsheetExpressionReference> void referenceAndCheck(final ReferenceAndSpreadsheetCellReference<TT> referenceAndSpreadsheetCellReference,
+                                                                               final TT expected) {
         this.checkEquals(
-                reference,
-                and.cell(),
-                "cell"
+                expected,
+                referenceAndSpreadsheetCellReference.reference()
+        );
+    }
+
+    private void cellAndCheck(final ReferenceAndSpreadsheetCellReference<?> referenceAndSpreadsheetCellReference) {
+        this.cellAndCheck(
+                referenceAndSpreadsheetCellReference,
+                this.cell()
+        );
+    }
+
+    private void cellAndCheck(final ReferenceAndSpreadsheetCellReference<?> referenceAndSpreadsheetCellReference,
+                              final SpreadsheetCellReference expected) {
+        this.checkEquals(
+                expected,
+                referenceAndSpreadsheetCellReference.cell()
         );
     }
 
