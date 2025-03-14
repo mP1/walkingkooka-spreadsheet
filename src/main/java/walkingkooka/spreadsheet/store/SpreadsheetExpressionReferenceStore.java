@@ -101,7 +101,7 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
      * </pre>
      * <p>
      * This might be useful to display all references to a particular cell. To display references to a label try
-     * {@link SpreadsheetLabelStore#loadCellOrRanges(SpreadsheetLabelName)}.
+     * {@link SpreadsheetLabelStore#loadCellOrCellRanges(SpreadsheetLabelName)}.
      */
     Set<T> findReferencesWithCell(final SpreadsheetCellReference cell,
                                   final int offset,

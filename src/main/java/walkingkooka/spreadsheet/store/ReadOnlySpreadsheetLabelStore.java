@@ -110,8 +110,8 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Set<? super SpreadsheetCellReferenceOrRange> loadCellOrRanges(final SpreadsheetLabelName label) {
-        return this.store.loadCellOrRanges(label);
+    public Set<SpreadsheetCellReferenceOrRange> loadCellOrCellRanges(final SpreadsheetLabelName label) {
+        return this.store.loadCellOrCellRanges(label);
     }
 
     @Override

@@ -34,11 +34,11 @@ import java.util.Set;
  */
 final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static Set<? super SpreadsheetCellReferenceOrRange> gather(final SpreadsheetLabelName label,
-                                                               final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
+    static Set<SpreadsheetCellReferenceOrRange> gather(final SpreadsheetLabelName label,
+                                                       final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
         final TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor visitor = new TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor(mappings);
         visitor.accept(label);
-        return visitor.references;
+        return visitor.cellOrCellRanges;
     }
 
     // VisibleForTesting
@@ -50,7 +50,7 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor ex
 
     @Override
     protected void visit(final SpreadsheetCellReference cell) {
-        this.references.add(cell);
+        this.cellOrCellRanges.add(cell);
     }
 
     @Override
@@ -66,15 +66,15 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetSelectionVisitor ex
 
     @Override
     protected void visit(final SpreadsheetCellRangeReference cellRange) {
-        this.references.add(cellRange);
+        this.cellOrCellRanges.add(cellRange);
     }
 
     private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings;
     private final Set<ExpressionReference> seen = Sets.hash();
-    private final Set<? super SpreadsheetCellReferenceOrRange> references = Sets.ordered();
+    private final Set<SpreadsheetCellReferenceOrRange> cellOrCellRanges = Sets.ordered();
 
     @Override
     public String toString() {
-        return this.references.toString();
+        return this.cellOrCellRanges.toString();
     }
 }
