@@ -90,6 +90,48 @@ public final class ReferenceAndSpreadsheetCellReferenceTest implements HashCodeE
         );
     }
 
+    // setReference.....................................................................................................
+
+    @Test
+    public void testSetReferenceWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .setReference(null)
+        );
+    }
+
+    @Test
+    public void testSetReferenceWithSame() {
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference = this.createObject();
+        assertSame(
+                referenceAndSpreadsheetCellReference,
+                referenceAndSpreadsheetCellReference.setReference(this.label())
+        );
+    }
+
+    @Test
+    public void testSetReferenceWithDifferent() {
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndSpreadsheetCellReference = this.createObject();
+
+        final SpreadsheetLabelName differentReference = SpreadsheetSelection.labelName("Different");
+        final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> different = referenceAndSpreadsheetCellReference.setReference(differentReference);
+
+        assertNotSame(
+                referenceAndSpreadsheetCellReference,
+                different
+        );
+
+        this.referenceAndCheck(referenceAndSpreadsheetCellReference);
+        this.referenceAndCheck(
+                different,
+                differentReference
+        );
+
+        this.cellAndCheck(referenceAndSpreadsheetCellReference);
+        this.cellAndCheck(different);
+    }
+
     // setCell..........................................................................................................
 
     @Test
