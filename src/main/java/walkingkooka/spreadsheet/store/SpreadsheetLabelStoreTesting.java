@@ -113,20 +113,20 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     // loadCellOrRanges.................................................................................................
 
     @Test
-    default void testLoadCellOrRangesNullLabelFails() {
+    default void testLoadCellOrCellRangesNullLabelFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore()
-                        .loadCellOrRanges(null)
+                        .loadCellOrCellRanges(null)
         );
     }
 
-    default void loadCellOrRangesAndCheck(final SpreadsheetLabelStore store,
-                                          final SpreadsheetLabelName label,
-                                          final Set<? super ExpressionReference> referencesOrRanges) {
+    default void loadCellOrCellRangesAndCheck(final SpreadsheetLabelStore store,
+                                              final SpreadsheetLabelName label,
+                                              final Set<? super ExpressionReference> referencesOrRanges) {
         this.checkEquals(referencesOrRanges,
-                store.loadCellOrRanges(label),
-                () -> "loadCellOrRanges for " + label);
+                store.loadCellOrCellRanges(label),
+                () -> "loadCellOrCellRanges for " + label);
     }
 
     // labels...........................................................................................................

@@ -41,7 +41,7 @@ public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabel
     /**
      * Resolves the given {@link SpreadsheetLabelName} to non label {@link SpreadsheetCellReferenceOrRange}.
      */
-    Set<? super SpreadsheetCellReferenceOrRange> loadCellOrRanges(final SpreadsheetLabelName label);
+    Set<SpreadsheetCellReferenceOrRange> loadCellOrCellRanges(final SpreadsheetLabelName label);
 
     /**
      * Returns all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetExpressionReference}.
