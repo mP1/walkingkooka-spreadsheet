@@ -199,10 +199,14 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.cellToReferencesAndCheck(
                 store,
                 Maps.of(
-                        b1,
-                        Sets.of(a1),
-                        c1,
-                        Sets.of(a1)
+                        b1.toRelative(),
+                        Sets.of(
+                                a1.toRelative()
+                        ),
+                        c1.toRelative(),
+                        Sets.of(
+                                a1.toRelative()
+                        )
                 )
         );
     }
@@ -627,7 +631,7 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
                 store,
                 0, // from
                 3, // to
-                a, b, c // expected
+                a.toRelative(), b.toRelative(), c.toRelative() // expected
         );
     }
 
@@ -851,15 +855,19 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.cellToReferencesAndCheck(
                 store,
                 Maps.of(
-                        b1,
-                        Sets.of(a1)
+                        b1.toRelative(),
+                        Sets.of(
+                                a1.toRelative()
+                        )
                 )
         );
         this.referenceToCellsAndCheck(
                 store,
                 Maps.of(
-                        a1,
-                        Sets.of(b1)
+                        a1.toRelative(),
+                        Sets.of(
+                                b1.toRelative()
+                        )
                 )
         );
     }
@@ -1127,8 +1135,8 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
         this.cellToReferencesAndCheck(
                 store,
                 Maps.of(
-                        b1,
-                        Sets.of(a1)
+                        b1.toRelative(),
+                        Sets.of(a1.toRelative())
                 )
         );
         this.referenceToCellsAndCheck(

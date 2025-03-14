@@ -160,12 +160,20 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(cells, "cells");
 
+        this.saveCellsWithRelativeReference(
+                (T)reference.toRelative(),
+                cells
+        );
+    }
+
+    private void saveCellsWithRelativeReference(final T reference,
+                                                final Set<SpreadsheetCellReference> cells) {
         final Set<SpreadsheetCellReference> previous = this.referenceToCells.get(reference);
         if (null == previous) {
             cells.forEach(cell -> this.addCellNonNull(
                             ReferenceAndSpreadsheetCellReference.with(
                                     reference,
-                                    cell
+                                    cell.toRelative()
                             )
                     )
             );
@@ -179,7 +187,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                     .forEach(cell -> this.addCellNonNull(
                                     ReferenceAndSpreadsheetCellReference.with(
                                             reference,
-                                            cell
+                                            cell.toRelative()
                                     )
                             )
                     );
@@ -189,7 +197,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                     .forEach(cell -> this.removeCellNonNull(
                                     ReferenceAndSpreadsheetCellReference.with(
                                             reference,
-                                            cell
+                                            cell.toRelative()
                                     )
                             )
                     );
@@ -200,6 +208,8 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     public void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
         this.addCellNonNull(
                 Objects.requireNonNull(referenceAndCell, "referenceAndCell")
+                        .setCell(referenceAndCell.cell().toRelative())
+                        .setReference((T) referenceAndCell.reference().toRelative())
         );
     }
 

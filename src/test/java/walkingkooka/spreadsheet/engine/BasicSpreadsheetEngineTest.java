@@ -2197,7 +2197,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 a1.reference(),
-                b2
+                b2.toRelative()
         );
         this.loadReferencesAndCheck(
                 cellReferenceStore,
@@ -2626,7 +2626,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 b2.reference(),
-                a1Reference
+                a1Reference.toRelative()
         );
     }
 
@@ -3038,7 +3038,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 a1.reference(),
-                b2Reference
+                b2Reference.toRelative()
         );
         this.loadReferencesAndCheck(
                 cellReferenceStore,
@@ -3547,7 +3547,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 a1.reference(),
-                e5Reference
+                e5Reference.toRelative()
         );
 
         this.loadReferencesAndCheck(
@@ -4482,7 +4482,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 a1.reference(),
-                b2Reference
+                b2Reference.toRelative()
         );
 
         this.loadReferencesAndCheck(
@@ -4493,7 +4493,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.findReferencesWithCellAndCheck(
                 cellReferenceStore,
                 a1.reference(),
-                b2Reference
+                b2Reference.toRelative()
         );
     }
 
