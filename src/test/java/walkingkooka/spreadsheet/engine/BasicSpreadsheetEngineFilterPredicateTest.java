@@ -62,6 +62,11 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     // test.............................................................................................................
 
     @Test
+    public void testTestWithNullFalse() {
+        this.testFalse(null);
+    }
+
+    @Test
     public void testTestFalseEmptyFormulaNoValueWithAny() {
         this.testFalse(
                 this.createPredicate(SpreadsheetValueType.ANY),

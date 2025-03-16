@@ -32,9 +32,9 @@ public final class SpreadsheetFormatParserTokenPredicateTest implements Predicat
         ClassTesting<SpreadsheetFormatParserTokenPredicate>,
         ToStringTesting<SpreadsheetFormatParserTokenPredicate> {
 
-    @Override
-    public void testTestNullFails() {
-        throw new UnsupportedOperationException();
+    @Test
+    public void testTestNullFalse() {
+        this.testFalse(null);
     }
 
     @Test

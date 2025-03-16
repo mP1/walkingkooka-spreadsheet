@@ -834,7 +834,8 @@ public abstract class SpreadsheetSelection implements HasText,
     // test...........................................................................................................
 
     /**
-     * Tests if this {@link SpreadsheetSelection} overlaps the given {@link SpreadsheetSelection}.
+     * Tests if this {@link SpreadsheetSelection} overlaps the given {@link SpreadsheetSelection}, with null always
+     * giving false.
      * This is intended to support ideas such as selecting the column, cell and row when a cell is selected,
      * eg
      * <pre></pre>
@@ -851,12 +852,11 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     @Override
     public final boolean test(final SpreadsheetSelection selection) {
-        Objects.requireNonNull(selection, "selection");
-
-        return SpreadsheetSelectionTestSpreadsheetSelectionVisitor.test(
-                this,
-                selection
-        );
+        return null != selection &&
+                SpreadsheetSelectionTestSpreadsheetSelectionVisitor.test(
+                        this,
+                        selection
+                );
     }
 
     /**
