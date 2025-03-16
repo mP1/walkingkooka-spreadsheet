@@ -67,6 +67,11 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
 
     @Override
     public boolean test(final SpreadsheetCell cell) {
+        return null != cell &&
+                this.testNonNull(cell);
+    }
+
+    private boolean testNonNull(final SpreadsheetCell cell) {
         final SpreadsheetFormula formula = cell.formula();
         return false == formula.text().isEmpty() &&
                 this.valueType.test(

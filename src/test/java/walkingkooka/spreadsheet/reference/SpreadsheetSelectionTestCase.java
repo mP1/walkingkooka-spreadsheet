@@ -585,11 +585,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     // testXXX..........................................................................................................
 
     @Test
-    public final void testTestWithNullFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> this.createSelection().test(null)
-        );
+    public final void testTestWithNullFalse() {
+        this.testFalse(null);
     }
 
     @Test
