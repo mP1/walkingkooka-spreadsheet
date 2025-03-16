@@ -283,8 +283,11 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
      */
     @Override
     public boolean test(final SpreadsheetSelection selection) {
-        Objects.requireNonNull(selection, "selection");
+        return null != selection &&
+                this.testNonNull(selection);
+    }
 
+    private boolean testNonNull(final SpreadsheetSelection selection) {
         final Set<SpreadsheetCellRangeReference> cellRanges = this.cellRanges;
         return cellRanges.isEmpty() ||
                 cellRanges.stream()
