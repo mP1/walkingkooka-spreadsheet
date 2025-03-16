@@ -452,6 +452,14 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
     // Predicate........................................................................................................
 
     @Test
+    public void testTestWithNullFalse() {
+        this.testFalse(
+                SpreadsheetViewportWindows.parse(""),
+                null
+        );
+    }
+
+    @Test
     public void testTestEmptyWindow() {
         this.testTrue(
                 SpreadsheetViewportWindows.parse(""),
