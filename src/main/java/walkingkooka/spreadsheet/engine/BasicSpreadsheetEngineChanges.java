@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
@@ -44,6 +45,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.watch.Watchers;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -86,38 +88,56 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
         final SpreadsheetCellStore cellStore = repository.cells();
 
-        this.onSaveCell = deltaProperties.contains(SpreadsheetDeltaProperties.CELLS) ?
-                cellStore.addSaveWatcher(this::onCellSaved) :
-                null;
-
-        this.onDeleteCell = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS) ?
-                cellStore.addDeleteWatcher(this::onCellDeleted) :
-                null;
+        final List<Runnable> watchers = Lists.array();
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.CELLS)) {
+            watchers.add(
+                    cellStore.addSaveWatcher(this::onCellSaved)
+            );
+        }
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS)) {
+            watchers.add(
+                    cellStore.addDeleteWatcher(this::onCellDeleted)
+            );
+        }
 
         final SpreadsheetColumnStore columnStore = repository.columns();
-        this.onSaveColumn = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMNS) ?
-                columnStore.addSaveWatcher(this::onColumnSaved) :
-                null;
-        this.onDeleteColumn = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS) ?
-                columnStore.addDeleteWatcher(this::onColumnDeleted) :
-                null;
+
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMNS)) {
+            watchers.add(
+                    columnStore.addSaveWatcher(this::onColumnSaved)
+            );
+        }
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS)) {
+            watchers.add(
+                    columnStore.addDeleteWatcher(this::onColumnDeleted)
+            );
+        }
 
         final SpreadsheetLabelStore labelStore = repository.labels();
-
-        this.onSaveLabel = deltaProperties.contains(SpreadsheetDeltaProperties.LABELS) ?
-                labelStore.addSaveWatcher(this::onLabelSaved) :
-                null;
-        this.onDeleteLabel = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_LABELS) ?
-                labelStore.addDeleteWatcher(this::onLabelDeleted) :
-                null;
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.LABELS)) {
+            watchers.add(
+                    labelStore.addSaveWatcher(this::onLabelSaved)
+            );
+        }
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_LABELS)) {
+            watchers.add(
+                    labelStore.addDeleteWatcher(this::onLabelDeleted)
+            );
+        }
 
         final SpreadsheetRowStore rowStore = repository.rows();
-        this.onSaveRow = deltaProperties.contains(SpreadsheetDeltaProperties.ROWS) ?
-                rowStore.addSaveWatcher(this::onRowSaved) :
-                null;
-        this.onDeleteRow = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_ROWS) ?
-                rowStore.addDeleteWatcher(this::onRowDeleted) :
-                null;
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.ROWS)) {
+            watchers.add(
+                    rowStore.addSaveWatcher(this::onRowSaved)
+            );
+        }
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_ROWS)) {
+            watchers.add(
+                    rowStore.addDeleteWatcher(this::onRowDeleted)
+            );
+        }
+
+        this.watchers = Watchers.runnableCollection(watchers);
 
         this.repository = repository;
     }
@@ -734,30 +754,10 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
      * Removes previously added watchers.
      */
     void close() {
-        // some might be null if the corresponding {@link SpreadsheetDeltaProperties} was clear.
-        Watchers.removeAllThenFail(
-                this.onSaveCell,
-                this.onDeleteCell,
-                this.onSaveColumn,
-                this.onDeleteColumn,
-                this.onSaveLabel,
-                this.onDeleteLabel,
-                this.onSaveRow,
-                this.onDeleteRow
-        );
+        this.watchers.run();
     }
 
-    private final Runnable onSaveCell;
-    private final Runnable onDeleteCell;
-
-    private final Runnable onSaveColumn;
-    private final Runnable onDeleteColumn;
-
-    private final Runnable onSaveLabel;
-    private final Runnable onDeleteLabel;
-
-    private final Runnable onSaveRow;
-    private final Runnable onDeleteRow;
+    private final Runnable watchers;
 
     // SpreadsheetExpressionReferenceLoader.............................................................................
 
