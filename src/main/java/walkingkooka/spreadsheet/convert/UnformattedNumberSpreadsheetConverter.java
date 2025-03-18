@@ -57,6 +57,7 @@ final class UnformattedNumberSpreadsheetConverter implements Converter<Spreadshe
                 this.failConversion(value, type);
     }
 
+    @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
