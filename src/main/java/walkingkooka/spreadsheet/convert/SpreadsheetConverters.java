@@ -168,6 +168,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterStringToExpression}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToExpression() {
+        return SpreadsheetConverterStringToExpression.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetConverterStringToSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> stringToSelection() {
