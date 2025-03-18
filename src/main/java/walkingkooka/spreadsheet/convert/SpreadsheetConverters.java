@@ -76,28 +76,28 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetErrorThrowingConverter}
+     * {@see SpreadsheetConverterSpreadsheetErrorThrowing}
      */
-    public static Converter<ConverterContext> errorThrowing() {
-        return SpreadsheetErrorThrowingConverter.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> errorThrowing() {
+        return SpreadsheetConverterSpreadsheetErrorThrowing.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetErrorToNumberConverter}
+     * {@see SpreadsheetConverterSpreadsheetErrorToNumber}
      */
     public static Converter<SpreadsheetConverterContext> errorToNumber() {
-        return SpreadsheetErrorToNumberConverter.INSTANCE;
+        return SpreadsheetConverterSpreadsheetErrorToNumber.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetErrorToStringConverter}
+     * {@see SpreadsheetConverterSpreadsheetErrorToString}
      */
-    public static Converter<ConverterContext> errorToString() {
-        return SpreadsheetErrorToStringConverter.INSTANCE;
+    public static Converter<SpreadsheetConverterContext> errorToString() {
+        return SpreadsheetConverterSpreadsheetErrorToString.INSTANCE;
     }
 
     /**
-     * {@see GeneralSpreadsheetConverter}
+     * {@see SpreadsheetConverterGeneral}
      */
     public static Converter<SpreadsheetConverterContext> general(final SpreadsheetFormatter dateFormatter,
                                                                  final Parser<SpreadsheetParserContext> dateParser,
@@ -108,7 +108,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                                                                  final SpreadsheetFormatter textFormatter,
                                                                  final SpreadsheetFormatter timeFormatter,
                                                                  final Parser<SpreadsheetParserContext> timeParser) {
-        return GeneralSpreadsheetConverter.with(
+        return SpreadsheetConverterGeneral.with(
                 dateFormatter,
                 dateParser,
                 dateTimeFormatter,
@@ -140,10 +140,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see PluginSelectorLikeToStringConverter}
+     * {@see SpreadsheetConverterPluginSelectorLikeToString}
      */
     public static Converter<SpreadsheetConverterContext> pluginSelectorLike() {
-        return PluginSelectorLikeToStringConverter.INSTANCE;
+        return SpreadsheetConverterPluginSelectorLikeToString.INSTANCE;
     }
 
     /**
@@ -154,24 +154,24 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetSelectionToStringConverter}
+     * {@see SpreadsheetConverterSpreadsheetSelectionToString}
      */
     public static Converter<SpreadsheetConverterContext> selectionToString() {
-        return SpreadsheetSelectionToStringConverter.INSTANCE;
+        return SpreadsheetConverterSpreadsheetSelectionToString.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetCellToConverter}
+     * {@see SpreadsheetConverterSpreadsheetCell}
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetCellTo() {
-        return SpreadsheetCellToConverter.INSTANCE;
+        return SpreadsheetConverterSpreadsheetCell.INSTANCE;
     }
 
     /**
-     * {@see StringToSpreadsheetSelectionConverter}
+     * {@see SpreadsheetConverterStringToSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> stringToSelection() {
-        return StringToSpreadsheetSelectionConverter.INSTANCE;
+        return SpreadsheetConverterStringToSpreadsheetSelection.INSTANCE;
     }
 
     /**
@@ -217,10 +217,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see StringToFormatPatternConverter}
+     * {@see SpreadsheetConverterStringToFormatPattern}
      */
     public static Converter<SpreadsheetConverterContext> stringToFormatPattern(final String pattern) {
-        return StringToFormatPatternConverter.with(pattern);
+        return SpreadsheetConverterStringToFormatPattern.with(pattern);
     }
 
     /**
@@ -238,10 +238,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see UnformattedNumberSpreadsheetConverter}
+     * {@see SpreadsheetConverterUnformattedNumber}
      */
     public static Converter<SpreadsheetConverterContext> unformattedNumber() {
-        return UnformattedNumberSpreadsheetConverter.INSTANCE;
+        return SpreadsheetConverterUnformattedNumber.INSTANCE;
     }
 
     /**
