@@ -1029,7 +1029,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
                         "  \"sort-comparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
                         "    \"background-color\": \"white\",\n" +
                         "    \"border-bottom-color\": \"black\",\n" +
@@ -1196,7 +1196,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"precision\": 10,\n" +
                         "  \"rounding-mode\": \"HALF_UP\",\n" +
                         "  \"sort-comparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
                         "    \"background-color\": \"white\",\n" +
                         "    \"border-bottom-color\": \"black\",\n" +
