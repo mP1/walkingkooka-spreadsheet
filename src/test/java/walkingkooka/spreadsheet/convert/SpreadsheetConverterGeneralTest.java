@@ -47,6 +47,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -383,6 +384,16 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         this.convertFails(
                 SpreadsheetErrorKind.DIV0.setMessage("Ignored"),
                 String.class
+        );
+    }
+
+    // Expression.......................................................................................................
+
+    @Test
+    public void testConvertExpressionValueToExpression() {
+        this.convertAndCheck(
+                Expression.value(123),
+                Expression.class
         );
     }
 

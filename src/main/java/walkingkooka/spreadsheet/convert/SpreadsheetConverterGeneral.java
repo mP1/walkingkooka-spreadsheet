@@ -346,7 +346,8 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                               final SpreadsheetConverterContext context) {
         return isNonNullAndValueIsInstanceofType(
                 value,
-                targetType
+                targetType,
+                context
         ) ||
                 isSupportedValueAndType(
                         value,
@@ -360,9 +361,14 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
     }
 
     private static boolean isNonNullAndValueIsInstanceofType(final Object value,
-                                                             final Class<?> targetType) {
+                                                             final Class<?> targetType,
+                                                             final SpreadsheetConverterContext context) {
         return null != value &&
-                value.getClass() == targetType;
+                INSTANCE_OF.canConvert(
+                        value,
+                        targetType,
+                        context
+                );
     }
 
     private static boolean isSupportedValueAndType(final Object value,
@@ -441,7 +447,11 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
     private <T> Either<T, String> convertNonNull(final Object value,
                                                  final Class<T> targetType,
                                                  final SpreadsheetConverterContext context) {
-        return value.getClass() == targetType ?
+        return INSTANCE_OF.canConvert(
+                value,
+                targetType,
+                context
+        ) ?
                 this.successfulConversion(
                         value,
                         targetType
@@ -454,6 +464,11 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                         context
                 );
     }
+
+    /**
+     * Used to check that a value is an instanceof the target type.
+     */
+    private final static Converter<SpreadsheetConverterContext> INSTANCE_OF = Converters.simple();
 
     private <T> Either<T, String> convertNonNull0(final Object value,
                                                   final Class<T> targetType,
