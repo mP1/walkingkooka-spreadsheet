@@ -1006,12 +1006,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"find-functions\": \"\",\n" +
                         "  \"find-highlighting\": false,\n" +
-                        "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": \"\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
@@ -1173,12 +1173,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"exponent-symbol\": \"e\",\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
                         "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"find-functions\": \"\",\n" +
                         "  \"find-highlighting\": false,\n" +
-                        "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"functions\": \"\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
