@@ -246,6 +246,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(SPREADSHEET_CELL_TO),
                     converterInfo(SELECTION_TO_SELECTION),
                     converterInfo(SELECTION_TO_STRING),
+                    converterInfo(STRING_TO_EXPRESSION),
                     converterInfo(STRING_TO_SELECTION)
             )
     );
