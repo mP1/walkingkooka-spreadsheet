@@ -213,6 +213,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStringToExpression() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.STRING_TO_EXPRESSION + "",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.stringToExpression()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStringToSelection() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.STRING_TO_SELECTION + "",
