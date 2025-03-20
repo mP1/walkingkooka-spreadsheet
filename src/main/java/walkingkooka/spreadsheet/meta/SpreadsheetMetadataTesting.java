@@ -195,20 +195,20 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     EXPRESSION_NUMBER_KIND
             ).set(
                     SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)")
+                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
                     ExpressionFunctionAliasSet.parse("")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
-                    ConverterSelector.parse("collection (error-to-number, error-to-string, string-to-selection, selection-to-selection, selection-to-string, general)")
+                    ConverterSelector.parse("collection (error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMATTERS,
                     SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
                             .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)")
+                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     ExpressionFunctionAliasSet.parse("")
@@ -252,7 +252,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetComparatorNameList.parse("date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year")
             ).set(
                     SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-selection, selection-to-selection, selection-to-string, general)")
+                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.STYLE,
                     TextStyle.EMPTY
