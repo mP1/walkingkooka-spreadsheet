@@ -102,7 +102,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             NO_VALUE
     );
 
-
     /**
      * Uses the provided {@link Parser} to create a {@link SpreadsheetFormula} with the text and parsed {@link SpreadsheetFormulaParserToken}.
      * If the formula expression is invalid, a {@link SpreadsheetFormula} will be created with its value set to {@link SpreadsheetError}.
@@ -158,7 +157,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         this.value = value;
     }
 
-    // Text ....................................................................................................
+    // Text ............................................................................................................
 
     @Override
     public String text() {
@@ -201,7 +200,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
     public final static int MAX_FORMULA_TEXT_LENGTH = 8192;
 
-    // token .............................................................................................
+    // token ...........................................................................................................
 
     public Optional<SpreadsheetFormulaParserToken> token() {
         return this.token;
@@ -226,7 +225,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     private final Optional<SpreadsheetFormulaParserToken> token;
 
-    // expression .............................................................................................
+    // expression ......................................................................................................
 
     public Optional<Expression> expression() {
         return this.expression;
@@ -249,7 +248,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     private final Optional<Expression> expression;
 
-    // value .............................................................................................
+    // value ............................................................................................................
 
     /**
      * The value when this formula is evaluated.
@@ -324,7 +323,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 this;
     }
 
-    // internal factory .............................................................................................
+    // internal factory ................................................................................................
 
     private SpreadsheetFormula replace(final String text,
                                        final Optional<SpreadsheetFormulaParserToken> token,
@@ -367,7 +366,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         );
     }
 
-    // Patchable.......................................................................................................
+    // Patchable........................................................................................................
 
     @Override
     public SpreadsheetFormula patch(final JsonNode json,
@@ -455,7 +454,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         }
     }
 
-    // consumeSpreadsheetExpressionReferences............................................................................
+    // consumeSpreadsheetExpressionReferences...........................................................................
 
     /**
      * Useful method that walks the {@link SpreadsheetFormulaParserToken} if one is present, passing
@@ -481,7 +480,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 );
     }
 
-    // JsonNodeContext..................................................................................................
+    // json.............................................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetFormula} parse a {@link JsonNode}.
@@ -583,14 +582,14 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         );
     }
 
-    // HasUrlFragment..................................................................................................
+    // HasUrlFragment...................................................................................................
 
     @Override
     public UrlFragment urlFragment() {
         return UrlFragment.with(this.text());
     }
 
-    // HashCodeEqualsDefined..........................................................................................
+    // HashCodeEqualsDefined............................................................................................
 
     @Override
     public int hashCode() {
