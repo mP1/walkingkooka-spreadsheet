@@ -54,8 +54,11 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContexts;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -487,6 +490,90 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         assertSame(
                 formula,
                 cleared
+        );
+    }
+
+    // isPure...........................................................................................................
+
+    @Test
+    public void testIsPureWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetFormula.EMPTY.isPure(null)
+        );
+    }
+
+    @Test
+    public void testIsPureMissingExpressionFalse() {
+        this.isPureAndCheck(
+                SpreadsheetFormula.EMPTY.setText("Hello"),
+                ExpressionEvaluationContexts.fake(),
+                false
+        );
+    }
+
+    @Test
+    public void testIsPureWithPureExpression() {
+        final Expression expression = Expression.value("Hello");
+
+        this.isPureAndCheck(
+                SpreadsheetFormula.EMPTY.setText("Hello")
+                        .setExpression(
+                                Optional.of(expression)
+                        ),
+                ExpressionEvaluationContexts.fake(),
+                true
+        );
+    }
+
+    @Test
+    public void testIsPureWithPureFunction() {
+        final ExpressionFunctionName functionName = ExpressionFunctionName.with("Hello");
+
+        this.isPureAndCheck(
+                SpreadsheetFormula.EMPTY.setText("Hello")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.namedFunction(functionName)
+                                )
+                        ),
+                new FakeExpressionEvaluationContext() {
+                    @Override
+                    public boolean isPure(final ExpressionFunctionName n) {
+                        return functionName.equals(n);
+                    }
+                },
+                true
+        );
+    }
+
+    @Test
+    public void testIsPureWithImpureFunction() {
+        this.isPureAndCheck(
+                SpreadsheetFormula.EMPTY.setText("Hello")
+                        .setExpression(
+                                Optional.of(
+                                        Expression.namedFunction(
+                                                ExpressionFunctionName.with("Hello")
+                                        )
+                                )
+                        ),
+                new FakeExpressionEvaluationContext() {
+                    @Override
+                    public boolean isPure(final ExpressionFunctionName n) {
+                        return false;
+                    }
+                },
+                false
+        );
+    }
+
+    private void isPureAndCheck(final SpreadsheetFormula formula,
+                                final ExpressionPurityContext context,
+                                final boolean expected) {
+        this.checkEquals(
+                expected,
+                formula.isPure(context)
         );
     }
 

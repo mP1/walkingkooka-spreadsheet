@@ -45,6 +45,8 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.ReferenceExpression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -642,6 +644,20 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 .isEmpty() &&
                 false == this.value()
                         .isPresent();
+    }
+
+    // isPure...........................................................................................................
+
+    /**
+     * Returns true only if an {@link Expression} exists and the {@link ExpressionPurityContext#isPure(ExpressionFunctionName)}
+     * returns true.
+     */
+    public boolean isPure(final ExpressionPurityContext context) {
+        Objects.requireNonNull(context, "context");
+
+        final Expression expression = this.expression.orElse(null);
+        return null != expression &&
+                expression.isPure(context);
     }
 }
 
