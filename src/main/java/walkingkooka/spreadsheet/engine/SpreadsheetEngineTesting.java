@@ -1742,51 +1742,15 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void saveLabelAndCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetLabelMapping label,
                                    final SpreadsheetEngineContext context,
-                                   final SpreadsheetCell... cells) {
-        this.saveLabelAndCheck(
-                engine,
-                label,
-                context,
-                Sets.of(cells)
-        );
-    }
-
-    default void saveLabelAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetLabelMapping label,
-                                   final SpreadsheetEngineContext context,
-                                   final Set<SpreadsheetCell> cells) {
-        final SpreadsheetDelta result = engine.saveLabel(
-                label,
-                context
-        );
-
-        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(cells)
-                .setColumnCount(
-                        OptionalInt.of(
-                                engine.columnCount(context)
-                        )
-                ).setRowCount(
-                        OptionalInt.of(
-                                engine.rowCount(context)
-                        )
-                ).setLabels(
-                        Sets.of(label)
-                );
+                                   final SpreadsheetDelta delta) {
         this.checkEquals(
-                expected,
-                result,
+                delta,
+                engine.saveLabel(
+                        label,
+                        context
+                ),
                 () -> "saveLabel " + label
         );
-    }
-
-    default void saveLabelAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetLabelMapping label,
-                                   final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta delta) {
-        this.checkEquals(delta,
-                engine.saveLabel(label, context),
-                () -> "saveLabel " + label);
     }
 
     // deleteLabel......................................................................................................

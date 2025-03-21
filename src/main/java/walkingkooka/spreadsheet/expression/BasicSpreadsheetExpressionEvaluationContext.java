@@ -114,8 +114,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        this.cellCycleCheck(cell);
-
         return this.spreadsheetExpressionReferenceLoader.loadCell(
                 cell,
                 this
@@ -124,8 +122,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-        this.cellRangeCycleCheck(range);
-
         return this.spreadsheetExpressionReferenceLoader.loadCellRange(
                 range,
                 this
@@ -210,7 +206,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
         ExpressionReference expressionReference = reference;
         if (expressionReference instanceof SpreadsheetExpressionReference) {
-            expressionReference = this.resolveIfLabelAndCycleCheck(expressionReference);
+            expressionReference = this.resolveIfLabel(
+                    (SpreadsheetExpressionReference)expressionReference
+            ).toExpressionReference();
         }
         if (expressionReference instanceof SpreadsheetExpressionReference) {
             value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(

@@ -33,7 +33,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
@@ -630,91 +629,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     // evaluate.........................................................................................................
-
-    @Test
-    public void testEvaluateWithSelfReferenceGivesError() {
-        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
-        final SpreadsheetCell cell = cellReference.setFormula(
-                SpreadsheetFormula.EMPTY.setText("=A1")
-                        .setExpression(
-                                Optional.of(
-                                        Expression.reference(cellReference)
-                                )
-                        )
-        );
-
-        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
-        cellStore.save(cell);
-
-        this.evaluateAndCheck(
-                this.createContext(cellStore),
-                cell,
-                LOADER,
-                SpreadsheetError.cycle(cellReference)
-        );
-    }
-
-    @Test
-    public void testEvaluateWithIndirectCycleReferenceGivesError() {
-        final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("B2");
-
-        final SpreadsheetCell a1 = SpreadsheetSelection.A1
-                .setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=B2")
-                                .setExpression(
-                                        Optional.of(
-                                                Expression.reference(b2Reference)
-                                        )
-                                )
-                );
-
-        final SpreadsheetCell b2 = b2Reference.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=A1")
-                                .setExpression(
-                                        Optional.of(
-                                                Expression.reference(
-                                                        a1.reference()
-                                                )
-                                        )
-                                )
-                );
-        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
-        cellStore.save(a1);
-        cellStore.save(b2);
-
-        this.evaluateAndCheck(
-                this.createContext(cellStore),
-                a1,
-                new FakeSpreadsheetExpressionReferenceLoader() {
-                    @Override
-                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                              final SpreadsheetExpressionEvaluationContext context) {
-                        switch (cell.toString().toLowerCase()) {
-                            case "a1":
-                                return cellStore.load(cell);
-                            case "b2":
-                                final SpreadsheetCell b2 = cellStore.loadOrFail(cell);
-
-                                return Optional.of(
-                                        b2.setFormula(
-                                                b2.formula()
-                                                        .setValue(
-                                                                Optional.of(
-                                                                        context.setCell(
-                                                                                Optional.of(b2)
-                                                                        ).referenceOrFail(SpreadsheetSelection.A1)
-                                                                )
-                                                        )
-                                        )
-                                );
-                        }
-
-                        return cellStore.load(cell);
-                    }
-                },
-                SpreadsheetError.cycle(a1.reference())
-        );
-    }
 
     @Test
     public void testEvaluate() {

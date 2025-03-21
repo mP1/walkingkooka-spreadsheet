@@ -34,6 +34,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
@@ -44,6 +46,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Handles creating a {@link SpreadsheetDelta} with all the requested fields in {@link SpreadsheetDeltaProperties}.
@@ -92,6 +95,8 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
         this.shouldSaveUpdateCells = deltaProperties.contains(SpreadsheetDeltaProperties.CELLS);
         this.shouldDeleteCells = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS);
+
+        this.references = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
     }
 
     private SpreadsheetDelta go() {
@@ -131,7 +136,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
         if(this.deltaProperties.contains(SpreadsheetDeltaProperties.REFERENCES)) {
             delta = delta.setReferences(
-                    this.changes.cellToReferences
+                    this.extractExternalReferences()
             );
         }
 
@@ -196,23 +201,27 @@ final class BasicSpreadsheetEnginePrepareResponse {
             for (final BasicSpreadsheetEngineChangesCache<SpreadsheetColumnReference, SpreadsheetColumn> referenceAndColumn : this.changes.columns.values()) {
                 final SpreadsheetColumnReference column = referenceAndColumn.reference;
 
-                if (referenceAndColumn.isSave()) {
-                    if (this.shouldSaveUpdateColumns) {
-                        columns.put(
-                                column,
-                                //column
-                                referenceAndColumn.value()
-                        );
-                    }
-                } else {
-                    if (referenceAndColumn.isDelete()) {
+                final BasicSpreadsheetEngineChangesCacheStatusColumn status = (BasicSpreadsheetEngineChangesCacheStatusColumn)referenceAndColumn.status();
+
+                switch(status) {
+                    case SAVED:
+                        if (this.shouldSaveUpdateColumns) {
+                            columns.put(
+                                    column,
+                                    referenceAndColumn.value()
+                            );
+                        }
+                        break;
+                    case DELETED:
                         if (this.shouldDeleteColumns) {
                             columns.put(
                                     column,
                                     null
                             );
                         }
-                    }
+                        break;
+                    default:
+                        throw new IllegalStateException("Invalid status " + status + " for column " + column);
                 }
             }
         }
@@ -227,23 +236,27 @@ final class BasicSpreadsheetEnginePrepareResponse {
             for (final BasicSpreadsheetEngineChangesCache<SpreadsheetRowReference, SpreadsheetRow> referenceAndRow : this.changes.rows.values()) {
                 final SpreadsheetRowReference row = referenceAndRow.reference;
 
-                if (referenceAndRow.isSave()) {
-                    if (this.shouldSaveUpdateRows) {
-                        rows.put(
-                                row,
-                                // row
-                                referenceAndRow.value()
-                        );
-                    }
-                } else {
-                    if (referenceAndRow.isDelete()) {
+                final BasicSpreadsheetEngineChangesCacheStatusRow status = (BasicSpreadsheetEngineChangesCacheStatusRow)referenceAndRow.status();
+
+                switch(status) {
+                    case SAVED:
+                        if (this.shouldSaveUpdateRows) {
+                            rows.put(
+                                    row,
+                                    referenceAndRow.value()
+                            );
+                        }
+                        break;
+                    case DELETED:
                         if (this.shouldDeleteRows) {
                             rows.put(
                                     row,
                                     null
                             );
                         }
-                    }
+                        break;
+                    default:
+                        throw new IllegalStateException("Invalid status " + status + " for row " + row);
                 }
             }
         }
@@ -256,24 +269,40 @@ final class BasicSpreadsheetEnginePrepareResponse {
             for (final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> nameAndMapping : this.changes.labels.values()) {
                 final SpreadsheetLabelName labelName = nameAndMapping.reference;
 
-                if (nameAndMapping.isLoadOrSave()) {
-                    final SpreadsheetLabelMapping labelMapping = nameAndMapping.value();
-                    if (this.shouldSaveUpdateLabels) {
-                        this.labels.put(
-                                labelName,
-                                labelMapping
-                        );
-                    }
-                    this.addLabelMappingCells(labelMapping);
-                } else {
-                    if (nameAndMapping.isDelete()) {
+                final BasicSpreadsheetEngineChangesCacheStatusLabel status = (BasicSpreadsheetEngineChangesCacheStatusLabel)nameAndMapping.status();
+                switch (status) {
+//                    case LOADED:
+//                    case LOADING:
+//                    case LOAD_FINISHED:
+//                    case SAVED:
+//                    case SAVE_FINISHED:
+                    case LOADED_REFERENCES_REFRESHED:
+                    case SAVED_REFERENCES_REFRESHED:
+                        final SpreadsheetLabelMapping labelMapping = nameAndMapping.value();
+                        if (this.shouldSaveUpdateLabels) {
+                            this.labels.put(
+                                    labelName,
+                                    labelMapping
+                            );
+                        }
+                        this.addLabelMappingCells(labelMapping);
+                        break;
+//                    case DELETE:
+//                    case DELETE_FINISHED:
+                    case DELETED_REFERENCES_REFRESHED:
                         if (this.shouldDeleteLabels) {
                             this.labels.put(
                                     labelName,
                                     null
                             );
                         }
-                    }
+                        break;
+                    case REFERENCE_LOADED_REFERENCES_REFRESHED:
+                    case REFERENCE_SAVED_REFERENCES_REFRESHED:
+                    case REFERENCE_DELETED_REFERENCES_REFRESHED:
+                        break;
+                    default:
+                        throw new IllegalStateException("Invalid status " + status + " for label " + labelName);
                 }
             }
         }
@@ -327,30 +356,42 @@ final class BasicSpreadsheetEnginePrepareResponse {
             for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> referenceAndCell : this.changes.cells.values()) {
                 final SpreadsheetCellReference cell = referenceAndCell.reference;
 
-                // dont want to include cells loaded because they are referenced in a formula
-                if (referenceAndCell.isLoadOrSave()) {
-                    if (this.shouldSaveUpdateCells) {
-                        this.cells.put(
-                                cell,
-                                referenceAndCell.value()
-                        );
-                    }
+                final BasicSpreadsheetEngineChangesCacheStatusCell status = (BasicSpreadsheetEngineChangesCacheStatusCell)referenceAndCell.status();
+                switch (status) {
 
-                    this.addLabelMappingCells(cell);
-                } else {
-                    if (referenceAndCell.isDelete() && this.shouldDeleteCells) {
-                        this.cells.put(
-                                cell,
-                                null
-                        );
-                    }
-                    this.addColumn(
-                            cell.column()
-                    );
-                    this.addRow(
-                            cell.row()
-                    );
+                    case LOADED_REFERENCES_REFRESHED:
+                    case SAVED_REFERENCES_REFRESHED:
+                    case REFERENCE_SAVED_REFERENCES_REFRESHED:
+                        if (this.shouldSaveUpdateCells) {
+                            this.cells.put(
+                                    cell,
+                                    referenceAndCell.value()
+                            );
+                        }
+
+                        this.addLabelMappingCells(cell);
+                        break;
+                    case DELETED_REFERENCES_REFRESHED:
+                        if (this.shouldDeleteCells) {
+                            this.cells.put(
+                                    cell,
+                                    null
+                            );
+                        }
+                        break;
+                    case REFERENCE_LOADED_REFERENCES_REFRESHED:
+                    case REFERENCE_DELETED_REFERENCES_REFRESHED:
+                        break;
+                    default:
+                        throw new IllegalStateException("Invalid status " + status + " for " + cell);
                 }
+
+                this.addColumn(
+                        cell.column()
+                );
+                this.addRow(
+                        cell.row()
+                );
             }
 
             // each cell might have additional labels...................................................................
@@ -449,9 +490,17 @@ final class BasicSpreadsheetEnginePrepareResponse {
             } while (null != reference && reference.isLabelName());
 
             if (null != reference && reference.isCell()) {
-                this.addCell(
-                        reference.toCell()
-                );
+                final SpreadsheetCellReference cell = reference.toCell();
+                this.addCell(cell);
+
+                final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.changes.cells.get(cell);
+                if(null != cache) {
+                    addReferences(
+                            cell,
+                            Sets.of(labelMapping.label()),
+                            this.references
+                    );
+                }
             }
         }
     }
@@ -531,6 +580,80 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
         return deleted;
     }
+
+    /**
+     * Queries stores for all the references for each "loaded" cell.
+     */
+    private Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> extractExternalReferences() {
+        final SpreadsheetStoreRepository repo = this.context.storeRepository();
+        final SpreadsheetCellReferencesStore cellReferencesStore = repo.cellReferences();
+        final SpreadsheetCellRangeStore<SpreadsheetCellReference> cellRangesStore = repo.rangeToCells();
+        //final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repo.labelReferences();
+        final SpreadsheetLabelStore labelStore = repo.labels();
+
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> all = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        all.putAll(this.references);
+        final SpreadsheetViewportWindows window = this.window;
+
+        for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache : this.changes.cells.values()) {
+            if(cache.status().isReference()) {
+                continue;
+            }
+
+            final SpreadsheetCellReference cell = cache.reference;
+            if (window.test(cell)) {
+
+                final Set<SpreadsheetExpressionReference> references = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+                references.addAll(
+                        cellReferencesStore.findCellsWithReference(
+                                cell,
+                                0, // offset
+                                BasicSpreadsheetEngine.FIND_REFERENCES_COUNT// count
+                        )
+                );
+
+                references.addAll(
+                        cellRangesStore.findValuesWithCell(cell)
+                );
+
+                references.addAll(
+                        labelStore.findLabelsWithReference(
+                                cell,
+                                0, // offset
+                                BasicSpreadsheetEngine.FIND_REFERENCES_COUNT// count
+                        ).stream()
+                                .map(SpreadsheetLabelMapping::label)
+                                .collect(Collectors.toList())
+                );
+
+                if (false == references.isEmpty()) {
+                        addReferences(
+                                cell,
+                                references,
+                                all
+                        );
+                }
+            }
+        }
+
+        return all;
+    }
+
+    private static void addReferences(final SpreadsheetCellReference cell,
+                                      final Set<SpreadsheetExpressionReference> references,
+                                      final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> all) {
+        Set<SpreadsheetExpressionReference> old = all.get(cell);
+        if(null == old) {
+            old = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+            all.put(
+                    cell,
+                    old
+            );
+        }
+        old.addAll(references);
+    }
+
+    private final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references;
 
     private final BasicSpreadsheetEngine engine;
 

@@ -57,6 +57,9 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChanges.with(
                 engine,
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                SpreadsheetDeltaProperties.ALL,
+                BasicSpreadsheetEngineChangesMode.IMMEDIATE, // IMMEDIATE is simpler than BATCH
                 new FakeSpreadsheetEngineContext() {
 
                     @Override
@@ -109,19 +112,17 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                             }
                         };
                     }
-                },
-                SpreadsheetDeltaProperties.ALL,
-                BasicSpreadsheetEngineChangesMode.IMMEDIATE
+                }
         );
 
-        changes.onCellSavedImmediate(
+        changes.onCellSaved(
                 SpreadsheetSelection.A1
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
                                         .setText("1+2")
                         )
         );
-        changes.onCellSavedImmediate(
+        changes.onCellSaved(
                 SpreadsheetSelection.parseCell("B2")
                         .setFormula(
                                 SpreadsheetFormula.EMPTY
@@ -129,21 +130,21 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                         )
         );
 
-        changes.onColumnSavedImmediate(
+        changes.onColumnSaved(
                 SpreadsheetSelection.parseColumn("M")
                         .column()
         );
-        changes.onColumnSavedImmediate(
+        changes.onColumnSaved(
                 SpreadsheetSelection.parseColumn("N")
                         .column()
                         .setHidden(true)
         );
 
-        changes.onRowSavedImmediate(
+        changes.onRowSaved(
                 SpreadsheetSelection.parseRow("6")
                         .row()
         );
-        changes.onRowSavedImmediate(
+        changes.onRowSaved(
                 SpreadsheetSelection.parseRow("7")
                         .row()
                         .setHidden(true)
@@ -151,7 +152,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
 
         this.toStringAndCheck(
                 changes,
-                "{A1=A1 A1 1+2 status=SAVE committed=true, B2=B2 B2 3+4 status=SAVE committed=true} {} {M=M M status=SAVE, N=N N hidden=true status=SAVE} {6=6 6 status=SAVE, 7=7 7 hidden=true status=SAVE}"
+                "SKIP_EVALUATE cells: A1: A1 1+2 status=SAVED, B2: B2 3+4 status=SAVED columns: M: M status=SAVED, N: N hidden=true status=SAVED rows: 6: 6 status=SAVED, 7: 7 hidden=true status=SAVED"
         );
     }
 

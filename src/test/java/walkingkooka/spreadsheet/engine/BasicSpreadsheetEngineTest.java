@@ -235,6 +235,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static double COLUMN_WIDTH = 50;
 
     /**
+     * Helper that converts a CSV of cell references into a {@link Set} of {@link SpreadsheetCellReference}.
+     */
+    private static Set<SpreadsheetCellReference> cells(final String cells) {
+        return Arrays.stream(
+                        cells.split(",")
+                ).map(SpreadsheetSelection::parseCell)
+                .collect(Collectors.toCollection(
+                        () -> SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR))
+                );
+    }
+
+    /**
      * Helper that converts a references string into a map.
      * <pre>
      * A1=B2,C3:D4,Label5;
@@ -667,17 +679,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(labelMapping);
 
         this.checkEquals(
-                SpreadsheetDelta.EMPTY
-                        .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setDeletedCells(
-                                Sets.of(LABEL_CELL)
-                        ).setLabels(
-                                Sets.of(LABEL.setLabelMappingReference(LABEL_CELL))
-                        ).setColumnCount(
-                                OptionalInt.of(0)
-                        ).setRowCount(
-                                OptionalInt.of(0)
-                        ),
+                SpreadsheetDelta.EMPTY.setDeletedCells(
+                        Sets.of(LABEL_CELL)
+                ).setLabels(
+                        Sets.of(
+                                LABEL.setLabelMappingReference(LABEL_CELL)
+                        )
+                ).setReferences(
+                        references("Z99=" + LABEL)
+                ).setColumnWidths(
+                        columnWidths("Z")
+                ).setRowHeights(
+                        rowHeights("99")
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                ),
                 engine.loadCells(
                         LABEL_CELL,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -756,18 +774,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .save(LABEL.setLabelMappingReference(LABEL_CELL));
 
         this.checkEquals(
-                SpreadsheetDelta.EMPTY
-                        .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setDeletedCells(
-                                Sets.of(LABEL_CELL)
-                        )
-                        .setLabels(
-                                Sets.of(labelMapping)
-                        ).setColumnCount(
-                                OptionalInt.of(0)
-                        ).setRowCount(
-                                OptionalInt.of(0)
-                        ),
+                SpreadsheetDelta.EMPTY.setDeletedCells(
+                        Sets.of(LABEL_CELL)
+                ).setLabels(
+                        Sets.of(labelMapping)
+                ).setReferences(
+                        references("Z99=" + LABEL)
+                ).setColumnWidths(
+                        columnWidths("Z")
+                ).setRowHeights(
+                        rowHeights("99")
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                ),
                 engine.loadCells(
                         LABEL,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
@@ -1326,18 +1347,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         VALUE = BigDecimal.ZERO;
 
+        final SpreadsheetCell cellB2 = this.cell(
+                b2,
+                "=1+2+BasicSpreadsheetEngineTestValue()"
+        );
+
         engine.saveCell(
-                this.cell(
-                        b2,
-                        "=1+2+BasicSpreadsheetEngineTestValue()"
-                ),
+                cellB2,
                 context
         );
+        final SpreadsheetCell cellC2 = this.cell(
+                c2,
+                "=3+4+" + b2
+        );
         engine.saveCell(
-                this.cell(
-                        c2,
-                        "=3+4+" + b2
-                ),
+                cellC2,
                 context
         );
 
@@ -1355,13 +1379,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         formatCell(
-                                                b2,
-                                                "=1+2+BasicSpreadsheetEngineTestValue()",
+                                                cellB2,
                                                 100 + 3
+                                        ),
+                                        formatCell(
+                                                cellC2,
+                                                3+4+(1+2+100) // 3+4+(b2)
                                         )
                                 )
+                        ).setReferences(
+                                references("b2=c2")
                         ).setColumnWidths(
-                                columnWidths("B")
+                                columnWidths("B,C")
                         ).setRowHeights(
                                 rowHeights("2")
                         ).setColumnCount(
@@ -1383,25 +1412,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         VALUE = BigDecimal.ZERO;
 
+        final SpreadsheetCell cellB2 = this.cell(
+                b2,
+                "=1+2+BasicSpreadsheetEngineTestValue()"
+        );
+
         engine.saveCell(
-                this.cell(
-                        b2,
-                        "=1+2+BasicSpreadsheetEngineTestValue()"
-                ),
+                cellB2,
                 context
         );
+
+        final SpreadsheetCell cellC2 = this.cell(
+                c2,
+                "=3+4+" + b2
+        );
+
         engine.saveCell(
-                this.cell(
-                        c2,
-                        "=3+4+" + b2
-                ),
+                cellC2,
                 context
         );
+
+        final SpreadsheetCell cellD2 = this.cell(
+                d2,
+                "=5+6+" + b2
+        );
+
         engine.saveCell(
-                this.cell(
-                        d2,
-                        "=5+6+" + b2
-                ),
+                cellD2,
                 context
         );
 
@@ -1420,13 +1457,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         formatCell(
-                                                b2,
-                                                "=1+2+BasicSpreadsheetEngineTestValue()",
+                                                cellB2,
                                                 100 + 3
+                                        ),
+                                        formatCell(
+                                                cellC2,
+                                                3+4+100 + 3
+                                        ),
+                                        formatCell(
+                                                cellD2,
+                                                5+6+100 + 3
                                         )
                                 )
+                        ).setReferences(
+                                references("b2=c2,d2")
                         ).setColumnWidths(
-                                columnWidths("B")
+                                columnWidths("B,C,D")
                         ).setRowHeights(
                                 rowHeights("2")
                         ).setColumnCount(
@@ -1673,7 +1719,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellWhenFormulaEmptyTextAndValueWhenSkipEvaluateAlreadyFormatted() {
+    public void testLoadCellWithFormulaEmptyTextAndValueWhenSkipEvaluateAlreadyFormatted() {
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
@@ -1692,7 +1738,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellWhenFormulaEmptyTextAndValueWhenComputeIfNecessary() {
+    public void testLoadCellWithFormulaEmptyTextAndValueWhenComputeIfNecessary() {
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
@@ -1709,7 +1755,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellWhenFormulaEmptyTextAndValueWhenForceRecompute() {
+    public void testLoadCellWithFormulaEmptyTextAndValueWhenForceRecompute() {
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
@@ -1728,7 +1774,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCellWhenFormulaEmptyTextAndValueWhenClearValueErrorSkipEvaluate() {
+    public void testLoadCellWithFormulaEmptyTextAndValueWhenClearValueErrorSkipEvaluate() {
         final String value = "Hello";
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
@@ -1801,6 +1847,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         null
                                 )
                         )
+
                 ).setColumnWidths(columnWidths("A")
                 ).setRowHeights(rowHeights("1")
                 ).setColumnCount(OptionalInt.of(1)
@@ -1815,7 +1862,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
 
-        final SpreadsheetCell a1Cell = context.storeRepository()
+        final SpreadsheetCell savedCell = context.storeRepository()
                 .cells()
                 .save(
                         a1.setFormula(SpreadsheetFormula.EMPTY)
@@ -1836,14 +1883,51 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formatCell(a1Cell)
+                                this.formatCell(savedCell)
                         )
+                ).setReferences(
+                        references("A1=LABEL123")
                 ).setLabels(
                         Sets.of(mapping)
                 ).setColumnWidths(columnWidths("A")
                 ).setRowHeights(rowHeights("1")
                 ).setColumnCount(OptionalInt.of(1)
                 ).setRowCount(OptionalInt.of(1))
+        );
+    }
+
+    @Test
+    public void testLoadCellWithFormulaReferencesToMissingCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+
+        final SpreadsheetCell b2Cell = context.storeRepository()
+                .cells()
+                .save(
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=A1+10")
+                        ).setStyle(STYLE)
+                );
+
+        this.loadCellAndCheck(
+                engine,
+                b2,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        b2Cell,
+                                        0+10 // A1 is missing and given a value of 0
+                                )
+                        )
+                ).setColumnWidths(columnWidths("B")
+                ).setRowHeights(rowHeights("2")
+                ).setColumnCount(OptionalInt.of(2)
+                ).setRowCount(OptionalInt.of(2))
         );
     }
 
@@ -1877,10 +1961,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         this.formatCell(c3, EXPRESSION_NUMBER_KIND.create(33))
                                 )
                         ).setDeletedCells(
-                                Sets.of(
-                                        SpreadsheetSelection.parseCell("B3"),
-                                        SpreadsheetSelection.parseCell("C2")
-                                )
+                                cells("B3,C2")
                         ).setColumnWidths(
                                 columnWidths("B,C")
                         ).setRowHeights(
@@ -1937,26 +2018,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaSelfReferenceCycle() {
+    public void testSaveCellFormulaSelfReferenceCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell a1 = this.cell(
+        final SpreadsheetCell a1Cell = this.cell(
                 "a1",
                 "=A1"
         );
-        final SpreadsheetCell a1Formatted = this.formatCell(
-                a1,
-                SpreadsheetError.cycle(a1.reference())
+        final SpreadsheetCell a1CellFormatted = this.formatCell(
+                a1Cell,
+                SpreadsheetError.cycle(a1Cell.reference())
         );
         this.saveCellAndCheck(
                 engine,
-                a1,
+                a1Cell,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
-                                Sets.of(a1Formatted)
-                        ).setReferences(references("A1=A1")
+                                Sets.of(a1CellFormatted)
+                        ).setReferences(
+                                references("A1=A1")
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
@@ -1973,7 +2055,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelStore labelStore = repository.labels();
         final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
-        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadCellStoreAndCheck(cellStore, a1CellFormatted);
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(
                 cellReferenceStore,
@@ -1986,56 +2068,48 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell a1 = this.cell("a1", "");
-        final SpreadsheetCell a1Formatted = this.formatCell(a1);
+        final SpreadsheetCell a1Cell = this.cell(
+                "a1",
+                ""
+        );
+        final SpreadsheetCell a1Formatted = this.formatCell(a1Cell);
         this.saveCellAndCheck(
                 engine,
-                a1,
+                a1Cell,
                 context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(a1Formatted)
-                        ).setColumnWidths(
-                                columnWidths("A")
-                        ).setRowHeights(
-                                rowHeights("1")
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        )
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(a1Formatted)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
         );
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
-
-        this.loadCellStoreAndCheck(cellStore, a1Formatted);
-        this.loadLabelStoreAndCheck(labelStore);
-        this.countAndCheck(cellReferenceStore, 0);
-
         this.saveCellAndCheck(
                 engine,
-                a1,
+                a1Cell,
                 context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(a1Formatted)
-                        ).setColumnWidths(
-                                columnWidths("A")
-                        ).setRowHeights(
-                                rowHeights("1")
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        )
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(a1Formatted)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
         );
     }
 
     @Test
-    public void testSaveCellWithFormulaWithInvalidDate() {
+    public void testSaveCellFormulaWithInvalidDate() {
         this.saveCellWithErrorAndCheck(
                 "1999/99/31",
                 SpreadsheetErrorKind.VALUE.setMessage(
@@ -2045,7 +2119,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaWithInvalidDateTime() {
+    public void testSaveCellFormulaWithInvalidDateTime() {
         this.saveCellWithErrorAndCheck(
                 "1999/99/31 12:58",
                 SpreadsheetErrorKind.VALUE.setMessage("Invalid value for MonthOfYear (valid values 1 - 12): 99")
@@ -2053,7 +2127,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaWithInvalidTime() {
+    public void testSaveCellFormulaWithInvalidTime() {
         this.saveCellWithErrorAndCheck(
                 "12:99",
                 SpreadsheetErrorKind.VALUE.setMessage("Invalid value for MinuteOfHour (valid values 0 - 59): 99")
@@ -2102,7 +2176,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaOnlyMathExpression() {
+    public void testSaveCellFormulaMathExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2139,74 +2213,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellStoreAndCheck(cellStore, a1Formatted);
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(cellReferenceStore, 0);
-    }
-
-    @Test
-    public void testSaveCellWithFormulaWithUnknownCellReference() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
-
-        final SpreadsheetCell a1 = this.cell(
-                "a1",
-                "=$B$2+99"
-        );
-        final SpreadsheetCell a1Formatted = this.formatCell(
-                a1,
-                99
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                a1,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1Formatted
-                                )
-                        ).setColumnWidths(
-                                columnWidths("A")
-                        ).setRowHeights(
-                                rowHeights("1")
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        )
-        );
-
-        this.loadCellStoreAndCheck(
-                cellStore,
-                a1Formatted
-        );
-        this.loadLabelStoreAndCheck(labelStore);
-
-        // verify references always are present in the store.
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
-
-        this.loadReferencesAndCheck(
-               cellReferenceStore,
-               b2.toRelative(),
-               a1.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                a1.reference(),
-                b2.toRelative()
-        );
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                a1.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                b2
-        );
     }
 
     @Test
@@ -2321,7 +2327,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithMultipleIndependentUnreferenced() {
+    public void testSaveCellWithMathExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2417,18 +2423,414 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(cellReferenceStore, 0);
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference()); // references parse A1 -> none
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1.reference()
+        ); // references to A1 -> none
+        this.findCellsWithReferenceAndCheck(
+                cellReferenceStore,
+                a1.reference()
+        ); // references parse A1 -> none
 
-        this.loadReferencesAndCheck(cellReferenceStore, b2.reference()); // references to B2 -> none
-        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference()); // references parse B2 -> none
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                b2.reference()
+        ); // references to B2 -> none
+        this.findCellsWithReferenceAndCheck(
+                cellReferenceStore,
+                b2.reference()
+        ); // references parse B2 -> none
 
-        this.loadReferencesAndCheck(cellReferenceStore, c3.reference()); // references to C3 -> none
-        this.findReferencesWithCellAndCheck(cellReferenceStore, c3.reference()); // references parse C3 -> none
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                c3.reference()
+        ); // references to C3 -> none
+        this.findCellsWithReferenceAndCheck(
+                cellReferenceStore,
+                c3.reference()
+        ); // references parse C3 -> none
     }
 
     @Test
-    public void testSaveCellWithFormulaLabelCycleToSelf() {
+    public void testSaveCellWithMissingCellReference() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell(
+                "a1",
+                "=b2"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1,
+                                                null
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveCellRefreshFirst() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "a1",
+                "=b2"
+        );
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "b2",
+                "=99"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                null
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                99 // refreshed because reference to newly saved b2
+                                        ),
+                                        this.formatCell(
+                                                b2Cell,
+                                                99
+                                        )
+                                )
+                        ).setReferences(
+                                references("b2=A1")
+                        ).setColumnWidths(
+                                columnWidths("A,B")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveCellReferencesFirst() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "a1",
+                "=1"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "b2",
+                "=200+a1"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2Cell,
+                                                200+1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveCellReferencesFirstLoadBothCellsIndividually() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "a1",
+                "=1"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "b2",
+                "=200+a1"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2Cell,
+                                                200+1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+
+        this.loadCellAndCheck(
+                engine,
+                a1Cell.reference(),
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                1
+                                        )
+                                )
+                        ).setReferences(
+                                references("A1=B2")
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+
+        this.loadCellAndCheck(
+                engine,
+                b2Cell.reference(),
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2Cell,
+                                                200+1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveCellSaveCellRefreshesFirstAndSecond() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "a1",
+                "=C3"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                null
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "b2",
+                "=C3"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2Cell,
+                                                null
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+
+        final SpreadsheetCell c3Cell = this.cell(
+                "c3",
+                "=99"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                c3Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                99
+                                        ),
+                                        this.formatCell(
+                                                b2Cell,
+                                                99
+                                        ),
+                                        this.formatCell(
+                                                c3Cell,
+                                                99
+                                        )
+                                )
+                        ).setReferences(
+                                references("c3=A1,B2")
+                        ).setColumnWidths(
+                                columnWidths("A,B,C")
+                        ).setRowHeights(
+                                rowHeights("1,2,3")
+                        ).setColumnCount(
+                                OptionalInt.of(3)
+                        ).setRowCount(
+                                OptionalInt.of(3)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithLabelCycleToSelf() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2519,13 +2921,81 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithLabelReference() {
+    public void testSaveCellSaveLabelDifferentCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName unknown = SpreadsheetSelection.labelName("LABELXYZ");
+        this.saveCellAndCheck(
+                engine,
+                this.cell(
+                        "A1",
+                        "=123"
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=123",
+                                                123
+                                        )
+                                )
+                        ).setColumnWidths(
+                                COLUMN_A_WIDTH
+                        ).setRowHeights(
+                                ROW_1_HEIGHT
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
 
-        final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELA1");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.A1
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=123",
+                                                123
+                                        )
+                                )
+                        ).setColumnWidths(
+                                COLUMN_A_WIDTH
+                        ).setRowHeights(
+                                ROW_1_HEIGHT
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        ).setLabels(
+                                Sets.of(mapping)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithUnknownLabelReference() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName unknown = SpreadsheetSelection.labelName("UNKNOWNLABEL");
+
+        final SpreadsheetCell a1 = this.cell(
+                "a1",
+                "=1+" + unknown
+        );
         final SpreadsheetCell a1Formatted = this.formatCell(
                 a1,
                 SpreadsheetError.selectionNotFound(unknown)
@@ -2556,515 +3026,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
-        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1Formatted
+        );
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(cellReferenceStore, 0);
 
-        this.loadReferencesAndCheck(labelReferencesStore, unknown, a1.reference());
-    }
-
-    @Test
-    public void testSaveCellWithTwiceLaterCellReferencesPrevious() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell(
-                "$A$1",
-                "=1+2"
-        );
-        engine.saveCell(
-                a1,
-                context
-        );
-
-        final SpreadsheetCellReference a1Reference = SpreadsheetSelection.parseCell("$A$1");
-        final SpreadsheetCell b2 = this.cell(
-                "$B$2",
-                "=5+" + a1Reference
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                b2,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                b2,
-                                                5 + 3
-                                        )
-                                )
-                        ).setColumnWidths(
-                                columnWidths("B")
-                        ).setRowHeights(
-                                rowHeights("2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        )
-        );
-
-        final SpreadsheetCellReferencesStore cellReferenceStore = context.storeRepository()
-                .cellReferences();
-
         this.loadReferencesAndCheck(
-                cellReferenceStore,
-                a1.reference(),
-                b2.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
+                labelReferencesStore,
+                unknown,
                 a1.reference()
         );
-
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                b2.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                b2.reference(),
-                a1Reference.toRelative()
-        );
     }
 
     @Test
-    public void testSaveCellWithTwiceLaterCellReferencesPrevious2() {
+    public void testSaveCellSaveLabelToMissingCellRefreshesFirstCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell(
-                "$A$1",
-                "=1+C3"
-        );
-        engine.saveCell(
-                a1,
-                context
-        );
-
-        final SpreadsheetCell b2 = this.cell(
-                "$B$2",
-                "=5+A1"
-        );
-        engine.saveCell(
-                b2,
-                context
-        );
-
-        final SpreadsheetCell c3 = this.cell(
-                "$C$3",
-                "=10"
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                c3,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                a1,
-                                                1 + 10
-                                        ),
-                                        this.formatCell(
-                                                b2,
-                                                5 + 1 + 10
-                                        ),
-                                        this.formatCell(
-                                                c3,
-                                                10
-                                        )
-                                )
-                        ).setReferences(references("A1=B2;C3=A1")
-                        ).setColumnWidths(
-                                columnWidths("A,B,C")
-                        ).setRowHeights(
-                                rowHeights("1,2,3")
-                        ).setColumnCount(
-                                OptionalInt.of(3)
-                        ).setRowCount(
-                                OptionalInt.of(3)
-                        )
-        );
-    }
-
-    @Test
-    public void testSaveCellWithTwiceLaterReferencesPreviousAgain() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell(
-                "$A$1",
-                "=1+2"
-        );
-        engine.saveCell(
-                a1,
-                context
-        );
-
-        final SpreadsheetCell b2 = this.cell(
-                "$B$2",
-                "=5+$A$1"
-        );
-        final SpreadsheetCell b2Formatted = this.formatCell(
-                b2,
-                5 + 1 + 2
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                b2,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        b2Formatted
-                                )
-                        ).setColumnWidths(
-                                columnWidths("B")
-                        ).setRowHeights(
-                                rowHeights("2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        )
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                b2Formatted,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        b2Formatted
-                                )
-                        ).setColumnWidths(
-                                columnWidths("B")
-                        ).setRowHeights(
-                                rowHeights("2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        )
-        );
-    }
-
-    @Test
-    public void testSaveCellWithIndirectCycle() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell(
-                "a1",
-                "=b2"
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                a1,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                a1,
-                                                null
-                                        )
-                                )
-                        ).setColumnWidths(
-                                columnWidths("A")
-                        ).setRowHeights(
-                                rowHeights("1")
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        )
-        );
-
-        final SpreadsheetCell b2 = this.cell(
-                "b2",
-                "=a1"
-        );
-
-        final SpreadsheetCell a1Formatted = this.formatCell(
-                a1,
-                SpreadsheetError.cycle(
-                        b2.reference()
-                )
-        );
-
-        final SpreadsheetCell b2Formatted = this.formatCell(
-                b2,
-                SpreadsheetError.cycle(
-                        b2.reference()
-                )
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                b2,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1Formatted,
-                                        b2Formatted
-                                )
-                        ).setReferences(references("A1=B2;B2=A1")
-                        ).setColumnWidths(
-                                columnWidths("A,B")
-                        ).setRowHeights(
-                                rowHeights("1,2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        )
-        );
-
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
-
-        this.loadCellStoreAndCheck(
-                cellStore,
-                a1Formatted,
-                b2Formatted
-        );
-        this.loadLabelStoreAndCheck(labelStore);
-        this.countAndCheck(
-                cellReferenceStore,
-                2
-        ); // b2 -> a1 & a1 -> b2
-    }
-
-    @Test
-    public void testSaveCellWithDoubleIndirectCycle() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell(
-                "a1",
-                "=b2"
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                a1,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                a1,
-                                                null
-                                        )
-                                )
-                        ).setColumnWidths(
-                                columnWidths("A")
-                        ).setRowHeights(
-                                rowHeights("1")
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        )
-        );
-
-        final SpreadsheetCell b2 = this.cell(
-                "b2",
-                "=c3"
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                b2,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                a1,
-                                                null
-                                        ),
-                                        this.formatCell(
-                                                b2,
-                                                null
-                                        )
-                                )
-                        ).setReferences(references("B2=A1")
-                        ).setColumnWidths(
-                                columnWidths("A,B")
-                        ).setRowHeights(
-                                rowHeights("1,2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        )
-        );
-
-        final SpreadsheetCell c3 = this.cell(
-                "c3",
-                "=a1"
-        );
-
-        final SpreadsheetCell a1Formatted = this.formatCell(
-                a1,
-                SpreadsheetError.cycle(
-                        c3.reference()
-                )
-        );
-
-        final SpreadsheetCell b2Formatted = this.formatCell(
-                b2,
-                SpreadsheetError.cycle(
-                        c3.reference()
-                )
-        );
-
-        final SpreadsheetCell c3Formatted = this.formatCell(
-                c3,
-                SpreadsheetError.cycle(
-                        c3.reference()
-                )
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                c3,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        a1Formatted,
-                                        b2Formatted,
-                                        c3Formatted
-                                )
-                        ).setReferences(references("A1=C3;B2=A1;C3=B2")
-                        ).setColumnWidths(
-                                columnWidths("A,B,C")
-                        ).setRowHeights(
-                                rowHeights("1,2,3")
-                        ).setColumnCount(
-                                OptionalInt.of(3)
-                        ).setRowCount(
-                                OptionalInt.of(3)
-                        )
-        );
-
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
-
-        this.loadCellStoreAndCheck(
-                cellStore,
-                a1Formatted,
-                b2Formatted,
-                c3Formatted
-        );
-        this.loadLabelStoreAndCheck(labelStore);
-        this.countAndCheck(
-                cellReferenceStore,
-                3
-        );
-    }
-
-    @Test
-    public void testSaveCellWithReferencesUpdated() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("$B$2");
-        final SpreadsheetCell a1 = this.cell(
-                "$A$1",
-                "=" + b2Reference + "+5"
-        );
-        engine.saveCell(
-                a1,
-                context
-        );
-
-        final SpreadsheetCell b2 = this.cell(
-                "$B$2",
-                "=1+2"
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                b2,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                a1,
-                                                1 + 2 + 5
-                                        ),
-                                        this.formatCell(
-                                                b2,
-                                                1 + 2
-                                        )
-                                )
-                        ).setReferences(references("B2=A1")
-                        ).setColumnWidths(
-                                columnWidths("A,B")
-                        ).setRowHeights(
-                                rowHeights("1,2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        )
-        );
-
-        final SpreadsheetCellReferencesStore cellReferenceStore = context.storeRepository()
-                .cellReferences();
-
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                b2Reference,
-                a1.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                a1.reference(),
-                b2Reference.toRelative()
-        );
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                a1.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                b2.reference()
-        );
-    }
-
-    @Test
-    public void testSaveCellWithFormulaUnknownLabelReference() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetLabelName labelName = SpreadsheetSelection.labelName("UNKNOWNLABEL");
-
-        labelName.setLabelMappingReference(
-                SpreadsheetSelection.parseCell("B2")
-        );
 
         final SpreadsheetCell a1Cell = this.cell(
                 "A1",
-                "=10+UNKNOWNLABEL"
+                "=10+B2LABEL"
         );
+
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
 
         this.saveCellAndCheck(
                 engine,
@@ -3075,7 +3061,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 a1Cell,
-                                                SpreadsheetError.selectionNotFound(labelName)
+                                                SpreadsheetError.referenceNotFound(b2Label)
                                         )
                                 )
                         ).setColumnWidths(
@@ -3088,52 +3074,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 OptionalInt.of(1)
                         )
         );
-    }
 
-    @Test
-    public void testSaveCellWithFormulaLabelReferenceToMissingCell() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetLabelName labelName = SpreadsheetSelection.labelName("LABELB2");
-
-        final SpreadsheetLabelMapping labelMapping = labelName.setLabelMappingReference(
+        final SpreadsheetLabelMapping b2Mapping = b2Label.setLabelMappingReference(
                 SpreadsheetSelection.parseCell("B2")
         );
 
         this.saveLabelAndCheck(
                 engine,
-                labelMapping,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setLabels(
-                                Sets.of(labelMapping)
-                        ).setColumnCount(
-                                OptionalInt.of(0)
-                        ).setRowCount(
-                                OptionalInt.of(0)
-                        )
-        );
-
-        final SpreadsheetCell a1Cell = this.cell(
-                "A1",
-                "=10+LABELB2"
-        );
-
-        this.saveCellAndCheck(
-                engine,
-                a1Cell,
+                b2Mapping,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
                                                 a1Cell,
-                                                10+0
+                                                10 + 0
                                         )
                                 )
                         ).setLabels(
-                                Sets.of(labelMapping)
+                                Sets.of(b2Mapping)
+                        ).setReferences(
+                                references("B2=B2LABEL")
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
@@ -3147,27 +3108,69 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaLabelReference() {
+    public void testSaveCellSaveLabelSaveCellRefreshesCell2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetLabelMapping labelMapping = context.storeRepository()
-                .labels()
-                .save(
-                        SpreadsheetLabelMapping.with(
-                                SpreadsheetSelection.labelName("LABELA1"),
-                                SpreadsheetSelection.A1)
-                );
 
         final SpreadsheetCell a1 = this.cell(
                 "$A$1",
                 "=10"
         );
-        engine.saveCell(a1, context);
+
+        this.saveCellAndCheck(
+                engine,
+                a1,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1,
+                                        10
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                SpreadsheetSelection.labelName("A1LABEL"),
+                SpreadsheetSelection.A1
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1,
+                                        10
+                                )
+                        )
+                ).setLabels(
+                        Sets.of(mapping)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
 
         final SpreadsheetCell b2 = this.cell(
                 "$B$2",
-                "=5+LABELA1"
+                "=5+A1LABEL"
         );
 
         this.saveCellAndCheck(
@@ -3183,9 +3186,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setLabels(
-                                Sets.of(
-                                        labelMapping
-                                )
+                                Sets.of(mapping)
                         ).setColumnWidths(
                                 columnWidths("B")
                         ).setRowHeights(
@@ -3199,66 +3200,167 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaLabelReference2() {
+    public void testSaveCellSaveCellSaveLabelRefreshesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
-
-        final SpreadsheetCell b2 = this.cell(
-                "$B$2",
-                "=5"
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+        final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
+                b2Label,
+                SpreadsheetSelection.parseCell("B2")
         );
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
-        labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        labelB2,
-                        b2.reference()
-                )
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=" + b2Label + "+1"
         );
-
-        final SpreadsheetCell a1 = this.cell(
-                "$A$1",
-                "=10+" + labelB2
-        );
-        engine.saveCell(
-                a1,
-                context
-        );
-
-        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
-
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
-
-        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference());
-
-        this.loadReferencesAndCheck(labelReferencesStore, labelB2, a1.reference());
 
         this.saveCellAndCheck(
                 engine,
-                b2,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                SpreadsheetError.referenceNotFound(b2Label)
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "B2",
+                "=99"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2Cell,
+                                                99
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                b2Mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                99 + 1
+                                        ),
+                                        this.formatCell(
+                                                b2Cell,
+                                                99
+                                        )
+                                )
+                        ).setReferences(
+                                references("B2=B2LABEL")
+                        ).setLabels(
+                                Sets.of(b2Mapping)
+                        ).setColumnWidths(
+                                columnWidths("A,B")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithIndirectCycle() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "a1",
+                "=b2"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                null
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "b2",
+                "=a1"
+        );
+
+        final SpreadsheetCell a1CellFormatted = this.formatCell(
+                a1Cell,
+                SpreadsheetError.cycle(
+                        b2Cell.reference()
+                )
+        );
+
+        final SpreadsheetCell b2CellFormatted = this.formatCell(
+                b2Cell,
+                SpreadsheetError.cycle(
+                        a1Cell.reference()
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formatCell(
-                                        a1,
-                                        10 + 5
-                                ),
-                                this.formatCell(
-                                        b2,
-                                        5
-                                )
+                                a1CellFormatted,
+                                b2CellFormatted
                         )
-                ).setLabels(
-                        Sets.of(
-                                labelB2.setLabelMappingReference(b2.reference())
-                        )
-                ).setReferences(references("B2=LABELB2")
+                ).setReferences(
+                        references("B2=A1")
                 ).setColumnWidths(
                         columnWidths("A,B")
                 ).setRowHeights(
@@ -3269,48 +3371,44 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         OptionalInt.of(2)
                 )
         );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
+
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1CellFormatted,
+                b2CellFormatted
+        );
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(
+                cellReferenceStore,
+                2
+        ); // b2 -> a1 & a1 -> b2
     }
 
     @Test
-    public void testSaveCellWithReplacesCellReferences() {
+    public void testSaveCellWithDoubleIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell d4 = this.cell(
-                "$D$4",
-                "=20"
-        );
-        engine.saveCell(d4, context);
-
-        final SpreadsheetCell e5 = this.cell(
-                "$E$5",
-                "=30"
-        );
-        engine.saveCell(e5, context);
-
-        engine.saveCell(
-                this.cell(
-                        "$A$1",
-                        "=10+" + d4.reference()
-                ),
-                context
-        );
-
-        final SpreadsheetCell a1 = this.cell(
-                "$A$1",
-                "=40+" + e5.reference()
+        final SpreadsheetCell a1Cell = this.cell(
+                "a1",
+                "=b2"
         );
 
         this.saveCellAndCheck(
                 engine,
-                a1,
+                a1Cell,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
-                                                40 + 30
+                                                a1Cell,
+                                                null
                                         )
                                 )
                         ).setColumnWidths(
@@ -3318,262 +3416,636 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setRowHeights(
                                 rowHeights("1")
                         ).setColumnCount(
-                                OptionalInt.of(5)
+                                OptionalInt.of(1)
                         ).setRowCount(
-                                OptionalInt.of(5)
+                                OptionalInt.of(1)
                         )
         );
 
-        final SpreadsheetCellReferencesStore cellReferenceStore = context
-                .storeRepository()
-                .cellReferences();
-
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                a1.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                a1.reference(),
-                e5.reference()
-        );
-
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                d4.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                d4.reference()
-        );
-    }
-
-    @Test
-    public void testSaveCellWithReplacesLabelReferences() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
-
-        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
-        final SpreadsheetLabelMapping labelMappingLabelB2 = labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        labelB2,
-                        SpreadsheetSelection.parseCell("B2")
-                )
-        );
-
-        final SpreadsheetLabelName labelD4 = SpreadsheetSelection.labelName("LABELD4");
-        final SpreadsheetLabelMapping labelMappingLabelD4 = labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        labelD4,
-                        SpreadsheetSelection.parseCell("D4")
-                )
-        );
-
-        final SpreadsheetCell d4 = this.cell(
-                "$D$4",
-                "=20"
-        );
-        engine.saveCell(
-                d4,
-                context
-        );
-
-        engine.saveCell(
-                this.cell(
-                        "$A$1",
-                        "=10+" + labelB2
-                ),
-                context
-        );
-
-        final SpreadsheetCell a1 = this.cell(
-                "$A$1",
-                "=40+" + labelD4
+        final SpreadsheetCell b2Cell = this.cell(
+                "b2",
+                "=c3"
         );
 
         this.saveCellAndCheck(
                 engine,
-                a1,
+                b2Cell,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
-                                                40 + 20
+                                                b2Cell,
+                                                null
+                                        )
+                                )
+                        ).setReferences(
+                                references("B2=A1")
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+
+        final SpreadsheetCell c3Cell = this.cell(
+                "c3",
+                "=a1"
+        );
+
+        final SpreadsheetCell a1CellFormatted = this.formatCell(
+                a1Cell,
+                SpreadsheetError.cycle(
+                        c3Cell.reference()
+                )
+        );
+
+        final SpreadsheetCell b2CellFormatted = this.formatCell(
+                b2Cell,
+                SpreadsheetError.cycle(
+                        c3Cell.reference()
+                )
+        );
+
+        final SpreadsheetCell c3CellFormatted = this.formatCell(
+                c3Cell,
+                SpreadsheetError.cycle(
+                        a1Cell.reference()
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                c3Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                a1CellFormatted,
+                                b2CellFormatted,
+                                c3CellFormatted
+                        )
+                ).setReferences(
+                        references("C3=B2")
+                ).setColumnWidths(
+                        columnWidths("A,B,C")
+                ).setRowHeights(
+                        rowHeights("1,2,3")
+                ).setColumnCount(
+                        OptionalInt.of(3)
+                ).setRowCount(
+                        OptionalInt.of(3)
+                )
+        );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
+
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1CellFormatted,
+                b2CellFormatted,
+                c3CellFormatted
+        );
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(
+                cellReferenceStore,
+                3
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveCellSaveCellLoadCellVerifyReferences() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=1"
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+        final SpreadsheetCell b2Cell = this.cell(
+                "B2",
+                "=20+A1"
+        );
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2Cell,
+                                                20+1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+
+        final SpreadsheetCell c3Cell = this.cell(
+                "C3",
+                "=A1+300"
+        );
+        this.saveCellAndCheck(
+                engine,
+                c3Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                c3Cell,
+                                                1 + 300
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("C")
+                        ).setRowHeights(
+                                rowHeights("3")
+                        ).setColumnCount(
+                                OptionalInt.of(3)
+                        ).setRowCount(
+                                OptionalInt.of(3)
+                        )
+        );
+
+        // verify all the references for A1
+        this.loadMultipleCellRangesAndCheck(
+                engine,
+                Sets.of(
+                        SpreadsheetSelection.parseCellRange("A1:C3")
+                ),
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1
+                                ),
+                                this.formatCell(
+                                        b2Cell,
+                                        20 + 1
+                                ),
+                                this.formatCell(
+                                        c3Cell,
+                                        1 + 300
+                                )
+                        )
+                ).setDeletedCells(
+                        cells("B1,C1,A2,C2,A3,B3")
+                ).setReferences(
+                        references("A1=B2,C3")
+                ).setColumnWidths(
+                        columnWidths("A,B,C")
+                ).setRowHeights(
+                        rowHeights("1,2,3")
+                ).setColumnCount(
+                        OptionalInt.of(3)
+                ).setRowCount(
+                        OptionalInt.of(3)
+                ).setWindow(
+                        SpreadsheetViewportWindows.parse("A1:C3")
+                )
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveCellSaveCellSaveAgainDifferentCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=1"
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+        final SpreadsheetCell b2Cell = this.cell(
+                "B2",
+                "=20+A1"
+        );
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2Cell,
+                                                20+1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+
+        {
+            final SpreadsheetCell c3Cell = this.cell(
+                    "C3",
+                    "=A1+300"
+            );
+            this.saveCellAndCheck(
+                    engine,
+                    c3Cell,
+                    context,
+                    SpreadsheetDelta.EMPTY
+                            .setCells(
+                                    Sets.of(
+                                            this.formatCell(
+                                                    c3Cell,
+                                                    1 + 300
+                                            )
+                                    )
+                            ).setColumnWidths(
+                                    columnWidths("C")
+                            ).setRowHeights(
+                                    rowHeights("3")
+                            ).setColumnCount(
+                                    OptionalInt.of(3)
+                            ).setRowCount(
+                                    OptionalInt.of(3)
+                            )
+            );
+
+            // verify all the references for A1
+            this.loadMultipleCellRangesAndCheck(
+                    engine,
+                    Sets.of(
+                            SpreadsheetSelection.parseCellRange("A1:C3")
+                    ),
+                    SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                    SpreadsheetDeltaProperties.ALL,
+                    context,
+                    SpreadsheetDelta.EMPTY.setCells(
+                            Sets.of(
+                                    this.formatCell(
+                                            a1Cell,
+                                            1
+                                    ),
+                                    this.formatCell(
+                                            b2Cell,
+                                            20 + 1
+                                    ),
+                                    this.formatCell(
+                                            c3Cell,
+                                            1 + 300
+                                    )
+                            )
+                    ).setDeletedCells(
+                            cells("B1,C1,A2,C2,A3,B3")
+                    ).setReferences(
+                            references("A1=B2,C3")
+                    ).setColumnWidths(
+                            columnWidths("A,B,C")
+                    ).setRowHeights(
+                            rowHeights("1,2,3")
+                    ).setColumnCount(
+                            OptionalInt.of(3)
+                    ).setRowCount(
+                            OptionalInt.of(3)
+                    ).setWindow(
+                            SpreadsheetViewportWindows.parse("A1:C3")
+                    )
+            );
+        }
+
+        // save c3 again with a different formula mentioning different cell
+        {
+            final SpreadsheetCell c3Cell = this.cell(
+                    "C3",
+                    "=B2+300"
+            );
+            this.saveCellAndCheck(
+                    engine,
+                    c3Cell,
+                    context,
+                    SpreadsheetDelta.EMPTY
+                            .setCells(
+                                    Sets.of(
+                                            this.formatCell(
+                                                    c3Cell,
+                                                    21 + 300
+                                            )
+                                    )
+                            ).setColumnWidths(
+                                    columnWidths("C")
+                            ).setRowHeights(
+                                    rowHeights("3")
+                            ).setColumnCount(
+                                    OptionalInt.of(3)
+                            ).setRowCount(
+                                    OptionalInt.of(3)
+                            )
+            );
+
+            // verify all the references for A1
+            this.loadMultipleCellRangesAndCheck(
+                    engine,
+                    Sets.of(
+                            SpreadsheetSelection.parseCellRange("A1:C3")
+                    ),
+                    SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                    SpreadsheetDeltaProperties.ALL,
+                    context,
+                    SpreadsheetDelta.EMPTY.setCells(
+                            Sets.of(
+                                    this.formatCell(
+                                            a1Cell,
+                                            1
+                                    ),
+                                    this.formatCell(
+                                            b2Cell,
+                                            20 + 1
+                                    ),
+                                    this.formatCell(
+                                            c3Cell,
+                                            21 + 300
+                                    )
+                            )
+                    ).setDeletedCells(
+                            cells("B1,C1,A2,C2,A3,B3")
+                    ).setReferences(
+                            references("A1=B2;B2=C3")
+                    ).setColumnWidths(
+                            columnWidths("A,B,C")
+                    ).setRowHeights(
+                            rowHeights("1,2,3")
+                    ).setColumnCount(
+                            OptionalInt.of(3)
+                    ).setRowCount(
+                            OptionalInt.of(3)
+                    ).setWindow(
+                            SpreadsheetViewportWindows.parse("A1:C3")
+                    )
+            );
+        }
+    }
+
+    @Test
+    public void testSaveCellSaveLabelSaveCellSaveLabelSaveCellWithCellAndLabelLoadCellVerifyReferences() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=1"
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        final SpreadsheetLabelName a1Label = SpreadsheetSelection.labelName("A1LABEL");
+        final SpreadsheetLabelMapping a1Mapping = a1Label.setLabelMappingReference(
+                a1Cell.reference()
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                a1Mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1
+                                )
+                        )
+                ).setLabels(
+                        Sets.of(a1Mapping)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "B2",
+                "=20"
+        );
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        b2Cell,
+                                        20
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("B")
+                ).setRowHeights(
+                        rowHeights("2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+        final SpreadsheetLabelMapping b2Mapping = b2Label.setLabelMappingReference(
+                b2Cell.reference()
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                b2Mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2Cell,
+                                                20
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(b2Mapping)
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+
+        final SpreadsheetCell c3Cell = this.cell(
+                "C3",
+                "=A1LABEL+B2LABEL+300"
+        );
+        this.saveCellAndCheck(
+                engine,
+                c3Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                c3Cell,
+                                                1 + 20 + 300
                                         )
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        labelMappingLabelB2,
-                                        labelMappingLabelD4
+                                        a1Mapping,
+                                        b2Mapping
                                 )
                         ).setColumnWidths(
-                                columnWidths("A")
+                                columnWidths("C")
                         ).setRowHeights(
-                                rowHeights("1")
+                                rowHeights("3")
                         ).setColumnCount(
-                                OptionalInt.of(4)
+                                OptionalInt.of(3)
                         ).setRowCount(
-                                OptionalInt.of(4)
+                                OptionalInt.of(3)
                         )
         );
 
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                a1.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                a1.reference()
-        );
-
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                d4.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                d4.reference()
-        );
-
-        this.loadReferencesAndCheck(
-                labelReferencesStore,
-                labelB2
-        );
-        this.loadReferencesAndCheck(
-                labelReferencesStore,
-                labelD4,
-                a1.reference()
-        );
-    }
-
-    @Test
-    public void testSaveCellWithReplacesCellAndLabelReferences() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-
-        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
-
-        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
-        final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("B2");
-        final SpreadsheetLabelMapping labelMappingB2 = labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        labelB2,
-                        b2Reference
-                )
-        );
-
-        final SpreadsheetLabelName labelD4 = SpreadsheetSelection.labelName("LABELD4");
-        final SpreadsheetLabelMapping labelMappingD4 = labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        labelD4,
-                        SpreadsheetSelection.parseCell("D4")
-                )
-        );
-
-        final SpreadsheetCell d4 = this.cell(
-                "$D$4",
-                "=20"
-        );
-        engine.saveCell(
-                d4,
-                context
-        );
-
-        final SpreadsheetCell e5 = this.cell(
-                "$E$5",
-                "=30"
-        );
-        engine.saveCell(
-                e5,
-                context
-        );
-
-        engine.saveCell(
-                this.cell(
-                        "$A$1",
-                        "=10+" + labelB2 + "+C2"
-                ),
-                context
-        );
-
-        final SpreadsheetCellReference e5Reference = SpreadsheetSelection.parseCell("$E$5");
-        final SpreadsheetCell a1 = this.cell(
-                "$A$1",
-                "=40+" + labelD4 + "+" + e5Reference
-        );
-        this.saveCellAndCheck(
+        // verify all the references for labels
+        this.loadMultipleCellRangesAndCheck(
                 engine,
-                a1,
+                Sets.of(
+                        SpreadsheetSelection.parseCellRange("A1:C3")
+                ),
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                SpreadsheetDeltaProperties.ALL,
                 context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                a1,
-                                                40 + 20 + 30
-                                        )
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1
+                                ),
+                                this.formatCell(
+                                        b2Cell,
+                                        20
+                                ),
+                                this.formatCell(
+                                        c3Cell,
+                                        1 + 20 + 300
                                 )
-                        ).setLabels(
-                                Sets.of(
-                                        labelMappingB2,
-                                        labelMappingD4
-                                )
-                        ).setColumnWidths(
-                                columnWidths("A")
-                        ).setRowHeights(
-                                rowHeights("1")
-                        ).setColumnCount(
-                                OptionalInt.of(5)
-                        ).setRowCount(
-                                OptionalInt.of(5)
                         )
-        );
-
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                a1.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                a1.reference(),
-                e5Reference.toRelative()
-        );
-
-        this.loadReferencesAndCheck(
-                cellReferenceStore,
-                d4.reference()
-        );
-        this.findReferencesWithCellAndCheck(
-                cellReferenceStore,
-                d4.reference()
-        );
-
-        this.loadReferencesAndCheck(
-                labelReferencesStore,
-                labelB2
-        );
-        this.loadReferencesAndCheck(
-                labelReferencesStore,
-                labelD4,
-                a1.reference()
+                ).setLabels(
+                        Sets.of(
+                                a1Mapping,
+                                b2Mapping
+                        )
+                ).setDeletedCells(
+                        cells("B1,C1,A2,C2,A3,B3")
+                ).setReferences(
+                        references("A1=A1LABEL;B2=B2LABEL")
+                ).setColumnWidths(
+                        columnWidths("A,B,C")
+                ).setRowHeights(
+                        rowHeights("1,2,3")
+                ).setColumnCount(
+                        OptionalInt.of(3)
+                ).setRowCount(
+                        OptionalInt.of(3)
+                ).setWindow(
+                        SpreadsheetViewportWindows.parse("A1:C3")
+                )
         );
     }
+
 
     // saveCell tests with non expression formula's only value literals.................................................
 
     @Test
-    public void testSaveCellWithFormulaApostropheString() {
+    public void testSaveCellFormulaApostropheString() {
         this.saveCellAndLoadAndFormattedCheck(
                 "'Hello",
                 "Hello"
@@ -3581,7 +4053,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaDateLiteral() {
+    public void testSaveCellFormulaDateLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31",
                 LocalDate.of(1999, 12, 31)
@@ -3589,7 +4061,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaDateTimeLiteral() {
+    public void testSaveCellFormulaDateTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31 12:34",
                 LocalDateTime.of(
@@ -3600,7 +4072,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberLiteral() {
+    public void testSaveCellFormulaNumberLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "123",
                 123
@@ -3608,7 +4080,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumber() {
+    public void testSaveCellFormulaNumber() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123",
                 123
@@ -3616,7 +4088,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberMath() {
+    public void testSaveCellFormulaNumberMath() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123+456.75",
                 123 + 456.75
@@ -3624,7 +4096,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberGreaterThan() {
+    public void testSaveCellFormulaNumberGreaterThan() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123>45",
                 true
@@ -3632,7 +4104,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberLessThanEquals() {
+    public void testSaveCellFormulaNumberLessThanEquals() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123<=45",
                 false
@@ -3640,7 +4112,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringEqualsSameCase() {
+    public void testSaveCellFormulaStringEqualsSameCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"hello\"",
                 true
@@ -3648,7 +4120,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringEqualsDifferentCase() {
+    public void testSaveCellFormulaStringEqualsDifferentCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"HELLO\"",
                 true
@@ -3656,7 +4128,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringEqualsDifferent() {
+    public void testSaveCellFormulaStringEqualsDifferent() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"different\"",
                 false
@@ -3664,7 +4136,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringNotEqualsSameCase() {
+    public void testSaveCellFormulaStringNotEqualsSameCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"hello\"",
                 false
@@ -3672,7 +4144,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringNotEqualsDifferentCase() {
+    public void testSaveCellFormulaStringNotEqualsDifferentCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"HELLO\"",
                 false
@@ -3680,7 +4152,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringNotEqualsDifferent() {
+    public void testSaveCellFormulaStringNotEqualsDifferent() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"different\"",
                 true
@@ -3688,7 +4160,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaTimeLiteral() {
+    public void testSaveCellFormulaTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "12:34",
                 LocalTime.of(12, 34)
@@ -3827,7 +4299,298 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 saved
         );
 
-        this.loadCellStoreAndCheck(context.storeRepository().cells(), a1Formatted);
+        this.loadCellStoreAndCheck(
+                context.storeRepository()
+                        .cells(),
+                a1Formatted
+        );
+    }
+
+    @Test
+    public void testSaveCellWithCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "$A$1",
+                "=1+" + b2
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1 + 0
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        final SpreadsheetCellReferencesStore cellReferenceStore = context.storeRepository()
+                .cellReferences();
+
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1Cell.reference()
+        );
+        this.findCellsWithReferenceAndCheck(
+                cellReferenceStore,
+                a1Cell.reference()
+        );
+
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                b2,
+                a1Cell.reference()
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveCellSaveLabelRefreshesFirstCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+        final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
+                b2Label,
+                SpreadsheetSelection.parseCell("B2")
+        );
+
+        final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1")
+                .row();
+        engine.saveRow(row1, context);
+
+        final SpreadsheetRow row2 = SpreadsheetSelection.parseRow("2")
+                .row();
+        engine.saveRow(row2, context);
+
+        final SpreadsheetRow row3 = SpreadsheetSelection.parseRow("3")
+                .row();
+        engine.saveRow(row3, context);
+
+        engine.saveCell(
+                this.cell(
+                        "A1",
+                        "=" + b2Label + "+1"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        "B2",
+                        "=99"
+                ),
+                context
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                b2Mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=B2LABEL+1",
+                                                99 + 1
+                                        ),
+                                        this.formatCell(
+                                                "B2",
+                                                "=99",
+                                                99
+                                        )
+                                )
+                        ).setReferences(
+                                references("B2=B2LABEL")
+                        ).setRows(
+                                Sets.of(
+                                        row1,
+                                        row2
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A,B")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        ).setLabels(
+                                Sets.of(b2Mapping)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=1"
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        final SpreadsheetLabelName a1Label = SpreadsheetSelection.labelName("A1LABEL");
+        final SpreadsheetLabelMapping a1Mapping = a1Label.setLabelMappingReference(
+                a1Cell.reference()
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                a1Mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1
+                                )
+                        )
+                ).setLabels(
+                        Sets.of(a1Mapping)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveLabelSaveLabelSameCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        this.saveCellAndCheck(
+                engine,
+                this.cell(
+                        "A1",
+                        "=111"
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=111",
+                                                111
+                                        )
+                                )
+                        ).setColumnWidths(
+                                COLUMN_A_WIDTH
+                        ).setRowHeights(
+                                ROW_1_HEIGHT
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        final SpreadsheetLabelName a1Label1 = SpreadsheetSelection.labelName("A1LABEL1");
+        final SpreadsheetLabelMapping a1Mapping1 = a1Label1.setLabelMappingReference(
+                SpreadsheetSelection.A1
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                a1Mapping1,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=111",
+                                                111
+                                        )
+                                )
+                        ).setColumnWidths(
+                                COLUMN_A_WIDTH
+                        ).setRowHeights(
+                                ROW_1_HEIGHT
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        ).setLabels(
+                                Sets.of(a1Mapping1)
+                        )
+        );
+
+        final SpreadsheetLabelName a1Label2 = SpreadsheetSelection.labelName("A1LABEL2");
+        final SpreadsheetLabelMapping a1Mapping2 = a1Label2.setLabelMappingReference(
+                SpreadsheetSelection.A1
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                a1Mapping2,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=111",
+                                                111
+                                        )
+                                )
+                        ).setColumnWidths(
+                                COLUMN_A_WIDTH
+                        ).setRowHeights(
+                                ROW_1_HEIGHT
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        ).setLabels(
+                                Sets.of(
+                                        a1Mapping1,
+                                        a1Mapping2
+                                )
+                        )
+        );
     }
 
     // saveCells........................................................................................................
@@ -3901,39 +4664,40 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell a1 = this.cell(
+        final SpreadsheetCell a1Cell = this.cell(
                 "a1",
                 "=b2"
         );
-        final SpreadsheetCell b2 = this.cell(
+        final SpreadsheetCell b2Cell = this.cell(
                 "b2",
                 "=a1"
         );
 
-        final SpreadsheetCell a1Formatted = this.formatCell(
-                a1,
+        final SpreadsheetCell a1CellFormatted = this.formatCell(
+                a1Cell,
                 SpreadsheetError.cycle(
-                        b2.reference()
+                        b2Cell.reference()
                 )
         );
 
         final SpreadsheetCell b2Formatted = this.formatCell(
-                b2,
+                b2Cell,
                 SpreadsheetError.cycle(
-                        b2.reference()
+                        b2Cell.reference()
                 )
         );
 
         this.saveCellsAndCheck(
                 engine,
                 Sets.of(
-                        a1, b2
+                        a1Cell,
+                        b2Cell
                 ),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        a1Formatted,
+                                        a1CellFormatted,
                                         b2Formatted
                                 )
                         ).setReferences(references("A1=B2;B2=A1")
@@ -3955,7 +4719,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellStoreAndCheck(
                 cellStore,
-                a1Formatted,
+                a1CellFormatted,
                 b2Formatted
         );
         this.loadLabelStoreAndCheck(labelStore);
@@ -3970,54 +4734,55 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell a1 = this.cell(
+        final SpreadsheetCell a1Cell = this.cell(
                 "a1",
                 "=b2"
         );
-        final SpreadsheetCell b2 = this.cell(
+        final SpreadsheetCell b2Cell = this.cell(
                 "b2",
                 "=c3"
         );
-        final SpreadsheetCell c3 = this.cell(
+        final SpreadsheetCell c3Cell = this.cell(
                 "c3",
                 "=a1"
         );
 
-        final SpreadsheetCell a1Formatted = this.formatCell(
-                a1,
+        final SpreadsheetCell a1CellFormatted = this.formatCell(
+                a1Cell,
                 SpreadsheetError.cycle(
-                        c3.reference()
+                        c3Cell.reference()
                 )
         );
 
-        final SpreadsheetCell b2Formatted = this.formatCell(
-                b2,
+        final SpreadsheetCell b2CellFormatted = this.formatCell(
+                b2Cell,
                 SpreadsheetError.cycle(
-                        c3.reference()
+                        c3Cell.reference()
                 )
         );
 
-        final SpreadsheetCell c3Formatted = this.formatCell(
-                c3,
+        final SpreadsheetCell c3CellFormatted = this.formatCell(
+                c3Cell,
                 SpreadsheetError.cycle(
-                        c3.reference()
+                        a1Cell.reference()
                 )
         );
 
         this.saveCellsAndCheck(
                 engine,
                 Sets.of(
-                        a1, b2, c3
+                        a1Cell, b2Cell, c3Cell
                 ),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        a1Formatted,
-                                        b2Formatted,
-                                        c3Formatted
+                                        a1CellFormatted,
+                                        b2CellFormatted,
+                                        c3CellFormatted
                                 )
-                        ).setReferences(references("A1=C3;B2=A1;C3=B2")
+                        ).setReferences(
+                                references("A1=C3;B2=A1;C3=B2")
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
                         ).setRowHeights(
@@ -4036,9 +4801,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellStoreAndCheck(
                 cellStore,
-                a1Formatted,
-                b2Formatted,
-                c3Formatted
+                a1CellFormatted,
+                b2CellFormatted,
+                c3CellFormatted
         );
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(
@@ -4052,28 +4817,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell a1 = this.cell(
+        final SpreadsheetCell a1Cell = this.cell(
                 "a1",
                 "=100"
         );
         final SpreadsheetCell a1Formatted = this.formatCell(
-                a1,
+                a1Cell,
                 100
         );
 
-        final SpreadsheetCell b2 = this.cell(
+        final SpreadsheetCell b2Cell = this.cell(
                 "b2",
                 "=a1+2"
         );
         final SpreadsheetCell b2Formatted = this.formatCell(
-                b2,
+                b2Cell,
                 100 + 2
         );
 
         this.saveCellsAndCheck(
                 engine,
                 Sets.of(
-                        a1, b2
+                        a1Cell,
+                        b2Cell
                 ),
                 context,
                 SpreadsheetDelta.EMPTY
@@ -4082,6 +4848,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         a1Formatted,
                                         b2Formatted
                                 )
+                        ).setReferences(
+                                references("a1=b2")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -4094,17 +4862,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
+
         final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
 
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                b2Cell.reference()
+        );
+        this.findCellsWithReferenceAndCheck(
+                cellReferenceStore,
+                a1Cell.reference(),
+                b2Cell.reference()
+        );
+
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                a1Cell.reference(),
+                b2Cell.reference()
+        );
+        this.findCellsWithReferenceAndCheck(
+                cellReferenceStore,
+                b2Cell.reference()
+        );
+
         this.loadCellStoreAndCheck(
-                cellStore,
+                repository.cells(),
                 a1Formatted,
                 b2Formatted
         );
-        this.loadLabelStoreAndCheck(labelStore);
-        this.countAndCheck(cellReferenceStore, 1); // b2 -> a1
+        this.loadLabelStoreAndCheck(
+                repository.labels()
+        );
+        this.countAndCheck(
+                cellReferenceStore,
+                1
+        ); // b2 -> a1
     }
 
     @Test
@@ -4136,7 +4928,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         a1Formatted,
                                         b2Formatted
                                 )
-                        ).setReferences(references("B2=A1")
+                        ).setReferences(
+                                references("B2=A1")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -4234,6 +5027,175 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(
                 cellReferenceStore,
                 2
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveLabelRefreshesCellThenSaveCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELA1");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.A1
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                this.cell(
+                        "A1",
+                        "=99"
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=99",
+                                                99
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=99",
+                                                99
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(mapping)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                this.cell(
+                        "B2",
+                        "=1000"
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "B2",
+                                                "=1000",
+                                                1000
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellSaveLabelRefreshesCellReferencesAndColumns() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+        final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
+                b2Label,
+                SpreadsheetSelection.parseCell("B2")
+        );
+
+        final SpreadsheetColumn a = SpreadsheetSelection.parseColumn("a")
+                .column();
+        engine.saveColumn(a, context);
+
+        final SpreadsheetColumn b = SpreadsheetSelection.parseColumn("b")
+                .column();
+        engine.saveColumn(b, context);
+
+        final SpreadsheetColumn c = SpreadsheetSelection.parseColumn("c")
+                .column();
+        engine.saveColumn(c, context);
+
+        engine.saveCell(
+                this.cell(
+                        "A1",
+                        "=" + b2Label + "+1"
+                ),
+                context
+        );
+        engine.saveCell(
+                this.cell(
+                        "B2",
+                        "=99"
+                ),
+                context
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                b2Mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=" + b2Label + "+1",
+                                                99 + 1
+                                        ),
+                                        this.formatCell(
+                                                "B2",
+                                                "=99",
+                                                99
+                                        )
+                                )
+                        ).setReferences(
+                                references("b2=B2LABEL")
+                        ).setColumns(
+                                Sets.of(
+                                        a,
+                                        b
+                                )
+                        ).setColumnWidths(
+                                columnWidths("A,B")
+                        ).setRowHeights(
+                                rowHeights("1,2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        ).setLabels(
+                                Sets.of(b2Mapping)
+                        )
         );
     }
 
@@ -4405,7 +5367,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReferenceStore,
                 a1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 cellReferenceStore,
                 a1
         );
@@ -4414,7 +5376,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReferenceStore,
                 b2
         );
-        this.findReferencesWithCellAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 cellReferenceStore,
                 b2
         );
@@ -4424,42 +5386,42 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testDeleteCellsWhereCellWithCellExternalReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
-        final SpreadsheetCellReference b2Reference = SpreadsheetSelection.parseCell("$B$2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
-        final SpreadsheetCell a1 = this.cell(
+        final SpreadsheetCell a1Cell = this.cell(
                 "$A$1",
-                "=1+" + b2Reference
+                "=1+" + b2
         );
         engine.saveCell(
-                a1,
+                a1Cell,
                 context
         );
 
-        final SpreadsheetCell b2 = this.cell(
-                b2Reference,
+        final SpreadsheetCell b2Cell = this.cell(
+                b2,
                 "=20"
         );
         engine.saveCell(
-                b2,
+                b2Cell,
                 context
         );
 
         this.deleteCellAndCheck(
                 engine,
-                b2.reference(),
+                b2Cell.reference(),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
+                                                a1Cell,
                                                 1 // https://github.com/mP1/walkingkooka-spreadsheet/issues/2549
                                         )
                                 )
                         ).setReferences(references("B2=A1")
                         ).setDeletedCells(
                                 Sets.of(
-                                        b2.reference()
+                                        b2Cell.reference()
                                 )
                         ).setColumnWidths(
                                 columnWidths("A,B")
@@ -4477,23 +5439,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadReferencesAndCheck(
                 cellReferenceStore,
-                a1.reference()
+                a1Cell.reference()
         );
-        this.findReferencesWithCellAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 cellReferenceStore,
-                a1.reference(),
-                b2Reference.toRelative()
+                a1Cell.reference()
         );
 
         this.loadReferencesAndCheck(
                 cellReferenceStore,
-                b2.reference(),
-                a1.reference()
+                b2Cell.reference(),
+                a1Cell.reference()
         );
-        this.findReferencesWithCellAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 cellReferenceStore,
-                a1.reference(),
-                b2Reference.toRelative()
+                b2,
+                a1Cell.reference()
         );
     }
 
@@ -4597,7 +5558,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReferenceStore,
                 a1.reference()
         );
-        this.findReferencesWithCellAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 cellReferenceStore,
                 a1.reference()
         );
@@ -4605,7 +5566,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellReferenceStore,
                 b2.reference()
         );
-        this.findReferencesWithCellAndCheck(
+        this.findCellsWithReferenceAndCheck(
                 cellReferenceStore,
                 b2.reference()
         );
@@ -4616,31 +5577,103 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testDeleteCellWithLabelReferrers() {
+    public void testDeleteCellWithLabelReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetLabelStore labelStore = repository.labels();
         final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetSelection.labelName("LABELB2");
-        final SpreadsheetCell b2 = this.cell("$B$2", "=20");
-        final SpreadsheetLabelMapping labelMapping = SpreadsheetLabelMapping.with(
-                labelB2,
-                b2.reference()
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+        final SpreadsheetCell b2Cell = this.cell(
+                "$B$2",
+                "=20"
         );
-        labelStore.save(labelMapping);
+        final SpreadsheetLabelMapping b2LabelMapping = SpreadsheetLabelMapping.with(
+                b2Label,
+                b2Cell.reference()
+        );
+        this.saveLabelAndCheck(
+                engine,
+                b2LabelMapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(
+                                b2LabelMapping
+                        )
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + labelB2);
-        engine.saveCell(a1, context);
+        final SpreadsheetCell a1 = this.cell(
+                "$A$1",
+                "=1+" + b2Label
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                    Sets.of(
+                            this.formatCell(
+                                    a1,
+                                    1+0
+                            )
+                    )
+                ).setLabels(
+                        Sets.of(
+                                b2LabelMapping
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
 
-        engine.saveCell(b2, context);
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1,
+                                        1+20
+                                ),
+                                this.formatCell(
+                                        b2Cell,
+                                        20
+                                )
+                        )
+                ).setLabels(
+                        Sets.of(
+                                b2LabelMapping
+                        )
+                ).setReferences(
+                        references("B2=B2LABEL")
+                ).setColumnWidths(
+                        columnWidths("A,B")
+                ).setRowHeights(
+                        rowHeights("1,2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
 
         this.deleteCellAndCheck(
                 engine,
-                b2.reference(),
+                b2Cell.reference(),
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
@@ -4652,11 +5685,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 )
                         ).setDeletedCells(
                                 Sets.of(
-                                        b2.reference()
+                                        b2Cell.reference()
                                 )
                         ).setLabels(
-                                Sets.of(labelMapping)
-                        ).setReferences(references("B2=LABELB2")
+                                Sets.of(b2LabelMapping)
+                        ).setReferences(references("B2=B2LABEL")
                         ).setColumnWidths(
                                 columnWidths("A,B")
                         ).setRowHeights(
@@ -4669,12 +5702,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, a1.reference());
+        this.findCellsWithReferenceAndCheck(cellReferenceStore, a1.reference());
 
-        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
-        this.findReferencesWithCellAndCheck(cellReferenceStore, b2.reference());
+        this.loadReferencesAndCheck(cellReferenceStore, b2Cell.reference());
+        this.findCellsWithReferenceAndCheck(cellReferenceStore, b2Cell.reference());
 
-        this.loadReferencesAndCheck(labelReferencesStore, labelB2, a1.reference());
+        this.loadReferencesAndCheck(labelReferencesStore, b2Label, a1.reference());
     }
 
     @Test
@@ -7181,10 +8214,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference a6 = SpreadsheetSelection.parseCell("$A$6");
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11");
@@ -7192,29 +8221,42 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a21 = SpreadsheetSelection.parseCell("$A$21");
 
         final SpreadsheetCellRangeReference a16a21 = a16.cellRange(a21);
-        labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        LABEL,
-                        a16a21
+
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(a16a21);
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
                 )
         );
 
         engine.saveCell(
                 this.cell(
                         a1,
-                        "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                        "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
         engine.saveCell(
                 this.cell(
                         a16,
-                        "=20+0"
+                        "=20"
                 ),
                 context
         );
 
-        final int count = a11.row().value() - a6.row().value() + 1;
+        final int count = a11.row()
+                .value() -
+                a6.row()
+                        .value() +
+                1;
         this.deleteRowsAndCheck(
                 engine,
                 a6.row(),
@@ -7224,14 +8266,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
-                                                "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
-                                                1 + 0 + 20 + 0
-                                        ),
-                                        this.formatCell(
                                                 a16.addRow(-count),
-                                                "=20+0",
-                                                20 + 0
+                                                "=20",
+                                                20
                                         )
                                 )
                         ).setLabels(
@@ -7246,7 +8283,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
-                                rowHeights("1,10,16")
+                                rowHeights("10,16")
                         ).setColumnCount(
                                 OptionalInt.of(1)
                         ).setRowCount(
@@ -7254,15 +8291,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // b..c deleted, d moved
 
-        this.countAndCheck(cellStore, 2); // a&d
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+
+        this.countAndCheck(
+                cellStore,
+                2
+        ); // a&d
 
         this.loadCellAndFormulaAndValueCheck(
                 engine,
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
-                1 + 20
+                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+                1+20
         );
 
         this.loadCellAndFormulaAndValueCheck(
@@ -7270,9 +8313,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a16.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=20+0",
+                "=20",
                 20
         );
+
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         this.countAndCheck(
                 labelStore,
@@ -7859,31 +8904,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1");
         final SpreadsheetCellReference e1 = SpreadsheetSelection.parseCell("$E$1");
 
-        labelStore.save(
+        engine.saveLabel(
                 SpreadsheetLabelMapping.with(
                         LABEL,
                         e1
-                )
+                ),
+                context
         );
 
         engine.saveCell(
                 this.cell(
                         a1,
-                        "=1+0+" + LABEL
+                        "=1+" + LABEL
                 ),
                 context
         );
         engine.saveCell(
                 this.cell(
                         e1,
-                        "=2+0"
+                        "=2"
                 ),
                 context
         );
@@ -7891,32 +8933,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int count = 2;
         this.deleteColumnsAndCheck(
                 engine,
-                a1.column().add(1),
+                SpreadsheetSelection.parseColumn("B"),
                 count,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formatCell(
-                                                "$A$1",
-                                                "=1+0+" + LABEL,
-                                                1 + 0 + 2 + 0
-                                        ),
-                                        this.formatCell(
+                                        this.formatCell( // A1 cell value did not "change" even though LABEL123 was updated
                                                 "$C$1",
-                                                "=2+0",
-                                                2 + 0
+                                                "=2",
+                                                2
                                         )
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        LABEL.setLabelMappingReference(SpreadsheetSelection.parseCell("$C$1"))
+                                        LABEL.setLabelMappingReference(
+                                                SpreadsheetSelection.parseCell("$C$1")
+                                        )
                                 )
-                        ).setReferences(references("C1=Label123")
+                        ).setReferences(
+                                references("C1=Label123")
                         ).setDeletedCells(
                                 Sets.of(e1)
                         ).setColumnWidths(
-                                columnWidths("A,C,E")
+                                columnWidths("C,E")
                         ).setRowHeights(
                                 rowHeights("1")
                         ).setColumnCount(
@@ -7926,13 +8966,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         ); // $b moved
 
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+
         this.countAndCheck(
-                cellStore,
+                repository.cells(),
                 2
         );
 
         this.loadLabelAndCheck(
-                labelStore,
+                repository.labels(),
                 LABEL,
                 e1.addColumn(-count)
         );
@@ -7942,7 +8984,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+0+" + LABEL,
+                "=1+" + LABEL,
                 3
         );
 
@@ -7951,7 +8993,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 e1.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=2+0",
+                "=2",
                 2
         );
     }
@@ -8593,10 +9635,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference f1 = SpreadsheetSelection.parseCell("$F$1");
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1");
@@ -8604,24 +9642,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference u1 = SpreadsheetSelection.parseCell("$U$1");
 
         final SpreadsheetCellRangeReference p1u1 = p1.cellRange(u1);
-        labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        LABEL,
-                        p1u1
+
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(p1u1);
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
                 )
         );
 
         engine.saveCell(
                 this.cell(
                         a1,
-                        "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
+                        "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
         engine.saveCell(
                 this.cell(
                         p1,
-                        "=20+0"
+                        "=20"
                 ),
                 context
         );
@@ -8637,14 +9684,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
-                                                "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
-                                                1 + 0 + 20 + 0
-                                        ),
-                                        this.formatCell(
                                                 p1.addColumn(-count),
-                                                "=20+0",
-                                                20 + 0
+                                                "=20",
+                                                20
                                         )
                                 )
                         ).setLabels(
@@ -8657,7 +9699,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setDeletedCells(
                                 Sets.of(p1)
                         ).setColumnWidths(
-                                columnWidths("A,J,P")
+                                columnWidths("J,P")
                         ).setRowHeights(
                                 rowHeights("1")
                         ).setColumnCount(
@@ -8666,6 +9708,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 OptionalInt.of(1)
                         )
         ); // b..c deleted, d moved
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
 
         this.countAndCheck(
                 cellStore,
@@ -8677,7 +9722,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
+                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 1 + 20
         );
 
@@ -8686,9 +9731,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 p1.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=20+0",
+                "=20",
                 20
         );
+
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         this.countAndCheck(
                 labelStore,
@@ -9177,7 +10224,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c1 = SpreadsheetSelection.parseCell("$C$1"); // MOVED
         final SpreadsheetCellReference n9 = SpreadsheetSelection.parseCell("$N$9"); // moved
 
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, n9));
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(n9);
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
 
         engine.saveCell(
                 this.cell(
@@ -9189,27 +10249,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         b1,
-                        "=2+0"
+                        "=2"
                 ),
                 context
         );
         engine.saveCell(
                 this.cell(
                         c1,
-                        "=3+0+" + LABEL
+                        "=3+" + LABEL
                 ),
                 context
         );
         engine.saveCell(
                 this.cell(
                         n9,
-                        "=99+0"
+                        "=99"
                 ),
                 context
         );
 
+        // A1 not included in cells because the A1.value did not change
         final int count = 1;
-        this.insertColumnsAndCheck(engine,
+        this.insertColumnsAndCheck(
+                engine,
                 b1.column(),
                 count,
                 context,
@@ -9217,27 +10279,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
-                                                "=1+" + LABEL,
-                                                1 + 99 + 0
-                                        ),
-                                        this.formatCell(
                                                 "$C$1",
-                                                "=2+0",
-                                                2 + 0
+                                                "=2",
+                                                2
                                         ),
                                         this.formatCell(
                                                 "$D$1",
-                                                "=3+0+" + LABEL,
-                                                3 + 0 + 99 + 0
+                                                "=3+" + LABEL,
+                                                3 + 99
                                         ),
                                         this.formatCell(
                                                 "$O$9",
-                                                "=99+0",
-                                                99 + 0
+                                                "=99",
+                                                99
                                         )
                                 )
-                        ).setReferences(references("O9=Label123")
+                        ).setReferences(
+                                references("O9=" + LABEL)
                         ).setLabels(
                                 Sets.of(
                                         LABEL.setLabelMappingReference(
@@ -9245,9 +10303,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         )
                                 )
                         ).setDeletedCells(
-                                Sets.of(b1, n9)
+                                Sets.of(
+                                        b1,
+                                        n9
+                                )
                         ).setColumnWidths(
-                                columnWidths("A,B,C,D,N,O")
+                                columnWidths("B,C,D,N,O")
                         ).setRowHeights(
                                 rowHeights("1,9")
                         ).setColumnCount(
@@ -9282,7 +10343,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=2+0",
+                "=2",
                 2 + 0
         );
 
@@ -9291,7 +10352,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c1.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=3+0+" + LABEL,
+                "=3+" + LABEL,
                 3 + 99
         );
 
@@ -9300,8 +10361,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 n9.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=99+0",
-                99 + 0
+                "=99",
+                99
         );
     }
 
@@ -9400,20 +10461,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference f1 = SpreadsheetSelection.parseCell("$F$1");
         final SpreadsheetCellReference k1 = SpreadsheetSelection.parseCell("$K$1");
         final SpreadsheetCellReference p1 = SpreadsheetSelection.parseCell("$P$1");
         final SpreadsheetCellReference u1 = SpreadsheetSelection.parseCell("$U$1");
 
-        labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        LABEL,
-                        k1.cellRange(p1)
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(
+                k1.cellRange(p1)
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
                 )
         );
 
@@ -9427,7 +10494,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         k1,
-                        "=99+0"
+                        "=99"
                 ),
                 context
         );
@@ -9441,14 +10508,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
-                                                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
-                                                1 + 99 + 0
-                                        ),
-                                        this.formatCell(
                                                 "$P$1",
-                                                "=99+0",
-                                                99 + 0
+                                                "=99",
+                                                99
                                         )
                                 )
                         ).setReferences(references("P1=Label123")
@@ -9461,7 +10523,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setDeletedCells(
                                 Sets.of(k1)
                         ).setColumnWidths(
-                                columnWidths("A,K,P")
+                                columnWidths("K,P")
                         ).setRowHeights(
                                 rowHeights("1")
                         ).setColumnCount(
@@ -9470,6 +10532,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 OptionalInt.of(1)
                         )
         ); // $b insert
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         this.countAndCheck(
                 labelStore,
@@ -9500,8 +10566,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 p1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=99+0",
-                99 + 0
+                "=99",
+                99
         );
     }
 
@@ -10267,31 +11333,40 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetCellReference b2Cell = SpreadsheetSelection.parseCell("$B$2"); //
+        final SpreadsheetCellReference d4Cell = SpreadsheetSelection.parseCell("$D$4"); // moved
 
-        final SpreadsheetCellReference b3 = SpreadsheetSelection.parseCell("$B$3"); //
-        final SpreadsheetCellReference d5 = SpreadsheetSelection.parseCell("$D$5"); // moved
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
 
-        final SpreadsheetLabelMapping mapping = labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        LABEL,
-                        b3
+        final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
+                b2Label,
+                b2Cell
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                b2Mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(b2Mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
                 )
         );
 
         engine.saveCell(
                 this.cell(
-                        b3,
+                        b2Cell,
                         "=100"
                 ),
                 context
         );
         engine.saveCell(
                 this.cell(
-                        d5,
-                        "=2+" + LABEL
+                        d4Cell,
+                        "=2+" + b2Label
                 ),
                 context
         );
@@ -10299,40 +11374,49 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int count = 1;
         this.insertRowsAndCheck(
                 engine,
-                d5.row(),
+                d4Cell.row(),
                 count,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                "$D$6",
-                                                "=2+" + LABEL,
+                                                "$D$5",
+                                                "=2+" + b2Label,
                                                 2 + 100
                                         )
                                 )
                         ).setLabels(
-                                Sets.of(mapping)
+                                Sets.of(b2Mapping)
                         ).setDeletedCells(
-                                Sets.of(d5)
+                                Sets.of(d4Cell)
                         ).setColumnWidths(
                                 columnWidths("D")
                         ).setRowHeights(
-                                rowHeights("5,6")
+                                rowHeights("4,5")
                         ).setColumnCount(
                                 OptionalInt.of(4)
                         ).setRowCount(
-                                OptionalInt.of(6)
+                                OptionalInt.of(5)
                         )
         ); // $b insert
 
-        this.loadLabelAndCheck(labelStore, LABEL, b3);
+        final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        this.countAndCheck(cellStore, 2);
+        this.loadLabelAndCheck(
+                repository.labels(),
+                b2Label,
+                b2Cell
+        );
+
+        this.countAndCheck(
+                repository.cells(),
+                2
+        );
 
         this.loadCellAndFormulaAndValueCheck(
                 engine,
-                b3,
+                b2Cell,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=100",
@@ -10341,10 +11425,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadCellAndFormulaAndValueCheck(
                 engine,
-                d5.addRow(+count),
+                d4Cell.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=2+" + LABEL,
+                "=2+" + b2Label,
                 2 + 100
         );
     }
@@ -10354,19 +11438,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-
         final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("$A$1"); // A1
         final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("$A$2"); // moved
         final SpreadsheetCellReference a3 = SpreadsheetSelection.parseCell("$A$3"); // MOVED
         final SpreadsheetCellReference i14 = SpreadsheetSelection.parseCell("$I$14"); // moved
 
-        labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        LABEL,
-                        i14
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(i14);
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
                 )
         );
 
@@ -10380,21 +11468,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         a2,
-                        "=2+0"
+                        "=2"
                 ),
                 context
         );
         engine.saveCell(
                 this.cell(
                         a3,
-                        "=3+0+" + LABEL
+                        "=3+" + LABEL
                 ),
                 context
         );
         engine.saveCell(
                 this.cell(
                         i14,
-                        "=99+0"
+                        "=99"
                 ),
                 context
         );
@@ -10409,46 +11497,45 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                "$A$1",
-                                                "=1+" + LABEL,
-                                                1 + 99 + 0
-                                        ),
-                                        this.formatCell(
                                                 "$A$3",
-                                                "=2+0",
-                                                2 + 0
+                                                "=2",
+                                                2
                                         ),
                                         this.formatCell(
                                                 "$A$4",
-                                                "=3+0+" + LABEL,
-                                                3 + 0 + 99
+                                                "=3+" + LABEL,
+                                                3 + 99
                                         ),
                                         this.formatCell(
                                                 "$I$15",
-                                                "=99+0",
-                                                99 + 0
+                                                "=99",
+                                                99
                                         ) // $b insert
                                 )
                         ).setLabels(
                                 Sets.of(
-                                        SpreadsheetLabelMapping.with(
-                                                LABEL,
+                                        LABEL.setLabelMappingReference(
                                                 SpreadsheetSelection.parseCell("$I$15")
                                         )
                                 )
-                        ).setReferences(references("I15=Label123")
+                        ).setReferences(
+                                references("I15=Label123")
                         ).setDeletedCells(
                                 Sets.of(a2, i14)
                         ).setColumnWidths(
                                 columnWidths("A,I")
                         ).setRowHeights(
-                                rowHeights("1,2,3,4,14,15")
+                                rowHeights("2,3,4,14,15")
                         ).setColumnCount(
                                 OptionalInt.of(9)
                         ).setRowCount(
                                 OptionalInt.of(15)
                         )
         );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         this.loadLabelAndCheck(
                 labelStore,
@@ -10475,8 +11562,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a2.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=2+0",
-                2 + 0
+                "=2",
+                2
         );
 
         this.loadCellAndFormulaAndValueCheck(
@@ -10484,7 +11571,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a3.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=3+0+" + LABEL,
+                "=3+" + LABEL,
                 3 + 99
         );
 
@@ -10493,8 +11580,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 i14.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=99+0",
-                99 + 0
+                "=99",
+                99
         );
     }
 
@@ -10605,20 +11692,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetStoreRepository repository = context.storeRepository();
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final SpreadsheetLabelStore labelStore = repository.labels();
-
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1.toAbsolute();
         final SpreadsheetCellReference a6 = SpreadsheetSelection.parseCell("$A$6");
         final SpreadsheetCellReference a11 = SpreadsheetSelection.parseCell("$A$11");
         final SpreadsheetCellReference a16 = SpreadsheetSelection.parseCell("$A$16");
         final SpreadsheetCellReference a21 = SpreadsheetSelection.parseCell("$A$21");
 
-        labelStore.save(
-                SpreadsheetLabelMapping.with(
-                        LABEL,
-                        a11.cellRange(a16)
+        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(
+                a11.cellRange(a16)
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
                 )
         );
 
@@ -10632,7 +11725,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         a11,
-                        "=99+0"
+                        "=99"
                 ),
                 context
         );
@@ -10646,14 +11739,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
-                                                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
-                                                1 + 99 + 0
-                                        ),
-                                        this.formatCell(
                                                 "$A$16",
-                                                "=99+0",
-                                                99 + 0
+                                                "=99",
+                                                99
                                         )// $b insert
                                 )
                         ).setLabels(
@@ -10662,19 +11750,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetSelection.parseCellRange("$A$16:$A$21")
                                         )
                                 )
-                        ).setReferences(references("A16=Label123")
+                        ).setReferences(
+                                references("A16=Label123")
                         ).setDeletedCells(
                                 Sets.of(a11)
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
-                                rowHeights("1,11,16")
+                                rowHeights("11,16")
                         ).setColumnCount(
                                 OptionalInt.of(1)
                         ).setRowCount(
                                 OptionalInt.of(16)
                         )
         );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
 
         this.countAndCheck(
                 labelStore,
@@ -10705,8 +11798,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a16,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=99+0",
-                99 + 0
+                "=99",
+                99
         );
     }
 
@@ -11217,10 +12310,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadMultipleCellRangesAndCheck(
                 engine,
-                "A1:B2",
+                Sets.of(
+                        SpreadsheetSelection.parseCellRange("A1:B2")
+                ),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
-                context
+                context,
+                SpreadsheetDelta.EMPTY.setDeletedCells(
+                        cells("A1,B1,A2,B2")
+                ).setColumnWidths(
+                        columnWidths("A,B")
+                ).setRowHeights(
+                        rowHeights("1,2")
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                ).setWindow(
+                        SpreadsheetViewportWindows.parse("A1:B2")
+                )
         );
     }
 
@@ -11264,6 +12372,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 3
                                         )
                                 )
+                        ).setDeletedCells(
+                                cells("B3,C2")
                         ).setColumnWidths(
                                 columnWidths("B,C")
                         ).setRowHeights(
@@ -11284,7 +12394,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellStore cellStore = context.storeRepository()
                 .cells();
 
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.parseCell("a1");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
         cellStore.save(
                 a1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
@@ -11330,10 +12440,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 context
                                         )
                                 )
+                        ).setDeletedCells(
+                                cells("A2,B1,B2,D5,E4,E5")
                         ).setColumnWidths(
-                                columnWidths("A,D")
+                                columnWidths("A,B,D,E")
                         ).setRowHeights(
-                                rowHeights("1,4")
+                                rowHeights("1,2,4,5")
                         ).setColumnCount(
                                 OptionalInt.of(4)
                         ).setRowCount(
@@ -11373,9 +12485,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
-                        .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setColumns(
+                        .setDeletedCells(
+                                cells("B2,C2,B3,C3")
+                        ).setColumns(
                                 Sets.of(c)
+                        ).setColumnWidths(
+                                columnWidths("B,C")
+                        ).setRowHeights(
+                                rowHeights("2,3")
                         ).setColumnCount(
                                 OptionalInt.of(0)
                         ).setRowCount(
@@ -11393,7 +12510,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .labels();
 
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("C3");
-        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
+        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("C3LABEL");
 
         labelStore.save(label.setLabelMappingReference(b2));
 
@@ -11405,17 +12522,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setLabels(
-                                Sets.of(
-                                        label.setLabelMappingReference(b2)
-                                )
-                        ).setColumnCount(
-                                OptionalInt.of(0)
-                        ).setRowCount(
-                                OptionalInt.of(0)
-                        ).setWindow(window)
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(
+                                label.setLabelMappingReference(b2)
+                        )
+                ).setDeletedCells(
+                        cells("B2,C2,B3,C3")
+                ).setReferences(
+                        references("C3=C3LABEL")
+                ).setColumnWidths(
+                        columnWidths("B,C")
+                ).setRowHeights(
+                        rowHeights("2,3")
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                ).setWindow(window)
         );
     }
 
@@ -11449,15 +12572,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(SpreadsheetDelta.NO_CELLS)
-                        .setRows(
-                                Sets.of(c)
-                        ).setColumnCount(
-                                OptionalInt.of(0)
-                        ).setRowCount(
-                                OptionalInt.of(0)
-                        ).setWindow(window)
+                SpreadsheetDelta.EMPTY.setRows(
+                        Sets.of(c)
+                ).setDeletedCells(
+                        cells("B2,C2,B3,C3")
+                ).setColumnWidths(
+                        columnWidths("B,C")
+                ).setRowHeights(
+                        rowHeights("2,3")
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                ).setWindow(window)
         );
     }
 
@@ -11505,20 +12632,65 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final SpreadsheetCell b2 = this.cell(
+        final SpreadsheetCell b2Cell = this.cell(
                 "b2",
-                "=c3*2"
+                "=c3*1"
         );
-        cellStore.save(b2);
 
-        final SpreadsheetCell c3 = this.cell(
-                "c3",
-                "=2"
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        b2Cell,
+                                        0 * 1
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("B")
+                ).setRowHeights(
+                        rowHeights("2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
         );
-        cellStore.save(c3);
+
+        final SpreadsheetCell c3Cell = this.cell(
+                "c3",
+                "=20"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                c3Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        b2Cell,
+                                        20 * 1 // C3=20 refreshed
+                                ),
+                                this.formatCell(
+                                        c3Cell,
+                                        20
+                                )
+                        )
+                ).setReferences(
+                        references("C3=B2")
+                ).setColumnWidths(
+                        columnWidths("B,C")
+                ).setRowHeights(
+                        rowHeights("2,3")
+                ).setColumnCount(
+                        OptionalInt.of(3)
+                ).setRowCount(
+                        OptionalInt.of(3)
+                )
+        );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:c3");
 
@@ -11532,14 +12704,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                b2,
-                                                4
+                                                b2Cell,
+                                                20 * 1
                                         ),
                                         this.formatCell(
-                                                c3,
-                                                2
+                                                c3Cell,
+                                                20
                                         )
                                 )
+                        ).setDeletedCells(
+                                cells("C2,B3")
+                        ).setReferences(
+                                references("C3=B2")
                         ).setColumnWidths(
                                 columnWidths("B,C")
                         ).setRowHeights(
@@ -11557,26 +12733,57 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final SpreadsheetCell a1 = this.cell(
+        final SpreadsheetCell a1Cell = this.cell(
                 "a1",
                 "=b2+100"
         );
-        cellStore.save(a1);
 
-        final SpreadsheetCell b2 = this.cell(
+        final SpreadsheetCell b2Cell = this.cell(
                 "b2",
                 "=c3+10"
         );
-        cellStore.save(b2);
 
-        final SpreadsheetCell c3 = this.cell(
+        final SpreadsheetCell c3Cell = this.cell(
                 "c3",
                 "=1"
         );
-        cellStore.save(c3);
+
+        this.saveCellsAndCheck(
+                engine,
+                Sets.of(
+                        a1Cell,
+                        b2Cell,
+                        c3Cell
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                1 + 10 + 100
+                                        ),
+                                        this.formatCell(
+                                                b2Cell,
+                                                1 + 10
+                                        ),
+                                        this.formatCell(
+                                                c3Cell,
+                                                1
+                                        )
+                                )
+                        ).setReferences(
+                                references("b2=a1;c3=b2")
+                        ).setColumnWidths(
+                                columnWidths("A,B,C")
+                        ).setRowHeights(
+                                rowHeights("1,2,3")
+                        ).setColumnCount(
+                                OptionalInt.of(3)
+                        ).setRowCount(
+                                OptionalInt.of(3)
+                        )
+        );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("a1:c3");
 
@@ -11590,18 +12797,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
+                                                a1Cell,
                                                 1 + 10 + 100
                                         ),
                                         this.formatCell(
-                                                b2,
+                                                b2Cell,
                                                 1 + 10
                                         ),
                                         this.formatCell(
-                                                c3,
+                                                c3Cell,
                                                 1
                                         )
                                 )
+                        ).setDeletedCells(
+                                cells("B1,C1,A2,C2,A3,B3")
+                        ).setReferences(
+                                references("b2=a1;c3=b2")
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
                         ).setRowHeights(
@@ -11619,26 +12830,56 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
-        final SpreadsheetCell a1 = this.cell(
+        final SpreadsheetCell a1Cell = this.cell(
                 "a1",
                 "=c3+100"
         );
-        cellStore.save(a1);
 
-        final SpreadsheetCell b2 = this.cell(
+        final SpreadsheetCell b2Cell = this.cell(
                 "b2",
                 "=a1+10"
         );
-        cellStore.save(b2);
 
-        final SpreadsheetCell c3 = this.cell(
+        final SpreadsheetCell c3Cell = this.cell(
                 "c3",
                 "=1"
         );
-        cellStore.save(c3);
+        this.saveCellsAndCheck(
+                engine,
+                Sets.of(
+                        a1Cell,
+                        b2Cell,
+                        c3Cell
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                1 + 100
+                                        ),
+                                        this.formatCell(
+                                                b2Cell,
+                                                1 + 100 + 10
+                                        ),
+                                        this.formatCell(
+                                                c3Cell,
+                                                1
+                                        )
+                                )
+                        ).setReferences(
+                                references("A1=B2;C3=A1")
+                        ).setColumnWidths(
+                                columnWidths("A,B,C")
+                        ).setRowHeights(
+                                rowHeights("1,2,3")
+                        ).setColumnCount(
+                                OptionalInt.of(3)
+                        ).setRowCount(
+                                OptionalInt.of(3)
+                        )
+        );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("a1:c3");
 
@@ -11652,18 +12893,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                a1,
+                                                a1Cell,
                                                 1 + 100
                                         ),
                                         this.formatCell(
-                                                b2,
+                                                b2Cell,
                                                 1 + 100 + 10
                                         ),
                                         this.formatCell(
-                                                c3,
+                                                c3Cell,
                                                 1
                                         )
                                 )
+                        ).setDeletedCells(
+                                cells("B1,C1,A2,C2,A3,B3")
+                        ).setReferences(
+                                references("c3=a1;A1=B2")
                         ).setColumnWidths(
                                 columnWidths("A,B,C")
                         ).setRowHeights(
@@ -11681,25 +12926,73 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
+        final SpreadsheetCell c3Cell = this.cell(
+                "c3",
+                "=1"
+        );
 
-        final SpreadsheetCell c3 = this.cell("c3", "=1");
-        cellStore.save(c3);
-
-        final SpreadsheetCell d4 = this.cell("D4", "=2");
-        cellStore.save(d4);
-
-        final SpreadsheetLabelStore labelStore = context.storeRepository()
-                .labels();
-
-        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelD4");
-
-        labelStore.save(
-                label.setLabelMappingReference(
-                        d4.reference()
+        final SpreadsheetCell d4Cell = this.cell(
+                "D4",
+                "=2"
+        );
+        this.saveCellsAndCheck(
+                engine,
+                Sets.of(
+                        c3Cell,
+                        d4Cell
+                ),
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        c3Cell,
+                                        1
+                                ),
+                                this.formatCell(
+                                        d4Cell,
+                                        2
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("C,D")
+                ).setRowHeights(
+                        rowHeights("3,4")
+                ).setColumnCount(
+                        OptionalInt.of(4)
+                ).setRowCount(
+                        OptionalInt.of(4)
                 )
         );
+
+        final SpreadsheetLabelName d4Label = SpreadsheetLabelName.labelName("D4LABEL");
+        final SpreadsheetLabelMapping d4Mapping = d4Label.setLabelMappingReference(
+                d4Cell.reference()
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                d4Mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        d4Cell,
+                                        2
+                                )
+                        )
+                ).setLabels(
+                        Sets.of(d4Mapping)
+                ).setColumnWidths(
+                        columnWidths("D")
+                ).setRowHeights(
+                        rowHeights("4")
+                ).setColumnCount(
+                        OptionalInt.of(4)
+                ).setRowCount(
+                        OptionalInt.of(4)
+                )
+        );
+
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("c3:d4");
 
@@ -11713,22 +13006,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                c3,
+                                                c3Cell,
                                                 1
                                         ),
                                         this.formatCell(
-                                                d4,
+                                                d4Cell,
                                                 2
                                         )
                                 )
-                        )
-                        .setWindow(window)
-                        .setLabels(
+                        ).setDeletedCells(
+                                cells("D3,C4")
+                        ).setLabels(
                                 Sets.of(
-                                        label.setLabelMappingReference(d4.reference())
+                                        d4Label.setLabelMappingReference(d4Cell.reference())
                                 )
                         ).setReferences(
-                                references("D4=LabelD4")
+                                references("D4=D4LABEL")
                         ).setColumnWidths(
                                 columnWidths("C,D")
                         ).setRowHeights(
@@ -11737,7 +13030,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 OptionalInt.of(4)
                         ).setRowCount(
                                 OptionalInt.of(4)
-                        )
+                        ).setWindow(window)
         );
     }
 
@@ -11749,10 +13042,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
 
-        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelC3");
+        final SpreadsheetLabelName c3Label = SpreadsheetLabelName.labelName("C3Label");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-        final SpreadsheetLabelMapping mapping = labelStore.save(
-                label.setLabelMappingReference(c3)
+        final SpreadsheetLabelMapping c3Mapping = labelStore.save(
+                c3Label.setLabelMappingReference(c3)
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:d4");
@@ -11764,14 +13057,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY
-                        .setWindow(window)
+                        .setLabels(
+                                Sets.of(c3Mapping)
+                        ).setDeletedCells(
+                                cells("B2,C2,D2,B3,C3,D3,B4,C4,D4")
+                        ).setReferences(
+                                references("C3=C3LABEL")
+                        ).setColumnWidths(
+                                columnWidths("B,C,D")
+                        ).setRowHeights(
+                                rowHeights("2,3,4")
+                        )
                         .setColumnCount(
                                 OptionalInt.of(0)
                         ).setRowCount(
                                 OptionalInt.of(0)
-                        ).setLabels(
-                                Sets.of(mapping)
-                        )
+                        ).setWindow(window)
         );
     }
 
@@ -11783,10 +13084,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelStore labelStore = context.storeRepository()
                 .labels();
 
-        final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
+        final SpreadsheetLabelName c3d4Label = SpreadsheetLabelName.labelName("C3D4LABEL");
         final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
-        final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(
-                labelC3d4.setLabelMappingReference(c3d4)
+        final SpreadsheetLabelMapping c3d4Mapping = labelStore.save(
+                c3d4Label.setLabelMappingReference(c3d4)
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
@@ -11799,7 +13100,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setLabels(
-                                Sets.of(mappingC3d4)
+                                Sets.of(c3d4Mapping)
+                        ).setDeletedCells(
+                                cells("B2,C2,D2,E2,B3,C3,D3,E3,B4,C4,D4,E4,B5,C5,D5,E5")
+                        ).setReferences(
+                                references("C3=C3D4LABEL;D3=C3D4LABEL;C4=C3D4LABEL;D4=C3D4LABEL")
+                        ).setColumnWidths(
+                                columnWidths("B,C,D,E")
+                        ).setRowHeights(
+                                rowHeights("2,3,4,5")
                         ).setColumnCount(
                                 OptionalInt.of(0)
                         ).setRowCount(
@@ -11813,17 +13122,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelStore labelStore = context.storeRepository()
-                .labels();
+        final SpreadsheetLabelName c3Label = SpreadsheetLabelName.labelName("C3LABEL");
+        final SpreadsheetCellReference c3Cell = SpreadsheetSelection.parseCell("c3");
 
-        final SpreadsheetLabelName labelC3 = SpreadsheetLabelName.labelName("LabelC3");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
-        final SpreadsheetLabelMapping mappingC3 = labelStore.save(labelC3.setLabelMappingReference(c3));
+        final SpreadsheetLabelMapping c3Mapping = c3Label.setLabelMappingReference(c3Cell);
 
-        final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("LabelC3d4");
-        final SpreadsheetCellRangeReference c3d4 = SpreadsheetSelection.parseCellRange("c3:d4");
-        final SpreadsheetLabelMapping mappingC3d4 = labelStore.save(
-                labelC3d4.setLabelMappingReference(c3d4)
+        this.saveLabelAndCheck(
+                engine,
+                c3Mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setLabels(
+                                Sets.of(
+                                        c3Mapping
+                                )
+                        ).setColumnCount(
+                                OptionalInt.of(0)
+                        ).setRowCount(
+                                OptionalInt.of(0)
+                        )
+        );
+
+
+        final SpreadsheetLabelName labelC3d4 = SpreadsheetLabelName.labelName("C3D4LABEL");
+        final SpreadsheetCellRangeReference c3d4Cell = SpreadsheetSelection.parseCellRange("c3:d4");
+
+        final SpreadsheetLabelMapping c3d4Mapping = labelC3d4.setLabelMappingReference(c3d4Cell);
+
+        this.saveLabelAndCheck(
+                engine,
+                c3Mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setLabels(
+                                Sets.of(
+                                        c3Mapping
+                                )
+                        ).setColumnCount(
+                                OptionalInt.of(0)
+                        ).setRowCount(
+                                OptionalInt.of(0)
+                        )
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("b2:e5");
@@ -11836,10 +13175,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY
                         .setLabels(
-                                Sets.of(
-                                        mappingC3,
-                                        mappingC3d4
-                                )
+                                Sets.of(c3Mapping)
+                        ).setDeletedCells(
+                                cells("B2,C2,D2,E2,B3,C3,D3,E3,B4,C4,D4,E4,B5,C5,D5,E5")
+                        ).setReferences(
+                                references("C3=C3LABEL")
+                        ).setColumnWidths(
+                                columnWidths("B,C,D,E")
+                        ).setRowHeights(
+                                rowHeights("2,3,4,5")
                         ).setColumnCount(
                                 OptionalInt.of(0)
                         ).setRowCount(
@@ -11853,19 +13197,51 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
+        final SpreadsheetCell c3Cell = this.cell(
+                "c3",
+                "=1"
+        );
+        this.saveCellAndCheck(
+                engine,
+                c3Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                c3Cell,
+                                                1
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("C")
+                        ).setRowHeights(
+                                rowHeights("3")
+                        ).setColumnCount(
+                                OptionalInt.of(3)
+                        ).setRowCount(
+                                OptionalInt.of(3)
+                        )
+        );
 
-        final SpreadsheetCell c3 = this.cell("c3", "=1");
-        cellStore.save(c3);
+        final SpreadsheetLabelName d4Label = SpreadsheetLabelName.labelName("D4LABEL");
+        final SpreadsheetCellReference d4Cell = SpreadsheetSelection.parseCell("d4");
+        final SpreadsheetLabelMapping d4Mapping = d4Label.setLabelMappingReference(d4Cell);
 
-        final SpreadsheetLabelStore labelStore = context.storeRepository()
-                .labels();
-
-        final SpreadsheetLabelName label = SpreadsheetLabelName.labelName("LabelD4");
-        final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
-        labelStore.save(
-                label.setLabelMappingReference(d4)
+        this.saveLabelAndCheck(
+                engine,
+                d4Mapping,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setLabels(
+                                Sets.of(
+                                        d4Mapping
+                                )
+                        ).setColumnCount(
+                                OptionalInt.of(3)
+                        ).setRowCount(
+                                OptionalInt.of(3)
+                        )
         );
 
         final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.parse("c3:d4");
@@ -11876,27 +13252,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 SpreadsheetDeltaProperties.ALL,
                 context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                c3,
-                                                1
-                                        )
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        c3Cell,
+                                        1
                                 )
-                        ).setLabels(
-                                Sets.of(
-                                        label.setLabelMappingReference(d4)
-                                )
-                        ).setColumnWidths(
-                                columnWidths("C")
-                        ).setRowHeights(
-                                rowHeights("3")
-                        ).setColumnCount(
-                                OptionalInt.of(3)
-                        ).setRowCount(
-                                OptionalInt.of(3)
-                        ).setWindow(window)
+                        )
+                ).setLabels(
+                        Sets.of(
+                                d4Label.setLabelMappingReference(d4Cell)
+                        )
+                ).setDeletedCells(
+                        cells("D3,C4,D4")
+                ).setReferences(
+                        references("D4=D4LABEL")
+                ).setColumnWidths(
+                        columnWidths("C,D")
+                ).setRowHeights(
+                        rowHeights("3,4")
+                ).setColumnCount(
+                        OptionalInt.of(3)
+                ).setRowCount(
+                        OptionalInt.of(3)
+                ).setWindow(window)
         );
     }
 
@@ -11961,15 +13340,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 3
                                         )
                                 )
+                        ).setDeletedCells(
+                                cells("A1,B1,C1,A2,C2,A3,B3")
                         ).setColumns(
                                 Sets.of(
                                         bHidden,
                                         c
                                 )
                         ).setColumnWidths(
-                                columnWidths("C")
+                                columnWidths("A,C")
                         ).setRowHeights(
-                                rowHeights("2,3")
+                                rowHeights("1,2,3")
                         ).setColumnCount(
                                 OptionalInt.of(4)
                         ).setRowCount(
@@ -12039,15 +13420,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 3
                                         )
                                 )
+                        ).setDeletedCells(
+                                cells("A1,B1,C1,A2,C2,A3,B3")
                         ).setRows(
                                 Sets.of(
                                         row2Hidden,
                                         row3
                                 )
                         ).setColumnWidths(
-                                columnWidths("B,C")
+                                columnWidths("A,B,C")
                         ).setRowHeights(
-                                rowHeights("3")
+                                rowHeights("1,3")
                         ).setColumnCount(
                                 OptionalInt.of(4)
                         ).setRowCount(
@@ -13407,59 +14790,80 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellStore cellStore = context.storeRepository()
-                .cells();
-
         final SpreadsheetCellReference k21 = SpreadsheetSelection.parseCell("$K$21");
         final SpreadsheetCellReference l22 = SpreadsheetSelection.parseCell("$L$22");
 
-        final SpreadsheetCell cellK21 = this.cell(
+        final SpreadsheetCell k2CellK = this.cell(
                 k21,
                 "=1+0"
         );
-        final SpreadsheetCell cellL22 = this.cell(
+        final SpreadsheetCell l22CellL = this.cell(
                 l22,
                 "=" + k21
         );
 
-        cellStore.save(cellK21);
-        cellStore.save(cellL22);
+        this.saveCellsAndCheck(
+                engine,
+                Sets.of(
+                        k2CellK,
+                        l22CellL
+                ),
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        k2CellK,
+                                        1 + 0
+                                ),
+                                this.formatCell(
+                                        l22CellL,
+                                        1 + 0
+                                )
+                        )
+                ).setReferences(references("K21=L22")
+                ).setColumnWidths(
+                        columnWidths("K,L")
+                ).setRowHeights(
+                        rowHeights("21,22")
+                ).setColumnCount(
+                        OptionalInt.of(12)
+                ).setRowCount(
+                        OptionalInt.of(22)
+                )
+        );
 
-        final SpreadsheetCellReference d = SpreadsheetSelection.parseCell("$AE$41");
+        final SpreadsheetCellReference ae41 = SpreadsheetSelection.parseCell("$AE$41");
 
         this.fillCellsAndCheck(
                 engine,
-                Lists.of(cellL22),
-                l22.cellRange(l22),
-                d.cellRange(d),
+                Lists.of(l22CellL), // cells
+                l22.cellRange(l22), // from
+                ae41.cellRange(ae41), // to
                 context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                k21,
-                                                "=1+0",
-                                                1 + 0
-                                        ),
-                                        this.formatCell(
-                                                d,
-                                                "=" + k21,
-                                                1 + 0
-                                        )
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        ae41,
+                                        "=" + k21,
+                                        1 + 0
                                 )
-                        ).setReferences(references("$K$21=AE41")
-                        ).setColumnWidths(
-                                columnWidths("K,AE")
-                        ).setRowHeights(
-                                rowHeights("21,41")
-                        ).setColumnCount(
-                                OptionalInt.of(31)
-                        ).setRowCount(
-                                OptionalInt.of(41)
                         )
+                ).setColumnWidths(
+                        columnWidths("AE")
+                ).setRowHeights(
+                        rowHeights("41")
+                ).setColumnCount(
+                        OptionalInt.of(31)
+                ).setRowCount(
+                        OptionalInt.of(41)
+                )
         );
 
-        this.countAndCheck(cellStore, 2 + 1);
+        this.countAndCheck(
+                context.storeRepository()
+                        .cells(),
+                2 + 1
+        );
     }
 
     @Test
@@ -13508,6 +14912,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 3 + 2
                                         )
                                 )
+                        ).setReferences(
+                                references("E5=F6")
                         ).setColumnWidths(
                                 columnWidths("E,F")
                         ).setRowHeights(
@@ -13570,7 +14976,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 2 + 0
                                         )
                                 )
-                        ).setReferences(references("C1=A1")
+                        ).setReferences(
+                                references("C1=A1")
                         ).setColumnWidths(
                                 columnWidths("A,C")
                         ).setRowHeights(
@@ -13937,16 +15344,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        final SpreadsheetLabelMapping mapping2 = SpreadsheetSelection.labelName("Label222")
-                .setLabelMappingReference(b2);
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingReference(b2);
 
         engine.saveLabel(
                 mapping2,
                 context
         );
 
-        final SpreadsheetLabelMapping mapping3 = SpreadsheetSelection.labelName("Label333")
-                .setLabelMappingReference(c2);
+        final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label333");
+        final SpreadsheetLabelMapping mapping3 = label3.setLabelMappingReference(c2);
 
         engine.saveLabel(
                 mapping3,
@@ -13974,6 +15381,145 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         mapping1,
                                         mapping2,
                                         mapping3
+                                )
+                        ).setReferences(
+                                Maps.of(
+                                        a2, Sets.of(LABEL),
+                                        b2, Sets.of(label2),
+                                        c2, Sets.of(label3)
+                                )
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(2))
+        );
+    }
+
+    @Test
+    public void testFindCellsWithReferences() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=a2+200")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=b2+3000")
+                        )
+                ),
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A1:C2"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                20, // count
+                SpreadsheetValueType.ANY,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setReferences(
+                                references("a2=b2;b2=c2")
+                        ).setColumnWidths(columnWidths("A,B,C"))
+                        .setRowHeights(rowHeights("2"))
+                        .setColumnCount(OptionalInt.of(3))
+                        .setRowCount(OptionalInt.of(2))
+        );
+    }
+
+    @Test
+    public void testFindCellsWithLabelsAndReferences() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a2 = SpreadsheetSelection.parseCell("a2");
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("b2");
+        final SpreadsheetCellReference c2 = SpreadsheetSelection.parseCell("c2");
+
+        final SpreadsheetDelta saved = engine.saveCells(
+                Sets.of(
+                        a2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=1")
+                        ),
+                        b2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=200+a2")
+                        ),
+                        c2.setFormula(
+                                SpreadsheetFormula.EMPTY.setText("=3000+b2")
+                        )
+                ),
+                context
+        );
+
+        final SpreadsheetLabelMapping mapping1 = LABEL.setLabelMappingReference(a2);
+        engine.saveLabel(
+                mapping1,
+                context
+        );
+
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label222");
+        final SpreadsheetLabelMapping mapping2 = label2.setLabelMappingReference(b2);
+
+        engine.saveLabel(
+                mapping2,
+                context
+        );
+
+        final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label333");
+        final SpreadsheetLabelMapping mapping3 = label3.setLabelMappingReference(c2);
+
+        engine.saveLabel(
+                mapping3,
+                context
+        );
+
+        this.findCellsAndCheck(
+                engine,
+                SpreadsheetSelection.parseCellRange("A1:C2"),
+                SpreadsheetCellRangeReferencePath.LRTD,
+                0, // offset
+                20, // count
+                SpreadsheetValueType.ANY,
+                Expression.value(true), // match everything
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        saved.cell(a2).get(),
+                                        saved.cell(b2).get(),
+                                        saved.cell(c2).get()
+                                )
+                        ).setLabels(
+                                Sets.of(
+                                        mapping1,
+                                        mapping2,
+                                        mapping3
+                                )
+                        ).setReferences(
+                                Maps.of(
+                                        a2,
+                                        Sets.of(b2, LABEL),
+                                        b2,
+                                        Sets.of(c2, label2),
+                                        c2,
+                                        Sets.of(label3)
                                 )
                         ).setColumnWidths(columnWidths("A,B,C"))
                         .setRowHeights(rowHeights("2"))
@@ -14861,7 +16407,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         "BBB"
                                 )
                         )
-                ).setReferences(references("A1=B1;A2=B2")
+                ).setReferences(
+                        references("A1=B1;A2=B2")
                 ).setColumnWidths(
                         columnWidths("A,B")
                 ).setRowHeights(
@@ -14930,7 +16477,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         "BBB"
                                 )
                         )
-                ).setReferences(references("A1=B1;A2=B2")
+                ).setReferences(
+                        references("A1=B1;A2=B2")
                 ).setColumnWidths(
                         columnWidths("A,B")
                 ).setRowHeights(
@@ -14991,7 +16539,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Sets.of(
                                 label.setLabelMappingReference(SpreadsheetSelection.A1)
                         )
-                ).setReferences(references("A1=Label123")
+                ).setReferences(
+                        references("A1=Label123")
                 ).setColumnWidths(
                         columnWidths("A")
                 ).setRowHeights(
@@ -15053,84 +16602,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadFormulaReferencesWithReferenceToMissingCell() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell(
-                "A1",
-                "=111+b2"
-        );
-
-        engine.saveCells(
-                Sets.of(a1),
-                context
-        );
-
-        this.loadFormulaReferencesAndCheck(
-                engine,
-                SpreadsheetSelection.A1,
-                0, // offset
-                100, // count
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        SpreadsheetSelection.parseCell("B2")
-                                                .setFormula(SpreadsheetFormula.EMPTY)
-                                )
-                        ).setColumnWidths(columnWidths("B"))
-                        .setRowHeights(rowHeights("2"))
-                        .setColumnCount(OptionalInt.of(1))
-                        .setRowCount(OptionalInt.of(1))
-        );
-    }
-
-    @Test
-    public void testLoadFormulaReferencesWithReferenceToExistingCell() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell(
-                "A1",
-                "=111+b2"
-        );
-        final SpreadsheetCell b2 = this.cell(
-                "B2",
-                "=222"
-        );
-
-        engine.saveCells(
-                Sets.of(
-                        a1,
-                        b2
-                ),
-                context
-        );
-
-        this.loadFormulaReferencesAndCheck(
-                engine,
-                SpreadsheetSelection.A1,
-                0, // offset
-                100, // count
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "B2",
-                                                "=222",
-                                                222
-                                        )
-                                )
-                        ).setColumnWidths(columnWidths("B")) // B2 not included in output cells
-                        .setRowHeights(rowHeights("2"))
-                        .setColumnCount(OptionalInt.of(2))
-                        .setRowCount(OptionalInt.of(2))
-        );
-    }
-
-    @Test
     public void testLoadFormulaReferencesWithFormulaIncludingLabel() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -15168,7 +16639,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadFormulaReferencesWithExternalFormulaLabel() {
+    public void testLoadFormulaReferencesWithCellFormulaWithLabel() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -15205,66 +16676,113 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadFormulaReferencesWithExternalFormulaReferencesWithLabel() {
+    public void testLoadFormulaReferencesWithCellHasCellAndLabelTarget() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         // points to cell
-        final SpreadsheetCell a1 = this.cell(
+        final SpreadsheetCell a1Cell = this.cell(
                 "A1",
                 "=B2+111"
         );
 
-        final SpreadsheetCell b2 = this.cell(
+        final SpreadsheetCell b2Cell = this.cell(
                 "B2",
                 "=222"
         );
 
         engine.saveCells(
                 Sets.of(
-                        a1,
-                        b2
+                        a1Cell,
+                        b2Cell
                 ),
                 context
         );
 
-
-        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(
-                b2.reference()
-        );
+        final SpreadsheetLabelMapping b2Mapping = SpreadsheetSelection.labelName("B2LABEL")
+                .setLabelMappingReference(
+                        b2Cell.reference()
+                );
 
         engine.saveLabel(
-                mapping,
+                b2Mapping,
                 context
         );
 
-
         this.loadFormulaReferencesAndCheck(
                 engine,
-                SpreadsheetSelection.A1,
+                b2Cell.reference(),
                 0, // offset
                 100, // count
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "B2",
-                                                "=222",
-                                                222
-                                        )
+                        Sets.of(
+                                this.formatCell(
+                                        "A1",
+                                        "=B2+111",
+                                        222 + 111
                                 )
-                        ).setLabels(
-                                Sets.of(mapping)
-                        ).setColumnWidths(columnWidths("B"))
-                        .setRowHeights(rowHeights("2"))
-                        .setColumnCount(OptionalInt.of(2))
+                        )
+                ).setLabels(
+                        Sets.of(b2Mapping)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+    }
+
+    @Test
+    public void testLoadFormulaReferencesWithoutReferences() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=111"
+        );
+        final SpreadsheetCell b2Cell = this.cell(
+                "B2",
+                "=222+A1"
+        );
+
+        engine.saveCells(
+                Sets.of(
+                        a1Cell,
+                        b2Cell
+                ),
+                context
+        );
+
+        final SpreadsheetLabelMapping a1Mapping = SpreadsheetSelection.labelName("A1LABEL")
+                .setLabelMappingReference(SpreadsheetSelection.A1);
+
+        engine.saveLabel(
+                a1Mapping,
+                context
+        );
+
+        // because the cells were not moved the result should have no cells.
+        this.loadFormulaReferencesAndCheck(
+                engine,
+                b2Cell.reference(),
+                0, // offset
+                100, // count
+                SpreadsheetDeltaProperties.ALL,
+                context,
+                SpreadsheetDelta.EMPTY.setColumnCount(OptionalInt.of(2))
                         .setRowCount(OptionalInt.of(2))
         );
     }
 
     @Test
-    public void testLoadReferencesWithCellReferenceAndLabels() {
+    public void testLoadFormulaReferencesWithManyFormulaCellReferences() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -15276,69 +16794,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "B2",
                 "=222+A1"
         );
-
-        engine.saveCells(
-                Sets.of(
-                        a1,
-                        b2
-                ),
-                context
-        );
-
-        final SpreadsheetLabelMapping mapping = LABEL.setLabelMappingReference(
-                SpreadsheetSelection.A1
-        );
-
-        engine.saveLabel(
-                mapping,
-                context
-        );
-
-        // because the cells were not moved the result should have no cells.
-        this.loadFormulaReferencesAndCheck(
-                engine,
-                b2.reference(),
-                0, // offset
-                100, // count
-                SpreadsheetDeltaProperties.ALL,
-                context,
-                SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "A1",
-                                                "=111",
-                                                111
-                                        )
-                                )
-                        ).setLabels(
-                                Sets.of(mapping)
-                        ).setColumnWidths(columnWidths("A")) // B2 not included in output cells
-                        .setRowHeights(rowHeights("1"))
-                        .setColumnCount(OptionalInt.of(2))
-                        .setRowCount(OptionalInt.of(2))
-        );
-    }
-
-    @Test
-    public void testLoadReferencesWithManyFormulaCellReferences() {
-        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell(
-                "A1",
-                "=111+B2+C3+D4"
-        );
-        final SpreadsheetCell b2 = this.cell(
-                "B2",
-                "=222"
-        );
         final SpreadsheetCell c3 = this.cell(
                 "c3",
-                "=333"
+                "=333+A1"
         );
         final SpreadsheetCell d4 = this.cell(
-                "D4",
-                "=444"
+                "d4",
+                "=444+A1"
         );
 
         engine.saveCells(
@@ -15351,7 +16813,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        // because the cells were not moved the result should have no cells.
         this.loadFormulaReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
@@ -15360,50 +16821,55 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "B2",
-                                                "=222",
-                                                222
-                                        ),
-                                        this.formatCell(
-                                                "C3",
-                                                "=333",
-                                                333
-                                        ),
-                                        this.formatCell(
-                                                "D4",
-                                                "=444",
-                                                444
-                                        )
+                        Sets.of(
+                                this.formatCell(
+                                        "B2",
+                                        "=222+A1",
+                                        222 + 111
+                                ),
+                                this.formatCell(
+                                        "C3",
+                                        "=333+A1",
+                                        333 + 111
+                                ),
+                                this.formatCell(
+                                        "D4",
+                                        "=444+A1",
+                                        444 + 111
                                 )
-                        ).setColumnWidths(columnWidths("B,C,D")) // B2 not included in output cells
-                        .setRowHeights(rowHeights("2,3,4"))
-                        .setColumnCount(OptionalInt.of(4))
-                        .setRowCount(OptionalInt.of(4))
+                        )
+                ).setColumnWidths(
+                        columnWidths("B,C,D")
+                ).setRowHeights(
+                        rowHeights("2,3,4")
+                ).setColumnCount(
+                        OptionalInt.of(4)
+                ).setRowCount(
+                        OptionalInt.of(4)
+                )
         );
     }
 
     @Test
-    public void testLoadReferencesWithManyFormulaCellReferencesAndOffset() {
+    public void testLoadFormulaReferencesWithManyFormulaCellReferencesAndOffset() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell(
                 "A1",
-                "=111+B2+C3+D4"
+                "=111"
         );
         final SpreadsheetCell b2 = this.cell(
                 "B2",
-                "=222"
+                "=222+A1"
         );
         final SpreadsheetCell c3 = this.cell(
                 "c3",
-                "=333"
+                "=333+A1"
         );
         final SpreadsheetCell d4 = this.cell(
-                "D4",
-                "=444"
+                "d4",
+                "=444+A1"
         );
 
         engine.saveCells(
@@ -15416,7 +16882,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        // because the cells were not moved the result should have no cells.
         this.loadFormulaReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
@@ -15425,49 +16890,50 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "C3",
-                                                "=333",
-                                                333
-                                        ),
-                                        this.formatCell(
-                                                "D4",
-                                                "=444",
-                                                444
-                                        )
+                        Sets.of(
+                                this.formatCell(
+                                        "C3",
+                                        "=333+A1",
+                                        333 + 111
+                                ),
+                                this.formatCell(
+                                        "D4",
+                                        "=444+A1",
+                                        444 + 111
                                 )
-                        ).setColumnWidths(columnWidths("C,D")) // B2 not included in output cells
-                        .setRowHeights(rowHeights("3,4"))
-                        .setColumnCount(OptionalInt.of(4))
-                        .setRowCount(OptionalInt.of(4))
+                        )
+                ).setColumnWidths(
+                        columnWidths("C,D")
+                ).setRowHeights(
+                        rowHeights("3,4")
+                ).setColumnCount(
+                        OptionalInt.of(4)
+                ).setRowCount(
+                        OptionalInt.of(4)
+                )
         );
     }
 
     @Test
-    public void testLoadReferencesWithManyFormulaCellReferencesAndOffsetAndCount() {
+    public void testLoadFormulaReferencesWithManyFormulaCellReferencesAndOffsetAndCount() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell(
                 "A1",
-                "=111+B2+C3+D4+E5"
+                "=111"
         );
         final SpreadsheetCell b2 = this.cell(
                 "B2",
-                "=222"
+                "=222+A1"
         );
         final SpreadsheetCell c3 = this.cell(
                 "c3",
-                "=333"
+                "=333+A1"
         );
         final SpreadsheetCell d4 = this.cell(
-                "D4",
-                "=444"
-        );
-        final SpreadsheetCell e5 = this.cell(
-                "E5",
-                "=555"
+                "d4",
+                "=444+A1"
         );
 
         engine.saveCells(
@@ -15475,48 +16941,46 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         a1,
                         b2,
                         c3,
-                        d4,
-                        e5
+                        d4
                 ),
                 context
         );
 
-        // because the cells were not moved the result should have no cells.
         this.loadFormulaReferencesAndCheck(
                 engine,
                 SpreadsheetSelection.A1,
-                1, // offset skips B2
-                2, // count includes C3, D4, stops before E5
+                1, // offset
+                1, // count
                 SpreadsheetDeltaProperties.ALL,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "C3",
-                                                "=333",
-                                                333
-                                        ),
-                                        this.formatCell(
-                                                "D4",
-                                                "=444",
-                                                444
-                                        )
+                        Sets.of(
+                                this.formatCell(
+                                        "C3",
+                                        "=333+A1",
+                                        333 + 111
                                 )
-                        ).setColumnWidths(columnWidths("C,D")) // B2 not included in output cells
-                        .setRowHeights(rowHeights("3,4"))
-                        .setColumnCount(OptionalInt.of(5))
-                        .setRowCount(OptionalInt.of(5))
+                        )
+                ).setColumnWidths(
+                        columnWidths("C")
+                ).setRowHeights(
+                        rowHeights("3")
+                ).setColumnCount(
+                        OptionalInt.of(4)
+                ).setRowCount(
+                        OptionalInt.of(4)
+                )
         );
     }
 
     //  loadLabel.......................................................................................................
 
     @Test
-    public void testLoadLabelWithUnknownLabelFails() {
+    public void testLoadLabelWithUnknownLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELB2");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
                 label,
                 SpreadsheetSelection.parseCell("B2")
@@ -15525,7 +16989,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.saveLabelAndCheck(
                 engine,
                 mapping,
-                context
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
         );
 
         this.loadLabelAndFailCheck(
@@ -15536,6 +17007,234 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     //  saveLabel.......................................................................................................
+
+    @Test
+    public void testSaveLabelWithMissingCellReference() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                SpreadsheetSelection.labelName("LABELA1"),
+                SpreadsheetSelection.A1
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+
+        this.loadLabelAndCheck(
+                context.storeRepository().labels(),
+                mapping.label(),
+                mapping
+        );
+    }
+
+    @Test
+    public void testSaveLabelAndUnrelatedSaveCell() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELA1");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.A1
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                this.formatCell(
+                        "B2",
+                        "=222"
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "B2",
+                                                "=222",
+                                                222
+                                        )
+                                )
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveLabelAndSaveCellForLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABELA1");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                label,
+                SpreadsheetSelection.A1
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                this.formatCell(
+                        "A1",
+                        "=111"
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=111",
+                                                111
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(mapping)
+                        ).setReferences(
+                                references("A1=LABELA1")
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        this.findCellsWithReferenceAndCheck(
+                context.storeRepository()
+                        .cellReferences(),
+                SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testSaveLabelAndSaveCellSaveSecondCellToLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName a1Label = SpreadsheetSelection.labelName("A1LABEL");
+        final SpreadsheetLabelMapping a1Mapping = a1Label.setLabelMappingReference(
+                SpreadsheetSelection.A1
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                a1Mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(a1Mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                this.formatCell(
+                        "A1",
+                        "=111"
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=111",
+                                                111
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(a1Mapping)
+                        ).setReferences(
+                                references("A1=A1LABEL")
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                this.formatCell(
+                        "B2",
+                        "=A1LABEL"
+                ),
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "B2",
+                                                "=A1LABEL",
+                                                111
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(a1Mapping)
+                        ).setColumnWidths(
+                                columnWidths("B")
+                        ).setRowHeights(
+                                rowHeights("2")
+                        ).setColumnCount(
+                                OptionalInt.of(2)
+                        ).setRowCount(
+                                OptionalInt.of(2)
+                        )
+        );
+    }
 
     @Test
     public void testSaveLabelWithCycleFails() {
@@ -15582,86 +17281,253 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveLabelAndLoadFromLabelStore() {
+    public void testSaveLabelSaveCellToLabelMissingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
-                label,
-                SpreadsheetSelection.parseCell("B2")
-        );
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetLabelMapping mapping = SpreadsheetSelection.labelName("B2LABEL")
+                .setLabelMappingReference(b2);
 
         this.saveLabelAndCheck(
                 engine,
                 mapping,
-                context
-        );
-
-        this.loadLabelAndCheck(
-                context.storeRepository().labels(),
-                label,
-                mapping
-        );
-    }
-
-    @Test
-    public void testSaveLabelAndLoadLabel() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
-                label,
-                SpreadsheetSelection.parseCell("B2")
-        );
-
-        this.saveLabelAndCheck(
-                engine,
-                mapping,
-                context
-        );
-
-        this.loadLabelAndCheck(
-                engine,
-                label,
                 context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnWidths(Maps.empty()
+                ).setRowHeights(Maps.empty()
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "a1",
+                "=1+B2LABEL"
+        );
+        final SpreadsheetCell a1CellFormatted = this.formatCell(
+                a1Cell,
+                1
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                a1CellFormatted
+                        )
+                ).setLabels(
+                        Sets.of(mapping)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetCellStore cellStore = repository.cells();
+        final SpreadsheetLabelStore labelStore = repository.labels();
+        final SpreadsheetCellReferencesStore cellReferenceStore = repository.cellReferences();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
+
+        this.loadCellStoreAndCheck(
+                cellStore,
+                a1CellFormatted
+        );
+        this.loadLabelStoreAndCheck(
+                labelStore,
                 mapping
+        );
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                SpreadsheetSelection.A1
+        );
+        this.loadReferencesAndCheck(
+                cellReferenceStore,
+                b2
+        );
+        this.loadReferencesAndCheck(
+                labelReferencesStore,
+                LABEL
         );
     }
 
     @Test
-    public void testSaveLabelWithoutCellReferences() {
+    public void testSaveLabelSaveCellToLabelMissingCellSaveMissingCellRefreshesOtherCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
-                label,
-                SpreadsheetSelection.parseCell("B2")
+        final SpreadsheetStoreRepository repository = context.storeRepository();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repository.labelReferences();
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "$B$2",
+                "=99"
         );
 
-        engine.saveCell(
-                this.cell(
-                        "B2",
-                        "=99"
-                ),
-                context
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+        final SpreadsheetLabelMapping b2Mappings = SpreadsheetLabelMapping.with(
+                b2Label,
+                b2Cell.reference()
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                b2Mappings,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(b2Mappings)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "$A$1",
+                "=1+" + b2Label
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1 + 0 // B2LABEL -> missing B2 = 0
+                                )
+                        )
+                ).setLabels(
+                        Sets.of(b2Mappings)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1 + 99 // 1 + B2LABEL
+                                ),
+                                this.formatCell(
+                                        b2Cell,
+                                        99
+                                )
+                        )
+                ).setLabels(
+                        Sets.of(
+                                b2Label.setLabelMappingReference(
+                                        b2Cell.reference()
+                                )
+                        )
+                ).setReferences(references("B2=B2LABEL")
+                ).setColumnWidths(
+                        columnWidths("A,B")
+                ).setRowHeights(
+                        rowHeights("1,2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+    }
+
+    @Test
+    public void testSaveLabelSaveCellSaveCellWithLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+                SpreadsheetSelection.labelName("A1LABEL"),
+                SpreadsheetSelection.A1
         );
 
         this.saveLabelAndCheck(
                 engine,
                 mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+
+        final SpreadsheetCell a1 = this.cell(
+                "$A$1",
+                "=10"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
-                                                "B2",
-                                                "=99",
-                                                99
+                                                a1,
+                                                10
                                         )
                                 )
+                        ).setLabels(
+                                Sets.of(mapping)
+                        ).setReferences(references("A1=A1LABEL")
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        final SpreadsheetCell b2 = this.cell(
+                "$B$2",
+                "=5+A1LABEL"
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                b2,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                b2,
+                                                5 + 10
+                                        )
+                                )
+                        ).setLabels(
+                                Sets.of(mapping)
                         ).setColumnWidths(
                                 columnWidths("B")
                         ).setRowHeights(
@@ -15670,340 +17536,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 OptionalInt.of(2)
                         ).setRowCount(
                                 OptionalInt.of(2)
-                        ).setLabels(
-                                Sets.of(mapping)
-                        )
-        );
-
-        engine.saveCell(this.cell("A1", label + "+1"), context);
-    }
-
-    @Test
-    public void testSaveLabelRefreshesCellReferences() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
-                label,
-                SpreadsheetSelection.parseCell("B2")
-        );
-
-        engine.saveCell(
-                this.cell(
-                        "A1",
-                        "=" + label + "+1"
-                ),
-                context
-        );
-        engine.saveCell(
-                this.cell(
-                        "B2",
-                        "=99"
-                ),
-                context
-        );
-
-        this.saveLabelAndCheck(
-                engine,
-                mapping,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "A1",
-                                                "=" + label + "+1",
-                                                99 + 1
-                                        ),
-                                        this.formatCell(
-                                                "B2",
-                                                "=99",
-                                                99
-                                        )
-                                )
-                        ).setColumnWidths(
-                                columnWidths("A,B")
-                        ).setRowHeights(
-                                rowHeights("1,2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        ).setLabels(
-                                Sets.of(mapping)
-                        )
-        );
-    }
-
-    @Test
-    public void testSaveLabelRefreshesCellReferencesAndColumns() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetSelection.parseCell("B2"));
-
-        final SpreadsheetColumn a = SpreadsheetSelection.parseColumn("a")
-                .column();
-        engine.saveColumn(a, context);
-
-        final SpreadsheetColumn b = SpreadsheetSelection.parseColumn("b")
-                .column();
-        engine.saveColumn(b, context);
-
-        final SpreadsheetColumn c = SpreadsheetSelection.parseColumn("c")
-                .column();
-        engine.saveColumn(c, context);
-
-        engine.saveCell(
-                this.cell(
-                        "A1",
-                        "=" + label + "+1"
-                ),
-                context
-        );
-        engine.saveCell(
-                this.cell(
-                        "B2",
-                        "=99"
-                ),
-                context
-        );
-
-        this.saveLabelAndCheck(
-                engine,
-                mapping,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "A1",
-                                                "=" + label + "+1",
-                                                99 + 1
-                                        ),
-                                        this.formatCell(
-                                                "B2",
-                                                "=99",
-                                                99
-                                        )
-                                )
-                        ).setColumns(
-                                Sets.of(
-                                        a,
-                                        b
-                                )
-                        ).setColumnWidths(
-                                columnWidths("A,B")
-                        ).setRowHeights(
-                                rowHeights("1,2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        ).setLabels(
-                                Sets.of(mapping)
-                        )
-        );
-    }
-
-    @Test
-    public void testSaveLabelRefreshesCellReferencesAndRows() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
-                label,
-                SpreadsheetSelection.parseCell("B2")
-        );
-
-        final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1")
-                .row();
-        engine.saveRow(row1, context);
-
-        final SpreadsheetRow row2 = SpreadsheetSelection.parseRow("2")
-                .row();
-        engine.saveRow(row2, context);
-
-        final SpreadsheetRow row3 = SpreadsheetSelection.parseRow("3")
-                .row();
-        engine.saveRow(row3, context);
-
-        engine.saveCell(
-                this.cell(
-                        "A1",
-                        "=" + label + "+1"
-                ),
-                context
-        );
-        engine.saveCell(
-                this.cell(
-                        "B2",
-                        "=99"
-                ),
-                context
-        );
-
-        this.saveLabelAndCheck(
-                engine,
-                mapping,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "A1",
-                                                "=" + label + "+1",
-                                                99 + 1
-                                        ),
-                                        this.formatCell(
-                                                "B2",
-                                                "=99",
-                                                99
-                                        )
-                                )
-                        ).setRows(
-                                Sets.of(
-                                        row1,
-                                        row2
-                                )
-                        ).setColumnWidths(
-                                columnWidths("A,B")
-                        ).setRowHeights(
-                                rowHeights("1,2")
-                        ).setColumnCount(
-                                OptionalInt.of(2)
-                        ).setRowCount(
-                                OptionalInt.of(2)
-                        ).setLabels(
-                                Sets.of(mapping)
-                        )
-        );
-    }
-
-    @Test
-    public void testSaveLabelForCell() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        engine.saveCell(
-                this.cell(
-                        "A1",
-                        "=123"
-                ), context
-        );
-
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
-                label,
-                SpreadsheetSelection.A1
-        );
-
-        this.saveLabelAndCheck(
-                engine,
-                mapping,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "A1",
-                                                "=123",
-                                                123
-                                        )
-                                )
-                        ).setColumnWidths(
-                                COLUMN_A_WIDTH
-                        ).setRowHeights(
-                                ROW_1_HEIGHT
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        ).setLabels(
-                                Sets.of(mapping)
-                        )
-        );
-    }
-
-    @Test
-    public void testSaveLabelDifferentSameCell() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        engine.saveCell(
-                this.cell(
-                        "A1",
-                        "=111"
-                ), context
-        );
-
-        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("LABEL111");
-        final SpreadsheetLabelMapping mapping1 = SpreadsheetLabelMapping.with(
-                label1,
-                SpreadsheetSelection.A1
-        );
-
-        this.saveLabelAndCheck(
-                engine,
-                mapping1,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "A1",
-                                                "=111",
-                                                111
-                                        )
-                                )
-                        ).setColumnWidths(
-                                COLUMN_A_WIDTH
-                        ).setRowHeights(
-                                ROW_1_HEIGHT
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        ).setLabels(
-                                Sets.of(mapping1)
-                        )
-        );
-
-        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("LABEL222");
-        final SpreadsheetLabelMapping mapping2 = SpreadsheetLabelMapping.with(
-                label2,
-                SpreadsheetSelection.A1
-        );
-
-        this.saveLabelAndCheck(
-                engine,
-                mapping2,
-                context,
-                SpreadsheetDelta.EMPTY
-                        .setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                "A1",
-                                                "=111",
-                                                111
-                                        )
-                                )
-                        ).setColumnWidths(
-                                COLUMN_A_WIDTH
-                        ).setRowHeights(
-                                ROW_1_HEIGHT
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
-                        ).setLabels(
-                                Sets.of(
-                                        mapping1,
-                                        mapping2
-                                )
                         )
         );
     }
@@ -16135,11 +17667,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     //  deleteLabel.......................................................................................................
 
     @Test
-    public void testDeleteLabelAndLoadFromLabelStore() {
+    public void testDeleteLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("B2LABEL");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
                 label,
                 SpreadsheetSelection.parseCell("B2")
@@ -16148,7 +17680,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.saveLabelAndCheck(
                 engine,
                 mapping,
-                context
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(mapping)
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
         );
 
         this.deleteLabelAndCheck(
@@ -16165,16 +17704,74 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("LABEL123");
-        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
-                label,
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+        final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
+                b2Label,
                 SpreadsheetSelection.parseCell("B2")
         );
 
         engine.saveCell(
                 this.cell(
                         "A1",
-                        "=" + label + "+1"
+                        "=B2LABEL+1"
+                ),
+                context
+        );
+
+        engine.saveLabel(
+                b2Mapping,
+                context
+        );
+
+        // should refresh A1 because it mentions B2LABEL
+        this.deleteLabelAndCheck(
+                engine,
+                b2Label,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                "A1",
+                                                "=B2LABEL+1",
+                                                SpreadsheetError.selectionNotFound(b2Label)
+                                        )
+                                )
+                        ).setDeletedLabels(
+                                Sets.of(b2Label)
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+
+        this.loadLabelFailCheck(
+                context.storeRepository()
+                        .labels(),
+                b2Label
+        );
+    }
+
+    @Test
+    public void testDeleteLabelRefreshesCell2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+        final SpreadsheetLabelMapping b2Mapping = SpreadsheetLabelMapping.with(
+                b2Label,
+                SpreadsheetSelection.parseCell("B2")
+        );
+
+        engine.saveCell(
+                this.cell(
+                        "A1",
+                        "=B2LABEL+1"
                 ),
                 context
         );
@@ -16187,25 +17784,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         engine.saveLabel(
-                mapping,
+                b2Mapping,
                 context
         );
 
+        // should refresh A1 because it mentions B2LABEL
         this.deleteLabelAndCheck(
                 engine,
-                label,
+                b2Label,
                 context,
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
                                         this.formatCell(
                                                 "A1",
-                                                "=" + label + "+1",
-                                                SpreadsheetError.selectionNotFound(label)
+                                                "=B2LABEL+1",
+                                                SpreadsheetError.selectionNotFound(b2Label)
                                         )
                                 )
                         ).setDeletedLabels(
-                                Sets.of(label)
+                                Sets.of(b2Label)
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
@@ -16217,7 +17815,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadLabelFailCheck(context.storeRepository().labels(), label);
+        this.loadLabelFailCheck(
+                context.storeRepository()
+                        .labels(),
+                b2Label
+        );
     }
 
     @Test
@@ -16713,6 +18315,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         SpreadsheetError.cycle(a1.reference())
                                 )
                         )
+                ).setReferences(
+                        references("a1=a1,b2")
                 )
         );
     }
@@ -19399,7 +21003,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetCell formatCell(final SpreadsheetCellReference cell,
                                        final String formulaText) {
         return this.formatCell(
-                this.cell(cell, formulaText),
+                this.cell(
+                        cell,
+                        formulaText
+                ),
                 Optional.empty(),
                 STYLE
         );
@@ -19419,7 +21026,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                        final String formulaText,
                                        final Object value) {
         return this.formatCell(
-                this.cell(cell, formulaText),
+                this.cell(
+                        cell,
+                        formulaText
+                ),
                 value
         );
     }
@@ -19586,17 +21196,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private void findReferencesWithCellAndCheck(final SpreadsheetCellReferencesStore store,
+    private void findCellsWithReferenceAndCheck(final SpreadsheetCellReferencesStore store,
                                                 final SpreadsheetCellReference cell,
                                                 final SpreadsheetCellReference... expected) {
         this.checkEquals(
                 Sets.of(expected),
-                store.findReferencesWithCell(
+                store.findCellsWithReference(
                         cell,
                         0, // offset
                         Integer.MAX_VALUE // count
                 ),
-                () -> "findReferences with " + cell
+                () -> "findCellsWithReference with " + cell
         );
     }
 

@@ -27,30 +27,30 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 /**
  * A {@link SpreadsheetSelectionVisitor} that adds references to each reference present within cell formula.
  */
-final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor with(final SpreadsheetCellReference cell,
-                                                                                      final SpreadsheetStoreRepository repository) {
-        return new BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(
+    static BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor with(final SpreadsheetCellReference cell,
+                                                                                            final SpreadsheetStoreRepository repository) {
+        return new BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor(
                 cell,
                 repository
         );
     }
 
     // VisibleForTesting
-    BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(final SpreadsheetCellReference cell,
-                                                                          final SpreadsheetStoreRepository repository) {
+    BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor(final SpreadsheetCellReference cell,
+                                                                                final SpreadsheetStoreRepository repository) {
         super();
         this.cell = cell;
         this.repository = repository;
     }
 
     @Override
-    protected void visit(final SpreadsheetCellReference cell) {
+    protected void visit(final SpreadsheetCellReference formulaCell) {
         this.repository.cellReferences()
                 .addCell(
                         ReferenceAndSpreadsheetCellReference.with(
-                                cell,
+                                formulaCell,
                                 this.cell
                         )
                 );
