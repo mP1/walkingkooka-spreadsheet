@@ -274,8 +274,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     public SpreadsheetCell setStyle(final TextStyle style) {
-        checkTextStyle(style);
-
         return this.style.equals(style) ?
                 this :
                 this.replace(
@@ -283,7 +281,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formula,
                         this.formatter,
                         this.parser,
-                        style,
+                        Objects.requireNonNull(style, "style"),
                         NO_FORMATTED_VALUE_CELL
                 );
     }
@@ -292,10 +290,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * The cell style that is used to format the output of the formula.
      */
     private final TextStyle style;
-
-    private static TextStyle checkTextStyle(final TextStyle style) {
-        return Objects.requireNonNull(style, "style");
-    }
 
     // formatted .......................................................................................................
 
