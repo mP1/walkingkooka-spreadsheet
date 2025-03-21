@@ -58,10 +58,6 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         return new TreeMapSpreadsheetCellStore();
     }
 
-    private static SpreadsheetCellRangeReference checkCellRange(final SpreadsheetCellRangeReference range) {
-        return Objects.requireNonNull(range, "range");
-    }
-
     /**
      * Private ctor.
      */
@@ -129,7 +125,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                                               final SpreadsheetCellRangeReferencePath path,
                                               final int offset,
                                               final int count) {
-        checkCellRange(range);
+        Objects.requireNonNull(range, "range");
         Objects.requireNonNull(path, "path");
         Store.checkOffsetAndCount(
                 offset,
@@ -249,7 +245,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public void deleteCells(final SpreadsheetCellRangeReference range) {
-        checkCellRange(range);
+        Objects.requireNonNull(range, "range");
 
         this.store.all()
                 .stream()
