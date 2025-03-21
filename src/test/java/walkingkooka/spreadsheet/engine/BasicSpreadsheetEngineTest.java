@@ -519,7 +519,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ).set(
                         SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                         ExpressionFunctionAliasSet.parse(
-                                        TEST_NUMBER_PARAMETER +
+                                TEST_NUMBER_PARAMETER +
                                         "," +
                                         TEST_STRING_PARAMETER +
                                         "," +
@@ -875,7 +875,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 value instanceof Number ?
-                        EXPRESSION_NUMBER_KIND.create((Number)value) :
+                        EXPRESSION_NUMBER_KIND.create((Number) value) :
                         value,
                 formattedText
         );
@@ -1237,9 +1237,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "=1+$B$2"
         );
         final Set<SpreadsheetCell> saved = engine.saveCell(
-                        unsaved,
-                        context
-                ).cells();
+                unsaved,
+                context
+        ).cells();
 
         this.checkEquals(
                 this.formatCell(
@@ -1384,7 +1384,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         ),
                                         formatCell(
                                                 cellC2,
-                                                3+4+(1+2+100) // 3+4+(b2)
+                                                3 + 4 + (1 + 2 + 100) // 3+4+(b2)
                                         )
                                 )
                         ).setReferences(
@@ -1462,11 +1462,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         ),
                                         formatCell(
                                                 cellC2,
-                                                3+4+100 + 3
+                                                3 + 4 + 100 + 3
                                         ),
                                         formatCell(
                                                 cellD2,
-                                                5+6+100 + 3
+                                                5 + 6 + 100 + 3
                                         )
                                 )
                         ).setReferences(
@@ -1921,7 +1921,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Sets.of(
                                 this.formatCell(
                                         b2Cell,
-                                        0+10 // A1 is missing and given a value of 0
+                                        0 + 10 // A1 is missing and given a value of 0
                                 )
                         )
                 ).setColumnWidths(columnWidths("B")
@@ -2600,7 +2600,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 b2Cell,
-                                                200+1
+                                                200 + 1
                                         )
                                 )
                         ).setColumnWidths(
@@ -2662,7 +2662,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 b2Cell,
-                                                200+1
+                                                200 + 1
                                         )
                                 )
                         ).setColumnWidths(
@@ -2714,7 +2714,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 b2Cell,
-                                                200+1
+                                                200 + 1
                                         )
                                 )
                         ).setColumnWidths(
@@ -3563,7 +3563,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 b2Cell,
-                                                20+1
+                                                20 + 1
                                         )
                                 )
                         ).setColumnWidths(
@@ -3690,7 +3690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 b2Cell,
-                                                20+1
+                                                20 + 1
                                         )
                                 )
                         ).setColumnWidths(
@@ -4448,21 +4448,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1Cell,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                                Sets.of(
-                                        this.formatCell(
-                                                a1Cell,
-                                                1
-                                        )
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1
                                 )
-                        ).setColumnWidths(
-                                columnWidths("A")
-                        ).setRowHeights(
-                                rowHeights("1")
-                        ).setColumnCount(
-                                OptionalInt.of(1)
-                        ).setRowCount(
-                                OptionalInt.of(1)
                         )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
         );
 
         final SpreadsheetLabelName a1Label = SpreadsheetSelection.labelName("A1LABEL");
@@ -5618,12 +5618,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
-                    Sets.of(
-                            this.formatCell(
-                                    a1,
-                                    1+0
-                            )
-                    )
+                        Sets.of(
+                                this.formatCell(
+                                        a1,
+                                        1 + 0
+                                )
+                        )
                 ).setLabels(
                         Sets.of(
                                 b2LabelMapping
@@ -5647,7 +5647,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Sets.of(
                                 this.formatCell(
                                         a1,
-                                        1+20
+                                        1 + 20
                                 ),
                                 this.formatCell(
                                         b2Cell,
@@ -5680,7 +5680,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 a1,
-                                                1+0
+                                                1 + 0
                                         )
                                 )
                         ).setDeletedCells(
@@ -7433,7 +7433,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.loadLabelAndCheck(
-                labelStore, 
+                labelStore,
                 LABEL,
                 a1
         );
@@ -8305,7 +8305,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
-                1+20
+                1 + 20
         );
 
         this.loadCellAndFormulaAndValueCheck(
@@ -10396,7 +10396,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(
                 this.cell(
                         f6,
-                        "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL +")"
+                        "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")"
                 ),
                 context
         );
@@ -10412,7 +10412,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 "$G$6",
-                                                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL+")",
+                                                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                                                 2 + 0 + 99 + 0
                                         )
                                 )
@@ -10451,7 +10451,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 f6.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL +")",
+                "=2+0+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 2 + 99
         );
     }
@@ -10557,7 +10557,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a1,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "=1+BasicSpreadsheetEngineTestSum(" + LABEL +")",
+                "=1+BasicSpreadsheetEngineTestSum(" + LABEL + ")",
                 1 + 99
         );
 
@@ -21063,8 +21063,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cell,
                 Optional.ofNullable(
                         value instanceof Number ?
-                        EXPRESSION_NUMBER_KIND.create((Number)value) :
-                        value
+                                EXPRESSION_NUMBER_KIND.create((Number) value) :
+                                value
                 ),
                 style
         );
@@ -21257,7 +21257,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 evaluation,
                 context,
                 formulaText,
-                (Object)EXPRESSION_NUMBER_KIND.create(value)
+                (Object) EXPRESSION_NUMBER_KIND.create(value)
         );
     }
     // class............................................................................................................
