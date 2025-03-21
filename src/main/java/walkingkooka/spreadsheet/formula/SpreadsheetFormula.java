@@ -207,12 +207,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     public SpreadsheetFormula setToken(final Optional<SpreadsheetFormulaParserToken> token) {
-        checkToken(token);
-
         return this.token.equals(token) ?
                 this :
                 this.replace(
-                        token.isPresent() ? null : this.text(), // no need to keep text if token is present.
+                        Objects.requireNonNull(token, "token")
+                                .isPresent() ? null :
+                                this.text(), // no need to keep text if token is present.
                         token,
                         NO_EXPRESSION,
                         NO_VALUE
@@ -224,10 +224,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * used to reconstruct the text form.
      */
     private final Optional<SpreadsheetFormulaParserToken> token;
-
-    private static void checkToken(final Optional<SpreadsheetFormulaParserToken> token) {
-        Objects.requireNonNull(token, "token");
-    }
 
     // expression .............................................................................................
 
