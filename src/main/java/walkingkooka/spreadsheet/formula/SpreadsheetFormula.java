@@ -274,23 +274,17 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     public SpreadsheetFormula setValue(final Optional<Object> value) {
-        checkValue(value);
-
         return this.value.equals(value) ?
                 this :
                 this.replace(
                         this.text,
                         this.token,
                         this.expression,
-                        value
+                        Objects.requireNonNull(value, "value")
                 );
     }
 
     private final Optional<Object> value;
-
-    private static void checkValue(final Optional<Object> value) {
-        Objects.requireNonNull(value, "value");
-    }
 
     // magic...... ....................................................................................................
 
