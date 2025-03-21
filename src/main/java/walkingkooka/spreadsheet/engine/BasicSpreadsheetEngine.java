@@ -57,8 +57,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContexts;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
@@ -124,104 +124,43 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(deltaProperties, "deltaProperties");
         Objects.requireNonNull(context, "context");
 
-        return this.loadCellRange(
-                        context.resolveIfLabel(selection)
-                                .toCellRange(),
-                        evaluation,
-                        deltaProperties,
-                        context
-                );
-    }
-
-    private SpreadsheetDelta loadCellRange(final SpreadsheetCellRangeReference cellRange,
-                                           final SpreadsheetEngineEvaluation evaluation,
-                                           final Set<SpreadsheetDeltaProperties> deltaProperties,
-                                           final SpreadsheetEngineContext context) {
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
+                evaluation,
                 deltaProperties,
                 context
         );
 
         try {
-            final SpreadsheetStoreRepository repository = context.storeRepository();
-
-            // load and evaluate cells
-            final Set<SpreadsheetCell> loaded = SortedSets.tree();
-
-            for (final SpreadsheetCell cell : context.storeRepository()
-                    .cells()
-                    .loadCellRange(cellRange)) {
-
-                final SpreadsheetCell evaluated = this.loadCell(
-                        cell,
-                        evaluation,
-                        changes,
-                        context
+            if (selection.isLabelName()) {
+                changes.getOrCreateLabelCache(
+                        selection.toLabelName(),
+                        BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
                 );
-                changes.onCellLoad(evaluated);
-                loaded.add(evaluated);
             }
 
-            final Set<SpreadsheetCellReference> loadedOrDeleted = loaded.stream()
-                    .map(SpreadsheetCell::reference)
-                    .collect(Collectors.toCollection(Sets::ordered));
-
-            SpreadsheetDelta delta = this.prepareResponse(
+            this.loadCellRange(
+                    context.resolveIfLabel(selection)
+                            .toCellRange(),
                     changes,
                     context
             );
 
-            // load any labels for the requested cell when it was NOT found and labels are requested.
-            if (deltaProperties.contains(SpreadsheetDeltaProperties.LABELS)) {
-                final Set<SpreadsheetCellReference> deleted = delta.deletedCells();
-                loadedOrDeleted.addAll(deleted);
+            // finish evaluating loaded cells
+            changes.commit();
 
-                final Set<SpreadsheetCellReference> allDeleted = SortedSets.tree();
-                allDeleted.addAll(deleted);
+            //final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.with(cellRanges);
 
-                final Set<SpreadsheetLabelMapping> labels = SortedSets.tree();
-                labels.addAll(delta.labels());
-
-                final SpreadsheetLabelStore labelStore = repository.labels();
-
-                for (final SpreadsheetCellReference cell : cellRange) {
-                    if (loadedOrDeleted.contains(cell)) {
-                        continue;
-                    }
-                    labels.addAll(
-                            labelStore.findLabelsWithReference(
-                                    cell,
-                                    0,
-                                    FIND_LABELS_WITH_REFERENCE_COUNT
-                            )
-                    );
-                    allDeleted.add(cell);
-                }
-
-                delta = delta.setDeletedCells(allDeleted)
-                        .setLabels(labels);
-            }
-
-            return delta;
+            return this.prepareResponse(
+                    changes,
+                    context
+            );//.setWindow(window);
         } finally {
             changes.close();
         }
     }
 
-    SpreadsheetCell loadCell(final SpreadsheetCell cell,
-                             final SpreadsheetEngineEvaluation evaluation,
-                             final SpreadsheetExpressionReferenceLoader loader,
-                             final SpreadsheetEngineContext context) {
-        return this.parseFormulaEvaluateFormatStyleAndSave(
-                cell,
-                evaluation,
-                loader,
-                context
-        );
-    }
-
-    // LOAD CELLS.......................................................................................................
+    // LOAD MULTIPLE CELL RANGES........................................................................................
 
     @Override
     public SpreadsheetDelta loadMultipleCellRanges(final Set<SpreadsheetCellRangeReference> cellRanges,
@@ -233,34 +172,24 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(deltaProperties, "deltaProperties");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
+                evaluation,
                 deltaProperties,
                 context
         );
 
         try {
-            final SpreadsheetCellStore store = context.storeRepository()
-                    .cells();
-
             for (final SpreadsheetCellRangeReference cellRange : cellRanges) {
-                cellRange.cellStream()
-                        .forEach(reference -> {
-                                    if (false == changes.isCellLoaded(reference)) {
-                                        final Optional<SpreadsheetCell> loaded = store.load(reference);
-                                        if (loaded.isPresent()) {
-                                            final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
-                                                    loaded.get(),
-                                                    evaluation,
-                                                    changes, // SpreadsheetExpressionReferenceLoader
-                                                    context
-                                            );
-                                            changes.onCellLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
-                                        }
-                                    }
-                                }
-                        );
+                this.loadCellRange(
+                        cellRange,
+                        changes,
+                        context
+                );
             }
+
+            // finish evaluating loaded cells
+            changes.commit();
 
             final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.with(cellRanges);
 
@@ -274,6 +203,53 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    private void loadCellRange(final SpreadsheetCellRangeReference cellRange,
+                               final BasicSpreadsheetEngineChanges changes,
+                               final SpreadsheetEngineContext context) {
+        if(cellRange.count() == 1) {
+            this.loadCell(
+                    cellRange.toCell(),
+                    changes,
+                    context
+            );
+        } else {
+            final SpreadsheetCellStore store = context.storeRepository()
+                    .cells();
+
+            for (final SpreadsheetCellReference cell : cellRange) {
+                changes.getOrCreateCellCache(
+                        cell,
+                        BasicSpreadsheetEngineChangesCacheStatusCell.DELETED
+                );
+            }
+
+            final Set<SpreadsheetCell> spreadsheetCells = store.loadCellRange(cellRange);
+            for (final SpreadsheetCell spreadsheetCell : spreadsheetCells) {
+                final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                        spreadsheetCell.reference(),
+                        BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
+                );
+                cache.loading(spreadsheetCell);
+            }
+        }
+    }
+
+    private void loadCell(final SpreadsheetCellReference cell,
+                          final BasicSpreadsheetEngineChanges changes,
+                          final SpreadsheetEngineContext context) {
+        final SpreadsheetCellStore store = context.storeRepository()
+                .cells();
+
+        final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                cell,
+                BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
+        );
+        cache.loadingOrMissing(
+                store.load(cell)
+                        .orElse(null)
+        );
+    }
+
     // SAVE CELL........................................................................................................
 
     /**
@@ -285,19 +261,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
 
         try {
-            final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
-                    cell,
-                    SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                    changes, // SpreadsheetExpressionReferenceLoader
-                    context
+            final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                    cell.reference(),
+                    BasicSpreadsheetEngineChangesCacheStatusCell.SAVING
             );
-            changes.onCellSavedImmediate(saved);
+            cache.saving(cell);
+            changes.commit();
+
             return this.prepareResponse(
                     changes,
                     context
@@ -326,22 +302,22 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private SpreadsheetDelta saveCellsNotEmpty(final Set<SpreadsheetCell> cells,
                                                final SpreadsheetEngineContext context) {
         // save all cells.
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
 
         try {
             for (final SpreadsheetCell cell : cells) {
-                final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
-                        cell,
-                        SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                        changes, // SpreadsheetExpressionReferenceLoader
-                        context
+                // loadCell will fail with a CYCLE if status=SAVING
+                final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                        cell.reference(),
+                        BasicSpreadsheetEngineChangesCacheStatusCell.SAVING
                 );
-
-                changes.onCellSavedBatch(saved);
+                cache.saving(cell);
             }
+
+            changes.commit();
 
             return this.prepareResponse(
                     changes,
@@ -363,7 +339,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(selection, "selection");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -375,6 +351,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             context.resolveIfLabel(selection)
                                     .toCellRange()
                     );
+
+            changes.commit();
 
             return this.prepareResponse(
                     changes,
@@ -397,7 +375,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(to, "to");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -410,6 +388,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     changes,
                     context
             );
+
+            changes.commit();
 
             return this.prepareResponse(changes, context);
         } finally {
@@ -429,7 +409,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(expression, "expression");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -473,8 +453,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(deltaProperties, "deltaProperties");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 deltaProperties,
                 context
         );
@@ -530,12 +511,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     if (filterPredicate.test(loadedAndEval)) {
                         if (skipOffset >= offset) {
                             found.add(loadedAndEval);
-                            changes.onCellLoad(loadedAndEval);
+                            changes.onCellLoading(loadedAndEval);
                         }
                         skipOffset++;
                     }
                 }
             }
+
+            changes.commit();
 
             return this.prepareResponse(
                     changes,
@@ -568,17 +551,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList comparators,
                                         final Set<SpreadsheetDeltaProperties> deltaProperties,
                                         final SpreadsheetEngineContext context) {
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 deltaProperties,
                 context
         );
         try {
             final Set<SpreadsheetCell> loaded = SortedSets.tree();
+            final SpreadsheetCellStore cellStore = context.storeRepository()
+                    .cells();
 
-            for (final SpreadsheetCell cell : context.storeRepository()
-                    .cells()
-                    .loadCellRange(cellRange)) {
+            for (final SpreadsheetCell cell : cellStore.loadCellRange(cellRange)) {
 
                 final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
                         cell,
@@ -602,9 +586,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             // delete old cells...
             for (final SpreadsheetCell cell : movedFromTo.keySet()) {
-                changes.onCellDeletedBatch(
-                        cell.reference()
-                );
+                cellStore.delete(cell.reference());
             }
 
             // save moved cells
@@ -615,8 +597,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         changes, // SpreadsheetExpressionReferenceLoader
                         context
                 );
-                changes.onCellSavedBatch(saved);
             }
+
+            changes.commit();
 
             return this.prepareResponse(
                     changes,
@@ -690,55 +673,44 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(properties, "properties");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 properties,
                 context
         );
 
         try {
             final SpreadsheetStoreRepository repository = context.storeRepository();
-            final SpreadsheetCellStore cellStore = repository.cells();
+            final SpreadsheetCellReferencesStore cellReferencesStore = repository.cellReferences();
 
             int skipCount = 0;
             int loadedCount = 0;
 
             // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferenceStore.loadReferences(SpreadsheetCellReference, int offset, int count)
-            for (final SpreadsheetCellReference reference : repository.cellReferences()
-                    .findReferencesWithCell(
-                            cell,
-                            0, // offset
-                            FIND_REFERENCES_COUNT // count
-                    )) {
-                if(skipCount < offset) {
+            for (final SpreadsheetCellReference reference : cellReferencesStore.findCellsWithReference(
+                    cell,
+                    0, // offset
+                    FIND_REFERENCES_COUNT // count
+            )) {
+                if (skipCount < offset) {
                     skipCount++;
                     continue;
                 }
 
-                if(loadedCount >= count) {
+                if (loadedCount >= count) {
                     break;
                 }
 
-                final SpreadsheetCellReference cellReference = reference.toCell();
-
-                final SpreadsheetCell loadedCellForCellReference = cellStore.load(cellReference)
-                        .orElse(null);
-                final SpreadsheetCell target;
-                if(null != loadedCellForCellReference) {
-                    // include an SpreadsheetFormula without any formula text if the cell does not exist
-                    target = this.parseFormulaEvaluateFormatStyleAndSave(
-                            loadedCellForCellReference,
-                            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                            changes, // SpreadsheetExpressionReferenceLoader
-                            context
-                    );
-                } else {
-                    target = cellReference.setFormula(SpreadsheetFormula.EMPTY);
-                }
-                changes.onCellLoad(target);
+                changes.getOrCreateCellCache(
+                        reference.toCell(),
+                        BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
+                );
 
                 loadedCount++;
             }
+
+            changes.commit();
 
             return this.prepareResponse(
                     changes,
@@ -775,7 +747,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(column, "column");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -788,13 +760,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // load cells in column and save them again, this will re-evaluate as necessary.
             final SpreadsheetCellStore cells = repo.cells();
             for (final SpreadsheetCell cell : cells.column(column.reference())) {
-                this.parseFormulaEvaluateFormatStyleAndSave(
-                        cell,
-                        SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                        changes, // SpreadsheetExpressionReferenceLoader
-                        context
+                final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                        cell.reference(),
+                        BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED // Maybe should be LOADING so cell appears in response
                 );
+                cache.loading(cell);
             }
+
+            changes.commit();
 
             return this.prepareResponse(changes, context);
         } finally {
@@ -827,7 +800,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(row, "row");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -839,13 +812,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // load cells in row and save them again, this will re-evaluate as necessary.
             final SpreadsheetCellStore cells = repo.cells();
             for (final SpreadsheetCell cell : cells.row(row.reference())) {
-                this.parseFormulaEvaluateFormatStyleAndSave(
-                        cell,
-                        SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                        changes, // SpreadsheetExpressionReferenceLoader
-                        context
+                final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
+                        cell.reference(),
+                        BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED // Maybe should be LOADING so cell appears in response
                 );
+                cache.loading(cell);
             }
+
+            changes.commit();
 
             return this.prepareResponse(changes, context);
         } finally {
@@ -863,7 +837,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetEngine.checkCount(count);
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -889,7 +863,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetEngine.checkCount(count);
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -916,7 +890,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetEngine.checkCount(count);
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -943,7 +917,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetEngine.checkCount(count);
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
                 context
         );
@@ -970,8 +944,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(mapping, "mapping");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                SpreadsheetDeltaProperties.ALL,
                 context
         );
 
@@ -980,7 +956,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .labels()
                     .save(mapping);
 
-            changes.onLabelSavedImmediate(saved);
+            changes.onLabelSaved(saved);
+            changes.commit();
 
             return this.prepareResponse(
                     changes,
@@ -997,8 +974,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(label, "name");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                SpreadsheetDeltaProperties.ALL,
                 context
         );
 
@@ -1007,7 +986,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .labels()
                     .delete(label);
 
-            changes.onLabelDeletedImmediate(label);
+            //changes.onLabelDeletedImmediate(label);
+            changes.commit();
 
             return this.prepareResponse(changes, context);
         } finally {
@@ -1104,36 +1084,28 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                                         final int offset,
                                                                         final int count,
                                                                         final SpreadsheetEngineContext context) {
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.createChanges(
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 FIND_REFERENCES_DELTA_PROPERTIES,
                 context
         );
 
         try {
-            final SpreadsheetCellStore store = context.storeRepository()
-                    .cells();
-
-            for (final SpreadsheetCellReference reference : context.storeRepository()
+            for (final SpreadsheetCellReference cell : context.storeRepository()
                     .cellReferences()
                     .findCellsWithCellOrCellRange(
                             cellOrCellRange,
                             offset,
                             count
                     )) {
-                if (false == changes.isCellLoaded(reference)) {
-                    final Optional<SpreadsheetCell> loaded = store.load(reference);
-                    if (loaded.isPresent()) {
-                        final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
-                                loaded.get(),
-                                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                                changes, // SpreadsheetExpressionReferenceLoader
-                                context
-                        );
-                        changes.onCellLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
-                    }
-                }
+                changes.getOrCreateCellCache(
+                        cell,
+                        BasicSpreadsheetEngineChangesCacheStatusCell.UNLOADED
+                );
             }
+
+            changes.commit();
 
             return this.prepareResponse(
                     changes,
@@ -1171,6 +1143,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         context.storeRepository()
                 .cells()
                 .save(styled); // update cells enabling caching of parsing and value and errors.
+
         return styled;
     }
 

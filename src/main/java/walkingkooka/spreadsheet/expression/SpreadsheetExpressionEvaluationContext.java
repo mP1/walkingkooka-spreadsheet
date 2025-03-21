@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Cast;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
@@ -37,7 +36,6 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -142,76 +140,6 @@ public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvalua
     default SpreadsheetCell cellOrFail() {
         return this.cell()
                 .orElseThrow(() -> new IllegalStateException("Missing cell"));
-    }
-
-    /**
-     * Helper that may be used to verify that the load cell {@link SpreadsheetCellReference} is not the current cell,
-     * throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
-     */
-    default void cellCycleCheck(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
-
-        final SpreadsheetCellReference current = this.cell()
-                .map(SpreadsheetCell::reference)
-                .orElse(null);
-
-        if(null != current) {
-            if(current.equalsIgnoreReferenceKind(cell)) {
-                throw SpreadsheetError.cycle(cell)
-                        .exception();
-            }
-        }
-    }
-
-    /**
-     * Helper that may be used to verify that the load cells {@link SpreadsheetCellRange} does not include the current
-     * cell, throwing {@link SpreadsheetError#cycle(SpreadsheetExpressionReference)}.
-     */
-    default void cellRangeCycleCheck(final SpreadsheetCellRangeReference range) {
-        Objects.requireNonNull(range, "range");
-
-        final SpreadsheetCellReference current = this.cell()
-                .map(SpreadsheetCell::reference)
-                .orElse(null);
-
-        if(null != current) {
-            if(range.test(current)) {
-                throw SpreadsheetError.cycle(range)
-                        .exception();
-            }
-        }
-    }
-
-    /**
-     * Guard that resolves any labels and verifies that the reference is not a cycle to the current cell.
-     */
-    default ExpressionReference resolveIfLabelAndCycleCheck(final ExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        ExpressionReference result  = reference;
-
-        if(reference instanceof SpreadsheetExpressionReference) {
-            final SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) reference;
-
-            final SpreadsheetExpressionReference notLabel = this.resolveIfLabel(spreadsheetExpressionReference)
-                    .toExpressionReference();
-
-            if(notLabel.isCell()) {
-                this.cellCycleCheck(
-                        notLabel.toCell()
-                );
-            }
-            if(notLabel.isCellRange()) {
-                this.cellRangeCycleCheck(
-                        notLabel.toCellRange()
-                );
-            }
-
-            result = notLabel;
-        }
-
-
-        return result;
     }
 
     /**

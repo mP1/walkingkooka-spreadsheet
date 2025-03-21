@@ -22,8 +22,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
-public final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor>
-        implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor> {
+public final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor>
+        implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.parseCell("A99");
 
@@ -33,14 +33,14 @@ public final class BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectio
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor> type() {
-        return BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor.class;
+    public Class<BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor> type() {
+        return BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor.class;
     }
 
     // VisitingTesting.............................................................................................................
 
     @Override
-    public BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor createVisitor() {
-        return new BasicSpreadsheetEngineChangesAddReferencesSpreadsheetSelectionVisitor(CELL, null);
+    public BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor createVisitor() {
+        return new BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelectionVisitor(CELL, null);
     }
 }

@@ -69,15 +69,11 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        this.cellCycleCheck(cell);
-
         return this.context.loadCell(cell);
     }
 
     @Override
     public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-        this.cellRangeCycleCheck(range);
-
         return this.context.loadCellRange(range);
     }
 
@@ -88,9 +84,7 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        return this.context.reference(
-                this.resolveIfLabelAndCycleCheck(reference)
-        );
+        return this.context.reference(reference);
     }
 
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................

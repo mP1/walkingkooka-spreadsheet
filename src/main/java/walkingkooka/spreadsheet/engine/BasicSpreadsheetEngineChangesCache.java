@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.ToStringBuilder;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Map;
@@ -30,13 +29,18 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
 
     static <S extends SpreadsheetSelection, V> BasicSpreadsheetEngineChangesCache<S, V> getOrCreate(
             final S reference,
-            final Map<S, BasicSpreadsheetEngineChangesCache<S, V>> referenceToValue) {
+            final Map<S, BasicSpreadsheetEngineChangesCache<S, V>> referenceToValue,
+            final BasicSpreadsheetEngineChangesCacheStatus<S> initialStatus) {
         Objects.requireNonNull(reference, "reference");
-
+        Objects.requireNonNull(referenceToValue, "referenceToValue");
+        Objects.requireNonNull(initialStatus, "initialStatus");
 
         BasicSpreadsheetEngineChangesCache<S, V> cache = referenceToValue.get(reference);
         if (null == cache) {
-            cache = new BasicSpreadsheetEngineChangesCache<>(reference);
+            cache = new BasicSpreadsheetEngineChangesCache<>(
+                    reference,
+                    initialStatus
+            );
 
             referenceToValue.put(
                     reference,
@@ -47,8 +51,10 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
         return cache;
     }
 
-    private BasicSpreadsheetEngineChangesCache(final S reference) {
+    private BasicSpreadsheetEngineChangesCache(final S reference,
+                                               final BasicSpreadsheetEngineChangesCacheStatus<S> initialStatus) {
         this.reference = reference;
+        this.status = initialStatus;
     }
 
     /**
@@ -56,133 +62,162 @@ final class BasicSpreadsheetEngineChangesCache<S extends SpreadsheetSelection, V
      */
     final S reference;
 
-    BasicSpreadsheetEngineChangesCache<S, V> load() {
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE ?
-                this :
-                this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD);
+    /**
+     * Updates a cache with an initially loaded value which will never be null.
+     */
+    BasicSpreadsheetEngineChangesCache<S, V> loadingOrMissing(final V value) {
+        return null != value ?
+                this.loading(value) :
+                this.deleted();
     }
 
-    BasicSpreadsheetEngineChangesCache<S, V> load(final V value) {
-        Objects.requireNonNull(value, "value");
+    BasicSpreadsheetEngineChangesCache<S, V> loading(final V value) {
+        final BasicSpreadsheetEngineChangesCacheStatus<S> oldStatus = this.status;
+        final BasicSpreadsheetEngineChangesCacheStatus<S> newStatus = null != value ?
+                oldStatus.loading() :
+                oldStatus.deleted();
 
-        this.value = value;
+        // if status changed
 
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE ?
-                this :
-                this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD);
-    }
-
-    BasicSpreadsheetEngineChangesCache<S, V> loadCellReference() {
-        // dont change status if already loaded or saved.
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE || this.status == BasicSpreadsheetEngineChangesCacheStatus.LOAD ?
-                this : // unchanged
-                this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.LOAD_REFERENCE);
-    }
-
-    BasicSpreadsheetEngineChangesCache<S, V> loadCellReference(final V value) {
-        Objects.requireNonNull(value, "value");
-
-        this.value = value;
-        return this.loadCellReference();
-    }
-
-    BasicSpreadsheetEngineChangesCache<S, V> save() {
-        return this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.SAVE);
-    }
-
-    BasicSpreadsheetEngineChangesCache<S, V> save(final V value) {
-        Objects.requireNonNull(value, "value");
-
-        if (false == Objects.equals(this.value, value)) {
-            this.committed = false;
+        if (oldStatus != newStatus) {
+            this.setStatus(newStatus);
         }
         this.value = value;
-        return this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.SAVE);
-    }
-
-    BasicSpreadsheetEngineChangesCache<S, V> delete() {
-        this.value = null;
-        return this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.DELETE);
-    }
-
-    BasicSpreadsheetEngineChangesCache<S, V> missing() {
-        this.value = null;
-        return this.setStatus(BasicSpreadsheetEngineChangesCacheStatus.MISSING);
-    }
-
-    BasicSpreadsheetEngineChangesCache<S, V> setStatus(final BasicSpreadsheetEngineChangesCacheStatus status) {
-        Objects.requireNonNull(status, "operation");
-        this.status = status;
 
         return this;
     }
 
-    boolean isLoad() {
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.LOAD;
+    BasicSpreadsheetEngineChangesCache<S, V> loadedOrMissing(final V value) {
+        return null != value ?
+                this.loaded(value) :
+                this.deleted();
     }
 
-    boolean isloadReference() {
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.LOAD_REFERENCE;
+    BasicSpreadsheetEngineChangesCache<S, V> loaded(final V value) {
+        Objects.requireNonNull(value, "value");
+
+        final BasicSpreadsheetEngineChangesCacheStatus<S> oldStatus = this.status;
+
+        // unloaded -> loaded = loaded
+        // loaded -> different SpreadsheetCell -> saved
+        // loaded -> same SpreadsheetCell -> loaded
+        final BasicSpreadsheetEngineChangesCacheStatus<S> newStatus = oldStatus.isUnloaded() || Objects.equals(this.value, value) ?
+                oldStatus.loaded() :
+                oldStatus.saved();
+
+        // if status changed
+
+        if (oldStatus != newStatus) {
+            this.setStatus(newStatus);
+            this.value = value;
+        }
+
+        return this;
     }
 
-    boolean isSave() {
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.SAVE;
+    BasicSpreadsheetEngineChangesCache<S, V> saving(final V value) {
+        Objects.requireNonNull(value, "value");
+
+        this.value = value;
+
+        return this;
     }
 
-    boolean isLoadOrSave() {
-        return this.isLoad() || this.isSave();
+    BasicSpreadsheetEngineChangesCache<S, V> saved(final V value) {
+        final BasicSpreadsheetEngineChangesCacheStatus<S> oldStatus = this.status;
+        final BasicSpreadsheetEngineChangesCacheStatus<S> newStatus = oldStatus.saved();
+
+        // if status changed
+        if (oldStatus != newStatus || false == Objects.equals(this.value, value)) {
+            this.setStatus(newStatus);
+            this.value = value;
+        }
+
+        return this;
     }
 
-    boolean isDelete() {
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.DELETE;
+    BasicSpreadsheetEngineChangesCache<S, V> deleted() {
+        return this.setStatus(
+                this.status.deleted()
+        );
     }
 
-    boolean isMissing() {
-        return this.status == BasicSpreadsheetEngineChangesCacheStatus.MISSING;
+    BasicSpreadsheetEngineChangesCache<S, V> forceReferencesRefresh() {
+        return this.setStatus(
+                this.status.forceReferencesRefresh()
+        );
     }
 
-    boolean isDeleteOrMissing() {
-        return this.isDelete() || this.isMissing();
+    BasicSpreadsheetEngineChangesCache<S, V> referencesRefreshed() {
+        return this.setStatus(
+                this.status.referencesRefreshed()
+        );
     }
 
-    private BasicSpreadsheetEngineChangesCacheStatus status;
+    V valueOrNull() {
+        return this.value;
+    }
 
     /**
      * Getter that returns the loaded or saved value.
      */
     V value() {
-        this.status.value();
-
-        return this.value;
+        return this.status.value(
+                this.reference,
+                this.value
+        );
     }
 
     private V value;
 
-    /**
-     * Setter supporting fluent setter.
-     */
-    BasicSpreadsheetEngineChangesCache<S, V> setCommitted(final boolean committed) {
-        this.committed = committed;
+    // status..........................................................................................................
+
+    BasicSpreadsheetEngineChangesCache<S, V> setStatus(final BasicSpreadsheetEngineChangesCacheStatus<S> status) {
+        Objects.requireNonNull(status, "status");
+
+        BasicSpreadsheetEngineChangesCacheStatus<S> previous = this.status;
+
+        if (previous != status) {
+
+            // new status of REFERENCE shouldnt replace non REFERENCE status
+            final BasicSpreadsheetEngineChangesCacheStatus<S> save;
+            if (previous.isReference()) {
+                save = status;
+            } else {
+                save = status.toNonReference();
+            }
+
+            if (previous != save) {
+                this.status = save;
+            }
+        }
+
         return this;
     }
 
-    /**
-     * Indicates a unsaved or undeleted entity.
-     */
-    boolean committed = false;
+    BasicSpreadsheetEngineChangesCacheStatus<S> status() {
+        return this.status;
+    }
+
+    private BasicSpreadsheetEngineChangesCacheStatus<S> status;
 
     // Object...........................................................................................................
 
     @Override
     public String toString() {
-        return ToStringBuilder.empty()
-                .value(this.reference)
-                .labelSeparator("=")
-                .value(this.value)
-                .label("status")
-                .value(this.status)
-                .label("committed")
-                .value(this.committed)
-                .build();
+        final S reference = this.reference;
+        final V value = this.value;
+
+        final StringBuilder b = new StringBuilder();
+        if (null != value) {
+            b.append(value);
+        } else {
+            b.append(reference)
+                    .append(" value=null");
+        }
+
+        b.append(" status=")
+                .append(this.status);
+        return b.toString();
     }
 }
