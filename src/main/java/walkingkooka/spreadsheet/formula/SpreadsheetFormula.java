@@ -169,10 +169,10 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     public SpreadsheetFormula setText(final String text) {
-        checkText(text);
         return this.text().equals(text) ?
                 this :
-                text.isEmpty() ?
+                checkText(text)
+                        .isEmpty() ?
                         EMPTY :
                         this.replace(
                                 text,
@@ -188,15 +188,16 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     private final String text;
 
-    private static void checkText(final String text) {
+    private static String checkText(final String text) {
         Objects.requireNonNull(text, "text");
 
         final int length = text.length();
         if (length >= MAX_FORMULA_TEXT_LENGTH) {
             throw new IllegalArgumentException("Invalid text length " + length + ">= " + MAX_FORMULA_TEXT_LENGTH);
         }
-    }
 
+        return text;
+    }
 
     public final static int MAX_FORMULA_TEXT_LENGTH = 8192;
 
