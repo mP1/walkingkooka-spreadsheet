@@ -236,14 +236,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     public SpreadsheetFormula setExpression(final Optional<Expression> expression) {
-        checkExpression(expression);
-
         return this.expression.equals(expression) ?
                 this :
                 this.replace(
                         this.text,
                         this.token,
-                        expression,
+                        Objects.requireNonNull(expression, "expression"),
                         NO_VALUE
                 );
     }
@@ -253,10 +251,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * The expression can be executed to produce a value or error.
      */
     private final Optional<Expression> expression;
-
-    private static void checkExpression(final Optional<Expression> expression) {
-        Objects.requireNonNull(expression, "expression");
-    }
 
     // value .............................................................................................
 
