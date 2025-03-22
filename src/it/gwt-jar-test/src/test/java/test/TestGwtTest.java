@@ -315,22 +315,6 @@ public class TestGwtTest extends GWTTestCase {
                 );
             }
 
-//            private Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceToValue() {
-//                return (r) -> {
-//                    switch (r.toString().toLowerCase()) {
-//                        case "b2":
-//                            return Optional.of(
-//                                    Optional.ofNullable(
-//
-//                                            EXPRESSION_NUMBER_KIND.create(34)
-//                                    )
-//                            );
-//                        default:
-//                            return Optional.empty();
-//                    }
-//                };
-//            }
-
             @Override
             public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
                 Objects.requireNonNull(token, "token");
