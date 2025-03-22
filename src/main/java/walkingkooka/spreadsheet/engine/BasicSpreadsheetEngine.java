@@ -149,12 +149,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             // finish evaluating loaded cells
             changes.commit();
 
-            //final SpreadsheetViewportWindows window = SpreadsheetViewportWindows.with(cellRanges);
-
             return this.prepareResponse(
                     changes,
                     context
-            );//.setWindow(window);
+            );
         } finally {
             changes.close();
         }
@@ -309,7 +307,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         try {
             for (final SpreadsheetCell cell : cells) {
-                // loadCell will fail with a CYCLE if status=SAVING
                 final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = changes.getOrCreateCellCache(
                         cell.reference(),
                         BasicSpreadsheetEngineChangesCacheStatusCell.SAVING
@@ -986,7 +983,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .labels()
                     .delete(label);
 
-            //changes.onLabelDeletedImmediate(label);
             changes.commit();
 
             return this.prepareResponse(changes, context);
