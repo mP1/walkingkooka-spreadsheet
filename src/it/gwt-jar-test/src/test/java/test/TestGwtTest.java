@@ -109,7 +109,7 @@ public class TestGwtTest extends GWTTestCase {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
-    public void testFormulaWithCellReference() {
+    public void testFormula() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext();
 

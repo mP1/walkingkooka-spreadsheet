@@ -115,10 +115,10 @@ public final class Sample {
 
     public static void main(final String[] args) {
         final Sample sample = new Sample();
-        sample.testFormulaWithCellReference();
+        sample.testFormula();
     }
 
-    public void testFormulaWithCellReference() {
+    public void testFormula() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext();
 
