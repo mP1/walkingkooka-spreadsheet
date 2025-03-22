@@ -88,7 +88,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public static SpreadsheetCell with(final SpreadsheetCellReference reference,
                                        final SpreadsheetFormula formula) {
         return new SpreadsheetCell(
-                checkReference(reference),
+                Objects.requireNonNull(reference, "reference"),
                 checkFormula(formula),
                 NO_FORMATTER,
                 NO_PARSER,
@@ -136,12 +136,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     public SpreadsheetCell setReference(final SpreadsheetCellReference reference) {
-        checkReference(reference);
-
         return this.reference.equals(reference) ?
                 this :
                 this.replace(
-                        reference,
+                        Objects.requireNonNull(reference, "reference"),
                         this.formula,
                         this.formatter,
                         this.parser,
@@ -154,10 +152,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * The reference that identifies this cell.
      */
     private final SpreadsheetCellReference reference;
-
-    private static SpreadsheetCellReference checkReference(final SpreadsheetCellReference reference) {
-        return Objects.requireNonNull(reference, "reference");
-    }
 
     // formula .........................................................................................................
 
