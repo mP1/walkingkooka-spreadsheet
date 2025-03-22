@@ -22,8 +22,8 @@ import org.junit.Test;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -101,9 +101,8 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 // copied parse Sample
 @J2clTestInput(JunitTest.class)
@@ -127,34 +126,67 @@ public class JunitTest {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext();
 
-        engine.saveCell(
-                SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText("=12+B2")
-                ),
-                engineContext
+        final SpreadsheetCell unsaved = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=12")
         );
 
         final SpreadsheetDelta delta = engine.saveCell(
-                SpreadsheetSelection.parseCell("B2")
-                        .setFormula(
-                                SpreadsheetFormula.EMPTY.setText("=34")
-                        ),
+                unsaved,
                 engineContext
         );
 
-        final Set<String> saved = delta.cells()
-                .stream()
-                .map(c -> c.formula().value().get().toString())
-                .collect(Collectors.toCollection(SortedSets::tree));
-
-        // a1=12+b2
-        // a1=12+34
-        // b2=34
+        // a1=12
         checkEquals(
-                Sets.of("46", "34"),
-                saved,
-                "saved formula values"
+                SpreadsheetDelta.EMPTY.setCells(
+                                Sets.of(
+                                        unsaved.setFormula(
+                                                unsaved.formula()
+                                                        .setToken(
+                                                                Optional.of(
+                                                                        SpreadsheetFormulaParserToken.expression(
+                                                                                Lists.of(
+                                                                                        SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                                                                        SpreadsheetFormulaParserToken.number(
+                                                                                                Lists.of(
+                                                                                                        SpreadsheetFormulaParserToken.digits("12", "12")
+                                                                                                ),
+                                                                                                "12"
+                                                                                        )
+                                                                                ),
+                                                                                "=12"
+                                                                        )
+                                                                )
+                                                        ).setExpression(
+                                                                Optional.of(
+                                                                        Expression.value(
+                                                                                EXPRESSION_NUMBER_KIND.create(12)
+                                                                        )
+                                                                )
+                                                        ).setValue(
+                                                                Optional.of(
+                                                                        EXPRESSION_NUMBER_KIND.create(12)
+                                                                )
+                                                        )
+                                        ).setFormattedValue(
+                                                Optional.of(
+                                                        TextNode.text("12.0")
+                                                )
+                                        )
+                                )
+                        ).setColumnWidths(
+                                Maps.of(
+                                        SpreadsheetSelection.A1.column(),
+                                        50.0
+                                )
+                        ).setRowHeights(
+                                Maps.of(
+                                        SpreadsheetSelection.A1.row(),
+                                        50.0
+                                )
+                        ).setColumnCount(OptionalInt.of(1))
+                        .setRowCount(OptionalInt.of(1)),
+                delta,
+                "saved A1=12"
         );
     }
 
@@ -281,7 +313,9 @@ public class JunitTest {
                                 (r) -> {
                                     throw new UnsupportedOperationException();
                                 },
-                                this.expressionReferenceToValue(),
+                                (r) -> {
+                                    throw new UnsupportedOperationException();
+                                },
                                 SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
                                 CaseSensitivity.INSENSITIVE,
                                 metadata.spreadsheetConverterContext(
@@ -294,21 +328,21 @@ public class JunitTest {
                 );
             }
 
-            private Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceToValue() {
-                return (r) -> {
-                    switch (r.toString().toLowerCase()) {
-                        case "b2":
-                            return Optional.of(
-                                    Optional.ofNullable(
-
-                                            EXPRESSION_NUMBER_KIND.create(34)
-                                    )
-                            );
-                        default:
-                            return Optional.empty();
-                    }
-                };
-            }
+//            private Function<ExpressionReference, Optional<Optional<Object>>> expressionReferenceToValue() {
+//                return (r) -> {
+//                    switch (r.toString().toLowerCase()) {
+//                        case "b2":
+//                            return Optional.of(
+//                                    Optional.ofNullable(
+//
+//                                            EXPRESSION_NUMBER_KIND.create(34)
+//                                    )
+//                            );
+//                        default:
+//                            return Optional.empty();
+//                    }
+//                };
+//            }
 
             @Override
             public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
