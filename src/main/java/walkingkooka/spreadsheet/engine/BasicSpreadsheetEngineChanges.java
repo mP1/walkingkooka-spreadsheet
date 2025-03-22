@@ -265,13 +265,6 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         }
     }
 
-    /**
-     * Tests if the given {@link SpreadsheetCellReference} has been already been loaded in this request.
-     */
-    boolean isCellLoaded(final SpreadsheetCellReference cell) {
-        return this.cells.containsKey(cell); // TODO TODO try and remove
-    }
-
     void onCellSaved(final SpreadsheetCell cell) {
         // A SpreadsheetCell must have been evaluated
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
