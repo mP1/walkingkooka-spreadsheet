@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.sample;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
@@ -118,6 +119,7 @@ public final class Sample {
         sample.testFormula();
     }
 
+    @Test
     public void testFormula() {
         final SpreadsheetEngine engine = engine();
         final SpreadsheetEngineContext engineContext = engineContext();
