@@ -948,6 +948,13 @@ public abstract class SpreadsheetSelection implements HasText,
         return this.isColumn() || this.isColumnRange();
     }
 
+    /**
+     * Returns true for cells, cell-ranges or labels.
+     */
+    public final boolean isExternalReference() {
+        return this instanceof SpreadsheetExpressionReference;
+    }
+
     public final boolean isLabelName() {
         return this instanceof SpreadsheetLabelName;
     }
