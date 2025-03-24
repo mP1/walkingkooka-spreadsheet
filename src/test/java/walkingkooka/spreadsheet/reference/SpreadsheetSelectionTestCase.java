@@ -2042,6 +2042,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         "isScalar",
                         "isCellOrCellRange",
                         "isColumnOrColumnRange",
+                        "isExternalReference",
                         "isRowOrRowRange",
                         "isUnit"
                 )
