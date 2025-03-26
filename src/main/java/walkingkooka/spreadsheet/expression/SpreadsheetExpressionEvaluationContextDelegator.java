@@ -26,8 +26,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
 import walkingkooka.text.cursor.TextCursor;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 
 import java.util.Optional;
@@ -42,10 +43,10 @@ import java.util.Optional;
  * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
-        ExpressionEvaluationContextDelegator {
+        StorageExpressionEvaluationContextDelegator {
 
     @Override
-    default ExpressionEvaluationContext expressionEvaluationContext() {
+    default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }
 

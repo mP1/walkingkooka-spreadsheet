@@ -64,6 +64,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.storage.StorageStore;
+import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
@@ -1240,6 +1242,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     @Override
                     public SpreadsheetLabelStore labels() {
                         return labelStore;
+                    }
+
+                    @Override
+                    public StorageStore storage() {
+                        return StorageStores.fake();
                     }
                 }
         );

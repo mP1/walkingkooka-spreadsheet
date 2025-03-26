@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -126,6 +127,13 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     @Override
     public AbsoluteUrl serverUrl() {
         return this.context.serverUrl();
+    }
+
+    // StorageExpressionEvaluationContext...............................................................................
+
+    @Override
+    public StorageStore storage() {
+        return this.context.storage();
     }
 
     // ExpressionEvaluationContext......................................................................................

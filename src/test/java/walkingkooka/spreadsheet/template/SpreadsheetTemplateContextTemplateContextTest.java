@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
+import walkingkooka.storage.StorageStores;
 import walkingkooka.template.TemplateContext;
 import walkingkooka.template.TemplateContextTesting2;
 import walkingkooka.template.TemplateValueName;
@@ -192,6 +193,7 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
                                 SpreadsheetExpressionReferenceLoaders.fake(),
                                 Url.parseAbsolute("https://example.com"), // serverUrl
                                 SpreadsheetMetadata.EMPTY,
+                                StorageStores.tree(STORAGE_STORE_CONTEXT),
                                 SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
                                 new FakeExpressionFunctionProvider() {
                                     @Override
