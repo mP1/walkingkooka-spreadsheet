@@ -128,7 +128,7 @@
 
         <dependency>
             <groupId>walkingkooka</groupId>
-            <artifactId>walkingkooka-store-gwt</artifactId>
+            <artifactId>walkingkooka-storage-expression-function-gwt</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
