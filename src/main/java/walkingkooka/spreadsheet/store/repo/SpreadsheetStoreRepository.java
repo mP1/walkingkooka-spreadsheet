@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.store.Store;
 
 /**
@@ -86,6 +87,11 @@ public interface SpreadsheetStoreRepository {
      * A {@link SpreadsheetRowStore} holding rows.
      */
     SpreadsheetRowStore rows();
+
+    /**
+     * Returns a {@link StorageStore}
+     */
+    StorageStore storage();
 
     /**
      * A {@link SpreadsheetUserStore} holding users.

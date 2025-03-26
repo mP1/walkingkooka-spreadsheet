@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.store.Store;
 
 import java.util.Objects;
@@ -49,6 +50,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                 final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                                 final SpreadsheetRowStore rows,
+                                                final StorageStore storage,
                                                 final SpreadsheetUserStore users) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
@@ -60,6 +62,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         Objects.requireNonNull(rangeToCells, "rangeToCells");
         Objects.requireNonNull(rangeToConditionalFormattingRules, "rangeToConditionalFormattingRules");
         Objects.requireNonNull(rows, "rows");
+        Objects.requireNonNull(storage, "storage");
         Objects.requireNonNull(users, "users");
 
         return new BasicSpreadsheetStoreRepository(
@@ -73,6 +76,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                 rangeToCells,
                 rangeToConditionalFormattingRules,
                 rows,
+                storage,
                 users
         );
     }
@@ -87,6 +91,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                             final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                             final SpreadsheetRowStore rows,
+                                            final StorageStore storage,
                                             final SpreadsheetUserStore users) {
         this.cells = cells;
         this.cellReferences = cellReferences;
@@ -98,6 +103,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         this.rangeToCells = rangeToCells;
         this.rangeToConditionalFormattingRules = rangeToConditionalFormattingRules;
         this.rows = rows;
+        this.storage = storage;
         this.users = users;
     }
 
@@ -172,6 +178,13 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetRowStore rows;
 
     @Override
+    public StorageStore storage() {
+        return this.storage;
+    }
+
+    private final StorageStore storage;
+
+    @Override
     public SpreadsheetUserStore users() {
         return this.users;
     }
@@ -190,6 +203,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                 this.rangeToCells + " " +
                 this.rangeToConditionalFormattingRules + " " +
                 this.rows + " " +
+                this.storage + " " +
                 this.users;
     }
 }

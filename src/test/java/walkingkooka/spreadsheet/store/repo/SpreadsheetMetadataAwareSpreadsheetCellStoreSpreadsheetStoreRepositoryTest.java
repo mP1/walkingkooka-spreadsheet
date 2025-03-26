@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
+import walkingkooka.storage.StorageStores;
 
 import java.time.LocalDateTime;
 
@@ -232,6 +233,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                         SpreadsheetCellRangeStores.treeMap(),
                         SpreadsheetCellRangeStores.treeMap(),
                         SpreadsheetRowStores.treeMap(),
+                        StorageStores.tree(STORAGE_STORE_CONTEXT),
                         SpreadsheetUserStores.treeMap()
                 ),
                 SPREADSHEET_PARSER_PROVIDER,

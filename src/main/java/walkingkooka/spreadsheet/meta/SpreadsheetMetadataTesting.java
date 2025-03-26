@@ -61,6 +61,8 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.FakeStorageStoreContext;
+import walkingkooka.storage.StorageStoreContext;
 import walkingkooka.test.Testing;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -142,6 +144,18 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_FORMATTER_PROVIDER,
             SPREADSHEET_PARSER_PROVIDER
     );
+
+    StorageStoreContext STORAGE_STORE_CONTEXT = new FakeStorageStoreContext() {
+        @Override
+        public LocalDateTime now() {
+            return NOW.now();
+        }
+
+        @Override
+        public Optional<EmailAddress> user() {
+            return Optional.of(USER);
+        }
+    };
 
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
