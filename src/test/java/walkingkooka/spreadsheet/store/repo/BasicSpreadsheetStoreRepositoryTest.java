@@ -41,6 +41,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
+import walkingkooka.storage.StorageStore;
+import walkingkooka.storage.StorageStores;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -59,6 +61,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users()
         );
     }
@@ -76,6 +79,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users());
     }
 
@@ -92,6 +96,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users());
     }
 
@@ -108,6 +113,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users());
     }
 
@@ -124,6 +130,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users()
         );
     }
@@ -141,6 +148,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users()
         );
     }
@@ -158,6 +166,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users()
         );
     }
@@ -175,6 +184,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 null,
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users()
         );
     }
@@ -192,6 +202,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 null,
                 this.rows(),
+                this.storage(),
                 this.users()
         );
     }
@@ -208,6 +219,25 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.metadatas(),
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
+                null,
+                this.storage(),
+                this.users()
+        );
+    }
+
+    @Test
+    public void testWithNullStorageFails() {
+        this.withFails(
+                this.cells(),
+                this.cellReferences(),
+                this.columns(),
+                this.groups(),
+                this.labels(),
+                this.labelReferences(),
+                this.metadatas(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
+                this.rows(),
                 null,
                 this.users()
         );
@@ -226,6 +256,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 null
         );
     }
@@ -240,6 +271,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                            final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                            final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                            final SpreadsheetRowStore rows,
+                           final StorageStore storage,
                            final SpreadsheetUserStore users) {
         assertThrows(
                 NullPointerException.class,
@@ -254,6 +286,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                         rangeToCells,
                         rangeToConditionalFormattingRules,
                         rows,
+                        storage,
                         users
                 )
         );
@@ -271,6 +304,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetMetadataStore metadatas = this.metadatas();
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
         final SpreadsheetRowStore rows = this.rows();
+        final StorageStore storage = this.storage();
         final SpreadsheetUserStore users = this.users();
 
         this.toStringAndCheck(
@@ -285,9 +319,10 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                         rangeToCells,
                         rangeToConditionalFormattingRules,
                         rows,
+                        storage,
                         users
                 ),
-                cells + " " + cellReferences + " " + columns + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + rows + " " + users);
+                cells + " " + cellReferences + " " + columns + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + rows + " " + storage + " " + users);
     }
 
     @Override
@@ -303,6 +338,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.rangeToCells(),
                 this.rangeToConditionalFormattingRules(),
                 this.rows(),
+                this.storage(),
                 this.users()
         );
     }
@@ -345,6 +381,10 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private SpreadsheetRowStore rows() {
         return SpreadsheetRowStores.fake();
+    }
+
+    private StorageStore storage() {
+        return StorageStores.fake();
     }
 
     private SpreadsheetUserStore users() {

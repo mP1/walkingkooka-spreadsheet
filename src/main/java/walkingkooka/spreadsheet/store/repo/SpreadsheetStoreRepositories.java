@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.storage.StorageStore;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.
@@ -60,6 +61,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                    final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                    final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                                    final SpreadsheetRowStore rows,
+                                                   final StorageStore storage,
                                                    final SpreadsheetUserStore users) {
         return BasicSpreadsheetStoreRepository.with(
                 cells,
@@ -72,6 +74,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                 rangeToCells,
                 rangeToConditionalFormattingRules,
                 rows,
+                storage,
                 users
         );
     }
