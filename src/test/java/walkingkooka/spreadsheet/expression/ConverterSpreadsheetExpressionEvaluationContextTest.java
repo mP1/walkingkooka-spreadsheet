@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.Expression;
@@ -73,6 +74,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.STORAGE_STORE_CONTEXT;
 
 public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext> {
 
@@ -521,6 +523,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                         SERVER_URL,
                         METADATA,
+                        StorageStores.tree(STORAGE_STORE_CONTEXT),
                         METADATA.spreadsheetConverterContext(
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 LABEL_NAME_RESOLVER,

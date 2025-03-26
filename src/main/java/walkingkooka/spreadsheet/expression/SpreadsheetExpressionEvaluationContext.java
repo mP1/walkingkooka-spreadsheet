@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -44,7 +45,7 @@ import java.util.function.Function;
  * Enhances {@link ExpressionEvaluationContext} adding a few extra methods required by a spreadsheet during
  * expression execution.
  */
-public interface SpreadsheetExpressionEvaluationContext extends ExpressionEvaluationContext,
+public interface SpreadsheetExpressionEvaluationContext extends StorageExpressionEvaluationContext,
         SpreadsheetConverterContext,
         HasSpreadsheetMetadata {
 

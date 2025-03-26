@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -107,6 +108,11 @@ public class FakeSpreadsheetTemplateContext extends FakeSpreadsheetParserContext
 
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public StorageStore storage() {
         throw new UnsupportedOperationException();
     }
 

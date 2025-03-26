@@ -28,16 +28,16 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.storage.expression.function.FakeStorageExpressionEvaluationContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
+public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
     @Override
     public Optional<SpreadsheetCell> cell() {
         throw new UnsupportedOperationException();

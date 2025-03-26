@@ -16187,7 +16187,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetCellRangeStores.treeMap(),
                                                 SpreadsheetCellRangeStores.treeMap(),
                                                 SpreadsheetRowStores.treeMap(),
-                                                StorageStores.fake(),
+                                                StorageStores.empty(),
                                                 SpreadsheetUserStores.fake()
                                         );
                                     }

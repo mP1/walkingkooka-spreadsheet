@@ -245,6 +245,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 loader,
                 this.serverUrl,
                 metadata,
+                this.storeRepository.storage(),
                 this.spreadsheetConverterContext,
                 this.expressionFunctionProvider,
                 this // ProviderContext

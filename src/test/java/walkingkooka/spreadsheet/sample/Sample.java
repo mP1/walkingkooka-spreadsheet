@@ -79,6 +79,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.FakeStorageStoreContext;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -508,6 +509,11 @@ public final class Sample {
 
         @Override
         public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public StorageStore storage() {
             throw new UnsupportedOperationException();
         }
 

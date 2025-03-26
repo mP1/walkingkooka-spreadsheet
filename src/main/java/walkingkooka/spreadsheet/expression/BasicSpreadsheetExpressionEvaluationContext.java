@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -56,6 +57,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
+                                                            final StorageStore storage,
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final ProviderContext providerContext) {
@@ -63,6 +65,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+        Objects.requireNonNull(storage, "storage");
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -72,6 +75,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 spreadsheetExpressionReferenceLoader,
                 serverUrl,
                 spreadsheetMetadata,
+                storage,
                 spreadsheetConverterContext,
                 expressionFunctionProvider,
                 providerContext
@@ -82,6 +86,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
+                                                        final StorageStore storage,
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
                                                         final ProviderContext providerContext) {
@@ -90,6 +95,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
+        this.storage = storage;
         this.spreadsheetConverterContext = spreadsheetConverterContext;
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.providerContext = providerContext;
@@ -162,6 +168,15 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private final AbsoluteUrl serverUrl;
+
+    // StorageExpressionEvaluationContext...............................................................................
+
+    @Override
+    public StorageStore storage() {
+        return this.storage;
+    }
+
+    private final StorageStore storage;
 
     // ExpressionEvaluationContext......................................................................................
 
