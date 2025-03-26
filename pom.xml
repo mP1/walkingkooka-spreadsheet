@@ -197,7 +197,7 @@
 
     <dependency>
       <groupId>walkingkooka</groupId>
-      <artifactId>walkingkooka-store</artifactId>
+      <artifactId>walkingkooka-storage-expression-function</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
 
