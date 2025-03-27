@@ -347,12 +347,12 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     private SpreadsheetFormula replace(final String text,
                                        final Optional<SpreadsheetFormulaParserToken> token,
                                        final Optional<Expression> expression,
-                                       final Optional<Object> value) {
+                                       final Optional<Object> expressionValue) {
         return new SpreadsheetFormula(
                 text,
                 token,
                 expression,
-                value
+                expressionValue
         );
     }
 
@@ -572,9 +572,14 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             object = object.set(EXPRESSION_PROPERTY, context.marshallWithType(expression.get()));
         }
 
-        final Optional<Object> value = this.expressionValue;
-        if (value.isPresent()) {
-            object = object.set(EXPRESSION_VALUE_PROPERTY, context.marshallWithType(value.get()));
+        final Optional<Object> expressionValue = this.expressionValue;
+        if (expressionValue.isPresent()) {
+            object = object.set(
+                    EXPRESSION_VALUE_PROPERTY,
+                    context.marshallWithType(
+                            expressionValue.get()
+                    )
+            );
         }
 
         return object;
