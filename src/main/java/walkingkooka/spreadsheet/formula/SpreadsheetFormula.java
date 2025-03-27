@@ -189,6 +189,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     private final String text;
 
+    /**
+     * Verifies that the given text holding a formula is not an excessive length. The syntactical correctness is not validated.
+     */
     private static String checkText(final String text) {
         Objects.requireNonNull(text, "text");
 
