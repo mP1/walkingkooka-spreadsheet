@@ -138,7 +138,11 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         );
         final SpreadsheetCell loaded = delta.cells().iterator().next();
         this.checkEquals(Optional.of(TextNode.text(FORMULA_VALUE)), loaded.formattedValue(), "formattedValue");
-        this.checkEquals(Optional.of(FORMULA_VALUE), loaded.formula().value());
+        this.checkEquals(
+                Optional.of(FORMULA_VALUE),
+                loaded.formula()
+                        .expressionValue()
+        );
 
         this.checkMetadataUpdated(context);
     }
@@ -349,7 +353,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                                         Optional.of(
                                                 Expression.value(FORMULA_VALUE)
                                         )
-                                ).setValue(
+                                ).setExpressionValue(
                                         Optional.of(FORMULA_VALUE)
                                 )
                 );
@@ -540,7 +544,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 return cell.setFormattedValue(
                         this.formatValue(
                                 cell.formula()
-                                        .value(),
+                                        .expressionValue(),
                                 formatter.orElse(
                                         SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
                                 )

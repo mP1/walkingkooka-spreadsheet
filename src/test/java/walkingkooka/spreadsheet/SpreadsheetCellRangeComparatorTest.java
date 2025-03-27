@@ -329,7 +329,7 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
                                  final Object value) {
         return SpreadsheetSelection.parseCell(reference)
                 .setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
+                        SpreadsheetFormula.EMPTY.setExpressionValue(
                                 Optional.ofNullable(value)
                         )
                 );

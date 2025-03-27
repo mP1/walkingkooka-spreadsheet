@@ -81,7 +81,7 @@ final class SpreadsheetConverterSpreadsheetCell extends SpreadsheetConverter {
             } else {
                 if (Object.class == type) {
                     value = cell.formula()
-                            .value()
+                            .expressionValue()
                             .orElse(null);
                 } else {
                     if (SpreadsheetFormatterSelector.class == type) {

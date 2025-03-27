@@ -64,7 +64,9 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
                 cell,
                 this.context
         ).map(c -> Optional.of(
-                c.formula().value())
+                c.formula()
+                        .expressionValue()
+                )
         ).orElse(SpreadsheetExpressionEvaluationContext.REFERENCE_NULL_VALUE);
     }
 
@@ -91,7 +93,7 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
             cellToValue.put(
                     cell.reference(),
                     cell.formula()
-                            .value()
+                            .expressionValue()
                             .orElse(null)
             );
         }

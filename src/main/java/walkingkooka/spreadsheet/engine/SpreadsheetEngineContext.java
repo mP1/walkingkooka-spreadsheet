@@ -119,7 +119,7 @@ public interface SpreadsheetEngineContext extends Context,
         return this.formatValueAndStyle(
                 cell.setFormula(
                         cell.formula()
-                                .setValue(
+                                .setExpressionValue(
                                         Optional.of(
                                                 SpreadsheetErrorKind.translate(cause)
                                                         .replaceWithValueIfPossible(this)

@@ -148,7 +148,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         return null == cell ?
                 null :
                 cell.formula().
-                        value()
+                        expressionValue()
                         .orElse(null);
     }
 
