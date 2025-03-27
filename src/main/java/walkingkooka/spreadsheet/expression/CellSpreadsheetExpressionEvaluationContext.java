@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
@@ -94,9 +93,6 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
      * All other {@link SpreadsheetExpressionEvaluationContext} methods are delegated to the wrapped.
      */
     @Override
-    public StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
-        return null;
-    }
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
         return this.context;
     }
