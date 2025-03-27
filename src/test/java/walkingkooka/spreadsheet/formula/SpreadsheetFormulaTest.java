@@ -98,7 +98,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testWithNullExpressionFails() {
-        assertThrows(NullPointerException.class, () -> formula(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> formula(null)
+        );
     }
 
     @Test
@@ -639,10 +642,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                                 Optional.of(
                                         SpreadsheetFormulaParserToken.date(
                                                 Lists.of(
-                                                     SpreadsheetFormulaParserToken.textLiteral(
-                                                             text,
-                                                             text
-                                                     )
+                                                        SpreadsheetFormulaParserToken.textLiteral(
+                                                                text,
+                                                                text
+                                                        )
                                                 ),
                                                 text
                                         )
@@ -1226,8 +1229,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testTreePrintTreeValueString() {
         this.treePrintAndCheck(
                 SpreadsheetFormula.EMPTY.setValue(
-                                Optional.of("Hello123")
-                        ),
+                        Optional.of("Hello123")
+                ),
                 "Formula\n" +
                         "  value: \"Hello123\" (java.lang.String)\n"
         );
