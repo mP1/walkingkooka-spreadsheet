@@ -210,14 +210,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     public SpreadsheetCell setFormatter(final Optional<SpreadsheetFormatterSelector> formatter) {
-        Objects.requireNonNull(formatter, "formatter");
-
         return this.formatter.equals(formatter) ?
                 this :
                 this.replace(
                         this.reference,
                         this.formula,
-                        formatter,
+                        Objects.requireNonNull(formatter, "formatter"),
                         this.parser,
                         this.style,
                         NO_FORMATTED_VALUE_CELL
@@ -240,11 +238,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * expression they will be cleared.
      */
     public SpreadsheetCell setParser(final Optional<SpreadsheetParserSelector> parser) {
-        Objects.requireNonNull(parser, "parser");
-
         return this.parser.equals(parser) ?
                 this :
-                this.replaceParser(parser);
+                this.replaceParser(
+                        Objects.requireNonNull(parser, "parser")
+                );
     }
 
     private SpreadsheetCell replaceParser(final Optional<SpreadsheetParserSelector> parser) {
