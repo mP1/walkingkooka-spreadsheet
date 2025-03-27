@@ -350,7 +350,7 @@ public final class Sample {
                         Optional.of(
                                 this.formatValue(
                                         cell.formula()
-                                                .expressionValue(),
+                                                .value(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
                                                         .spreadsheetFormatter(

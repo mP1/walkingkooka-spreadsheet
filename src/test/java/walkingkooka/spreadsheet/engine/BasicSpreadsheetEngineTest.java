@@ -1223,7 +1223,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         EXPRESSION_NUMBER_KIND.create(999)
                 ),
                 second.formula()
-                        .expressionValue(),
+                        .value(),
                 "first should have value updated to 999 and not 1 the original value."
         );
     }
@@ -21046,7 +21046,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.formatCell(
                 cell,
                 cell.formula()
-                        .expressionValue(),
+                        .value(),
                 STYLE
         );
     }

@@ -256,6 +256,13 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     // value ............................................................................................................
 
     /**
+     * Returns any value that is present, currently only considers the {@link #expressionValue()}
+     */
+    public Optional<Object> value() {
+        return this.expressionValue();
+    }
+
+    /**
      * The value when this formula is evaluated.
      */
     public Optional<Object> expressionValue() {

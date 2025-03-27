@@ -305,7 +305,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         final SpreadsheetFormula formula = cell
                 .formula();
-        final Optional<Object> value = formula.expressionValue();
+        final Optional<Object> value = formula.value();
 
         return this.applyConditionalRules(
                 cell.setFormattedValue(
