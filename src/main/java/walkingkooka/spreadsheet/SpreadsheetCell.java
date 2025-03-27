@@ -192,7 +192,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         // if value is a List formula should have an ERROR of #VALUE!
         return formula.setExpressionValue(
-                formula.expressionValue()
+                formula.value()
                         .map(v -> v instanceof Collection ? SpreadsheetErrorKind.VALUE : v)
         );
         // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/2205
