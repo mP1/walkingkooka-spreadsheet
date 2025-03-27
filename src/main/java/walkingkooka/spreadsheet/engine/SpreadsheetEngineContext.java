@@ -23,6 +23,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -116,14 +117,16 @@ public interface SpreadsheetEngineContext extends Context,
         Objects.requireNonNull(cause, "cause");
         Objects.requireNonNull(cell, "cell");
 
+        final SpreadsheetError error = SpreadsheetErrorKind.translate(cause);
+        final Optional<Object> valueReplacingError = error.replaceWithValueIfPossible(this);
+
         return this.formatValueAndStyle(
                 cell.setFormula(
                         cell.formula()
                                 .setExpressionValue(
-                                        Optional.of(
-                                                SpreadsheetErrorKind.translate(cause)
-                                                        .replaceWithValueIfPossible(this)
-                                        )
+                                        valueReplacingError.isPresent() ?
+                                                valueReplacingError :
+                                                Optional.of(error)
                                 )
                 ),
                 Optional.empty() // ignore cell formatter
