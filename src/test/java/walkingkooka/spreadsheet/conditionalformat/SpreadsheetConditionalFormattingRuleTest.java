@@ -217,7 +217,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createObject(), "\"description#\" 123 123 style");
+        this.toStringAndCheck(this.createObject(), "\"description#\" 123 123  style");
     }
 
     @Override
