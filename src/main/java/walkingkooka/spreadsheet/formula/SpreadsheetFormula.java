@@ -414,13 +414,13 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         if (false == CharSequences.isNullOrEmpty(text)) {
             printer.println("text: " + CharSequences.quoteAndEscape(text));
         } else {
-            this.printTree0(
+            this.printTreeLabelAndValue(
                     "token",
                     this.token(),
                     printer
             );
 
-            this.printTree0(
+            this.printTreeLabelAndValue(
                     "expression",
                     this.expression(),
                     printer
@@ -446,9 +446,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         printer.outdent();
     }
 
-    private void printTree0(final String label,
-                            final Optional<? extends TreePrintable> printable,
-                            final IndentingPrinter printer) {
+    private void printTreeLabelAndValue(final String label,
+                                        final Optional<? extends TreePrintable> printable,
+                                        final IndentingPrinter printer) {
         if (printable.isPresent()) {
             printer.println(label + ":");
             printer.indent();
