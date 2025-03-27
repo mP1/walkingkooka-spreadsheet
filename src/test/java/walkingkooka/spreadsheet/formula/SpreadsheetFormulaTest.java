@@ -356,6 +356,81 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different);
     }
 
+    // SetExpressionValue...............................................................................................
+
+    @SuppressWarnings("OptionalAssignedToNull")
+    @Test
+    public void testSetExpressionValueNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .setExpressionValue(null)
+        );
+    }
+
+    @Test
+    public void testSetExpressionValueSame() {
+        final SpreadsheetFormula formula = this.createObject();
+        assertSame(
+                formula,
+                formula.setExpressionValue(formula.expressionValue())
+        );
+    }
+
+    @Test
+    public void testSetExpressionValueDifferent() {
+        final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token());
+        final Optional<Object> differentExpressionValue = Optional.of(
+                "different!"
+        );
+        final SpreadsheetFormula different = formula.setExpressionValue(differentExpressionValue);
+        assertNotSame(formula, different);
+
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(different);
+        this.expressionAndCheck(different);
+        this.expressionValueAndCheck(different, differentExpressionValue);
+        this.errorAndCheck(different);
+    }
+
+    @Test
+    public void testSetExpressionValueDifferentAndClear() {
+        final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token())
+                .setExpressionValue(this.expressionValue());
+        final Optional<Object> differentExpressionValue = SpreadsheetFormula.NO_EXPRESSION_VALUE;
+        final SpreadsheetFormula different = formula.setExpressionValue(differentExpressionValue);
+        assertNotSame(
+                formula,
+                different
+        );
+
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(different);
+        this.expressionAndCheck(different);
+        this.expressionValueAndCheck(different);
+        this.errorAndCheck(different);
+    }
+
+    @Test
+    public void testSetExpressionValueDifferentAfterSetValue() {
+        final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token())
+                .setExpression(this.expression())
+                .setExpressionValue(this.expressionValue());
+
+        final Optional<Object> differentExpressionValue = Optional.of("different!");
+        final SpreadsheetFormula different = formula.setExpressionValue(differentExpressionValue);
+        assertNotSame(formula, different);
+
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(different);
+        this.expressionAndCheck(different, formula.expression());
+        this.expressionValueAndCheck(different, differentExpressionValue);
+        this.errorAndCheck(different);
+    }
+
     // replaceErrorWithValueIfPossible..................................................................................
 
     @Test
