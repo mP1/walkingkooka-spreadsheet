@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.Value;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -72,7 +73,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Patchable<SpreadsheetFormula>,
         TreePrintable,
         UsesToStringBuilder,
-        HasUrlFragment {
+        HasUrlFragment,
+        Value<Optional<Object>> {
 
     /**
      * No {@link SpreadsheetFormulaParserToken} constant.
