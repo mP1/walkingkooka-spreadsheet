@@ -253,26 +253,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     private final Optional<Expression> expression;
 
-    // value ............................................................................................................
-
-    /**
-     * Returns any value that is present, currently only considers the {@link #expressionValue()}
-     */
-    public Optional<Object> value() {
-        return this.expressionValue();
-    }
-
-    /**
-     * Only returns an {@link SpreadsheetError} if one is present and ignores any non error value.
-     */
-    public Optional<SpreadsheetError> error() {
-        final Optional<Object> expressionValue = this.expressionValue();
-
-        return expressionValue.orElse(null)
-                instanceof SpreadsheetError ?
-                Cast.to(expressionValue) :
-                SpreadsheetFormula.NO_ERROR;
-    }
+    // expressionValue..................................................................................................
 
     /**
      * The value when this formula is evaluated.
@@ -296,6 +277,27 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     private final Optional<Object> expressionValue;
+
+    // value ............................................................................................................
+
+    /**
+     * Returns any value that is present, currently only considers the {@link #expressionValue()}
+     */
+    public Optional<Object> value() {
+        return this.expressionValue();
+    }
+
+    /**
+     * Only returns an {@link SpreadsheetError} if one is present and ignores any non error value.
+     */
+    public Optional<SpreadsheetError> error() {
+        final Optional<Object> expressionValue = this.expressionValue();
+
+        return expressionValue.orElse(null)
+                instanceof SpreadsheetError ?
+                Cast.to(expressionValue) :
+                SpreadsheetFormula.NO_ERROR;
+    }
 
     // magic...... ....................................................................................................
 
