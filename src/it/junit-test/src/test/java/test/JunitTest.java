@@ -165,7 +165,7 @@ public class JunitTest {
                                                                                 EXPRESSION_NUMBER_KIND.create(12)
                                                                         )
                                                                 )
-                                                        ).setValue(
+                                                        ).setExpressionValue(
                                                                 Optional.of(
                                                                         EXPRESSION_NUMBER_KIND.create(12)
                                                                 )
