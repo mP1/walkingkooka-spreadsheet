@@ -231,6 +231,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStringToSpreadsheetMetadataPropertyName() {
+        this.converterAndCheck(
+                SpreadsheetConvertersConverterProvider.STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME + "",
+                PROVIDER_CONTEXT,
+                SpreadsheetConverters.stringToSpreadsheetMetadataPropertyName()
+        );
+    }
+
+    @Test
     public void testConverterNameWithSelectionToString() {
         this.converterAndCheck(
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_STRING,
