@@ -352,7 +352,7 @@ public class JunitTest {
                         Optional.of(
                                 this.formatValue(
                                         cell.formula()
-                                                .expressionValue(),
+                                                .value(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
                                                         .spreadsheetFormatter(

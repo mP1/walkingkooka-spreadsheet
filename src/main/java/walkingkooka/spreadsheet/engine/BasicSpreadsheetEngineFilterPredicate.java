@@ -75,7 +75,7 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
         final SpreadsheetFormula formula = cell.formula();
         return false == formula.text().isEmpty() &&
                 this.valueType.test(
-                        formula.expressionValue()
+                        formula.value()
                                 .orElse(null)
                 ) &&
                 this.evaluateExpressionAsBoolean(cell);
