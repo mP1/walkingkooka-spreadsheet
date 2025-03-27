@@ -313,13 +313,13 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         final SpreadsheetError error = this.error()
                 .orElse(null);
-        return null == error ?
-                this :
-                this.setExpressionValue(
-                        Optional.of(
-                                error.replaceWithValueIfPossible(context)
-                        )
-                );
+        final Optional<Object> errorValue = null != error ?
+                error.replaceWithValueIfPossible(context) :
+                null;
+
+        return null != errorValue && errorValue.isPresent() ?
+                this.setExpressionValue(errorValue) :
+                this;
     }
 
     // clear ...........................................................................................................

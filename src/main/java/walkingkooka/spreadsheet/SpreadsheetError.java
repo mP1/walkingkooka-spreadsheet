@@ -170,14 +170,17 @@ public final class SpreadsheetError implements Value<Optional<?>>,
     private final String message;
 
     /**
+     * Returns a value if this error should be replaced with a value.
      * Applies some cell formula value transformations such as turning formulas to missing cells should give a value of zero.
      */
-    public Object replaceWithValueIfPossible(final SpreadsheetEngineContext context) {
+    public Optional<Object> replaceWithValueIfPossible(final SpreadsheetEngineContext context) {
         Objects.requireNonNull(context, "context");
 
-        return this.isMissingCell() ?
+        return Optional.ofNullable(
+                this.isMissingCell() ?
                 context.missingCellNumberValue() :
-                this;
+                null
+        );
     }
 
     @Override
