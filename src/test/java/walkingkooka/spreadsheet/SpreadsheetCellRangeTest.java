@@ -1055,7 +1055,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     private SpreadsheetCell cellWithValue(final String reference,
                                           final Optional<Object> value) {
         return SpreadsheetSelection.parseCell(reference)
-                .setFormula(SpreadsheetFormula.EMPTY.setValue(
+                .setFormula(SpreadsheetFormula.EMPTY.setExpressionValue(
                         value
                 ));
     }
@@ -1085,7 +1085,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         return SpreadsheetSelection.parseCell(reference)
                 .setFormula(
                         SpreadsheetMetadataTesting.parseFormula(formula)
-                                .setValue(
+                                .setExpressionValue(
                                         value
                                 )
                 );

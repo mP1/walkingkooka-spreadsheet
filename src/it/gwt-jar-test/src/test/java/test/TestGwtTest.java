@@ -339,7 +339,7 @@ public class TestGwtTest extends GWTTestCase {
                         Optional.of(
                                 this.formatValue(
                                         cell.formula()
-                                                .value(),
+                                                .expressionValue(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
                                                         .spreadsheetFormatter(

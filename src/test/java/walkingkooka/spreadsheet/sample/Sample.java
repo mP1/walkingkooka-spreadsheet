@@ -163,7 +163,7 @@ public final class Sample {
                                                                                 EXPRESSION_NUMBER_KIND.create(12)
                                                                         )
                                                                 )
-                                                        ).setValue(
+                                                        ).setExpressionValue(
                                                                 Optional.of(
                                                                         EXPRESSION_NUMBER_KIND.create(12)
                                                                 )
@@ -350,7 +350,7 @@ public final class Sample {
                         Optional.of(
                                 this.formatValue(
                                         cell.formula()
-                                                .value(),
+                                                .expressionValue(),
                                         formatter.orElse(
                                                 this.spreadsheetMetadata()
                                                         .spreadsheetFormatter(

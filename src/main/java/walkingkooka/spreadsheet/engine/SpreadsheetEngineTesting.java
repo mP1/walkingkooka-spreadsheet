@@ -219,9 +219,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 context
         );
         this.checkEquals(
-                SpreadsheetFormula.NO_VALUE,
-                spreadsheetCell.formula().value(),
-                () -> "values parse returned cells=" + spreadsheetCell);
+                SpreadsheetFormula.NO_EXPRESSION_VALUE,
+                spreadsheetCell.formula()
+                        .expressionValue(),
+                () -> "values parse returned cells=" + spreadsheetCell
+        );
         return spreadsheetCell;
     }
 
@@ -2491,7 +2493,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                           final Object value) {
         this.checkEquals(
                 value,
-                cell.formula().value().orElse(null),
+                cell.formula()
+                        .expressionValue()
+                        .orElse(null
+                        ),
                 () -> "formula values returned cell=" + cell);
     }
 

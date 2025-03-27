@@ -250,7 +250,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 .setFormula(formula);
 
         final SpreadsheetCell with = requires.setFormula(
-                formula.setValue(
+                formula.setExpressionValue(
                         Optional.of(
                                 SpreadsheetErrorKind.ERROR.setMessage(
                                         "Invalid character '9' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | \"d/m/y\" | \"d/m/y h:mm\" | \"#;#.#\" | \"hh:mm\""
@@ -290,7 +290,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                                         text
                                 )
                         )
-                ).setValue(
+                ).setExpressionValue(
                         Optional.of(
                                 SpreadsheetErrorKind.VALUE.setMessage("Invalid value for DayOfMonth (valid values 1 - 28/31): 99")
                         )
