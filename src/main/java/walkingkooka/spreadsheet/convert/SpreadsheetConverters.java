@@ -168,27 +168,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterStringToExpression}
-     */
-    public static Converter<SpreadsheetConverterContext> stringToExpression() {
-        return SpreadsheetConverterStringToExpression.INSTANCE;
-    }
-
-    /**
-     * {@see SpreadsheetConverterStringToSpreadsheetSelection}
-     */
-    public static Converter<SpreadsheetConverterContext> stringToSelection() {
-        return SpreadsheetConverterStringToSpreadsheetSelection.INSTANCE;
-    }
-
-    /**
-     * {@see SpreadsheetConverterStringToSpreadsheetMetadataPropertyName}
-     */
-    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetMetadataPropertyName() {
-        return SpreadsheetConverterStringToSpreadsheetMetadataPropertyName.INSTANCE;
-    }
-
-    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link DateSpreadsheetFormulaParserToken} and converting
      * that into a {@link LocalDate}.
      */
@@ -217,6 +196,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterStringToExpression}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToExpression() {
+        return SpreadsheetConverterStringToExpression.INSTANCE;
+    }
+
+    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link NumberSpreadsheetFormulaParserToken} and converting
      * that into a {@link ExpressionNumber}. Note the {@link Converter} does not support converting to other {@link Number} types and attempts will fail.
      */
@@ -235,6 +221,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> stringToFormatPattern(final String pattern) {
         return SpreadsheetConverterStringToFormatPattern.with(pattern);
+    }
+
+    /**
+     * {@see SpreadsheetConverterStringToSpreadsheetSelection}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToSelection() {
+        return SpreadsheetConverterStringToSpreadsheetSelection.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterStringToSpreadsheetMetadataPropertyName}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetMetadataPropertyName() {
+        return SpreadsheetConverterStringToSpreadsheetMetadataPropertyName.INSTANCE;
     }
 
     /**
