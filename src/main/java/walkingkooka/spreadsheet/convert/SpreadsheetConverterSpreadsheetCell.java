@@ -26,7 +26,8 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 
 /**
- * A {@link Converter} that supports converting a {@link SpreadsheetCell} to various target types.
+ * A {@link Converter} that supports converting a {@link SpreadsheetCell} to various target types, where each type maps
+ * to a property within a {@link SpreadsheetCell}, such as {@link TextStyle} extracting the {@link SpreadsheetCell#style()}.
  */
 final class SpreadsheetConverterSpreadsheetCell extends SpreadsheetConverter {
 
