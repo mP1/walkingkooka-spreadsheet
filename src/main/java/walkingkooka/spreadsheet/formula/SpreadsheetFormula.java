@@ -263,13 +263,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     /**
-     * The value when this formula is evaluated.
-     */
-    public Optional<Object> expressionValue() {
-        return this.expressionValue;
-    }
-
-    /**
      * Only returns an {@link SpreadsheetError} if one is present and ignores any non error value.
      */
     public Optional<SpreadsheetError> error() {
@@ -281,6 +274,16 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 SpreadsheetFormula.NO_ERROR;
     }
 
+    /**
+     * The value when this formula is evaluated.
+     */
+    public Optional<Object> expressionValue() {
+        return this.expressionValue;
+    }
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetFormula} with the given expression value.
+     */
     public SpreadsheetFormula setExpressionValue(final Optional<Object> expressionValue) {
         return this.expressionValue.equals(expressionValue) ?
                 this :
