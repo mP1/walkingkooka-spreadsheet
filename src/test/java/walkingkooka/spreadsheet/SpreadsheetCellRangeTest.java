@@ -1168,10 +1168,12 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 "A1:B2\n" +
                         "  Cell A1\n" +
                         "    Formula\n" +
-                        "      text: \"=1\"\n" +
+                        "      text:\n" +
+                        "        \"=1\"\n" +
                         "  Cell B2\n" +
                         "    Formula\n" +
-                        "      text: \"=22\"\n" +
+                        "      text:\n" +
+                        "        \"=22\"\n" +
                         "    formatter:\n" +
                         "      text-format-pattern\n" +
                         "        \"@\"\n" +

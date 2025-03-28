@@ -353,7 +353,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
                 this.createObject(),
                 "#N/A\n" +
                         "  \"message #1\"\n" +
-                        "  123"
+                        "  123\n"
         );
     }
 

@@ -461,7 +461,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         final String text = this.text;
         if (false == CharSequences.isNullOrEmpty(text)) {
-            printer.println("text: " + CharSequences.quoteAndEscape(text));
+            this.printTreeLabelAndValue(
+                    "text",
+                    this.text(),
+                    printer
+            );
         } else {
             this.printTreeLabelAndValue(
                     "token",
@@ -476,21 +480,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             );
         }
 
-        final Optional<Object> possibleExpressionValue = this.expressionValue();
-        if (possibleExpressionValue.isPresent()) {
-            final Object expressionValue = possibleExpressionValue.get();
-
-            printer.print("expressionValue: ");
-            if (expressionValue instanceof TreePrintable) {
-
-                final TreePrintable treePrintable = Cast.to(expressionValue);
-                printer.indent();
-                treePrintable.printTree(printer);
-                printer.outdent();
-            } else {
-                printer.println(CharSequences.quoteIfChars(expressionValue) + " (" + expressionValue.getClass().getName() + ")");
-            }
-        }
+        this.printTreeLabelAndValue(
+                "expressionValue",
+                this.expressionValue(),
+                printer
+        );
 
         this.printTreeLabelAndValue(
                 "error",
@@ -502,16 +496,29 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     }
 
     private void printTreeLabelAndValue(final String label,
-                                        final Optional<? extends TreePrintable> printable,
+                                        final Object value,
                                         final IndentingPrinter printer) {
-        if (printable.isPresent()) {
+        if(null != value) {
             printer.println(label + ":");
             printer.indent();
             {
-                printable.get().printTree(printer);
+                TreePrintable.printTreeOrToString(
+                        value,
+                        printer
+                );
             }
             printer.outdent();
         }
+    }
+
+    private void printTreeLabelAndValue(final String label,
+                                        final Optional<?> printable,
+                                        final IndentingPrinter printer) {
+        this.printTreeLabelAndValue(
+                label,
+                printable.orElse(null),
+                printer
+        );
     }
 
     // consumeSpreadsheetExpressionReferences...........................................................................

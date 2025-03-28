@@ -387,7 +387,8 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
                 "A1\n" +
                         "  Cell A1\n" +
                         "    Formula\n" +
-                        "      text: \"=123+456\"\n"
+                        "      text:\n" +
+                        "        \"=123+456\"\n"
         );
     }
 
@@ -400,7 +401,8 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
                 ),
                 "A1\n" +
                         "  Formula\n" +
-                        "    text: \"=123+456\"\n"
+                        "    text:\n" +
+                        "      \"=123+456\"\n"
         );
     }
 

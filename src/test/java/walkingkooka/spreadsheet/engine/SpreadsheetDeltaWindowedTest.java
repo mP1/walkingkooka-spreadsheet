@@ -736,13 +736,16 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
-                        "        text: \"1\"\n" +
+                        "        text:\n" +
+                        "          \"1\"\n" +
                         "    Cell B2\n" +
                         "      Formula\n" +
-                        "        text: \"2\"\n" +
+                        "        text:\n" +
+                        "          \"2\"\n" +
                         "    Cell C3\n" +
                         "      Formula\n" +
-                        "        text: \"3\"\n" +
+                        "        text:\n" +
+                        "          \"3\"\n" +
                         "  window:\n" +
                         "    A1:E5\n"
         );
@@ -873,13 +876,16 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
-                        "        text: \"1\"\n" +
+                        "        text:\n" +
+                        "          \"1\"\n" +
                         "    Cell B2\n" +
                         "      Formula\n" +
-                        "        text: \"2\"\n" +
+                        "        text:\n" +
+                        "          \"2\"\n" +
                         "    Cell C3\n" +
                         "      Formula\n" +
-                        "        text: \"3\"\n" +
+                        "        text:\n" +
+                        "          \"3\"\n" +
                         "  labels:\n" +
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
@@ -945,13 +951,16 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
-                        "        text: \"1\"\n" +
+                        "        text:\n" +
+                        "          \"1\"\n" +
                         "    Cell B2\n" +
                         "      Formula\n" +
-                        "        text: \"2\"\n" +
+                        "        text:\n" +
+                        "          \"2\"\n" +
                         "    Cell C3\n" +
                         "      Formula\n" +
-                        "        text: \"3\"\n" +
+                        "        text:\n" +
+                        "          \"3\"\n" +
                         "  labels:\n" +
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
@@ -1079,13 +1088,16 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
-                        "        text: \"1\"\n" +
+                        "        text:\n" +
+                        "          \"1\"\n" +
                         "    Cell B2\n" +
                         "      Formula\n" +
-                        "        text: \"2\"\n" +
+                        "        text:\n" +
+                        "          \"2\"\n" +
                         "    Cell C3\n" +
                         "      Formula\n" +
-                        "        text: \"3\"\n" +
+                        "        text:\n" +
+                        "          \"3\"\n" +
                         "  columnWidths:\n" +
                         "    A: 50.0\n" +
                         "  window:\n" +
@@ -1118,13 +1130,16 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
-                        "        text: \"1\"\n" +
+                        "        text:\n" +
+                        "          \"1\"\n" +
                         "    Cell B2\n" +
                         "      Formula\n" +
-                        "        text: \"2\"\n" +
+                        "        text:\n" +
+                        "          \"2\"\n" +
                         "    Cell C3\n" +
                         "      Formula\n" +
-                        "        text: \"3\"\n" +
+                        "        text:\n" +
+                        "          \"3\"\n" +
                         "  rowHeights:\n" +
                         "    1: 75.0\n" +
                         "  window:\n" +
@@ -1163,13 +1178,16 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         "  cells:\n" +
                         "    Cell A1\n" +
                         "      Formula\n" +
-                        "        text: \"1\"\n" +
+                        "        text:\n" +
+                        "          \"1\"\n" +
                         "    Cell B2\n" +
                         "      Formula\n" +
-                        "        text: \"2\"\n" +
+                        "        text:\n" +
+                        "          \"2\"\n" +
                         "    Cell C3\n" +
                         "      Formula\n" +
-                        "        text: \"3\"\n" +
+                        "        text:\n" +
+                        "          \"3\"\n" +
                         "  labels:\n" +
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +
