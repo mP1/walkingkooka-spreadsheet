@@ -25,6 +25,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.store.HasNotFoundTextTesting;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -35,6 +36,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         HasUrlFragmentTesting,
         JsonNodeMarshallingTesting<SpreadsheetId>,
         ParseStringTesting<SpreadsheetId>,
+        TreePrintableTesting,
         ToStringTesting<SpreadsheetId> {
 
     private final static Long VALUE = 123L;
@@ -183,5 +185,15 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                this.createObject(),
+                "7b\n"
+        );
     }
 }
