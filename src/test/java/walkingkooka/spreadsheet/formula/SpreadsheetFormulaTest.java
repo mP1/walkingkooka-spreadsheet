@@ -431,6 +431,81 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different);
     }
 
+    // setError.........................................................................................................
+
+    @SuppressWarnings("OptionalAssignedToNull")
+    @Test
+    public void testSetErrorNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .setError(null)
+        );
+    }
+
+    @Test
+    public void testSetErrorSame() {
+        final SpreadsheetFormula formula = this.createObject();
+        assertSame(
+                formula,
+                formula.setError(formula.error())
+        );
+    }
+
+    @Test
+    public void testSetErrorDifferent() {
+        final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token());
+        final Optional<SpreadsheetError> differentError = Optional.of(
+                SpreadsheetError.cycle(SpreadsheetSelection.A1)
+        );
+        final SpreadsheetFormula different = formula.setError(differentError);
+        assertNotSame(formula, different);
+
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(different);
+        this.expressionAndCheck(different);
+        this.expressionValueAndCheck(different);
+        this.errorAndCheck(different, differentError);
+    }
+
+    @Test
+    public void testSetErrorDifferentAndClear() {
+        final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token())
+                .setError(this.error());
+        final Optional<SpreadsheetError> differentError = SpreadsheetFormula.NO_ERROR;
+        final SpreadsheetFormula different = formula.setError(differentError);
+        assertNotSame(
+                formula,
+                different
+        );
+
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(different);
+        this.expressionAndCheck(different);
+        this.expressionValueAndCheck(different);
+        this.errorAndCheck(different);
+    }
+
+    @Test
+    public void testSetErrorDifferentAfterSetValue() {
+        final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token())
+                .setExpression(this.expression())
+                .setError(this.error());
+
+        final Optional<SpreadsheetError> differentError = this.error("Different error");
+        final SpreadsheetFormula different = formula.setError(differentError);
+        assertNotSame(formula, different);
+
+        this.textAndCheck(different, TEXT);
+        this.tokenAndCheck(different);
+        this.expressionAndCheck(different, formula.expression());
+        this.expressionValueAndCheck(different);
+        this.errorAndCheck(different, differentError);
+    }
+    
     // replaceErrorWithValueIfPossible..................................................................................
 
     @Test
@@ -1283,19 +1358,22 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testTreePrintTextTokenExpressionError() {
+    public void testTreePrintTextTokenExpressionValueError() {
         this.treePrintAndCheck(
                 formula("1+2")
                         .setToken(this.token())
                         .setExpression(this.expression())
-                        .setExpressionValue(this.error()),
+                        .setExpressionValue(this.expressionValue())
+                        .setError(this.error()),
                 "Formula\n" +
                         "  token:\n" +
                         "    TextSpreadsheetFormula \"1+2\"\n" +
                         "      TextLiteralSpreadsheetFormula \"1+2\" \"1+2\"\n" +
                         "  expression:\n" +
                         "    ValueExpression \"1+2\" (java.lang.String)\n" +
-                        "  expressionValue: #VALUE!\n" +
+                        "  expressionValue: 3.0 (java.lang.Double)\n" +
+                        "  error:\n" +
+                        "    #VALUE!\n" +
                         "      \"Message #1\"\n"
         );
     }
@@ -1619,11 +1697,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private Optional<Object> error() {
+    private Optional<SpreadsheetError> error() {
         return this.error(ERROR);
     }
 
-    private Optional<Object> error(final String error) {
+    private Optional<SpreadsheetError> error(final String error) {
         return Optional.of(
                 SpreadsheetErrorKind.VALUE.setMessage(error)
         );
@@ -1641,7 +1719,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                                final Optional<SpreadsheetError> error) {
         this.checkEquals(
                 error,
-                formula.expressionValue(),
+                formula.error(),
                 () -> "formula: " + formula
         );
     }
