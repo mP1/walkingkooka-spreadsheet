@@ -1872,6 +1872,30 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
+    public void testUnmarshallTextAndError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.DIV0.setMessageAndValue(
+                "Hello error message",
+                123
+        );
+
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetFormula.TEXT_PROPERTY,
+                                JsonNode.string(TEXT)
+                        ).set(
+                                SpreadsheetFormula.ERROR_PROPERTY,
+                                this.marshallContext()
+                                        .marshall(error)
+                        ),
+                formula(TEXT)
+                        .setError(
+                                Optional.of(error)
+                        )
+        );
+    }
+
     // marshall.......................................................................................................
 
     @Test
@@ -1993,10 +2017,22 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testMarshallRoundtripTextAndError() {
+    public void testMarshallRoundtripTextAndExpresionValueWithError() {
         this.marshallRoundTripTwiceAndCheck(
                 formula(TEXT)
                         .setExpressionValue(
+                                Optional.of(
+                                        SpreadsheetErrorKind.VALUE.setMessage("error message #1")
+                                )
+                        )
+        );
+    }
+
+    @Test
+    public void testMarshallRoundtripTextAndError() {
+        this.marshallRoundTripTwiceAndCheck(
+                formula(TEXT)
+                        .setError(
                                 Optional.of(
                                         SpreadsheetErrorKind.VALUE.setMessage("error message #1")
                                 )
