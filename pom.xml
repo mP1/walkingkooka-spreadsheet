@@ -218,6 +218,12 @@
       <artifactId>walkingkooka-tree-text</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+
+    <dependency>
+      <groupId>walkingkooka</groupId>
+      <artifactId>walkingkooka-validation</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>

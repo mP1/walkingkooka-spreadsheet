@@ -25,6 +25,7 @@
     <inherits name="walkingkooka.template.Template"/>
     <inherits name="walkingkooka.tree.expression.function.provider.TreeExpressionFunctionProvider"/>
     <inherits name="walkingkooka.tree.text.Text"/>
+    <inherits name="walkingkooka.validation.Validation"/>
     <inherits name="walkingkooka.watch.Watch"/>
 
     <source path="">
