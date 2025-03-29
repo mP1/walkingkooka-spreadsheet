@@ -602,7 +602,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         return formula.setToken(Optional.ofNullable(token))
                 .setExpression(Optional.ofNullable(expression))
-                .setExpressionValue(Optional.ofNullable(expressionValue));
+                .setExpressionValue(Optional.ofNullable(expressionValue))
+                .setError(Optional.ofNullable(error));
     }
 
     /**
@@ -640,7 +641,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         if(error.isPresent()) {
             object = object.set(
                     ERROR_PROPERTY,
-                    context.marshall(error)
+                    context.marshall(
+                            error.get()
+                    )
             );
         }
 
