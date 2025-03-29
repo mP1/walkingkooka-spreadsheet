@@ -342,9 +342,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 .orElse(null);
         if (value instanceof SpreadsheetError) {
             final SpreadsheetError error = (SpreadsheetError) value;
-            final Optional<Object> errorValue = null != error ?
-                    error.replaceWithValueIfPossible(context) :
-                    null;
+            final Optional<Object> errorValue = error.replaceWithValueIfPossible(context);
+
             result = null != errorValue && errorValue.isPresent() ?
                     this.setExpressionValue(errorValue) :
                     this;
