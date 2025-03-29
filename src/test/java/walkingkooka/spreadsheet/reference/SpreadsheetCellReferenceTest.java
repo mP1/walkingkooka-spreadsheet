@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.ValidationReferenceTesting;
 import walkingkooka.visit.Visiting;
 
 import java.util.Map;
@@ -45,7 +46,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReferenceOrRangeTestCase<SpreadsheetCellReference>
         implements ComparableTesting2<SpreadsheetCellReference>,
         HateosResourceTesting<SpreadsheetCellReference, String>,
-        CanReplaceReferencesTesting<SpreadsheetCellReference> {
+        CanReplaceReferencesTesting<SpreadsheetCellReference>,
+        ValidationReferenceTesting {
 
     private final static int COLUMN = 123;
     private final static int ROW = 456;
