@@ -217,13 +217,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterStringToSpreadsheetId}
-     */
-    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetId() {
-        return SpreadsheetConverterStringToSpreadsheetId.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetConverterStringToFormatPattern}
      */
     public static Converter<SpreadsheetConverterContext> stringToFormatPattern(final String pattern) {
@@ -235,6 +228,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> stringToSelection() {
         return SpreadsheetConverterStringToSpreadsheetSelection.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterStringToSpreadsheetId}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetId() {
+        return SpreadsheetConverterStringToSpreadsheetId.INSTANCE;
     }
 
     /**
