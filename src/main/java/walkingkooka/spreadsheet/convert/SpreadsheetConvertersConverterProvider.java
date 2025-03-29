@@ -151,6 +151,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.stringToSelection();
                 break;
+            case STRING_TO_SPREADSHEET_ID_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.stringToSpreadsheetId();
+                break;
             case STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -234,6 +239,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName STRING_TO_SELECTION = ConverterName.with(STRING_TO_SELECTION_STRING);
 
+    private final static String STRING_TO_SPREADSHEET_ID_STRING = "string-to-spreadsheet-id";
+
+    final static ConverterName STRING_TO_SPREADSHEET_ID = ConverterName.with(STRING_TO_SPREADSHEET_ID_STRING);
+
     private final static String STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING = "string-to-spreadsheet-metadata-property-name";
 
     final static ConverterName STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME = ConverterName.with(STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING);
@@ -257,6 +266,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(SELECTION_TO_STRING),
                     converterInfo(STRING_TO_EXPRESSION),
                     converterInfo(STRING_TO_SELECTION),
+                    converterInfo(STRING_TO_SPREADSHEET_ID),
                     converterInfo(STRING_TO_SPREADSHEET_METADATA_PROPERTY_NAME)
             )
     );
