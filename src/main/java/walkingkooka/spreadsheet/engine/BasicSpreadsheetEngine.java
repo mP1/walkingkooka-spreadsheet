@@ -943,8 +943,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
-                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                SpreadsheetDeltaProperties.ALL,
                 context
         );
 
@@ -973,8 +971,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
                 this,
-                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                SpreadsheetDeltaProperties.ALL,
                 context
         );
 
