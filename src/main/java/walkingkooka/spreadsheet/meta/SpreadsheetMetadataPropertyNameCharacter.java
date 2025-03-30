@@ -60,7 +60,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     abstract Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols);
 
     @Override
-    Class<Character> type() {
+    public Class<Character> type() {
         return Character.class;
     }
 

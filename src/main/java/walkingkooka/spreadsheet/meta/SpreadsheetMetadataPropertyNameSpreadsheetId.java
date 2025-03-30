@@ -62,7 +62,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     }
 
     @Override
-    Class<SpreadsheetId> type() {
+    public Class<SpreadsheetId> type() {
         return SpreadsheetId.class;
     }
 

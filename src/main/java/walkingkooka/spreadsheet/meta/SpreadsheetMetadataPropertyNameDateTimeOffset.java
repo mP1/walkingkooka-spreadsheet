@@ -59,7 +59,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     }
 
     @Override
-    Class<Long> type() {
+    public Class<Long> type() {
         return Long.class;
     }
 

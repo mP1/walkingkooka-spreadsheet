@@ -67,7 +67,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector exten
     abstract Optional<SpreadsheetFormatPattern> extractLocaleAwareValueSpreadsheetFormatPattern(final Locale locale);
 
     @Override
-    final Class<SpreadsheetFormatterSelector> type() {
+    public final Class<SpreadsheetFormatterSelector> type() {
         return SpreadsheetFormatterSelector.class;
     }
 

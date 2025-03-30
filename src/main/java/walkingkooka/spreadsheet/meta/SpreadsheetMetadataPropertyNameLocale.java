@@ -59,7 +59,7 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     }
 
     @Override
-    Class<Locale> type() {
+    public Class<Locale> type() {
         return Locale.class;
     }
 

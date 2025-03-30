@@ -53,7 +53,7 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
     }
 
     @Override
-    final Class<ExpressionFunctionAliasSet> type() {
+    public final Class<ExpressionFunctionAliasSet> type() {
         return ExpressionFunctionAliasSet.class;
     }
 

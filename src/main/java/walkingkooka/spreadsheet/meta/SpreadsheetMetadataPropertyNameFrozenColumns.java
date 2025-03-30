@@ -65,7 +65,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     }
 
     @Override
-    Class<SpreadsheetColumnRangeReference> type() {
+    public Class<SpreadsheetColumnRangeReference> type() {
         return SpreadsheetColumnRangeReference.class;
     }
 

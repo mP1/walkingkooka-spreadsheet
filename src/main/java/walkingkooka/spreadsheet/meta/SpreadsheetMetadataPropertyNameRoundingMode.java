@@ -60,7 +60,7 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     }
 
     @Override
-    Class<RoundingMode> type() {
+    public Class<RoundingMode> type() {
         return RoundingMode.class;
     }
 

@@ -46,7 +46,7 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
     }
 
     @Override
-    final Class<String> type() {
+    public final Class<String> type() {
         return String.class;
     }
 

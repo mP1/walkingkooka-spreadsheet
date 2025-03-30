@@ -53,7 +53,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParserAliasSet extends 
     }
 
     @Override
-    final Class<SpreadsheetParserAliasSet> type() {
+    public final Class<SpreadsheetParserAliasSet> type() {
         return SpreadsheetParserAliasSet.class;
     }
 

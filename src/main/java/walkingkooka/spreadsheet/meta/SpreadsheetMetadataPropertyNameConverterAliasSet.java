@@ -53,7 +53,7 @@ abstract class SpreadsheetMetadataPropertyNameConverterAliasSet extends Spreadsh
     }
 
     @Override
-    final Class<ConverterAliasSet> type() {
+    public final Class<ConverterAliasSet> type() {
         return ConverterAliasSet.class;
     }
 

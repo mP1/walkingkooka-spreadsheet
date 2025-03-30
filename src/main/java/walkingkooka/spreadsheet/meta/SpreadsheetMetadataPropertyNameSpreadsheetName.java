@@ -62,7 +62,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
     }
 
     @Override
-    Class<SpreadsheetName> type() {
+    public Class<SpreadsheetName> type() {
         return SpreadsheetName.class;
     }
 
