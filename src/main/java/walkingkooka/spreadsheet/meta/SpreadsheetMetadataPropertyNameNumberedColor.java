@@ -95,7 +95,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     }
 
     @Override
-    Class<Color> type() {
+    public Class<Color> type() {
         return Color.class;
     }
 

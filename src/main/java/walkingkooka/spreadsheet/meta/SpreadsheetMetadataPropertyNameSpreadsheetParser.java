@@ -67,7 +67,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParser extends Spreadsh
     abstract Optional<SpreadsheetParsePattern> extractLocaleAwareValueSpreadsheetParsePattern(final Locale locale);
 
     @Override
-    final Class<SpreadsheetParserSelector> type() {
+    public final Class<SpreadsheetParserSelector> type() {
         return SpreadsheetParserSelector.class;
     }
 

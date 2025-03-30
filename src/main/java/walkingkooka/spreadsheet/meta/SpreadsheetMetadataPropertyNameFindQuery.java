@@ -62,7 +62,7 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
     }
 
     @Override
-    Class<SpreadsheetCellQuery> type() {
+    public Class<SpreadsheetCellQuery> type() {
         return SpreadsheetCellQuery.class;
     }
 

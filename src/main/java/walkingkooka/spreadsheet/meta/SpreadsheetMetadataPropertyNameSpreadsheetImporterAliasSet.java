@@ -54,7 +54,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet extend
     }
 
     @Override
-    final Class<SpreadsheetImporterAliasSet> type() {
+    public final Class<SpreadsheetImporterAliasSet> type() {
         return SpreadsheetImporterAliasSet.class;
     }
 

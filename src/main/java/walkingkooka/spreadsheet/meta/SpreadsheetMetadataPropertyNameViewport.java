@@ -63,7 +63,7 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
     }
 
     @Override
-    Class<SpreadsheetViewport> type() {
+    public Class<SpreadsheetViewport> type() {
         return SpreadsheetViewport.class;
     }
 

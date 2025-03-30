@@ -48,7 +48,7 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     }
 
     @Override
-    Class<EmailAddress> type() {
+    public Class<EmailAddress> type() {
         return EmailAddress.class;
     }
 

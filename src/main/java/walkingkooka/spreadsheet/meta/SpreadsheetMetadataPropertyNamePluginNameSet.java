@@ -60,7 +60,7 @@ final class SpreadsheetMetadataPropertyNamePluginNameSet extends SpreadsheetMeta
     }
 
     @Override
-    Class<PluginNameSet> type() {
+    public Class<PluginNameSet> type() {
         return PluginNameSet.class;
     }
 

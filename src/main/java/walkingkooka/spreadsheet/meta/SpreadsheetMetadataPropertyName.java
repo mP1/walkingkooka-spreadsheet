@@ -534,7 +534,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         );
     }
 
-    abstract Class<T> type();
+    /**
+     * Returns the value type of this property.
+     */
+    public abstract Class<T> type();
 
     /**
      * Provides the specific text about an invalid value for {@link #spreadsheetMetadataPropertyValueException(Object)}.

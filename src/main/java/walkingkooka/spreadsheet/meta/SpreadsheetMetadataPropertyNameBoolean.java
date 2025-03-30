@@ -48,7 +48,7 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
     }
 
     @Override
-    Class<Boolean> type() {
+    public Class<Boolean> type() {
         return Boolean.class;
     }
 

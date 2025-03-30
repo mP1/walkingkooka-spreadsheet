@@ -53,7 +53,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSet exten
     }
 
     @Override
-    final Class<SpreadsheetFormatterAliasSet> type() {
+    public final Class<SpreadsheetFormatterAliasSet> type() {
         return SpreadsheetFormatterAliasSet.class;
     }
 

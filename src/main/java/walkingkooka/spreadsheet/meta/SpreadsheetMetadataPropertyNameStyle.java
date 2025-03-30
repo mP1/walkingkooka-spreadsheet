@@ -42,7 +42,7 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
     }
 
     @Override
-    Class<TextStyle> type() {
+    public Class<TextStyle> type() {
         return TextStyle.class;
     }
 

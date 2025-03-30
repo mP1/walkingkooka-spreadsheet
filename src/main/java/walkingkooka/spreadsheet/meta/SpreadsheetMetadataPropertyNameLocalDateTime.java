@@ -47,7 +47,7 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     }
 
     @Override
-    Class<LocalDateTime> type() {
+    public Class<LocalDateTime> type() {
         return LocalDateTime.class;
     }
 

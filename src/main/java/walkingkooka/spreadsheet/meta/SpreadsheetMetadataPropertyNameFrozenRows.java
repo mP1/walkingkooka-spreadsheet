@@ -66,7 +66,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     }
 
     @Override
-    Class<SpreadsheetRowRangeReference> type() {
+    public Class<SpreadsheetRowRangeReference> type() {
         return SpreadsheetRowRangeReference.class;
     }
 

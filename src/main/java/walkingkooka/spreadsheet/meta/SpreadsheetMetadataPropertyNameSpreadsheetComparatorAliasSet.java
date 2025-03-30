@@ -54,7 +54,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSet exte
     }
 
     @Override
-    final Class<SpreadsheetComparatorAliasSet> type() {
+    public final Class<SpreadsheetComparatorAliasSet> type() {
         return SpreadsheetComparatorAliasSet.class;
     }
 

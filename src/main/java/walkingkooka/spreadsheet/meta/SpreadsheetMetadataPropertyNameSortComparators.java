@@ -67,7 +67,7 @@ final class SpreadsheetMetadataPropertyNameSortComparators extends SpreadsheetMe
     }
 
     @Override
-    Class<SpreadsheetComparatorNameList> type() {
+    public Class<SpreadsheetComparatorNameList> type() {
         return SpreadsheetComparatorNameList.class;
     }
 

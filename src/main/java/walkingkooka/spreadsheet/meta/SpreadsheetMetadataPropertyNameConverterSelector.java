@@ -53,7 +53,7 @@ abstract class SpreadsheetMetadataPropertyNameConverterSelector extends Spreadsh
     }
 
     @Override
-    final Class<ConverterSelector> type() {
+    public final Class<ConverterSelector> type() {
         return ConverterSelector.class;
     }
 
