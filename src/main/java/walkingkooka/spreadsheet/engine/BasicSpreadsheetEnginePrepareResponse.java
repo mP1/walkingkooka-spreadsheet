@@ -228,7 +228,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted();
+    private final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
     private void rows() {
         if (this.shouldSaveUpdateRows || this.shouldDeleteRows) {
@@ -263,7 +263,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted();
+    private final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
     private void labels() {
         if (this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateCells) {
@@ -342,7 +342,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> labels = Maps.ordered();
+    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> labels = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
     private void cells() {
         if (this.shouldSaveUpdateCells || this.shouldDeleteCells || this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateColumns || this.shouldDeleteColumns || this.shouldSaveUpdateRows || this.shouldDeleteRows) {
