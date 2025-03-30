@@ -17009,6 +17009,109 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    @Test
+    public void testLoadLabelWithCellReferences() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetLabelName b2Label = SpreadsheetSelection.labelName("B2LABEL");
+
+        final SpreadsheetCell a1Cell = this.cell(
+                "A1",
+                "=1+B2LABEL"
+        );
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        SpreadsheetError.referenceNotFound(b2Label)
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        final SpreadsheetCell b2Cell = this.cell(
+                "B2",
+                "=10"
+        );
+        this.saveCellAndCheck(
+                engine,
+                b2Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        b2Cell,
+                                        10
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("B")
+                ).setRowHeights(
+                        rowHeights("2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+
+        final SpreadsheetLabelMapping b2Mapping = b2Label.setLabelMappingReference(
+                SpreadsheetSelection.parseCell("B2")
+        );
+
+        this.saveLabelAndCheck(
+                engine,
+                b2Mapping,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        a1Cell,
+                                        1 + 10
+                                ),
+                                this.formatCell(
+                                        b2Cell,
+                                        10
+                                )
+                        )
+                ).setLabels(
+                        Sets.of(b2Mapping)
+                ).setReferences(
+                        references("B2=B2LABEL")
+                ).setColumnWidths(
+                        columnWidths("A,B")
+                ).setRowHeights(
+                        rowHeights("1,2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
+                )
+        );
+
+        this.loadLabelAndCheck(
+                engine,
+                b2Label,
+                context,
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(b2Mapping)
+                )
+        );
+    }
+
     //  saveLabel.......................................................................................................
 
     @Test
