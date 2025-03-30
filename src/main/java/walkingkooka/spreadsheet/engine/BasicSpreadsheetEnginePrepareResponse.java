@@ -561,7 +561,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private static <T extends SpreadsheetSelection> Set<T> extractDeleted(final Map<T, ?> referenceToEntities) {
-        final Set<T> deleted = SortedSets.tree();
+        final Set<T> deleted = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         for (final Map.Entry<T, ?> referenceToColumnOrRow : referenceToEntities.entrySet()) {
             if (null == referenceToColumnOrRow.getValue()) {
