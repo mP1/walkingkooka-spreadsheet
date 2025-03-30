@@ -207,8 +207,8 @@ public class JunitTest {
         if (null == metadata) {
             SpreadsheetMetadata m = SpreadsheetMetadata.EMPTY
                     .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
-                    .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
                     .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.of(2000, 12, 31, 12, 58, 59))
+                    .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD")
                     .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY").spreadsheetParserSelector())
@@ -490,6 +490,11 @@ public class JunitTest {
 
         @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
             throw new UnsupportedOperationException();
         }
 
