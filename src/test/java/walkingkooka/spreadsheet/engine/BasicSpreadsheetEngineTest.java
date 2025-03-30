@@ -17002,10 +17002,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
 
-        this.loadLabelAndFailCheck(
+        this.loadLabelAndCheck(
                 engine,
                 SpreadsheetSelection.labelName("UnknownLabel"),
-                this.createContext()
+                this.createContext(),
+                SpreadsheetDelta.EMPTY.setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
         );
     }
 
@@ -17106,8 +17111,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 b2Label,
                 context,
-                SpreadsheetDelta.EMPTY.setLabels(
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(
+                                        b2Cell,
+                                        10
+                                )
+                        )
+                ).setLabels(
                         Sets.of(b2Mapping)
+                ).setReferences(
+                        references("B2=B2LABEL")
+                ).setColumnWidths(
+                        columnWidths("B")
+                ).setRowHeights(
+                        rowHeights("2")
+                ).setColumnCount(
+                        OptionalInt.of(2)
+                ).setRowCount(
+                        OptionalInt.of(2)
                 )
         );
     }
@@ -17382,7 +17404,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 engine,
                 label2,
                 context,
-                SpreadsheetDelta.EMPTY
+                SpreadsheetDelta.EMPTY.setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
         );
     }
 
@@ -17801,10 +17827,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 0, // offset
                 4, // count
                 context,
-                mapping1,
-                mapping2,
-                mapping3,
-                mapping4
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(
+                                mapping1,
+                                mapping2,
+                                mapping3,
+                                mapping4
+                        )
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
         );
     }
 
@@ -17862,10 +17896,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1, // offset
                 2, // count
                 context,
-                // mapping1 offset=1 skips,
-                mapping2,
-                mapping3
-                //mapping4 // skipped because of count=2
+                SpreadsheetDelta.EMPTY.setLabels(
+                        Sets.of(
+                                // mapping1 offset=1 skips,
+                                mapping2,
+                                mapping3
+                                //mapping4 // skipped because of count=2
+                        )
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
         );
     }
 
