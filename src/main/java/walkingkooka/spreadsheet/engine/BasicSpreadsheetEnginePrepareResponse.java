@@ -134,7 +134,8 @@ final class BasicSpreadsheetEnginePrepareResponse {
             );
         }
 
-        if(this.deltaProperties.contains(SpreadsheetDeltaProperties.REFERENCES)) {
+        final Set<SpreadsheetDeltaProperties> properties = this.deltaProperties;
+        if(properties.contains(SpreadsheetDeltaProperties.REFERENCES)) {
             delta = delta.setReferences(
                     this.extractExternalReferences()
             );
@@ -160,19 +161,19 @@ final class BasicSpreadsheetEnginePrepareResponse {
                     extractDeleted(this.labels)
             );
         }
-        if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
+        if (properties.contains(SpreadsheetDeltaProperties.COLUMN_WIDTHS)) {
             delta = delta.setColumnWidths(
                     this.columnsWidths()
             );
         }
-        if (deltaProperties.contains(SpreadsheetDeltaProperties.ROW_HEIGHTS)) {
+        if (properties.contains(SpreadsheetDeltaProperties.ROW_HEIGHTS)) {
             delta = delta.setRowHeights(
                     this.rowHeights()
             );
         }
 
-        final boolean hasColumnCount = deltaProperties.contains(SpreadsheetDeltaProperties.COLUMN_COUNT);
-        final boolean hasRowCount = deltaProperties.contains(SpreadsheetDeltaProperties.ROW_COUNT);
+        final boolean hasColumnCount = properties.contains(SpreadsheetDeltaProperties.COLUMN_COUNT);
+        final boolean hasRowCount = properties.contains(SpreadsheetDeltaProperties.ROW_COUNT);
 
         if (hasColumnCount || hasRowCount) {
             if (hasColumnCount) {
@@ -271,11 +272,6 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
                 final BasicSpreadsheetEngineChangesCacheStatusLabel status = (BasicSpreadsheetEngineChangesCacheStatusLabel)nameAndMapping.status();
                 switch (status) {
-//                    case LOADED:
-//                    case LOADING:
-//                    case LOAD_FINISHED:
-//                    case SAVED:
-//                    case SAVE_FINISHED:
                     case LOADED_REFERENCES_REFRESHED:
                     case SAVED_REFERENCES_REFRESHED:
                         final SpreadsheetLabelMapping labelMapping = nameAndMapping.value();
@@ -287,8 +283,6 @@ final class BasicSpreadsheetEnginePrepareResponse {
                         }
                         this.addLabelMappingCells(labelMapping);
                         break;
-//                    case DELETE:
-//                    case DELETE_FINISHED:
                     case DELETED_REFERENCES_REFRESHED:
                         if (this.shouldDeleteLabels) {
                             this.labels.put(
@@ -358,7 +352,6 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
                 final BasicSpreadsheetEngineChangesCacheStatusCell status = (BasicSpreadsheetEngineChangesCacheStatusCell)referenceAndCell.status();
                 switch (status) {
-
                     case LOADED_REFERENCES_REFRESHED:
                     case SAVED_REFERENCES_REFRESHED:
                     case REFERENCE_SAVED_REFERENCES_REFRESHED:
@@ -588,7 +581,6 @@ final class BasicSpreadsheetEnginePrepareResponse {
         final SpreadsheetStoreRepository repo = this.context.storeRepository();
         final SpreadsheetCellReferencesStore cellReferencesStore = repo.cellReferences();
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> cellRangesStore = repo.rangeToCells();
-        //final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = repo.labelReferences();
         final SpreadsheetLabelStore labelStore = repo.labels();
 
         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> all = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
