@@ -1864,20 +1864,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void loadLabelAndCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetLabelName label,
                                    final SpreadsheetEngineContext context,
-                                   final SpreadsheetLabelMapping mapping) {
-        this.loadLabelAndCheck(
-                engine,
-                label,
-                context,
-                SpreadsheetDelta.EMPTY.setLabels(
-                        Sets.of(mapping)
-                )
-        );
-    }
-
-    default void loadLabelAndCheck(final SpreadsheetEngine engine,
-                                   final SpreadsheetLabelName label,
-                                   final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta expected) {
         this.checkEquals(
                 expected,
@@ -1886,38 +1872,42 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
-    default void loadLabelAndFailCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetLabelName label,
-                                       final SpreadsheetEngineContext context) {
-        this.checkEquals(
-                SpreadsheetDelta.EMPTY,
-                engine.loadLabel(label, context),
-                () -> "loadLabel " + label
+    default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
+                                   final SpreadsheetLabelName label) {
+        this.loadLabelAndCheck(
+                labelStore,
+                label,
+                Optional.empty()
         );
     }
 
     default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                    final SpreadsheetLabelName label,
                                    final SpreadsheetExpressionReference reference) {
-        this.loadLabelAndCheck(labelStore,
+        this.loadLabelAndCheck(
+                labelStore,
                 label,
-                SpreadsheetLabelMapping.with(label, reference));
+                SpreadsheetLabelMapping.with(label, reference)
+        );
     }
 
     default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                    final SpreadsheetLabelName label,
                                    final SpreadsheetLabelMapping mapping) {
-        this.checkEquals(Optional.of(mapping),
-                labelStore.load(label),
-                () -> "label " + label + " loaded");
+        this.loadLabelAndCheck(
+                labelStore,
+                label,
+                Optional.of(mapping)
+        );
     }
 
-    default void loadLabelFailCheck(final SpreadsheetLabelStore labelStore,
-                                    final SpreadsheetLabelName label) {
+    default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
+                                   final SpreadsheetLabelName label,
+                                   final Optional<SpreadsheetLabelMapping> mapping) {
         this.checkEquals(
-                Optional.empty(),
+                mapping,
                 labelStore.load(label),
-                "label loaded failed");
+                () -> "label " + label + " loaded");
     }
 
     // loadLabels.......................................................................................................
