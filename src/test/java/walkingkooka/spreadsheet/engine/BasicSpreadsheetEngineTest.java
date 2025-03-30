@@ -6447,7 +6447,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 2);
 
-        this.loadLabelAndCheck(labelStore, LABEL, a1);
+        this.loadLabelAndCheck(
+                labelStore,
+                LABEL,
+                a1
+        );
     }
 
     @Test
@@ -6564,7 +6568,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         ); // $b delete, $c columns -1.
 
-        this.loadLabelFailCheck(
+        this.loadLabelAndCheck(
                 labelStore,
                 LABEL
         );
@@ -17943,7 +17947,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context
         );
 
-        this.loadLabelFailCheck(context.storeRepository().labels(), label);
+        this.loadLabelAndCheck(
+                context.storeRepository()
+                        .labels(),
+                label
+        );
     }
 
     @Test
@@ -17997,7 +18005,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadLabelFailCheck(
+        this.loadLabelAndCheck(
                 context.storeRepository()
                         .labels(),
                 b2Label
@@ -18062,7 +18070,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadLabelFailCheck(
+        this.loadLabelAndCheck(
                 context.storeRepository()
                         .labels(),
                 b2Label
@@ -18133,8 +18141,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadLabelFailCheck(
-                context.storeRepository().labels(),
+        this.loadLabelAndCheck(
+                context.storeRepository()
+                        .labels(),
                 label
         );
     }
@@ -18209,8 +18218,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
         );
 
-        this.loadLabelFailCheck(
-                context.storeRepository().labels(),
+        this.loadLabelAndCheck(
+                context.storeRepository()
+                        .labels(),
                 label
         );
     }
