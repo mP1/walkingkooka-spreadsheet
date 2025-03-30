@@ -73,7 +73,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -993,13 +992,34 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(label, "name");
         Objects.requireNonNull(context, "context");
 
-        return SpreadsheetDelta.EMPTY.setLabels(
-                context.storeRepository()
-                        .labels()
-                        .load(label)
-                        .map(Sets::of)
-                        .orElse(Sets.empty())
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
+                this,
+                context
         );
+
+        try {
+            final SpreadsheetLabelMapping loaded = context.storeRepository()
+                    .labels()
+                    .load(label)
+                    .orElse(null);
+
+            if (null != loaded) {
+                changes.getOrCreateLabelCache(
+                        loaded.label(),
+                        BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
+                );
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                    changes,
+                    SpreadsheetViewportWindows.EMPTY, // dont want to load any *extra* labels
+                    context
+            );
+        } finally {
+            changes.close();
+        }
     }
 
     @Override
@@ -1012,18 +1032,35 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
         Objects.requireNonNull(context, "context");
 
-        return SpreadsheetDelta.EMPTY.setLabels(
-                SortedSets.immutable(
-                        new TreeSet<>(
-                                context.storeRepository()
-                                        .labels()
-                                        .values(
-                                                offset,
-                                                count
-                                        )
-                        )
-                )
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
+                this,
+                context
         );
+
+        try {
+            final List<SpreadsheetLabelMapping> mappings = context.storeRepository()
+                    .labels()
+                    .values(
+                            offset,
+                            count
+                    );
+            for (final SpreadsheetLabelMapping mapping : mappings) {
+                changes.getOrCreateLabelCache(
+                        mapping.label(),
+                        BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
+                );
+            }
+
+            changes.commit();
+
+            return this.prepareResponse(
+                    changes,
+                    SpreadsheetViewportWindows.EMPTY, // dont want to load any *extra* labels
+                    context
+            );
+        } finally {
+            changes.close();
+        }
     }
 
     @Override
