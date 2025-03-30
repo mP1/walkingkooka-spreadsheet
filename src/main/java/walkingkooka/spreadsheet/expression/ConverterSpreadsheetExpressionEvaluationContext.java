@@ -217,6 +217,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
+    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        this.context.setSpreadsheetMetadata(metadata);
+    }
+
+    @Override
     public AbsoluteUrl serverUrl() {
         return this.context.serverUrl();
     }

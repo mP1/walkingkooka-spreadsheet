@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -148,4 +149,10 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * This is necessary for functions such as hyperlink which creates a link to a cell.
      */
     AbsoluteUrl serverUrl();
+
+    /**
+     * Saves or replaces the current {@link SpreadsheetMetadata} with a new copy.
+     * This is necessary to support a function that allows updating/replacing a {@link SpreadsheetMetadata}.
+     */
+    void setSpreadsheetMetadata(final SpreadsheetMetadata metadata);
 }

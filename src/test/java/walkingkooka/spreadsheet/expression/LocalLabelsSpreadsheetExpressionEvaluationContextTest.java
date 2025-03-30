@@ -432,6 +432,15 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
     }
 
     @Override
+    public void testSetSpreadsheetMetadataWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+    @Override
+    public void testSetSpreadsheetMetadataWithDifferentIdFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Class<LocalLabelsSpreadsheetExpressionEvaluationContext> type() {
         return LocalLabelsSpreadsheetExpressionEvaluationContext.class;
     }

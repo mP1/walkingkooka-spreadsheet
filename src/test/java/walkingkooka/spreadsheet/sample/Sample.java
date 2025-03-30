@@ -492,6 +492,11 @@ public final class Sample {
         }
 
         @Override
+        public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
             throw new UnsupportedOperationException();
         }

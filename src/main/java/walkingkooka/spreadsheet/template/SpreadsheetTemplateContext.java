@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.template;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -73,6 +74,12 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
 
     @Override
     default Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        Objects.requireNonNull(metadata, "metadata");
         throw new UnsupportedOperationException();
     }
 }

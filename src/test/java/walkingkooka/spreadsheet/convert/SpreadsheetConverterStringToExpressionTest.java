@@ -23,7 +23,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
-import walkingkooka.storage.StorageStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 
@@ -85,7 +85,7 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
                                 SpreadsheetExpressionReferenceLoaders.fake(),
                                 Url.parseAbsolute("https://example.com"), // serverUrl
                                 METADATA_EN_AU,
-                                StorageStores.fake(),
+                                SpreadsheetStoreRepositories.fake(),
                                 SPREADSHEET_FORMATTER_CONTEXT,
                                 ExpressionFunctionProviders.fake(),
                                 ProviderContexts.fake()

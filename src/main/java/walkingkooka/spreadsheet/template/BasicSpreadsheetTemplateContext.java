@@ -21,6 +21,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContextDelegator;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -104,6 +105,11 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
         }
 
         return value;
+    }
+
+    @Override
+    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        this.spreadsheetExpressionEvaluationContext.setSpreadsheetMetadata(metadata);
     }
 
     @Override

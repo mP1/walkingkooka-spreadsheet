@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.storage.StorageStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.MathContext;
@@ -69,6 +69,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
     @Override
     public void testSetCellWithSame() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetSpreadsheetMetadataWithDifferentIdFails() {
         throw new UnsupportedOperationException();
     }
 
@@ -173,7 +178,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     Url.parseAbsolute("https://example.com"),
                     METADATA_EN_AU,
-                    StorageStores.fake(),
+                    SpreadsheetStoreRepositories.fake(),
                     SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                     EXPRESSION_FUNCTION_PROVIDER,
                     PROVIDER_CONTEXT

@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.storage.StorageStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -46,7 +46,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
-                                                               final StorageStore storageStore,
+                                                               final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                                final SpreadsheetConverterContext spreadsheetConverterContext,
                                                                final ExpressionFunctionProvider expressionFunctionProvider,
                                                                final ProviderContext providerContext) {
@@ -55,7 +55,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 spreadsheetExpressionReferenceLoader,
                 serverUrl,
                 spreadsheetMetadata,
-                storageStore,
+                spreadsheetStoreRepository,
                 spreadsheetConverterContext,
                 expressionFunctionProvider,
                 providerContext
