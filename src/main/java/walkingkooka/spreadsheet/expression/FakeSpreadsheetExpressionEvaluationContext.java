@@ -92,6 +92,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
+    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public AbsoluteUrl serverUrl() {
         throw new UnsupportedOperationException();
     }

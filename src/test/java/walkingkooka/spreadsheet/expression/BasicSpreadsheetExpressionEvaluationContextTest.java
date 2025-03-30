@@ -24,10 +24,12 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -36,8 +38,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
-import walkingkooka.storage.StorageStore;
-import walkingkooka.storage.StorageStores;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
@@ -60,9 +62,12 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU;
+    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            SpreadsheetId.with(1)
+    );
 
-    private final static StorageStore STORAGE = StorageStores.fake();
+    private final static SpreadsheetStoreRepository SPREADSHEET_STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
     // with.............................................................................................................
 
@@ -74,7 +79,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 //REFERENCE_TO_VALUE,
                 METADATA,
-                STORAGE,
+                SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
@@ -88,7 +93,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SERVER_URL,
                 METADATA,
-                STORAGE,
+                SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
@@ -102,7 +107,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 null,
                 METADATA,
-                STORAGE,
+                SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
@@ -116,7 +121,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
                 null,
-                STORAGE,
+                SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
@@ -144,7 +149,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
                 METADATA,
-                STORAGE,
+                SPREADSHEET_STORE_REPOSITORY,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
@@ -159,7 +164,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
                 METADATA,
-                STORAGE,
+                SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
@@ -173,7 +178,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
                 METADATA,
-                STORAGE,
+                SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 null
@@ -184,7 +189,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                            final AbsoluteUrl serverUrl,
                            final SpreadsheetMetadata spreadsheetMetadata,
-                           final StorageStore storageStore,
+                           final SpreadsheetStoreRepository spreadsheetStoreRepository,
                            final SpreadsheetConverterContext spreadsheetConverterContext,
                            final ExpressionFunctionProvider expressionFunctionProvider,
                            final ProviderContext providerContext) {
@@ -195,7 +200,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         spreadsheetExpressionReferenceLoader,
                         serverUrl,
                         spreadsheetMetadata,
-                        storageStore,
+                        spreadsheetStoreRepository,
                         spreadsheetConverterContext,
                         expressionFunctionProvider,
                         providerContext
@@ -359,7 +364,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 spreadsheetExpressionReferenceLoader,
                 SERVER_URL,
                 METADATA,
-                STORAGE,
+                SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT

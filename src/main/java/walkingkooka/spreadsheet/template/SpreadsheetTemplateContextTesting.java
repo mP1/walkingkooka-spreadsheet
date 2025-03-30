@@ -77,6 +77,16 @@ public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplate
         );
     }
 
+    @Override
+    default void testSetSpreadsheetMetadataWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testSetSpreadsheetMetadataWithDifferentIdFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // class............................................................................................................
 
     @Override

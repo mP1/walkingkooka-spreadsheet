@@ -87,5 +87,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
                 .spreadsheetMetadata();
     }
 
+    @Override
+    default void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        this.spreadsheetExpressionEvaluationContext()
+                .setSpreadsheetMetadata(metadata);
+    }
+
     SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
 }

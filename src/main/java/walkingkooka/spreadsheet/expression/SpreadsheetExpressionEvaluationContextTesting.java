@@ -20,7 +20,10 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -193,6 +196,36 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         this.checkEquals(
                 expected,
                 context.setCell(cell)
+        );
+    }
+
+    // setSpreadsheetMetadata...........................................................................................
+
+    @Test
+    default void testSetSpreadsheetMetadataWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .setSpreadsheetMetadata(null)
+        );
+    }
+
+    @Test
+    default void testSetSpreadsheetMetadataWithDifferentIdFails() {
+        final C context = this.createContext();
+        final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+        final SpreadsheetMetadata set = metadata.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.with(
+                        1L +
+                                metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                                        .value()
+                )
+        );
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> context.setSpreadsheetMetadata(set)
         );
     }
 }

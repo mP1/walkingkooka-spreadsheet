@@ -47,6 +47,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
@@ -523,7 +525,14 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                         SERVER_URL,
                         METADATA,
-                        StorageStores.tree(STORAGE_STORE_CONTEXT),
+                        new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public StorageStore storage() {
+                                return this.storage;
+                            }
+
+                            private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
+                        },
                         METADATA.spreadsheetConverterContext(
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 LABEL_NAME_RESOLVER,
@@ -543,6 +552,11 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     @Override
     public void testReferenceWithNullReferenceFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetSpreadsheetMetadataWithDifferentIdFails() {
         throw new UnsupportedOperationException();
     }
 

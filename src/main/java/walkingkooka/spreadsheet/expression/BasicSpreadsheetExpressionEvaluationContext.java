@@ -22,12 +22,14 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -35,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -57,7 +60,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                             final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
-                                                            final StorageStore storage,
+                                                            final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final ProviderContext providerContext) {
@@ -65,7 +68,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
-        Objects.requireNonNull(storage, "storage");
+        Objects.requireNonNull(spreadsheetStoreRepository, "spreadsheetStoreRepository");
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -75,7 +78,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 spreadsheetExpressionReferenceLoader,
                 serverUrl,
                 spreadsheetMetadata,
-                storage,
+                spreadsheetStoreRepository,
                 spreadsheetConverterContext,
                 expressionFunctionProvider,
                 providerContext
@@ -86,7 +89,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                         final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
-                                                        final StorageStore storage,
+                                                        final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
                                                         final ProviderContext providerContext) {
@@ -95,7 +98,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
-        this.storage = storage;
+        this.spreadsheetStoreRepository = spreadsheetStoreRepository;
         this.spreadsheetConverterContext = spreadsheetConverterContext;
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.providerContext = providerContext;
@@ -160,7 +163,27 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return this.spreadsheetMetadata;
     }
 
-    private final SpreadsheetMetadata spreadsheetMetadata;
+    @Override
+    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        Objects.requireNonNull(metadata, "metadata");
+
+        final SpreadsheetMetadata old = this.spreadsheetMetadata;
+        final SpreadsheetId oldId = old.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+        final SpreadsheetId newId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+        if(false == oldId.equals(newId)) {
+            throw new IllegalArgumentException("Invalid metadata id " + newId + " is different from " + oldId);
+        }
+
+        final SpreadsheetStoreRepository repo = this.spreadsheetStoreRepository;
+        this.spreadsheetMetadata = repo.metadatas()
+                .save(metadata);
+        // TODO maybe should clear parsed cell formulas.
+    }
+
+    /**
+     * The current {@link SpreadsheetMetadata}. It will be replaced if a {@link #setSpreadsheetMetadata(SpreadsheetMetadata)} happens.
+     */
+    private SpreadsheetMetadata spreadsheetMetadata;
 
     @Override
     public AbsoluteUrl serverUrl() {
@@ -173,10 +196,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public StorageStore storage() {
-        return this.storage;
+        return this.spreadsheetStoreRepository.storage();
     }
 
-    private final StorageStore storage;
+    private final SpreadsheetStoreRepository spreadsheetStoreRepository;
 
     // ExpressionEvaluationContext......................................................................................
 
