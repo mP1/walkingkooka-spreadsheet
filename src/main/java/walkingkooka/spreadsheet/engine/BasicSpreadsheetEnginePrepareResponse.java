@@ -362,7 +362,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                             );
                         }
 
-                        this.addLabelMappingCells(cell);
+                        this.addLabelMappings(cell);
                         break;
                     case DELETED_REFERENCES_REFRESHED:
                         if (this.shouldDeleteCells) {
@@ -394,7 +394,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                 final SpreadsheetCell cell = cellReferenceToCell.getValue();
 
                 if (null != cell) {
-                    this.addLabelMappingCells(cellReference);
+                    this.addLabelMappings(cellReference);
                 }
             }
         }
@@ -448,7 +448,10 @@ final class BasicSpreadsheetEnginePrepareResponse {
         return columnsWidths;
     }
 
-    private void addLabelMappingCells(final SpreadsheetCellReference cell) {
+    /**
+     * Adds all the {@link SpreadsheetLabelMapping} for the given {@link SpreadsheetCellReference}.
+     */
+    private void addLabelMappings(final SpreadsheetCellReference cell) {
         if (this.shouldSaveUpdateLabels) {
             for (final SpreadsheetLabelMapping labelMapping : this.labelStore.findLabelsWithReference(
                     cell,
