@@ -108,7 +108,7 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
     default void resolveIfLabelFails(final SpreadsheetLabelNameResolver resolver,
                                      final SpreadsheetSelection selection) {
         assertThrows(
-                IllegalArgumentException.class,
+                LabelNotFoundException.class,
                 () -> resolver.resolveIfLabel(selection),
                 () -> "resolveIfLabelFalls " + selection
         );
