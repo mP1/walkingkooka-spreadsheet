@@ -207,7 +207,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.context.resolveLabel(labelName);
     }
 

@@ -158,7 +158,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // resolveLabel.....................................................................................................
 
     @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.labelNameResolver.resolveLabel(labelName);
     }
 

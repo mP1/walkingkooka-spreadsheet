@@ -23,6 +23,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.Optional;
+
 public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting<SpreadsheetEngineContextDelegator> {
 
     final static class TestSpreadsheetEngineContextDelegator implements SpreadsheetEngineContextDelegator {
@@ -37,7 +39,7 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
         }
 
         @Override
-        public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+        public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
             throw new UnsupportedOperationException();
         }
     }

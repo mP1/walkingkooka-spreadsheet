@@ -26,6 +26,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContextDelegator;
 
 import java.util.Objects;
+import java.util.Optional;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
         ExpressionNumberConverterContextDelegator {
@@ -83,7 +84,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     // SpreadsheetLabelNameResolver.....................................................................................
 
     @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetLabelNameResolver.resolveLabel(labelName);
     }
 

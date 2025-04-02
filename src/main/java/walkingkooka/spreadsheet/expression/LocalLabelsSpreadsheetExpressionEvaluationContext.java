@@ -173,7 +173,7 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
      * Complains if the given selection is a local label with a value
      */
     @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         if (this.findLocalLabel(labelName).isPresent()) {
             throw new IllegalArgumentException("Label " + labelName + " has a value");
         }

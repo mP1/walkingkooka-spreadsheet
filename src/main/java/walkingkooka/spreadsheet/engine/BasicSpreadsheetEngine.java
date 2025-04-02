@@ -1930,7 +1930,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetSelection selection = anchoredBefore.selection();
 
             if (selection.isLabelName()) {
-                final SpreadsheetSelection selectionNotLabel = context.resolveLabel(selection.toLabelName());
+                final SpreadsheetSelection selectionNotLabel = context.resolveLabelOrFail(selection.toLabelName());
                 notLabelViewport = notLabelViewport.setAnchoredSelection(
                         Optional.of(
                                 selectionNotLabel.setAnchor(

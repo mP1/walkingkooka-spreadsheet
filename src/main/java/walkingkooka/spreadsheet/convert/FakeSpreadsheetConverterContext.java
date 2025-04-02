@@ -22,6 +22,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
 
+import java.util.Optional;
+
 public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConverterContext implements SpreadsheetConverterContext {
 
     @Override
@@ -30,7 +32,7 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
     }
 
     @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 }
