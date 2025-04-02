@@ -43,6 +43,7 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolver implements Spreads
 
     private final SpreadsheetLabelStore labelStore;
 
+    @Override
     public String toString() {
         return this.labelStore.toString();
     }
