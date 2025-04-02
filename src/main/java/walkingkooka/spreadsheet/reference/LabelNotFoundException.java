@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.HasSpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.text.CharSequences;
 
 import java.util.Objects;
 
@@ -31,7 +32,12 @@ public class LabelNotFoundException extends RuntimeException implements HasSprea
 
     public LabelNotFoundException(final SpreadsheetLabelName label) {
         super(
-                "Label " + Objects.requireNonNull(label, "label") + " not found"
+                "Label " +
+                        CharSequences.quoteAndEscape(
+                                Objects.requireNonNull(label, "label")
+                                        .value()
+                        ) +
+                        " not found"
         );
 
         this.label = label;
