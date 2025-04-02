@@ -1380,7 +1380,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
         return this.createContext(
                 (s) -> {
                     this.checkEquals(label, s, "label");
-                    return selection;
+                    return Optional.ofNullable(selection);
                 }
         );
     }

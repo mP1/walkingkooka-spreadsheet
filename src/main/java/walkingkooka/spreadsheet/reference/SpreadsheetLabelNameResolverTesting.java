@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.store.MissingStoreException;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
@@ -126,16 +125,23 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
         );
     }
 
-    default void resolveLabelAndCheck(final String labelName,
-                                      final SpreadsheetSelection expected) {
+    default void resolveLabelAndCheck(final SpreadsheetLabelName labelName) {
         this.resolveLabelAndCheck(
-                SpreadsheetSelection.labelName(labelName),
-                expected
+                labelName,
+                Optional.empty()
         );
     }
 
     default void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
                                       final SpreadsheetSelection expected) {
+        this.resolveLabelAndCheck(
+                labelName,
+                Optional.of(expected)
+        );
+    }
+
+    default void resolveLabelAndCheck(final SpreadsheetLabelName labelName,
+                                      final Optional<SpreadsheetSelection> expected) {
         this.resolveLabelAndCheck(
                 this.createSpreadsheetLabelNameResolver(),
                 labelName,
@@ -154,49 +160,31 @@ public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelN
     }
 
     default void resolveLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
+                                      final SpreadsheetLabelName labelName) {
+        this.resolveLabelAndCheck(
+                resolver,
+                labelName,
+                Optional.empty()
+        );
+    }
+
+    default void resolveLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
                                       final SpreadsheetLabelName labelName,
                                       final SpreadsheetSelection expected) {
+        this.resolveLabelAndCheck(
+                resolver,
+                labelName,
+                Optional.of(expected)
+        );
+    }
+
+    default void resolveLabelAndCheck(final SpreadsheetLabelNameResolver resolver,
+                                      final SpreadsheetLabelName labelName,
+                                      final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
                 expected,
                 resolver.resolveLabel(labelName),
                 () -> "resolveLabel " + labelName
-        );
-    }
-
-    // resolveLabelFails................................................................................................
-
-    default void resolveLabelFails(final String labelName) {
-        this.resolveLabelFails(
-                SpreadsheetSelection.labelName(labelName)
-        );
-    }
-
-    default void resolveLabelFails(final SpreadsheetLabelName labelName) {
-        this.resolveLabelFails(
-                this.createSpreadsheetLabelNameResolver(),
-                labelName
-        );
-    }
-
-    default void resolveLabelFails(final SpreadsheetLabelNameResolver resolver,
-                                   final String labelName) {
-        this.resolveLabelFails(
-                resolver,
-                SpreadsheetSelection.labelName(labelName)
-        );
-    }
-
-    default void resolveLabelFails(final SpreadsheetLabelNameResolver resolver,
-                                   final SpreadsheetLabelName labelName) {
-        final MissingStoreException thrown = assertThrows(
-                MissingStoreException.class,
-                () -> resolver.resolveLabel(labelName),
-                () -> "resolveLabel " + labelName
-        );
-
-        this.checkEquals(
-                Optional.of(labelName),
-                thrown.value()
         );
     }
 

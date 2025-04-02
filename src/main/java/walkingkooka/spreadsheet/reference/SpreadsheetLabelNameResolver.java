@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A SAM interface that defines a single method to resolve any {@link SpreadsheetLabelName} selections to a NON
@@ -33,13 +34,21 @@ public interface SpreadsheetLabelNameResolver {
         Objects.requireNonNull(selection, "selection");
 
         return selection.isLabelName() ?
-                this.resolveLabel(selection.toLabelName()) :
+                this.resolveLabelOrFail(selection.toLabelName()) :
                 selection;
     }
 
     /**
      * Resolves the given {@link SpreadsheetLabelName} into a non label {@link SpreadsheetSelection}.
-     * Unknown labels will result in an exception being thrown.
      */
-    SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName);
+    Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName);
+
+    /**
+     * Resolves the given {@link SpreadsheetLabelName} into a non label {@link SpreadsheetSelection}.
+     * Unknown labels will result in an {@link LabelNotFoundException} being thrown.
+     */
+    default SpreadsheetSelection resolveLabelOrFail(final SpreadsheetLabelName labelName) {
+        return this.resolveLabel(labelName)
+                .orElseThrow(() -> new LabelNotFoundException(labelName));
+    }
 }

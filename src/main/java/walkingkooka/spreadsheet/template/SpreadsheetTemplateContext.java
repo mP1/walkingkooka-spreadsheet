@@ -68,7 +68,7 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     }
 
     @Override
-    default SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+    default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 

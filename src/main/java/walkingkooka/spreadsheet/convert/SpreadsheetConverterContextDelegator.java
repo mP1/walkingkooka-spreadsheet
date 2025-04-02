@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContextDelegator;
 
+import java.util.Optional;
+
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
         ExpressionNumberConverterContextDelegator {
 
@@ -38,7 +40,7 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     }
 
     @Override
-    default SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+    default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetConverterContext()
                 .resolveLabel(labelName);
     }

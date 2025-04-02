@@ -45,8 +45,8 @@ public final class SpreadsheetLabelStoreSpreadsheetLabelNameResolverTest impleme
     }
 
     @Test
-    public void testResolveLabelFails() {
-        this.resolveLabelFails(
+    public void testResolveLabelWithMissingLabel() {
+        this.resolveLabelAndCheck(
                 SpreadsheetSelection.labelName("Unknown404")
         );
     }

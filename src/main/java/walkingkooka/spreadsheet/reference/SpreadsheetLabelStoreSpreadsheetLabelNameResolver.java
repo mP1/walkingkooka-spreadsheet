@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.Cast;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetLabelNameResolver} that uses a {@link SpreadsheetLabelStore} to query the final non label target.
@@ -37,8 +39,10 @@ final class SpreadsheetLabelStoreSpreadsheetLabelNameResolver implements Spreads
     }
 
     @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.labelStore.resolveLabelOrFail(labelName);
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+        return Cast.to(
+                this.labelStore.resolveLabel(labelName)
+        );
     }
 
     private final SpreadsheetLabelStore labelStore;

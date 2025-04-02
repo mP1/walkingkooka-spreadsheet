@@ -136,7 +136,7 @@ final class BasicSpreadsheetEngineWindowSpreadsheetSelectionVisitor extends Spre
     @Override
     protected void visit(final SpreadsheetLabelName label) {
         this.accept(
-                this.context.resolveLabel(label)
+                this.context.resolveLabelOrFail(label)
         );
     }
 

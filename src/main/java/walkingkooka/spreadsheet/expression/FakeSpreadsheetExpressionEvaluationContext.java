@@ -79,7 +79,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public SpreadsheetSelection resolveLabel(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         // required so SpreadsheetLabelNameResolverTesting.testResolveLabelWithNullFails passes
         Objects.requireNonNull(labelName, "label");
 
