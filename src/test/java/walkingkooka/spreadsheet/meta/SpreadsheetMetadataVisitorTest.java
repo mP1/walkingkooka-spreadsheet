@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
@@ -749,6 +750,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 32);
+    }
+
+    @Test
+    public void testVisitValidators() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitValidators(final ValidatorAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.VALIDATORS,
+                ValidatorAliasSet.parse("nonNull")
+        );
     }
 
     @Test

@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
@@ -350,6 +351,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitTwoDigitYear(final int value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitValidators(final ValidatorAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 

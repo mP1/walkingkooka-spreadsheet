@@ -69,6 +69,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.provider.ValidatorAliasSet;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -373,6 +374,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year {@link SpreadsheetFormatPattern}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be used to pick available validators within {@link SpreadsheetCell#validator()}.
+     */
+    public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidators.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>value-separator</code> {@link Character}
@@ -825,6 +831,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
         SpreadsheetName.with("Untitled");
+        ValidatorAliasSet.EMPTY.isEmpty();
         SpreadsheetViewport.NO_NAVIGATION.isEmpty();
     }
 }

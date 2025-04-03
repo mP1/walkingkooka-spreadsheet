@@ -121,6 +121,7 @@
     "word-wrap": "NORMAL"
   },
   "two-digit-year": 20,
+  "validators": "",
   "viewport": {
     "rectangle": "A1:100:100"
   }
