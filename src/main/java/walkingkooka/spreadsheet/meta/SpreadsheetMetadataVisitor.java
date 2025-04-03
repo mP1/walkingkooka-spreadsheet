@@ -182,6 +182,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitFindHighlighting(final boolean value) {
+        // nop
+    }
+
     protected void visitFindQuery(final SpreadsheetCellQuery query) {
         // nop
     }
@@ -223,10 +227,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitHideZeroValues(final boolean value) {
-        // nop
-    }
-
-    protected void visitFindHighlighting(final boolean value) {
         // nop
     }
 
