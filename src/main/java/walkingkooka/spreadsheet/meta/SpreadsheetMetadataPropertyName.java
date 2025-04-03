@@ -727,14 +727,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * Used during hashing and equality checks.
      */
     @Override
-    public CaseSensitivity caseSensitivity() {
+    public final CaseSensitivity caseSensitivity() {
         return CASE_SENSITIVITY;
     }
 
     // Comparable.......................................................................................................
 
     @Override
-    public int compareTo(final SpreadsheetMetadataPropertyName<?> other) {
+    public final int compareTo(final SpreadsheetMetadataPropertyName<?> other) {
         return this.caseSensitivity()
                 .comparator()
                 .compare(
