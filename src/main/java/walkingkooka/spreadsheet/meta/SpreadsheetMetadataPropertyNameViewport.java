@@ -76,7 +76,7 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetViewport parseUrlFragmentSaveValueNonNull(final String value) {
+    SpreadsheetViewport parseUrlFragmentSaveValueNonNull(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

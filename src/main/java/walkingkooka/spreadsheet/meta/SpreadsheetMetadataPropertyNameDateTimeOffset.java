@@ -66,7 +66,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public Long parseUrlFragmentSaveValueNonNull(final String value) {
+    Long parseUrlFragmentSaveValueNonNull(final String value) {
         return Long.parseLong(value);
     }
 }

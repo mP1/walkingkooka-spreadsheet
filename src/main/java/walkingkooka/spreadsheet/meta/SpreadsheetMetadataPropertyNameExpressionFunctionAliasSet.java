@@ -60,7 +60,7 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final ExpressionFunctionAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    final ExpressionFunctionAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return ExpressionFunctionAliasSet.parse(value);
     }
 }

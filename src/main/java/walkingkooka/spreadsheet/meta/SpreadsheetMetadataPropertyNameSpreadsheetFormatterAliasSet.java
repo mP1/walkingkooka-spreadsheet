@@ -60,7 +60,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSet exten
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final SpreadsheetFormatterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    final SpreadsheetFormatterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetFormatterAliasSet.parse(value);
     }
 }
