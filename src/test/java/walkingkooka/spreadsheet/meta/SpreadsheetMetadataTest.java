@@ -88,6 +88,8 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.VerticalAlign;
 import walkingkooka.tree.text.WordBreak;
 import walkingkooka.tree.text.WordWrap;
+import walkingkooka.validation.provider.ValidatorAliasSet;
+import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -810,7 +812,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-                "Metadata missing: comparators, converters, exporters, formatters, functions, importers, parsers",
+                "Metadata missing: comparators, converters, exporters, formatters, functions, importers, parsers, validators",
                 thrown.getMessage()
         );
     }
@@ -843,6 +845,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 ).set(
                         SpreadsheetMetadataPropertyName.PARSERS,
                         SpreadsheetParserAliasSet.parse("parser1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATORS,
+                        ValidatorAliasSet.parse("validator1")
                 ).spreadsheetProvider(
                         this.spreadsheetProvider()
                 )
@@ -881,7 +886,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetImporterProviders.spreadsheetImport(),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern()
-                )
+                ),
+                ValidatorProviders.validators()
         );
     }
 

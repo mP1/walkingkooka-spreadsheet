@@ -48,6 +48,12 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
+import walkingkooka.validation.ValidationReference;
+import walkingkooka.validation.Validator;
+import walkingkooka.validation.ValidatorContext;
+import walkingkooka.validation.provider.ValidatorInfoSet;
+import walkingkooka.validation.provider.ValidatorName;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.List;
 import java.util.Optional;
@@ -178,6 +184,24 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
 
     @Override
     public ExpressionFunctionInfoSet expressionFunctionInfos() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector validatorSelector,
+                                                                                                    final ProviderContext providerContext) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorName validatorName,
+                                                                                                    final List<?> values,
+                                                                                                    final ProviderContext providerContext) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ValidatorInfoSet validatorInfos() {
         throw new UnsupportedOperationException();
     }
 }

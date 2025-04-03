@@ -21225,7 +21225,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
                 ), // SpreadsheetProvider
                 PROVIDER_CONTEXT
         );
