@@ -40,7 +40,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
     }
 
     @Override
-    SpreadsheetName checkValue0(final Object value) {
+    SpreadsheetName checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof SpreadsheetName);
     }
@@ -69,7 +69,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetName parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetName parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetName.with(value);
     }
 }

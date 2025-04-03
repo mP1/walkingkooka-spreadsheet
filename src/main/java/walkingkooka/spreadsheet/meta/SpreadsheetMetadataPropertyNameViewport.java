@@ -47,7 +47,7 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
      * After checking the type force the {@link SpreadsheetViewport}
      */
     @Override
-    SpreadsheetViewport checkValue0(final Object value) {
+    SpreadsheetViewport checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof SpreadsheetViewport);
     }
@@ -76,7 +76,7 @@ final class SpreadsheetMetadataPropertyNameViewport extends SpreadsheetMetadataP
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetViewport parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetViewport parseUrlFragmentSaveValueNonNull(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

@@ -40,7 +40,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     }
 
     @Override
-    SpreadsheetId checkValue0(final Object value) {
+    SpreadsheetId checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof SpreadsheetId);
     }
@@ -69,7 +69,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetId parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetId parseUrlFragmentSaveValueNonNull(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

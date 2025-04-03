@@ -35,7 +35,7 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
     }
 
     @Override
-    final ExpressionFunctionAliasSet checkValue0(final Object value) {
+    final ExpressionFunctionAliasSet checkValueNonNull(final Object value) {
         return this.checkValueType(
                 value,
                 v -> v instanceof ExpressionFunctionAliasSet
@@ -60,7 +60,7 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final ExpressionFunctionAliasSet parseUrlFragmentSaveValue0(final String value) {
+    public final ExpressionFunctionAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return ExpressionFunctionAliasSet.parse(value);
     }
 }

@@ -41,7 +41,7 @@ final class SpreadsheetMetadataPropertyNameIntegerNamedColor extends Spreadsheet
     }
 
     @Override
-    Integer checkValue0(final Object value) {
+    Integer checkValueNonNull(final Object value) {
         final int colorNumber = this.checkValueTypeInteger(value);
         try {
             SpreadsheetMetadataPropertyName.numberedColor(colorNumber);

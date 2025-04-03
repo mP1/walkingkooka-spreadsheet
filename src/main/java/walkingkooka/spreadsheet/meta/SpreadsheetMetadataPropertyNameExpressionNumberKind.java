@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
     }
 
     @Override
-    ExpressionNumberKind checkValue0(final Object value) {
+    ExpressionNumberKind checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof ExpressionNumberKind);
     }
@@ -68,7 +68,7 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public ExpressionNumberKind parseUrlFragmentSaveValue0(final String value) {
+    public ExpressionNumberKind parseUrlFragmentSaveValueNonNull(final String value) {
         return ExpressionNumberKind.valueOf(value);
     }
 }

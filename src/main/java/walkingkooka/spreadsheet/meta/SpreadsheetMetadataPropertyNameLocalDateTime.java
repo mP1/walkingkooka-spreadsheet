@@ -31,7 +31,7 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     }
 
     @Override
-    final LocalDateTime checkValue0(final Object value) {
+    final LocalDateTime checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof LocalDateTime);
     }
@@ -54,7 +54,7 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final LocalDateTime parseUrlFragmentSaveValue0(final String value) {
+    public final LocalDateTime parseUrlFragmentSaveValueNonNull(final String value) {
         return LocalDateTime.parse(value);
     }
 }

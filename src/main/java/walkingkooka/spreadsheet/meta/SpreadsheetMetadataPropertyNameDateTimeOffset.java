@@ -37,7 +37,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     }
 
     @Override
-    Long checkValue0(final Object value) {
+    Long checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof Long);
     }
@@ -66,7 +66,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public Long parseUrlFragmentSaveValue0(final String value) {
+    public Long parseUrlFragmentSaveValueNonNull(final String value) {
         return Long.parseLong(value);
     }
 }

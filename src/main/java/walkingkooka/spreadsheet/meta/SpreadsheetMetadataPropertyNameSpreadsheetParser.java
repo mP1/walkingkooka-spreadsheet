@@ -42,7 +42,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParser extends Spreadsh
     final SpreadsheetPatternKind spreadsheetPatternKind;
 
     @Override
-    final SpreadsheetParserSelector checkValue0(final Object value) {
+    final SpreadsheetParserSelector checkValueNonNull(final Object value) {
         return this.checkValueType(
                 value,
                 v -> v instanceof SpreadsheetParserSelector
@@ -74,7 +74,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParser extends Spreadsh
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final SpreadsheetParserSelector parseUrlFragmentSaveValue0(final String value) {
+    public final SpreadsheetParserSelector parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetParserSelector.parse(value);
     }
 }

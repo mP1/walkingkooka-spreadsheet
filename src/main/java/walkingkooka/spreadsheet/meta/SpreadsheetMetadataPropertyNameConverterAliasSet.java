@@ -35,7 +35,7 @@ abstract class SpreadsheetMetadataPropertyNameConverterAliasSet extends Spreadsh
     }
 
     @Override
-    final ConverterAliasSet checkValue0(final Object value) {
+    final ConverterAliasSet checkValueNonNull(final Object value) {
         return this.checkValueType(
                 value,
                 v -> v instanceof ConverterAliasSet
@@ -60,7 +60,7 @@ abstract class SpreadsheetMetadataPropertyNameConverterAliasSet extends Spreadsh
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final ConverterAliasSet parseUrlFragmentSaveValue0(final String value) {
+    public final ConverterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return ConverterAliasSet.parse(value);
     }
 }

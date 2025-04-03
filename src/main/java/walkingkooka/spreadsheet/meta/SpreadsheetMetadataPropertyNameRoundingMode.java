@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     }
 
     @Override
-    RoundingMode checkValue0(final Object value) {
+    RoundingMode checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof RoundingMode);
     }
@@ -67,7 +67,7 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public RoundingMode parseUrlFragmentSaveValue0(final String value) {
+    public RoundingMode parseUrlFragmentSaveValueNonNull(final String value) {
         return RoundingMode.valueOf(value);
     }
 }

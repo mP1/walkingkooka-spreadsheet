@@ -34,7 +34,7 @@ final class SpreadsheetMetadataPropertyNameIntegerTwoDigitYear extends Spreadshe
     }
 
     @Override
-    Integer checkValue0(final Object value) {
+    Integer checkValueNonNull(final Object value) {
         final Integer integerValue = this.checkValueTypeInteger(value);
         if (integerValue < 0 || integerValue > 99) {
             throw new SpreadsheetMetadataPropertyValueException("must be between 0 and including 99", this, integerValue);

@@ -34,7 +34,7 @@ final class SpreadsheetMetadataPropertyNameIntegerDefaultYear extends Spreadshee
     }
 
     @Override
-    Integer checkValue0(final Object value) {
+    Integer checkValueNonNull(final Object value) {
         return this.checkValueTypeInteger(value);
     }
 

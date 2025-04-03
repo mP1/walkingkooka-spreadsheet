@@ -44,7 +44,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     }
 
     @Override
-    SpreadsheetRowRangeReference checkValue0(final Object value) {
+    SpreadsheetRowRangeReference checkValueNonNull(final Object value) {
         final SpreadsheetRowRangeReference range = this.checkValueType(
                 value,
                 v -> v instanceof SpreadsheetRowRangeReference
@@ -79,7 +79,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetRowRangeReference parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetRowRangeReference parseUrlFragmentSaveValueNonNull(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

@@ -77,7 +77,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     final int number;
 
     @Override
-    Color checkValue0(final Object value) {
+    Color checkValueNonNull(final Object value) {
         return this.checkValueType(
                 value,
                 v -> v instanceof Color
@@ -102,7 +102,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public Color parseUrlFragmentSaveValue0(final String value) {
+    public Color parseUrlFragmentSaveValueNonNull(final String value) {
         return Color.parse(value);
     }
 
