@@ -74,7 +74,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParser extends Spreadsh
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final SpreadsheetParserSelector parseUrlFragmentSaveValueNonNull(final String value) {
+    final SpreadsheetParserSelector parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetParserSelector.parse(value);
     }
 }

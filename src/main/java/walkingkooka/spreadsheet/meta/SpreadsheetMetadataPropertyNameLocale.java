@@ -66,7 +66,7 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public Locale parseUrlFragmentSaveValueNonNull(final String value) {
+    Locale parseUrlFragmentSaveValueNonNull(final String value) {
         return Locale.forLanguageTag(value);
     }
 }

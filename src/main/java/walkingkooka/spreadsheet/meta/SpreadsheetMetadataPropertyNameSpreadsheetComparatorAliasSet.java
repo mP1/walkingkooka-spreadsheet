@@ -61,7 +61,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSet exte
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final SpreadsheetComparatorAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    final SpreadsheetComparatorAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetComparatorAliasSet.parse(value);
     }
 }

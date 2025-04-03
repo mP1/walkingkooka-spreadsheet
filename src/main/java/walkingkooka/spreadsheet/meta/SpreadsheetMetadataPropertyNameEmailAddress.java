@@ -55,7 +55,7 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final EmailAddress parseUrlFragmentSaveValueNonNull(final String value) {
+    final EmailAddress parseUrlFragmentSaveValueNonNull(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

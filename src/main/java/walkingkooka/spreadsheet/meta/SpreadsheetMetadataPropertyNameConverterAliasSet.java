@@ -60,7 +60,7 @@ abstract class SpreadsheetMetadataPropertyNameConverterAliasSet extends Spreadsh
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final ConverterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    final ConverterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return ConverterAliasSet.parse(value);
     }
 }

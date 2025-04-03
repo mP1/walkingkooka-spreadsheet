@@ -79,7 +79,7 @@ final class SpreadsheetMetadataPropertyNameFrozenRows extends SpreadsheetMetadat
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetRowRangeReference parseUrlFragmentSaveValueNonNull(final String value) {
+    SpreadsheetRowRangeReference parseUrlFragmentSaveValueNonNull(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }
