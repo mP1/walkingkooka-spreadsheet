@@ -107,6 +107,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.MathContext;
@@ -1134,6 +1135,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetFormatterAliasSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
         final SpreadsheetImporterAliasSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
         final SpreadsheetParserAliasSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
+        final ValidatorAliasSet validators = components.getOrNull(SpreadsheetMetadataPropertyName.VALIDATORS);
 
         components.reportIfMissing();
 
@@ -1164,6 +1166,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 ),
                 SpreadsheetParserProviders.aliases(
                         parsers,
+                        provider
+                ),
+                ValidatorProviders.aliases(
+                        validators,
                         provider
                 )
         );

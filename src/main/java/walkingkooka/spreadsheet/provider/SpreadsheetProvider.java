@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.validation.provider.ValidatorProvider;
 
 /**
  * Aggregates all the {@link Provider provider(s)} used in a spreadsheet.
@@ -36,5 +37,6 @@ public interface SpreadsheetProvider extends ConverterProvider,
         SpreadsheetExporterProvider,
         SpreadsheetFormatterProvider,
         SpreadsheetParserProvider,
-        SpreadsheetImporterProvider {
+        SpreadsheetImporterProvider,
+        ValidatorProvider {
 }

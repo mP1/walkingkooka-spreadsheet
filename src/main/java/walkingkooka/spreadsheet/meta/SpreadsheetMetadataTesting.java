@@ -75,6 +75,8 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.provider.ValidatorAliasSet;
+import walkingkooka.validation.provider.ValidatorProvider;
+import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -157,6 +159,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
             return Optional.of(USER);
         }
     };
+
+    ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
 
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
@@ -364,7 +368,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SPREADSHEET_EXPORTER_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
                     SPREADSHEET_IMPORTER_PROVIDER,
-                    SPREADSHEET_PARSER_PROVIDER
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
             )
     );
 

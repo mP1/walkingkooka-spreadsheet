@@ -32,6 +32,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderDelegator;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderDelegator;
+import walkingkooka.validation.provider.ValidatorProvider;
+import walkingkooka.validation.provider.ValidatorProviderDelegator;
 
 import java.util.Objects;
 
@@ -45,7 +47,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         SpreadsheetExporterProviderDelegator,
         SpreadsheetFormatterProviderDelegator,
         SpreadsheetImporterProviderDelegator,
-        SpreadsheetParserProviderDelegator {
+        SpreadsheetParserProviderDelegator,
+        ValidatorProviderDelegator {
 
     static BasicSpreadsheetProvider with(final ConverterProvider converterProvider,
                                          final ExpressionFunctionProvider expressionFunctionProvider,
@@ -53,7 +56,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                                          final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                          final SpreadsheetImporterProvider spreadsheetImporterProvider,
-                                         final SpreadsheetParserProvider spreadsheetParserProvider) {
+                                         final SpreadsheetParserProvider spreadsheetParserProvider,
+                                         final ValidatorProvider validatorProvider) {
         return new BasicSpreadsheetProvider(
                 Objects.requireNonNull(converterProvider, "converterProvider"),
                 Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider"),
@@ -61,7 +65,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 Objects.requireNonNull(spreadsheetExporterProvider, "spreadsheetExporterProvider"),
                 Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
                 Objects.requireNonNull(spreadsheetImporterProvider, "spreadsheetImporterProvider"),
-                Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider")
+                Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider"),
+                Objects.requireNonNull(validatorProvider, "validatorProvider")
         );
     }
 
@@ -71,7 +76,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                                      final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                      final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                      final SpreadsheetImporterProvider spreadsheetImporterProvider,
-                                     final SpreadsheetParserProvider spreadsheetParserProvider) {
+                                     final SpreadsheetParserProvider spreadsheetParserProvider,
+                                     final ValidatorProvider validatorProvider) {
         this.converterProvider = converterProvider;
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.spreadsheetComparatorProvider = spreadsheetComparatorProvider;
@@ -79,6 +85,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
         this.spreadsheetImporterProvider = spreadsheetImporterProvider;
         this.spreadsheetParserProvider = spreadsheetParserProvider;
+        this.validatorProvider = validatorProvider;
     }
 
     @Override
@@ -130,6 +137,13 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
 
     private final SpreadsheetParserProvider spreadsheetParserProvider;
 
+    @Override
+    public ValidatorProvider validatorProvider() {
+        return this.validatorProvider;
+    }
+
+    private final ValidatorProvider validatorProvider;
+
     // Object...........................................................................................................
 
     @Override
@@ -141,7 +155,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 this.spreadsheetExporterProvider,
                 this.spreadsheetFormatterProvider,
                 this.spreadsheetImporterProvider,
-                this.spreadsheetParserProvider
+                this.spreadsheetParserProvider,
+                this.validatorProvider
         );
     }
 
@@ -159,7 +174,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 this.spreadsheetExporterProvider.equals(other.spreadsheetExporterProvider) &&
                 this.spreadsheetFormatterProvider.equals(other.spreadsheetFormatterProvider) &&
                 this.spreadsheetImporterProvider.equals(other.spreadsheetImporterProvider) &&
-                this.spreadsheetParserProvider.equals(other.spreadsheetParserProvider);
+                this.spreadsheetParserProvider.equals(other.spreadsheetParserProvider) &&
+                this.validatorProvider.equals(other.validatorProvider);
     }
 
     @Override
@@ -174,6 +190,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 " " +
                 this.spreadsheetImporterProvider +
                 " " +
-                this.spreadsheetParserProvider;
+                this.spreadsheetParserProvider +
+                " " +
+                this.validatorProvider;
     }
 }
