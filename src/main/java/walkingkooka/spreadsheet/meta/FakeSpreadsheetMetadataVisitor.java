@@ -158,11 +158,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitFunctions(final ExpressionFunctionAliasSet aliases) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitExpressionNumberKind(final ExpressionNumberKind expressionNumberKind) {
         throw new UnsupportedOperationException();
     }
@@ -183,6 +178,16 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitFindHighlighting(final boolean value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitFormatConverter(final ConverterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitFormatters(final SpreadsheetFormatterAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
@@ -198,17 +203,17 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitFormatConverter(final ConverterSelector selector) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitFrozenColumns(final SpreadsheetColumnRangeReference range) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visitFrozenRows(final SpreadsheetRowRangeReference range) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitFunctions(final ExpressionFunctionAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 
@@ -224,11 +229,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitHideZeroValues(final boolean value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitFindHighlighting(final boolean value) {
         throw new UnsupportedOperationException();
     }
 
