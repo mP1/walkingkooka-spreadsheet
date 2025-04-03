@@ -74,6 +74,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.provider.ValidatorAliasSet;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -284,6 +285,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
                     50
+            ).set(
+                    SpreadsheetMetadataPropertyName.VALIDATORS,
+                    ValidatorAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.numberedColor(1),
                     Color.BLACK

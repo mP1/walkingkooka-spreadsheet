@@ -107,6 +107,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -1369,6 +1370,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         ).set(
                 SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
                 SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
+        ).set(
+                SpreadsheetMetadataPropertyName.VALIDATORS,
+                ValidatorProviders.validators()
+                        .validatorInfos()
+                        .aliasSet()
         );
     }
 

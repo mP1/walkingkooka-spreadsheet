@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 
@@ -324,6 +325,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitTwoDigitYear(final int value) {
+        // nop
+    }
+
+    protected void visitValidators(final ValidatorAliasSet aliases) {
         // nop
     }
 
