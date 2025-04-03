@@ -32,7 +32,7 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     }
 
     @Override
-    final EmailAddress checkValue0(final Object value) {
+    final EmailAddress checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof EmailAddress);
     }
@@ -55,7 +55,7 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final EmailAddress parseUrlFragmentSaveValue0(final String value) {
+    public final EmailAddress parseUrlFragmentSaveValueNonNull(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

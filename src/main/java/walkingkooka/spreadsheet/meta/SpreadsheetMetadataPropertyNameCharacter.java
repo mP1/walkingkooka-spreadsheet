@@ -36,7 +36,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     }
 
     @Override
-    final Character checkValue0(final Object value) {
+    final Character checkValueNonNull(final Object value) {
         final Character c = this.checkValueType(value, v -> v instanceof Character);
         if (c < 0x20 || Character.isWhitespace(c) || Character.isLetter(c) || Character.isDigit(c)) {
             throw this.spreadsheetMetadataPropertyValueException(value);
@@ -67,7 +67,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final Character parseUrlFragmentSaveValue0(final String value) {
+    public final Character parseUrlFragmentSaveValueNonNull(final String value) {
         if (value.length() != 1) {
             throw new IllegalArgumentException("Invalid value " + CharSequences.quoteAndEscape(value) + " expected a single character");
         }

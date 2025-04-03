@@ -505,10 +505,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             throw new SpreadsheetMetadataPropertyValueException("Missing value", this, value);
         }
 
-        return this.checkValue0(value);
+        return this.checkValueNonNull(value);
     }
 
-    abstract T checkValue0(final Object value);
+    abstract T checkValueNonNull(final Object value);
 
     /**
      * Checks the type of the given value and throws a {@link SpreadsheetMetadataPropertyValueException} if this test fails.
@@ -587,11 +587,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         Objects.requireNonNull(value, value);
 
         return this.checkValue(
-                this.parseUrlFragmentSaveValue0(value)
+                this.parseUrlFragmentSaveValueNonNull(value)
         );
     }
 
-    abstract T parseUrlFragmentSaveValue0(final String value);
+    abstract T parseUrlFragmentSaveValueNonNull(final String value);
 
     /**
      * This common method should be called by subclasses to indicate {@link #parseUrlFragmentSaveValue(String)} is not supported.

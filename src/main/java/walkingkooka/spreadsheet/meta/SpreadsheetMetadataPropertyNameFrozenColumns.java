@@ -43,7 +43,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     }
 
     @Override
-    SpreadsheetColumnRangeReference checkValue0(final Object value) {
+    SpreadsheetColumnRangeReference checkValueNonNull(final Object value) {
         final SpreadsheetColumnRangeReference range = this.checkValueType(
                 value,
                 v -> v instanceof SpreadsheetColumnRangeReference
@@ -78,7 +78,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetColumnRangeReference parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetColumnRangeReference parseUrlFragmentSaveValueNonNull(final String value) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

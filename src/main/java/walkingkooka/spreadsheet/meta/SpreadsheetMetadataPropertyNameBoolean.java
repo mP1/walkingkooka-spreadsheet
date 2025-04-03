@@ -33,7 +33,7 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
     }
 
     @Override
-    final Boolean checkValue0(final Object value) {
+    final Boolean checkValueNonNull(final Object value) {
         return this.checkValueType(value, v -> v instanceof Boolean);
     }
 
@@ -55,7 +55,7 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final Boolean parseUrlFragmentSaveValue0(final String value) {
+    public final Boolean parseUrlFragmentSaveValueNonNull(final String value) {
         return Boolean.valueOf(value);
     }
 }

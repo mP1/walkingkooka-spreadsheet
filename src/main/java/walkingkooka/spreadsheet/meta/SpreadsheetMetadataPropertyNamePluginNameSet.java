@@ -42,7 +42,7 @@ final class SpreadsheetMetadataPropertyNamePluginNameSet extends SpreadsheetMeta
     }
 
     @Override
-    PluginNameSet checkValue0(final Object value) {
+    PluginNameSet checkValueNonNull(final Object value) {
         return this.checkValueType(
                 value,
                 v -> v instanceof PluginNameSet
@@ -67,7 +67,7 @@ final class SpreadsheetMetadataPropertyNamePluginNameSet extends SpreadsheetMeta
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public PluginNameSet parseUrlFragmentSaveValue0(final String text) {
+    public PluginNameSet parseUrlFragmentSaveValueNonNull(final String text) {
         return PluginNameSet.parse(text);
     }
 

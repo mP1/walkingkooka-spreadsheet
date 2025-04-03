@@ -43,7 +43,7 @@ final class SpreadsheetMetadataPropertyNameSortComparators extends SpreadsheetMe
     }
 
     @Override
-    SpreadsheetComparatorNameList checkValue0(final Object value) {
+    SpreadsheetComparatorNameList checkValueNonNull(final Object value) {
         return this.checkValueType(
                 value,
                 v -> v instanceof SpreadsheetComparatorNameList
@@ -74,7 +74,7 @@ final class SpreadsheetMetadataPropertyNameSortComparators extends SpreadsheetMe
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetComparatorNameList parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetComparatorNameList parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetComparatorNameList.parse(value);
     }
 }

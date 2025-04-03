@@ -37,7 +37,7 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     }
 
     @Override
-    Locale checkValue0(final Object value) {
+    Locale checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof Locale);
     }
@@ -66,7 +66,7 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public Locale parseUrlFragmentSaveValue0(final String value) {
+    public Locale parseUrlFragmentSaveValueNonNull(final String value) {
         return Locale.forLanguageTag(value);
     }
 }

@@ -46,7 +46,7 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
      * After checking the type force the {@link SpreadsheetCellQuery}
      */
     @Override
-    SpreadsheetCellQuery checkValue0(final Object value) {
+    SpreadsheetCellQuery checkValueNonNull(final Object value) {
         return this.checkValueType(value,
                 v -> v instanceof SpreadsheetCellQuery);
     }
@@ -75,7 +75,7 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public SpreadsheetCellQuery parseUrlFragmentSaveValue0(final String value) {
+    public SpreadsheetCellQuery parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetCellQuery.parse(value);
     }
 }

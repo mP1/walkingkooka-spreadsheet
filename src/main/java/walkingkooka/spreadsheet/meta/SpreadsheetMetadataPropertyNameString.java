@@ -31,7 +31,7 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
     }
 
     @Override
-    final String checkValue0(final Object value) {
+    final String checkValueNonNull(final Object value) {
         final String stringValue = this.checkValueType(value,
                 v -> v instanceof String);
         if (stringValue.isEmpty()) {
@@ -60,7 +60,7 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final String parseUrlFragmentSaveValue0(final String value) {
+    public final String parseUrlFragmentSaveValueNonNull(final String value) {
         return value;
     }
 }

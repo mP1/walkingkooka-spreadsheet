@@ -36,7 +36,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet extend
     }
 
     @Override
-    final SpreadsheetImporterAliasSet checkValue0(final Object value) {
+    final SpreadsheetImporterAliasSet checkValueNonNull(final Object value) {
         return this.checkValueType(
                 value,
                 v -> v instanceof SpreadsheetImporterAliasSet
@@ -61,7 +61,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet extend
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final SpreadsheetImporterAliasSet parseUrlFragmentSaveValue0(final String value) {
+    public final SpreadsheetImporterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
         return SpreadsheetImporterAliasSet.parse(value);
     }
 }
