@@ -76,6 +76,7 @@
   "format-converter": "collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
   "formula-converter": "collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
   "formula-functions": "",
+  "formula-validators": "",
   "general-number-format-digit-count": 9,
   "hide-zero-values": false,
   "importers": "",
