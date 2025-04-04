@@ -298,19 +298,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitExpressionFunctions() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitFunctions(final ExpressionFunctionAliasSet a) {
-                this.visited = a;
-            }
-        }.accept(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("abs")
-        );
-    }
-
-    @Test
     public void testVisitFindConverter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -421,6 +408,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.FROZEN_ROWS,
                 SpreadsheetSelection.parseRowRange("1:2")
+        );
+    }
+
+    @Test
+    public void testVisitFunctions() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFunctions(final ExpressionFunctionAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                ExpressionFunctionAliasSet.parse("abs")
         );
     }
 
