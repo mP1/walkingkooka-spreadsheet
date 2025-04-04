@@ -203,7 +203,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitFormulaExpressionFunctions(final ExpressionFunctionAliasSet aliases) {
+    protected void visitFormulaFunctions(final ExpressionFunctionAliasSet aliases) {
         // nop
     }
 

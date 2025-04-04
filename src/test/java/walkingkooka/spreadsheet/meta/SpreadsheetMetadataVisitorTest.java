@@ -389,7 +389,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitFormulaFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitFormulaExpressionFunctions(final ExpressionFunctionAliasSet a) {
+            protected void visitFormulaFunctions(final ExpressionFunctionAliasSet a) {
                 this.visited = a;
             }
         }.accept(

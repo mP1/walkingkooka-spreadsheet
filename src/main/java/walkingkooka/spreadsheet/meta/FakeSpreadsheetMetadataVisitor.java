@@ -199,7 +199,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitFormulaExpressionFunctions(final ExpressionFunctionAliasSet aliases) {
+    protected void visitFormulaFunctions(final ExpressionFunctionAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 

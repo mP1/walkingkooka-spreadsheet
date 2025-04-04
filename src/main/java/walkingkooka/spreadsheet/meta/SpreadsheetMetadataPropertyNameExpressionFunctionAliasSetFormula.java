@@ -45,6 +45,6 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula ext
     @Override
     void accept(final ExpressionFunctionAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFormulaExpressionFunctions(aliases);
+        visitor.visitFormulaFunctions(aliases);
     }
 }
