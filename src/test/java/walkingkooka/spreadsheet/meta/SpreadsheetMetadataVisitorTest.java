@@ -386,6 +386,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitFormulaValidators() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormulaValidators(final ValidatorAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FORMULA_VALIDATORS,
+                ValidatorAliasSet.parse("first-validator, second-validator")
+        );
+    }
+
+    @Test
     public void testVisitFrozenColumns() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

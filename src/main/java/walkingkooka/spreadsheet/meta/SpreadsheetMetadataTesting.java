@@ -232,6 +232,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     ExpressionFunctionAliasSet.parse("")
             ).set(
+                    SpreadsheetMetadataPropertyName.FORMULA_VALIDATORS,
+                    ValidatorAliasSet.parse("")
+            ).set(
                     SpreadsheetMetadataPropertyName.FUNCTIONS,
                     ExpressionFunctionAliasSet.EMPTY
             ).set(

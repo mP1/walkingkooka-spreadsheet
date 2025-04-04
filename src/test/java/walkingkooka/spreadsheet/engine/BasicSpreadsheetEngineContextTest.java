@@ -929,6 +929,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                        "  \"formula-validators\": \"\",\n" +
                         "  \"functions\": \"\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +
@@ -1097,6 +1098,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                        "  \"formula-validators\": \"\",\n" +
                         "  \"functions\": \"\",\n" +
                         "  \"general-number-format-digit-count\": 9,\n" +
                         "  \"group-separator\": \",\",\n" +

@@ -207,6 +207,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitFormulaValidators(final ValidatorAliasSet aliases) {
+        // nop
+    }
+
     protected void visitFrozenColumns(final SpreadsheetColumnRangeReference range) {
         // nop
     }
