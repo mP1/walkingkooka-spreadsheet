@@ -21,12 +21,10 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -83,50 +81,6 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         public String toString() {
             return this.getClass().getSimpleName();
         }
-    }
-
-    // DecimalNumberContextTesting......................................................................................
-
-    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = SPREADSHEET_FORMATTER_CONTEXT;
-
-    @Override
-    public String currencySymbol() {
-        return DECIMAL_NUMBER_CONTEXT.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return DECIMAL_NUMBER_CONTEXT.groupSeparator();
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return DECIMAL_NUMBER_CONTEXT.mathContext();
-    }
-
-    @Override
-    public char negativeSign() {
-        return DECIMAL_NUMBER_CONTEXT.negativeSign();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return DECIMAL_NUMBER_CONTEXT.percentageSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return DECIMAL_NUMBER_CONTEXT.positiveSign();
     }
 
     // class............................................................................................................
