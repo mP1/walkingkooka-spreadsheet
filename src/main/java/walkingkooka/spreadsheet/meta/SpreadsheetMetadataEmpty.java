@@ -138,23 +138,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
         // no properties
     }
 
-    // Object...........................................................................................................
-
-    @Override
-    public int hashCode() {
-        return System.identityHashCode(this);
-    }
-
-    @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetMetadataEmpty;
-    }
-
-    @Override
-    boolean equalsValues(final SpreadsheetMetadata other) {
-        return true; // no values to test
-    }
-
     // JsonNodeContext..................................................................................................
 
     @Override
