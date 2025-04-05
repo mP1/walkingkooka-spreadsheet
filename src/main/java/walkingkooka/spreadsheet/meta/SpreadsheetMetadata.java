@@ -931,6 +931,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
+    // SpreadsheetConverterContext......................................................................................
+
     /**
      * Returns a {@link SpreadsheetConverterContext}
      */
@@ -1118,7 +1120,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // SpreadsheetParser................................................................................................
+    // SpreadsheetProvider..............................................................................................
 
     /**
      * Creates a {@link SpreadsheetProvider} honouring any provider properties wrapping the given {@link SpreadsheetProvider}.
