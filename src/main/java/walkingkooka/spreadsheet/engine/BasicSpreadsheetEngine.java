@@ -1929,7 +1929,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(viewport, "viewport");
         Objects.requireNonNull(context, "context");
 
-        Optional<SpreadsheetViewport> result = Optional.empty();
+        Optional<SpreadsheetViewport> result;
 
         SpreadsheetViewport notLabelViewport = viewport;
 
@@ -1948,7 +1948,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         )
                 );
 
-                result = this.navigate0(
+                result = this.navigateNonLabelSelection(
                         notLabelViewport,
                         context
                 );
@@ -1968,13 +1968,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     }
                 }
             } else {
-                result = this.navigate0(
+                result = this.navigateNonLabelSelection(
                         notLabelViewport,
                         context
                 );
             }
         } else {
-            result = this.navigate0(
+            result = this.navigateNonLabelSelection(
                     notLabelViewport,
                     context
             );
@@ -1983,11 +1983,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    private Optional<SpreadsheetViewport> navigate0(final SpreadsheetViewport viewport,
-                                                    final SpreadsheetEngineContext context) {
+    private Optional<SpreadsheetViewport> navigateNonLabelSelection(final SpreadsheetViewport viewport,
+                                                                    final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        return this.navigate1(
+        return this.navigateNonLabelSelection0(
                 viewport,
                 SpreadsheetViewportNavigationContexts.basic(
                         repository.columns()::isHidden,
@@ -1999,8 +1999,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    private Optional<SpreadsheetViewport> navigate1(final SpreadsheetViewport viewport,
-                                                    final SpreadsheetViewportNavigationContext context) {
+    private Optional<SpreadsheetViewport> navigateNonLabelSelection0(final SpreadsheetViewport viewport,
+                                                                     final SpreadsheetViewportNavigationContext context) {
         Optional<SpreadsheetViewport> result;
 
         final List<SpreadsheetViewportNavigation> navigations = viewport.navigations()
