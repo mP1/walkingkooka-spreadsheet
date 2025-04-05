@@ -1219,30 +1219,38 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // Object...........................................................................................................
 
     @Override
-    public abstract int hashCode();
+    public final int hashCode() {
+        if (0 == this.hashCode) {
+            this.hashCode = this.value()
+                    .hashCode();
+        }
+        return this.hashCode;
+    }
+
+    private int hashCode;
 
     @Override
-    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
-                this.canBeEquals(other) &&
-                        this.equals0(Cast.to(other));
+                null != other &&
+                        this.getClass() == other.getClass() &&
+                        this.equals0((SpreadsheetMetadata) other);
     }
-
-    abstract boolean canBeEquals(final Object other);
 
     private boolean equals0(final SpreadsheetMetadata other) {
-        return this.equalsValues(other) && Objects.equals(this.defaults, other.defaults);
+        return this.value()
+                .equals(other.value()) &&
+                Objects.equals(
+                        this.defaults,
+                        other.defaults
+                );
     }
-
-    /**
-     * subclasses will test if ALL their values are equal
-     */
-    abstract boolean equalsValues(final SpreadsheetMetadata other);
 
     @Override
     public final String toString() {
-        return this.marshall(JsonNodeMarshallContexts.basic()).toString();
+        return this.marshall(
+                JsonNodeMarshallContexts.basic()
+        ).toString();
     }
 
     // JsonNodeContext..................................................................................................

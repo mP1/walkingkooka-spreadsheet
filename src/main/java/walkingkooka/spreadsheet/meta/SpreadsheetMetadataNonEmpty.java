@@ -262,23 +262,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
                 .forEach(visitor::acceptPropertyAndValue);
     }
 
-    // Object...........................................................................................................
-
-    @Override
-    public int hashCode() {
-        return this.value().hashCode();
-    }
-
-    @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetMetadataNonEmpty;
-    }
-
-    @Override
-    boolean equalsValues(final SpreadsheetMetadata other) {
-        return this.value.equals(other.value());
-    }
-
     // JsonNodeContext..................................................................................................
 
     @Override
