@@ -25,4 +25,9 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
     public FakeSpreadsheetValidatorContext() {
         super();
     }
+
+    @Override
+    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference cell) {
+        throw new UnsupportedOperationException();
+    }
 }

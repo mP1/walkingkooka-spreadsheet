@@ -27,7 +27,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.validation.ValidatorContext;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -82,7 +81,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public ValidatorContext<SpreadsheetCellReference> setValidationReference(final SpreadsheetCellReference spreadsheetCellReference) {
+        public SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference spreadsheetCellReference) {
             Objects.requireNonNull(spreadsheetCellReference, "spreadsheetCellReference");
 
             throw new UnsupportedOperationException();
