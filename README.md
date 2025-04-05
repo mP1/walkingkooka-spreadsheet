@@ -104,18 +104,27 @@ these will be a plugin where users can contribute an alternative or supplementar
 
 These `Converters` along with a few others belonging to other repos are used to convert values from one type to another.
 
+- basic
+- collection
 - errorThrowing
 - errorToNumber
 - errorToString
 - general
 - parser
+- pluginSelectorLike
 - selectionToSelection
+- selectionToString
 - spreadsheetCellTo
 - stringToDate
 - stringToDateTime
+- stringToExpression
 - stringToExpressionNumber
 - stringToFormatPattern
 - stringToSelection
+- stringToSpreadsheetId
+- stringToSpreadsheetMetadataPropertyName
+- stringToSpreadsheetName
+- stringToTime
 - unformattedNumber
 
 - [walkingkooka-convert](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/Converters.java)
