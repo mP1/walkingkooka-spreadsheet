@@ -21,9 +21,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.environment.FakeEnvironmentContext;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -31,7 +29,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class SpreadsheetValidatorContextTestingTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextTestingTest.TestSpreadsheetValidatorContext>,
         SpreadsheetMetadataTesting {
@@ -62,17 +59,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
 
         @Override
         public EnvironmentContext environmentContext() {
-            return new FakeEnvironmentContext() {
-                @Override
-                public LocalDateTime now() {
-                    return NOW.now();
-                }
-
-                @Override
-                public Optional<EmailAddress> user() {
-                    return Optional.of(USER);
-                }
-            };
+            return SpreadsheetMetadataTesting.ENVIRONMENT_CONTEXT;
         }
 
         @Override
