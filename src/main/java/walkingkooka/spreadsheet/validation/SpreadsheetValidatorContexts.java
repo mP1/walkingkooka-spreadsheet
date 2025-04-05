@@ -18,11 +18,20 @@
 package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.validation.ValidatorContext;
 
 /**
  * A collection of factory methods for creating {@link SpreadsheetValidatorContext} validators.
  */
 public final class SpreadsheetValidatorContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetValidatorContext}
+     */
+    public static SpreadsheetValidatorContext basic(final ValidatorContext<SpreadsheetCellReference> context) {
+        return BasicSpreadsheetValidatorContext.with(context);
+    }
 
     /**
      * {@see FakeSpreadsheetValidatorContext}
