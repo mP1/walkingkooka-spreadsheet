@@ -23,6 +23,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -313,6 +314,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
+    EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.empty(
+            NOW,
+            Optional.of(USER)
+    );
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.basic(
             METADATA_EN_AU.environmentContext(
@@ -321,10 +326,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                                     PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
                                     DUMMY_ENVIRONMENTAL_VALUE
                             ),
-                            EnvironmentContexts.empty(
-                                    NOW,
-                                    Optional.of(USER)
-                            )
+                            ENVIRONMENT_CONTEXT
                     )
             ),
             PluginStores.fake()
