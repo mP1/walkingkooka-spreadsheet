@@ -968,7 +968,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
                                         final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(label, "name");
+        Objects.requireNonNull(label, "label");
         Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
@@ -994,7 +994,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     @Override
     public SpreadsheetDelta loadLabel(final SpreadsheetLabelName label,
                                       final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(label, "name");
+        Objects.requireNonNull(label, "label");
         Objects.requireNonNull(context, "context");
 
         final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
