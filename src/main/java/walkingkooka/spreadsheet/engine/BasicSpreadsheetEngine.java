@@ -653,7 +653,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    // loadReferences...................................................................................................
+    // loadFormulaReferences............................................................................................
 
     @Override
     public SpreadsheetDelta loadFormulaReferences(final SpreadsheetCellReference cell,
@@ -717,7 +717,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    // COLUMNS..........................................................................................................
+    // LOAD COLUMNS.....................................................................................................
 
     @Override
     public SpreadsheetDelta loadColumn(final SpreadsheetColumnReference column,
@@ -771,7 +771,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    // LOAD ROW.....................................................................................................
+    // LOAD ROW.........................................................................................................
+
     @Override
     public SpreadsheetDelta loadRow(final SpreadsheetRowReference row,
                                     final SpreadsheetEngineContext context) {
@@ -785,7 +786,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
     }
 
-    // SAVE ROW.....................................................................................................
+    // SAVE ROW.........................................................................................................
 
     /**
      * Saves the {@link SpreadsheetRow} and then loads and saves all the cells in that row.
@@ -932,7 +933,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    // labels............................................................................................................
+    // SAVE LABEL.......................................................................................................
 
     @Override
     public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
@@ -962,6 +963,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // DELETE LABEL.....................................................................................................
+
     @Override
     public SpreadsheetDelta deleteLabel(final SpreadsheetLabelName label,
                                         final SpreadsheetEngineContext context) {
@@ -985,6 +988,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             changes.close();
         }
     }
+
+    // LOAD LABEL.......................................................................................................
 
     @Override
     public SpreadsheetDelta loadLabel(final SpreadsheetLabelName label,
@@ -1021,6 +1026,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             changes.close();
         }
     }
+
+    // LOAD LABELS......................................................................................................
 
     @Override
     public SpreadsheetDelta loadLabels(final int offset,
@@ -1063,6 +1070,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // FIND LABELS WITH REFERENCE.......................................................................................
+
     @Override
     public SpreadsheetDelta findLabelsWithReference(final SpreadsheetExpressionReference reference,
                                                     final int offset,
@@ -1086,7 +1095,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    // findReferencesWithCell...........................................................................................
+    // FIND CELLS WITH REFERENCE........................................................................................
 
     @Override
     public SpreadsheetDelta findCellsWithReferences(final SpreadsheetExpressionReference reference,
@@ -1197,7 +1206,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
     }
 
-    // PARSE .........................................................................................................
+    // PARSE FORMULA....................................................................................................
 
     /**
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
@@ -1275,7 +1284,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    // EVAL .........................................................................................................
+    // EVAL ............................................................................................................
 
     /**
      * This is only called if the formula was parsed an {@link Expression} exists ready for evaluation.
@@ -2057,7 +2066,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 Sets.empty();
     }
 
-    // Object..........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     public String toString() {
