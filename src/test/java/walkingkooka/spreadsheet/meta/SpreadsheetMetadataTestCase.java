@@ -25,6 +25,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterTesting;
+import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -39,6 +40,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -67,6 +69,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         ToStringTesting<SpreadsheetMetadata>,
         TreePrintableTesting,
         EnvironmentContextTesting {
+
+    final static ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -587,6 +591,64 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         checkMessage(
                 thrown,
                 "Metadata missing: precision, rounding-mode");
+    }
+
+    // spreadsheetValidatorContext......................................................................................
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithCellFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .spreadsheetValidatorContext(
+                                null,
+                                LABEL_NAME_RESOLVER,
+                                CONVERTER_PROVIDER,
+                                PROVIDER_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithLabelNameResolverFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .spreadsheetValidatorContext(
+                                SpreadsheetSelection.A1,
+                                null,
+                                CONVERTER_PROVIDER,
+                                PROVIDER_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithConverterProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .spreadsheetValidatorContext(
+                                SpreadsheetSelection.A1,
+                                LABEL_NAME_RESOLVER,
+                                null,
+                                PROVIDER_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithProviderContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .spreadsheetValidatorContext(
+                                SpreadsheetSelection.A1,
+                                LABEL_NAME_RESOLVER,
+                                CONVERTER_PROVIDER,
+                                null
+                        )
+        );
     }
 
     // setDefaults......................................................................................................

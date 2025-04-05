@@ -24,6 +24,7 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -199,6 +200,26 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         );
         this.checkEquals(
                 "Metadata missing: decimal-separator, exponent-symbol, expression-number-kind, group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode, two-digit-year, value-separator",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    // SpreadsheetValidatorContext......................................................................................
+
+    @Test
+    public void testSpreadsheetValidatorContextMissingPropertiesFails() {
+        final IllegalStateException thrown = assertThrows(
+                IllegalStateException.class,
+                () -> SpreadsheetMetadata.EMPTY.spreadsheetValidatorContext(
+                        SpreadsheetSelection.A1,
+                        LABEL_NAME_RESOLVER,
+                        CONVERTER_PROVIDER,
+                        PROVIDER_CONTEXT
+                )
+        );
+        this.checkEquals(
+                "Metadata missing: formula-converter",
                 thrown.getMessage(),
                 "message"
         );

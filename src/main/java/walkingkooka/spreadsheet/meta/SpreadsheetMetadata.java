@@ -81,8 +81,11 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -107,6 +110,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
@@ -1117,6 +1121,40 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 this.dateTimeContext(now),
                 this.expressionNumberContext(),
                 valueSeparator
+        );
+    }
+
+    // SpreadsheetValidatorContext......................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetValidatorContext} with the given {@link SpreadsheetCellReference}.
+     */
+    public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetCellReference cell,
+                                                                         final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                         final ConverterProvider converterProvider,
+                                                                         final ProviderContext providerContext) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(converterProvider, "converterProvider");
+        Objects.requireNonNull(providerContext, "providerContext");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER);
+
+        components.reportIfMissing();
+
+        return SpreadsheetValidatorContexts.basic(
+                ValidatorContexts.basic(
+                        cell,
+                        this.spreadsheetConverterContext(
+                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                                labelNameResolver,
+                                converterProvider, // ConverterProvider
+                                providerContext // ProviderContext
+                        ),
+                        providerContext // EnvironmentContext
+                )
         );
     }
 
