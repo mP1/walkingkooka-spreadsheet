@@ -1518,7 +1518,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(selection, "selection");
         Objects.requireNonNull(context, "context");
 
-        return this.window0(
+        return this.windowNonLabelSelection(
                 viewportRectangle,
                 includeFrozenColumnsRows,
                 selection.map(context::resolveIfLabel),
@@ -1526,10 +1526,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    private SpreadsheetViewportWindows window0(final SpreadsheetViewportRectangle viewportRectangle,
-                                               final boolean includeFrozenColumnsRows,
-                                               final Optional<SpreadsheetSelection> selection,
-                                               final SpreadsheetEngineContext context) {
+    private SpreadsheetViewportWindows windowNonLabelSelection(final SpreadsheetViewportRectangle viewportRectangle,
+                                                               final boolean includeFrozenColumnsRows,
+                                                               final Optional<SpreadsheetSelection> selection,
+                                                               final SpreadsheetEngineContext context) {
         double width = viewportRectangle.width();
         double height = viewportRectangle.height();
 
