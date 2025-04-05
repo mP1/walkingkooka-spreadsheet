@@ -21,4 +21,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.validation.ValidatorContext;
 
 public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetCellReference> {
+
+    @Override
+    SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference cell);
 }
