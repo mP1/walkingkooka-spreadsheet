@@ -292,6 +292,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * Returns any value that is present, currently only considers the {@link #expressionValue()}
      */
+    @Override
     public Optional<Object> value() {
         final Optional<SpreadsheetError> error = this.error;
         return error.isPresent() ?
