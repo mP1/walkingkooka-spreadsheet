@@ -254,6 +254,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different);
     }
 
+    private void textAndCheck(final SpreadsheetFormula formula) {
+        textAndCheck(
+                formula,
+                TEXT
+        );
+    }
+
     // SetToken.........................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -297,7 +304,45 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different);
     }
 
-    // SetExpression.....................................................................................................
+    private Optional<SpreadsheetFormulaParserToken> token() {
+        return this.token(EXPRESSION);
+    }
+
+    private Optional<SpreadsheetFormulaParserToken> token(final String text) {
+        return Optional.of(
+                SpreadsheetFormulaParserToken.text(
+                        Lists.of(
+                                SpreadsheetFormulaParserToken.textLiteral(
+                                        text,
+                                        text
+                                )
+                        ),
+                        text
+                )
+        );
+    }
+
+    private void tokenAndCheck(final SpreadsheetFormula formula) {
+        this.tokenAndCheck(formula, this.token());
+    }
+
+    private void tokenEmptyAndCheck(final SpreadsheetFormula formula) {
+        this.tokenAndCheck(
+                formula,
+                SpreadsheetFormula.NO_TOKEN
+        );
+    }
+
+    private void tokenAndCheck(final SpreadsheetFormula formula,
+                               final Optional<SpreadsheetFormulaParserToken> token) {
+        this.checkEquals(
+                token,
+                formula.token(),
+                "token"
+        );
+    }
+
+    // SetExpression....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
@@ -383,6 +428,32 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different);
+    }
+
+    private Optional<Expression> expression() {
+        return this.expression(EXPRESSION);
+    }
+
+    private Optional<Expression> expression(final String text) {
+        return Optional.of(
+                Expression.value(text)
+        );
+    }
+
+    private void expressionAndCheck(final SpreadsheetFormula formula,
+                                    final Optional<Expression> expression) {
+        this.checkEquals(
+                expression,
+                formula.expression(),
+                "expression"
+        );
+    }
+
+    private void expressionAndCheck(final SpreadsheetFormula formula) {
+        this.expressionAndCheck(
+                formula,
+                SpreadsheetFormula.NO_EXPRESSION
+        );
     }
 
     // SetExpressionValue...............................................................................................
@@ -474,6 +545,30 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different);
     }
 
+    private Optional<Object> expressionValue() {
+        return this.expressionValue(EXPRESSION_VALUE);
+    }
+
+    private Optional<Object> expressionValue(final Object value) {
+        return Optional.of(value);
+    }
+
+    private void expressionValueAndCheck(final SpreadsheetFormula formula,
+                                         final Optional<Object> value) {
+        this.checkEquals(
+                value,
+                formula.expressionValue(),
+                "expressionValue"
+        );
+    }
+
+    private void expressionValueAndCheck(final SpreadsheetFormula formula) {
+        this.expressionValueAndCheck(
+                formula,
+                SpreadsheetFormula.NO_EXPRESSION_VALUE
+        );
+    }
+
     // setError.........................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -551,7 +646,34 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different, differentError);
     }
-    
+
+    private Optional<SpreadsheetError> error() {
+        return this.error(ERROR);
+    }
+
+    private Optional<SpreadsheetError> error(final String error) {
+        return Optional.of(
+                SpreadsheetErrorKind.VALUE.setMessage(error)
+        );
+    }
+
+    private void errorAndCheck(final SpreadsheetFormula formula) {
+        this.checkEquals(
+                SpreadsheetFormula.NO_ERROR,
+                formula.error(),
+                () -> "formula shouldnt have error=" + formula
+        );
+    }
+
+    private void errorAndCheck(final SpreadsheetFormula formula,
+                               final Optional<SpreadsheetError> error) {
+        this.checkEquals(
+                error,
+                formula.error(),
+                () -> "formula: " + formula
+        );
+    }
+
     // replaceErrorWithValueIfPossible..................................................................................
 
     @Test
@@ -1662,132 +1784,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    // helpers..........................................................................................................
 
     private SpreadsheetFormula formula(final String text) {
         return SpreadsheetFormula.EMPTY
                 .setText(text);
-    }
-
-    private void textAndCheck(final SpreadsheetFormula formula) {
-        textAndCheck(
-                formula,
-                TEXT
-        );
-    }
-
-    private Optional<SpreadsheetFormulaParserToken> token() {
-        return this.token(EXPRESSION);
-    }
-
-    private Optional<SpreadsheetFormulaParserToken> token(final String text) {
-        return Optional.of(
-                SpreadsheetFormulaParserToken.text(
-                        Lists.of(
-                                SpreadsheetFormulaParserToken.textLiteral(
-                                        text,
-                                        text
-                                )
-                        ),
-                        text
-                )
-        );
-    }
-
-    private void tokenAndCheck(final SpreadsheetFormula formula) {
-        this.tokenAndCheck(formula, this.token());
-    }
-
-    private void tokenEmptyAndCheck(final SpreadsheetFormula formula) {
-        this.tokenAndCheck(
-                formula,
-                SpreadsheetFormula.NO_TOKEN
-        );
-    }
-
-    private void tokenAndCheck(final SpreadsheetFormula formula,
-                               final Optional<SpreadsheetFormulaParserToken> token) {
-        this.checkEquals(
-                token,
-                formula.token(),
-                "token"
-        );
-    }
-
-    private Optional<Expression> expression() {
-        return this.expression(EXPRESSION);
-    }
-
-    private Optional<Expression> expression(final String text) {
-        return Optional.of(
-                Expression.value(text)
-        );
-    }
-
-    private void expressionAndCheck(final SpreadsheetFormula formula,
-                                    final Optional<Expression> expression) {
-        this.checkEquals(
-                expression,
-                formula.expression(),
-                "expression"
-        );
-    }
-
-    private void expressionAndCheck(final SpreadsheetFormula formula) {
-        this.expressionAndCheck(
-                formula,
-                SpreadsheetFormula.NO_EXPRESSION
-        );
-    }
-
-    private Optional<Object> expressionValue() {
-        return this.expressionValue(EXPRESSION_VALUE);
-    }
-
-    private Optional<Object> expressionValue(final Object value) {
-        return Optional.of(value);
-    }
-
-    private void expressionValueAndCheck(final SpreadsheetFormula formula,
-                                         final Optional<Object> value) {
-        this.checkEquals(
-                value,
-                formula.expressionValue(),
-                "expressionValue"
-        );
-    }
-
-    private void expressionValueAndCheck(final SpreadsheetFormula formula) {
-        this.expressionValueAndCheck(
-                formula,
-                SpreadsheetFormula.NO_EXPRESSION_VALUE
-        );
-    }
-
-    private Optional<SpreadsheetError> error() {
-        return this.error(ERROR);
-    }
-
-    private Optional<SpreadsheetError> error(final String error) {
-        return Optional.of(
-                SpreadsheetErrorKind.VALUE.setMessage(error)
-        );
-    }
-
-    private void errorAndCheck(final SpreadsheetFormula formula) {
-        this.checkEquals(
-                SpreadsheetFormula.NO_ERROR,
-                formula.error(),
-                () -> "formula shouldnt have error=" + formula
-        );
-    }
-
-    private void errorAndCheck(final SpreadsheetFormula formula,
-                               final Optional<SpreadsheetError> error) {
-        this.checkEquals(
-                error,
-                formula.error(),
-                () -> "formula: " + formula
-        );
     }
 
     // toString.........................................................................................................
