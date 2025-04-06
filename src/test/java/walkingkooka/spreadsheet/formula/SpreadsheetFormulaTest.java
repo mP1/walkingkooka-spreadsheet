@@ -203,7 +203,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         assertNotSame(formula, different);
 
         this.textAndCheck(different, differentText);
-        this.tokenEmptyAndCheck(different);
+        this.tokenAndCheck(different);
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different);
@@ -230,7 +230,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         assertNotSame(formula, different);
 
         this.textAndCheck(different, DIFFERENT_TEXT);
-        this.tokenEmptyAndCheck(different);
+        this.tokenAndCheck(different);
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different);
@@ -248,7 +248,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
 
         this.textAndCheck(different, DIFFERENT_TEXT);
-        this.tokenEmptyAndCheck(different);
+        this.tokenAndCheck(different);
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different);
@@ -323,10 +323,6 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private void tokenAndCheck(final SpreadsheetFormula formula) {
-        this.tokenAndCheck(formula, this.token());
-    }
-
-    private void tokenEmptyAndCheck(final SpreadsheetFormula formula) {
         this.tokenAndCheck(
                 formula,
                 SpreadsheetFormula.NO_TOKEN
@@ -375,8 +371,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
-        this.textAndCheck(different, TEXT);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(
                 different,
                 differentExpression
@@ -401,7 +403,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different,
                 TEXT
         );
-        this.tokenAndCheck(different);
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different);
@@ -420,8 +425,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
-        this.textAndCheck(different, TEXT);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(
                 different,
                 differentExpression
@@ -493,7 +504,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different,
                 TEXT
         );
-        this.tokenAndCheck(different);
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(
                 different,
@@ -514,8 +528,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different
         );
 
-        this.textAndCheck(different, TEXT);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different);
@@ -532,8 +552,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula different = formula.setExpressionValue(differentExpressionValue);
         assertNotSame(formula, different);
 
-        this.textAndCheck(different, TEXT);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(
                 different,
                 formula.expression()
@@ -600,8 +626,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
 
-        this.textAndCheck(different, TEXT);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.errorAndCheck(
@@ -622,8 +654,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different
         );
 
-        this.textAndCheck(different, TEXT);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different);
@@ -640,8 +678,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
 
-        this.textAndCheck(different, TEXT);
-        this.tokenAndCheck(different);
+        this.textAndCheck(
+                different,
+                TEXT
+        );
+        this.tokenAndCheck(
+                different,
+                this.token()
+        );
         this.expressionAndCheck(different, formula.expression());
         this.expressionValueAndCheck(different);
         this.errorAndCheck(different, differentError);
