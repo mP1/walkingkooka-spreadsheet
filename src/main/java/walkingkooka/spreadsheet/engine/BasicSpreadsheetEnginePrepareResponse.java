@@ -307,7 +307,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         if (this.window.isNotEmpty()) {
             // if not adding columns/rows/labels theres no point looping over ranges for their cells
             if (this.shouldSaveUpdateCells && (this.shouldSaveUpdateColumns || this.shouldSaveUpdateRows || this.shouldSaveUpdateLabels)) {
-                final Set<SpreadsheetCellReference> cells = Sets.hash();
+                final Set<SpreadsheetCellReference> cells = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
                 for (final SpreadsheetCellRangeReference cellRange : this.window.cellRanges()) {
 
