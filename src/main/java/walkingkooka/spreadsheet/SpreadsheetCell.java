@@ -43,6 +43,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Collection;
 import java.util.List;
@@ -83,6 +84,11 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public final static TextStyle NO_STYLE = TextStyle.EMPTY;
 
     /**
+     * No validator has been defined for this cell.
+     */
+    public final static Optional<ValidatorSelector> NO_VALIDATOR = Optional.empty();
+
+    /**
      * Factory that creates a new {@link SpreadsheetCell}
      */
     public static SpreadsheetCell with(final SpreadsheetCellReference reference,
@@ -93,7 +99,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 NO_FORMATTER,
                 NO_PARSER,
                 NO_STYLE,
-                NO_FORMATTED_VALUE_CELL
+                NO_FORMATTED_VALUE_CELL,
+                NO_VALIDATOR
         );
     }
 
@@ -105,7 +112,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                             final Optional<SpreadsheetFormatterSelector> formatter,
                             final Optional<SpreadsheetParserSelector> parser,
                             final TextStyle style,
-                            final Optional<TextNode> formattedValue) {
+                            final Optional<TextNode> formattedValue,
+                            final Optional<ValidatorSelector> validator) {
         super();
 
         this.reference = reference;
@@ -114,6 +122,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         this.parser = parser;
         this.style = style;
         this.formattedValue = formattedValue;
+        this.validator = validator;
     }
 
     // HasId ...........................................................................................................
@@ -144,7 +153,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formatter,
                         this.parser,
                         this.style,
-                        NO_FORMATTED_VALUE_CELL
+                        NO_FORMATTED_VALUE_CELL,
+                        this.validator
                 );
     }
 
@@ -179,7 +189,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formatter,
                         this.parser,
                         this.style,
-                        NO_FORMATTED_VALUE_CELL
+                        NO_FORMATTED_VALUE_CELL,
+                        this.validator
                 );
     }
 
@@ -218,7 +229,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         Objects.requireNonNull(formatter, "formatter"),
                         this.parser,
                         this.style,
-                        NO_FORMATTED_VALUE_CELL
+                        NO_FORMATTED_VALUE_CELL,
+                        this.validator
                 );
     }
 
@@ -255,7 +267,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.formatter,
                 parser,
                 this.style,
-                NO_FORMATTED_VALUE_CELL
+                NO_FORMATTED_VALUE_CELL,
+                this.validator
         );
     }
 
@@ -279,7 +292,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formatter,
                         this.parser,
                         Objects.requireNonNull(style, "style"),
-                        NO_FORMATTED_VALUE_CELL
+                        NO_FORMATTED_VALUE_CELL,
+                        this.validator
                 );
     }
 
@@ -306,7 +320,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         this.formatter,
                         this.parser,
                         this.style,
-                        formatted2
+                        formatted2,
+                        this.validator
                 );
     }
 
@@ -314,6 +329,31 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * A cached form of the cell output formatted and formula executed.
      */
     private final Optional<TextNode> formattedValue;
+
+    // validator........................................................................................................
+
+    public Optional<ValidatorSelector> validator() {
+        return this.validator;
+    }
+
+    public SpreadsheetCell setValidator(final Optional<ValidatorSelector> validator) {
+        return this.validator.equals(validator) ?
+                this :
+                this.replace(
+                        reference,
+                        this.formula,
+                        this.formatter,
+                        this.parser,
+                        this.style,
+                        this.formattedValue,
+                        Objects.requireNonNull(validator, "validator")
+                );
+    }
+
+    /**
+     * An optional validator this cell.
+     */
+    private final Optional<ValidatorSelector> validator;
 
     // replace..........................................................................................................
 
@@ -325,14 +365,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                     final Optional<SpreadsheetFormatterSelector> formatter,
                                     final Optional<SpreadsheetParserSelector> parser,
                                     final TextStyle style,
-                                    final Optional<TextNode> formatted) {
+                                    final Optional<TextNode> formatted,
+                                    final Optional<ValidatorSelector> validator) {
         return new SpreadsheetCell(
                 reference,
                 formula,
                 formatter,
                 parser,
                 style,
-                formatted
+                formatted,
+                validator
         );
     }
 
@@ -346,7 +388,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.formula.isEmpty() &&
                 false == this.formatter.isPresent() &&
                 false == this.parser.isPresent() &&
-                this.style.isEmpty();
+                this.style.isEmpty() &&
+                false == this.validator.isPresent();
     }
 
     // Comparable.......................................................................................................
@@ -430,6 +473,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                             propertyAndValue,
                                             context
                                     )
+                    );
+                    break;
+                case VALIDATOR_PROPERTY_STRING:
+                    patched = patched.setValidator(
+                            Optional.ofNullable(
+                                    context.unmarshall(
+                                            propertyAndValue,
+                                            ValidatorSelector.class
+                                    )
+                            )
                     );
                     break;
                 case REFERENCE_PROPERTY_STRING:
@@ -565,6 +618,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
                     printer.outdent();
                 }
             }
+
+            {
+                final Optional<ValidatorSelector> validator = this.validator();
+                if (validator.isPresent()) {
+                    printer.println("validator:");
+                    printer.indent();
+                    {
+                        validator.get()
+                                .printTree(printer);
+                    }
+                    printer.outdent();
+                }
+            }
         }
         printer.outdent();
     }
@@ -608,6 +674,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         TextStyle style = TextStyle.EMPTY;
         SpreadsheetParserSelector parser = null;
         TextNode formatted = null;
+        ValidatorSelector validator = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -633,6 +700,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 case FORMATTED_VALUE_PROPERTY_STRING:
                     formatted = context.unmarshallWithType(child);
                     break;
+                case VALIDATOR_PROPERTY_STRING:
+                    validator = context.unmarshallWithType(child);
+                    break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
                     break;
@@ -645,7 +715,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 Optional.ofNullable(formatter),
                 Optional.ofNullable(parser),
                 style,
-                Optional.ofNullable(formatted)
+                Optional.ofNullable(formatted),
+                Optional.ofNullable(validator)
         );
     }
 
@@ -710,6 +781,15 @@ public final class SpreadsheetCell implements CanBeEmpty,
             object = object.set(FORMATTED_VALUE_PROPERTY, context.marshallWithType(this.formattedValue.get()));
         }
 
+        if (this.validator.isPresent()) {
+            object = object.set(
+                    VALIDATOR_PROPERTY,
+                    context.marshallWithType(
+                            this.validator.get()
+                    )
+            );
+        }
+
         return object;
     }
 
@@ -725,6 +805,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String FORMATTED_VALUE_PROPERTY_STRING = "formatted-value";
 
+    private final static String VALIDATOR_PROPERTY_STRING = "validator";
+
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
@@ -736,6 +818,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
 
     final static JsonPropertyName FORMATTED_VALUE_PROPERTY = JsonPropertyName.with(FORMATTED_VALUE_PROPERTY_STRING);
+
+    final static JsonPropertyName VALIDATOR_PROPERTY = JsonPropertyName.with(VALIDATOR_PROPERTY_STRING);
 
     static {
         SpreadsheetCell.NO_FORMATTED_VALUE_CELL.hashCode();
@@ -761,7 +845,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.style,
                 this.parser,
                 this.formatter,
-                this.formattedValue
+                this.formattedValue,
+                this.validator
         );
     }
 
@@ -778,7 +863,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 this.style.equals(other.style) &&
                 this.parser.equals(other.parser) &&
                 this.formatter.equals(other.formatter) &&
-                this.formattedValue.equals(other.formattedValue);
+                this.formattedValue.equals(other.formattedValue) &&
+                this.validator.equals(other.validator);
     }
 
     @Override
@@ -794,6 +880,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 .enable(ToStringBuilderOption.QUOTE)
                 .value(this.parser.map(Object::toString).orElse(""))
                 .value(this.formatter.map(Object::toString).orElse(""))
+                .value(this.validator.map(Object::toString).orElse(""))
                 .disable(ToStringBuilderOption.QUOTE)
                 .value(this.formattedValue);
     }

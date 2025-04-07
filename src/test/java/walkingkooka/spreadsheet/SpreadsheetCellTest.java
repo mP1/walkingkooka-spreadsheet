@@ -59,6 +59,7 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.util.List;
@@ -219,6 +220,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different.formatter(),
                 "formatter"
         );
+        this.validatorAndCheck(cell);
+        this.validatorAndCheck(different);
     }
 
     private static SpreadsheetCellReference differentReference() {
@@ -293,6 +296,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of formula / value change.
     }
 
@@ -315,6 +319,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of formula / value change.
     }
 
@@ -387,6 +392,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 differentFormatter
         );
+        this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
     }
 
@@ -401,6 +407,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different);
         this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.validatorAndCheckNone(different);
         this.formattedValueAndCheckNone(different);
     }
 
@@ -493,6 +500,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different, this.formula());
         this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
     }
 
@@ -526,6 +534,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different, formula);
         this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
     }
 
@@ -541,6 +550,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.textStyleAndCheck(different);
         this.formatterAndCheckNone(different);
         this.formattedValueAndCheckNone(different);
+        this.validatorAndCheckNone(different);
     }
 
     private Optional<SpreadsheetParserSelector> parser() {
@@ -622,6 +632,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 differentTextStyle
         );
         this.formatterAndCheck(different);
+        this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of text properties change
     }
 
@@ -638,6 +649,94 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+    // SetStyle.........................................................................................................
+
+    @Test
+    public void testSetValidatorNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setValidator(null)
+        );
+    }
+
+    @Test
+    public void testSetValidatorSame() {
+        final SpreadsheetCell cell = this.createCell();
+        assertSame(
+                cell,
+                cell.setValidator(
+                        cell.validator()
+                )
+        );
+    }
+
+    @Test
+    public void testSetValidatorDifferent() {
+        final SpreadsheetCell cell = this.createCell();
+
+        final Optional<ValidatorSelector> differentValidator = this.differentValidator();
+        final SpreadsheetCell different = cell.setValidator(differentValidator);
+        assertNotSame(
+                cell,
+                different
+        );
+
+        this.referenceAndCheck(
+                different,
+                REFERENCE
+        );
+        this.formulaAndCheck(
+                different,
+                this.formula()
+        );
+        this.formatterAndCheck(different);
+        this.parserAndCheck(different);
+        this.textStyleAndCheck(
+                different
+        );
+        this.validatorAndCheck(
+                different,
+                differentValidator
+        );
+        this.formattedValueAndCheck(different);
+    }
+
+    private Optional<ValidatorSelector> validator() {
+        return Optional.ofNullable(
+                ValidatorSelector.parse("validator123")
+        );
+    }
+
+    private Optional<ValidatorSelector> differentValidator() {
+        return Optional.ofNullable(
+                ValidatorSelector.parse("different-validator-456")
+        );
+    }
+
+    private void validatorAndCheck(final SpreadsheetCell cell) {
+        this.validatorAndCheck(
+                cell,
+                this.validator()
+        );
+    }
+
+    private void validatorAndCheckNone(final SpreadsheetCell cell) {
+        this.validatorAndCheck(
+                cell,
+                Optional.empty()
+        );
+    }
+
+    private void validatorAndCheck(final SpreadsheetCell cell,
+                                   final Optional<ValidatorSelector> expected) {
+        this.checkEquals(
+                expected,
+                cell.validator(),
+                "validator"
+        );
+    }
+    
     // SetFormattedValue................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -675,23 +774,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 this.formatter()
         );
+        this.validatorAndCheck(different);
         this.formattedValueAndCheck(
                 different,
                 differentFormatted
         );
-    }
-
-    @Test
-    public void testSetFormattedValueWhenWithout() {
-        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
-        final SpreadsheetCell different = cell.setFormattedValue(this.formattedValue());
-        assertNotSame(cell, different);
-
-        this.referenceAndCheck(different);
-        this.formulaAndCheck(different);
-        this.textStyleAndCheck(different);
-        this.formatterAndCheckNone(different);
-        this.formattedValueAndCheck(different);
     }
 
     private Optional<TextNode> formattedValue() {
@@ -846,6 +933,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
+    public void testCompareDifferentValidator() {
+        this.compareToAndCheckEquals(
+                this.createComparable()
+                        .setValidator(
+                                this.differentValidator()
+                        )
+        );
+    }
+
+    @Test
     public void testCompareDifferentFormatter() {
         this.compareToAndCheckEquals(this.createComparable()
                 .setFormatter(
@@ -887,7 +984,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 )
                 .setParser(this.parser())
                 .setFormatter(this.formatter())
-                .setFormattedValue(this.formattedValue());
+                .setFormattedValue(this.formattedValue())
+                .setValidator(this.validator());
     }
 
     @Override
@@ -1144,11 +1242,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
-                        "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
                         "    \"formatter\": \"text-format-pattern @@\",\n" +
+                        "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
                         "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
+                        "    },\n" +
+                        "    \"validator\": {\n" +
+                        "      \"type\": \"validator-selector\",\n" +
+                        "      \"value\": \"validator123\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "}"
@@ -1168,15 +1270,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "    \"formula\": {\n" +
                         "      \"text\": \"=1+2\"\n" +
                         "    },\n" +
+                        "    \"formatter\": \"text-format-pattern @@\",\n" +
+                        "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
                         "    \"style\": {\n" +
                         "      \"font-style\": \"ITALIC\",\n" +
                         "      \"font-weight\": \"bold\"\n" +
                         "    },\n" +
-                        "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
-                        "    \"formatter\": \"text-format-pattern @@\",\n" +
                         "    \"formatted-value\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
+                        "    },\n" +
+                        "    \"validator\": {\n" +
+                        "      \"type\": \"validator-selector\",\n" +
+                        "      \"value\": \"validator123\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "}"
@@ -2154,7 +2260,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testToStringWithoutError() {
         this.toStringAndCheck(
                 this.createCell(),
-                REFERENCE + " " + this.formula() + " \"date-time-parse-pattern dd/mm/yyyy\" \"text-format-pattern @@\" \"formattedValue-text\""
+                REFERENCE + " " + this.formula() + " \"date-time-parse-pattern dd/mm/yyyy\" \"text-format-pattern @@\" \"validator123\" \"formattedValue-text\""
         );
     }
 
