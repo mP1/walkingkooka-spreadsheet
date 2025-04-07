@@ -86,24 +86,36 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testWithNullReferenceFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetCell.with(null, this.formula()));
+        assertThrows(
+                NullPointerException.class, 
+                () -> SpreadsheetCell.with(
+                        null,
+                        this.formula()
+                )
+        );
     }
 
     @Test
     public void testWithNullFormulaFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetCell.with(REFERENCE, null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetCell.with(
+                        REFERENCE,
+                        null
+                )
+        );
     }
 
     @Test
     public void testWith() {
         final SpreadsheetCell cell = this.createCell();
 
-        this.checkReference(cell);
-        this.checkParser(cell);
-        this.checkFormula(cell);
-        this.checkTextStyle(cell);
-        this.checkFormatter(cell);
-        this.checkFormattedValue(cell);
+        this.referenceAndCheck(cell);
+        this.parserAndCheck(cell);
+        this.formulaAndCheck(cell);
+        this.textStyleAndCheck(cell);
+        this.formatterAndCheck(cell);
+        this.formattedValueAndCheck(cell);
     }
 
     @Test
@@ -112,24 +124,30 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetSelection.parseCell("$B$2"),
                 formula(FORMULA));
 
-        this.checkReference(cell, reference.toRelative());
-        this.checkNoParser(cell);
-        this.checkFormula(cell);
-        this.checkTextStyle(cell);
-        this.checkNoFormatter(cell);
-        this.checkFormattedValue(cell, SpreadsheetCell.NO_FORMATTED_VALUE_CELL);
+        this.referenceAndCheck(
+                cell,
+                reference.toRelative()
+        );
+        this.parserAndCheckNone(cell);
+        this.formulaAndCheck(cell);
+        this.textStyleAndCheck(cell);
+        this.formatterAndCheckNone(cell);
+        this.formattedValueAndCheck(
+                cell,
+                SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+        );
     }
 
     @Test
     public void testWithFormula() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
 
-        this.checkReference(cell);
-        this.checkNoParser(cell);
-        this.checkFormula(cell);
-        this.checkTextStyle(cell);
-        this.checkNoFormatter(cell);
-        this.checkNoFormattedValue(cell);
+        this.referenceAndCheck(cell);
+        this.parserAndCheckNone(cell);
+        this.formulaAndCheck(cell);
+        this.textStyleAndCheck(cell);
+        this.formatterAndCheckNone(cell);
+        this.formattedValueAndCheckNone(cell);
     }
 
     @Test
@@ -142,9 +160,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         )
         );
 
-        this.checkReference(cell);
-        this.checkNoParser(cell);
-        this.checkFormula(
+        this.referenceAndCheck(cell);
+        this.parserAndCheckNone(cell);
+        this.formulaAndCheck(
                 cell,
                 SpreadsheetFormula.EMPTY.setText("=1+2")
                         .setExpressionValue(
@@ -152,22 +170,31 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         SpreadsheetErrorKind.VALUE)
                         )
         );
-        this.checkTextStyle(cell);
-        this.checkNoFormatter(cell);
-        this.checkNoFormattedValue(cell);
+        this.textStyleAndCheck(cell);
+        this.formatterAndCheckNone(cell);
+        this.formattedValueAndCheckNone(cell);
     }
 
     // SetReference.....................................................................................................
 
     @Test
     public void testSetReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setReference(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setReference(null)
+        );
     }
 
     @Test
     public void testSetReferenceSame() {
         final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setReference(cell.reference()));
+        assertSame(
+                cell,
+                cell.setReference(
+                        cell.reference()
+                )
+        );
     }
 
     @Test
@@ -177,16 +204,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setReference(differentReference);
         assertNotSame(cell, different);
 
-        this.checkReference(different, differentReference);
-        this.checkFormula(different, this.formula());
+        this.referenceAndCheck(different, differentReference);
+        this.formulaAndCheck(different, this.formula());
 
-        this.checkReference(cell);
+        this.referenceAndCheck(cell);
         this.checkEquals(
                 cell.parser(),
                 different.parser(),
                 "parser"
         );
-        this.checkFormula(cell);
+        this.formulaAndCheck(cell);
         this.checkEquals(
                 cell.formatter(),
                 different.formatter(),
@@ -194,18 +221,237 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // SetParsePattern.....................................................................................................
+    private static SpreadsheetCellReference differentReference() {
+        return reference(99, 888);
+    }
+
+    private static SpreadsheetCellReference reference() {
+        return reference(COLUMN, ROW);
+    }
+
+    private static SpreadsheetCellReference reference(final int column,
+                                                      final int row) {
+        return SpreadsheetSelection.cell(
+                SpreadsheetReferenceKind.RELATIVE.column(column),
+                SpreadsheetReferenceKind.RELATIVE.row(row)
+        );
+    }
+
+    private void referenceAndCheck(final SpreadsheetCell cell) {
+        this.referenceAndCheck(cell, REFERENCE);
+    }
+
+    private void referenceAndCheck(final SpreadsheetCell cell,
+                                   final SpreadsheetCellReference reference) {
+        this.checkEquals(
+                reference,
+                cell.reference(),
+                "reference"
+        );
+    }
+
+    // SetFormula.....................................................................................................
+
+    @Test
+    public void testSetFormulaNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setFormula(null)
+        );
+    }
+
+    @Test
+    public void testSetFormulaSame() {
+        final SpreadsheetCell cell = this.createCell();
+        assertSame(
+                cell,
+                cell.setFormula(
+                        cell.formula()
+                )
+        );
+    }
+
+    @Test
+    public void testSetFormulaDifferent() {
+        final SpreadsheetCell cell = this.createCell();
+        final SpreadsheetFormula differentFormula = this.formula("different");
+        final SpreadsheetCell different = cell.setFormula(differentFormula);
+        assertNotSame(
+                cell,
+                different
+        );
+
+        this.referenceAndCheck(
+                different,
+                REFERENCE
+        );
+        this.parserAndCheck(different);
+        this.formulaAndCheck(
+                different,
+                differentFormula
+        );
+        this.textStyleAndCheck(different);
+        this.formatterAndCheck(different);
+        this.formattedValueAndCheckNone(different); // clear formattedValue because of formula / value change.
+    }
+
+    @Test
+    public void testSetFormulaDifferentListValue() {
+        final SpreadsheetCell cell = this.createCell();
+
+        final SpreadsheetCell different = cell.setFormula(
+                SpreadsheetFormula.EMPTY
+                        .setExpressionValue(Optional.of(Lists.empty()))
+        );
+        assertNotSame(cell, different);
+
+        this.referenceAndCheck(different, REFERENCE);
+        this.parserAndCheck(different);
+        this.formulaAndCheck(
+                different,
+                SpreadsheetFormula.EMPTY
+                        .setExpressionValue(Optional.of(SpreadsheetErrorKind.VALUE))
+        );
+        this.textStyleAndCheck(different);
+        this.formatterAndCheck(different);
+        this.formattedValueAndCheckNone(different); // clear formattedValue because of formula / value change.
+    }
+
+    private SpreadsheetFormula formula() {
+        return this.formula(FORMULA);
+    }
+
+    private SpreadsheetFormula formula(final String text) {
+        return SpreadsheetFormula.EMPTY
+                .setText(text);
+    }
+
+    private void formulaAndCheck(final SpreadsheetCell cell) {
+        this.formulaAndCheck(cell, this.formula());
+    }
+
+    private void formulaAndCheck(final SpreadsheetCell cell,
+                                 final SpreadsheetFormula formula) {
+        this.checkEquals(
+                formula,
+                cell.formula(),
+                "formula"
+        );
+    }
+
+    // SetFormatter.....................................................................................................
+
+    @SuppressWarnings("OptionalAssignedToNull")
+    @Test
+    public void testSetFormatterNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setFormatter(null)
+        );
+    }
+
+    @Test
+    public void testSetFormatterSame() {
+        final SpreadsheetCell cell = this.createCell();
+        assertSame(
+                cell,
+                cell.setFormatter(
+                        cell.formatter()
+                )
+        );
+    }
+
+    @Test
+    public void testSetFormatterDifferent() {
+        final SpreadsheetCell cell = this.createCell();
+        final Optional<SpreadsheetFormatterSelector> differentFormatter = Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
+                        .spreadsheetFormatterSelector()
+        );
+        final SpreadsheetCell different = cell.setFormatter(differentFormatter);
+        assertNotSame(cell, different);
+
+        this.referenceAndCheck(
+                different,
+                REFERENCE
+        );
+        this.parserAndCheck(different);
+        this.formulaAndCheck(
+                different,
+                this.formula()
+        );
+        this.textStyleAndCheck(different);
+        this.formatterAndCheck(
+                different,
+                differentFormatter
+        );
+        this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
+    }
+
+    @Test
+    public void testSetFormatterWhenWithout() {
+        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
+        final SpreadsheetCell different = cell.setFormatter(this.formatter());
+        assertNotSame(cell, different);
+
+        this.referenceAndCheck(different);
+        this.parserAndCheckNone(different);
+        this.formulaAndCheck(different);
+        this.textStyleAndCheck(different);
+        this.formatterAndCheck(different);
+        this.formattedValueAndCheckNone(different);
+    }
+
+    private Optional<SpreadsheetFormatterSelector> formatter() {
+        return Optional.of(
+                SpreadsheetPattern.parseTextFormatPattern("@@")
+                        .spreadsheetFormatterSelector()
+        );
+    }
+
+    private void formatterAndCheckNone(final SpreadsheetCell cell) {
+        this.formatterAndCheck(
+                cell,
+                SpreadsheetCell.NO_FORMATTER
+        );
+    }
+
+    private void formatterAndCheck(final SpreadsheetCell cell) {
+        this.formatterAndCheck(cell, this.formatter());
+    }
+
+    private void formatterAndCheck(final SpreadsheetCell cell,
+                                   final Optional<SpreadsheetFormatterSelector> formatter) {
+        this.checkEquals(
+                formatter,
+                cell.formatter(),
+                "formatter"
+        );
+    }
+
+    // SetParser........................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetParserNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setParser(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setParser(null)
+        );
     }
 
     @Test
     public void testSetParserSame() {
         final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setParser(cell.parser()));
+        assertSame(
+                cell,
+                cell.setParser(
+                        cell.parser()
+                )
+        );
     }
 
     @Test
@@ -242,12 +488,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
 
-        this.checkReference(different, REFERENCE);
-        this.checkParser(different, differentParser);
-        this.checkFormula(different, this.formula());
-        this.checkTextStyle(different);
-        this.checkFormatter(different);
-        this.checkNoFormattedValue(different); // clear formattedValue because of format change
+        this.referenceAndCheck(different, REFERENCE);
+        this.parserAndCheck(different, differentParser);
+        this.formulaAndCheck(different, this.formula());
+        this.textStyleAndCheck(different);
+        this.formatterAndCheck(different);
+        this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
     }
 
     @Test
@@ -275,12 +521,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
 
-        this.checkReference(different, REFERENCE);
-        this.checkParser(different, differentParser);
-        this.checkFormula(different, formula);
-        this.checkTextStyle(different);
-        this.checkFormatter(different);
-        this.checkNoFormattedValue(different); // clear formattedValue because of format change
+        this.referenceAndCheck(different, REFERENCE);
+        this.parserAndCheck(different, differentParser);
+        this.formulaAndCheck(different, formula);
+        this.textStyleAndCheck(different);
+        this.formatterAndCheck(different);
+        this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
     }
 
     @Test
@@ -289,139 +535,110 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setParser(this.parser());
         assertNotSame(cell, different);
 
-        this.checkReference(different);
-        this.checkParser(different);
-        this.checkFormula(different);
-        this.checkTextStyle(different);
-        this.checkNoFormatter(different);
-        this.checkNoFormattedValue(different);
+        this.referenceAndCheck(different);
+        this.parserAndCheck(different);
+        this.formulaAndCheck(different);
+        this.textStyleAndCheck(different);
+        this.formatterAndCheckNone(different);
+        this.formattedValueAndCheckNone(different);
     }
 
-    // SetFormula.....................................................................................................
-
-    @Test
-    public void testSetFormulaNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setFormula(null));
-    }
-
-    @Test
-    public void testSetFormulaSame() {
-        final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setFormula(cell.formula()));
-    }
-
-    @Test
-    public void testSetFormulaDifferent() {
-        final SpreadsheetCell cell = this.createCell();
-        final SpreadsheetFormula differentFormula = this.formula("different");
-        final SpreadsheetCell different = cell.setFormula(differentFormula);
-        assertNotSame(cell, different);
-
-        this.checkReference(different, REFERENCE);
-        this.checkParser(different);
-        this.checkFormula(different, differentFormula);
-        this.checkTextStyle(different);
-        this.checkFormatter(different);
-        this.checkNoFormattedValue(different); // clear formattedValue because of formula / value change.
-    }
-
-    @Test
-    public void testSetFormulaDifferentListValue() {
-        final SpreadsheetCell cell = this.createCell();
-
-        final SpreadsheetCell different = cell.setFormula(
-                SpreadsheetFormula.EMPTY
-                        .setExpressionValue(Optional.of(Lists.empty()))
+    private Optional<SpreadsheetParserSelector> parser() {
+        return Optional.of(
+                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
+                        .spreadsheetParserSelector()
         );
-        assertNotSame(cell, different);
-
-        this.checkReference(different, REFERENCE);
-        this.checkParser(different);
-        this.checkFormula(
-                different,
-                SpreadsheetFormula.EMPTY
-                        .setExpressionValue(Optional.of(SpreadsheetErrorKind.VALUE))
-        );
-        this.checkTextStyle(different);
-        this.checkFormatter(different);
-        this.checkNoFormattedValue(different); // clear formattedValue because of formula / value change.
     }
 
-    // SetStyle.....................................................................................................
+    private void parserAndCheckNone(final SpreadsheetCell cell) {
+        this.parserAndCheck(
+                cell,
+                SpreadsheetCell.NO_PARSER
+        );
+    }
+
+    private void parserAndCheck(final SpreadsheetCell cell) {
+        this.parserAndCheck(
+                cell,
+                this.parser()
+        );
+    }
+
+    private void parserAndCheck(final SpreadsheetCell cell,
+                                final Optional<SpreadsheetParserSelector> selector) {
+        this.checkEquals(
+                selector,
+                cell.parser(),
+                "parser"
+        );
+    }
+
+    // SetStyle.........................................................................................................
 
     @Test
     public void testSetStyleNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setStyle(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createCell()
+                        .setStyle(null)
+        );
     }
 
     @Test
     public void testSetStyleSame() {
         final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setStyle(cell.style()));
+        assertSame(
+                cell,
+                cell.setStyle(
+                        cell.style()
+                )
+        );
     }
 
     @Test
     public void testSetStyleDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final TextStyle differentTextStyle = TextStyle.EMPTY.set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC);
-        final SpreadsheetCell different = cell.setStyle(differentTextStyle);
-        assertNotSame(cell, different);
-
-        this.checkReference(different, REFERENCE);
-        this.checkParser(different);
-        this.checkFormula(different, this.formula());
-        this.checkTextStyle(different, differentTextStyle);
-        this.checkFormatter(different);
-        this.checkNoFormattedValue(different); // clear formattedValue because of text properties change
-    }
-
-    // SetFormatter.....................................................................................................
-
-    @SuppressWarnings("OptionalAssignedToNull")
-    @Test
-    public void testSetFormatterNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createCell().setFormatter(null));
-    }
-
-    @Test
-    public void testSetFormatterSame() {
-        final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setFormatter(cell.formatter()));
-    }
-
-    @Test
-    public void testSetFormatterDifferent() {
-        final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetFormatterSelector> differentFormatter = Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
-                        .spreadsheetFormatterSelector()
+        final TextStyle differentTextStyle = TextStyle.EMPTY.set(
+                TextStylePropertyName.FONT_STYLE,
+                FontStyle.ITALIC
         );
-        final SpreadsheetCell different = cell.setFormatter(differentFormatter);
-        assertNotSame(cell, different);
+        final SpreadsheetCell different = cell.setStyle(differentTextStyle);
+        assertNotSame(
+                cell,
+                different
+        );
 
-        this.checkReference(different, REFERENCE);
-        this.checkParser(different);
-        this.checkFormula(different, this.formula());
-        this.checkTextStyle(different);
-        this.checkFormatter(different, differentFormatter);
-        this.checkNoFormattedValue(different); // clear formattedValue because of format change
+        this.referenceAndCheck(
+                different,
+                REFERENCE
+        );
+        this.parserAndCheck(different);
+        this.formulaAndCheck(
+                different,
+                this.formula()
+        );
+        this.textStyleAndCheck(
+                different,
+                differentTextStyle
+        );
+        this.formatterAndCheck(different);
+        this.formattedValueAndCheckNone(different); // clear formattedValue because of text properties change
     }
 
-    @Test
-    public void testSetFormatterWhenWithout() {
-        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
-        final SpreadsheetCell different = cell.setFormatter(this.formatter());
-        assertNotSame(cell, different);
-
-        this.checkReference(different);
-        this.checkNoParser(different);
-        this.checkFormula(different);
-        this.checkTextStyle(different);
-        this.checkFormatter(different);
-        this.checkNoFormattedValue(different);
+    private void textStyleAndCheck(final SpreadsheetCell cell) {
+        this.textStyleAndCheck(cell, SpreadsheetCell.NO_STYLE);
     }
 
-    // SetFormatted.....................................................................................................
+    private void textStyleAndCheck(final SpreadsheetCell cell,
+                                   final TextStyle style) {
+        this.checkEquals(
+                style,
+                cell.style(),
+                "style"
+        );
+    }
+
+    // SetFormattedValue................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
     @Test
@@ -448,11 +665,20 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setFormattedValue(differentFormatted);
         assertNotSame(cell, different);
 
-        this.checkReference(different, REFERENCE);
-        this.checkFormula(different, this.formula());
-        this.checkTextStyle(different);
-        this.checkFormatter(different, this.formatter());
-        this.checkFormattedValue(different, differentFormatted);
+        this.referenceAndCheck(different, REFERENCE);
+        this.formulaAndCheck(
+                different,
+                this.formula()
+        );
+        this.textStyleAndCheck(different);
+        this.formatterAndCheck(
+                different,
+                this.formatter()
+        );
+        this.formattedValueAndCheck(
+                different,
+                differentFormatted
+        );
     }
 
     @Test
@@ -461,11 +687,40 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setFormattedValue(this.formattedValue());
         assertNotSame(cell, different);
 
-        this.checkReference(different);
-        this.checkFormula(different);
-        this.checkTextStyle(different);
-        this.checkNoFormatter(different);
-        this.checkFormattedValue(different);
+        this.referenceAndCheck(different);
+        this.formulaAndCheck(different);
+        this.textStyleAndCheck(different);
+        this.formatterAndCheckNone(different);
+        this.formattedValueAndCheck(different);
+    }
+
+    private Optional<TextNode> formattedValue() {
+        return Optional.of(
+                TextNode.text("formattedValue-text")
+        );
+    }
+
+    private void formattedValueAndCheckNone(final SpreadsheetCell cell) {
+        this.formattedValueAndCheck(
+                cell,
+                SpreadsheetCell.NO_FORMATTED_VALUE_CELL
+        );
+    }
+
+    private void formattedValueAndCheck(final SpreadsheetCell cell) {
+        this.formattedValueAndCheck(
+                cell,
+                this.formattedValue()
+        );
+    }
+
+    private void formattedValueAndCheck(final SpreadsheetCell cell,
+                                        final Optional<TextNode> formatted) {
+        this.checkEquals(
+                formatted,
+                cell.formattedValue(),
+                "formattedValue"
+        );
     }
 
     // replaceReferences................................................................................................
@@ -546,17 +801,35 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testCompareDifferentFormulaEquals() {
-        this.checkNotEquals(this.createComparable(COLUMN, ROW, FORMULA + "99"));
+        this.checkNotEquals(
+                this.createComparable(
+                        COLUMN,
+                        ROW,
+                        FORMULA + "99"
+                )
+        );
     }
 
     @Test
     public void testCompareDifferentColumn() {
-        this.compareToAndCheckLess(this.createComparable(99, ROW, FORMULA));
+        this.compareToAndCheckLess(
+                this.createComparable(
+                        99,
+                        ROW,
+                        FORMULA
+                )
+        );
     }
 
     @Test
     public void testCompareDifferentRow() {
-        this.compareToAndCheckLess(this.createComparable(COLUMN, 99, FORMULA));
+        this.compareToAndCheckLess(
+                this.createComparable(
+                        COLUMN,
+                        99,
+                        FORMULA
+                )
+        );
     }
 
     @Test
@@ -564,7 +837,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.compareToAndCheckEquals(
                 this.createComparable()
                         .setStyle(
-                                TextStyle.EMPTY.set(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC)
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.FONT_STYLE,
+                                        FontStyle.ITALIC
+                                )
                         )
         );
     }
@@ -583,13 +859,44 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testCompareDifferentFormatted() {
-        this.compareToAndCheckEquals(this.createComparable().setFormattedValue(Optional.of(TextNode.text("different-formattedValue"))));
+        this.compareToAndCheckEquals(
+                this.createComparable()
+                        .setFormattedValue(
+                                Optional.of(
+                                        TextNode.text("different-formattedValue")
+                                )
+                        )
+        );
     }
 
-    // JsonNodeMarshallingTesting................................................................................
+    @Override
+    public SpreadsheetCell createComparable() {
+        return this.createComparable(
+                COLUMN,
+                ROW,
+                FORMULA
+        );
+    }
 
-    // HasJsonNode.unmarshallLabelName.......................................................................................
+    private SpreadsheetCell createComparable(final int column,
+                                             final int row,
+                                             final String formula) {
+        return SpreadsheetCell.with(
+                        reference(column, row),
+                        formula(formula)
+                )
+                .setParser(this.parser())
+                .setFormatter(this.formatter())
+                .setFormattedValue(this.formattedValue());
+    }
 
+    @Override
+    public boolean compareAndEqualsMatch() {
+        return false; // comparing does not include all properties, so compareTo == 0 <> equals
+    }
+
+    // JsonNodeMarshallingTesting.......................................................................................
+    
     @Test
     public void testUnmarshallBooleanFails() {
         this.unmarshallFails(JsonNode.booleanNode(true));
@@ -617,17 +924,29 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testUnmarshallObjectReferenceMissingFails() {
-        this.unmarshallFails(JsonNode.object()
-                .set(SpreadsheetCell.FORMULA_PROPERTY, this.marshallContext().marshall(formula())));
+        this.unmarshallFails(
+                JsonNode.object()
+                        .set(
+                                SpreadsheetCell.FORMULA_PROPERTY, 
+                                this.marshallContext()
+                                        .marshall(
+                                                this.formula()
+                                        )
+                        )
+        );
     }
 
     @Test
     public void testUnmarshallObjectReferenceMissingFails2() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.unmarshallFails(JsonNode.object()
-                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(this.boldAndItalics())));
+        this.unmarshallFails(
+                JsonNode.object()
+                .set(
+                        SpreadsheetCell.FORMULA_PROPERTY, 
+                        context.marshall(this.formula()))
+                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(this.boldAndItalics()))
+        );
     }
 
     @Test
@@ -636,12 +955,25 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.unmarshallAndCheck(JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
-                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(
+                                JsonPropertyName.with(reference()
+                                        .toString()
+                                ), JsonNode.object()
+                                        .set(
+                                                SpreadsheetCell.FORMULA_PROPERTY,
+                                                context.marshall(this.formula())
+                                        ).set(
+                                                SpreadsheetCell.STYLE_PROPERTY,
+                                                context.marshall(boldAndItalics)
+                                        )
                         ),
-                SpreadsheetCell.with(reference(), formula()).setStyle(boldAndItalics));
+                SpreadsheetCell.with(
+                        reference(),
+                        this.formula()
+                ).setStyle(boldAndItalics)
+        );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -651,15 +983,19 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.unmarshallAndCheck(JsonNode.object()
+        this.unmarshallAndCheck(
+                JsonNode.object()
                         .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
-                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
                                 .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
                                 .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
                         ),
-                SpreadsheetCell.with(reference(), formula())
-                        .setStyle(boldAndItalics)
-                        .setFormatter(formatter()));
+                SpreadsheetCell.with(
+                                reference(),
+                                this.formula()
+                        ).setStyle(boldAndItalics)
+                        .setFormatter(formatter())
+        );
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -669,13 +1005,18 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.unmarshallAndCheck(JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
-                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                                .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(
+                                JsonPropertyName.with(
+                                        reference().toString()
+                                ),
+                                JsonNode.object()
+                                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
+                                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
-                SpreadsheetCell.with(reference(), formula())
+                SpreadsheetCell.with(reference(), this.formula())
                         .setStyle(boldAndItalics)
                         .setFormattedValue(formattedValue()));
     }
@@ -699,10 +1040,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         this.unmarshallAndCheck(
                 JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
-                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
-                                .set(SpreadsheetCell.PARSER_PROPERTY, context.marshall(this.parser().get()))
-                                .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+                        .set(
+                                JsonPropertyName.with(reference().toString()),
+                                JsonNode.object()
+                                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula))
+                                        .set(SpreadsheetCell.PARSER_PROPERTY, context.marshall(this.parser().get()))
+                                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
                 reference()
                         .setFormula(SpreadsheetFormula.EMPTY)
@@ -718,13 +1061,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testUnmarshallObjectReferenceAndFormulaAndFormatterAndFormattedCell() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.unmarshallAndCheck(JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
-                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
-                                .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(JsonPropertyName.with(reference().toString()),
+                                JsonNode.object()
+                                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
+                                        .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
+                                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
-                SpreadsheetCell.with(reference(), formula())
+                SpreadsheetCell.with(reference(), this.formula())
                         .setFormatter(formatter())
                         .setFormattedValue(formattedValue()));
     }
@@ -736,20 +1081,23 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
         final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.unmarshallAndCheck(JsonNode.object()
-                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
-                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                                .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
-                                .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
+        this.unmarshallAndCheck(
+                JsonNode.object()
+                        .set(
+                                JsonPropertyName.with(reference().toString()),
+                                JsonNode.object()
+                                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(this.formula()))
+                                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                                        .set(SpreadsheetCell.FORMATTER_PROPERTY, context.marshall(formatter().get()))
+                                        .set(SpreadsheetCell.FORMATTED_VALUE_PROPERTY, context.marshallWithType(formattedValue().get()))
                         ),
-                SpreadsheetCell.with(reference(), formula())
+                SpreadsheetCell.with(reference(), this.formula())
                         .setStyle(boldAndItalics)
                         .setFormatter(formatter())
                         .setFormattedValue(formattedValue()));
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // json.............................................................................................................
 
     @Test
     public void testMarshallWithFormula() {
@@ -845,7 +1193,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.marshallRoundTripTwiceAndCheck(
                 SpreadsheetSelection.parseCell("A99")
                         .setFormula(SpreadsheetFormula.EMPTY)
-                        .setStyle(TextStyle.EMPTY.set(TextStylePropertyName.BACKGROUND_COLOR, Color.parse("#123456")))
+                        .setStyle(
+                                TextStyle.EMPTY.set(
+                                        TextStylePropertyName.BACKGROUND_COLOR,
+                                        Color.parse("#123456")
+                                )
+                        )
         );
     }
 
@@ -859,7 +1212,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                 Optional.of(
                                         SpreadsheetPattern.parseNumberFormatPattern("##")
                                                 .spreadsheetFormatterSelector()
-                                )).setFormattedValue(
+                                )
+                        ).setFormattedValue(
                                 Optional.of(
                                         TextNode.text("abc123")
                                 )
@@ -883,20 +1237,58 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+    @Override
+    public SpreadsheetCell createJsonNodeMarshallingValue() {
+        return this.createObject();
+    }
+
+    @Override
+    public SpreadsheetCell unmarshall(final JsonNode jsonNode,
+                                      final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCell.unmarshall(jsonNode, context);
+    }
+
+    private JsonNodeMarshallContext jsonNodeMarshallContext() {
+        return JsonNodeMarshallContexts.basic();
+    }
+
+    private void checkEquals(final JsonNode node,
+                             final String expected) {
+        this.checkEquals(
+                JsonNode.parse(expected),
+                JsonNode.object()
+                        .appendChild(node)
+        );
+    }
+
     // HateosResourceTesting............................................................................................
 
     @Test
     public void testHateosLinkIdAbsoluteReference() {
-        this.hateosLinkIdAndCheck(this.createCell("$B$21"), "B21");
+        this.hateosLinkIdAndCheck(
+                this.createCell("$B$21"),
+                "B21"
+        );
     }
 
     @Test
     public void testHateosLinkIdRelativeReference() {
-        this.hateosLinkIdAndCheck(this.createCell("C9"), "C9");
+        this.hateosLinkIdAndCheck(
+                this.createCell("C9"),
+                "C9"
+        );
+    }
+
+    @Override
+    public SpreadsheetCell createHateosResource() {
+        return this.createCell();
     }
 
     private SpreadsheetCell createCell(final String reference) {
-        return SpreadsheetCell.with(SpreadsheetSelection.parseCell(reference), formula("1+2"));
+        return SpreadsheetCell.with(
+                SpreadsheetSelection.parseCell(reference),
+                formula("1+2")
+        );
     }
 
     // patch............................................................................................................
@@ -1355,19 +1747,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    private void checkEquals(final JsonNode node,
-                             final String expected) {
-        this.checkEquals(
-                JsonNode.parse(expected),
-                JsonNode.object()
-                        .appendChild(node)
-        );
-    }
-
-    private JsonNodeMarshallContext jsonNodeMarshallContext() {
-        return JsonNodeMarshallContexts.basic();
-    }
-
     // treePrintable....................................................................................................
 
     @Test
@@ -1817,91 +2196,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         return this.createComparable();
     }
 
-    @Override
-    public SpreadsheetCell createComparable() {
-        return this.createComparable(COLUMN, ROW, FORMULA);
-    }
-
-    private SpreadsheetCell createComparable(final int column, final int row, final String formula) {
-        return SpreadsheetCell.with(
-                        reference(column, row),
-                        formula(formula)
-                )
-                .setParser(this.parser())
-                .setFormatter(this.formatter())
-                .setFormattedValue(this.formattedValue());
-    }
-
-    private static SpreadsheetCellReference differentReference() {
-        return reference(99, 888);
-    }
-
-    private static SpreadsheetCellReference reference() {
-        return reference(COLUMN, ROW);
-    }
-
-    private static SpreadsheetCellReference reference(final int column, final int row) {
-        return SpreadsheetSelection.cell(
-                SpreadsheetReferenceKind.RELATIVE.column(column),
-                SpreadsheetReferenceKind.RELATIVE.row(row)
-        );
-    }
-
-    private void checkReference(final SpreadsheetCell cell) {
-        this.checkReference(cell, REFERENCE);
-    }
-
-    private void checkReference(final SpreadsheetCell cell, final SpreadsheetCellReference reference) {
-        this.checkEquals(reference, cell.reference(), "reference");
-    }
-
-    private Optional<SpreadsheetParserSelector> parser() {
-        return Optional.of(
-                SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy")
-                        .spreadsheetParserSelector()
-        );
-    }
-
-    private void checkNoParser(final SpreadsheetCell cell) {
-        this.checkParser(
-                cell,
-                SpreadsheetCell.NO_PARSER
-        );
-    }
-
-    private void checkParser(final SpreadsheetCell cell) {
-        this.checkParser(
-                cell,
-                this.parser()
-        );
-    }
-
-    private void checkParser(final SpreadsheetCell cell,
-                             final Optional<SpreadsheetParserSelector> selector) {
-        this.checkEquals(
-                selector,
-                cell.parser(),
-                "parser"
-        );
-    }
-
-    private SpreadsheetFormula formula() {
-        return this.formula(FORMULA);
-    }
-
-    private SpreadsheetFormula formula(final String text) {
-        return SpreadsheetFormula.EMPTY
-                .setText(text);
-    }
-
-    private void checkFormula(final SpreadsheetCell cell) {
-        this.checkFormula(cell, this.formula());
-    }
-
-    private void checkFormula(final SpreadsheetCell cell, final SpreadsheetFormula formula) {
-        this.checkEquals(formula, cell.formula(), "formula");
-    }
-
     private TextStyle boldAndItalics() {
         return TextStyle.EMPTY.setValues(
                 Maps.of(
@@ -1911,64 +2205,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    private void checkTextStyle(final SpreadsheetCell cell) {
-        this.checkTextStyle(cell, SpreadsheetCell.NO_STYLE);
-    }
-
-    private void checkTextStyle(final SpreadsheetCell cell, final TextStyle style) {
-        this.checkEquals(style, cell.style(), "style");
-    }
-
-    private Optional<SpreadsheetFormatterSelector> formatter() {
-        return Optional.of(
-                SpreadsheetPattern.parseTextFormatPattern("@@")
-                        .spreadsheetFormatterSelector()
-        );
-    }
-
-    private void checkNoFormatter(final SpreadsheetCell cell) {
-        this.checkFormatter(
-                cell,
-                SpreadsheetCell.NO_FORMATTER
-        );
-    }
-
-    private void checkFormatter(final SpreadsheetCell cell) {
-        this.checkFormatter(cell, this.formatter());
-    }
-
-    private void checkFormatter(final SpreadsheetCell cell,
-                                final Optional<SpreadsheetFormatterSelector> formatter) {
-        this.checkEquals(
-                formatter,
-                cell.formatter(),
-                "formatter"
-        );
-    }
-
-    private Optional<TextNode> formattedValue() {
-        return Optional.of(TextNode.text("formattedValue-text"));
-    }
-
-    private void checkNoFormattedValue(final SpreadsheetCell cell) {
-        this.checkFormattedValue(cell, SpreadsheetCell.NO_FORMATTED_VALUE_CELL);
-    }
-
-    private void checkFormattedValue(final SpreadsheetCell cell) {
-        this.checkFormattedValue(
-                cell,
-                this.formattedValue()
-        );
-    }
-
-    private void checkFormattedValue(final SpreadsheetCell cell,
-                                     final Optional<TextNode> formatted) {
-        this.checkEquals(
-                formatted,
-                cell.formattedValue(),
-                "formattedValue"
-        );
-    }
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetCell> type() {
@@ -1978,30 +2215,5 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    @Override
-    public boolean compareAndEqualsMatch() {
-        return false; // comparing does not include all properties, so compareTo == 0 <> equals
-    }
-
-    // JsonNodeMarshallingTesting...........................................................................................
-
-    @Override
-    public SpreadsheetCell createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
-
-    @Override
-    public SpreadsheetCell unmarshall(final JsonNode jsonNode,
-                                      final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCell.unmarshall(jsonNode, context);
-    }
-
-    // HateosResourceTesting............................................................................................
-
-    @Override
-    public SpreadsheetCell createHateosResource() {
-        return this.createCell();
     }
 }
