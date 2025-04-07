@@ -353,7 +353,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     @Override
     public int compareTo(final SpreadsheetCell other) {
-        return this.reference().compareTo(other.reference());
+        return this.reference()
+                .compareTo(other.reference());
     }
 
     // replaceReferences................................................................................................
@@ -371,7 +372,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         .orElseThrow(
                                 () -> new IllegalArgumentException("Mapper returned nothing for " + cell)
                         )
-        ).setFormula(this.formula().replaceReferences(mapper));
+        ).setFormula(
+                this.formula()
+                        .replaceReferences(mapper)
+        );
     }
 
     // Patchable.......................................................................................................
@@ -582,7 +586,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
 
-            cell = unmarshall0(
+            cell = unmarshallProperties(
                     SpreadsheetSelection.parseCell(name.value()),
                     child,
                     context
@@ -596,9 +600,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return cell;
     }
 
-    private static SpreadsheetCell unmarshall0(final SpreadsheetCellReference reference,
-                                               final JsonNode node,
-                                               final JsonNodeUnmarshallContext context) {
+    private static SpreadsheetCell unmarshallProperties(final SpreadsheetCellReference reference,
+                                                        final JsonNode node,
+                                                        final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
         SpreadsheetFormatterSelector formatter = null;
         TextStyle style = TextStyle.EMPTY;
@@ -665,7 +669,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return JsonNode.object()
                 .set(
                         this.referenceToJsonPropertyName(),
-                        marshall0(context)
+                        marshallProperties(context)
                 );
     }
 
@@ -675,7 +679,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         );
     }
 
-    private JsonNode marshall0(final JsonNodeMarshallContext context) {
+    private JsonNode marshallProperties(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object()
                 .set(FORMULA_PROPERTY, context.marshall(this.formula));
 
