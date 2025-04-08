@@ -245,6 +245,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterStringToSpreadsheetError}
+     */
+    public static Converter<SpreadsheetConverterContext> stringToSpreadsheetError() {
+        return SpreadsheetConverterStringToSpreadsheetError.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetConverterStringToSpreadsheetName}
      */
     public static Converter<SpreadsheetConverterContext> stringToSpreadsheetName() {
