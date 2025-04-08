@@ -2020,7 +2020,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaSelfReferenceCycle() {
+    public void testSaveCellWithFormulaSelfReferenceCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -2178,7 +2178,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaMathExpression() {
+    public void testSaveCellWithFormulaMathExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
@@ -4047,7 +4047,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // saveCell tests with non expression formula's only value literals.................................................
 
     @Test
-    public void testSaveCellFormulaApostropheString() {
+    public void testSaveCellWithFormulaApostropheString() {
         this.saveCellAndLoadAndFormattedCheck(
                 "'Hello",
                 "Hello"
@@ -4055,7 +4055,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaDateLiteral() {
+    public void testSaveCellWithFormulaDateLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31",
                 LocalDate.of(1999, 12, 31)
@@ -4063,7 +4063,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaDateTimeLiteral() {
+    public void testSaveCellWithFormulaDateTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31 12:34",
                 LocalDateTime.of(
@@ -4074,7 +4074,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumberLiteral() {
+    public void testSaveCellWithFormulaNumberLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "123",
                 123
@@ -4082,7 +4082,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumber() {
+    public void testSaveCellWithFormulaNumber() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123",
                 123
@@ -4090,7 +4090,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumberMath() {
+    public void testSaveCellWithFormulaNumberMath() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123+456.75",
                 123 + 456.75
@@ -4098,7 +4098,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumberGreaterThan() {
+    public void testSaveCellWithFormulaNumberGreaterThan() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123>45",
                 true
@@ -4106,7 +4106,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaNumberLessThanEquals() {
+    public void testSaveCellWithFormulaNumberLessThanEquals() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=123<=45",
                 false
@@ -4114,7 +4114,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringEqualsSameCase() {
+    public void testSaveCellWithFormulaStringEqualsSameCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"hello\"",
                 true
@@ -4122,7 +4122,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringEqualsDifferentCase() {
+    public void testSaveCellWithFormulaStringEqualsDifferentCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"HELLO\"",
                 true
@@ -4130,7 +4130,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringEqualsDifferent() {
+    public void testSaveCellWithFormulaStringEqualsDifferent() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"=\"different\"",
                 false
@@ -4138,7 +4138,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringNotEqualsSameCase() {
+    public void testSaveCellWithFormulaStringNotEqualsSameCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"hello\"",
                 false
@@ -4146,7 +4146,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringNotEqualsDifferentCase() {
+    public void testSaveCellWithFormulaStringNotEqualsDifferentCase() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"HELLO\"",
                 false
@@ -4154,7 +4154,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaStringNotEqualsDifferent() {
+    public void testSaveCellWithFormulaStringNotEqualsDifferent() {
         this.saveCellAndLoadAndFormattedCheck(
                 "=\"hello\"<>\"different\"",
                 true
@@ -4162,7 +4162,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellFormulaTimeLiteral() {
+    public void testSaveCellWithFormulaTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
                 "12:34",
                 LocalTime.of(12, 34)
