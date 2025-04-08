@@ -910,7 +910,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-White\": 2,\n" +
                         "  \"color-Yellow\": 6,\n" +
                         "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
-                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-string, general, plugin-selector-like-to-string, selection-to-selection, selection-to-string, spreadsheet-cell-to, string-to-expression, string-to-selection, string-to-spreadsheet-id, string-to-spreadsheet-metadata-property-name, string-to-spreadsheet-name\",\n" +
+                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-string, general, plugin-selector-like-to-string, selection-to-selection, selection-to-string, spreadsheet-cell-to, string-to-error, string-to-expression, string-to-selection, string-to-spreadsheet-id, string-to-spreadsheet-metadata-property-name, string-to-spreadsheet-name\",\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"date-parser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
@@ -927,7 +927,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"find-highlighting\": false,\n" +
                         "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"formula-validators\": \"\",\n" +
                         "  \"functions\": \"\",\n" +
@@ -1079,7 +1079,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"color-White\": 2,\n" +
                         "  \"color-Yellow\": 6,\n" +
                         "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
-                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-string, general, plugin-selector-like-to-string, selection-to-selection, selection-to-string, spreadsheet-cell-to, string-to-expression, string-to-selection, string-to-spreadsheet-id, string-to-spreadsheet-metadata-property-name, string-to-spreadsheet-name\",\n" +
+                        "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-string, general, plugin-selector-like-to-string, selection-to-selection, selection-to-string, spreadsheet-cell-to, string-to-error, string-to-expression, string-to-selection, string-to-spreadsheet-id, string-to-spreadsheet-metadata-property-name, string-to-spreadsheet-name\",\n" +
                         "  \"currency-symbol\": \"CURR\",\n" +
                         "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
                         "  \"date-parser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
@@ -1096,7 +1096,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"find-highlighting\": false,\n" +
                         "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                         "  \"formula-validators\": \"\",\n" +
                         "  \"functions\": \"\",\n" +

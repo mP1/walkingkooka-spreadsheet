@@ -141,6 +141,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.spreadsheetCellTo();
                 break;
+            case STRING_TO_ERROR_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.stringToSpreadsheetError();
+                break;
             case STRING_TO_EXPRESSION_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -236,6 +241,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SPREADSHEET_CELL_TO = ConverterName.with(SPREADSHEET_CELL_TO_STRING);
 
+    private final static String STRING_TO_ERROR_STRING = "string-to-error";
+
+    final static ConverterName STRING_TO_ERROR = ConverterName.with(STRING_TO_ERROR_STRING);
+
     private final static String STRING_TO_EXPRESSION_STRING = "string-to-expression";
 
     final static ConverterName STRING_TO_EXPRESSION = ConverterName.with(STRING_TO_EXPRESSION_STRING);
@@ -273,6 +282,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                     converterInfo(SPREADSHEET_CELL_TO),
                     converterInfo(SELECTION_TO_SELECTION),
                     converterInfo(SELECTION_TO_STRING),
+                    converterInfo(STRING_TO_ERROR),
                     converterInfo(STRING_TO_EXPRESSION),
                     converterInfo(STRING_TO_SELECTION),
                     converterInfo(STRING_TO_SPREADSHEET_ID),

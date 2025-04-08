@@ -229,7 +229,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                             .aliasSet()
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
+                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     ExpressionFunctionAliasSet.parse("")
