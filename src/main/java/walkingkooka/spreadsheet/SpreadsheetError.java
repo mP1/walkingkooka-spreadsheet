@@ -124,6 +124,43 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     /**
+     * Supports parsing error messages, with the first token containing the {@link SpreadsheetErrorKind} and the remaining
+     * text the message.
+     * <pre>
+     * #DIV Error123
+     * </pre>
+     * becomes {@link SpreadsheetErrorKind#DIV0} and a {@link String} of <code>Error123</code>.
+     */
+    public static SpreadsheetError parse(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        final int nextToken = text.indexOf(' ');
+        final String kindText = -1 == nextToken ?
+                text :
+                text.substring(
+                        0,
+                        nextToken
+                );
+        if (kindText.isEmpty()) {
+            throw new IllegalArgumentException("Missing error kind");
+        }
+
+        final SpreadsheetErrorKind kind;
+
+        try {
+            kind = SpreadsheetErrorKind.parse(kindText);
+        } catch (final IllegalArgumentException cause) {
+            throw new IllegalArgumentException("Invalid error kind", cause);
+        }
+
+        return kind.setMessage(
+                        -1 == nextToken ?
+                                "" :
+                                text.substring(nextToken + 1)
+                );
+    }
+
+    /**
      * Generic factory that creates a new {@link SpreadsheetError} with the provided details.
      */
     public static SpreadsheetError with(final SpreadsheetErrorKind kind,

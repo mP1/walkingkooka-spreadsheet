@@ -25,6 +25,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -39,7 +40,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetError>,
+public final class SpreadsheetErrorTest implements ParseStringTesting<SpreadsheetError>,
+        ClassTesting2<SpreadsheetError>,
         HashCodeEqualsDefinedTesting2<SpreadsheetError>,
         JsonNodeMarshallingTesting<SpreadsheetError>,
         TreePrintableTesting,
@@ -360,6 +362,63 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
                 ).setValue(value),
                 error.toValidationError(cell)
         );
+    }
+
+    // parseString......................................................................................................
+
+    @Test
+    public void testParseInvalidKindFails() {
+        this.parseStringFails(
+                "Invalid123",
+                new IllegalArgumentException("Invalid error kind")
+        );
+    }
+
+    @Test
+    public void testParseWithoutMessage() {
+        this.parseStringAndCheck(
+                "#DIV/0!",
+                SpreadsheetErrorKind.DIV0.setMessage("")
+        );
+    }
+
+    @Test
+    public void testParseWithoutMessage2() {
+        this.parseStringAndCheck(
+                "#N/A",
+                SpreadsheetErrorKind.NA.setMessage("")
+        );
+    }
+
+    @Test
+    public void testParseWithMessage() {
+        this.parseStringAndCheck(
+                "#DIV/0! message123",
+                SpreadsheetErrorKind.DIV0.setMessage("message123")
+        );
+    }
+
+    @Test
+    public void testParseWithMessage2() {
+        this.parseStringAndCheck(
+                "#N/A message123",
+                SpreadsheetErrorKind.NA.setMessage("message123")
+        );
+    }
+
+    @Override
+    public SpreadsheetError parseString(final String text) {
+        return SpreadsheetError.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 
     // TreePrintable...................................................................................................
