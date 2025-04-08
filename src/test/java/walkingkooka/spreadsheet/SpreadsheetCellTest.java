@@ -112,10 +112,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = this.createCell();
 
         this.referenceAndCheck(cell);
-        this.parserAndCheck(cell);
         this.formulaAndCheck(cell);
-        this.textStyleAndCheck(cell);
         this.formatterAndCheck(cell);
+        this.parserAndCheck(cell);
+        this.styleAndCheck(cell);
         this.formattedValueAndCheck(cell);
     }
 
@@ -129,10 +129,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 cell,
                 reference.toRelative()
         );
-        this.parserAndCheckNone(cell);
         this.formulaAndCheck(cell);
-        this.textStyleAndCheck(cell);
         this.formatterAndCheckNone(cell);
+        this.parserAndCheckNone(cell);
+        this.styleAndCheck(cell);
         this.formattedValueAndCheck(
                 cell,
                 SpreadsheetCell.NO_FORMATTED_VALUE_CELL
@@ -144,10 +144,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
 
         this.referenceAndCheck(cell);
-        this.parserAndCheckNone(cell);
         this.formulaAndCheck(cell);
-        this.textStyleAndCheck(cell);
         this.formatterAndCheckNone(cell);
+        this.parserAndCheckNone(cell);
+        this.styleAndCheck(cell);
         this.formattedValueAndCheckNone(cell);
     }
 
@@ -162,7 +162,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
 
         this.referenceAndCheck(cell);
-        this.parserAndCheckNone(cell);
         this.formulaAndCheck(
                 cell,
                 SpreadsheetFormula.EMPTY.setText("=1+2")
@@ -171,8 +170,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                                         SpreadsheetErrorKind.VALUE)
                         )
         );
-        this.textStyleAndCheck(cell);
         this.formatterAndCheckNone(cell);
+        this.parserAndCheckNone(cell);
+        this.styleAndCheck(cell);
         this.formattedValueAndCheckNone(cell);
     }
 
@@ -214,6 +214,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different.parser(),
                 "parser"
         );
+
         this.formulaAndCheck(cell);
         this.checkEquals(
                 cell.formatter(),
@@ -289,13 +290,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 REFERENCE
         );
-        this.parserAndCheck(different);
         this.formulaAndCheck(
                 different,
                 differentFormula
         );
-        this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.parserAndCheck(different);
+        this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of formula / value change.
     }
@@ -311,14 +312,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
-        this.parserAndCheck(different);
         this.formulaAndCheck(
                 different,
                 SpreadsheetFormula.EMPTY
-                        .setExpressionValue(Optional.of(SpreadsheetErrorKind.VALUE))
+                        .setExpressionValue(
+                                Optional.of(SpreadsheetErrorKind.VALUE)
+                        )
         );
-        this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.parserAndCheck(different);
+        this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of formula / value change.
     }
@@ -382,16 +385,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 REFERENCE
         );
-        this.parserAndCheck(different);
         this.formulaAndCheck(
                 different,
                 this.formula()
         );
-        this.textStyleAndCheck(different);
         this.formatterAndCheck(
                 different,
                 differentFormatter
         );
+        this.parserAndCheck(different);
+        this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
     }
@@ -403,10 +406,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different);
-        this.parserAndCheckNone(different);
         this.formulaAndCheck(different);
-        this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.parserAndCheckNone(different);
+        this.styleAndCheck(different);
         this.validatorAndCheckNone(different);
         this.formattedValueAndCheckNone(different);
     }
@@ -495,11 +498,20 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         final SpreadsheetCell different = cell.setParser(differentParser);
         assertNotSame(cell, different);
 
-        this.referenceAndCheck(different, REFERENCE);
-        this.parserAndCheck(different, differentParser);
-        this.formulaAndCheck(different, this.formula());
-        this.textStyleAndCheck(different);
+        this.referenceAndCheck(
+                different,
+                REFERENCE
+        );
+        this.formulaAndCheck(
+                different,
+                this.formula()
+        );
         this.formatterAndCheck(different);
+        this.parserAndCheck(
+                different,
+                differentParser
+        );
+        this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
     }
@@ -530,10 +542,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different, REFERENCE);
-        this.parserAndCheck(different, differentParser);
         this.formulaAndCheck(different, formula);
-        this.textStyleAndCheck(different);
         this.formatterAndCheck(different);
+        this.parserAndCheck(different, differentParser);
+        this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of format change
     }
@@ -545,12 +557,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         assertNotSame(cell, different);
 
         this.referenceAndCheck(different);
-        this.parserAndCheck(different);
         this.formulaAndCheck(different);
-        this.textStyleAndCheck(different);
         this.formatterAndCheckNone(different);
-        this.formattedValueAndCheckNone(different);
+        this.parserAndCheck(different);
+        this.styleAndCheck(different);
         this.validatorAndCheckNone(different);
+        this.formattedValueAndCheckNone(different);
     }
 
     private Optional<SpreadsheetParserSelector> parser() {
@@ -622,26 +634,29 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 REFERENCE
         );
-        this.parserAndCheck(different);
         this.formulaAndCheck(
                 different,
                 this.formula()
         );
-        this.textStyleAndCheck(
+        this.formatterAndCheck(different);
+        this.parserAndCheck(different);
+        this.styleAndCheck(
                 different,
                 differentTextStyle
         );
-        this.formatterAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheckNone(different); // clear formattedValue because of text properties change
     }
 
-    private void textStyleAndCheck(final SpreadsheetCell cell) {
-        this.textStyleAndCheck(cell, SpreadsheetCell.NO_STYLE);
+    private void styleAndCheck(final SpreadsheetCell cell) {
+        this.styleAndCheck(
+                cell,
+                SpreadsheetCell.NO_STYLE
+        );
     }
 
-    private void textStyleAndCheck(final SpreadsheetCell cell,
-                                   final TextStyle style) {
+    private void styleAndCheck(final SpreadsheetCell cell,
+                               final TextStyle style) {
         this.checkEquals(
                 style,
                 cell.style(),
@@ -692,9 +707,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.formatterAndCheck(different);
         this.parserAndCheck(different);
-        this.textStyleAndCheck(
-                different
-        );
+        this.styleAndCheck(different);
         this.validatorAndCheck(
                 different,
                 differentValidator
@@ -769,11 +782,12 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 different,
                 this.formula()
         );
-        this.textStyleAndCheck(different);
         this.formatterAndCheck(
                 different,
                 this.formatter()
         );
+        this.parserAndCheck(different);
+        this.styleAndCheck(different);
         this.validatorAndCheck(different);
         this.formattedValueAndCheck(
                 different,
