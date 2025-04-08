@@ -43,12 +43,12 @@ import java.util.Optional;
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
-public final class SpreadsheetError implements Value<Optional<?>>,
+public final class SpreadsheetError implements Value<Optional<Object>>,
         TreePrintable,
         HasSpreadsheetErrorKind,
         UsesToStringBuilder {
 
-    public static final Optional<?> NO_VALUE = Optional.empty();
+    public static final Optional<Object> NO_VALUE = Optional.empty();
 
     /**
      * Creates a {@link SpreadsheetError} indicating a cycle involving the provided {@link SpreadsheetExpressionReference}.
@@ -127,7 +127,7 @@ public final class SpreadsheetError implements Value<Optional<?>>,
      */
     public static SpreadsheetError with(final SpreadsheetErrorKind kind,
                                         final String message,
-                                        final Optional<?> value) {
+                                        final Optional<Object> value) {
         Objects.requireNonNull(kind, "kind");
         Objects.requireNonNull(message, "message");
         Objects.requireNonNull(value, "value");
@@ -141,7 +141,7 @@ public final class SpreadsheetError implements Value<Optional<?>>,
 
     private SpreadsheetError(final SpreadsheetErrorKind kind,
                              final String message,
-                             final Optional<?> value) {
+                             final Optional<Object> value) {
         this.kind = kind;
         this.message = message;
         this.value = value;
@@ -184,14 +184,14 @@ public final class SpreadsheetError implements Value<Optional<?>>,
     }
 
     @Override
-    public Optional<?> value() {
+    public Optional<Object> value() {
         return this.value;
     }
 
     /**
      * Would be setter that returns a {@link SpreadsheetError} with the given value, creating a new instance if necessary.
      */
-    public SpreadsheetError setValue(final Optional<?> value) {
+    public SpreadsheetError setValue(final Optional<Object> value) {
         Objects.requireNonNull(value, "value");
 
         return this.value.equals(value) ?
@@ -203,7 +203,7 @@ public final class SpreadsheetError implements Value<Optional<?>>,
                 );
     }
 
-    private final Optional<?> value;
+    private final Optional<Object> value;
 
     /**
      * Only returns true if the {@link #kind} == {@link SpreadsheetErrorKind#NAME} and {@link #value()} is a {@link SpreadsheetCellReference}.
