@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -148,6 +149,32 @@ public final class SpreadsheetConverterSpreadsheetCellTest extends SpreadsheetCo
                 ),
                 SpreadsheetParserSelector.class,
                 parser
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetCellToValidatorSelectorWhenAbsent() {
+        this.convertAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1")
+                ),
+                ValidatorSelector.class,
+                null
+        );
+    }
+
+    @Test
+    public void testConvertSpreadsheetCellToValidatorSelector() {
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("hello-validator");
+
+        this.convertAndCheck(
+                SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1")
+                ).setValidator(
+                        Optional.of(validatorSelector)
+                ),
+                ValidatorSelector.class,
+                validatorSelector
         );
     }
 
