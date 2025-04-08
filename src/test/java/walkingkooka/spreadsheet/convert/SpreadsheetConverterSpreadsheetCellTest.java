@@ -99,7 +99,7 @@ public final class SpreadsheetConverterSpreadsheetCellTest extends SpreadsheetCo
     }
 
     @Test
-    public void testConvertSpreadsheetCellToSpreadsheetFormatterSelectionWhenAbsent() {
+    public void testConvertSpreadsheetCellToSpreadsheetFormatterSelectorWhenAbsent() {
         this.convertAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
@@ -126,7 +126,7 @@ public final class SpreadsheetConverterSpreadsheetCellTest extends SpreadsheetCo
     }
 
     @Test
-    public void testConvertSpreadsheetCellToSpreadsheetParserSelectionWhenAbsent() {
+    public void testConvertSpreadsheetCellToSpreadsheetParserSelectorWhenAbsent() {
         this.convertAndCheck(
                 SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1")
