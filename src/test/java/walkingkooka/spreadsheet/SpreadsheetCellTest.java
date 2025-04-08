@@ -176,6 +176,30 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formattedValueAndCheckNone(cell);
     }
 
+    @Test
+    public void testWithFormulaWithInputValue() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(
+                        Optional.of(123)
+                )
+        );
+
+        final SpreadsheetCell cell = SpreadsheetCell.with(
+                REFERENCE,
+                formula
+        );
+
+        this.referenceAndCheck(cell);
+        this.formulaAndCheck(
+                cell,
+                formula
+        );
+        this.formatterAndCheckNone(cell);
+        this.parserAndCheckNone(cell);
+        this.styleAndCheck(cell);
+        this.formattedValueAndCheckNone(cell);
+    }
+
     // SetReference.....................................................................................................
 
     @Test

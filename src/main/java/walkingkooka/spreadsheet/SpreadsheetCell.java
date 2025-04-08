@@ -200,7 +200,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private final SpreadsheetFormula formula;
 
     /**
-     * If a formula has a Collection value, return the value with {@link SpreadsheetErrorKind#VALUE}.
+     * If a formula has a Collection value, return the {@link SpreadsheetFormula#expressionValue()} with {@link SpreadsheetErrorKind#VALUE}.
      * A cell range resolves to a {@link List}, thus a cell = a range, will show an #VALUE!.
      */
     private static SpreadsheetFormula checkFormula(final SpreadsheetFormula formula) {
@@ -208,7 +208,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         // if value is a List formula should have an ERROR of #VALUE!
         return formula.setExpressionValue(
-                formula.value()
+                formula.expressionValue()
                         .map(v -> v instanceof Collection ? SpreadsheetErrorKind.VALUE : v)
         );
         // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/2205
