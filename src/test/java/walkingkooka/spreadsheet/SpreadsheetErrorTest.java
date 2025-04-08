@@ -32,6 +32,7 @@ import walkingkooka.tree.expression.FakeExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.ValidationError;
 
 import java.util.Optional;
 
@@ -335,6 +336,30 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkKind(error, KIND);
         this.checkMessage(error, MESSAGE);
         this.checkValue(error, VALUE);
+    }
+
+    // toValidationError................................................................................................
+
+    @Test
+    public void testToValidationError() {
+        final String message = "Message123";
+        final Optional<Object> value = Optional.of("Value456");
+
+        final SpreadsheetError error = SpreadsheetError.with(
+                SpreadsheetErrorKind.VALUE,
+                message,
+                value
+        );
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.checkEquals(
+                ValidationError.with(
+                        cell,
+                        message
+                ).setValue(value),
+                error.toValidationError(cell)
+        );
     }
 
     // TreePrintable...................................................................................................

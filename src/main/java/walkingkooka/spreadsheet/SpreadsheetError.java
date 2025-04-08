@@ -36,6 +36,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.ValidationError;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -244,6 +245,15 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
                 this.message,
                 this.value
         );
+    }
+
+    // toValidationError....... ........................................................................................
+
+    public ValidationError<SpreadsheetCellReference> toValidationError(final SpreadsheetCellReference cell) {
+        return ValidationError.with(
+                cell,
+                this.message
+        ).setValue(this.value);
     }
 
     // HasSpreadsheetErrorKind ........................................................................................
