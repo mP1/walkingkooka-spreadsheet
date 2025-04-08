@@ -304,4 +304,23 @@ public enum SpreadsheetErrorKind implements HasText {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unknown value=" + value));
     }
+
+    /**
+     * Supports parsing spreadsheet errors into the matching {@link SpreadsheetErrorKind}.
+     * <code>
+     * #DIV/0
+     * #N/A
+     * </code>
+     */
+    public static SpreadsheetErrorKind parse(final String text) {
+        CharSequences.failIfNullOrEmpty(text, "text");
+
+        for (final SpreadsheetErrorKind possible : values()) {
+            if (possible.text().equals(text)) {
+                return possible;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid text");
+    }
 }

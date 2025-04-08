@@ -25,6 +25,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.MissingStoreException;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
@@ -39,7 +40,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetErrorKind> {
+public final class SpreadsheetErrorKindTest implements ParseStringTesting<SpreadsheetErrorKind>,
+        ClassTesting<SpreadsheetErrorKind> {
 
     // translate.......................................................................................................
 
@@ -423,6 +425,46 @@ public final class SpreadsheetErrorKindTest implements ClassTesting<SpreadsheetE
                     SpreadsheetErrorKind.withValue(kind.value())
             );
         }
+    }
+
+    // ParseString......................................................................................................
+
+    @Test
+    public void testParseHashDivSlashZeroExclamationMark() {
+        this.parseStringAndCheck(
+                "#DIV/0!",
+                SpreadsheetErrorKind.DIV0
+        );
+    }
+
+    @Test
+    public void testParseAll() {
+        for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
+            switch (kind) {
+                case NAME_STRING:
+                    break;
+                default:
+                    this.parseStringAndCheck(
+                            kind.text(),
+                            kind
+                    );
+            }
+        }
+    }
+
+    @Override
+    public SpreadsheetErrorKind parseString(final String text) {
+        return SpreadsheetErrorKind.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> thrown) {
+        return thrown;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException thrown) {
+        return thrown;
     }
 
     // ClassTesting......................................................................................................
