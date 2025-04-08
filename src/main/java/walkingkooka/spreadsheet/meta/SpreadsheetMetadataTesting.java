@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.color.Color;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -319,8 +320,12 @@ public interface SpreadsheetMetadataTesting extends Testing {
             Optional.of(USER)
     );
 
+    // https://github.com/mP1/walkingkooka-spreadsheet/issues/6223
+    // SpreadsheetMetadataTesting.PROVIDER_CONTEXT requires real CanConvert
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.basic(
+            ConverterContexts.fake(), // CanConvert TODO
             METADATA_EN_AU.environmentContext(
+
                     EnvironmentContexts.properties(
                             Properties.EMPTY.set(
                                     PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
