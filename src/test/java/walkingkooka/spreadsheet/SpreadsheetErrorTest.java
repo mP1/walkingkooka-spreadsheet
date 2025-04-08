@@ -46,7 +46,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
     private final static SpreadsheetErrorKind KIND = SpreadsheetErrorKind.NA;
     private final static String MESSAGE = "message #1";
-    private final static Optional<?> VALUE = Optional.of(
+    private final static Optional<Object> VALUE = Optional.of(
             123
     );
 
@@ -325,7 +325,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     public void testSetValueWithDifferent() {
         final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE, VALUE);
 
-        final Optional<?> differentValue = Optional.of("different");
+        final Optional<Object> differentValue = Optional.of("different");
         final SpreadsheetError different = error.setValue(differentValue);
 
         this.checkKind(different, KIND);
