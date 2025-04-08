@@ -4219,9 +4219,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final String value = "Hello";
+        final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123);
 
-        final SpreadsheetCell a1 = SpreadsheetCell.with(
+        final SpreadsheetCell a1Cell = SpreadsheetCell.with(
                 SpreadsheetSelection.A1,
                 SpreadsheetFormula.EMPTY.setExpressionValue(
                         Optional.of(value)
@@ -4229,7 +4229,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         ).setStyle(STYLE);
 
         final SpreadsheetDelta result = engine.saveCell(
-                a1,
+                a1Cell,
                 context
         );
 
@@ -4237,7 +4237,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .setCells(
                         Sets.of(
                                 this.formatCell(
-                                        a1,
+                                        a1Cell,
                                         value
                                 )
                         )
@@ -4257,7 +4257,64 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.checkEquals(
                 expected,
                 result,
-                () -> "saveCell " + a1
+                () -> "saveCell " + a1Cell
+        );
+    }
+
+    @Test
+    public void testSaveCellWithEmptyFormulaTextAndInputValue() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final Optional<Object> value = Optional.of(
+                EXPRESSION_NUMBER_KIND.create(123)
+        );
+
+        final SpreadsheetCell a1Cell = SpreadsheetCell.with(
+                SpreadsheetSelection.A1,
+                SpreadsheetFormula.EMPTY.setInputValue(value)
+        ).setStyle(STYLE);
+
+        final SpreadsheetDelta result = engine.saveCell(
+                a1Cell,
+                context
+        );
+
+        final TextNode formatted = METADATA.spreadsheetFormatter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+        ).format(
+                value,
+                SPREADSHEET_TEXT_FORMAT_CONTEXT
+        ).get();
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1Cell.setFormattedValue(
+                                        Optional.of(
+                                                STYLE.replace(formatted)
+                                                        .root()
+                                        )
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                ).setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "saveCell " + a1Cell
         );
     }
 
