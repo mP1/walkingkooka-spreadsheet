@@ -1380,11 +1380,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        formatCell(
+                                        this.formatCell(
                                                 cellB2,
                                                 100 + 3
                                         ),
-                                        formatCell(
+                                        this.formatCell(
                                                 cellC2,
                                                 3 + 4 + (1 + 2 + 100) // 3+4+(b2)
                                         )
@@ -1458,15 +1458,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        formatCell(
+                                        this.formatCell(
                                                 cellB2,
                                                 100 + 3
                                         ),
-                                        formatCell(
+                                        this.formatCell(
                                                 cellC2,
                                                 3 + 4 + 100 + 3
                                         ),
-                                        formatCell(
+                                        this.formatCell(
                                                 cellD2,
                                                 5 + 6 + 100 + 3
                                         )
@@ -1752,7 +1752,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellAndCheck(
                 cell,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                this.formatCell(cell)
+                this.formatCellValue(cell)
         );
     }
 
@@ -1771,7 +1771,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellAndCheck(
                 cell,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                this.formatCell(cell)
+                this.formatCellValue(cell)
         );
     }
 
@@ -1885,7 +1885,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formatCell(savedCell)
+                                this.formatCellValue(savedCell)
                         )
                 ).setReferences(
                         references("A1=LABEL123")
@@ -1959,8 +1959,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        this.formatCell(b2, EXPRESSION_NUMBER_KIND.create(22)),
-                                        this.formatCell(c3, EXPRESSION_NUMBER_KIND.create(33))
+                                        this.formatCell(
+                                                b2,
+                                                EXPRESSION_NUMBER_KIND.create(22)
+                                        ),
+                                        this.formatCell(
+                                                c3,
+                                                EXPRESSION_NUMBER_KIND.create(33)
+                                        )
                                 )
                         ).setDeletedCells(
                                 cells("B3,C2")
@@ -1990,7 +1996,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "");
-        final SpreadsheetCell a1Formatted = this.formatCell(a1);
+        final SpreadsheetCell a1Formatted = this.formatCellValue(a1);
         this.saveCellAndCheck(
                 engine,
                 a1,
@@ -2074,7 +2080,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "a1",
                 ""
         );
-        final SpreadsheetCell a1Formatted = this.formatCell(a1Cell);
+        final SpreadsheetCell a1Formatted = this.formatCellValue(a1Cell);
         this.saveCellAndCheck(
                 engine,
                 a1Cell,
@@ -4275,46 +4281,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetFormula.EMPTY.setInputValue(value)
         ).setStyle(STYLE);
 
-        final SpreadsheetDelta result = engine.saveCell(
+        this.saveCellAndCheck(
+                engine,
                 a1Cell,
-                context
-        );
-
-        final TextNode formatted = METADATA.spreadsheetFormatter(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                PROVIDER_CONTEXT
-        ).format(
-                value,
-                SPREADSHEET_TEXT_FORMAT_CONTEXT
-        ).get();
-
-        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
-                .setCells(
-                        Sets.of(
-                                a1Cell.setFormattedValue(
-                                        Optional.of(
-                                                STYLE.replace(formatted)
-                                                        .root()
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(
+                                        this.formatCell(
+                                                a1Cell,
+                                                a1Cell.formula()
+                                                        .inputValue(),
+                                                STYLE
                                         )
                                 )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
                         )
-                ).setColumnWidths(
-                        columnWidths("A")
-                ).setRowHeights(
-                        rowHeights("1")
-                ).setColumnCount(
-                        OptionalInt.of(
-                                engine.columnCount(context)
-                        )
-                ).setRowCount(
-                        OptionalInt.of(
-                                engine.rowCount(context)
-                        )
-                );
-        this.checkEquals(
-                expected,
-                result,
-                () -> "saveCell " + a1Cell
         );
     }
 
@@ -8238,7 +8227,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetDelta.EMPTY
                         .setCells(
                                 Sets.of(
-                                        formatCell(
+                                        this.formatCell(
                                                 a1,
                                                 "=1+0+" + LABEL,
                                                 SpreadsheetError.selectionNotFound(LABEL)
@@ -21354,7 +21343,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      * Makes a {@link SpreadsheetCell} updating the formula expression and expected value and then formats the cell adding styling etc,
      * mimicking the very actions that happen during evaluation.
      */
-    private SpreadsheetCell formatCell(final SpreadsheetCell cell) {
+    private SpreadsheetCell formatCellValue(final SpreadsheetCell cell) {
         return this.formatCell(
                 cell,
                 cell.formula()
@@ -21389,11 +21378,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetCell formatCell(final SpreadsheetCell cell,
                                        final Optional<Object> value,
                                        final TextStyle style) {
-        SpreadsheetCell result = cell.setFormula(
-                this.parseFormula(
-                        cell.formula()
-                ).setExpressionValue(value)
-        );
+        final SpreadsheetFormula formula = cell.formula();
+
+        SpreadsheetCell result = false == formula.text().isEmpty() || formula.expressionValue().isPresent() ?
+                cell.setFormula(
+                        this.parseFormula(formula)
+                                .setExpressionValue(value)
+                ) :
+                cell.setFormula(
+                        formula.setInputValue(value)
+                );
 
         final TextNode formattedText = METADATA.spreadsheetFormatter(
                 SPREADSHEET_FORMATTER_PROVIDER,
