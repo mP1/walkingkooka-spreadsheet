@@ -360,6 +360,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row,
+                                                                final SpreadsheetEngineContext context) {
+        return this.engine.nextEmptyColumn(
+                row,
+                context
+        );
+    }
+    
+    @Override
     public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column,
                                                           final SpreadsheetEngineContext context) {
         return this.engine.nextEmptyRow(

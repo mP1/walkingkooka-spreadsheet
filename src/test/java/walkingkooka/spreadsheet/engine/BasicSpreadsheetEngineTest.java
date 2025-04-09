@@ -19130,6 +19130,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // nextEmptyColumn.....................................................................................................
+
+    @Test
+    public void testNextEmptyColumn() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        engine.saveCells(
+                Sets.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
+                        SpreadsheetSelection.parseCell("B2").setFormula(SpreadsheetFormula.EMPTY)
+                ),
+                context
+        );
+
+        this.nextEmptyColumnAndCheck(
+                engine,
+                SpreadsheetSelection.parseRow("2"),
+                context,
+                SpreadsheetSelection.parseColumn("C")
+        );
+    }
+    
     // nextEmptyRow.....................................................................................................
 
     @Test

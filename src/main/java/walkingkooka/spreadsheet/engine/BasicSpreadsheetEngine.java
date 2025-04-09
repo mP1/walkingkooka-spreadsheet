@@ -1573,6 +1573,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
+    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row,
+                                                                final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(row, "row");
+        Objects.requireNonNull(context, "context");
+
+        return context.storeRepository()
+                .cells()
+                .nextEmptyColumn(row);
+    }
+    
+    @Override
     public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column,
                                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(column, "column");
