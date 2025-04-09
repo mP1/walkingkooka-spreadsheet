@@ -2294,6 +2294,68 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "rowHeight " + row + " of " + engine);
     }
 
+    // nextEmptyRow.....................................................................................................
+
+    @Test
+    default void testNextEmptyRowWithNullColumnFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .nextEmptyRow(
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testNextEmptyRowWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .nextEmptyRow(
+                                SpreadsheetSelection.parseColumn("A"),
+                                null
+                        )
+        );
+    }
+
+    default void nextEmptyRowAndCheck(final SpreadsheetEngine engine,
+                                      final SpreadsheetColumnReference column,
+                                      final SpreadsheetEngineContext context) {
+        this.nextEmptyRowAndCheck(
+                engine,
+                column,
+                context,
+                Optional.empty()
+        );
+    }
+
+    default void nextEmptyRowAndCheck(final SpreadsheetEngine engine,
+                                      final SpreadsheetColumnReference column,
+                                      final SpreadsheetEngineContext context,
+                                      final SpreadsheetRowReference expected) {
+        this.nextEmptyRowAndCheck(
+                engine,
+                column,
+                context,
+                Optional.of(expected)
+        );
+    }
+
+    default void nextEmptyRowAndCheck(final SpreadsheetEngine engine,
+                                      final SpreadsheetColumnReference column,
+                                      final SpreadsheetEngineContext context,
+                                      final Optional<SpreadsheetRowReference> expected) {
+        this.checkEquals(
+                expected,
+                engine.nextEmptyRow(
+                        column,
+                        context
+                )
+        );
+    }
+
     // navigate.........................................................................................................
 
     @Test

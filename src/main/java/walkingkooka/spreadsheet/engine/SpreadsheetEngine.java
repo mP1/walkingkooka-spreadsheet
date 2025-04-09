@@ -279,6 +279,12 @@ public interface SpreadsheetEngine {
     int rowCount(final SpreadsheetEngineContext context);
 
     /**
+     * Finds the next empty row for the given column
+     */
+    Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column,
+                                                   final SpreadsheetEngineContext context);
+
+    /**
      * An absent {@link SpreadsheetSelection}.
      */
     Optional<SpreadsheetSelection> NO_SELECTION = Optional.empty();

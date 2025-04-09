@@ -1572,6 +1572,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .rowCount();
     }
 
+    @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column,
+                                                          final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(column, "column");
+        Objects.requireNonNull(context, "context");
+
+        return context.storeRepository()
+                .cells()
+                .nextEmptyRow(column);
+    }
+
     // WINDOW...........................................................................................................
 
     @Override
