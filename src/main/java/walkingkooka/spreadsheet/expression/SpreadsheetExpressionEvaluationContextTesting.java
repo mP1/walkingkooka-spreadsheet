@@ -26,8 +26,10 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
@@ -226,6 +228,36 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         assertThrows(
                 IllegalArgumentException.class,
                 () -> context.setSpreadsheetMetadata(set)
+        );
+    }
+
+    // nextEmptyColumn.....................................................................................................
+
+    default void nextEmptyColumnAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                         final SpreadsheetRowReference row) {
+        this.nextEmptyColumnAndCheck(
+                context,
+                row,
+                Optional.empty()
+        );
+    }
+
+    default void nextEmptyColumnAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                         final SpreadsheetRowReference row,
+                                         final SpreadsheetColumnReference expected) {
+        this.nextEmptyColumnAndCheck(
+                context,
+                row,
+                Optional.of(expected)
+        );
+    }
+
+    default void nextEmptyColumnAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                         final SpreadsheetRowReference row,
+                                         final Optional<SpreadsheetColumnReference> expected) {
+        this.checkEquals(
+                expected,
+                context.nextEmptyColumn(row)
         );
     }
 }

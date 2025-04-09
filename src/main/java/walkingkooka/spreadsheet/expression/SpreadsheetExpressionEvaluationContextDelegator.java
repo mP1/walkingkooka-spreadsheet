@@ -24,8 +24,10 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
 import walkingkooka.text.cursor.TextCursor;
@@ -67,6 +69,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetExpressionEvaluationContext()
                 .loadLabel(labelName);
+    }
+
+    @Override
+    default Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
+        return this.spreadsheetExpressionEvaluationContext()
+                .nextEmptyColumn(row);
     }
 
     @Override
