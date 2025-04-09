@@ -21,6 +21,8 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -75,6 +77,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         @Override
         public SpreadsheetCellReference validationReference() {
             return SpreadsheetSelection.A1;
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
+            return SpreadsheetExpressionEvaluationContexts.fake();
         }
 
         @Override

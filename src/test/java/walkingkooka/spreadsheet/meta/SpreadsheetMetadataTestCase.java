@@ -36,8 +36,10 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -69,6 +71,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         ToStringTesting<SpreadsheetMetadata>,
         TreePrintableTesting,
         EnvironmentContextTesting {
+
+    final static Function<SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = (SpreadsheetCellReference cell) -> {
+        throw new UnsupportedOperationException();
+    };
 
     final static ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
 
@@ -602,6 +608,22 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 null,
+                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                                LABEL_NAME_RESOLVER,
+                                CONVERTER_PROVIDER,
+                                PROVIDER_CONTEXT
+                        )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithSpreadsheetCellReferenceToSpreadsheetExpressionEvaluationContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createObject()
+                        .spreadsheetValidatorContext(
+                                null,
+                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
                                 PROVIDER_CONTEXT
@@ -616,6 +638,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
+                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 null,
                                 CONVERTER_PROVIDER,
                                 PROVIDER_CONTEXT
@@ -630,6 +653,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
+                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 null,
                                 PROVIDER_CONTEXT
@@ -644,6 +668,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
+                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
                                 null

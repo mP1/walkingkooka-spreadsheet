@@ -57,6 +57,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
@@ -1130,11 +1131,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetValidatorContext} with the given {@link SpreadsheetCellReference}.
      */
     public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetCellReference cell,
+                                                                         final Function<SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -1147,6 +1150,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return SpreadsheetValidatorContexts.basic(
                 ValidatorContexts.basic(
                         cell,
+                        Cast.to(referenceToExpressionEvaluationContext),
                         this.spreadsheetConverterContext(
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 labelNameResolver,

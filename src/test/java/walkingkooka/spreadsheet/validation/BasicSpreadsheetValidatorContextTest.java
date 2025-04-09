@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.validation;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.ValidatorContexts;
 
@@ -42,6 +43,9 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
                 BasicSpreadsheetValidatorContext.with(
                         ValidatorContexts.basic(
                                 SpreadsheetSelection.A1,
+                                (final SpreadsheetCellReference cell) -> {
+                                    throw new UnsupportedOperationException();
+                                },
                                 SPREADSHEET_FORMATTER_CONTEXT,
                                 PROVIDER_CONTEXT
                         )

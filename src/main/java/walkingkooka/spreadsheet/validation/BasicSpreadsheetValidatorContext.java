@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.validation;
 
+import walkingkooka.Cast;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.ValidatorContextDelegator;
@@ -59,6 +61,13 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
                                         Objects.requireNonNull(cell, "cell")
                                 )
                 );
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
+        return Cast.to(
+                this.context.expressionEvaluationContext()
+        );
     }
 
     // Object...........................................................................................................
