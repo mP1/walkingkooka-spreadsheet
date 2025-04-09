@@ -239,6 +239,13 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row,
+                                                                final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+
+    @Override
     public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column,
                                                           final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
