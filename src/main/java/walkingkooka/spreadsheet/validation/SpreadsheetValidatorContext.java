@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.ValidatorContext;
 
-public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetCellReference> {
+public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetExpressionReference> {
 
     @Override
-    SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference cell);
+    SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel);
 
     /**
      * Creates a {@link SpreadsheetExpressionEvaluationContext} with the current {@link #validationReference()}

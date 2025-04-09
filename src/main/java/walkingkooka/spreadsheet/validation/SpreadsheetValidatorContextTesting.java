@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.validation;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.ValidatorContextTesting;
 
-public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidatorContext> extends ValidatorContextTesting<C, SpreadsheetCellReference> {
+public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidatorContext> extends ValidatorContextTesting<C, SpreadsheetExpressionReference> {
 
     @Override
     default String typeNameSuffix() {

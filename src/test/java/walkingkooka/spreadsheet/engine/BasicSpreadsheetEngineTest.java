@@ -21503,10 +21503,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                             final ProviderContext context) {
                                 if (VALIDATOR.equals(validatorSelector)) {
                                     return Cast.to(
-                                            new Validator<SpreadsheetCellReference, SpreadsheetValidatorContext>() {
+                                            new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
                                                 @Override
-                                                public List<ValidationError<SpreadsheetCellReference>> validate(final Object value,
-                                                                                                                final SpreadsheetValidatorContext context) {
+                                                public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                                      final SpreadsheetValidatorContext context) {
                                                     checkEquals(
                                                             EXPRESSION_NUMBER_KIND.create(1 + 200),
                                                             context.expressionEvaluationContext()
