@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.CellSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.validation.ValidationReference;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -44,8 +43,7 @@ import java.util.function.Predicate;
 public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRange
         implements Comparable<SpreadsheetCellReference>,
         CanReplaceReferences<SpreadsheetCellReference>,
-        HateosResource<String>,
-        ValidationReference {
+        HateosResource<String> {
 
     /**
      * {@see SpreadsheetCellReferenceComparator}.
