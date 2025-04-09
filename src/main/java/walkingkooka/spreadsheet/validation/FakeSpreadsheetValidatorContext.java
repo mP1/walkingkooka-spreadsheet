@@ -18,17 +18,17 @@
 package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.FakeValidatorContext;
 
-public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<SpreadsheetCellReference> implements SpreadsheetValidatorContext {
+public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<SpreadsheetExpressionReference> implements SpreadsheetValidatorContext {
 
     public FakeSpreadsheetValidatorContext() {
         super();
     }
 
     @Override
-    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference cell) {
+    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel) {
         throw new UnsupportedOperationException();
     }
 

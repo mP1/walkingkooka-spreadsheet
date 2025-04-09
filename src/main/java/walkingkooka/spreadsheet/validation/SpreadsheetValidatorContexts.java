@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.ValidatorContext;
 
 /**
@@ -29,7 +29,7 @@ public final class SpreadsheetValidatorContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetValidatorContext}
      */
-    public static SpreadsheetValidatorContext basic(final ValidatorContext<SpreadsheetCellReference> context) {
+    public static SpreadsheetValidatorContext basic(final ValidatorContext<SpreadsheetExpressionReference> context) {
         return BasicSpreadsheetValidatorContext.with(context);
     }
 

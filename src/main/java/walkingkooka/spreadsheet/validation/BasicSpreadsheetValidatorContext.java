@@ -19,16 +19,16 @@ package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.ValidatorContextDelegator;
 
 import java.util.Objects;
 
 final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorContext,
-        ValidatorContextDelegator<SpreadsheetCellReference> {
+        ValidatorContextDelegator<SpreadsheetExpressionReference> {
 
-    static SpreadsheetValidatorContext with(final ValidatorContext<SpreadsheetCellReference> context) {
+    static SpreadsheetValidatorContext with(final ValidatorContext<SpreadsheetExpressionReference> context) {
         Objects.requireNonNull(context, "context");
 
         return context instanceof SpreadsheetValidatorContext ?
@@ -36,29 +36,29 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
                 new BasicSpreadsheetValidatorContext(context);
     }
 
-    private BasicSpreadsheetValidatorContext(final ValidatorContext<SpreadsheetCellReference> context) {
+    private BasicSpreadsheetValidatorContext(final ValidatorContext<SpreadsheetExpressionReference> context) {
         super();
 
         this.context = context;
     }
 
     @Override
-    public ValidatorContext<SpreadsheetCellReference> validatorContext() {
+    public ValidatorContext<SpreadsheetExpressionReference> validatorContext() {
         return this.context;
     }
 
-    private final ValidatorContext<SpreadsheetCellReference> context;
+    private final ValidatorContext<SpreadsheetExpressionReference> context;
 
     @Override
-    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference cell) {
+    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel) {
         return this.validatorContext()
                 .validationReference()
-                .equalsIgnoreReferenceKind(cell) ?
+                .equalsIgnoreReferenceKind(cellOrLabel) ?
                 this :
                 new BasicSpreadsheetValidatorContext(
                         this.validatorContext()
                                 .setValidationReference(
-                                        Objects.requireNonNull(cell, "cell")
+                                        Objects.requireNonNull(cellOrLabel, "cellOrLabel")
                                 )
                 );
     }

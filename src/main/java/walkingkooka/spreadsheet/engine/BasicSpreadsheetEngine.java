@@ -1363,19 +1363,19 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (null != validatorSelector) {
             final SpreadsheetFormula formula = cell.formula();
             if (false == formula.error().isPresent()) {
-                final Validator<SpreadsheetCellReference, SpreadsheetValidatorContext> validator = context.validator(
+                final Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext> validator = context.validator(
                         validatorSelector,
                         context // providerContext
                 );
 
-                final List<ValidationError<SpreadsheetCellReference>> errors = validator.validate(
+                final List<ValidationError<SpreadsheetExpressionReference>> errors = validator.validate(
                         formula.value()
                                 .orElse(null),
                         SpreadsheetValidatorContexts.basic(
                                 ValidatorContexts.basic(
                                         cell.reference(), // reference
-                                        (SpreadsheetCellReference cellReference) -> context.spreadsheetExpressionEvaluationContext(
-                                                Optional.of(cell),
+                                        (SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
+                                                Optional.ofNullable(cell),
                                                 loader
                                         ),
                                         context.spreadsheetMetadata()
@@ -1392,7 +1392,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                 // if errors found convert the first back to a SpreadsheetError and SpreadsheetFormula#setError
                 if (false == errors.isEmpty()) {
-                    final ValidationError<SpreadsheetCellReference> firstError = errors.get(0);
+                    final ValidationError<SpreadsheetExpressionReference> firstError = errors.get(0);
                     result = result.setFormula(
                             formula.setError(
                                     Optional.of(
