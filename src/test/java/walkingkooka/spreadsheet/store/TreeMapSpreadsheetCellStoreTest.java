@@ -1335,6 +1335,97 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
     }
 
+    // nextEmptyColumn..................................................................................................
+
+    @Test
+    public void testNextEmptyColumnWhenEmptyRow() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+        store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("1+2")
+                        )
+        );
+
+        this.nextEmptyColumnAndCheck(
+                store,
+                SpreadsheetSelection.parseRow("2"),
+                SpreadsheetReferenceKind.RELATIVE.firstColumn()
+        );
+    }
+
+    @Test
+    public void testNextEmptyColumnWhenSeveralRows() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+        store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("1")
+                        )
+        );
+        store.save(
+                SpreadsheetSelection.parseCell("B2")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("22")
+                        )
+        );
+        store.save(
+                SpreadsheetSelection.parseCell("B3")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("222")
+                        )
+        );
+        store.save(
+                SpreadsheetSelection.parseCell("C3")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("3")
+                        )
+        );
+
+        this.nextEmptyColumnAndCheck(
+                store,
+                SpreadsheetSelection.parseRow("3"),
+                SpreadsheetSelection.parseColumn("D")
+        );
+    }
+
+    @Test
+    public void testNextEmptyColumnWhenFull() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+        store.save(
+                SpreadsheetSelection.A1
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("1")
+                        )
+        );
+        store.save(
+                SpreadsheetSelection.parseRow("2")
+                        .setColumn(SpreadsheetReferenceKind.RELATIVE.lastColumn())
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("22")
+                        )
+        );
+        store.save(
+                SpreadsheetSelection.parseCell("C3")
+                        .setFormula(
+                                SpreadsheetFormula.EMPTY
+                                        .setText("3")
+                        )
+        );
+
+        this.nextEmptyColumnAndCheck(
+                store,
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
+    
     // nextEmptyRow.....................................................................................................
 
     @Test

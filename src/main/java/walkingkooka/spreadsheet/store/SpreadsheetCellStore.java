@@ -121,6 +121,11 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     double maxRowHeight(final SpreadsheetRowReference row);
 
     /**
+     * Returns the next empty {@link SpreadsheetColumnReference} for the given {@link SpreadsheetRowReference}.
+     */
+    Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row);
+
+    /**
      * Returns the next empty row for the given column.
      */
     Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column);

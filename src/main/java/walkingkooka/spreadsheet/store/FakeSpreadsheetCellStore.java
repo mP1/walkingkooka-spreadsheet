@@ -81,6 +81,11 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     }
 
     @Override
+    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }

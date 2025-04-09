@@ -211,6 +211,36 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         );
     }
 
+    // nextEmptyColumn.....................................................................................................
+
+    default void nextEmptyColumnAndCheck(final SpreadsheetCellStore store,
+                                         final SpreadsheetRowReference row) {
+        this.nextEmptyColumnAndCheck(
+                store,
+                row,
+                Optional.empty()
+        );
+    }
+
+    default void nextEmptyColumnAndCheck(final SpreadsheetCellStore store,
+                                         final SpreadsheetRowReference row,
+                                         final SpreadsheetColumnReference expected) {
+        this.nextEmptyColumnAndCheck(
+                store,
+                row,
+                Optional.of(expected)
+        );
+    }
+
+    default void nextEmptyColumnAndCheck(final SpreadsheetCellStore store,
+                                         final SpreadsheetRowReference row,
+                                         final Optional<SpreadsheetColumnReference> expected) {
+        this.checkEquals(
+                expected,
+                store.nextEmptyColumn(row)
+        );
+    }
+
     // nextEmptyRow.....................................................................................................
 
     default void nextEmptyRowAndCheck(final SpreadsheetCellStore store,
