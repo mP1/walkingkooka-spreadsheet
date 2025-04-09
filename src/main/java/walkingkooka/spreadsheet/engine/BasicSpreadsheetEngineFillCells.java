@@ -158,7 +158,7 @@ final class BasicSpreadsheetEngineFillCells {
                 context
         );
 
-        engine.parseFormulaEvaluateFormatStyleAndSave(
+        engine.parseFormulaEvaluateValidateFormatStyleAndSave(
                 cell2,
                 SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
                 this.changes, // SpreadsheetExpressionReferenceLoader
