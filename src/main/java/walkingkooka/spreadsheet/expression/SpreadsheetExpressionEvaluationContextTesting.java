@@ -260,4 +260,34 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
                 context.nextEmptyColumn(row)
         );
     }
+
+    // nextEmptyRow.....................................................................................................
+
+    default void nextEmptyRowAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                      final SpreadsheetColumnReference column) {
+        this.nextEmptyRowAndCheck(
+                context,
+                column,
+                Optional.empty()
+        );
+    }
+
+    default void nextEmptyRowAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                      final SpreadsheetColumnReference column,
+                                      final SpreadsheetRowReference expected) {
+        this.nextEmptyRowAndCheck(
+                context,
+                column,
+                Optional.of(expected)
+        );
+    }
+
+    default void nextEmptyRowAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                      final SpreadsheetColumnReference column,
+                                      final Optional<SpreadsheetRowReference> expected) {
+        this.checkEquals(
+                expected,
+                context.nextEmptyRow(column)
+        );
+    }
 }

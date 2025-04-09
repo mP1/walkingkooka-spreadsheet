@@ -127,6 +127,11 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
     }
 
     @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        return this.context.nextEmptyRow(column);
+    }
+
+    @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
         return this.context.spreadsheetMetadata();
     }

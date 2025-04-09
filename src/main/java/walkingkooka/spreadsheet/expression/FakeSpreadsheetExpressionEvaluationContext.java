@@ -104,6 +104,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public AbsoluteUrl serverUrl() {
         throw new UnsupportedOperationException();
     }

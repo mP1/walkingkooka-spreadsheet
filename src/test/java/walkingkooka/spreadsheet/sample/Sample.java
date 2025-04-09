@@ -461,6 +461,11 @@ public final class Sample {
         }
 
         @Override
+        public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public boolean isText(final Object value) {
             return SpreadsheetStrings.isText(value);
         }

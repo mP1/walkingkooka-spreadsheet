@@ -162,4 +162,9 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * Returns the next empty column for the requested {@link SpreadsheetRowReference}.
      */
     Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row);
+
+    /**
+     * Returns the next empty {@link SpreadsheetRowReference} for the requested {@link SpreadsheetColumnReference}.
+     */
+    Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column);
 }
