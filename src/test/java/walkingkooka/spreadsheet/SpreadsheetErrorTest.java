@@ -20,9 +20,11 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -35,6 +37,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.ValidationError;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -205,7 +208,51 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                 Optional.of(reference)
         );
     }
-    
+
+    // validationErrors.................................................................................................
+
+    @Test
+    public void testValidationErrorsWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SpreadsheetError.validationErrors(null)
+        );
+    }
+
+    @Test
+    public void testValidationErrorWithEmptyErrors() {
+        this.validationErrorsAndCheck(
+                Lists.empty(),
+                Optional.empty()
+        );
+    }
+
+    @Test
+    public void testValidationErrorWithManyErrors() {
+        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessageAndValue(
+                "Message Hello 123",
+                SpreadsheetSelection.A1
+        );
+
+        this.validationErrorsAndCheck(
+                Lists.of(
+                        ValidationError.with(
+                                SpreadsheetSelection.A1,
+                                "#VALUE! Message Hello 123"
+                        )
+                ),
+                Optional.of(error)
+        );
+    }
+
+    private void validationErrorsAndCheck(final List<ValidationError<SpreadsheetExpressionReference>> errors,
+                                          final Optional<SpreadsheetError> expected) {
+        this.checkEquals(
+                expected,
+                SpreadsheetError.validationErrors(errors)
+        );
+    }
+
     // isMissingCell....................................................................................................
 
     @Test
