@@ -19,11 +19,15 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
+import walkingkooka.validation.ValidationReference;
 
 /**
- * Base class for all Spreadsheet {@link ExpressionReference}
+ * Base class for all Spreadsheet {@link ExpressionReference}.
+ * Either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName} with the later can be used for untargeted
+ * form fields.
  */
-abstract public class SpreadsheetExpressionReference extends SpreadsheetSelection implements ExpressionReference {
+abstract public class SpreadsheetExpressionReference extends SpreadsheetSelection implements ExpressionReference,
+        ValidationReference {
 
     /**
      * Package private to limit subclassing.
