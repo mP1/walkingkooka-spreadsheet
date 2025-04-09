@@ -282,6 +282,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        return this.store.nextEmptyRow(column);
+    }
+
+    @Override
     public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
                                                        final String valueType,
                                                        final int max) {

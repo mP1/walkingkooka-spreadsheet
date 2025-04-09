@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
@@ -76,6 +77,11 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
 
     @Override
     public double maxRowHeight(final SpreadsheetRowReference row) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
 

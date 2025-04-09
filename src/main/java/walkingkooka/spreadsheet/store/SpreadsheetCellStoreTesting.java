@@ -26,8 +26,11 @@ import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -205,6 +208,36 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
         assertThrows(
                 NullPointerException.class,
                 () -> this.createStore().maxRowHeight(null)
+        );
+    }
+
+    // nextEmptyRow.....................................................................................................
+
+    default void nextEmptyRowAndCheck(final SpreadsheetCellStore store,
+                                      final SpreadsheetColumnReference column) {
+        this.nextEmptyRowAndCheck(
+                store,
+                column,
+                Optional.empty()
+        );
+    }
+
+    default void nextEmptyRowAndCheck(final SpreadsheetCellStore store,
+                                      final SpreadsheetColumnReference column,
+                                      final SpreadsheetRowReference expected) {
+        this.nextEmptyRowAndCheck(
+                store,
+                column,
+                Optional.of(expected)
+        );
+    }
+
+    default void nextEmptyRowAndCheck(final SpreadsheetCellStore store,
+                                      final SpreadsheetColumnReference column,
+                                      final Optional<SpreadsheetRowReference> expected) {
+        this.checkEquals(
+                expected,
+                store.nextEmptyRow(column)
         );
     }
 
