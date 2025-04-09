@@ -282,6 +282,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
+    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
+        return this.store.nextEmptyColumn(row);
+    }
+
+    @Override
     public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
         return this.store.nextEmptyRow(column);
     }

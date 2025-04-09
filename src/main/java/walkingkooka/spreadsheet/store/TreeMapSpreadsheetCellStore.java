@@ -373,6 +373,36 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     /**
+     * Slow but safe way to find the last column for the given row and then adds one.
+     */
+    @Override
+    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
+
+        SpreadsheetColumnReference next = null;
+        final SpreadsheetColumnReference first = SpreadsheetReferenceKind.RELATIVE.firstColumn();
+        final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
+
+        for (final SpreadsheetCell spreadsheetCell : this.store.between(
+                row.setColumn(first),
+                row.setColumn(last))) {
+            final SpreadsheetColumnReference possible = spreadsheetCell.reference()
+                    .column();
+            if (null == next || possible.compareTo(next) > 0) {
+                next = possible;
+            }
+        }
+
+        return Optional.ofNullable(
+                null == next ?
+                        first :
+                        next.equalsIgnoreReferenceKind(last) ?
+                                null :
+                                next.add(1)
+        );
+    }
+    
+    /**
      * Slow but safe way to find the last row for the given column and then adds one.
      */
     @Override
