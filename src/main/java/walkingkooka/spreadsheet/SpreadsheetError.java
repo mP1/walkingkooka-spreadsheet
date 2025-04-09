@@ -38,6 +38,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.ValidationError;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -121,6 +122,27 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
                 text,
                 reference
         );
+    }
+
+    /**
+     * Accepts potentially a list of {@link ValidationError errors} and returns a {@link SpreadsheetError}.
+     */
+    public static Optional<SpreadsheetError> validationErrors(final List<ValidationError<SpreadsheetExpressionReference>> errors) {
+        Objects.requireNonNull(errors, "errors");
+
+        SpreadsheetError error = null;
+
+        if (false == errors.isEmpty()) {
+            final ValidationError<SpreadsheetExpressionReference> firstError = errors.get(0);
+
+            error = SpreadsheetError.parse(
+                    firstError.text()
+            ).setValue(
+                    Optional.of(firstError.reference())
+            );
+        }
+
+        return Optional.ofNullable(error);
     }
 
     /**

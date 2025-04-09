@@ -69,7 +69,6 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -1368,43 +1367,33 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context // providerContext
                 );
 
-                final List<ValidationError<SpreadsheetExpressionReference>> errors = validator.validate(
-                        formula.value()
-                                .orElse(null),
-                        SpreadsheetValidatorContexts.basic(
-                                ValidatorContexts.basic(
-                                        cell.reference(), // reference
-                                        (SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
-                                                Optional.ofNullable(cell),
-                                                loader
-                                        ),
-                                        context.spreadsheetMetadata()
-                                                .spreadsheetConverterContext(
-                                                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                                        context, // SpreadsheetLabelNameResolver,
-                                                        context, // SpreadsheetConverterProvider
-                                                        context
-                                                ), // ConverterContext
-                                        context // EnvironmentContext
+                result = result.setFormula(
+                        formula.setError(
+                                SpreadsheetError.validationErrors(
+                                        validator.validate(
+                                                formula.value()
+                                                        .orElse(null),
+                                                SpreadsheetValidatorContexts.basic(
+                                                        ValidatorContexts.basic(
+                                                                cell.reference(), // reference
+                                                                (SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
+                                                                        Optional.ofNullable(cell),
+                                                                        loader
+                                                                ),
+                                                                context.spreadsheetMetadata()
+                                                                        .spreadsheetConverterContext(
+                                                                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                                                                                context, // SpreadsheetLabelNameResolver,
+                                                                                context, // SpreadsheetConverterProvider
+                                                                                context
+                                                                        ), // ConverterContext
+                                                                context // EnvironmentContext
+                                                        )
+                                                )
+                                        )
                                 )
                         )
                 );
-
-                // if errors found convert the first back to a SpreadsheetError and SpreadsheetFormula#setError
-                if (false == errors.isEmpty()) {
-                    final ValidationError<SpreadsheetExpressionReference> firstError = errors.get(0);
-                    result = result.setFormula(
-                            formula.setError(
-                                    Optional.of(
-                                            SpreadsheetError.parse(
-                                                    firstError.text()
-                                            ).setValue(
-                                                    Optional.of(firstError.reference())
-                                            )
-                                    )
-                            )
-                    );
-                }
             }
         }
 
