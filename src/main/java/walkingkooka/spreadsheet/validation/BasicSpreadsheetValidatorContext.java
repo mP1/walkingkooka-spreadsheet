@@ -53,7 +53,7 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
     public SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference cell) {
         return this.validatorContext()
                 .validationReference()
-                .equals(cell) ?
+                .equalsIgnoreReferenceKind(cell) ?
                 this :
                 new BasicSpreadsheetValidatorContext(
                         this.validatorContext()

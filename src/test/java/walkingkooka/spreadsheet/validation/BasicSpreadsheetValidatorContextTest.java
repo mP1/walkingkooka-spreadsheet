@@ -24,16 +24,34 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.ValidatorContexts;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetValidatorContextTesting<BasicSpreadsheetValidatorContext>,
-        SpreadsheetMetadataTesting{
+        SpreadsheetMetadataTesting {
 
     @Test
     public void testWithNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicSpreadsheetValidatorContext.with(null)
+        );
+    }
+
+    @Test
+    public void testSetValidationReferenceSameDifferentKind() {
+        final BasicSpreadsheetValidatorContext context = this.createContext();
+
+        final SpreadsheetCellReference different = SpreadsheetSelection.parseCell("$A1");
+
+        this.checkNotEquals(
+                different,
+                context.validationReference()
+        );
+
+        assertSame(
+                context,
+                context.setValidationReference(different)
         );
     }
 
