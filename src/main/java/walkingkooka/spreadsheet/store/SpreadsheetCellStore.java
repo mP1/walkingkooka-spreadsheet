@@ -28,6 +28,7 @@ import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -118,6 +119,11 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * Returns the max row height for the given {@link SpreadsheetRowReference}
      */
     double maxRowHeight(final SpreadsheetRowReference row);
+
+    /**
+     * Returns the next empty row for the given column.
+     */
+    Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column);
 
     static void checkFindCellsWithValueType(final SpreadsheetCellRangeReference range,
                                             final String valueTypeName,

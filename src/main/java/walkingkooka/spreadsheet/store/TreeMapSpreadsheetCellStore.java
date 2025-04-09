@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
@@ -369,6 +370,36 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                         .orElse(0.0)
                 ).max()
                 .orElse(0.0);
+    }
+
+    /**
+     * Slow but safe way to find the last row for the given column and then adds one.
+     */
+    @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
+
+        SpreadsheetRowReference next = null;
+        final SpreadsheetRowReference first = SpreadsheetReferenceKind.RELATIVE.firstRow();
+        final SpreadsheetRowReference last = SpreadsheetReferenceKind.RELATIVE.lastRow();
+
+        for (final SpreadsheetCell spreadsheetCell : this.store.between(
+                column.setRow(first),
+                column.setRow(last))) {
+            final SpreadsheetRowReference possible = spreadsheetCell.reference()
+                    .row();
+            if (null == next || possible.compareTo(next) > 0) {
+                next = possible;
+            }
+        }
+
+        return Optional.ofNullable(
+                null == next ?
+                        first :
+                        next.equalsIgnoreReferenceKind(last) ?
+                                null :
+                                next.add(1)
+        );
     }
 
     @Override
