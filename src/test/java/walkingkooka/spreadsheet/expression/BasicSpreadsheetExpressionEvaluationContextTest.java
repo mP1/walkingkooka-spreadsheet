@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -257,6 +258,39 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 ),
                 cell,
                 Optional.of(spreadsheetCell)
+        );
+    }
+
+    // nextEmptyColumn..................................................................................................
+
+    @Test
+    public void testNextEmptyColumn() {
+        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+        );
+        cellStore.save(spreadsheetCell);
+
+        this.nextEmptyColumnAndCheck(
+                BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SpreadsheetExpressionReferenceLoaders.fake(),
+                        SERVER_URL,
+                        METADATA,
+                        new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public SpreadsheetCellStore cells() {
+                                return cellStore;
+                            }
+                        },
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                ),
+                SpreadsheetSelection.parseRow("1"),
+                SpreadsheetSelection.parseColumn("B")
         );
     }
 

@@ -33,10 +33,12 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.text.CaseSensitivity;
@@ -156,6 +158,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .parse(expression, parserContext)
                 .get()
                 .cast(SpreadsheetFormulaParserToken.class);
+    }
+
+    @Override
+    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
+        return this.spreadsheetStoreRepository.cells()
+                .nextEmptyColumn(row);
     }
 
     @Override

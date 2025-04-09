@@ -23,8 +23,10 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.template.TemplateValueName;
 
@@ -63,6 +65,13 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     @Override
     default Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
 
         throw new UnsupportedOperationException();
     }

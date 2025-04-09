@@ -29,9 +29,11 @@ import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
@@ -155,4 +157,9 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * This is necessary to support a function that allows updating/replacing a {@link SpreadsheetMetadata}.
      */
     void setSpreadsheetMetadata(final SpreadsheetMetadata metadata);
+
+    /**
+     * Returns the next empty column for the requested {@link SpreadsheetRowReference}.
+     */
+    Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row);
 }
