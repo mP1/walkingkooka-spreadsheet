@@ -76,6 +76,11 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
         return SpreadsheetTemplateContext.super.nextEmptyColumn(row);
     }
 
+    @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        return SpreadsheetTemplateContext.super.nextEmptyRow(column);
+    }
+
     // SpreadsheetParserContext.........................................................................................
 
     @Override

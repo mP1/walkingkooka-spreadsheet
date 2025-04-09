@@ -294,6 +294,39 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
+    // nextEmptyRow.....................................................................................................
+
+    @Test
+    public void testNextEmptyRow() {
+        final SpreadsheetCellStore cellStore = SpreadsheetCellStores.treeMap();
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+        );
+        cellStore.save(spreadsheetCell);
+
+        this.nextEmptyRowAndCheck(
+                BasicSpreadsheetExpressionEvaluationContext.with(
+                        CELL,
+                        SpreadsheetExpressionReferenceLoaders.fake(),
+                        SERVER_URL,
+                        METADATA,
+                        new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public SpreadsheetCellStore cells() {
+                                return cellStore;
+                            }
+                        },
+                        SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        PROVIDER_CONTEXT
+                ),
+                SpreadsheetSelection.parseColumn("A"),
+                SpreadsheetSelection.parseRow("2")
+        );
+    }
+
     // parseFormula.....................................................................................................
 
     @Test

@@ -78,6 +78,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
+    default Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        return this.spreadsheetExpressionEvaluationContext()
+                .nextEmptyRow(column);
+    }
+
+    @Override
     default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         return this.spreadsheetExpressionEvaluationContext()
                 .parseFormula(formula);

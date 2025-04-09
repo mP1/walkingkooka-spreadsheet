@@ -77,6 +77,13 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     }
 
     @Override
+    default Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }

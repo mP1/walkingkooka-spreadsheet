@@ -445,6 +445,11 @@ public class TestGwtTest extends GWTTestCase {
         }
 
         @Override
+        public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
             throw new UnsupportedOperationException();
         }

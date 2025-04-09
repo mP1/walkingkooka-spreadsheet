@@ -167,6 +167,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        return this.spreadsheetStoreRepository.cells()
+                .nextEmptyRow(column);
+    }
+
+    @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetMetadata;
     }

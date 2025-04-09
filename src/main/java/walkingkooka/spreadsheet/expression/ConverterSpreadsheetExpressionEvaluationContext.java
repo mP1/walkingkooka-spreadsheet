@@ -209,6 +209,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        return this.context.nextEmptyRow(column);
+    }
+
+    @Override
     public SpreadsheetFormulaParserToken parseFormula(final TextCursor expression) {
         return this.context.parseFormula(expression);
     }
