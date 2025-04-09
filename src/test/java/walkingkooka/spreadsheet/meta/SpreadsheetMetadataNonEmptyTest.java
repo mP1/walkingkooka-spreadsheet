@@ -68,6 +68,7 @@ import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
@@ -2534,6 +2535,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 50
                         ).spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
+                                (final SpreadsheetCellReference cell) -> {
+                                    throw new UnsupportedOperationException();
+                                },
                                 LABEL_NAME_RESOLVER,
                                 ConverterProviders.converters(),
                                 PROVIDER_CONTEXT

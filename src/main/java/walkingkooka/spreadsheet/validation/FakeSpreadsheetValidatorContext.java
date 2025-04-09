@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.validation;
 
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.validation.FakeValidatorContext;
 
@@ -28,6 +29,11 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
 
     @Override
     public SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference cell) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
         throw new UnsupportedOperationException();
     }
 }

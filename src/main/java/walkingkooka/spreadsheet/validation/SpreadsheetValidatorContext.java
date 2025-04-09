@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.validation;
 
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.validation.ValidatorContext;
 
@@ -24,4 +25,11 @@ public interface SpreadsheetValidatorContext extends ValidatorContext<Spreadshee
 
     @Override
     SpreadsheetValidatorContext setValidationReference(final SpreadsheetCellReference cell);
+
+    /**
+     * Creates a {@link SpreadsheetExpressionEvaluationContext} with the current {@link #validationReference()}
+     * as the cell.
+     */
+    @Override
+    SpreadsheetExpressionEvaluationContext expressionEvaluationContext();
 }
