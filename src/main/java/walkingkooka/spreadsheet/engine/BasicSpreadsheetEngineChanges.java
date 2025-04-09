@@ -331,7 +331,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
             try {
                 this.pushCell(cell);
 
-                final SpreadsheetCell saved = this.engine.parseFormulaEvaluateFormatStyleAndSave(
+                final SpreadsheetCell saved = this.engine.parseFormulaEvaluateValidateFormatStyleAndSave(
                         spreadsheetCell,
                         this.evaluation,
                         this, // SpreadsheetExpressionReferenceLoader

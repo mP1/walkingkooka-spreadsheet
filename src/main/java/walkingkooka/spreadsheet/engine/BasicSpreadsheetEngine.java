@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
@@ -60,12 +61,18 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.Validator;
+import walkingkooka.validation.ValidatorContexts;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Collection;
 import java.util.List;
@@ -497,7 +504,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 for (final SpreadsheetCell possible : loaded) {
                     loadOffset++;
 
-                    final SpreadsheetCell loadedAndEval = this.evaluateFormatAndStyle(
+                    final SpreadsheetCell loadedAndEval = this.evaluateValidateFormatAndStyle(
                             possible,
                             SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                             changes, // SpreadsheetExpressionReferenceLoader
@@ -560,7 +567,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             for (final SpreadsheetCell cell : cellStore.loadCellRange(cellRange)) {
 
-                final SpreadsheetCell evaluated = this.parseFormulaEvaluateFormatStyleAndSave(
+                final SpreadsheetCell evaluated = this.parseFormulaEvaluateValidateFormatStyleAndSave(
                         cell,
                         SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                         changes, // SpreadsheetExpressionReferenceLoader
@@ -587,7 +594,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             // save moved cells
             for (final SpreadsheetCell to : movedFromTo.values()) {
-                final SpreadsheetCell saved = this.parseFormulaEvaluateFormatStyleAndSave(
+                final SpreadsheetCell saved = this.parseFormulaEvaluateValidateFormatStyleAndSave(
                         to,
                         SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                         changes, // SpreadsheetExpressionReferenceLoader
@@ -1164,10 +1171,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineEvaluation}
      */
-    SpreadsheetCell parseFormulaEvaluateFormatStyleAndSave(final SpreadsheetCell cell,
-                                                           final SpreadsheetEngineEvaluation evaluation,
-                                                           final SpreadsheetExpressionReferenceLoader loader,
-                                                           final SpreadsheetEngineContext context) {
+    SpreadsheetCell parseFormulaEvaluateValidateFormatStyleAndSave(final SpreadsheetCell cell,
+                                                                   final SpreadsheetEngineEvaluation evaluation,
+                                                                   final SpreadsheetExpressionReferenceLoader loader,
+                                                                   final SpreadsheetEngineContext context) {
         SpreadsheetCell styled = evaluation.parseFormulaEvaluateAndStyle(
                 cell,
                 this,
@@ -1186,10 +1193,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     // Visible for SpreadsheetEngineEvaluation only called by COMPUTE_IF_NECESSARY & FORCE_RECOMPUTE
-    SpreadsheetCell parseFormulaEvaluateFormatAndStyle(final SpreadsheetCell cell,
-                                                       final SpreadsheetEngineEvaluation evaluation,
-                                                       final SpreadsheetExpressionReferenceLoader loader,
-                                                       final SpreadsheetEngineContext context) {
+    SpreadsheetCell parseFormulaEvaluateValidateFormatAndStyle(final SpreadsheetCell cell,
+                                                               final SpreadsheetEngineEvaluation evaluation,
+                                                               final SpreadsheetExpressionReferenceLoader loader,
+                                                               final SpreadsheetEngineContext context) {
         final SpreadsheetCell afterParse = this.parseFormulaIfNecessary(
                 cell,
                 Function.identity(),
@@ -1198,7 +1205,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return afterParse.formula().error().isPresent() ?
                 afterParse :
-                this.evaluateFormatAndStyle(
+                this.evaluateValidateFormatAndStyle(
                         afterParse,
                         evaluation,
                         loader,
@@ -1289,32 +1296,40 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * This is only called if the formula was parsed an {@link Expression} exists ready for evaluation.
      */
-    private SpreadsheetCell evaluateFormatAndStyle(final SpreadsheetCell cell,
-                                                   final SpreadsheetEngineEvaluation evaluation,
-                                                   final SpreadsheetExpressionReferenceLoader loader,
-                                                   final SpreadsheetEngineContext context) {
-        SpreadsheetFormula formula = cell.formula();
+    private SpreadsheetCell evaluateValidateFormatAndStyle(final SpreadsheetCell cell,
+                                                           final SpreadsheetEngineEvaluation evaluation,
+                                                           final SpreadsheetExpressionReferenceLoader loader,
+                                                           final SpreadsheetEngineContext context) {
         SpreadsheetCell result = cell;
 
         try {
             // special case formula.text is empty but value is present
-            if(false == formula.text().isEmpty()) {
+            {
+                SpreadsheetFormula formula = cell.formula();
+                if (false == formula.text().isEmpty()) {
 
-                // ask enum to dispatch
-                final Optional<Expression> maybeExpression = formula.expression();
-                if (maybeExpression.isPresent()) {
-                    result = cell.setFormula(
-                            formula.setExpressionValue(
-                                    evaluation.evaluate(
-                                            this,
-                                            cell,
-                                            loader,
-                                            context
-                                    )
-                            ).replaceErrorWithValueIfPossible(context)
-                    );
+                    // ask enum to dispatch
+                    final Optional<Expression> maybeExpression = formula.expression();
+                    if (maybeExpression.isPresent()) {
+                        result = cell.setFormula(
+                                formula.setExpressionValue(
+                                        evaluation.evaluate(
+                                                this,
+                                                cell,
+                                                loader,
+                                                context
+                                        )
+                                ).replaceErrorWithValueIfPossible(context)
+                        );
+                    }
                 }
             }
+
+            result = this.validate(
+                    result,
+                    loader,
+                    context
+            );
 
             result = context.formatValueAndStyle(
                     result,
@@ -1330,6 +1345,67 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     cause,
                     cell
             );
+        }
+
+        return result;
+    }
+
+    /**
+     * If the current cell has a validator and has no error, validate the value.
+     */
+    private SpreadsheetCell validate(final SpreadsheetCell cell,
+                                     final SpreadsheetExpressionReferenceLoader loader,
+                                     final SpreadsheetEngineContext context) {
+        SpreadsheetCell result = cell;
+
+        final ValidatorSelector validatorSelector = cell.validator()
+                .orElse(null);
+        if (null != validatorSelector) {
+            final SpreadsheetFormula formula = cell.formula();
+            if (false == formula.error().isPresent()) {
+                final Validator<SpreadsheetCellReference, SpreadsheetValidatorContext> validator = context.validator(
+                        validatorSelector,
+                        context // providerContext
+                );
+
+                final List<ValidationError<SpreadsheetCellReference>> errors = validator.validate(
+                        formula.value()
+                                .orElse(null),
+                        SpreadsheetValidatorContexts.basic(
+                                ValidatorContexts.basic(
+                                        cell.reference(), // reference
+                                        (SpreadsheetCellReference cellReference) -> context.spreadsheetExpressionEvaluationContext(
+                                                Optional.of(cell),
+                                                loader
+                                        ),
+                                        context.spreadsheetMetadata()
+                                                .spreadsheetConverterContext(
+                                                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                                                        context, // SpreadsheetLabelNameResolver,
+                                                        context, // SpreadsheetConverterProvider
+                                                        context
+                                                ), // ConverterContext
+                                        context // EnvironmentContext
+                                )
+                        )
+                );
+
+                // if errors found convert the first back to a SpreadsheetError and SpreadsheetFormula#setError
+                if (false == errors.isEmpty()) {
+                    final ValidationError<SpreadsheetCellReference> firstError = errors.get(0);
+                    result = result.setFormula(
+                            formula.setError(
+                                    Optional.of(
+                                            SpreadsheetError.parse(
+                                                    firstError.text()
+                                            ).setValue(
+                                                    Optional.of(firstError.reference())
+                                            )
+                                    )
+                            )
+                    );
+                }
+            }
         }
 
         return result;

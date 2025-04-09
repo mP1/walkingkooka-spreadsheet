@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
@@ -92,6 +93,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -122,6 +124,13 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.ValidationReference;
+import walkingkooka.validation.Validator;
+import walkingkooka.validation.ValidatorContext;
+import walkingkooka.validation.provider.FakeValidatorProvider;
+import walkingkooka.validation.provider.ValidatorAliasSet;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -494,6 +503,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
     };
 
+    private final static ValidatorSelector VALIDATOR = ValidatorSelector.parse("TestValidator");
+
+    private final static Object VALIDATOR_FAIL_NUMBER = EXPRESSION_NUMBER_KIND.create(123);
+
+    private final static Object VALIDATOR_PASS_NUMBER = EXPRESSION_NUMBER_KIND.create(999);
+
+    private final static String VALIDATION_MESSAGE = "Hello Validation Message";
+
     static {
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
 
@@ -540,6 +557,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.STYLE, TextStyle.EMPTY
                         .set(TextStylePropertyName.WIDTH, Length.parsePixels(COLUMN_WIDTH + "px"))
                         .set(TextStylePropertyName.HEIGHT, Length.parsePixels(ROW_HEIGHT + "px"))
+                ).set(
+                        SpreadsheetMetadataPropertyName.VALIDATORS,
+                        ValidatorAliasSet.parse("" + VALIDATOR)
                 );
     }
 
@@ -1752,7 +1772,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellAndCheck(
                 cell,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                this.formatCellValue(cell)
+                this.formatCell(cell)
         );
     }
 
@@ -1771,7 +1791,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellAndCheck(
                 cell,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                this.formatCellValue(cell)
+                this.formatCell(cell)
         );
     }
 
@@ -1885,7 +1905,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 SpreadsheetDelta.EMPTY.setCells(
                         Sets.of(
-                                this.formatCellValue(savedCell)
+                                this.formatCell(savedCell)
                         )
                 ).setReferences(
                         references("A1=LABEL123")
@@ -1996,7 +2016,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCell a1 = this.cell("a1", "");
-        final SpreadsheetCell a1Formatted = this.formatCellValue(a1);
+        final SpreadsheetCell a1Formatted = this.formatCell(a1);
         this.saveCellAndCheck(
                 engine,
                 a1,
@@ -2080,7 +2100,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "a1",
                 ""
         );
-        final SpreadsheetCell a1Formatted = this.formatCellValue(a1Cell);
+        final SpreadsheetCell a1Formatted = this.formatCell(a1Cell);
         this.saveCellAndCheck(
                 engine,
                 a1Cell,
@@ -4281,6 +4301,118 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetFormula.EMPTY.setInputValue(value)
         ).setStyle(STYLE);
 
+        final SpreadsheetDelta result = engine.saveCell(
+                a1Cell,
+                context
+        );
+
+        final TextNode formatted = METADATA.spreadsheetFormatter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                PROVIDER_CONTEXT
+        ).format(
+                value,
+                SPREADSHEET_TEXT_FORMAT_CONTEXT
+        ).get();
+
+        final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
+                .setCells(
+                        Sets.of(
+                                a1Cell.setFormattedValue(
+                                        Optional.of(
+                                                STYLE.replace(formatted)
+                                                        .root()
+                                        )
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(
+                                engine.columnCount(context)
+                        )
+                ).setRowCount(
+                        OptionalInt.of(
+                                engine.rowCount(context)
+                        )
+                );
+        this.checkEquals(
+                expected,
+                result,
+                () -> "saveCell " + a1Cell
+        );
+    }
+
+    @Test
+    public void testSaveCellWithExpressionValueValidatorFails() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setExpressionValue(
+                Optional.of(VALIDATOR_FAIL_NUMBER)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setValidator(
+                        Optional.of(VALIDATOR)
+                ).setStyle(STYLE);
+
+        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessageAndValue(
+                VALIDATION_MESSAGE,
+                SpreadsheetSelection.A1
+        );
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormula(
+                a1Formula.setError(
+                        Optional.of(error)
+                )
+        ).setFormattedValue(
+                Optional.of(
+                        STYLE.replace(
+                                        METADATA.spreadsheetFormatter(
+                                                SPREADSHEET_FORMATTER_PROVIDER,
+                                                PROVIDER_CONTEXT
+                                        ).format(
+                                                Optional.of(error),
+                                                SPREADSHEET_TEXT_FORMAT_CONTEXT
+                                        ).get()
+                                )
+                                .root()
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithExpressionValueValidatorPass() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1Cell = SpreadsheetCell.with(
+                SpreadsheetSelection.A1,
+                SpreadsheetFormula.EMPTY.setExpressionValue(
+                        Optional.of(VALIDATOR_PASS_NUMBER)
+                )
+        ).setValidator(
+                Optional.of(VALIDATOR)
+        ).setStyle(STYLE);
+
         this.saveCellAndCheck(
                 engine,
                 a1Cell,
@@ -4290,11 +4422,104 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 Sets.of(
                                         this.formatCell(
                                                 a1Cell,
-                                                a1Cell.formula()
-                                                        .inputValue(),
-                                                STYLE
+                                                VALIDATOR_PASS_NUMBER
                                         )
                                 )
+                        ).setColumnWidths(
+                                columnWidths("A")
+                        ).setRowHeights(
+                                rowHeights("1")
+                        ).setColumnCount(
+                                OptionalInt.of(1)
+                        ).setRowCount(
+                                OptionalInt.of(1)
+                        )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithInputValueValidatorFails() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(VALIDATOR_FAIL_NUMBER)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setValidator(
+                        Optional.of(VALIDATOR)
+                ).setStyle(STYLE);
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                a1Cell.setFormula(
+                                        a1Formula.setError(
+                                                Optional.of(
+                                                        SpreadsheetErrorKind.VALUE.setMessageAndValue(
+                                                                VALIDATION_MESSAGE,
+                                                                SpreadsheetSelection.A1
+                                                        )
+                                                )
+                                        )
+                                ).setFormattedValue(
+                                        Optional.of(
+                                                STYLE.replace(
+                                                        TextNode.text("#VALUE! FORMATTED_PATTERN_SUFFIX")
+                                                )
+                                        )
+                                )
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
+    public void testSaveCellWithInputValueValidatorPass() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setInputValue(
+                Optional.of(VALIDATOR_PASS_NUMBER)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+                .setValidator(
+                        Optional.of(VALIDATOR)
+                ).setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+                Optional.of(
+                        STYLE.replace(
+                                        METADATA.spreadsheetFormatter(
+                                                SPREADSHEET_FORMATTER_PROVIDER,
+                                                PROVIDER_CONTEXT
+                                        ).format(
+                                                Optional.of(VALIDATOR_PASS_NUMBER),
+                                                SPREADSHEET_TEXT_FORMAT_CONTEXT
+                                        ).get()
+                                )
+                                .root()
+                )
+        );
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY
+                        .setCells(
+                                Sets.of(a1FormattedCell)
                         ).setColumnWidths(
                                 columnWidths("A")
                         ).setRowHeights(
@@ -21272,7 +21497,52 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
-                        VALIDATOR_PROVIDER
+                        new FakeValidatorProvider() {
+                            @Override
+                            public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector validatorSelector,
+                                                                                                                            final ProviderContext context) {
+                                if (VALIDATOR.equals(validatorSelector)) {
+                                    return Cast.to(
+                                            new Validator<SpreadsheetCellReference, SpreadsheetValidatorContext>() {
+                                                @Override
+                                                public List<ValidationError<SpreadsheetCellReference>> validate(final Object value,
+                                                                                                                final SpreadsheetValidatorContext context) {
+                                                    checkEquals(
+                                                            EXPRESSION_NUMBER_KIND.create(1 + 200),
+                                                            context.expressionEvaluationContext()
+                                                                    .evaluateExpression(
+                                                                            Expression.add(
+                                                                                    Expression.value(
+                                                                                            EXPRESSION_NUMBER_KIND.create(1)
+                                                                                    ),
+                                                                                    Expression.value(
+                                                                                            EXPRESSION_NUMBER_KIND.create(200)
+                                                                                    )
+                                                                            )
+                                                                    ),
+                                                            "SpreadsheetValidationContext.expressionEvaluationContext.evaluateExpression 1 + 200"
+                                                    );
+
+                                                    if (VALIDATOR_PASS_NUMBER.equals(value)) {
+                                                        return Lists.empty();
+                                                    }
+                                                    if (VALIDATOR_FAIL_NUMBER.equals(value)) {
+                                                        return Lists.of(
+                                                                context.validationError(
+                                                                        SpreadsheetErrorKind.VALUE.setMessage(VALIDATION_MESSAGE)
+                                                                                .toString()
+                                                                )
+                                                        );
+                                                    }
+
+                                                    throw new UnsupportedOperationException("Unexpected value being validated " + value);
+                                                }
+                                            }
+                                    );
+                                }
+                                throw new IllegalArgumentException("Unknown validator " + validatorSelector);
+                            }
+                        }
                 ), // SpreadsheetProvider
                 PROVIDER_CONTEXT
         );
@@ -21343,7 +21613,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      * Makes a {@link SpreadsheetCell} updating the formula expression and expected value and then formats the cell adding styling etc,
      * mimicking the very actions that happen during evaluation.
      */
-    private SpreadsheetCell formatCellValue(final SpreadsheetCell cell) {
+    private SpreadsheetCell formatCell(final SpreadsheetCell cell) {
         return this.formatCell(
                 cell,
                 cell.formula()
