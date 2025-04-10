@@ -19130,52 +19130,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    // nextEmptyColumn.....................................................................................................
-
-    @Test
-    public void testNextEmptyColumn() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        engine.saveCells(
-                Sets.of(
-                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                        SpreadsheetSelection.parseCell("B2").setFormula(SpreadsheetFormula.EMPTY)
-                ),
-                context
-        );
-
-        this.nextEmptyColumnAndCheck(
-                engine,
-                SpreadsheetSelection.parseRow("2"),
-                context,
-                SpreadsheetSelection.parseColumn("C")
-        );
-    }
-    
-    // nextEmptyRow.....................................................................................................
-
-    @Test
-    public void testNextEmptyRow() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        engine.saveCells(
-                Sets.of(
-                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
-                        SpreadsheetSelection.parseCell("B2").setFormula(SpreadsheetFormula.EMPTY)
-                ),
-                context
-        );
-
-        this.nextEmptyRowAndCheck(
-                engine,
-                SpreadsheetSelection.parseColumn("B"),
-                context,
-                SpreadsheetSelection.parseRow("3")
-        );
-    }
-
     // widths top left .................................................................................................
 
     @Test
