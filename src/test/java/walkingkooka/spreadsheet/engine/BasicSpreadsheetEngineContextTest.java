@@ -987,7 +987,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"time-formatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"time-parser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"two-digit-year\": 20,\n" +
-                        "  \"validators\": \"collection, non-null\",\n" +
+                        "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"value-separator\": \",\",\n" +
                         "  \"viewport\": {\n" +
                         "    \"rectangle\": \"A1:100.0:100.0\"\n" +
@@ -1156,7 +1156,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"time-formatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"time-parser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"two-digit-year\": 20,\n" +
-                        "  \"validators\": \"collection, non-null\",\n" +
+                        "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"value-separator\": \",\",\n" +
                         "  \"viewport\": {\n" +
                         "    \"rectangle\": \"A1:100.0:100.0\"\n" +
