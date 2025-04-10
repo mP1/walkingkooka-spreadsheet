@@ -52,6 +52,21 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
         SpreadsheetConverterContext,
         HasSpreadsheetMetadata {
 
+    /**
+     * Helper that makes it easy to add a variable with a value. This is especially useful when executing a {@link Expression}
+     * with a parameter such as a Validator.
+     */
+    default SpreadsheetExpressionEvaluationContext addLocalVariable(final ExpressionReference reference,
+                                                                    final Optional<Object> value) {
+        return this.enterScope(
+                (final ExpressionReference expressionReference) -> Optional.ofNullable(
+                        expressionReference.equals(reference) ?
+                                value :
+                                null
+                )
+        );
+    }
+
     @Override
     default SpreadsheetExpressionEvaluationContext enterScope(final Function<ExpressionReference, Optional<Optional<Object>>> scoped) {
         return SpreadsheetExpressionEvaluationContexts.localLabels(

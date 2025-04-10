@@ -21509,7 +21509,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                       final SpreadsheetValidatorContext context) {
                                                     checkEquals(
                                                             EXPRESSION_NUMBER_KIND.create(1 + 200),
-                                                            context.expressionEvaluationContext()
+                                                            context.expressionEvaluationContext(value)
                                                                     .evaluateExpression(
                                                                             Expression.add(
                                                                                     Expression.value(
@@ -21521,6 +21521,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                             )
                                                                     ),
                                                             "SpreadsheetValidationContext.expressionEvaluationContext.evaluateExpression 1 + 200"
+                                                    );
+
+                                                    // https://github.com/mP1/walkingkooka-validation/pull/70 ValidatorContext.expressionEvaluationContext value parameter added
+                                                    // Validate that a validator function can "read" the VALUE being validated.
+                                                    checkEquals(
+                                                            value,
+                                                            context.expressionEvaluationContext(value)
+                                                                    .evaluateExpression(
+                                                                            Expression.reference(SpreadsheetSelection.labelName("VALUE"))
+                                                                    )
                                                     );
 
                                                     if (VALIDATOR_PASS_NUMBER.equals(value)) {

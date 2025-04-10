@@ -64,9 +64,9 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
+    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Object value) {
         return Cast.to(
-                this.context.expressionEvaluationContext()
+                this.context.expressionEvaluationContext(value)
         );
     }
 
