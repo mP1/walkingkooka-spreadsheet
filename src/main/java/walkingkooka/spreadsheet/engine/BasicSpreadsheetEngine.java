@@ -1367,18 +1367,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context // providerContext
                 );
 
+                final Optional<Object> value = formula.value();
+
                 result = result.setFormula(
                         formula.setError(
                                 SpreadsheetError.validationErrors(
                                         validator.validate(
-                                                formula.value()
-                                                        .orElse(null),
+                                                value.orElse(null), // unwrap Optionals
                                                 SpreadsheetValidatorContexts.basic(
                                                         ValidatorContexts.basic(
                                                                 cell.reference(), // reference
-                                                                (SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
+                                                                (final Object v,
+                                                                 final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
                                                                         Optional.ofNullable(cell),
                                                                         loader
+                                                                ).addLocalVariable(
+                                                                        VALUE,
+                                                                        value
                                                                 ),
                                                                 context.spreadsheetMetadata()
                                                                         .spreadsheetConverterContext(
@@ -1399,6 +1404,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return result;
     }
+
+    private final static SpreadsheetLabelName VALUE = SpreadsheetSelection.labelName("VALUE");
 
     // SpreadsheetEngineEvaluation #evaluateXXX.........................................................................
 

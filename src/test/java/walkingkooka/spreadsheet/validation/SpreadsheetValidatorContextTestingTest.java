@@ -81,7 +81,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
+        public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Object value) {
             return SpreadsheetExpressionEvaluationContexts.fake();
         }
 

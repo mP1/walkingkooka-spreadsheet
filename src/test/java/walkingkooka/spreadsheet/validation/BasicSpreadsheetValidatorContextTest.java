@@ -62,7 +62,8 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
                 BasicSpreadsheetValidatorContext.with(
                         ValidatorContexts.basic(
                                 SpreadsheetSelection.A1,
-                                (final SpreadsheetExpressionReference cellOrLabel) -> {
+                                (final Object value,
+                                 final SpreadsheetExpressionReference cellOrLabel) -> {
                                     throw new UnsupportedOperationException();
                                 },
                                 SPREADSHEET_FORMATTER_CONTEXT,

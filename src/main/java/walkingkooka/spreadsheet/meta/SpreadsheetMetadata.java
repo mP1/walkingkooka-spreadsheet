@@ -123,6 +123,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -1131,7 +1132,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetValidatorContext} with the given {@link SpreadsheetCellReference}.
      */
     public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetCellReference cell,
-                                                                         final Function<SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
+                                                                         final BiFunction<Object, SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
                                                                          final ProviderContext providerContext) {

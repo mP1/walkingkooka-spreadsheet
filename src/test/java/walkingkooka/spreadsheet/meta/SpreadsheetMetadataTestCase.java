@@ -55,6 +55,7 @@ import walkingkooka.tree.text.WordWrap;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -72,7 +73,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         TreePrintableTesting,
         EnvironmentContextTesting {
 
-    final static Function<SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = (SpreadsheetCellReference cell) -> {
+    final static BiFunction<Object, SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = (final Object value,
+                                                                                                                                                                   final SpreadsheetCellReference cell) -> {
         throw new UnsupportedOperationException();
     };
 
@@ -608,7 +610,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 null,
-                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
                                 PROVIDER_CONTEXT
@@ -623,7 +625,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 null,
-                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
                                 PROVIDER_CONTEXT
@@ -638,7 +640,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
-                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 null,
                                 CONVERTER_PROVIDER,
                                 PROVIDER_CONTEXT
@@ -653,7 +655,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
-                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 null,
                                 PROVIDER_CONTEXT
@@ -668,7 +670,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> this.createObject()
                         .spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
-                                CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                                VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                                 LABEL_NAME_RESOLVER,
                                 CONVERTER_PROVIDER,
                                 null

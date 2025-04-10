@@ -33,7 +33,7 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
+    public SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Object value) {
         throw new UnsupportedOperationException();
     }
 }

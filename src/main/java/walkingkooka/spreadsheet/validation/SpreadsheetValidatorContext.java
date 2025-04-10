@@ -31,5 +31,5 @@ public interface SpreadsheetValidatorContext extends ValidatorContext<Spreadshee
      * as the cell.
      */
     @Override
-    SpreadsheetExpressionEvaluationContext expressionEvaluationContext();
+    SpreadsheetExpressionEvaluationContext expressionEvaluationContext(final Object value);
 }

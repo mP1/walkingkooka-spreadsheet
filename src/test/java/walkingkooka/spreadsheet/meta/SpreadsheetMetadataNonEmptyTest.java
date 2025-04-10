@@ -2535,7 +2535,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 50
                         ).spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
-                                (final SpreadsheetCellReference cell) -> {
+                                (final Object value,
+                                 final SpreadsheetCellReference cell) -> {
                                     throw new UnsupportedOperationException();
                                 },
                                 LABEL_NAME_RESOLVER,
