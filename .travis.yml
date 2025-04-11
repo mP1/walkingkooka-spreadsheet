@@ -11,7 +11,7 @@ after_success:
   - mvn jacoco:report coveralls:report
 
 after_failure:
-  - tail -n 500 target/it-tests/junit-test/build.log
+  - tail -n 500 target/it-tests/j2cl-test/build.log
   - tail -n 500 it-output.txt
 
 dist: trusty

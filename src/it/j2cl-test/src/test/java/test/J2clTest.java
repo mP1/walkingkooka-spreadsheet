@@ -110,8 +110,8 @@ import java.util.OptionalInt;
 import java.util.Set;
 
 // copied parse Sample
-@J2clTestInput(JunitTest.class)
-public class JunitTest {
+@J2clTestInput(J2clTest.class)
+public class J2clTest {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 

@@ -30,7 +30,7 @@ jobs:
         if: ${{ always() }}
         run: |
           tail -n 500 maven-install-output.txt
-          tail -n 500 target/it-tests/junit-test/build.log
+          tail -n 500 target/it-tests/j2cl-test/build.log
           tail -n 500 target/it-tests/gwt-jar-test/build.log
 
       - uses: actions/upload-artifact@v4
@@ -42,8 +42,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: junit-test-build.log
-          path: target/it-tests/junit-test/build.log
+          name: j2cl-test-build.log
+          path: target/it-tests/j2cl-test/build.log
 
       - uses: actions/upload-artifact@v4
         if: failure()
