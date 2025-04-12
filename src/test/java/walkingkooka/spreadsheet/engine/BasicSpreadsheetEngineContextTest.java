@@ -948,40 +948,40 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
                         "  \"sortConverter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
-                        "    \"background-color\": \"white\",\n" +
-                        "    \"border-bottom-color\": \"black\",\n" +
-                        "    \"border-bottom-style\": \"SOLID\",\n" +
-                        "    \"border-bottom-width\": \"1px\",\n" +
-                        "    \"border-left-color\": \"black\",\n" +
-                        "    \"border-left-style\": \"SOLID\",\n" +
-                        "    \"border-left-width\": \"1px\",\n" +
-                        "    \"border-right-color\": \"black\",\n" +
-                        "    \"border-right-style\": \"SOLID\",\n" +
-                        "    \"border-right-width\": \"1px\",\n" +
-                        "    \"border-top-color\": \"black\",\n" +
-                        "    \"border-top-style\": \"SOLID\",\n" +
-                        "    \"border-top-width\": \"1px\",\n" +
+                        "    \"backgroundColor\": \"white\",\n" +
+                        "    \"borderBottomColor\": \"black\",\n" +
+                        "    \"borderBottomStyle\": \"SOLID\",\n" +
+                        "    \"borderBottomWidth\": \"1px\",\n" +
+                        "    \"borderLeftColor\": \"black\",\n" +
+                        "    \"borderLeftStyle\": \"SOLID\",\n" +
+                        "    \"borderLeftWidth\": \"1px\",\n" +
+                        "    \"borderRightColor\": \"black\",\n" +
+                        "    \"borderRightStyle\": \"SOLID\",\n" +
+                        "    \"borderRightWidth\": \"1px\",\n" +
+                        "    \"borderTopColor\": \"black\",\n" +
+                        "    \"borderTopStyle\": \"SOLID\",\n" +
+                        "    \"borderTopWidth\": \"1px\",\n" +
                         "    \"color\": \"black\",\n" +
-                        "    \"font-family\": \"MS Sans Serif\",\n" +
-                        "    \"font-size\": 11,\n" +
-                        "    \"font-style\": \"NORMAL\",\n" +
-                        "    \"font-variant\": \"NORMAL\",\n" +
+                        "    \"fontFamily\": \"MS Sans Serif\",\n" +
+                        "    \"fontSize\": 11,\n" +
+                        "    \"fontStyle\": \"NORMAL\",\n" +
+                        "    \"fontVariant\": \"NORMAL\",\n" +
                         "    \"height\": \"30px\",\n" +
                         "    \"hyphens\": \"NONE\",\n" +
-                        "    \"margin-bottom\": \"none\",\n" +
-                        "    \"margin-left\": \"none\",\n" +
-                        "    \"margin-right\": \"none\",\n" +
-                        "    \"margin-top\": \"none\",\n" +
-                        "    \"padding-bottom\": \"none\",\n" +
-                        "    \"padding-left\": \"none\",\n" +
-                        "    \"padding-right\": \"none\",\n" +
-                        "    \"padding-top\": \"none\",\n" +
-                        "    \"text-align\": \"LEFT\",\n" +
-                        "    \"text-justify\": \"NONE\",\n" +
-                        "    \"vertical-align\": \"TOP\",\n" +
+                        "    \"marginBottom\": \"none\",\n" +
+                        "    \"marginLeft\": \"none\",\n" +
+                        "    \"marginRight\": \"none\",\n" +
+                        "    \"marginTop\": \"none\",\n" +
+                        "    \"paddingBottom\": \"none\",\n" +
+                        "    \"paddingLeft\": \"none\",\n" +
+                        "    \"paddingRight\": \"none\",\n" +
+                        "    \"paddingTop\": \"none\",\n" +
+                        "    \"textAlign\": \"LEFT\",\n" +
+                        "    \"textJustify\": \"NONE\",\n" +
+                        "    \"verticalAlign\": \"TOP\",\n" +
                         "    \"width\": \"100px\",\n" +
-                        "    \"word-break\": \"NORMAL\",\n" +
-                        "    \"word-wrap\": \"NORMAL\"\n" +
+                        "    \"wordBreak\": \"NORMAL\",\n" +
+                        "    \"wordWrap\": \"NORMAL\"\n" +
                         "  },\n" +
                         "  \"textFormatter\": \"text-format-pattern @\",\n" +
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
@@ -1117,40 +1117,40 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
                         "  \"sortConverter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
-                        "    \"background-color\": \"white\",\n" +
-                        "    \"border-bottom-color\": \"black\",\n" +
-                        "    \"border-bottom-style\": \"SOLID\",\n" +
-                        "    \"border-bottom-width\": \"1px\",\n" +
-                        "    \"border-left-color\": \"black\",\n" +
-                        "    \"border-left-style\": \"SOLID\",\n" +
-                        "    \"border-left-width\": \"1px\",\n" +
-                        "    \"border-right-color\": \"black\",\n" +
-                        "    \"border-right-style\": \"SOLID\",\n" +
-                        "    \"border-right-width\": \"1px\",\n" +
-                        "    \"border-top-color\": \"black\",\n" +
-                        "    \"border-top-style\": \"SOLID\",\n" +
-                        "    \"border-top-width\": \"1px\",\n" +
+                        "    \"backgroundColor\": \"white\",\n" +
+                        "    \"borderBottomColor\": \"black\",\n" +
+                        "    \"borderBottomStyle\": \"SOLID\",\n" +
+                        "    \"borderBottomWidth\": \"1px\",\n" +
+                        "    \"borderLeftColor\": \"black\",\n" +
+                        "    \"borderLeftStyle\": \"SOLID\",\n" +
+                        "    \"borderLeftWidth\": \"1px\",\n" +
+                        "    \"borderRightColor\": \"black\",\n" +
+                        "    \"borderRightStyle\": \"SOLID\",\n" +
+                        "    \"borderRightWidth\": \"1px\",\n" +
+                        "    \"borderTopColor\": \"black\",\n" +
+                        "    \"borderTopStyle\": \"SOLID\",\n" +
+                        "    \"borderTopWidth\": \"1px\",\n" +
                         "    \"color\": \"black\",\n" +
-                        "    \"font-family\": \"MS Sans Serif\",\n" +
-                        "    \"font-size\": 11,\n" +
-                        "    \"font-style\": \"NORMAL\",\n" +
-                        "    \"font-variant\": \"NORMAL\",\n" +
+                        "    \"fontFamily\": \"MS Sans Serif\",\n" +
+                        "    \"fontSize\": 11,\n" +
+                        "    \"fontStyle\": \"NORMAL\",\n" +
+                        "    \"fontVariant\": \"NORMAL\",\n" +
                         "    \"height\": \"30px\",\n" +
                         "    \"hyphens\": \"NONE\",\n" +
-                        "    \"margin-bottom\": \"none\",\n" +
-                        "    \"margin-left\": \"none\",\n" +
-                        "    \"margin-right\": \"none\",\n" +
-                        "    \"margin-top\": \"none\",\n" +
-                        "    \"padding-bottom\": \"none\",\n" +
-                        "    \"padding-left\": \"none\",\n" +
-                        "    \"padding-right\": \"none\",\n" +
-                        "    \"padding-top\": \"none\",\n" +
-                        "    \"text-align\": \"LEFT\",\n" +
-                        "    \"text-justify\": \"NONE\",\n" +
-                        "    \"vertical-align\": \"TOP\",\n" +
+                        "    \"marginBottom\": \"none\",\n" +
+                        "    \"marginLeft\": \"none\",\n" +
+                        "    \"marginRight\": \"none\",\n" +
+                        "    \"marginTop\": \"none\",\n" +
+                        "    \"paddingBottom\": \"none\",\n" +
+                        "    \"paddingLeft\": \"none\",\n" +
+                        "    \"paddingRight\": \"none\",\n" +
+                        "    \"paddingTop\": \"none\",\n" +
+                        "    \"textAlign\": \"LEFT\",\n" +
+                        "    \"textJustify\": \"NONE\",\n" +
+                        "    \"verticalAlign\": \"TOP\",\n" +
                         "    \"width\": \"100px\",\n" +
-                        "    \"word-break\": \"NORMAL\",\n" +
-                        "    \"word-wrap\": \"NORMAL\"\n" +
+                        "    \"wordBreak\": \"NORMAL\",\n" +
+                        "    \"wordWrap\": \"NORMAL\"\n" +
                         "  },\n" +
                         "  \"textFormatter\": \"text-format-pattern @\",\n" +
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
