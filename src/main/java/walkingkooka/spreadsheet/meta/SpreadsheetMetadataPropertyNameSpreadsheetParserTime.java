@@ -42,7 +42,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserTime extends Spreads
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetParserTime() {
         super(
-                "time-parser",
+                "timeParser",
                 SpreadsheetPatternKind.TIME_PARSE_PATTERN
         );
     }

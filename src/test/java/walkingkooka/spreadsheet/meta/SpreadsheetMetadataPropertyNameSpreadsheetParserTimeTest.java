@@ -38,7 +38,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserTimeTest exte
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameSpreadsheetParserTime.instance(),
-                "time-parser"
+                "timeParser"
         );
     }
 

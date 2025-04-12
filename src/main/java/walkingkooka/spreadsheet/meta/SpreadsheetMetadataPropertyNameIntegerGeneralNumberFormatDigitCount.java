@@ -30,7 +30,7 @@ final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount 
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount() {
-        super("general-number-format-digit-count");
+        super("generalNumberFormatDigitCount");
     }
 
     @Override

@@ -30,7 +30,7 @@ final class SpreadsheetMetadataPropertyNameBooleanFindHighlighting extends Sprea
     }
 
     private SpreadsheetMetadataPropertyNameBooleanFindHighlighting() {
-        super("find-highlighting");
+        super("findHighlighting");
     }
 
     @Override

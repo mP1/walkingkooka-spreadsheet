@@ -536,7 +536,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 )
         );
         this.checkEquals(
-                "Metadata missing: formula-converter",
+                "Metadata missing: formulaConverter",
                 thrown.getMessage()
         );
     }
@@ -599,7 +599,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 )
         );
         this.checkEquals(
-                "Metadata missing: formula-functions",
+                "Metadata missing: formulaFunctions",
                 thrown.getMessage(),
                 "message"
         );
@@ -642,7 +642,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 )
         );
         this.checkEquals(
-                "Metadata missing: date-formatter, date-parser, date-time-formatter, date-time-parser, number-formatter, number-parser, text-formatter, time-formatter, time-parser",
+                "Metadata missing: dateFormatter, dateParser, dateTimeFormatter, dateTimeParser, numberFormatter, numberParser, textFormatter, timeFormatter, timeParser",
                 thrown.getMessage()
         );
     }
@@ -732,7 +732,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-                "Metadata missing: date-time-offset, expression-number-kind, find-converter",
+                "Metadata missing: dateTimeOffset, expressionNumberKind, findConverter",
                 thrown.getMessage(),
                 "message"
         );
@@ -864,13 +864,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(this.property1(), this.value1())
                         .set(this.property2(), this.value2()),
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"creator@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": true\n" +
+                        "  \"hideZeroValues\": true\n" +
                         "}"
         );
     }
@@ -1039,7 +1039,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetId() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                "spreadsheet-id"
+                "spreadsheetId"
         );
     }
 
@@ -1047,7 +1047,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetName() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
-                "spreadsheet-name"
+                "spreadsheetName"
         );
     }
 
@@ -1055,7 +1055,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateFormatPattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATE_FORMATTER,
-                "date-formatter"
+                "dateFormatter"
         );
     }
 
@@ -1063,7 +1063,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateTimeFormatPattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-                "date-time-formatter"
+                "dateTimeFormatter"
         );
     }
 
@@ -1071,7 +1071,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateTimeParsePattern() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
-                "date-time-parser"
+                "dateTimeParser"
         );
     }
 
@@ -1079,7 +1079,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testUrlFragmentSpreadsheetDateTimeOffset() {
         this.urlFragmentAndCheck(
                 SpreadsheetMetadataPropertyName.DATETIME_OFFSET,
-                "date-time-offset"
+                "dateTimeOffset"
         );
     }
 

@@ -30,7 +30,10 @@ public final class SpreadsheetMetadataPropertyNameCharacterNegativeSignTest exte
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterNegativeSign.instance(), "negative-sign");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameCharacterNegativeSign.instance(),
+                "negativeSign"
+        );
     }
 
     @Override

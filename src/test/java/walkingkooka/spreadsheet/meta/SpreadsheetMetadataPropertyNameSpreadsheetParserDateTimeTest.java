@@ -39,7 +39,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserDateTimeTest 
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime.instance(),
-                "date-time-parser"
+                "dateTimeParser"
         );
     }
 

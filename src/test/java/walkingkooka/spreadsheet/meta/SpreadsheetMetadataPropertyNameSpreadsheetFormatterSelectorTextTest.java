@@ -34,7 +34,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTe
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText.instance(),
-                "text-formatter"
+                "textFormatter"
         );
     }
 

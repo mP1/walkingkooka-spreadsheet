@@ -41,7 +41,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText exte
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText() {
         super(
-                "text-formatter",
+                "textFormatter",
                 SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
         );
     }

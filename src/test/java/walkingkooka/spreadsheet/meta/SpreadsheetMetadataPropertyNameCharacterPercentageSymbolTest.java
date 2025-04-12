@@ -30,7 +30,10 @@ public final class SpreadsheetMetadataPropertyNameCharacterPercentageSymbolTest 
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterPercentageSymbol.instance(), "percentage-symbol");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameCharacterPercentageSymbol.instance(),
+                "percentageSymbol"
+        );
     }
 
     @Override

@@ -67,7 +67,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance(),
-                "time-formatter"
+                "timeFormatter"
         );
     }
 

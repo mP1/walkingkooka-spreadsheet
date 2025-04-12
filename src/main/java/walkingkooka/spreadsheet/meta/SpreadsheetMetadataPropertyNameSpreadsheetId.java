@@ -36,7 +36,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetId() {
-        super("spreadsheet-id");
+        super("spreadsheetId");
     }
 
     @Override

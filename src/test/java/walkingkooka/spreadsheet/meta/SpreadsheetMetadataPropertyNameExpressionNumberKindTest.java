@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameExpressionNumberKindTest exten
     public void testCheckValueWithInvalidExpressionNumberKindFails() {
         this.checkValueFails(
                 "invalid",
-                "Metadata expression-number-kind=\"invalid\", Expected ExpressionNumberKind"
+                "Metadata expressionNumberKind=\"invalid\", Expected ExpressionNumberKind"
         );
     }
 
@@ -40,7 +40,10 @@ public final class SpreadsheetMetadataPropertyNameExpressionNumberKindTest exten
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance(), "expression-number-kind");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameExpressionNumberKind.instance(),
+                "expressionNumberKind"
+        );
     }
 
     @Override

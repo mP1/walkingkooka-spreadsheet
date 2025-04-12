@@ -25,7 +25,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigi
     public void testNegativeValueFails() {
         this.checkValueFails(
                 -1,
-                "Metadata general-number-format-digit-count=-1, < 0"
+                "Metadata generalNumberFormatDigitCount=-1, < 0"
         );
     }
 
@@ -43,7 +43,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigi
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance(),
-                "general-number-format-digit-count"
+                "generalNumberFormatDigitCount"
         );
     }
 

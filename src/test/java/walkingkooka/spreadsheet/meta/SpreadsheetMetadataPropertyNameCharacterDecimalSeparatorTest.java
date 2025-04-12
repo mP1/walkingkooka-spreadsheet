@@ -30,7 +30,10 @@ public final class SpreadsheetMetadataPropertyNameCharacterDecimalSeparatorTest 
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterDecimalSeparator.instance(), "decimal-separator");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameCharacterDecimalSeparator.instance(),
+                "decimalSeparator"
+        );
     }
 
     @Override

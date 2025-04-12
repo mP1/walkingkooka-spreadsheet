@@ -58,7 +58,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
-import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -409,7 +408,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         return propertyName;
     }
 
-    static final String COLOR_PREFIX = "color-";
+    static final String COLOR_PREFIX = "color";
 
     /**
      * Retrieves a {@link SpreadsheetMetadataPropertyName} for a {@link SpreadsheetColorName named}.
@@ -438,15 +437,16 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     SpreadsheetMetadataPropertyName(final String name) {
         super();
 
-        final String finalName = null == name ?
-                CaseKind.CAMEL.change(
-                        this.getClass()
-                                .getSimpleName()
-                                .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
-                                .replace("Spreadsheet", ""), // handles subclasses like SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText
-                        CaseKind.KEBAB
-                ) :
-                name;
+        String finalName = name;
+        if(null == name) {
+            finalName = this.getClass()
+                    .getSimpleName()
+                    .substring(SpreadsheetMetadataPropertyName.class.getSimpleName().length())
+                    .replace("Spreadsheet", "");
+            finalName = finalName.substring(0, 1)
+                    .toLowerCase() +
+                    finalName.substring(1);
+        }
         this.name = finalName;
 
         this.jsonPropertyName = JsonPropertyName.with(finalName);
@@ -606,38 +606,38 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
         switch (this.value()) {
             // id
-            case "spreadsheet-id":
-            case "spreadsheet-name":
+            case "spreadsheetId":
+            case "spreadsheetName":
                 action = SpreadsheetCellStoreAction.NONE;
                 break;
 
             // authorship & timestamp
-            case "audit-info":
+            case "auditInfo":
                 action = SpreadsheetCellStoreAction.NONE;
                 break;
             // viewport
-            case "frozen-columns":
-            case "frozen-rows":
+            case "frozenColumns":
+            case "frozenRows":
             case "selection":
-            case "viewport-cell":
+            case "viewportCell":
                 action = SpreadsheetCellStoreAction.NONE;
                 break;
             // number parsing characters.
-            case "currency-symbol":
-            case "decimal-separator":
-            case "exponent-symbol":
-            case "group-separator":
-            case "negative-sign":
-            case "percentage-symbol":
-            case "positive-sign":
-            case "value-separator":
+            case "currencySymbol":
+            case "decimalSeparator":
+            case "exponentSymbol":
+            case "groupSeparator":
+            case "negativeSign":
+            case "percentageSymbol":
+            case "positiveSign":
+            case "valueSeparator":
                 action = SpreadsheetCellStoreAction.PARSE_FORMULA;
                 break;
             // parse-patterns
-            case "date-parser":
-            case "date-time-parser":
-            case "number-parser":
-            case "time-parser":
+            case "dateParser":
+            case "dateTimeParser":
+            case "numberParser":
+            case "timeParser":
                 action = SpreadsheetCellStoreAction.PARSE_FORMULA;
                 break;
             default:

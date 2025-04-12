@@ -47,7 +47,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserDateTest exte
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameSpreadsheetParserDate.instance(),
-                "date-parser"
+                "dateParser"
         );
     }
 

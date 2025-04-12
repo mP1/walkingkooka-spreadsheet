@@ -31,7 +31,7 @@ final class SpreadsheetMetadataPropertyNameStringCurrencySymbol extends Spreadsh
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameStringCurrencySymbol() {
-        super("currency-symbol");
+        super("currencySymbol");
     }
 
     @Override

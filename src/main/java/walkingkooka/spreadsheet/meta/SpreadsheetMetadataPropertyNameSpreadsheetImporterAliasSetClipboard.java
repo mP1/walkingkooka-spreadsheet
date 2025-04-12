@@ -33,7 +33,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard 
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard() {
-        super("clipboard-importer");
+        super("clipboardImporter");
     }
 
     @Override

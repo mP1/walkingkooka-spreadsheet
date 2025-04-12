@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends Spre
     public void testCheckValueWithInvalidSpreadsheetIdFails() {
         this.checkValueFails(
                 "123-invalid",
-                "Metadata spreadsheet-id=\"123-invalid\", Expected SpreadsheetId"
+                "Metadata spreadsheetId=\"123-invalid\", Expected SpreadsheetId"
         );
     }
 
@@ -40,7 +40,10 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends Spre
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetId.instance(), "spreadsheet-id");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameSpreadsheetId.instance(),
+                "spreadsheetId"
+        );
     }
 
     @Override

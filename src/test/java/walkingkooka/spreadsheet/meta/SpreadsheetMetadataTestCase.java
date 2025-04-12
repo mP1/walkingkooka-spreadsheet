@@ -513,7 +513,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
                 thrown,
-                "Metadata missing: find-converter"
+                "Metadata missing: findConverter"
         );
     }
 
@@ -557,7 +557,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
                 thrown,
-                "Metadata missing: formula-converter"
+                "Metadata missing: formulaConverter"
         );
     }
 
@@ -571,7 +571,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
                 thrown,
-                "Metadata missing: default-year, locale, two-digit-year"
+                "Metadata missing: defaultYear, locale, twoDigitYear"
         );
     }
 
@@ -582,7 +582,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().decimalNumberContext());
         checkMessage(
                 thrown,
-                "Metadata missing: currency-symbol, decimal-separator, exponent-symbol, group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode"
+                "Metadata missing: currencySymbol, decimalSeparator, exponentSymbol, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode"
         );
     }
 
@@ -600,7 +600,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
                 thrown,
-                "Metadata missing: date-formatter, date-time-formatter, number-formatter, text-formatter, time-formatter"
+                "Metadata missing: dateFormatter, dateTimeFormatter, numberFormatter, textFormatter, timeFormatter"
         );
     }
 
@@ -614,7 +614,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
                 thrown,
-                "Metadata missing: precision, rounding-mode");
+                "Metadata missing: precision, roundingMode");
     }
 
     // spreadsheetValidatorContext......................................................................................

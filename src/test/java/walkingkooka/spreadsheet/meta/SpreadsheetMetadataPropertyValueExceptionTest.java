@@ -38,7 +38,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
                 this.value());
         this.checkMessage(
                 throwable,
-                "Metadata audit-info=\"abc123\", message"
+                "Metadata auditInfo=\"abc123\", message"
         );
         this.checkPropertyNameAndValue(throwable);
     }
@@ -53,7 +53,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
         );
         this.checkMessage(
                 throwable,
-                "Metadata audit-info=\"abc123\", message"
+                "Metadata auditInfo=\"abc123\", message"
         );
         this.checkPropertyNameAndValue(throwable);
         this.checkCause(throwable, CAUSE);

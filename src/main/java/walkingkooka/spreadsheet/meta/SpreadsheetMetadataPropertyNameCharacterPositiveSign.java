@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyNameCharacterPositiveSign extends Spreads
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameCharacterPositiveSign() {
-        super("positive-sign");
+        super("positiveSign");
     }
 
     @Override

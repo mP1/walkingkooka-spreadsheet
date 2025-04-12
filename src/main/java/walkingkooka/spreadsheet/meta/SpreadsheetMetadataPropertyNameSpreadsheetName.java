@@ -36,7 +36,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetName() {
-        super("spreadsheet-name");
+        super("spreadsheetName");
     }
 
     @Override
