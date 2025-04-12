@@ -27,6 +27,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
@@ -111,7 +112,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testGetUnknown() {
         this.getAndCheck(
                 this.createObject(),
-                SpreadsheetMetadataPropertyName.MODIFIED_BY
+                SpreadsheetMetadataPropertyName.ROUNDING_MODE
         );
     }
 
@@ -249,15 +250,27 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testSetNullPropertyValueFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> this.createObject().set(SpreadsheetMetadataPropertyName.CREATED_BY, null));
+        assertThrows(
+                SpreadsheetMetadataPropertyValueException.class,
+                () -> this.createObject()
+                        .set(
+                                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                                null
+                        )
+        );
     }
 
     @Test
     public final void testSetInvalidPropertyValueFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.CREATED_BY;
-            this.createObject().set(propertyName, Cast.to("invalid-expected-EmailAddress"));
-        });
+        assertThrows(
+                SpreadsheetMetadataPropertyValueException.class, () -> {
+                    final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
+                    this.createObject()
+                            .set(
+                                    propertyName,
+                                    Cast.to("invalid-expected-EmailAddress")
+                            );
+                });
     }
 
     final <TT> SpreadsheetMetadata setAndCheck(final SpreadsheetMetadata metadata,
@@ -283,7 +296,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testRemoveUnknown() {
         final SpreadsheetMetadata metadata = this.createObject();
-        assertSame(metadata, metadata.remove(SpreadsheetMetadataPropertyName.MODIFIED_BY));
+        assertSame(
+                metadata,
+                metadata.remove(SpreadsheetMetadataPropertyName.ROUNDING_MODE)
+        );
     }
 
     final SpreadsheetMetadata removeAndCheck(final SpreadsheetMetadata metadata,
@@ -716,23 +732,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
-    public final void testSetDefaultsIncludesCreatorFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"));
-    }
-
-    @Test
-    public final void testSetDefaultsIncludesCreateDateTimeFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now());
-    }
-
-    @Test
-    public final void testSetDefaultsIncludesModifiedByFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
-    }
-
-    @Test
-    public final void testSetDefaultsIncludesModifiedDateTimeFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, LocalDateTime.now());
+    public final void testSetDefaultsIncludesAuditFails() {
+        this.setDefaultsWithInvalidFails(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                    EmailAddress.parse("creator@example.com"),
+                        LocalDateTime.MIN,
+                        EmailAddress.parse("modified@example.com"),
+                        LocalDateTime.MAX
+                )
+        );
     }
 
     @Test
@@ -747,35 +756,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
         this.checkEquals("Defaults includes invalid default values: " + property, thrown.getMessage(), () -> "defaults with " + defaults);
-    }
-
-    @Test
-    public final void testSetDefaultsSeveralInvalidsFails() {
-        final SpreadsheetMetadata metadata = this.createObject();
-        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
-                .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now());
-
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
-        this.checkEquals(
-                "Defaults includes invalid default values: " + SpreadsheetMetadataPropertyName.CREATED_BY + ", " + SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                thrown.getMessage(),
-                () -> "defaults with " + defaults
-        );
-    }
-
-    @Test
-    public final void testSetDefaultWithDefaultFails() {
-        final SpreadsheetMetadata metadata = this.createObject();
-
-        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
-                .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.now())
-                .setDefaults(SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$UAD")
-                );
-
-        assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
     }
 
     final void checkDefaults(final SpreadsheetMetadata metadata,

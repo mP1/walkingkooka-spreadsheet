@@ -24,6 +24,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -173,6 +174,14 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     LOCALE
             ).loadFromLocale()
             .set(
+                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    AuditInfo.with(
+                            USER,
+                            NOW.now(),
+                            USER,
+                            NOW.now()
+                    )
+            ).set(
                     SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH,
                     1
             ).set(
@@ -183,12 +192,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.CONVERTERS,
                     CONVERTER_PROVIDER.converterInfos()
                             .aliasSet()
-            ).set(
-                    SpreadsheetMetadataPropertyName.CREATED_BY,
-                    USER
-            ).set(
-                    SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                    NOW.now()
             ).set(
                     SpreadsheetMetadataPropertyName.DATE_FORMATTER,
                     SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd").spreadsheetFormatterSelector()
@@ -246,12 +249,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.IMPORTERS,
                     SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()
                             .aliasSet()
-            ).set(
-                    SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                    USER
-            ).set(
-                    SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
-                    NOW.now()
             ).set(
                     SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
                     SpreadsheetPattern.parseNumberFormatPattern("0.#").spreadsheetFormatterSelector()

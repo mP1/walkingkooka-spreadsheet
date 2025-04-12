@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -176,10 +177,14 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
 
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id)
-                .set(SpreadsheetMetadataPropertyName.CREATED_BY, creatorEmail)
-                .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, createDateTime)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail)
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, modifiedDateTime);
+                .set(
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                creatorEmail,
+                                createDateTime,
+                                modifiedEmail,
+                                modifiedDateTime
+                        )
+                ).set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"));
     }
 }

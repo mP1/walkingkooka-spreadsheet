@@ -21,7 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.net.email.EmailAddress;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -46,7 +46,6 @@ import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -103,6 +102,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
+    protected void visitAuditInfo(final AuditInfo auditInfo) {
+        // nop
+    }
+
     protected void visitCellCharacterWidth(final int value) {
         // nop
     }
@@ -120,14 +123,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitConverters(final ConverterAliasSet aliases) {
-        // nop
-    }
-
-    protected void visitCreatedTimestamp(final LocalDateTime dateTime) {
-        // nop
-    }
-
-    protected void visitCreatedBy(final EmailAddress emailAddress) {
         // nop
     }
 
@@ -240,14 +235,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitLocale(final Locale locale) {
-        // nop
-    }
-
-    protected void visitModifiedBy(final EmailAddress emailAddress) {
-        // nop
-    }
-
-    protected void visitModifiedTimestamp(final LocalDateTime dateTime) {
         // nop
     }
 

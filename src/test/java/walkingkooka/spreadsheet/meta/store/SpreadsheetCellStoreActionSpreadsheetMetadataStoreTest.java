@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -76,8 +77,9 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
         store.save(
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
-                        LocalDateTime.now()
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        metadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                                        .setModifiedTimestamp(LocalDateTime.now())
                 )
         );
     }
@@ -202,8 +204,13 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
                         SpreadsheetPattern.parseNumberParsePattern("0.00")
                                 .spreadsheetParserSelector()
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        EmailAddress.parse("different@example.com")
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                EmailAddress.parse("different@example.com"),
+                                LocalDateTime.MIN,
+                                EmailAddress.parse("different@example.com"),
+                                LocalDateTime.MAX
+                        )
                 )
         );
 
@@ -514,23 +521,19 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
 
     private SpreadsheetMetadata metadata() {
         final LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-        return SpreadsheetMetadata.EMPTY
-                .set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.ENGLISH
-                ).set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        EmailAddress.parse("creator@example")
-                ).set(
-                        SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
+
+        return SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                        EmailAddress.parse("creator@example.com"),
+                        yesterday,
+                        EmailAddress.parse("creator@example.com"),
                         yesterday
-                ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                        EmailAddress.parse("creator@example")
-                ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
-                        yesterday
-                );
+                )
+        ).set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.ENGLISH
+        );
     }
 
     @Override

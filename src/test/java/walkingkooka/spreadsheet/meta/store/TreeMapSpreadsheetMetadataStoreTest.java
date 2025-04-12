@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -59,17 +60,13 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                         SpreadsheetId.with(1)
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        creator
-                ).set(
-                        SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                        NOW
-                ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                        creator
-                ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
-                        NOW
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                creator,
+                                NOW,
+                                creator,
+                                NOW
+                        )
                 ).set(
                         SpreadsheetMetadataPropertyName.LOCALE,
                         locale.get()
@@ -92,17 +89,13 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                         SpreadsheetId.with(1)
                 ).set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        creator
-                ).set(
-                        SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                        NOW
-                ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                        creator
-                ).set(
-                        SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
-                        NOW
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                creator,
+                                NOW,
+                                creator,
+                                NOW
+                        )
                 ),
                 this.createStore()
                         .create(
@@ -127,21 +120,28 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
         store.save(this.metadata(1, "user1@example.com"));
         store.save(this.metadata(2, "user2@example.com"));
 
-        this.toStringAndCheck(store, "[{\n" +
-                "  \"spreadsheet-id\": \"1\",\n" +
-                "  \"created-by\": \"user1@example.com\",\n" +
-                "  \"created-timestamp\": \"1999-12-31T12:58:59\",\n" +
-                "  \"locale\": \"en-AU\",\n" +
-                "  \"modified-by\": \"modified@example.com\",\n" +
-                "  \"modified-timestamp\": \"2000-01-02T12:58:59\"\n" +
-                "}, {\n" +
-                "  \"spreadsheet-id\": \"2\",\n" +
-                "  \"created-by\": \"user2@example.com\",\n" +
-                "  \"created-timestamp\": \"1999-12-31T12:58:59\",\n" +
-                "  \"locale\": \"en-AU\",\n" +
-                "  \"modified-by\": \"modified@example.com\",\n" +
-                "  \"modified-timestamp\": \"2000-01-02T12:58:59\"\n" +
-                "}]");
+        this.toStringAndCheck(
+                store,
+                "[{\n" +
+                        "  \"spreadsheet-id\": \"1\",\n" +
+                        "  \"audit-info\": {\n" +
+                        "    \"createdBy\": \"user1@example.com\",\n" +
+                        "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
+                        "    \"modifiedBy\": \"modified@example.com\",\n" +
+                        "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                        "  },\n" +
+                        "  \"locale\": \"en-AU\"\n" +
+                        "}, {\n" +
+                        "  \"spreadsheet-id\": \"2\",\n" +
+                        "  \"audit-info\": {\n" +
+                        "    \"createdBy\": \"user2@example.com\",\n" +
+                        "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
+                        "    \"modifiedBy\": \"modified@example.com\",\n" +
+                        "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                        "  },\n" +
+                        "  \"locale\": \"en-AU\"\n" +
+                        "}]"
+        );
     }
 
     // class.........................................................................................................

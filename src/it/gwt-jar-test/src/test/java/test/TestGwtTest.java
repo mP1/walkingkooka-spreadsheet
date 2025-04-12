@@ -12,6 +12,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -195,9 +196,15 @@ public class TestGwtTest extends GWTTestCase {
     private static SpreadsheetMetadata metadata() {
         if (null == metadata) {
             SpreadsheetMetadata m = SpreadsheetMetadata.EMPTY
-                    .set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
-                    .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, LocalDateTime.of(2000, 12, 31, 12, 58, 59))
-                    .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("creator@example.com"))
+                    .set(
+                            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                            AuditInfo.with(
+                                    EmailAddress.parse("creator@example.com"),
+                                    LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+                                    EmailAddress.parse("modified@example.com"),
+                                    LocalDateTime.of(2000, 1, 2, 3, 4, 5)
+                            )
+                    ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD")
                     .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY").spreadsheetParserSelector())
@@ -214,8 +221,6 @@ public class TestGwtTest extends GWTTestCase {
                     .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
                     .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, ',')
                     .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
-                    .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
-                    .set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, LocalDateTime.of(1999, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
                     .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
                     .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8)
@@ -440,17 +445,17 @@ public class TestGwtTest extends GWTTestCase {
         }
 
         @Override
+        public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
             throw new UnsupportedOperationException();
         }
 
         @Override
         public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
             throw new UnsupportedOperationException();
         }
 

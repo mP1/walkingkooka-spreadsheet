@@ -23,6 +23,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -107,6 +108,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>created-by {@link AuditInfo}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<AuditInfo> AUDIT_INFO = registerConstant(SpreadsheetMetadataPropertyNameAuditInfo.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> CELL_CHARACTER_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth.instance());
@@ -130,16 +136,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterAliasSet}</code>
      */
     public static final SpreadsheetMetadataPropertyName<ConverterAliasSet> CONVERTERS = registerConstant(SpreadsheetMetadataPropertyNameConverterAliasSetConverters.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>created-by {@link EmailAddress}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<EmailAddress> CREATED_BY = registerConstant(SpreadsheetMetadataPropertyNameEmailAddressCreatedBy.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>created-timestamp {@link LocalDateTime}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<LocalDateTime> CREATED_TIMESTAMP = registerConstant(SpreadsheetMetadataPropertyNameLocalDateTimeCreateTimestamp.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency {@link String}</code>
@@ -279,16 +275,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
      */
     public static final SpreadsheetMetadataPropertyName<Locale> LOCALE = registerConstant(SpreadsheetMetadataPropertyNameLocale.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>last modified by {@link EmailAddress}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<EmailAddress> MODIFIED_BY = registerConstant(SpreadsheetMetadataPropertyNameEmailAddressModifiedBy.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>modified-timestamp {@link LocalDateTime}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_TIMESTAMP = registerConstant(SpreadsheetMetadataPropertyNameLocalDateTimeModifiedTimestamp.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>negative-sign {@link Character}</code>
@@ -556,11 +542,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     abstract String expected();
 
     /**
-     * Defaults must not include a spreadsheet-id, email address or timestamp.
+     * Defaults must not include a {@link SpreadsheetId}, {@link AuditInfo}
      */
     final boolean isNotDefaultProperty() {
-        return this instanceof SpreadsheetMetadataPropertyNameEmailAddress ||
-                this instanceof SpreadsheetMetadataPropertyNameLocalDateTime ||
+        return this instanceof SpreadsheetMetadataPropertyNameAuditInfo ||
                 this instanceof SpreadsheetMetadataPropertyNameSpreadsheetId;
     }
 
@@ -627,10 +612,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 break;
 
             // authorship & timestamp
-            case "created-by":
-            case "created-timestamp":
-            case "modified-by":
-            case "modified-timestamp":
+            case "audit-info":
                 action = SpreadsheetCellStoreAction.NONE;
                 break;
             // viewport
