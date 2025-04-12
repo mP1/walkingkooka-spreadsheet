@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.FieldAttributes;
@@ -40,6 +41,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.lang.reflect.Field;
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -130,47 +132,51 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testPatchNonNullValue() {
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                EmailAddress.parse("user@example.com"),
-                JsonNode.object()
-                        .set(
-                                JsonPropertyName.with("created-by"),
-                                JsonNode.string("user@example.com")
-                        )
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                        EmailAddress.parse("created@example.com"),
+                        LocalDateTime.MIN,
+                        EmailAddress.parse("modified@example.com"),
+                        LocalDateTime.MAX
+                ),
+                "{\n" +
+                        "  \"audit-info\": {\n" +
+                        "    \"createdBy\": \"created@example.com\",\n" +
+                        "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
+                        "    \"modifiedBy\": \"modified@example.com\",\n" +
+                        "    \"modifiedTimestamp\": \"+999999999-12-31T23:59:59.999999999\"\n" +
+                        "  }\n" +
+                        "}"
         );
     }
 
     @Test
     public void testPatchNonNullValue2() {
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                EmailAddress.parse("user@example.com"),
-                SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        EmailAddress.parse("user@patched-over.com")
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                        EmailAddress.parse("after@example.com"),
+                        LocalDateTime.MIN,
+                        EmailAddress.parse("after@example.com"),
+                        LocalDateTime.MAX
                 ),
                 SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        EmailAddress.parse("user@example.com")
-                )
-        );
-    }
-
-    @Test
-    public void testPatchNonNullValue3() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
-
-        this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                EmailAddress.parse("user@example.com"),
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        EmailAddress.parse("user@patched-over.com")
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                EmailAddress.parse("before@example.com"),
+                                LocalDateTime.MIN,
+                                EmailAddress.parse("before@example.com"),
+                                LocalDateTime.MAX
+                        )
                 ),
-                metadata.set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        EmailAddress.parse("user@example.com")
+                SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                EmailAddress.parse("after@example.com"),
+                                LocalDateTime.MIN,
+                                EmailAddress.parse("after@example.com"),
+                                LocalDateTime.MAX
+                        )
                 )
         );
     }
@@ -178,11 +184,11 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testPatchNullValue() {
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 null,
                 JsonNode.object()
                         .set(
-                                JsonPropertyName.with("created-by"),
+                                JsonPropertyName.with("audit-info"),
                                 JsonNode.nullNode()
                         )
         );
@@ -191,11 +197,16 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testPatchNullValue2() {
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 null,
                 SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        EmailAddress.parse("user@patched-over.com")
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                EmailAddress.parse("user@example.com"),
+                                LocalDateTime.MIN,
+                                EmailAddress.parse("user@example.com"),
+                                LocalDateTime.MAX
+                        )
                 ),
                 SpreadsheetMetadata.EMPTY
         );
@@ -207,13 +218,28 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         this.patchAndCheck(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 null,
                 metadata.set(
-                        SpreadsheetMetadataPropertyName.CREATED_BY,
-                        EmailAddress.parse("user@patched-over.com")
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                EmailAddress.parse("created@example.com"),
+                                LocalDateTime.MIN,
+                                EmailAddress.parse("modified@example.com"),
+                                LocalDateTime.MAX
+                        )
                 ),
                 metadata
+        );
+    }
+
+    private <T> void patchAndCheck(final SpreadsheetMetadataPropertyName<T> propertyName,
+                                   final T value,
+                                   final String expected) {
+        this.patchAndCheck(
+                propertyName,
+                value,
+                JsonNode.parse(expected)
         );
     }
 
@@ -252,58 +278,43 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testSortSpreadsheetIdFirst() {
-        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
-        final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
-        final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP;
+        final SpreadsheetMetadataPropertyName<?> audit = SpreadsheetMetadataPropertyName.AUDIT_INFO;
+        final SpreadsheetMetadataPropertyName<?> hideZeroValues = SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES;
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
 
         //noinspection unchecked
         this.compareToArraySortAndCheck(
-                spreadsheetId, modifiedDateTime, creator, modifiedBy,
-                spreadsheetId, creator, modifiedBy, modifiedDateTime
-        );
-    }
-
-    @Test
-    public void testSortSpreadsheetIdFirst2() {
-        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
-        final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
-        final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP;
-        final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
-
-        //noinspection unchecked
-        this.compareToArraySortAndCheck(
-                modifiedDateTime, spreadsheetId, modifiedBy, creator,
-                spreadsheetId, creator, modifiedBy, modifiedDateTime
+                spreadsheetId, hideZeroValues, audit,
+                spreadsheetId, audit, hideZeroValues
         );
     }
 
     @Test
     public void testSortNumberedColours() {
-        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
+        final SpreadsheetMetadataPropertyName<?> audit = SpreadsheetMetadataPropertyName.AUDIT_INFO;
         final SpreadsheetMetadataPropertyName<?> color10 = SpreadsheetMetadataPropertyName.numberedColor(10);
         final SpreadsheetMetadataPropertyName<?> color2 = SpreadsheetMetadataPropertyName.numberedColor(2);
         final SpreadsheetMetadataPropertyName<?> color3 = SpreadsheetMetadataPropertyName.numberedColor(3);
 
         //noinspection unchecked
         this.compareToArraySortAndCheck(
-                color3, color2, creator, color10,
-                color2, color3, color10, creator
+                color3, color2, audit, color10,
+                audit, color2, color3, color10
         );
     }
 
     @Test
     public void testSortSpreadsheetIdNumberedColours() {
         final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
-        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATED_BY;
+        final SpreadsheetMetadataPropertyName<?> audit = SpreadsheetMetadataPropertyName.AUDIT_INFO;
         final SpreadsheetMetadataPropertyName<?> color10 = SpreadsheetMetadataPropertyName.numberedColor(10);
         final SpreadsheetMetadataPropertyName<?> color2 = SpreadsheetMetadataPropertyName.numberedColor(2);
         final SpreadsheetMetadataPropertyName<?> color3 = SpreadsheetMetadataPropertyName.numberedColor(3);
 
         //noinspection unchecked
         this.compareToArraySortAndCheck(
-                color3, color2, creator, spreadsheetId, color10,
-                spreadsheetId, color2, color3, color10, creator
+                color3, color2, audit, spreadsheetId, color10,
+                spreadsheetId, audit, color2, color3, color10
         );
     }
 
@@ -321,10 +332,15 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseUrlFragmentSaveValueCreatorFails() {
+    public void testParseUrlFragmentSaveValueAuditInfoFails() {
         this.parseValueFails(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                EmailAddress.parse("creator@example.com")
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                        EmailAddress.parse("created@example.com"),
+                        LocalDateTime.MIN,
+                        EmailAddress.parse("modified@example.com"),
+                        LocalDateTime.MAX
+                )
         );
     }
 
@@ -333,14 +349,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         this.parseValueFails(
                 SpreadsheetMetadataPropertyName.FROZEN_COLUMNS,
                 "A:B"
-        );
-    }
-
-    @Test
-    public void testParseUrlFragmentSaveValueModifiedByFails() {
-        this.parseValueFails(
-                SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                EmailAddress.parse("modified-by@example.com")
         );
     }
 
@@ -413,33 +421,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testSpreadsheetCellStoreActionCreatedBy() {
+    public void testSpreadsheetCellStoreActionAuditInfo() {
         this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                SpreadsheetCellStoreAction.NONE
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionCreateDateTime() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                SpreadsheetCellStoreAction.NONE
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionModifiedBy() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                SpreadsheetCellStoreAction.NONE
-        );
-    }
-
-    @Test
-    public void testSpreadsheetCellStoreActionModifiedDateTime() {
-        this.spreadsheetCellStoreActionAndCheck(
-                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 SpreadsheetCellStoreAction.NONE
         );
     }
@@ -617,7 +601,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Override
     public String nameText() {
-        return SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP.name;
+        return SpreadsheetMetadataPropertyName.COMPARATORS.name;
     }
 
     @Override
@@ -627,7 +611,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Override
     public String nameTextLess() {
-        return SpreadsheetMetadataPropertyName.CREATED_BY.name;
+        return SpreadsheetMetadataPropertyName.AUDIT_INFO.name;
     }
 
     // HasSpreadsheetPatternKind........................................................................................

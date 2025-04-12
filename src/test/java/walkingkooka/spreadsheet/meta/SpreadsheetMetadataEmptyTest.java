@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -64,15 +65,25 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testSet() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATED_BY;
-        final EmailAddress email = EmailAddress.parse("user@example.com");
+        final SpreadsheetMetadataPropertyName<AuditInfo> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
+        final AuditInfo auditInfo = AuditInfo.with(
+                EmailAddress.parse("created@example.com"),
+                LocalDateTime.MIN,
+                EmailAddress.parse("modified@example.com"),
+                LocalDateTime.MAX
+        );
 
         this.setAndCheck(
                 SpreadsheetMetadata.EMPTY,
                 propertyName,
-                email,
+                auditInfo,
                 "{\n" +
-                        "  \"created-by\": \"user@example.com\"\n" +
+                        "  \"audit-info\": {\n" +
+                        "    \"createdBy\": \"created@example.com\",\n" +
+                        "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
+                        "    \"modifiedBy\": \"modified@example.com\",\n" +
+                        "    \"modifiedTimestamp\": \"+999999999-12-31T23:59:59.999999999\"\n" +
+                        "  }\n" +
                         "}"
         );
     }
@@ -96,12 +107,11 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testMissingProperties() {
-        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY,
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                SpreadsheetMetadataPropertyName.LOCALE,
-                SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP);
+        this.missingRequiredPropertiesAndCheck(
+                SpreadsheetMetadata.EMPTY,
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                SpreadsheetMetadataPropertyName.LOCALE
+        );
     }
 
     @Test
@@ -109,12 +119,11 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$");
 
-        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                SpreadsheetMetadataPropertyName.LOCALE,
-                SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP);
+        this.missingRequiredPropertiesAndCheck(
+                SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                SpreadsheetMetadataPropertyName.LOCALE
+        );
     }
 
     // EnvironmentContext...............................................................................................
@@ -128,7 +137,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                                 EnvironmentContext.ANONYMOUS
                         )
                 ),
-                EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.CREATED_BY)
+                EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.AUDIT_INFO)
         );
     }
 

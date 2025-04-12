@@ -23,6 +23,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.reflect.JavaVisibility;
@@ -92,8 +93,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
 
     @Test
     public void testVisitSpreadsheetMetadataPropertyNameSkip() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATED_BY;
-        final EmailAddress value = this.emailAddress();
+        final SpreadsheetMetadataPropertyName<AuditInfo> propertyName = SpreadsheetMetadataPropertyName.AUDIT_INFO;
+        final AuditInfo value = AuditInfo.with(
+                EmailAddress.parse("created@example.com"),
+                LocalDateTime.MIN,
+                EmailAddress.parse("modified@example.com"),
+                LocalDateTime.MAX
+        );
         final SpreadsheetMetadata metadata = metadata(propertyName, value);
 
         new FakeSpreadsheetMetadataVisitor() {
@@ -119,6 +125,24 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 assertSame(value, v, "value");
             }
         }.accept(metadata);
+    }
+
+    @Test
+    public void testVisitCreatedBy() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitAuditInfo(final AuditInfo a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                        EmailAddress.parse("created@example.com"),
+                        LocalDateTime.MIN,
+                        EmailAddress.parse("modified@example.com"),
+                        LocalDateTime.MAX
+                )
+        );
     }
 
     @Test
@@ -170,26 +194,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                         .converterInfos()
                         .aliasSet()
         );
-    }
-
-    @Test
-    public void testVisitCreatedBy() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitCreatedBy(final EmailAddress e) {
-                this.visited = e;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.CREATED_BY, this.emailAddress());
-    }
-
-    @Test
-    public void testVisitCreatedTimestamp() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitCreatedTimestamp(final LocalDateTime d) {
-                this.visited = d;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, this.dateTime());
     }
 
     @Test
@@ -465,26 +469,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = l;
             }
         }.accept(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
-    }
-
-    @Test
-    public void testVisitModifiedBy() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitModifiedBy(final EmailAddress e) {
-                this.visited = e;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.MODIFIED_BY, this.emailAddress());
-    }
-
-    @Test
-    public void testVisitModifiedTimestamp() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitModifiedTimestamp(final LocalDateTime d) {
-                this.visited = d;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, this.dateTime());
     }
 
     @Test

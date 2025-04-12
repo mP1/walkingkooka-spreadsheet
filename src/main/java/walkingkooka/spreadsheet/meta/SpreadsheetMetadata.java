@@ -177,11 +177,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final Set<SpreadsheetMetadataPropertyName<?>> missingRequiredProperties() {
         final Set<SpreadsheetMetadataPropertyName<?>> missing = SortedSets.tree();
 
-        addIfMissing(SpreadsheetMetadataPropertyName.CREATED_BY, missing);
-        addIfMissing(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, missing);
-        addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_BY, missing);
-        addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, missing);
-
+        addIfMissing(SpreadsheetMetadataPropertyName.AUDIT_INFO, missing);
         addIfMissing(SpreadsheetMetadataPropertyName.LOCALE, missing);
 
         return Sets.readOnly(missing);
@@ -1356,7 +1352,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     static {
-        SpreadsheetMetadataPropertyName.CREATED_BY.value();
+        SpreadsheetMetadataPropertyName.AUDIT_INFO.caseSensitivity();
 
         JsonNodeContext.register(
                 JsonNodeContext.computeTypeName(SpreadsheetMetadata.class),

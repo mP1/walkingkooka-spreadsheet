@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.net.email.EmailAddress;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -44,7 +44,6 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
@@ -74,6 +73,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitAuditInfo(final AuditInfo auditInfo) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitCellCharacterWidth(final int value) {
         throw new UnsupportedOperationException();
     }
@@ -95,16 +99,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitConverters(final ConverterAliasSet aliases) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitCreatedTimestamp(final LocalDateTime dateTime) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitCreatedBy(final EmailAddress emailAddress) {
         throw new UnsupportedOperationException();
     }
 
@@ -245,16 +239,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitLocale(final Locale locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitModifiedBy(final EmailAddress emailAddress) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitModifiedTimestamp(final LocalDateTime dateTime) {
         throw new UnsupportedOperationException();
     }
 

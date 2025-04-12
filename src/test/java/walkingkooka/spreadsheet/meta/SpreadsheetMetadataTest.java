@@ -26,6 +26,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
@@ -338,68 +339,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testShouldViewsRefreshSameDifferentCreator() {
         final SpreadsheetMetadata metadata = this.metadata();
         final SpreadsheetMetadata different = metadata.set(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                EmailAddress.parse("different@example.com")
-        );
-
-        this.checkNotEquals(
-                metadata,
-                different
-        );
-
-        this.shouldViewRefreshAndCheck(
-                different,
-                metadata,
-                false
-        );
-    }
-
-    @Test
-    public void testShouldViewsRefreshSameDifferentCreateDateTime() {
-        final SpreadsheetMetadata metadata = this.metadata();
-        final SpreadsheetMetadata different = metadata.set(
-                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                LocalDateTime.now().plusDays(1)
-        );
-
-        this.checkNotEquals(
-                metadata,
-                different
-        );
-
-        this.shouldViewRefreshAndCheck(
-                different,
-                metadata,
-                false
-        );
-    }
-
-    @Test
-    public void testShouldViewsRefreshSameDifferentModified() {
-        final SpreadsheetMetadata metadata = this.metadata();
-        final SpreadsheetMetadata different = metadata.set(
-                SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                EmailAddress.parse("different@example.com")
-        );
-
-        this.checkNotEquals(
-                metadata,
-                different
-        );
-
-        this.shouldViewRefreshAndCheck(
-                different,
-                metadata,
-                false
-        );
-    }
-
-    @Test
-    public void testShouldViewsRefreshSameDifferentModifiedDateTime() {
-        final SpreadsheetMetadata metadata = this.metadata();
-        final SpreadsheetMetadata different = metadata.set(
-                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
-                LocalDateTime.now().plusDays(1)
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                        EmailAddress.parse("different@example.com"),
+                        LocalDateTime.MIN,
+                        EmailAddress.parse("different2@example.com"),
+                        LocalDateTime.MAX
+                )
         );
 
         this.checkNotEquals(
@@ -918,8 +864,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(this.property1(), this.value1())
                         .set(this.property2(), this.value2()),
                 "{\n" +
-                        "  \"created-by\": \"user@example.com\",\n" +
-                        "  \"created-timestamp\": \"2000-01-02T12:58:59\"\n" +
+                        "  \"audit-info\": {\n" +
+                        "    \"createdBy\": \"creator@example.com\",\n" +
+                        "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
+                        "    \"modifiedBy\": \"modified@example.com\",\n" +
+                        "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
+                        "  },\n" +
+                        "  \"hide-zero-values\": true\n" +
                         "}"
         );
     }
@@ -1162,21 +1113,26 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @SuppressWarnings("SameReturnValue")
-    private SpreadsheetMetadataPropertyName<LocalDateTime> property1() {
-        return SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP;
+    private SpreadsheetMetadataPropertyName<AuditInfo> property1() {
+        return SpreadsheetMetadataPropertyName.AUDIT_INFO;
     }
 
-    private LocalDateTime value1() {
-        return LocalDateTime.of(2000, 1, 2, 12, 58, 59);
+    private AuditInfo value1() {
+        return AuditInfo.with(
+                EmailAddress.parse("creator@example.com"),
+                LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+                EmailAddress.parse("modified@example.com"),
+                LocalDateTime.of(2000, 1, 2, 12, 58, 59)
+        );
     }
 
     @SuppressWarnings("SameReturnValue")
-    private SpreadsheetMetadataPropertyName<EmailAddress> property2() {
-        return SpreadsheetMetadataPropertyName.CREATED_BY;
+    private SpreadsheetMetadataPropertyName<Boolean> property2() {
+        return SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES;
     }
 
-    private EmailAddress value2() {
-        return EmailAddress.parse("user@example.com");
+    private Boolean value2() {
+        return true;
     }
 
     // ClassTesting.....................................................................................................

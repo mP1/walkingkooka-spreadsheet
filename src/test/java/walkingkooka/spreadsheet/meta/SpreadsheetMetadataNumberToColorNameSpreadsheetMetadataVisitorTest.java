@@ -19,9 +19,12 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+
+import java.time.LocalDateTime;
 
 public final class SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor>
         implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisitor> {
@@ -37,8 +40,14 @@ public final class SpreadsheetMetadataNumberToColorNameSpreadsheetMetadataVisito
     @Test
     public void testToString() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("user@example.com"))
-                .set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
+                .set(SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                EmailAddress.parse("creator@example.com"),
+                                LocalDateTime.MIN,
+                                EmailAddress.parse("modified@example.com"),
+                                LocalDateTime.MAX
+                        )
+                ).set(SpreadsheetMetadataPropertyName.numberedColor(1), Color.parse("#123456"))
                 .set(SpreadsheetMetadataPropertyName.numberedColor(2), Color.parse("#89abcd"))
                 .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("apple")), 1)
                 .set(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with("banana")), 3);

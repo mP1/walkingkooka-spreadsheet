@@ -19,8 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
+
+import java.time.LocalDateTime;
 
 public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor>
         implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor> {
@@ -39,8 +42,14 @@ public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTes
 
         visitor.accept(
                 SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.CREATED_BY, EmailAddress.parse("user@example.com"))
-                        .set(SpreadsheetMetadataPropertyName.numberedColor(12), Color.fromRgb(0x112233))
+                        .set(SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                                AuditInfo.with(
+                                        EmailAddress.parse("creator@example.com"),
+                                        LocalDateTime.MIN,
+                                        EmailAddress.parse("modified@example.com"),
+                                        LocalDateTime.MAX
+                                )
+                        ).set(SpreadsheetMetadataPropertyName.numberedColor(12), Color.fromRgb(0x112233))
                         .set(SpreadsheetMetadataPropertyName.numberedColor(13), Color.fromRgb(0xffeedd))
         );
         this.toStringAndCheck(visitor, "{12=#112233, 13=#ffeedd}");

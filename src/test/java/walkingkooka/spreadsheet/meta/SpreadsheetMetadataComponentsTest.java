@@ -21,11 +21,13 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -40,16 +42,21 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testGetOrNullAbsent() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        this.checkEquals(null, components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY));
-        this.checkMissing(components, SpreadsheetMetadataPropertyName.CREATED_BY);
+        this.checkEquals(null, components.getOrNull(SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES));
+        this.checkMissing(components, SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES);
     }
 
     @Test
     public void testGetOrNullPresent() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATED_BY;
-        final EmailAddress value = EmailAddress.parse("user@example.com");
+        final SpreadsheetMetadataPropertyName<Boolean> property = SpreadsheetMetadataPropertyName.HIDE_ZERO_VALUES;
+        final boolean value = true;
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY.set(property, value));
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(
+                SpreadsheetMetadata.EMPTY.set(
+                        property,
+                        value
+                )
+        );
         this.checkEquals(value, components.getOrNull(property));
         this.checkMissing(components);
     }
@@ -59,14 +66,14 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testReportIfMissingMissingOne() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
+        components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
 
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: created-by",
+                "Metadata missing: audit-info",
                 thrown.getMessage(),
                 "message"
         );
@@ -75,7 +82,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testReportIfMissingMissingTwo() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
+        components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
         final IllegalStateException thrown = assertThrows(
@@ -83,7 +90,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: created-by, decimal-separator",
+                "Metadata missing: audit-info, decimal-separator",
                 thrown.getMessage(),
                 "message"
         );
@@ -92,17 +99,18 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testReportIfMissingMissingSorted() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
         components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+        components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
 
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: created-by, decimal-separator, locale, rounding-mode",
+                "Metadata missing: audit-info, decimal-separator, locale, rounding-mode",
                 thrown.getMessage(),
                 "message"
         );
@@ -111,16 +119,16 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testReportIfMissingMissingDuplicates() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
+        components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
+        components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
 
         final IllegalStateException thrown = assertThrows(
                 IllegalStateException.class,
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: created-by, rounding-mode",
+                "Metadata missing: audit-info, rounding-mode",
                 thrown.getMessage(),
                 "message"
         );
@@ -128,10 +136,20 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
 
     @Test
     public void testReportIfMissingNone() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATED_BY;
-        final EmailAddress value = EmailAddress.parse("user@example.com");
+        final SpreadsheetMetadataPropertyName<AuditInfo> property = SpreadsheetMetadataPropertyName.AUDIT_INFO;
+        final AuditInfo value = AuditInfo.with(
+                EmailAddress.parse("created@example.com"),
+                LocalDateTime.MIN,
+                EmailAddress.parse("modified@example.com"),
+                LocalDateTime.MAX
+        );
 
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY.set(property, value));
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(
+                SpreadsheetMetadata.EMPTY.set(
+                        property,
+                        value
+                )
+        );
         components.getOrNull(property);
         components.reportIfMissing();
     }
@@ -148,10 +166,16 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
     @Test
     public void testToString() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.CREATED_BY);
+        components.getOrNull(SpreadsheetMetadataPropertyName.AUDIT_INFO);
         components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
-        this.toStringAndCheck(components, Lists.of(SpreadsheetMetadataPropertyName.CREATED_BY, SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR).toString());
+        this.toStringAndCheck(
+                components,
+                Lists.of(
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR
+                ).toString()
+        );
     }
 
     // ClassTesting.....................................................................................................

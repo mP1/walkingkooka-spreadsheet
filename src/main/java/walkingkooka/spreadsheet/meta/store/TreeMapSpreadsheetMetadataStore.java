@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -86,17 +87,13 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         final LocalDateTime timestamp = this.now.now();
 
         SpreadsheetMetadata unsaved = this.createTemplate.set(
-                SpreadsheetMetadataPropertyName.CREATED_BY,
-                creator
-        ).setOrRemove(
-                SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP,
-                timestamp
-        ).set(
-                SpreadsheetMetadataPropertyName.MODIFIED_BY,
-                creator
-        ).set(
-                SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP,
-                timestamp
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                        creator,
+                        timestamp,
+                        creator,
+                        timestamp
+                )
         );
         if (locale.isPresent()) {
             unsaved = unsaved.set(

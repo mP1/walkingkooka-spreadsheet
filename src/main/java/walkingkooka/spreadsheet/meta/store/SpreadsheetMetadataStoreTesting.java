@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -80,7 +81,7 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         );
 
         this.checkEquals(
-                "Metadata missing required properties: created-by, created-timestamp, locale, modified-by, modified-timestamp",
+                "Metadata missing required properties: audit-info, locale",
                 thrown.getMessage()
         );
     }
@@ -98,12 +99,18 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         final LocalDateTime modifiedDateTime = LocalDateTime.of(2000, 1, 2, 12, 58, 59);
 
         return SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, this.id())
-                .set(SpreadsheetMetadataPropertyName.CREATED_BY, creatorEmail)
-                .set(SpreadsheetMetadataPropertyName.CREATED_TIMESTAMP, createDateTime)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail)
-                .set(SpreadsheetMetadataPropertyName.MODIFIED_TIMESTAMP, modifiedDateTime);
+                .set(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                        this.id()
+                ).set(
+                        SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                        AuditInfo.with(
+                                creatorEmail,
+                                createDateTime,
+                                modifiedEmail,
+                                modifiedDateTime
+                        )
+                ).set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
     }
 
     // TypeNameTesting..................................................................
