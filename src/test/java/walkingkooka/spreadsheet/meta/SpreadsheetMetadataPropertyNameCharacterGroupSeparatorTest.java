@@ -30,7 +30,10 @@ public final class SpreadsheetMetadataPropertyNameCharacterGroupSeparatorTest ex
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterGroupSeparator.instance(), "group-separator");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameCharacterGroupSeparator.instance(),
+                "groupSeparator"
+        );
     }
 
     @Override

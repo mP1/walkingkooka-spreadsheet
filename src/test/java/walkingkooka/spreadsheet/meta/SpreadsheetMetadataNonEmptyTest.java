@@ -405,9 +405,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
-                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"decimal-separator\": \",\"\n" +
+                        "    \"decimalSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -433,9 +433,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
-                        "  \"decimal-separator\": \",\",\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"decimal-separator\": \",\"\n" +
+                        "    \"decimalSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -465,13 +465,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 auditInfo,
                 different,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"different@example.com\",\n" +
                         "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
                         "    \"modifiedBy\": \"different@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"+999999999-12-31T23:59:59.999999999\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": true\n" +
+                        "  \"hideZeroValues\": true\n" +
                         "}"
         );
     }
@@ -497,13 +497,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 hideIfZero,
                 different,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": false\n" +
+                        "  \"hideZeroValues\": false\n" +
                         "}"
         );
     }
@@ -529,13 +529,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 precision,
                 value3,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": true,\n" +
+                        "  \"hideZeroValues\": true,\n" +
                         "  \"precision\": 10\n" +
                         "}"
         );
@@ -554,8 +554,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 groupSeparator,
                 comma,
                 "{\n" +
-                        "  \"decimal-separator\": \".\",\n" +
-                        "  \"group-separator\": \",\"\n" +
+                        "  \"decimalSeparator\": \".\",\n" +
+                        "  \"groupSeparator\": \",\"\n" +
                         "}"
         );
     }
@@ -576,9 +576,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 positive,
                 plus,
                 "{\n" +
-                        "  \"decimal-separator\": \".\",\n" +
-                        "  \"group-separator\": \",\",\n" +
-                        "  \"positive-sign\": \"+\"\n" +
+                        "  \"decimalSeparator\": \".\",\n" +
+                        "  \"groupSeparator\": \",\",\n" +
+                        "  \"positiveSign\": \"+\"\n" +
                         "}"
         );
     }
@@ -595,8 +595,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value,
                 dot,
                 "{\n" +
-                        "  \"group-separator\": \".\",\n" +
-                        "  \"value-separator\": \".\"\n" +
+                        "  \"groupSeparator\": \".\",\n" +
+                        "  \"valueSeparator\": \".\"\n" +
                         "}"
         );
     }
@@ -613,7 +613,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> this.createSpreadsheetMetadata(decimalSeparator, dot).set(groupSeparator, dot)
         );
 
-        this.checkEquals("Cannot set group-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
+        this.checkEquals(
+                "Cannot set groupSeparator='.' duplicate of decimalSeparator",
+                thrown.getMessage(),
+                "thrown message"
+        );
     }
 
     @Test
@@ -628,7 +632,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 () -> this.createSpreadsheetMetadata(decimalSeparator, dot).set(valueSeparator, dot)
         );
 
-        this.checkEquals("Cannot set value-separator='.' duplicate of decimal-separator", thrown.getMessage(), "thrown message");
+        this.checkEquals(
+                "Cannot set valueSeparator='.' duplicate of decimalSeparator",
+                thrown.getMessage(),
+                "thrown message"
+        );
     }
 
     @Test
@@ -644,8 +652,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value,
                 dot,
                 "{\n" +
-                        "  \"group-separator\": \".\",\n" +
-                        "  \"value-separator\": \".\"\n" +
+                        "  \"groupSeparator\": \".\",\n" +
+                        "  \"valueSeparator\": \".\"\n" +
                         "}"
         );
     }
@@ -663,8 +671,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 groupSeparator,
                 dot,
                 "{\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\"\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
+                        "  \"groupSeparator\": \".\"\n" +
                         "}"
         );
     }
@@ -682,8 +690,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"value-separator\": \".\"\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
+                        "  \"valueSeparator\": \".\"\n" +
                         "}"
         );
     }
@@ -708,9 +716,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 groupSeparator,
                 dot,
                 "{\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\",\n" +
-                        "  \"positive-sign\": \"+\"\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
+                        "  \"groupSeparator\": \".\",\n" +
+                        "  \"positiveSign\": \"+\"\n" +
                         "}"
         );
     }
@@ -735,9 +743,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 groupSeparator,
                 dot,
                 "{\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\",\n" +
-                        "  \"positive-sign\": \"+\"\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
+                        "  \"groupSeparator\": \".\",\n" +
+                        "  \"positiveSign\": \"+\"\n" +
                         "}"
         );
     }
@@ -799,10 +807,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\",\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
+                        "  \"groupSeparator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"group-separator\": \",\"\n" +
+                        "    \"groupSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -826,11 +834,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\",\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
+                        "  \"groupSeparator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"decimal-separator\": \".\",\n" +
-                        "    \"group-separator\": \",\"\n" +
+                        "    \"decimalSeparator\": \".\",\n" +
+                        "    \"groupSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -859,17 +867,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 decimalSeparator,
                 comma,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"+999999999-12-31T23:59:59.999999999\"\n" +
                         "  },\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\",\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
+                        "  \"groupSeparator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"decimal-separator\": \".\",\n" +
-                        "    \"group-separator\": \",\"\n" +
+                        "    \"decimalSeparator\": \".\",\n" +
+                        "    \"groupSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -898,17 +906,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 groupSeparator,
                 dot,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"+999999999-12-31T23:59:59.999999999\"\n" +
                         "  },\n" +
-                        "  \"decimal-separator\": \",\",\n" +
-                        "  \"group-separator\": \".\",\n" +
+                        "  \"decimalSeparator\": \",\",\n" +
+                        "  \"groupSeparator\": \".\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"decimal-separator\": \".\",\n" +
-                        "    \"group-separator\": \",\"\n" +
+                        "    \"decimalSeparator\": \".\",\n" +
+                        "    \"groupSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -927,11 +935,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 percent,
                 '%',
                 "{\n" +
-                        "  \"percentage-symbol\": \"%\",\n" +
+                        "  \"percentageSymbol\": \"%\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"group-separator\": \",\",\n" +
-                        "    \"percentage-symbol\": \"%\",\n" +
-                        "    \"value-separator\": \",\"\n" +
+                        "    \"groupSeparator\": \",\",\n" +
+                        "    \"percentageSymbol\": \"%\",\n" +
+                        "    \"valueSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -950,11 +958,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 groupSeparator,
                 ',',
                 "{\n" +
-                        "  \"group-separator\": \",\",\n" +
+                        "  \"groupSeparator\": \",\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"group-separator\": \",\",\n" +
-                        "    \"percentage-symbol\": \"%\",\n" +
-                        "    \"value-separator\": \",\"\n" +
+                        "    \"groupSeparator\": \",\",\n" +
+                        "    \"percentageSymbol\": \"%\",\n" +
+                        "    \"valueSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -973,11 +981,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value,
                 ',',
                 "{\n" +
-                        "  \"value-separator\": \",\",\n" +
+                        "  \"valueSeparator\": \",\",\n" +
                         "  \"_defaults\": {\n" +
-                        "    \"group-separator\": \",\",\n" +
-                        "    \"percentage-symbol\": \"%\",\n" +
-                        "    \"value-separator\": \",\"\n" +
+                        "    \"groupSeparator\": \",\",\n" +
+                        "    \"percentageSymbol\": \"%\",\n" +
+                        "    \"valueSeparator\": \",\"\n" +
                         "  }\n" +
                         "}"
         );
@@ -1055,7 +1063,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property1,
                 value1,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
@@ -1072,13 +1080,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property2,
                 value2,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": true\n" +
+                        "  \"hideZeroValues\": true\n" +
                         "}"
         );
 
@@ -1102,7 +1110,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property1,
                 value1,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
@@ -1119,13 +1127,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property2,
                 value2,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": true\n" +
+                        "  \"hideZeroValues\": true\n" +
                         "}"
         );
 
@@ -1140,13 +1148,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 property1,
                 value1,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": true\n" +
+                        "  \"hideZeroValues\": true\n" +
                         "}"
         );
     }
@@ -2005,9 +2013,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, NEGATIVE_SIGN)
                 .decimalNumberContext());
-        this.checkEquals("Metadata missing: locale, percentage-symbol, positive-sign, precision, rounding-mode",
+        this.checkEquals(
+                "Metadata missing: locale, percentageSymbol, positiveSign, precision, roundingMode",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     @Test
@@ -2017,9 +2027,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, EXPONENT_SYMBOL)
                 .decimalNumberContext());
-        this.checkEquals("Metadata missing: group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode",
+        this.checkEquals(
+                "Metadata missing: groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     @Test
@@ -2131,7 +2143,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .expressionNumberContext());
         this.checkEquals(
-                "Metadata missing: rounding-mode",
+                "Metadata missing: roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -2355,7 +2367,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         .jsonNodeUnmarshallContext()
         );
         this.checkEquals(
-                "Metadata missing: rounding-mode",
+                "Metadata missing: roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -2418,7 +2430,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         SpreadsheetMetadata.EMPTY
                 ).mathContext()
         );
-        this.checkMessage(thrown, "Metadata missing: rounding-mode");
+        this.checkMessage(thrown, "Metadata missing: roundingMode");
     }
 
     @Test
@@ -2468,7 +2480,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 )
         );
         this.checkEquals(
-                "Metadata missing: date-time-parser, number-parser, time-parser",
+                "Metadata missing: dateTimeParser, numberParser, timeParser",
                 thrown.getMessage(),
                 "message"
         );
@@ -2715,13 +2727,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(
                 SpreadsheetMetadataNonEmpty.with(map, null),
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": true\n" +
+                        "  \"hideZeroValues\": true\n" +
                         "}"
         );
     }
@@ -2734,7 +2746,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(
                 SpreadsheetMetadataNonEmpty.with(map, null),
                 "{\n" +
-                        "  \"decimal-separator\": \".\"\n" +
+                        "  \"decimalSeparator\": \".\"\n" +
                         "}"
         );
     }
@@ -2747,7 +2759,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(
                 SpreadsheetMetadataNonEmpty.with(map, null),
                 "{\n" +
-                        "  \"currency-symbol\": \"AUD\"\n" +
+                        "  \"currencySymbol\": \"AUD\"\n" +
                         "}"
         );
     }
@@ -2770,13 +2782,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         )
                 ),
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
                         "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                         "  },\n" +
-                        "  \"hide-zero-values\": true,\n" +
+                        "  \"hideZeroValues\": true,\n" +
                         "  \"_defaults\": {\n" +
                         "    \"locale\": \"en\"\n" +
                         "  }\n" +
@@ -2790,7 +2802,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testUnmarshallInvalidCharacterValueFails() {
         this.unmarshallFails(
                 "{" +
-                        "  \"decimal-separator\": \"d\"\n" +
+                        "  \"decimalSeparator\": \"d\"\n" +
                         "}",
                 SpreadsheetMetadata.class
         );
@@ -2800,10 +2812,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testUnmarshallWithDefaultSwap() {
         this.unmarshallAndCheck(
                 "{\n" +
-                        "    \"decimal-separator\": \",\",\n" +
+                        "    \"decimalSeparator\": \",\",\n" +
                         "    \"_defaults\": {\n" +
-                        "        \"decimal-separator\": \".\",\n" +
-                        "        \"group-separator\": \",\"\n" +
+                        "        \"decimalSeparator\": \".\",\n" +
+                        "        \"groupSeparator\": \",\"\n" +
                         "    }\n" +
                         "}",
                 SpreadsheetMetadata.EMPTY
@@ -2823,73 +2835,73 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testUnmarshall() {
         final JsonNode json = JsonNode.parse("{\n" +
-                "  \"audit-info\": {\n" +
+                "  \"auditInfo\": {\n" +
                 "    \"createdBy\": \"created@example.com\",\n" +
                 "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                 "    \"modifiedBy\": \"modified@example.com\",\n" +
                 "    \"modifiedTimestamp\": \"2000-01-02T12:58:59\"\n" +
                 "  },\n" +
-                "  \"cell-character-width\": 0,\n" +
-                "  \"color-1\": \"#000001\",\n" +
-                "  \"color-10\": \"#00000a\",\n" +
-                "  \"color-11\": \"#00000b\",\n" +
-                "  \"color-12\": \"#00000c\",\n" +
-                "  \"color-13\": \"#00000d\",\n" +
-                "  \"color-14\": \"#00000e\",\n" +
-                "  \"color-15\": \"#00000f\",\n" +
-                "  \"color-16\": \"#000010\",\n" +
-                "  \"color-17\": \"#000011\",\n" +
-                "  \"color-18\": \"#000012\",\n" +
-                "  \"color-19\": \"#000013\",\n" +
-                "  \"color-2\": \"#000002\",\n" +
-                "  \"color-20\": \"#000014\",\n" +
-                "  \"color-21\": \"#000015\",\n" +
-                "  \"color-22\": \"#000016\",\n" +
-                "  \"color-23\": \"#000017\",\n" +
-                "  \"color-24\": \"#000018\",\n" +
-                "  \"color-25\": \"#000019\",\n" +
-                "  \"color-26\": \"#00001a\",\n" +
-                "  \"color-27\": \"#00001b\",\n" +
-                "  \"color-28\": \"#00001c\",\n" +
-                "  \"color-29\": \"#00001d\",\n" +
-                "  \"color-3\": \"#000003\",\n" +
-                "  \"color-30\": \"#00001e\",\n" +
-                "  \"color-31\": \"#00001f\",\n" +
-                "  \"color-32\": \"#000020\",\n" +
-                "  \"color-33\": \"#000021\",\n" +
-                "  \"color-4\": \"#000004\",\n" +
-                "  \"color-5\": \"#000005\",\n" +
-                "  \"color-6\": \"#000006\",\n" +
-                "  \"color-7\": \"#000007\",\n" +
-                "  \"color-8\": \"#000008\",\n" +
-                "  \"color-9\": \"#000009\",\n" +
-                "  \"color-big\": 1,\n" +
-                "  \"color-medium\": 2,\n" +
-                "  \"color-small\": 3,\n" +
-                "  \"currency-symbol\": \"$AUD\",\n" +
-                "  \"date-formatter\": \"date-format-pattern DD/MM/YYYY\",\n" +
-                "  \"date-parser\": \"date-parse-pattern DD/MM/YYYY;DDMMYYYY\",\n" +
-                "  \"date-time-formatter\": \"date-time-format-pattern DD/MM/YYYY hh:mm\",\n" +
-                "  \"date-time-offset\": \"0\",\n" +
-                "  \"date-time-parser\": \"date-time-pattern DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
-                "  \"decimal-separator\": \".\",\n" +
-                "  \"default-year\": 1901,\n" +
-                "  \"exponent-symbol\": \"E\",\n" +
-                "  \"group-separator\": \",\",\n" +
-                "  \"hide-zero-values\": true,\n" +
+                "  \"cellCharacterWidth\": 0,\n" +
+                "  \"color1\": \"#000001\",\n" +
+                "  \"color10\": \"#00000a\",\n" +
+                "  \"color11\": \"#00000b\",\n" +
+                "  \"color12\": \"#00000c\",\n" +
+                "  \"color13\": \"#00000d\",\n" +
+                "  \"color14\": \"#00000e\",\n" +
+                "  \"color15\": \"#00000f\",\n" +
+                "  \"color16\": \"#000010\",\n" +
+                "  \"color17\": \"#000011\",\n" +
+                "  \"color18\": \"#000012\",\n" +
+                "  \"color19\": \"#000013\",\n" +
+                "  \"color2\": \"#000002\",\n" +
+                "  \"color20\": \"#000014\",\n" +
+                "  \"color21\": \"#000015\",\n" +
+                "  \"color22\": \"#000016\",\n" +
+                "  \"color23\": \"#000017\",\n" +
+                "  \"color24\": \"#000018\",\n" +
+                "  \"color25\": \"#000019\",\n" +
+                "  \"color26\": \"#00001a\",\n" +
+                "  \"color27\": \"#00001b\",\n" +
+                "  \"color28\": \"#00001c\",\n" +
+                "  \"color29\": \"#00001d\",\n" +
+                "  \"color3\": \"#000003\",\n" +
+                "  \"color30\": \"#00001e\",\n" +
+                "  \"color31\": \"#00001f\",\n" +
+                "  \"color32\": \"#000020\",\n" +
+                "  \"color33\": \"#000021\",\n" +
+                "  \"color4\": \"#000004\",\n" +
+                "  \"color5\": \"#000005\",\n" +
+                "  \"color6\": \"#000006\",\n" +
+                "  \"color7\": \"#000007\",\n" +
+                "  \"color8\": \"#000008\",\n" +
+                "  \"color9\": \"#000009\",\n" +
+                "  \"colorbig\": 1,\n" +
+                "  \"colormedium\": 2,\n" +
+                "  \"colorsmall\": 3,\n" +
+                "  \"currencySymbol\": \"$AUD\",\n" +
+                "  \"dateFormatter\": \"date-format-pattern DD/MM/YYYY\",\n" +
+                "  \"dateParser\": \"date-parse-pattern DD/MM/YYYY;DDMMYYYY\",\n" +
+                "  \"dateTimeFormatter\": \"date-time-format-pattern DD/MM/YYYY hh:mm\",\n" +
+                "  \"dateTimeOffset\": \"0\",\n" +
+                "  \"dateTimeParser\": \"date-time-pattern DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
+                "  \"decimalSeparator\": \".\",\n" +
+                "  \"defaultYear\": 1901,\n" +
+                "  \"exponentSymbol\": \"E\",\n" +
+                "  \"groupSeparator\": \",\",\n" +
+                "  \"hideZeroValues\": true,\n" +
                 "  \"locale\": \"en\",\n" +
-                "  \"negative-sign\": \"-\",\n" +
-                "  \"number-formatter\": \"number-format-pattern #0.0\",\n" +
-                "  \"number-parser\": \"number-parse-pattern #0.0;$#0.00\",\n" +
-                "  \"percentage-symbol\": \"%\",\n" +
-                "  \"positive-sign\": \"+\",\n" +
+                "  \"negativeSign\": \"-\",\n" +
+                "  \"numberFormatter\": \"number-format-pattern #0.0\",\n" +
+                "  \"numberParser\": \"number-parse-pattern #0.0;$#0.00\",\n" +
+                "  \"percentageSymbol\": \"%\",\n" +
+                "  \"positiveSign\": \"+\",\n" +
                 "  \"precision\": 123,\n" +
-                "  \"rounding-mode\": \"FLOOR\",\n" +
-                "  \"spreadsheet-id\": \"7b\",\n" +
-                "  \"text-formatter\": \"text-format-pattern @@\",\n" +
-                "  \"time-formatter\": \"time-format-pattern hh:mm\",\n" +
-                "  \"time-parser\": \"time-parse-pattern hh:mm;hh:mm:ss.000\",\n" +
-                "  \"two-digit-year\": 31\n" +
+                "  \"roundingMode\": \"FLOOR\",\n" +
+                "  \"spreadsheetId\": \"7b\",\n" +
+                "  \"textFormatter\": \"text-format-pattern @@\",\n" +
+                "  \"timeFormatter\": \"time-format-pattern hh:mm\",\n" +
+                "  \"timeParser\": \"time-parse-pattern hh:mm;hh:mm:ss.000\",\n" +
+                "  \"twoDigitYear\": 31\n" +
                 "}");
         final SpreadsheetMetadata metadata = this.unmarshall(json);
         this.checkNotEquals(
@@ -3092,10 +3104,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                                         .setDefaultAnchor()
                                         )
                                 )),
-                "spreadsheet-id: 4d2\n" +
-                        "frozen-columns: column-range A:C\n" +
-                        "frozen-rows: row-range 1:3\n" +
-                        "spreadsheet-name: Untitled\n" +
+                "spreadsheetId: 4d2\n" +
+                        "frozenColumns: column-range A:C\n" +
+                        "frozenRows: row-range 1:3\n" +
+                        "spreadsheetName: Untitled\n" +
                         "viewport: rectangle:\n" +
                         "  home: D4\n" +
                         "  width: 100.0\n" +

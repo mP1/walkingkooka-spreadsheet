@@ -75,7 +75,7 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
         IntStream.range(SpreadsheetColors.MIN, SpreadsheetColors.MAX)
                 .forEach(i -> {
                     final SpreadsheetMetadataPropertyNameNumberedColor propertyName = SpreadsheetMetadataPropertyNameNumberedColor.withNumber(i);
-                    final String value = "color-" + i;
+                    final String value = "color" + i;
                     assertSame(propertyName, SpreadsheetMetadataPropertyName.with(value));
 
                     this.checkEquals(value, propertyName.value(), "value");
@@ -93,7 +93,7 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameNumberedColor.withNumber(12),
-                "color-12"
+                "color12"
         );
     }
 

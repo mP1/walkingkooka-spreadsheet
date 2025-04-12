@@ -44,7 +44,7 @@ public final class SpreadsheetMetadataPropertyNameSortComparatorsTest extends Sp
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameSortComparators.instance(),
-                "sort-comparators"
+                "sortComparators"
         );
     }
 

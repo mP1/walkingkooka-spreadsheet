@@ -119,10 +119,10 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
                                         EnvironmentContext.ANONYMOUS
                                 )
                         ),
-                EnvironmentValueName.with("spreadsheet-id"),
-                EnvironmentValueName.with("spreadsheet-name"),
+                EnvironmentValueName.with("spreadsheetId"),
+                EnvironmentValueName.with("spreadsheetName"),
                 EnvironmentValueName.with("locale"),
-                EnvironmentValueName.with("rounding-mode")
+                EnvironmentValueName.with("roundingMode")
         );
     }
 

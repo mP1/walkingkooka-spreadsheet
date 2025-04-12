@@ -842,111 +842,111 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.createContext(),
                 "serverUrl=https://example.com/path123 \"\n" +
                         "\" metadata={\n" +
-                        "  \"cell-character-width\": 1,\n" +
-                        "  \"clipboard-exporter\": \"json\",\n" +
-                        "  \"clipboard-importer\": \"json\",\n" +
-                        "  \"color-1\": \"#000000\",\n" +
-                        "  \"color-2\": \"#ffffff\",\n" +
-                        "  \"color-3\": \"#ff0000\",\n" +
-                        "  \"color-4\": \"#00ff00\",\n" +
-                        "  \"color-5\": \"#0000ff\",\n" +
-                        "  \"color-6\": \"#ffff00\",\n" +
-                        "  \"color-7\": \"#ff00ff\",\n" +
-                        "  \"color-8\": \"#00ffff\",\n" +
-                        "  \"color-9\": \"#800000\",\n" +
-                        "  \"color-10\": \"#008000\",\n" +
-                        "  \"color-11\": \"#000080\",\n" +
-                        "  \"color-12\": \"#808000\",\n" +
-                        "  \"color-13\": \"#800080\",\n" +
-                        "  \"color-14\": \"#008080\",\n" +
-                        "  \"color-15\": \"#c0c0c0\",\n" +
-                        "  \"color-16\": \"#808080\",\n" +
-                        "  \"color-17\": \"#9999ff\",\n" +
-                        "  \"color-18\": \"#993366\",\n" +
-                        "  \"color-19\": \"#ffffcc\",\n" +
-                        "  \"color-20\": \"#ccffff\",\n" +
-                        "  \"color-21\": \"#660066\",\n" +
-                        "  \"color-22\": \"#ff8080\",\n" +
-                        "  \"color-23\": \"#0066cc\",\n" +
-                        "  \"color-24\": \"#ccccff\",\n" +
-                        "  \"color-25\": \"#000080\",\n" +
-                        "  \"color-26\": \"#ff00ff\",\n" +
-                        "  \"color-27\": \"#ffff00\",\n" +
-                        "  \"color-28\": \"#00ffff\",\n" +
-                        "  \"color-29\": \"#800080\",\n" +
-                        "  \"color-30\": \"#800000\",\n" +
-                        "  \"color-31\": \"#008080\",\n" +
-                        "  \"color-32\": \"#0000ff\",\n" +
-                        "  \"color-33\": \"#00ccff\",\n" +
-                        "  \"color-34\": \"#ccffff\",\n" +
-                        "  \"color-35\": \"#ccffcc\",\n" +
-                        "  \"color-36\": \"#ffff99\",\n" +
-                        "  \"color-37\": \"#99ccff\",\n" +
-                        "  \"color-38\": \"#ff99cc\",\n" +
-                        "  \"color-39\": \"#cc99ff\",\n" +
-                        "  \"color-40\": \"#ffcc99\",\n" +
-                        "  \"color-41\": \"#3366ff\",\n" +
-                        "  \"color-42\": \"#33cccc\",\n" +
-                        "  \"color-43\": \"#99cc00\",\n" +
-                        "  \"color-44\": \"#ffcc00\",\n" +
-                        "  \"color-45\": \"#ff9900\",\n" +
-                        "  \"color-46\": \"#ff6600\",\n" +
-                        "  \"color-47\": \"#666699\",\n" +
-                        "  \"color-48\": \"#969696\",\n" +
-                        "  \"color-49\": \"#003366\",\n" +
-                        "  \"color-50\": \"#339966\",\n" +
-                        "  \"color-51\": \"#003300\",\n" +
-                        "  \"color-52\": \"#333300\",\n" +
-                        "  \"color-53\": \"#993300\",\n" +
-                        "  \"color-54\": \"#993366\",\n" +
-                        "  \"color-55\": \"#333399\",\n" +
-                        "  \"color-56\": \"#333333\",\n" +
-                        "  \"color-Black\": 1,\n" +
-                        "  \"color-Blue\": 5,\n" +
-                        "  \"color-Cyan\": 8,\n" +
-                        "  \"color-Green\": 4,\n" +
-                        "  \"color-Magenta\": 7,\n" +
-                        "  \"color-Red\": 3,\n" +
-                        "  \"color-White\": 2,\n" +
-                        "  \"color-Yellow\": 6,\n" +
+                        "  \"cellCharacterWidth\": 1,\n" +
+                        "  \"clipboardExporter\": \"json\",\n" +
+                        "  \"clipboardImporter\": \"json\",\n" +
+                        "  \"color1\": \"#000000\",\n" +
+                        "  \"color2\": \"#ffffff\",\n" +
+                        "  \"color3\": \"#ff0000\",\n" +
+                        "  \"color4\": \"#00ff00\",\n" +
+                        "  \"color5\": \"#0000ff\",\n" +
+                        "  \"color6\": \"#ffff00\",\n" +
+                        "  \"color7\": \"#ff00ff\",\n" +
+                        "  \"color8\": \"#00ffff\",\n" +
+                        "  \"color9\": \"#800000\",\n" +
+                        "  \"color10\": \"#008000\",\n" +
+                        "  \"color11\": \"#000080\",\n" +
+                        "  \"color12\": \"#808000\",\n" +
+                        "  \"color13\": \"#800080\",\n" +
+                        "  \"color14\": \"#008080\",\n" +
+                        "  \"color15\": \"#c0c0c0\",\n" +
+                        "  \"color16\": \"#808080\",\n" +
+                        "  \"color17\": \"#9999ff\",\n" +
+                        "  \"color18\": \"#993366\",\n" +
+                        "  \"color19\": \"#ffffcc\",\n" +
+                        "  \"color20\": \"#ccffff\",\n" +
+                        "  \"color21\": \"#660066\",\n" +
+                        "  \"color22\": \"#ff8080\",\n" +
+                        "  \"color23\": \"#0066cc\",\n" +
+                        "  \"color24\": \"#ccccff\",\n" +
+                        "  \"color25\": \"#000080\",\n" +
+                        "  \"color26\": \"#ff00ff\",\n" +
+                        "  \"color27\": \"#ffff00\",\n" +
+                        "  \"color28\": \"#00ffff\",\n" +
+                        "  \"color29\": \"#800080\",\n" +
+                        "  \"color30\": \"#800000\",\n" +
+                        "  \"color31\": \"#008080\",\n" +
+                        "  \"color32\": \"#0000ff\",\n" +
+                        "  \"color33\": \"#00ccff\",\n" +
+                        "  \"color34\": \"#ccffff\",\n" +
+                        "  \"color35\": \"#ccffcc\",\n" +
+                        "  \"color36\": \"#ffff99\",\n" +
+                        "  \"color37\": \"#99ccff\",\n" +
+                        "  \"color38\": \"#ff99cc\",\n" +
+                        "  \"color39\": \"#cc99ff\",\n" +
+                        "  \"color40\": \"#ffcc99\",\n" +
+                        "  \"color41\": \"#3366ff\",\n" +
+                        "  \"color42\": \"#33cccc\",\n" +
+                        "  \"color43\": \"#99cc00\",\n" +
+                        "  \"color44\": \"#ffcc00\",\n" +
+                        "  \"color45\": \"#ff9900\",\n" +
+                        "  \"color46\": \"#ff6600\",\n" +
+                        "  \"color47\": \"#666699\",\n" +
+                        "  \"color48\": \"#969696\",\n" +
+                        "  \"color49\": \"#003366\",\n" +
+                        "  \"color50\": \"#339966\",\n" +
+                        "  \"color51\": \"#003300\",\n" +
+                        "  \"color52\": \"#333300\",\n" +
+                        "  \"color53\": \"#993300\",\n" +
+                        "  \"color54\": \"#993366\",\n" +
+                        "  \"color55\": \"#333399\",\n" +
+                        "  \"color56\": \"#333333\",\n" +
+                        "  \"colorBlack\": 1,\n" +
+                        "  \"colorBlue\": 5,\n" +
+                        "  \"colorCyan\": 8,\n" +
+                        "  \"colorGreen\": 4,\n" +
+                        "  \"colorMagenta\": 7,\n" +
+                        "  \"colorRed\": 3,\n" +
+                        "  \"colorWhite\": 2,\n" +
+                        "  \"colorYellow\": 6,\n" +
                         "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
                         "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-string, general, plugin-selector-like-to-string, selection-to-selection, selection-to-string, spreadsheet-cell-to, string-to-error, string-to-expression, string-to-selection, string-to-spreadsheet-id, string-to-spreadsheet-metadata-property-name, string-to-spreadsheet-name\",\n" +
-                        "  \"currency-symbol\": \"CURR\",\n" +
-                        "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
-                        "  \"date-parser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
-                        "  \"date-time-formatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
-                        "  \"date-time-offset\": \"-25569\",\n" +
-                        "  \"date-time-parser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
-                        "  \"decimal-separator\": \".\",\n" +
-                        "  \"default-year\": 1900,\n" +
-                        "  \"exponent-symbol\": \"e\",\n" +
+                        "  \"currencySymbol\": \"CURR\",\n" +
+                        "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
+                        "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                        "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                        "  \"dateTimeOffset\": \"-25569\",\n" +
+                        "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                        "  \"decimalSeparator\": \".\",\n" +
+                        "  \"defaultYear\": 1900,\n" +
+                        "  \"exponentSymbol\": \"e\",\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
-                        "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"find-functions\": \"\",\n" +
-                        "  \"find-highlighting\": false,\n" +
-                        "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
+                        "  \"findConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"findFunctions\": \"\",\n" +
+                        "  \"findHighlighting\": false,\n" +
+                        "  \"formatConverter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"formula-validators\": \"\",\n" +
+                        "  \"formulaConverter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formulaFunctions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                        "  \"formulaValidators\": \"\",\n" +
                         "  \"functions\": \"\",\n" +
-                        "  \"general-number-format-digit-count\": 9,\n" +
-                        "  \"group-separator\": \",\",\n" +
-                        "  \"hide-zero-values\": false,\n" +
+                        "  \"generalNumberFormatDigitCount\": 9,\n" +
+                        "  \"groupSeparator\": \",\",\n" +
+                        "  \"hideZeroValues\": false,\n" +
                         "  \"importers\": \"collection, empty, json\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
-                        "  \"negative-sign\": \"!\",\n" +
-                        "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
-                        "  \"number-parser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
+                        "  \"negativeSign\": \"!\",\n" +
+                        "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
+                        "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                         "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
-                        "  \"percentage-symbol\": \"%\",\n" +
+                        "  \"percentageSymbol\": \"%\",\n" +
                         "  \"plugins\": \"\",\n" +
-                        "  \"positive-sign\": \"@\",\n" +
+                        "  \"positiveSign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
-                        "  \"rounding-mode\": \"HALF_UP\",\n" +
-                        "  \"sort-comparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"roundingMode\": \"HALF_UP\",\n" +
+                        "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
+                        "  \"sortConverter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
                         "    \"background-color\": \"white\",\n" +
                         "    \"border-bottom-color\": \"black\",\n" +
@@ -983,12 +983,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"word-break\": \"NORMAL\",\n" +
                         "    \"word-wrap\": \"NORMAL\"\n" +
                         "  },\n" +
-                        "  \"text-formatter\": \"text-format-pattern @\",\n" +
-                        "  \"time-formatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
-                        "  \"time-parser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
-                        "  \"two-digit-year\": 20,\n" +
+                        "  \"textFormatter\": \"text-format-pattern @\",\n" +
+                        "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
+                        "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                        "  \"twoDigitYear\": 20,\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
-                        "  \"value-separator\": \",\",\n" +
+                        "  \"valueSeparator\": \",\",\n" +
                         "  \"viewport\": {\n" +
                         "    \"rectangle\": \"A1:100.0:100.0\"\n" +
                         "  }\n" +
@@ -1011,111 +1011,111 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 ),
                 "serverUrl=https://example.com/path123 \"\n" +
                         "\" metadata={\n" +
-                        "  \"cell-character-width\": 1,\n" +
-                        "  \"clipboard-exporter\": \"json\",\n" +
-                        "  \"clipboard-importer\": \"json\",\n" +
-                        "  \"color-1\": \"#000001\",\n" +
-                        "  \"color-2\": \"#000002\",\n" +
-                        "  \"color-3\": \"#000003\",\n" +
-                        "  \"color-4\": \"#000004\",\n" +
-                        "  \"color-5\": \"#000005\",\n" +
-                        "  \"color-6\": \"#000006\",\n" +
-                        "  \"color-7\": \"#000007\",\n" +
-                        "  \"color-8\": \"#000008\",\n" +
-                        "  \"color-9\": \"#000009\",\n" +
-                        "  \"color-10\": \"#00000a\",\n" +
-                        "  \"color-11\": \"#00000b\",\n" +
-                        "  \"color-12\": \"#00000c\",\n" +
-                        "  \"color-13\": \"#00000d\",\n" +
-                        "  \"color-14\": \"#00000e\",\n" +
-                        "  \"color-15\": \"#00000f\",\n" +
-                        "  \"color-16\": \"#000010\",\n" +
-                        "  \"color-17\": \"#000011\",\n" +
-                        "  \"color-18\": \"#000012\",\n" +
-                        "  \"color-19\": \"#000013\",\n" +
-                        "  \"color-20\": \"#000014\",\n" +
-                        "  \"color-21\": \"#000015\",\n" +
-                        "  \"color-22\": \"#000016\",\n" +
-                        "  \"color-23\": \"#000017\",\n" +
-                        "  \"color-24\": \"#000018\",\n" +
-                        "  \"color-25\": \"#000019\",\n" +
-                        "  \"color-26\": \"#00001a\",\n" +
-                        "  \"color-27\": \"#00001b\",\n" +
-                        "  \"color-28\": \"#00001c\",\n" +
-                        "  \"color-29\": \"#00001d\",\n" +
-                        "  \"color-30\": \"#00001e\",\n" +
-                        "  \"color-31\": \"#00001f\",\n" +
-                        "  \"color-32\": \"#000020\",\n" +
-                        "  \"color-33\": \"#000021\",\n" +
-                        "  \"color-34\": \"#000022\",\n" +
-                        "  \"color-35\": \"#000023\",\n" +
-                        "  \"color-36\": \"#000024\",\n" +
-                        "  \"color-37\": \"#000025\",\n" +
-                        "  \"color-38\": \"#000026\",\n" +
-                        "  \"color-39\": \"#000027\",\n" +
-                        "  \"color-40\": \"#000028\",\n" +
-                        "  \"color-41\": \"#000029\",\n" +
-                        "  \"color-42\": \"#00002a\",\n" +
-                        "  \"color-43\": \"#00002b\",\n" +
-                        "  \"color-44\": \"#00002c\",\n" +
-                        "  \"color-45\": \"#00002d\",\n" +
-                        "  \"color-46\": \"#00002e\",\n" +
-                        "  \"color-47\": \"#00002f\",\n" +
-                        "  \"color-48\": \"#000030\",\n" +
-                        "  \"color-49\": \"#000031\",\n" +
-                        "  \"color-50\": \"#000032\",\n" +
-                        "  \"color-51\": \"#000033\",\n" +
-                        "  \"color-52\": \"#000034\",\n" +
-                        "  \"color-53\": \"#000035\",\n" +
-                        "  \"color-54\": \"#000036\",\n" +
-                        "  \"color-55\": \"#000037\",\n" +
-                        "  \"color-56\": \"#000038\",\n" +
-                        "  \"color-Black\": 1,\n" +
-                        "  \"color-Blue\": 5,\n" +
-                        "  \"color-Cyan\": 8,\n" +
-                        "  \"color-Green\": 4,\n" +
-                        "  \"color-Magenta\": 7,\n" +
-                        "  \"color-Red\": 3,\n" +
-                        "  \"color-White\": 2,\n" +
-                        "  \"color-Yellow\": 6,\n" +
+                        "  \"cellCharacterWidth\": 1,\n" +
+                        "  \"clipboardExporter\": \"json\",\n" +
+                        "  \"clipboardImporter\": \"json\",\n" +
+                        "  \"color1\": \"#000001\",\n" +
+                        "  \"color2\": \"#000002\",\n" +
+                        "  \"color3\": \"#000003\",\n" +
+                        "  \"color4\": \"#000004\",\n" +
+                        "  \"color5\": \"#000005\",\n" +
+                        "  \"color6\": \"#000006\",\n" +
+                        "  \"color7\": \"#000007\",\n" +
+                        "  \"color8\": \"#000008\",\n" +
+                        "  \"color9\": \"#000009\",\n" +
+                        "  \"color10\": \"#00000a\",\n" +
+                        "  \"color11\": \"#00000b\",\n" +
+                        "  \"color12\": \"#00000c\",\n" +
+                        "  \"color13\": \"#00000d\",\n" +
+                        "  \"color14\": \"#00000e\",\n" +
+                        "  \"color15\": \"#00000f\",\n" +
+                        "  \"color16\": \"#000010\",\n" +
+                        "  \"color17\": \"#000011\",\n" +
+                        "  \"color18\": \"#000012\",\n" +
+                        "  \"color19\": \"#000013\",\n" +
+                        "  \"color20\": \"#000014\",\n" +
+                        "  \"color21\": \"#000015\",\n" +
+                        "  \"color22\": \"#000016\",\n" +
+                        "  \"color23\": \"#000017\",\n" +
+                        "  \"color24\": \"#000018\",\n" +
+                        "  \"color25\": \"#000019\",\n" +
+                        "  \"color26\": \"#00001a\",\n" +
+                        "  \"color27\": \"#00001b\",\n" +
+                        "  \"color28\": \"#00001c\",\n" +
+                        "  \"color29\": \"#00001d\",\n" +
+                        "  \"color30\": \"#00001e\",\n" +
+                        "  \"color31\": \"#00001f\",\n" +
+                        "  \"color32\": \"#000020\",\n" +
+                        "  \"color33\": \"#000021\",\n" +
+                        "  \"color34\": \"#000022\",\n" +
+                        "  \"color35\": \"#000023\",\n" +
+                        "  \"color36\": \"#000024\",\n" +
+                        "  \"color37\": \"#000025\",\n" +
+                        "  \"color38\": \"#000026\",\n" +
+                        "  \"color39\": \"#000027\",\n" +
+                        "  \"color40\": \"#000028\",\n" +
+                        "  \"color41\": \"#000029\",\n" +
+                        "  \"color42\": \"#00002a\",\n" +
+                        "  \"color43\": \"#00002b\",\n" +
+                        "  \"color44\": \"#00002c\",\n" +
+                        "  \"color45\": \"#00002d\",\n" +
+                        "  \"color46\": \"#00002e\",\n" +
+                        "  \"color47\": \"#00002f\",\n" +
+                        "  \"color48\": \"#000030\",\n" +
+                        "  \"color49\": \"#000031\",\n" +
+                        "  \"color50\": \"#000032\",\n" +
+                        "  \"color51\": \"#000033\",\n" +
+                        "  \"color52\": \"#000034\",\n" +
+                        "  \"color53\": \"#000035\",\n" +
+                        "  \"color54\": \"#000036\",\n" +
+                        "  \"color55\": \"#000037\",\n" +
+                        "  \"color56\": \"#000038\",\n" +
+                        "  \"colorBlack\": 1,\n" +
+                        "  \"colorBlue\": 5,\n" +
+                        "  \"colorCyan\": 8,\n" +
+                        "  \"colorGreen\": 4,\n" +
+                        "  \"colorMagenta\": 7,\n" +
+                        "  \"colorRed\": 3,\n" +
+                        "  \"colorWhite\": 2,\n" +
+                        "  \"colorYellow\": 6,\n" +
                         "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
                         "  \"converters\": \"basic, collection, error-throwing, error-to-number, error-to-string, general, plugin-selector-like-to-string, selection-to-selection, selection-to-string, spreadsheet-cell-to, string-to-error, string-to-expression, string-to-selection, string-to-spreadsheet-id, string-to-spreadsheet-metadata-property-name, string-to-spreadsheet-name\",\n" +
-                        "  \"currency-symbol\": \"CURR\",\n" +
-                        "  \"date-formatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
-                        "  \"date-parser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
-                        "  \"date-time-formatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
-                        "  \"date-time-offset\": \"-25569\",\n" +
-                        "  \"date-time-parser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
-                        "  \"decimal-separator\": \".\",\n" +
-                        "  \"default-year\": 1900,\n" +
-                        "  \"exponent-symbol\": \"e\",\n" +
+                        "  \"currencySymbol\": \"CURR\",\n" +
+                        "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
+                        "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                        "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                        "  \"dateTimeOffset\": \"-25569\",\n" +
+                        "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                        "  \"decimalSeparator\": \".\",\n" +
+                        "  \"defaultYear\": 1900,\n" +
+                        "  \"exponentSymbol\": \"e\",\n" +
                         "  \"exporters\": \"collection, empty, json\",\n" +
-                        "  \"expression-number-kind\": \"BIG_DECIMAL\",\n" +
-                        "  \"find-converter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"find-functions\": \"\",\n" +
-                        "  \"find-highlighting\": false,\n" +
-                        "  \"format-converter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
+                        "  \"findConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"findFunctions\": \"\",\n" +
+                        "  \"findHighlighting\": false,\n" +
+                        "  \"formatConverter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                        "  \"formula-converter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"formula-functions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"formula-validators\": \"\",\n" +
+                        "  \"formulaConverter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"formulaFunctions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                        "  \"formulaValidators\": \"\",\n" +
                         "  \"functions\": \"\",\n" +
-                        "  \"general-number-format-digit-count\": 9,\n" +
-                        "  \"group-separator\": \",\",\n" +
-                        "  \"hide-zero-values\": false,\n" +
+                        "  \"generalNumberFormatDigitCount\": 9,\n" +
+                        "  \"groupSeparator\": \",\",\n" +
+                        "  \"hideZeroValues\": false,\n" +
                         "  \"importers\": \"collection, empty, json\",\n" +
                         "  \"locale\": \"en-AU\",\n" +
-                        "  \"negative-sign\": \"!\",\n" +
-                        "  \"number-formatter\": \"number-format-pattern #,##0.###\",\n" +
-                        "  \"number-parser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
+                        "  \"negativeSign\": \"!\",\n" +
+                        "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
+                        "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                         "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
-                        "  \"percentage-symbol\": \"%\",\n" +
+                        "  \"percentageSymbol\": \"%\",\n" +
                         "  \"plugins\": \"\",\n" +
-                        "  \"positive-sign\": \"@\",\n" +
+                        "  \"positiveSign\": \"@\",\n" +
                         "  \"precision\": 10,\n" +
-                        "  \"rounding-mode\": \"HALF_UP\",\n" +
-                        "  \"sort-comparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                        "  \"sort-converter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
+                        "  \"roundingMode\": \"HALF_UP\",\n" +
+                        "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
+                        "  \"sortConverter\": \"collection(error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"style\": {\n" +
                         "    \"background-color\": \"white\",\n" +
                         "    \"border-bottom-color\": \"black\",\n" +
@@ -1152,12 +1152,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "    \"word-break\": \"NORMAL\",\n" +
                         "    \"word-wrap\": \"NORMAL\"\n" +
                         "  },\n" +
-                        "  \"text-formatter\": \"text-format-pattern @\",\n" +
-                        "  \"time-formatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
-                        "  \"time-parser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
-                        "  \"two-digit-year\": 20,\n" +
+                        "  \"textFormatter\": \"text-format-pattern @\",\n" +
+                        "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
+                        "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                        "  \"twoDigitYear\": 20,\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
-                        "  \"value-separator\": \",\",\n" +
+                        "  \"valueSeparator\": \",\",\n" +
                         "  \"viewport\": {\n" +
                         "    \"rectangle\": \"A1:100.0:100.0\"\n" +
                         "  }\n" +

@@ -42,7 +42,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime 
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime() {
         super(
-                "date-time-formatter",
+                "dateTimeFormatter",
                 SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
         );
     }

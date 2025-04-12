@@ -139,7 +139,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance(),
-                "number-formatter"
+                "numberFormatter"
         );
     }
 

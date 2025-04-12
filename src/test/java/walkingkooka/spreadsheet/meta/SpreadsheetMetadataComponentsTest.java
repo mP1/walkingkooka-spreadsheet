@@ -73,7 +73,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: audit-info",
+                "Metadata missing: auditInfo",
                 thrown.getMessage(),
                 "message"
         );
@@ -90,7 +90,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: audit-info, decimal-separator",
+                "Metadata missing: auditInfo, decimalSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -110,7 +110,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: audit-info, decimal-separator, locale, rounding-mode",
+                "Metadata missing: auditInfo, decimalSeparator, locale, roundingMode",
                 thrown.getMessage(),
                 "message"
         );
@@ -128,7 +128,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2<Sp
                 components::reportIfMissing
         );
         this.checkEquals(
-                "Metadata missing: audit-info, rounding-mode",
+                "Metadata missing: auditInfo, roundingMode",
                 thrown.getMessage(),
                 "message"
         );

@@ -44,7 +44,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumber extends Sprea
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetParserNumber() {
         super(
-                "number-parser",
+                "numberParser",
                 SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
         );
     }

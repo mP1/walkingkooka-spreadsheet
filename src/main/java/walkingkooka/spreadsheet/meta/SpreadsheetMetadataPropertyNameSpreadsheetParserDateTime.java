@@ -42,7 +42,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime extends Spr
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime() {
         super(
-                "date-time-parser",
+                "dateTimeParser",
                 SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
         );
     }

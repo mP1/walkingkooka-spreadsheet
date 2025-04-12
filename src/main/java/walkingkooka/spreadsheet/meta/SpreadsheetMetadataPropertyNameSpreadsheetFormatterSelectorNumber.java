@@ -43,7 +43,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber ex
      */
     private SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber() {
         super(
-                "number-formatter",
+                "numberFormatter",
                 SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
         );
     }

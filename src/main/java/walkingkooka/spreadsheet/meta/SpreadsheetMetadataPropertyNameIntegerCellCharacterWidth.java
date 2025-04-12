@@ -30,7 +30,7 @@ final class SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth extends Spr
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameIntegerCellCharacterWidth() {
-        super("cell-character-width");
+        super("cellCharacterWidth");
     }
 
     @Override

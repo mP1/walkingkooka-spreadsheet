@@ -30,7 +30,7 @@ final class SpreadsheetMetadataPropertyNameIntegerDefaultYear extends Spreadshee
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameIntegerDefaultYear() {
-        super("default-year");
+        super("defaultYear");
     }
 
     @Override

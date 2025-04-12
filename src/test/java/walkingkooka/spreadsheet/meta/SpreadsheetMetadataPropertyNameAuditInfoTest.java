@@ -38,7 +38,7 @@ public final class SpreadsheetMetadataPropertyNameAuditInfoTest extends Spreadsh
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameAuditInfo.instance(),
-                "audit-info"
+                "auditInfo"
         );
     }
 

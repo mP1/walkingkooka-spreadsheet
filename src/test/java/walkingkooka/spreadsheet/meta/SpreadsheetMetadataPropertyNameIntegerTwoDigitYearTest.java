@@ -25,7 +25,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerTwoDigitYearTest extend
     public void testCheckValueNegativeValueFails() {
         this.checkValueFails(
                 -1,
-                "Metadata two-digit-year=-1, must be between 0 and including 99"
+                "Metadata twoDigitYear=-1, must be between 0 and including 99"
         );
     }
 
@@ -33,7 +33,7 @@ public final class SpreadsheetMetadataPropertyNameIntegerTwoDigitYearTest extend
     public void testCheckValue100ValueFails() {
         this.checkValueFails(
                 100,
-                "Metadata two-digit-year=100, must be between 0 and including 99"
+                "Metadata twoDigitYear=100, must be between 0 and including 99"
         );
     }
 
@@ -49,7 +49,10 @@ public final class SpreadsheetMetadataPropertyNameIntegerTwoDigitYearTest extend
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance(), "two-digit-year");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance(),
+                "twoDigitYear"
+        );
     }
 
     @Override

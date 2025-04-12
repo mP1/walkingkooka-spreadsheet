@@ -30,7 +30,7 @@ public final class SpreadsheetMetadataPropertyNameCharacterPositiveSignTest exte
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterPositiveSign.instance(), "positive-sign");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterPositiveSign.instance(), "positiveSign");
     }
 
     @Override

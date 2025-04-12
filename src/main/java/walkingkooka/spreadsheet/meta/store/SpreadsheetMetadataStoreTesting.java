@@ -81,7 +81,7 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         );
 
         this.checkEquals(
-                "Metadata missing required properties: audit-info, locale",
+                "Metadata missing required properties: auditInfo, locale",
                 thrown.getMessage()
         );
     }

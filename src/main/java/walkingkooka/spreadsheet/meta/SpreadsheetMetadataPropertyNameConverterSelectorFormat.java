@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameConverterSelectorFormat extends Sprea
      */
     private SpreadsheetMetadataPropertyNameConverterSelectorFormat() {
         super(
-                "format-converter"
+                "formatConverter"
         );
     }
 

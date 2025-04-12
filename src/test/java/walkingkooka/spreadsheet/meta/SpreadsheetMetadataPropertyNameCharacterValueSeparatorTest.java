@@ -30,7 +30,7 @@ public final class SpreadsheetMetadataPropertyNameCharacterValueSeparatorTest ex
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterValueSeparator.instance(), "value-separator");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCharacterValueSeparator.instance(), "valueSeparator");
     }
 
     @Override

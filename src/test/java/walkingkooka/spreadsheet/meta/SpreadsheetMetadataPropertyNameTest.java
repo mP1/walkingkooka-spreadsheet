@@ -101,7 +101,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
         Stream.of("big", "medium", "small")
                 .forEach(i -> {
-                            final String value = "color-" + i;
+                            final String value = "color" + i;
                             final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);
                             this.checkEquals(SpreadsheetMetadataPropertyNameIntegerNamedColor.class, propertyName.getClass(), "class name");
                             this.checkEquals(value, propertyName.value(), "value");
@@ -117,7 +117,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
         IntStream.range(SpreadsheetColors.MAX, SpreadsheetColors.MAX)
                 .forEach(i -> {
-                            final String value = "color-" + i;
+                            final String value = "color" + i;
                             final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);
                             this.checkEquals(SpreadsheetMetadataPropertyNameNumberedColor.class, propertyName.getClass(), "class name");
                             this.checkEquals(value, propertyName.value(), "value");
@@ -140,7 +140,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                         LocalDateTime.MAX
                 ),
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
@@ -188,7 +188,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 null,
                 JsonNode.object()
                         .set(
-                                JsonPropertyName.with("audit-info"),
+                                JsonPropertyName.with("auditInfo"),
                                 JsonNode.nullNode()
                         )
         );

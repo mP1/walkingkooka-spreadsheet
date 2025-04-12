@@ -30,7 +30,10 @@ public final class SpreadsheetMetadataPropertyNameStringCurrencySymbolTest exten
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameStringCurrencySymbol.instance(), "currency-symbol");
+        this.toStringAndCheck(
+                SpreadsheetMetadataPropertyNameStringCurrencySymbol.instance(),
+                "currencySymbol"
+        );
     }
 
     @Override

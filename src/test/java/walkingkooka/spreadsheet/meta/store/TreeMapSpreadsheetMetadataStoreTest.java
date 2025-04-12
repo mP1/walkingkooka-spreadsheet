@@ -123,8 +123,8 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
         this.toStringAndCheck(
                 store,
                 "[{\n" +
-                        "  \"spreadsheet-id\": \"1\",\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"spreadsheetId\": \"1\",\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"user1@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
@@ -132,8 +132,8 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
                         "  },\n" +
                         "  \"locale\": \"en-AU\"\n" +
                         "}, {\n" +
-                        "  \"spreadsheet-id\": \"2\",\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"spreadsheetId\": \"2\",\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"user2@example.com\",\n" +
                         "    \"createdTimestamp\": \"1999-12-31T12:58:59\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +

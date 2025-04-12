@@ -112,7 +112,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
     public void testToString() {
         this.toStringAndCheck(
                 SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.instance(),
-                "number-parser"
+                "numberParser"
         );
     }
 

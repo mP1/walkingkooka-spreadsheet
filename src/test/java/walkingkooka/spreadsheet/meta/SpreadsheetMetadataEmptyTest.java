@@ -78,7 +78,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 propertyName,
                 auditInfo,
                 "{\n" +
-                        "  \"audit-info\": {\n" +
+                        "  \"auditInfo\": {\n" +
                         "    \"createdBy\": \"created@example.com\",\n" +
                         "    \"createdTimestamp\": \"-999999999-01-01T00:00\",\n" +
                         "    \"modifiedBy\": \"modified@example.com\",\n" +
@@ -149,9 +149,11 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 IllegalStateException.class,
                 SpreadsheetMetadata.EMPTY::expressionNumberContext
         );
-        this.checkEquals("Metadata missing: expression-number-kind, precision, rounding-mode",
+        this.checkEquals(
+                "Metadata missing: expressionNumberKind, precision, roundingMode",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     // HasJsonNodeUnmarshallContext.....................................................................................
@@ -162,9 +164,11 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 IllegalStateException.class,
                 SpreadsheetMetadata.EMPTY::jsonNodeUnmarshallContext
         );
-        this.checkEquals("Metadata missing: expression-number-kind, precision, rounding-mode",
+        this.checkEquals(
+                "Metadata missing: expressionNumberKind, precision, roundingMode",
                 thrown.getMessage(),
-                "message");
+                "message"
+        );
     }
 
     // HasParser........................................................................................................
@@ -179,7 +183,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 )
         );
         this.checkEquals(
-                "Metadata missing: date-parser, date-time-parser, number-parser, time-parser",
+                "Metadata missing: dateParser, dateTimeParser, numberParser, timeParser",
                 thrown.getMessage(),
                 "message"
         );
@@ -194,7 +198,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Metadata missing: currency-symbol, decimal-separator, exponent-symbol, expression-number-kind, group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode, two-digit-year, value-separator",
+                "Metadata missing: currencySymbol, decimalSeparator, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, valueSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -209,7 +213,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                         .spreadsheetParserContext(LocalDateTime::now)
         );
         this.checkEquals(
-                "Metadata missing: decimal-separator, exponent-symbol, expression-number-kind, group-separator, locale, negative-sign, percentage-symbol, positive-sign, precision, rounding-mode, two-digit-year, value-separator",
+                "Metadata missing: decimalSeparator, exponentSymbol, expressionNumberKind, groupSeparator, locale, negativeSign, percentageSymbol, positiveSign, precision, roundingMode, twoDigitYear, valueSeparator",
                 thrown.getMessage(),
                 "message"
         );
@@ -233,7 +237,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 )
         );
         this.checkEquals(
-                "Metadata missing: formula-converter",
+                "Metadata missing: formulaConverter",
                 thrown.getMessage(),
                 "message"
         );

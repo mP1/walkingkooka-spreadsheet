@@ -38,7 +38,7 @@ final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula ext
      */
     private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula() {
         super(
-                "formula-functions"
+                "formulaFunctions"
         );
     }
 

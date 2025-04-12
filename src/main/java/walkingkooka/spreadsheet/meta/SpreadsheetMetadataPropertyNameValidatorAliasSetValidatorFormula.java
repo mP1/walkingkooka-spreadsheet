@@ -33,7 +33,7 @@ final class SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorFormula ext
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorFormula() {
-        super("formula-validators");
+        super("formulaValidators");
     }
 
     @Override
