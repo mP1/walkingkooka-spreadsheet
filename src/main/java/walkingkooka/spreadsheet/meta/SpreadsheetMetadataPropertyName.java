@@ -779,9 +779,17 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * Force class initialization of the following types which will ensure they also {@link walkingkooka.tree.json.marshall.JsonNodeContext#register(String, BiFunction, BiFunction, Class, Class[])}
      */
     static {
+        final EmailAddress emailAddress = EmailAddress.parse("user@example.com");
+        final LocalDateTime now = LocalDateTime.now();
+
+        AuditInfo.with(
+                emailAddress,
+                now,
+                emailAddress,
+                now
+        );
         Color.BLACK.alpha();
         ConverterSelector.parse("Dummy");
-        EmailAddress.tryParse("user@example.com");
         ExpressionNumberKind.DEFAULT.name();
         ExpressionFunctionAliasSet.parse("hello");
         FontFamily.with("MS Sans Serif");
