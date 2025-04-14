@@ -17,24 +17,12 @@
 
 package walkingkooka.spreadsheet.validation.form.store;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.validation.form.store.FakeFormStore;
 
-/**
- * A collection of factory methods for creating {@link SpreadsheetFormStore} form stores.
- */
-public final class SpreadsheetFormStores implements PublicStaticHelper {
+public class FakeSpreadsheetFormStore extends FakeFormStore<SpreadsheetExpressionReference> implements SpreadsheetFormStore {
 
-    /**
-     * {@see FakeSpreadsheetFormStore}
-     */
-    public static SpreadsheetFormStore fake() {
-        return new FakeSpreadsheetFormStore();
-    }
-
-    /**
-     * Stop creation
-     */
-    private SpreadsheetFormStores() {
-        throw new UnsupportedOperationException();
+    public FakeSpreadsheetFormStore() {
+        super();
     }
 }
