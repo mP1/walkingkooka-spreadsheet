@@ -32,6 +32,13 @@ public final class SpreadsheetFormStores implements PublicStaticHelper {
     }
 
     /**
+     * {@see TreeSpreadsheetFormStore}
+     */
+    public static SpreadsheetFormStore treeMap() {
+        return TreeSpreadsheetFormStore.empty();
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetFormStores() {
