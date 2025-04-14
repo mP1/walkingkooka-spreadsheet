@@ -23,6 +23,7 @@ import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.ConditionRightSpreadsheetFormulaParserToken;
@@ -783,7 +784,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
                         text.charAt(0),
                         factory
                 ) :
-                Parsers.string(text, CaseSensitivity.INSENSITIVE)
+                Parsers.string(text, SpreadsheetStrings.CASE_SENSITIVITY)
                         .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value(), stringParserToken.text()))
                         .setToString(CharSequences.quoteAndEscape(text).toString())
                         .cast();
