@@ -94,6 +94,7 @@ import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -16456,6 +16457,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 SpreadsheetCellStores.treeMap(),
                                                 SpreadsheetCellReferencesStores.treeMap(),
                                                 SpreadsheetColumnStores.treeMap(),
+                                                SpreadsheetFormStores.treeMap(),
                                                 SpreadsheetGroupStores.fake(),
                                                 SpreadsheetLabelStores.treeMap(),
                                                 SpreadsheetExpressionReferenceStores.treeMap(),
@@ -21453,6 +21455,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetCellStores.treeMap(),
                         SpreadsheetCellReferencesStores.treeMap(),
                         SpreadsheetColumnStores.treeMap(),
+                        SpreadsheetFormStores.treeMap(),
                         SpreadsheetGroupStores.fake(),
                         SpreadsheetLabelStores.treeMap(),
                         SpreadsheetExpressionReferenceStores.treeMap(),

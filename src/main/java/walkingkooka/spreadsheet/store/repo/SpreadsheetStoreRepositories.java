@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.storage.StorageStore;
 
 /**
@@ -54,6 +55,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
     public static SpreadsheetStoreRepository basic(final SpreadsheetCellStore cells,
                                                    final SpreadsheetCellReferencesStore cellReferences,
                                                    final SpreadsheetColumnStore columns,
+                                                   final SpreadsheetFormStore forms,
                                                    final SpreadsheetGroupStore groups,
                                                    final SpreadsheetLabelStore labels,
                                                    final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
@@ -67,6 +69,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                 cells,
                 cellReferences,
                 columns,
+                forms,
                 groups,
                 labels,
                 labelReferences,

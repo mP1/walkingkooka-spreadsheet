@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.store.Store;
 
@@ -43,6 +44,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     static BasicSpreadsheetStoreRepository with(final SpreadsheetCellStore cells,
                                                 final SpreadsheetCellReferencesStore cellReferences,
                                                 final SpreadsheetColumnStore columns,
+                                                final SpreadsheetFormStore forms,
                                                 final SpreadsheetGroupStore groups,
                                                 final SpreadsheetLabelStore labels,
                                                 final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
@@ -55,6 +57,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
         Objects.requireNonNull(columns, "columns");
+        Objects.requireNonNull(forms, "forms");
         Objects.requireNonNull(groups, "groups");
         Objects.requireNonNull(labels, "labels");
         Objects.requireNonNull(labelReferences, "labelReferences");
@@ -69,6 +72,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                 cells,
                 cellReferences,
                 columns,
+                forms,
                 groups,
                 labels,
                 labelReferences,
@@ -84,6 +88,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private BasicSpreadsheetStoreRepository(final SpreadsheetCellStore cells,
                                             final SpreadsheetCellReferencesStore cellReferences,
                                             final SpreadsheetColumnStore columns,
+                                            final SpreadsheetFormStore forms,
                                             final SpreadsheetGroupStore groups,
                                             final SpreadsheetLabelStore labels,
                                             final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
@@ -96,6 +101,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         this.cells = cells;
         this.cellReferences = cellReferences;
         this.columns = columns;
+        this.forms = forms;
         this.groups = groups;
         this.labels = labels;
         this.labelReferences = labelReferences;
@@ -127,6 +133,13 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     private final SpreadsheetColumnStore columns;
+
+    @Override
+    public SpreadsheetFormStore forms() {
+        return this.forms;
+    }
+
+    private final SpreadsheetFormStore forms;
 
     @Override
     public SpreadsheetGroupStore groups() {
@@ -196,6 +209,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         return this.cells + " " +
                 this.cellReferences + " " +
                 this.columns + " " +
+                this.forms + " " +
                 this.groups + " " +
                 this.labels + " " +
                 this.labelReferences + " " +

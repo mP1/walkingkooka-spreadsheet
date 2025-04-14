@@ -81,6 +81,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.FakeStorageStoreContext;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
@@ -402,6 +403,7 @@ public final class Sample {
                     SpreadsheetCellStores.treeMap(),
                     SpreadsheetCellReferencesStores.treeMap(),
                     SpreadsheetColumnStores.treeMap(),
+                    SpreadsheetFormStores.fake(),
                     SpreadsheetGroupStores.fake(),
                     SpreadsheetLabelStores.treeMap(),
                     SpreadsheetExpressionReferenceStores.treeMap(),

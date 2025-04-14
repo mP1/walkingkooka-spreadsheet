@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.store.Store;
 
@@ -52,6 +53,11 @@ public interface SpreadsheetStoreRepository {
      * A {@link SpreadsheetColumnStore} holding columns.
      */
     SpreadsheetColumnStore columns();
+
+    /**
+     * A {@link SpreadsheetFormStore} holding forms
+     */
+    SpreadsheetFormStore forms();
 
     /**
      * A {@link SpreadsheetGroupStore} holding groups.
