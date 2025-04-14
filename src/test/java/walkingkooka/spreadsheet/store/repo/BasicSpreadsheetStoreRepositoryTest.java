@@ -41,6 +41,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
 
@@ -54,6 +56,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 null,
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -72,6 +75,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 null,
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -88,6 +92,25 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         this.withFails(
                 this.cells(),
                 this.cellReferences(),
+                null,
+                this.forms(),
+                this.groups(),
+                this.labels(),
+                this.labelReferences(),
+                this.metadatas(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
+                this.rows(),
+                this.storage(),
+                this.users());
+    }
+
+    @Test
+    public void testWithNullFormsFails() {
+        this.withFails(
+                this.cells(),
+                this.cellReferences(),
+                this.columns(),
                 null,
                 this.groups(),
                 this.labels(),
@@ -106,6 +129,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 null,
                 this.labels(),
                 this.labelReferences(),
@@ -123,6 +147,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 null,
                 this.labelReferences(),
@@ -141,6 +166,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 null,
@@ -159,6 +185,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -177,6 +204,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -195,6 +223,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -213,6 +242,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -231,6 +261,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -249,6 +280,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -264,6 +296,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     private void withFails(final SpreadsheetCellStore cells,
                            final SpreadsheetCellReferencesStore cellReferences,
                            final SpreadsheetColumnStore columns,
+                           final SpreadsheetFormStore forms,
                            final SpreadsheetGroupStore groups,
                            final SpreadsheetLabelStore labels,
                            final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
@@ -279,6 +312,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                         cells,
                         cellReferences,
                         columns,
+                        forms,
                         groups,
                         labels,
                         labelReferences,
@@ -297,6 +331,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetCellStore cells = this.cells();
         final SpreadsheetCellReferencesStore cellReferences = this.cellReferences();
         final SpreadsheetColumnStore columns = this.columns();
+        final SpreadsheetFormStore forms = this.forms();
         final SpreadsheetGroupStore groups = this.groups();
         final SpreadsheetLabelStore labels = this.labels();
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = this.labelReferences();
@@ -312,6 +347,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                         cells,
                         cellReferences,
                         columns,
+                        forms,
                         groups,
                         labels,
                         labelReferences,
@@ -322,7 +358,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                         storage,
                         users
                 ),
-                cells + " " + cellReferences + " " + columns + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + rows + " " + storage + " " + users);
+                cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + rows + " " + storage + " " + users);
     }
 
     @Override
@@ -331,6 +367,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 this.cells(),
                 this.cellReferences(),
                 this.columns(),
+                this.forms(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
@@ -353,6 +390,10 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private SpreadsheetColumnStore columns() {
         return SpreadsheetColumnStores.fake();
+    }
+
+    private SpreadsheetFormStore forms() {
+        return SpreadsheetFormStores.fake();
     }
 
     private SpreadsheetGroupStore groups() {

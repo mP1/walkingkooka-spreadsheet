@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.storage.StorageStore;
 
 import java.util.Objects;
@@ -122,6 +123,11 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     @Override
     public SpreadsheetColumnStore columns() {
         return this.repository.columns();
+    }
+
+    @Override
+    public SpreadsheetFormStore forms() {
+        return this.repository.forms();
     }
 
     @Override

@@ -65,6 +65,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.FakeStorageStoreContext;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
@@ -187,9 +188,9 @@ public class TestGwtTest extends GWTTestCase {
                                     final Object actual,
                                     final String message) {
         assertEquals(
-                message,
                 expected,
-                actual
+                actual,
+                message
         );
     }
 
@@ -391,6 +392,7 @@ public class TestGwtTest extends GWTTestCase {
                     SpreadsheetCellStores.treeMap(),
                     SpreadsheetCellReferencesStores.treeMap(),
                     SpreadsheetColumnStores.treeMap(),
+                    SpreadsheetFormStores.fake(),
                     SpreadsheetGroupStores.fake(),
                     SpreadsheetLabelStores.treeMap(),
                     SpreadsheetExpressionReferenceStores.treeMap(),

@@ -83,6 +83,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.FakeStorageStoreContext;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
@@ -199,10 +200,10 @@ public class J2clTest {
     private static void checkEquals(final Object expected,
                                     final Object actual,
                                     final String message) {
-        Assert.assertEquals(
-                message,
+        assertEquals(
                 expected,
-                actual
+                actual,
+                message
         );
     }
 
@@ -404,6 +405,7 @@ public class J2clTest {
                     SpreadsheetCellStores.treeMap(),
                     SpreadsheetCellReferencesStores.treeMap(),
                     SpreadsheetColumnStores.treeMap(),
+                    SpreadsheetFormStores.fake(),
                     SpreadsheetGroupStores.fake(),
                     SpreadsheetLabelStores.treeMap(),
                     SpreadsheetExpressionReferenceStores.treeMap(),

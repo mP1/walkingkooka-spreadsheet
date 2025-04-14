@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.test.Fake;
 
@@ -51,6 +52,11 @@ public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
 
     @Override
     public SpreadsheetColumnStore columns() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetFormStore forms() {
         throw new UnsupportedOperationException();
     }
 
