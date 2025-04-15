@@ -74,6 +74,7 @@
   "findFunctions": "",
   "findHighlighting": false,
   "formatConverter": "collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
+  "formHandlers": "",
   "formulaConverter": "collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
   "formulaFunctions": "",
   "formulaValidators": "",
