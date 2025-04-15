@@ -2992,6 +2992,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterSelector.parse("general")
         );
         properties.put(
+                SpreadsheetMetadataPropertyName.FORMULA_FORM_HANDLERS,
+                FormHandlerAliasSet.parse("hello-form-handler")
+        );
+        properties.put(
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 ExpressionFunctionAliasSet.parse("hello")
         );

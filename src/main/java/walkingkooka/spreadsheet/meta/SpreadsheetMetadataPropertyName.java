@@ -233,6 +233,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormula.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#formula()}.
+     */
+    public static final SpreadsheetMetadataPropertyName<FormHandlerAliasSet> FORMULA_FORM_HANDLERS = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#formula()}.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula.instance());

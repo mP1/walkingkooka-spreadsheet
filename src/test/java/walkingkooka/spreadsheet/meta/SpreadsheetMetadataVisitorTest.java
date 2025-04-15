@@ -391,6 +391,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitFormulaFormHandlers() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormulaFormHandlers(final FormHandlerAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FORMULA_FORM_HANDLERS,
+                FormHandlerAliasSet.EMPTY
+        );
+    }
+
+    @Test
     public void testVisitFormulaFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
