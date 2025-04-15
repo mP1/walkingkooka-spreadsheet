@@ -129,6 +129,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionAndCheck(formula);
         this.expressionValueAndCheck(formula);
+        this.inputValueAndCheck(formula);
         this.errorAndCheck(formula);
 
         this.isEmptyAndCheck(
@@ -212,6 +213,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -239,6 +241,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -257,6 +260,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.tokenAndCheck(different);
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -307,6 +311,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
         this.expressionAndCheck(different); // should also clear expression, value, error
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -390,6 +395,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 differentExpression
         );
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -415,6 +421,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -444,6 +451,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 differentExpression
         );
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -519,6 +527,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different,
                 differentExpressionValue
         );
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -544,6 +553,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -574,6 +584,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 different,
                 differentExpressionValue
         );
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -764,6 +775,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(
                 different,
                 differentError
@@ -792,6 +804,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionAndCheck(different);
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different);
     }
 
@@ -816,6 +829,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
         this.expressionAndCheck(different, formula.expression());
         this.expressionValueAndCheck(different);
+        this.inputValueAndCheck(different);
         this.errorAndCheck(different, differentError);
     }
 
