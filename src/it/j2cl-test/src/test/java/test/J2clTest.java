@@ -200,10 +200,10 @@ public class J2clTest {
     private static void checkEquals(final Object expected,
                                     final Object actual,
                                     final String message) {
-        assertEquals(
+        Assert.assertEquals(
+                message,
                 expected,
-                actual,
-                message
+                actual
         );
     }
 
