@@ -77,6 +77,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         Value<Optional<Object>> {
 
     /**
+     * A constant for an absent formula text.
+     */
+    public final static String NO_TEXT = "";
+
+    /**
      * No {@link SpreadsheetFormulaParserToken} constant.
      */
     public final static Optional<SpreadsheetFormulaParserToken> NO_TOKEN = Optional.empty();
@@ -105,7 +110,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * A formula with no text, token, expression, value or error.
      */
     public final static SpreadsheetFormula EMPTY = new SpreadsheetFormula(
-            "",
+            NO_TEXT,
             NO_TOKEN,
             NO_EXPRESSION,
             NO_EXPRESSION_VALUE,
@@ -330,7 +335,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.inputValue.equals(inputValue) ?
                 this :
                 this.replace(
-                        "",
+                        NO_TEXT,
                         NO_TOKEN,
                         NO_EXPRESSION,
                         NO_EXPRESSION_VALUE,
@@ -643,7 +648,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     static SpreadsheetFormula unmarshall(final JsonNode node,
                                          final JsonNodeUnmarshallContext context) {
-        String text = "";
+        String text = NO_TEXT;
         SpreadsheetFormulaParserToken token = null;
         Expression expression = null;
         Object expressionValue = null;
