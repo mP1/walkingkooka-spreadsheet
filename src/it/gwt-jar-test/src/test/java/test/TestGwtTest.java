@@ -188,9 +188,9 @@ public class TestGwtTest extends GWTTestCase {
                                     final Object actual,
                                     final String message) {
         assertEquals(
+                message,
                 expected,
-                actual,
-                message
+                actual
         );
     }
 
