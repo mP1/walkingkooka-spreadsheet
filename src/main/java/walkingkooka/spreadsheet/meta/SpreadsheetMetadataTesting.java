@@ -77,6 +77,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
@@ -230,6 +231,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.FORMATTERS,
                     SPREADSHEET_FORMATTER_PROVIDER.spreadsheetFormatterInfos()
                             .aliasSet()
+            ).set(
+                    SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                    FormHandlerAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                     ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
