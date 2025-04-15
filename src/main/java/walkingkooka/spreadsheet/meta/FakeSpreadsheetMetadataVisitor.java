@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
@@ -184,6 +185,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitFormatters(final SpreadsheetFormatterAliasSet aliases) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitFormHandlers(final FormHandlerAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 

@@ -92,6 +92,7 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.WordWrap;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
 import java.math.BigDecimal;
@@ -2981,6 +2982,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetFormatterProviders.spreadsheetFormatPattern()
                         .spreadsheetFormatterInfos()
                         .aliasSet()
+        );
+        properties.put(
+                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                FormHandlerAliasSet.parse("Hello-form-handler")
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,

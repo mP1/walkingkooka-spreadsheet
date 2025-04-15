@@ -70,6 +70,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
 import java.math.RoundingMode;
@@ -220,6 +221,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link SpreadsheetFormatterAliasSet}</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterAliasSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetFormatters.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerAliasSet}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<FormHandlerAliasSet> FORM_HANDLERS = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormHandlers.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values within an {@link SpreadsheetCell#formula()} expression.
@@ -794,6 +800,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         ExpressionFunctionAliasSet.parse("hello");
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
+        FormHandlerAliasSet.EMPTY.isEmpty();
         SpreadsheetCellFindQuery.empty();
 
         PluginNameSet.parse("");

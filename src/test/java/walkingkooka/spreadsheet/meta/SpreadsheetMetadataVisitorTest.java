@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
@@ -360,6 +361,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                 ConverterSelector.parse("general")
+        );
+    }
+
+    @Test
+    public void testVisitFormHandlers() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitFormHandlers(final FormHandlerAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                FormHandlerAliasSet.parse("hello")
         );
     }
 
