@@ -97,7 +97,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     public final static Optional<Object> NO_EXPRESSION_VALUE = Optional.empty();
 
     /**
-     * No expression value constant.
+     * Input value is absent constant.
      */
     public final static Optional<Object> NO_INPUT_VALUE = Optional.empty();
 
