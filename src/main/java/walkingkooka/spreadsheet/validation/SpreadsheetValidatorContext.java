@@ -19,9 +19,18 @@ package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
 
 public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetExpressionReference> {
+
+    /**
+     * A named reference that may be used within {@link walkingkooka.tree.expression.Expression} executed within a {@link Validator}.
+     */
+    SpreadsheetLabelName VALUE = SpreadsheetSelection.labelName(ValidatorContext.VALIDATION_EXPRESSION_VALUE_REFERENCE_STRING);
+
 
     @Override
     SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel);
