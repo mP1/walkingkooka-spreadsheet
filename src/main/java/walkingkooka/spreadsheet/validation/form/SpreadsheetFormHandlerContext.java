@@ -17,11 +17,12 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.validation.form.FormHandlerContext;
 
-public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference> {
+public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
 
     @Override
     SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference spreadsheetExpressionReference);

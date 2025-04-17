@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.form.FormHandlerContextTesting;
 
-public interface SpreadsheetFormHandlerContextTesting<C extends SpreadsheetFormHandlerContext> extends FormHandlerContextTesting<C, SpreadsheetExpressionReference> {
+public interface SpreadsheetFormHandlerContextTesting<C extends SpreadsheetFormHandlerContext> extends FormHandlerContextTesting<C, SpreadsheetExpressionReference, SpreadsheetDelta> {
 }
