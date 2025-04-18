@@ -71,10 +71,9 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
 
     @Override
     public List<SpreadsheetParserSelectorToken> tokens(final SpreadsheetParserContext context) {
-        return SpreadsheetParserSelectorToken.tokens(
-                this.token,
-                context
-        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetParserSelectorToken.tokens(this.token);
     }
 
     private final ParserToken token;
