@@ -18,12 +18,29 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormHandlerContext;
 
 /**
  * A collection of factory methods to create {@link FormHandlerContext}
  */
 public final class SpreadsheetFormHandlerContexts implements PublicStaticHelper {
+
+    /**
+     * {@see SpreadsheetEngineFormHandlerContext}
+     */
+    static SpreadsheetFormHandlerContext spreadsheetEngine(final Form<SpreadsheetExpressionReference> form,
+                                                           final SpreadsheetEngine engine,
+                                                           final SpreadsheetEngineContext context) {
+        return SpreadsheetEngineFormHandlerContext.with(
+                form,
+                engine,
+                context
+        );
+    }
 
     /**
      * Stop creation
