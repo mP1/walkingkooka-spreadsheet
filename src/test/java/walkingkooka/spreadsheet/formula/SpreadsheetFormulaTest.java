@@ -1008,21 +1008,21 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // replaceErrorWithValueIfPossible..................................................................................
 
     @Test
-    public void testReplaceErrorWithValueIfPossibleWithNullContextFails() {
+    public void testSetExpressionValueIfErrorNullContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> SpreadsheetFormula.EMPTY
-                        .replaceErrorWithValueIfPossible(null)
+                        .setExpressionValueIfError(null)
         );
     }
 
     @Test
-    public void testReplaceErrorWithValueIfPossibleWithMissingCellBecomesZero() {
+    public void testSetExpressionValueIfErrorWhenMissingCellBecomesZero() {
         final ExpressionNumberKind kind = ExpressionNumberKind.BIG_DECIMAL;
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
 
 
-        this.replaceErrorWithValueIfPossibleAndCheck(
+        this.setExpressionValueIfErrorAndCheck(
                 formula.setExpressionValue(
                         Optional.of(
                                 SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1)
@@ -1044,8 +1044,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testReplaceErrorWithValueIfPossibleWithNotMissingCell() {
-        this.replaceErrorWithValueIfPossibleAndCheck(
+    public void testSetExpressionValueIfErrorWhenNotMissingCell() {
+        this.setExpressionValueIfErrorAndCheck(
                 SpreadsheetFormula.EMPTY.setExpressionValue(
                         Optional.of(
                                 "abc"
@@ -1054,21 +1054,21 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private void replaceErrorWithValueIfPossibleAndCheck(final SpreadsheetFormula formula) {
-        this.replaceErrorWithValueIfPossibleAndCheck(
+    private void setExpressionValueIfErrorAndCheck(final SpreadsheetFormula formula) {
+        this.setExpressionValueIfErrorAndCheck(
                 formula,
                 SpreadsheetEngineContexts.fake(),
                 formula
         );
     }
 
-    private void replaceErrorWithValueIfPossibleAndCheck(final SpreadsheetFormula formula,
-                                                         final SpreadsheetEngineContext context,
-                                                         final Object expected) {
+    private void setExpressionValueIfErrorAndCheck(final SpreadsheetFormula formula,
+                                                   final SpreadsheetEngineContext context,
+                                                   final Object expected) {
         this.checkEquals(
                 expected,
-                formula.replaceErrorWithValueIfPossible(context),
-                () -> formula + " replaceErrorWithValueIfPossible"
+                formula.setExpressionValueIfError(context),
+                () -> formula + " setExpressionValueIfError"
         );
     }
 
