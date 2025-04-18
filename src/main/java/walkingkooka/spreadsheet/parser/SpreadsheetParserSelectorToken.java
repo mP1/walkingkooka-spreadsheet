@@ -46,12 +46,8 @@ public final class SpreadsheetParserSelectorToken implements PluginSelectorToken
     /**
      * This method is intended to only be called by {@link SpreadsheetParser} that contain a {@link SpreadsheetFormatParserToken}.
      */
-    public static List<SpreadsheetParserSelectorToken> tokens(final ParserToken token,
-                                                              final SpreadsheetParserContext context) {
-        return SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor.tokens(
-                token,
-                context
-        );
+    public static List<SpreadsheetParserSelectorToken> tokens(final ParserToken token) {
+        return SpreadsheetParserSelectorTokensSpreadsheetFormatParserTokenVisitor.tokens(token);
     }
 
     /**

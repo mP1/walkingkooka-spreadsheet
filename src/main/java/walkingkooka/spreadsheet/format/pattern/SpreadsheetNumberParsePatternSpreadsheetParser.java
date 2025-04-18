@@ -89,8 +89,7 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
         Objects.requireNonNull(context, "context");
 
         return SpreadsheetParserSelectorToken.tokens(
-                this.pattern.value(),
-                context
+                this.pattern.value()
         );
     }
 
