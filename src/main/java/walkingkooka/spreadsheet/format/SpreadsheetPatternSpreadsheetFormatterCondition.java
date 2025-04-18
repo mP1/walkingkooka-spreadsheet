@@ -73,10 +73,9 @@ final class SpreadsheetPatternSpreadsheetFormatterCondition implements Spreadshe
 
     @Override
     public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSelectorToken.tokens(
-                this.token,
-                context
-        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetFormatterSelectorToken.tokens(this.token);
     }
 
     /**

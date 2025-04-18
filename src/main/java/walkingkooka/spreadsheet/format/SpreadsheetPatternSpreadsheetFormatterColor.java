@@ -78,10 +78,9 @@ final class SpreadsheetPatternSpreadsheetFormatterColor implements SpreadsheetPa
 
     @Override
     public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSelectorToken.tokens(
-                this.token,
-                context
-        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetFormatterSelectorToken.tokens(this.token);
     }
 
     /**

@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 public final class SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor> {
     @Override
     public SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor(null);
+        return new SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
