@@ -113,8 +113,6 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                 booleanTo(LocalTime.class, TRUE_TO_TIME, FALSE_TO_TIME)
         ); // Time
 
-        this.booleanConverter = booleanTo;
-
         // LocalDate ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> dateTo = mapping(
                 Converters.localDateToNumber()
@@ -441,8 +439,6 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                 )
         );
     }
-
-    private final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> booleanConverter;
 
     private <T> Either<T, String> convertNonNull(final Object value,
                                                  final Class<T> targetType,
