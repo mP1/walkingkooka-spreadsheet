@@ -31,7 +31,7 @@ public interface CanReplaceReferences<T extends CanReplaceReferences<T>> {
     /**
      * A mapper function that always returns the given {@link SpreadsheetCellReference}.
      */
-    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> NULL_REPLACE_REFERENCE_MAPPER = new Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>>() {
+    Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> NULL_REPLACE_REFERENCE_MAPPER = new Function<>() {
         @Override
         public Optional<SpreadsheetCellReference> apply(final SpreadsheetCellReference cellReference) {
             return Optional.of(
