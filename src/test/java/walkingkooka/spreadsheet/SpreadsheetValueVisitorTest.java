@@ -934,6 +934,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Test
+    @Override
     public void testAcceptWithNull() {
         final StringBuilder b = new StringBuilder();
         final Object value = null;
