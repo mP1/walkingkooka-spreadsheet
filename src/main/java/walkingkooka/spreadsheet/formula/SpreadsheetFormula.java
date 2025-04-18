@@ -458,7 +458,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * <br>
      * This handles the special case of turning formulas to missing cells parse #NAME to a value of zero.
      */
-    public SpreadsheetFormula replaceErrorWithValueIfPossible(final SpreadsheetEngineContext context) {
+    public SpreadsheetFormula setExpressionValueIfError(final SpreadsheetEngineContext context) {
         Objects.requireNonNull(context, "context");
 
         SpreadsheetFormula result = this;

@@ -1318,7 +1318,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                 loader,
                                                 context
                                         )
-                                ).replaceErrorWithValueIfPossible(context)
+                                ).setExpressionValueIfError(context)
                         );
                     }
                 }
