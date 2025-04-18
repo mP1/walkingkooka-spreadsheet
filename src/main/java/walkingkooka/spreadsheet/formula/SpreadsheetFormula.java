@@ -449,7 +449,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 );
     }
 
-    private Optional<SpreadsheetError> error;
+    private final Optional<SpreadsheetError> error;
 
     // magic...... ....................................................................................................
 
