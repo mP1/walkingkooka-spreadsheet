@@ -35,19 +35,16 @@ import java.util.stream.Collectors;
 final class SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     // only called by SpreadsheetFormatterSelectorToken#tokens
-    static List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatParserToken token,
-                                                          final SpreadsheetFormatterContext context) {
+    static List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatParserToken token) {
         Objects.requireNonNull(token, "token");
-        Objects.requireNonNull(context, "context");
 
-        final SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor(context);
+        final SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         return visitor.tokens;
     }
 
-    SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor(final SpreadsheetFormatterContext context) {
+    SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor() {
         this.tokens = Lists.array();
-        this.context = context;
     }
 
     @Override
@@ -89,8 +86,6 @@ final class SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisito
     }
 
     private final List<SpreadsheetFormatterSelectorToken> tokens;
-
-    private final SpreadsheetFormatterContext context;
 
     @Override
     public String toString() {

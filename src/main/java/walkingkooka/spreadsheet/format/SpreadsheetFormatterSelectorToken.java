@@ -45,12 +45,8 @@ public final class SpreadsheetFormatterSelectorToken implements PluginSelectorTo
     /**
      * This method is intended to only be called by {@link SpreadsheetFormatter} that contain a {@link SpreadsheetFormatParserToken}.
      */
-    static List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatParserToken token,
-                                                          final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor.tokens(
-                token,
-                context
-        );
+    static List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatParserToken token) {
+        return SpreadsheetFormatterSelectorTokensSpreadsheetFormatParserTokenVisitor.tokens(token);
     }
 
     /**

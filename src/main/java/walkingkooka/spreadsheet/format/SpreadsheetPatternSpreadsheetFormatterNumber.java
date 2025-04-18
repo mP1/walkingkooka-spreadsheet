@@ -128,10 +128,9 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
 
     @Override
     public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
-        return SpreadsheetFormatterSelectorToken.tokens(
-                this.token,
-                context
-        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetFormatterSelectorToken.tokens(this.token);
     }
 
     private final SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific normalOrScientific;
