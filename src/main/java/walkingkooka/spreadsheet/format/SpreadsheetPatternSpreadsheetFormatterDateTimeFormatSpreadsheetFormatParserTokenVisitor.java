@@ -39,7 +39,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatParserTokenVisitor} that is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)} to
+ * A {@link SpreadsheetFormatParserTokenVisitor} that is used exclusively by {@link SpreadsheetFormatter#format(Optional, SpreadsheetFormatterContext)} to
  * assemble a {@link SpreadsheetFormatter} that handles date times.
  */
 final class SpreadsheetPatternSpreadsheetFormatterDateTimeFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor {
