@@ -54,6 +54,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                 this.viewport(),
                 cells,
                 this.columns(),
+                this.forms(),
                 this.labels(),
                 this.rows(),
                 this.references(),
@@ -91,6 +92,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         ),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -117,6 +119,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -143,6 +146,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -168,6 +172,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         this.references(),
@@ -194,6 +199,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -217,6 +223,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -241,6 +248,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.viewport(),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -266,6 +274,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -291,6 +300,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         this.columns(),
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -310,12 +320,39 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
+    public void testMarshallForms() {
+        this.marshallAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.forms(),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                JsonNode.object()
+                        .set(SpreadsheetDelta.FORMS_PROPERTY, this.formsJson())
+        );
+    }
+
+    @Test
     public void testMarshallRows() {
         this.marshallAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         this.rows(),
                         SpreadsheetDelta.NO_REFERENCES,
@@ -341,6 +378,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         this.references(),
@@ -369,6 +407,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -395,6 +434,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -421,6 +461,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -447,6 +488,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -473,6 +515,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -499,6 +542,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -525,6 +569,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -551,6 +596,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -577,6 +623,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -604,6 +651,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -633,6 +681,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.viewport(),
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -651,12 +700,38 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
+    public void testToStringForms() {
+        this.toStringAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        this.viewport(),
+                        this.cells(),
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.forms(),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "home: A1 width: 100.0 height: 40.0 anchoredSelection: A1:B2 BOTTOM_RIGHT cells: A1 1, B2 2, C3 3 forms: Form111 fields=A1 \"Label111\" text"
+        );
+    }
+
+    @Test
     public void testToStringLabels() {
         this.toStringAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         this.viewport(),
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -681,6 +756,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.viewport(),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         this.references(),
@@ -705,6 +781,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -729,6 +806,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -752,6 +830,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -775,6 +854,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -798,6 +878,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -823,6 +904,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -847,6 +929,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -871,6 +954,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -894,6 +978,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -920,6 +1005,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -944,6 +1030,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.viewport(),
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -974,6 +1061,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1014,6 +1102,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                                 this.a(),
                                 this.hiddenD()
                         ),
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1036,12 +1125,48 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Test
+    public void testPrintTreeForms() {
+        this.treePrintAndCheck(
+                SpreadsheetDeltaNonWindowed.withNonWindowed(
+                        SpreadsheetDelta.NO_VIEWPORT,
+                        SpreadsheetDelta.NO_CELLS,
+                        SpreadsheetDelta.NO_COLUMNS,
+                        this.forms(),
+                        SpreadsheetDelta.NO_LABELS,
+                        SpreadsheetDelta.NO_ROWS,
+                        SpreadsheetDelta.NO_REFERENCES,
+                        SpreadsheetDelta.NO_DELETED_CELLS,
+                        SpreadsheetDelta.NO_DELETED_COLUMNS,
+                        SpreadsheetDelta.NO_DELETED_ROWS,
+                        SpreadsheetDelta.NO_DELETED_LABELS,
+                        SpreadsheetDelta.NO_MATCHED_CELLS,
+                        SpreadsheetDelta.NO_COLUMN_WIDTHS,
+                        SpreadsheetDelta.NO_ROW_HEIGHTS,
+                        SpreadsheetDelta.NO_TOTAL_WIDTH,
+                        SpreadsheetDelta.NO_TOTAL_HEIGHT
+                ),
+                "SpreadsheetDelta\n" +
+                        "  forms:\n" +
+                        "    Form\n" +
+                        "      Form111\n" +
+                        "      fields:\n" +
+                        "        FormField\n" +
+                        "          cell A1\n" +
+                        "          label:\n" +
+                        "            \"Label111\"\n" +
+                        "          type:\n" +
+                        "            text\n"
+        );
+    }
+
+    @Test
     public void testPrintTreeLabels() {
         this.treePrintAndCheck(
                 SpreadsheetDeltaNonWindowed.withNonWindowed(
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1071,6 +1196,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         Sets.of(
                                 this.row1(),
@@ -1102,6 +1228,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1144,6 +1271,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         this.references(),
@@ -1171,6 +1299,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1215,6 +1344,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1241,6 +1371,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1267,6 +1398,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         SpreadsheetDelta.NO_CELLS,
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1293,6 +1425,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1337,6 +1470,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1376,6 +1510,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         SpreadsheetDelta.NO_VIEWPORT,
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        SpreadsheetDelta.NO_FORMS,
                         SpreadsheetDelta.NO_LABELS,
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1415,6 +1550,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         this.viewport(),
                         this.cells(),
                         SpreadsheetDelta.NO_COLUMNS,
+                        this.forms(),
                         this.labels(),
                         SpreadsheetDelta.NO_ROWS,
                         SpreadsheetDelta.NO_REFERENCES,
@@ -1448,6 +1584,16 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
                         "      Formula\n" +
                         "        text:\n" +
                         "          \"3\"\n" +
+                        "  forms:\n" +
+                        "    Form\n" +
+                        "      Form111\n" +
+                        "      fields:\n" +
+                        "        FormField\n" +
+                        "          cell A1\n" +
+                        "          label:\n" +
+                        "            \"Label111\"\n" +
+                        "          type:\n" +
+                        "            text\n" +
                         "  labels:\n" +
                         "    LabelA1A: A1\n" +
                         "    LabelA1B: A1\n" +

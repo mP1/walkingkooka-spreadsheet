@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.validation.form.Form;
 
 import java.util.Map;
 import java.util.Optional;
@@ -47,6 +48,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     static SpreadsheetDeltaNonWindowed withNonWindowed(final Optional<SpreadsheetViewport> viewport,
                                                        final Set<SpreadsheetCell> cells,
                                                        final Set<SpreadsheetColumn> columns,
+                                                       final Set<Form<SpreadsheetExpressionReference>> forms,
                                                        final Set<SpreadsheetLabelMapping> labels,
                                                        final Set<SpreadsheetRow> rows,
                                                        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
@@ -63,6 +65,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 viewport,
                 cells,
                 columns,
+                forms,
                 labels,
                 rows,
                 references,
@@ -81,6 +84,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     private SpreadsheetDeltaNonWindowed(final Optional<SpreadsheetViewport> viewport,
                                         final Set<SpreadsheetCell> cells,
                                         final Set<SpreadsheetColumn> columns,
+                                        final Set<Form<SpreadsheetExpressionReference>> forms,
                                         final Set<SpreadsheetLabelMapping> labels,
                                         final Set<SpreadsheetRow> rows,
                                         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
@@ -97,6 +101,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 viewport,
                 cells,
                 columns,
+                forms,
                 labels,
                 rows,
                 references,
@@ -118,6 +123,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -140,6 +146,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -166,6 +173,29 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                         NO_WINDOW
                 ),
                 columns,
+                this.forms,
+                this.labels,
+                this.rows,
+                this.references,
+                this.deletedCells,
+                this.deletedColumns,
+                this.deletedRows,
+                this.deletedLabels,
+                this.matchedCells,
+                this.columnWidths,
+                this.rowHeights,
+                this.columnCount,
+                this.rowCount
+        );
+    }
+
+    @Override
+    SpreadsheetDelta replaceForms(final Set<Form<SpreadsheetExpressionReference>> forms) {
+        return new SpreadsheetDeltaNonWindowed(
+                this.viewport,
+                this.cells,
+                this.columns,
+                forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -187,6 +217,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 labels,
                 this.rows,
                 this.references,
@@ -213,6 +244,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                         NO_WINDOW
                 ),
                 this.columns,
+                this.forms,
                 this.labels,
                 rows,
                 this.references,
@@ -234,6 +266,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 references,
@@ -255,6 +288,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -276,6 +310,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -297,6 +332,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -318,6 +354,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -339,6 +376,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -360,6 +398,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -381,6 +420,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -402,6 +442,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,
@@ -423,6 +464,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.references,

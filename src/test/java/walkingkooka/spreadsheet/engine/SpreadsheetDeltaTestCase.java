@@ -49,6 +49,10 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormField;
+import walkingkooka.validation.form.FormName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,6 +104,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -532,6 +537,162 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         return updated;
     }
 
+    // forms............................................................................................................
+
+    @Test
+    public final void testFormsReadOnly() {
+        final D delta = this.createSpreadsheetDelta();
+        final Set<Form<SpreadsheetExpressionReference>> forms = delta.forms();
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> forms.clear()
+        );
+
+        this.formsAndCheck(delta);
+    }
+
+    @Test
+    public final void testSetFormsWithNullFails() {
+        final D delta = this.createSpreadsheetDelta();
+        assertThrows(
+                NullPointerException.class,
+                () -> delta.setForms(null)
+        );
+    }
+
+    @Test
+    public final void testSetFormsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(
+                delta,
+                delta.setForms(this.forms())
+        );
+    }
+
+    @Test
+    public void testSetFormsEmpty() {
+        final D before = this.createSpreadsheetDelta();
+        final Set<Form<SpreadsheetExpressionReference>> different = SpreadsheetDelta.NO_FORMS;
+
+        final SpreadsheetDelta after = before.setForms(different);
+        assertNotSame(before, after);
+
+        this.formsAndCheck(
+                after,
+                different
+        );
+
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.formsAndCheck(
+                after,
+                different
+        );
+        this.rowsAndCheck(after);
+
+        this.referencesAndCheck(after);
+
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
+
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
+    }
+
+    @Test
+    public final void testSetFormsWithDifferent() {
+        final D before = this.createSpreadsheetDelta();
+        final Set<Form<SpreadsheetExpressionReference>> different = this.differentForms();
+
+        final SpreadsheetDelta after = before.setForms(different);
+        assertNotSame(
+                before,
+                after
+        );
+
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
+        this.formsAndCheck(
+                after,
+                different
+        );
+        this.labelsAndCheck(after);
+        this.rowsAndCheck(after);
+
+        this.referencesAndCheck(after);
+
+        this.deletedCellsAndCheck(after);
+        this.deletedColumnsAndCheck(after);
+        this.deletedRowsAndCheck(after);
+
+        this.columnWidthsAndCheck(after);
+        this.rowHeightsAndCheck(after);
+    }
+
+    final Set<Form<SpreadsheetExpressionReference>> forms() {
+        return Sets.of(
+                this.form1()
+        );
+    }
+
+    final Set<Form<SpreadsheetExpressionReference>> differentForms() {
+        return Sets.of(
+                this.form2()
+        );
+    }
+
+    final void formsAndCheck(final SpreadsheetDelta delta) {
+        this.formsAndCheck(
+                delta,
+                this.forms()
+        );
+    }
+
+    final void formsAndCheck(final SpreadsheetDelta delta,
+                             final Set<Form<SpreadsheetExpressionReference>> forms) {
+        this.checkEquals(
+                forms,
+                delta.forms(),
+                "forms"
+        );
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.forms()
+                        .add(
+                                Form.with(
+                                        FormName.with("ThrowsUOE")
+                                )
+                        )
+        );
+    }
+
+    final Form<SpreadsheetExpressionReference> form1() {
+        return Form.<SpreadsheetExpressionReference>with(
+                FormName.with("Form111")
+        ).setFields(
+                Lists.of(
+                        FormField.<SpreadsheetExpressionReference>with(SpreadsheetSelection.A1)
+                                .setLabel("Label111")
+                                .setType(
+                                        Optional.of(ValidationValueTypeName.TEXT)
+                                )
+                )
+        );
+    }
+
+    final Form<SpreadsheetExpressionReference> form2() {
+        return Form.with(FormName.with("Form222"));
+    }
+
+    final JsonNode formsJson() {
+        return this.marshallContext()
+                .marshallCollection(
+                        this.forms()
+                );
+    }
+    
     // labels...........................................................................................................
 
     @Test
@@ -586,6 +747,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.rowsAndCheck(after);
 
         this.referencesAndCheck(after);
@@ -616,6 +778,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.rowsAndCheck(after);
 
         this.referencesAndCheck(after);
@@ -730,6 +893,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
 
         this.referencesAndCheck(after);
@@ -952,6 +1116,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -977,6 +1142,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1010,6 +1176,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1146,6 +1313,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1301,6 +1469,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1426,6 +1595,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1559,6 +1729,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1649,6 +1820,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1775,6 +1947,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1857,6 +2030,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -1933,6 +2107,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.cellsAndCheck(after);
         this.columnsAndCheck(after);
+        this.formsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
