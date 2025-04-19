@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -35,7 +36,8 @@ import java.util.Optional;
 /**
  * Base class for both column and row.
  */
-public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection> implements HateosResource<R>,
+public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection & Comparable<R>> implements HasSpreadsheetReference<R>,
+        HateosResource<R>,
         TreePrintable,
         UsesToStringBuilder {
 
@@ -64,6 +66,7 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection> imp
 
     // reference .......................................................................................................
 
+    @Override
     public final R reference() {
         return this.reference;
     }

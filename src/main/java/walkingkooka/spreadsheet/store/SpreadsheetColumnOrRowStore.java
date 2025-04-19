@@ -27,7 +27,7 @@ import java.util.Optional;
 /**
  * A common {@link SpreadsheetStore} for both {@link SpreadsheetColumn} or {@link SpreadsheetRow}.
  */
-public interface SpreadsheetColumnOrRowStore<R extends SpreadsheetSelection, V extends SpreadsheetColumnOrRow<R>> extends SpreadsheetStore<R, V> {
+public interface SpreadsheetColumnOrRowStore<R extends SpreadsheetSelection & Comparable<R>, V extends SpreadsheetColumnOrRow<R>> extends SpreadsheetStore<R, V> {
 
     /**
      * Tests if the given {@link SpreadsheetColumnOrRow} is hidden. Column or rows that do not exist will return false.
