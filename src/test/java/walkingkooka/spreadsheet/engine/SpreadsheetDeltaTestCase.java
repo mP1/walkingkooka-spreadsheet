@@ -119,6 +119,55 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.viewportAndCheck(before);
     }
 
+
+    final Optional<SpreadsheetViewport> viewport() {
+        return Optional.of(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCellRange("A1:B2")
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                                )
+                        )
+        );
+    }
+
+    final Optional<SpreadsheetViewport> differentViewport() {
+        return Optional.of(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCell("C3")
+                                                .setDefaultAnchor()
+                                )
+                        )
+        );
+    }
+
+    final void viewportAndCheck(final SpreadsheetDelta delta) {
+        this.viewportAndCheck(delta, this.viewport());
+    }
+
+    final void viewportAndCheck(final SpreadsheetDelta delta,
+                                final Optional<SpreadsheetViewport> viewport) {
+        this.checkEquals(
+                viewport,
+                delta.viewport(),
+                "viewport"
+        );
+    }
+
+    final JsonNode viewportJson() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        return context.marshall(
+                this.viewport()
+                        .get()
+        );
+    }
+
     // cells............................................................................................................
 
     @Test
@@ -190,6 +239,103 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 Lists.of(a1, b2),
                 new ArrayList<>(delta.cells())
         );
+    }
+
+    final Set<SpreadsheetCell> cells() {
+        return Sets.of(
+                this.a1(),
+                this.b2(),
+                this.c3()
+        );
+    }
+
+    final Set<SpreadsheetCell> differentCells() {
+        return Sets.of(
+                this.a1()
+                        .setFormula(SpreadsheetFormula.EMPTY.setText("'different A1")),
+                this.b2()
+                        .setFormula(SpreadsheetFormula.EMPTY.setText("'different B2")),
+                this.c3()
+                        .setFormula(SpreadsheetFormula.EMPTY.setText("'different C3"))
+        );
+    }
+
+    final Set<SpreadsheetCell> cells0(final String... cellReferences) {
+        return Arrays.stream(cellReferences)
+                .map(r -> this.cell(r, "55"))
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    final SpreadsheetCell a1() {
+        return this.cell("A1", "1");
+    }
+
+    final SpreadsheetCell b2() {
+        return this.cell("B2", "2");
+    }
+
+    final SpreadsheetCell c3() {
+        return this.cell("C3", "3");
+    }
+
+    final SpreadsheetCell cell(final String cellReference,
+                               final String formulaText) {
+        return SpreadsheetSelection.parseCell(cellReference)
+                .setFormula(
+                        SpreadsheetFormula.EMPTY
+                                .setText(formulaText)
+                );
+    }
+
+    final void cellsAndCheck(final SpreadsheetDelta delta) {
+        this.cellsAndCheck(delta, this.cells());
+    }
+
+    final void cellsAndCheck(final SpreadsheetDelta delta,
+                             final Set<SpreadsheetCell> cells) {
+        this.checkEquals(cells, delta.cells(), "cells");
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.cells()
+                        .add(this.cell("ZZ99", "read only"))
+        );
+    }
+
+    final JsonNode cellsJson() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        JsonObject object = JsonNode.object();
+        object = cellsJson0(
+                object,
+                this.a1(),
+                context
+        );
+        object = cellsJson0(
+                object,
+                this.b2(),
+                context
+        );
+        object = cellsJson0(
+                object,
+                this.c3(),
+                context
+        );
+
+        return object;
+    }
+
+    private static JsonObject cellsJson0(final JsonObject object,
+                                         final SpreadsheetCell cell,
+                                         final JsonNodeMarshallContext context) {
+        JsonObject updated = object;
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(cell)
+                .objectOrFail()
+                .asMap()
+                .entrySet()) {
+            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
+        }
+        return updated;
     }
 
     // columns..........................................................................................................
@@ -288,6 +434,105 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    final Set<SpreadsheetColumn> columns() {
+        return Sets.of(
+                this.a(),
+                this.b(),
+                this.c(),
+                this.hiddenD()
+        );
+    }
+
+    final Set<SpreadsheetColumn> differentColumns() {
+        return Sets.of(
+                this.a(),
+                this.b(),
+                this.c(),
+                this.hiddenD().setHidden(false)
+        );
+    }
+
+    final SpreadsheetColumn a() {
+        return this.column("A");
+    }
+
+    final SpreadsheetColumn b() {
+        return this.column("B");
+    }
+
+    final SpreadsheetColumn c() {
+        return this.column("C");
+    }
+
+    final SpreadsheetColumn hiddenD() {
+        return this.column("d")
+                .setHidden(true);
+    }
+
+    final SpreadsheetColumn column(final String columnReference) {
+        return SpreadsheetSelection.parseColumn(columnReference)
+                .column();
+    }
+
+    final void columnsAndCheck(final SpreadsheetDelta delta) {
+        this.columnsAndCheck(
+                delta,
+                this.columns()
+        );
+    }
+
+    final void columnsAndCheck(final SpreadsheetDelta delta,
+                               final Set<SpreadsheetColumn> columns) {
+        this.checkEquals(columns, delta.columns(), "columns");
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.columns()
+                        .add(this.column("Z"))
+        );
+    }
+
+    final JsonNode columnsJson() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        JsonObject object = JsonNode.object();
+        object = columnsJson0(
+                object,
+                this.a(),
+                context
+        );
+        object = columnsJson0(
+                object,
+                this.b(),
+                context
+        );
+        object = columnsJson0(
+                object,
+                this.c(),
+                context
+        );
+        object = columnsJson0(
+                object,
+                this.hiddenD(),
+                context
+        );
+
+        return object;
+    }
+
+    private static JsonObject columnsJson0(final JsonObject object,
+                                           final SpreadsheetColumn column,
+                                           final JsonNodeMarshallContext context) {
+        JsonObject updated = object;
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(column)
+                .objectOrFail()
+                .asMap()
+                .entrySet()) {
+            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
+        }
+        return updated;
+    }
+
     // labels...........................................................................................................
 
     @Test
@@ -382,6 +627,70 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.columnWidthsAndCheck(after);
         this.rowHeightsAndCheck(after);
+    }
+
+    final Set<SpreadsheetLabelMapping> labels() {
+        return Sets.of(
+                this.label1a().setLabelMappingReference(this.a1().reference()),
+                this.label1b().setLabelMappingReference(this.a1().reference()),
+                this.label2().setLabelMappingReference(this.b2().reference()),
+                this.label3().setLabelMappingReference(SpreadsheetSelection.parseCellRange("C3:D4"))
+        );
+    }
+
+    final Set<SpreadsheetLabelMapping> differentLabels() {
+        final SpreadsheetCellReference a1 = this.a1().reference();
+
+        return Sets.of(
+                this.label1a().setLabelMappingReference(a1),
+                this.label1b().setLabelMappingReference(a1),
+                this.label2().setLabelMappingReference(a1),
+                this.label3().setLabelMappingReference(a1)
+        );
+    }
+
+    final void labelsAndCheck(final SpreadsheetDelta delta) {
+        this.labelsAndCheck(
+                delta,
+                this.labels()
+        );
+    }
+
+    final void labelsAndCheck(final SpreadsheetDelta delta,
+                              final Set<SpreadsheetLabelMapping> labels) {
+        this.checkEquals(labels, delta.labels(), "labels");
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.labels()
+                        .add(
+                                SpreadsheetLabelName.labelName("LabelZ")
+                                        .setLabelMappingReference(SpreadsheetSelection.parseCell("Z9")
+                                        )
+                        )
+        );
+    }
+
+    final SpreadsheetLabelName label1a() {
+        return SpreadsheetLabelName.labelName("LabelA1A");
+    }
+
+    final SpreadsheetLabelName label1b() {
+        return SpreadsheetLabelName.labelName("LabelA1B");
+    }
+
+    final SpreadsheetLabelName label2() {
+        return SpreadsheetLabelName.labelName("LabelB2");
+    }
+
+    final SpreadsheetLabelName label3() {
+        return SpreadsheetLabelName.labelName("LabelC3");
+    }
+
+    final JsonNode labelsJson() {
+        return this.marshallContext()
+                .marshallCollection(
+                        this.labels()
+                );
     }
 
     // rows.............................................................................................................
@@ -488,6 +797,110 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 after,
                 hiddenRow1
         );
+    }
+
+    final Set<SpreadsheetRow> rows() {
+        return Sets.of(
+                this.row1(),
+                this.row2(),
+                this.row3(),
+                this.hiddenRow4()
+        );
+    }
+
+    final Set<SpreadsheetRow> differentRows() {
+        return Sets.of(
+                this.row1(),
+                this.row2(),
+                this.row3(),
+                this.hiddenRow4().setHidden(false)
+        );
+    }
+
+    final SpreadsheetRow row1() {
+        return this.row("1");
+    }
+
+    final SpreadsheetRow row2() {
+        return this.row("2");
+    }
+
+    final SpreadsheetRow row3() {
+        return this.row("3");
+    }
+
+    final SpreadsheetRow hiddenRow4() {
+        return this.row("4")
+                .setHidden(true);
+    }
+
+    final SpreadsheetRow row(final String rowReference) {
+        return SpreadsheetSelection.parseRow(rowReference)
+                .row();
+    }
+
+    final void rowsAndCheck(final SpreadsheetDelta delta) {
+        this.rowsAndCheck(
+                delta,
+                this.rows()
+        );
+    }
+
+    final void rowsAndCheck(final SpreadsheetDelta delta,
+                            final Set<SpreadsheetRow> rows) {
+        this.checkEquals(
+                rows,
+                delta.rows(),
+                "rows"
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.rows()
+                        .add(this.row("999"))
+        );
+    }
+
+    final JsonNode rowsJson() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        JsonObject object = JsonNode.object();
+        object = rowsJson0(
+                object,
+                this.row1(),
+                context
+        );
+        object = rowsJson0(
+                object,
+                this.row2(),
+                context
+        );
+        object = rowsJson0(
+                object,
+                this.row3(),
+                context
+        );
+        object = rowsJson0(
+                object,
+                this.hiddenRow4(),
+                context
+        );
+
+        return object;
+    }
+
+    private static JsonObject rowsJson0(final JsonObject object,
+                                        final SpreadsheetRow row,
+                                        final JsonNodeMarshallContext context) {
+        JsonObject updated = object;
+
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(row)
+                .objectOrFail()
+                .asMap()
+                .entrySet()) {
+            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
+        }
+        return updated;
     }
 
     // references.......................................................................................................
@@ -609,6 +1022,82 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.rowHeightsAndCheck(after);
     }
 
+    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references() {
+        return Maps.of(
+                SpreadsheetSelection.A1,
+                Sets.of(
+                        this.b2()
+                                .reference(),
+                        SpreadsheetSelection.parseCellRange("C3:D4"),
+                        this.label1a()
+                )
+        );
+    }
+
+    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> differentReferences() {
+        return Maps.of(
+                SpreadsheetSelection.A1,
+                Sets.of(
+                        this.b2()
+                                .reference()
+                )
+        );
+    }
+
+    final void referencesAndCheck(final SpreadsheetDelta delta) {
+        this.referencesAndCheck(
+                delta,
+                this.references()
+        );
+    }
+
+    final void referencesAndCheck(final SpreadsheetDelta delta,
+                                  final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references) {
+        this.checkEquals(
+                references,
+                delta.references(),
+                "references"
+        );
+
+        this.allRelativeAndCheck(
+                delta.references()
+                        .keySet()
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.references()
+                        .put(
+                                b2().reference(),
+                                Sets.empty()
+                        )
+        );
+    }
+
+    final JsonNode referencesJson() {
+        return JsonNode.object()
+                .set(
+                        JsonPropertyName.with("A1"),
+                        JsonNode.array()
+                                .appendChild(
+                                        marshallContext()
+                                                .marshallWithType(
+                                                        SpreadsheetSelection.parseCell("B2")
+                                                )
+                                ).appendChild(
+                                        marshallContext()
+                                                .marshallWithType(
+                                                        SpreadsheetSelection.parseCellRange("C3:D4")
+                                                )
+                                ).appendChild(
+                                        marshallContext()
+                                                .marshallWithType(
+                                                        SpreadsheetSelection.labelName("LabelA1A")
+                                                )
+                                )
+                );
+    }
+
     // deletedCells.....................................................................................................
 
     @Test
@@ -724,6 +1213,47 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    final Set<SpreadsheetCellReference> deletedCells() {
+        return Sets.of(
+                SpreadsheetSelection.parseCell("C1"),
+                SpreadsheetSelection.parseCell("C2")
+        );
+    }
+
+    final Set<SpreadsheetCellReference> differentDeletedCells() {
+        return Set.of(SpreadsheetSelection.parseCell("C2"));
+    }
+
+    final void deletedCellsAndCheck(final SpreadsheetDelta delta) {
+        this.deletedCellsAndCheck(
+                delta,
+                this.deletedCells()
+        );
+    }
+
+    final void deletedCellsAndCheck(final SpreadsheetDelta delta,
+                                    final Set<SpreadsheetCellReference> cells) {
+        this.checkEquals(
+                cells,
+                delta.deletedCells(),
+                "deletedCells"
+        );
+
+        this.allRelativeAndCheck(
+                delta.deletedColumns()
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.deletedCells()
+                        .add(null)
+        );
+    }
+
+    final JsonNode deletedCellsJson() {
+        return JsonNode.string("C1,C2");
+    }
+
     // deletedColumns...................................................................................................
 
     @Test
@@ -812,6 +1342,46 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                         b
                 )
         );
+    }
+
+    final Set<SpreadsheetColumnReference> deletedColumns() {
+        return Sets.of(
+                SpreadsheetSelection.parseColumn("C"),
+                SpreadsheetSelection.parseColumn("D")
+        );
+    }
+
+    final Set<SpreadsheetColumnReference> differentDeletedColumns() {
+        return Set.of(SpreadsheetSelection.parseColumn("E"));
+    }
+
+    final void deletedColumnsAndCheck(final SpreadsheetDelta delta) {
+        this.deletedColumnsAndCheck(
+                delta,
+                this.deletedColumns()
+        );
+    }
+
+    final void deletedColumnsAndCheck(final SpreadsheetDelta delta,
+                                      final Set<SpreadsheetColumnReference> columns) {
+        this.checkEquals(
+                columns,
+                delta.deletedColumns(),
+                "deletedColumns"
+        );
+
+        this.allRelativeAndCheck(
+                delta.deletedColumns()
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.deletedColumns().add(null)
+        );
+    }
+
+    final JsonNode deletedColumnsJson() {
+        return JsonNode.string("C,D");
     }
 
     // deletedRows......................................................................................................
@@ -906,6 +1476,48 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    final Set<SpreadsheetRowReference> deletedRows() {
+        return Sets.of(
+                SpreadsheetSelection.parseRow("3"),
+                SpreadsheetSelection.parseRow("4")
+        );
+    }
+
+    final Set<SpreadsheetRowReference> differentDeletedRows() {
+        return Set.of(
+                SpreadsheetSelection.parseRow("5")
+        );
+    }
+
+    final void deletedRowsAndCheck(final SpreadsheetDelta delta) {
+        this.deletedRowsAndCheck(
+                delta,
+                this.deletedRows()
+        );
+    }
+
+    final void deletedRowsAndCheck(final SpreadsheetDelta delta,
+                                   final Set<SpreadsheetRowReference> rows) {
+        this.checkEquals(
+                rows,
+                delta.deletedRows(),
+                "deletedRows"
+        );
+
+        this.allRelativeAndCheck(
+                delta.deletedRows()
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.deletedRows().add(null)
+        );
+    }
+
+    final JsonNode deletedRowsJson() {
+        return JsonNode.string("3,4");
+    }
+
     // deletedLabels.....................................................................................................
 
     @Test
@@ -963,6 +1575,42 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 before,
                 after
         );
+    }
+
+    final Set<SpreadsheetLabelName> deletedLabels() {
+        return Sets.of(
+                SpreadsheetSelection.labelName("DeletedLabel111"),
+                SpreadsheetSelection.labelName("DeletedLabel222")
+        );
+    }
+
+    final Set<SpreadsheetLabelName> differentDeletedLabels() {
+        return Set.of(
+                SpreadsheetSelection.labelName("DifferentLabel333")
+        );
+    }
+
+    final void deletedLabelsAndCheck(final SpreadsheetDelta delta) {
+        this.deletedLabelsAndCheck(
+                delta,
+                this.deletedLabels()
+        );
+    }
+
+    final void deletedLabelsAndCheck(final SpreadsheetDelta delta,
+                                     final Set<SpreadsheetLabelName> labels) {
+        this.checkEquals(labels,
+                delta.deletedLabels(),
+                "deletedLabels");
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.deletedLabels()
+                        .add(null)
+        );
+    }
+
+    final JsonNode deletedLabelsJson() {
+        return JsonNode.string("DeletedLabel111,DeletedLabel222");
     }
 
     // matchedCells.....................................................................................................
@@ -1064,6 +1712,40 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    final Set<SpreadsheetCellReference> matchedCells() {
+        return Sets.of(
+                SpreadsheetSelection.A1,
+                SpreadsheetSelection.parseCell("B2"),
+                SpreadsheetSelection.parseCell("C3")
+        );
+    }
+
+    final Set<SpreadsheetCellReference> differentMatchedCells() {
+        return Set.of(SpreadsheetSelection.parseCell("C2"));
+    }
+
+    final void matchedCellsAndCheck(final SpreadsheetDelta delta,
+                                    final Set<SpreadsheetCellReference> cells) {
+        this.checkEquals(
+                cells,
+                delta.matchedCells(),
+                "matchedCells"
+        );
+
+        this.allRelativeAndCheck(
+                delta.matchedCells()
+        );
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> delta.matchedCells().add(null)
+        );
+    }
+
+    final JsonNode matchedCellsJson() {
+        return JsonNode.string("A1,B2,C3");
+    }
+
     // setColumnWidths..................................................................................................
 
     @Test
@@ -1100,6 +1782,43 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.referencesAndCheck(after);
 
         this.rowHeightsAndCheck(after);
+    }
+
+    final Map<SpreadsheetColumnReference, Double> columnWidths() {
+        return Maps.of(
+                SpreadsheetSelection.parseColumn("A"),
+                50.0
+        );
+    }
+
+    final static JsonNode COLUMN_WIDTHS_JSON = JsonNode.parse("{\"A\": 50.0}");
+
+    final Map<SpreadsheetColumnReference, Double> differentColumnWidths() {
+        return Maps.of(
+                SpreadsheetSelection.parseColumn("B"),
+                999.0
+        );
+    }
+
+    final void columnWidthsAndCheck(final SpreadsheetDelta delta) {
+        columnWidthsAndCheck(
+                delta,
+                this.columnWidths()
+        );
+    }
+
+    final void columnWidthsAndCheck(final SpreadsheetDelta delta,
+                                    final Map<SpreadsheetColumnReference, Double> columnWidths) {
+        this.checkEquals(
+                columnWidths,
+                delta.columnWidths(),
+                "columnWidths"
+        );
+
+        this.allRelativeAndCheck(
+                delta.columnWidths()
+                        .keySet()
+        );
     }
 
     // setRowHeights....................................................................................................
@@ -1146,6 +1865,43 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         this.deletedCellsAndCheck(after);
         this.columnWidthsAndCheck(after);
+    }
+
+    final Map<SpreadsheetRowReference, Double> rowHeights() {
+        return Maps.of(
+                SpreadsheetSelection.parseRow("1"),
+                75.0
+        );
+    }
+
+    final static JsonNode ROW_HEIGHTS_JSON = JsonNode.parse("{\"1\": 75.0}");
+
+    final Map<SpreadsheetRowReference, Double> differentRowHeights() {
+        return Maps.of(
+                SpreadsheetSelection.parseRow("2"),
+                999.0
+        );
+    }
+
+    final void rowHeightsAndCheck(final SpreadsheetDelta delta) {
+        rowHeightsAndCheck(
+                delta,
+                this.rowHeights()
+        );
+    }
+
+    final void rowHeightsAndCheck(final SpreadsheetDelta delta,
+                                  final Map<SpreadsheetRowReference, Double> rowHeights) {
+        this.checkEquals(
+                rowHeights,
+                delta.rowHeights(),
+                "rowHeights"
+        );
+
+        this.allRelativeAndCheck(
+                delta.rowHeights()
+                        .keySet()
+        );
     }
 
     // setWindow........................................................................................................
@@ -1214,98 +1970,27 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.rowsAndCheck(before);
     }
 
-    // unmarshall.......................................................................................................
+    abstract SpreadsheetViewportWindows window();
 
-    @Test
-    public final void testUnmarshallViewportWithCell() {
-        this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseCell("B2")
-                                                .setDefaultAnchor()
-                                )
-                        )
+    final SpreadsheetViewportWindows differentWindow() {
+        return SpreadsheetViewportWindows.parse("A1:Z99");
+    }
+
+    final void windowAndCheck(final SpreadsheetDelta delta) {
+        this.windowAndCheck(
+                delta,
+                this.window()
         );
     }
 
-    @Test
-    public final void testUnmarshallViewportWithCellRange() {
-        this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseCellRange("B2:C3")
-                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
-                                )
-                        )
+    final void windowAndCheck(final SpreadsheetDelta delta,
+                              final SpreadsheetViewportWindows window) {
+        this.checkEquals(
+                window,
+                delta.window(),
+                "window"
         );
     }
-
-    @Test
-    public final void testUnmarshallViewportWithColumn() {
-        this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseColumn("B")
-                                                .setDefaultAnchor()
-                                )
-                        )
-        );
-    }
-
-    @Test
-    public final void testUnmarshallViewportWithColumnRange() {
-        this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseColumnRange("B:CD")
-                                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
-                                )
-                        )
-        );
-    }
-
-    @Test
-    public final void testUnmarshallViewportWithRow() {
-        this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseRow("2")
-                                                .setDefaultAnchor()
-                                )
-                        )
-        );
-    }
-
-    @Test
-    public final void testUnmarshallViewportWithRowRange() {
-        this.unmarshallViewportAndCheck(
-                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseRowRange("2:34")
-                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
-                                )
-                        )
-        );
-    }
-
-    @Test
-    public final void testUnmarshallNullViewport() {
-        this.unmarshallViewportAndCheck(null);
-    }
-
-    abstract void unmarshallViewportAndCheck(final SpreadsheetViewport viewport);
 
     // equals...........................................................................................................
 
@@ -1477,6 +2162,35 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
+    @Override
+    public final D createObject() {
+        return this.createSpreadsheetDelta();
+    }
+
+    private <S extends SpreadsheetSelection> void checkEquals(final Set<S> expected,
+                                                              final Set<S> actual,
+                                                              final String message) {
+        final Set<S> ignoresKindExpected = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        ignoresKindExpected.addAll(expected);
+
+        this.checkEquals(
+                (Object) ignoresKindExpected,
+                (Object) actual,
+                message
+        );
+    }
+
+    private void allRelativeAndCheck(final Set<? extends SpreadsheetSelection> references) {
+        checkEquals(
+                Sets.empty(),
+                references
+                        .stream()
+                        .filter(r -> false == r.toRelative().equals(r))
+                        .collect(Collectors.toCollection(SortedSets::tree)),
+                () -> "non relative cell references found"
+        );
+    }
+
     // helpers..........................................................................................................
 
     final D createSpreadsheetDelta() {
@@ -1485,798 +2199,111 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     abstract D createSpreadsheetDelta(final Set<SpreadsheetCell> cells);
 
-    // selection........................................................................................................
+    // unmarshall.......................................................................................................
 
-    final Optional<SpreadsheetViewport> viewport() {
-        return Optional.of(
+    @Test
+    public final void testUnmarshallViewportWithCell() {
+        this.unmarshallViewportAndCheck(
                 SpreadsheetSelection.A1.viewportRectangle(100, 40)
                         .viewport()
                         .setAnchoredSelection(
                                 Optional.of(
-                                        SpreadsheetSelection.parseCellRange("A1:B2")
-                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
-                                )
-                        )
-        );
-    }
-
-    final Optional<SpreadsheetViewport> differentViewport() {
-        return Optional.of(
-                SpreadsheetSelection.A1.viewportRectangle(100, 40)
-                        .viewport()
-                        .setAnchoredSelection(
-                                Optional.of(
-                                        SpreadsheetSelection.parseCell("C3")
+                                        SpreadsheetSelection.parseCell("B2")
                                                 .setDefaultAnchor()
                                 )
                         )
         );
     }
 
-    final void viewportAndCheck(final SpreadsheetDelta delta) {
-        this.viewportAndCheck(delta, this.viewport());
-    }
-
-    final void viewportAndCheck(final SpreadsheetDelta delta,
-                                final Optional<SpreadsheetViewport> viewport) {
-        this.checkEquals(
-                viewport,
-                delta.viewport(),
-                "viewport"
-        );
-    }
-
-    final JsonNode viewportJson() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
-        return context.marshall(
-                this.viewport()
-                        .get()
-        );
-    }
-
-    // cells............................................................................................................
-
-    final Set<SpreadsheetCell> cells() {
-        return Sets.of(
-                this.a1(),
-                this.b2(),
-                this.c3()
-        );
-    }
-
-    final Set<SpreadsheetCell> differentCells() {
-        return Sets.of(
-                this.a1()
-                        .setFormula(SpreadsheetFormula.EMPTY.setText("'different A1")),
-                this.b2()
-                        .setFormula(SpreadsheetFormula.EMPTY.setText("'different B2")),
-                this.c3()
-                        .setFormula(SpreadsheetFormula.EMPTY.setText("'different C3"))
-        );
-    }
-
-    final Set<SpreadsheetCell> cells0(final String... cellReferences) {
-        return Arrays.stream(cellReferences)
-                .map(r -> this.cell(r, "55"))
-                .collect(Collectors.toCollection(TreeSet::new));
-    }
-
-    final SpreadsheetCell a1() {
-        return this.cell("A1", "1");
-    }
-
-    final SpreadsheetCell b2() {
-        return this.cell("B2", "2");
-    }
-
-    final SpreadsheetCell c3() {
-        return this.cell("C3", "3");
-    }
-
-    final SpreadsheetCell cell(final String cellReference,
-                               final String formulaText) {
-        return SpreadsheetSelection.parseCell(cellReference)
-                .setFormula(
-                        SpreadsheetFormula.EMPTY
-                                .setText(formulaText)
-                );
-    }
-
-    final void cellsAndCheck(final SpreadsheetDelta delta) {
-        this.cellsAndCheck(delta, this.cells());
-    }
-
-    final void cellsAndCheck(final SpreadsheetDelta delta,
-                             final Set<SpreadsheetCell> cells) {
-        this.checkEquals(cells, delta.cells(), "cells");
-
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.cells()
-                        .add(this.cell("ZZ99", "read only"))
-        );
-    }
-
-    final JsonNode cellsJson() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
-        JsonObject object = JsonNode.object();
-        object = cellsJson0(
-                object,
-                this.a1(),
-                context
-        );
-        object = cellsJson0(
-                object,
-                this.b2(),
-                context
-        );
-        object = cellsJson0(
-                object,
-                this.c3(),
-                context
-        );
-
-        return object;
-    }
-
-    private static JsonObject cellsJson0(final JsonObject object,
-                                         final SpreadsheetCell cell,
-                                         final JsonNodeMarshallContext context) {
-        JsonObject updated = object;
-        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(cell)
-                .objectOrFail()
-                .asMap()
-                .entrySet()) {
-            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
-        }
-        return updated;
-    }
-
-    // columns..........................................................................................................
-
-    final Set<SpreadsheetColumn> columns() {
-        return Sets.of(
-                this.a(),
-                this.b(),
-                this.c(),
-                this.hiddenD()
-        );
-    }
-
-    final Set<SpreadsheetColumn> differentColumns() {
-        return Sets.of(
-                this.a(),
-                this.b(),
-                this.c(),
-                this.hiddenD().setHidden(false)
-        );
-    }
-
-    final SpreadsheetColumn a() {
-        return this.column("A");
-    }
-
-    final SpreadsheetColumn b() {
-        return this.column("B");
-    }
-
-    final SpreadsheetColumn c() {
-        return this.column("C");
-    }
-
-    final SpreadsheetColumn hiddenD() {
-        return this.column("d")
-                .setHidden(true);
-    }
-
-    final SpreadsheetColumn column(final String columnReference) {
-        return SpreadsheetSelection.parseColumn(columnReference)
-                .column();
-    }
-
-    final void columnsAndCheck(final SpreadsheetDelta delta) {
-        this.columnsAndCheck(
-                delta,
-                this.columns()
-        );
-    }
-
-    final void columnsAndCheck(final SpreadsheetDelta delta,
-                               final Set<SpreadsheetColumn> columns) {
-        this.checkEquals(columns, delta.columns(), "columns");
-
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.columns()
-                        .add(this.column("Z"))
-        );
-    }
-
-    final JsonNode columnsJson() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
-        JsonObject object = JsonNode.object();
-        object = columnsJson0(
-                object,
-                this.a(),
-                context
-        );
-        object = columnsJson0(
-                object,
-                this.b(),
-                context
-        );
-        object = columnsJson0(
-                object,
-                this.c(),
-                context
-        );
-        object = columnsJson0(
-                object,
-                this.hiddenD(),
-                context
-        );
-
-        return object;
-    }
-
-    private static JsonObject columnsJson0(final JsonObject object,
-                                           final SpreadsheetColumn column,
-                                           final JsonNodeMarshallContext context) {
-        JsonObject updated = object;
-        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(column)
-                .objectOrFail()
-                .asMap()
-                .entrySet()) {
-            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
-        }
-        return updated;
-    }
-
-    // labels...........................................................................................................
-
-    final Set<SpreadsheetLabelMapping> labels() {
-        return Sets.of(
-                this.label1a().setLabelMappingReference(this.a1().reference()),
-                this.label1b().setLabelMappingReference(this.a1().reference()),
-                this.label2().setLabelMappingReference(this.b2().reference()),
-                this.label3().setLabelMappingReference(SpreadsheetSelection.parseCellRange("C3:D4"))
-        );
-    }
-
-    final Set<SpreadsheetLabelMapping> differentLabels() {
-        final SpreadsheetCellReference a1 = this.a1().reference();
-
-        return Sets.of(
-                this.label1a().setLabelMappingReference(a1),
-                this.label1b().setLabelMappingReference(a1),
-                this.label2().setLabelMappingReference(a1),
-                this.label3().setLabelMappingReference(a1)
-        );
-    }
-
-    final void labelsAndCheck(final SpreadsheetDelta delta) {
-        this.labelsAndCheck(
-                delta,
-                this.labels()
-        );
-    }
-
-    final void labelsAndCheck(final SpreadsheetDelta delta,
-                              final Set<SpreadsheetLabelMapping> labels) {
-        this.checkEquals(labels, delta.labels(), "labels");
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.labels()
-                        .add(
-                                SpreadsheetLabelName.labelName("LabelZ")
-                                        .setLabelMappingReference(SpreadsheetSelection.parseCell("Z9")
-                                        )
-                        )
-        );
-    }
-
-    final SpreadsheetLabelName label1a() {
-        return SpreadsheetLabelName.labelName("LabelA1A");
-    }
-
-    final SpreadsheetLabelName label1b() {
-        return SpreadsheetLabelName.labelName("LabelA1B");
-    }
-
-    final SpreadsheetLabelName label2() {
-        return SpreadsheetLabelName.labelName("LabelB2");
-    }
-
-    final SpreadsheetLabelName label3() {
-        return SpreadsheetLabelName.labelName("LabelC3");
-    }
-
-    final JsonNode labelsJson() {
-        return this.marshallContext()
-                .marshallCollection(
-                        this.labels()
-                );
-    }
-
-    // rows.............................................................................................................
-
-    final Set<SpreadsheetRow> rows() {
-        return Sets.of(
-                this.row1(),
-                this.row2(),
-                this.row3(),
-                this.hiddenRow4()
-        );
-    }
-
-    final Set<SpreadsheetRow> differentRows() {
-        return Sets.of(
-                this.row1(),
-                this.row2(),
-                this.row3(),
-                this.hiddenRow4().setHidden(false)
-        );
-    }
-
-    final SpreadsheetRow row1() {
-        return this.row("1");
-    }
-
-    final SpreadsheetRow row2() {
-        return this.row("2");
-    }
-
-    final SpreadsheetRow row3() {
-        return this.row("3");
-    }
-
-    final SpreadsheetRow hiddenRow4() {
-        return this.row("4")
-                .setHidden(true);
-    }
-
-    final SpreadsheetRow row(final String rowReference) {
-        return SpreadsheetSelection.parseRow(rowReference)
-                .row();
-    }
-
-    final void rowsAndCheck(final SpreadsheetDelta delta) {
-        this.rowsAndCheck(
-                delta,
-                this.rows()
-        );
-    }
-
-    final void rowsAndCheck(final SpreadsheetDelta delta,
-                            final Set<SpreadsheetRow> rows) {
-        this.checkEquals(
-                rows,
-                delta.rows(),
-                "rows"
-        );
-
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.rows()
-                        .add(this.row("999"))
-        );
-    }
-
-    final JsonNode rowsJson() {
-        final JsonNodeMarshallContext context = this.marshallContext();
-
-        JsonObject object = JsonNode.object();
-        object = rowsJson0(
-                object,
-                this.row1(),
-                context
-        );
-        object = rowsJson0(
-                object,
-                this.row2(),
-                context
-        );
-        object = rowsJson0(
-                object,
-                this.row3(),
-                context
-        );
-        object = rowsJson0(
-                object,
-                this.hiddenRow4(),
-                context
-        );
-
-        return object;
-    }
-
-    private static JsonObject rowsJson0(final JsonObject object,
-                                        final SpreadsheetRow row,
-                                        final JsonNodeMarshallContext context) {
-        JsonObject updated = object;
-
-        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(row)
-                .objectOrFail()
-                .asMap()
-                .entrySet()) {
-            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
-        }
-        return updated;
-    }
-
-    // references.......................................................................................................
-
-    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references() {
-        return Maps.of(
-                SpreadsheetSelection.A1,
-                Sets.of(
-                        this.b2()
-                                .reference(),
-                        SpreadsheetSelection.parseCellRange("C3:D4"),
-                        this.label1a()
-                )
-        );
-    }
-
-    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> differentReferences() {
-        return Maps.of(
-                SpreadsheetSelection.A1,
-                Sets.of(
-                        this.b2()
-                                .reference()
-                )
-        );
-    }
-
-    final void referencesAndCheck(final SpreadsheetDelta delta) {
-        this.referencesAndCheck(
-                delta,
-                this.references()
-        );
-    }
-
-    final void referencesAndCheck(final SpreadsheetDelta delta,
-                                  final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references) {
-        this.checkEquals(
-                references,
-                delta.references(),
-                "references"
-        );
-
-        this.allRelativeAndCheck(
-            delta.references()
-                    .keySet()
-        );
-
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.references()
-                        .put(
-                                b2().reference(),
-                                Sets.empty()
-                        )
-        );
-    }
-
-    final JsonNode referencesJson() {
-        return JsonNode.object()
-                .set(
-                        JsonPropertyName.with("A1"),
-                        JsonNode.array()
-                                .appendChild(
-                                        marshallContext()
-                                                .marshallWithType(
-                                                        SpreadsheetSelection.parseCell("B2")
-                                                )
-                                ).appendChild(
-                                        marshallContext()
-                                                .marshallWithType(
-                                                        SpreadsheetSelection.parseCellRange("C3:D4")
-                                                )
-                                ).appendChild(
-                                        marshallContext()
-                                                .marshallWithType(
-                                                        SpreadsheetSelection.labelName("LabelA1A")
-                                                )
+    @Test
+    public final void testUnmarshallViewportWithCellRange() {
+        this.unmarshallViewportAndCheck(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseCellRange("B2:C3")
+                                                .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                                 )
-                );
-    }
-
-    // deletedCells.....................................................................................................
-
-    final Set<SpreadsheetCellReference> deletedCells() {
-        return Sets.of(
-                SpreadsheetSelection.parseCell("C1"),
-                SpreadsheetSelection.parseCell("C2")
+                        )
         );
     }
 
-    final Set<SpreadsheetCellReference> differentDeletedCells() {
-        return Set.of(SpreadsheetSelection.parseCell("C2"));
-    }
-
-    final void deletedCellsAndCheck(final SpreadsheetDelta delta) {
-        this.deletedCellsAndCheck(
-                delta,
-                this.deletedCells()
+    @Test
+    public final void testUnmarshallViewportWithColumn() {
+        this.unmarshallViewportAndCheck(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumn("B")
+                                                .setDefaultAnchor()
+                                )
+                        )
         );
     }
 
-    final void deletedCellsAndCheck(final SpreadsheetDelta delta,
-                                    final Set<SpreadsheetCellReference> cells) {
-        this.checkEquals(
-                cells,
-                delta.deletedCells(),
-                "deletedCells"
-        );
-
-        this.allRelativeAndCheck(
-                delta.deletedColumns()
-        );
-
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.deletedCells()
-                        .add(null)
+    @Test
+    public final void testUnmarshallViewportWithColumnRange() {
+        this.unmarshallViewportAndCheck(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseColumnRange("B:CD")
+                                                .setAnchor(SpreadsheetViewportAnchor.RIGHT)
+                                )
+                        )
         );
     }
 
-    final JsonNode deletedCellsJson() {
-        return JsonNode.string("C1,C2");
-    }
-
-    // deletedColumns...................................................................................................
-
-    final Set<SpreadsheetColumnReference> deletedColumns() {
-        return Sets.of(
-                SpreadsheetSelection.parseColumn("C"),
-                SpreadsheetSelection.parseColumn("D")
+    @Test
+    public final void testUnmarshallViewportWithRow() {
+        this.unmarshallViewportAndCheck(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRow("2")
+                                                .setDefaultAnchor()
+                                )
+                        )
         );
     }
 
-    final Set<SpreadsheetColumnReference> differentDeletedColumns() {
-        return Set.of(SpreadsheetSelection.parseColumn("E"));
-    }
-
-    final void deletedColumnsAndCheck(final SpreadsheetDelta delta) {
-        this.deletedColumnsAndCheck(
-                delta,
-                this.deletedColumns()
+    @Test
+    public final void testUnmarshallViewportWithRowRange() {
+        this.unmarshallViewportAndCheck(
+                SpreadsheetSelection.A1.viewportRectangle(100, 40)
+                        .viewport()
+                        .setAnchoredSelection(
+                                Optional.of(
+                                        SpreadsheetSelection.parseRowRange("2:34")
+                                                .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
+                                )
+                        )
         );
     }
 
-    final void deletedColumnsAndCheck(final SpreadsheetDelta delta,
-                                      final Set<SpreadsheetColumnReference> columns) {
-        this.checkEquals(
-                columns,
-                delta.deletedColumns(),
-                "deletedColumns"
-        );
-
-        this.allRelativeAndCheck(
-                delta.deletedColumns()
-        );
-
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.deletedColumns().add(null)
-        );
+    @Test
+    public final void testUnmarshallNullViewport() {
+        this.unmarshallViewportAndCheck(null);
     }
 
-    final JsonNode deletedColumnsJson() {
-        return JsonNode.string("C,D");
+    abstract void unmarshallViewportAndCheck(final SpreadsheetViewport viewport);
+
+    @Override
+    public final D createJsonNodeMarshallingValue() {
+        return this.createSpreadsheetDelta();
     }
 
-    // deletedRows......................................................................................................
-
-    final Set<SpreadsheetRowReference> deletedRows() {
-        return Sets.of(
-                SpreadsheetSelection.parseRow("3"),
-                SpreadsheetSelection.parseRow("4")
-        );
+    @Override
+    public final D unmarshall(final JsonNode jsonNode,
+                              final JsonNodeUnmarshallContext context) {
+        return Cast.to(SpreadsheetDelta.unmarshall(jsonNode, context));
     }
 
-    final Set<SpreadsheetRowReference> differentDeletedRows() {
-        return Set.of(
-                SpreadsheetSelection.parseRow("5")
-        );
-    }
-
-    final void deletedRowsAndCheck(final SpreadsheetDelta delta) {
-        this.deletedRowsAndCheck(
-                delta,
-                this.deletedRows()
-        );
-    }
-
-    final void deletedRowsAndCheck(final SpreadsheetDelta delta,
-                                   final Set<SpreadsheetRowReference> rows) {
-        this.checkEquals(
-                rows,
-                delta.deletedRows(),
-                "deletedRows"
-        );
-
-        this.allRelativeAndCheck(
-                delta.deletedRows()
-        );
-
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.deletedRows().add(null)
-        );
-    }
-
-    final JsonNode deletedRowsJson() {
-        return JsonNode.string("3,4");
-    }
-
-    // deletedLabels....................................................................................................
-
-    final Set<SpreadsheetLabelName> deletedLabels() {
-        return Sets.of(
-                SpreadsheetSelection.labelName("DeletedLabel111"),
-                SpreadsheetSelection.labelName("DeletedLabel222")
-        );
-    }
-
-    final Set<SpreadsheetLabelName> differentDeletedLabels() {
-        return Set.of(
-                SpreadsheetSelection.labelName("DifferentLabel333")
-        );
-    }
-
-    final void deletedLabelsAndCheck(final SpreadsheetDelta delta) {
-        this.deletedLabelsAndCheck(
-                delta,
-                this.deletedLabels()
-        );
-    }
-
-    final void deletedLabelsAndCheck(final SpreadsheetDelta delta,
-                                     final Set<SpreadsheetLabelName> labels) {
-        this.checkEquals(labels,
-                delta.deletedLabels(),
-                "deletedLabels");
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.deletedLabels()
-                        .add(null)
-        );
-    }
-
-    final JsonNode deletedLabelsJson() {
-        return JsonNode.string("DeletedLabel111,DeletedLabel222");
-    }
-
-    // matchedCells.....................................................................................................
-
-    final Set<SpreadsheetCellReference> matchedCells() {
-        return Sets.of(
-                SpreadsheetSelection.A1,
-                SpreadsheetSelection.parseCell("B2"),
-                SpreadsheetSelection.parseCell("C3")
-        );
-    }
-
-    final Set<SpreadsheetCellReference> differentMatchedCells() {
-        return Set.of(SpreadsheetSelection.parseCell("C2"));
-    }
-
-    final void matchedCellsAndCheck(final SpreadsheetDelta delta) {
-        this.matchedCellsAndCheck(delta, this.matchedCells());
-    }
-
-    final void matchedCellsAndCheck(final SpreadsheetDelta delta,
-                                    final SpreadsheetCellReference... cells) {
-        this.matchedCellsAndCheck(
-                delta,
-                SortedSets.of(cells)
-        );
-    }
-
-    final void matchedCellsAndCheck(final SpreadsheetDelta delta,
-                                    final Set<SpreadsheetCellReference> cells) {
-        this.checkEquals(
-                cells,
-                delta.matchedCells(),
-                "matchedCells"
-        );
-
-        this.allRelativeAndCheck(
-                delta.matchedCells()
-        );
-
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> delta.matchedCells().add(null)
-        );
-    }
-
-    final JsonNode matchedCellsJson() {
-        return JsonNode.string("A1,B2,C3");
-    }
-
-    // columnWidths.....................................................................................................
-
-    final Map<SpreadsheetColumnReference, Double> columnWidths() {
-        return Maps.of(
-                SpreadsheetSelection.parseColumn("A"),
-                50.0
-        );
-    }
-
-    final static JsonNode COLUMN_WIDTHS_JSON = JsonNode.parse("{\"A\": 50.0}");
-
-    final Map<SpreadsheetColumnReference, Double> differentColumnWidths() {
-        return Maps.of(
-                SpreadsheetSelection.parseColumn("B"),
-                999.0
-        );
-    }
-
-    final void columnWidthsAndCheck(final SpreadsheetDelta delta) {
-        columnWidthsAndCheck(
-                delta,
-                this.columnWidths()
-        );
-    }
-
-    final void columnWidthsAndCheck(final SpreadsheetDelta delta,
-                                    final Map<SpreadsheetColumnReference, Double> columnWidths) {
-        this.checkEquals(
-                columnWidths,
-                delta.columnWidths(),
-                "columnWidths"
-        );
-
-        this.allRelativeAndCheck(
-                delta.columnWidths()
-                        .keySet()
-        );
-    }
-
-    // rowHeights.......................................................................................................
-
-    final Map<SpreadsheetRowReference, Double> rowHeights() {
-        return Maps.of(
-                SpreadsheetSelection.parseRow("1"),
-                75.0
-        );
-    }
-
-    final static JsonNode ROW_HEIGHTS_JSON = JsonNode.parse("{\"1\": 75.0}");
-
-    final Map<SpreadsheetRowReference, Double> differentRowHeights() {
-        return Maps.of(
-                SpreadsheetSelection.parseRow("2"),
-                999.0
-        );
-    }
-
-    final void rowHeightsAndCheck(final SpreadsheetDelta delta) {
-        rowHeightsAndCheck(
-                delta,
-                this.rowHeights()
-        );
-    }
-
-    final void rowHeightsAndCheck(final SpreadsheetDelta delta,
-                                  final Map<SpreadsheetRowReference, Double> rowHeights) {
-        this.checkEquals(
-                rowHeights,
-                delta.rowHeights(),
-                "rowHeights"
-        );
-
-        this.allRelativeAndCheck(
-                delta.rowHeights()
-                        .keySet()
-        );
-    }
+    // helpers..........................................................................................................
 
     // columnCount......................................................................................................
 
@@ -2334,84 +2361,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    // window...........................................................................................................
-
-    abstract SpreadsheetViewportWindows window();
-
-    final SpreadsheetViewportWindows differentWindow() {
-        return SpreadsheetViewportWindows.parse("A1:Z99");
-    }
-
-    final void windowAndCheck(final SpreadsheetDelta delta) {
-        this.windowAndCheck(
-                delta,
-                this.window()
-        );
-    }
-
-    final void windowAndCheck(final SpreadsheetDelta delta,
-                              final SpreadsheetViewportWindows window) {
-        this.checkEquals(
-                window,
-                delta.window(),
-                "window"
-        );
-    }
-
-    // equality.........................................................................................................
-
-    private <S extends SpreadsheetSelection> void checkEquals(final Set<S> expected,
-                                                              final Set<S> actual,
-                                                              final String message) {
-        final Set<S> ignoresKindExpected = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
-        ignoresKindExpected.addAll(expected);
-
-        this.checkEquals(
-                (Object) ignoresKindExpected,
-                (Object) actual,
-                message
-        );
-    }
-
-    private void allRelativeAndCheck(final Set<? extends SpreadsheetSelection> references) {
-        checkEquals(
-                Sets.empty(),
-                references
-                        .stream()
-                        .filter(r -> false == r.toRelative().equals(r))
-                        .collect(Collectors.toCollection(SortedSets::tree)),
-                () -> "non relative cell references found"
-        );
-    }
-
-    // equality.........................................................................................................
-
-    @Override
-    public final D createObject() {
-        return this.createSpreadsheetDelta();
-    }
-
-    // json.............................................................................................................
-
-    @Override
-    public final D createJsonNodeMarshallingValue() {
-        return this.createSpreadsheetDelta();
-    }
-
-    @Override
-    public final D unmarshall(final JsonNode jsonNode,
-                              final JsonNodeUnmarshallContext context) {
-        return Cast.to(SpreadsheetDelta.unmarshall(jsonNode, context));
-    }
-
-    // ClassTesting.....................................................................................................
+    // class............................................................................................................
 
     @Override
     public final JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
     }
-
-    // TypeNameTesting..................................................................................................
 
     @Override
     public final String typeNamePrefix() {
