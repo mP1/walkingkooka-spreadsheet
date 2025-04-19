@@ -307,7 +307,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                 cells.stream()
                         .skip(offset)
                         .limit(count)
-                        .collect(ImmutableSortedSet.collector()) :
+                        .collect(ImmutableSortedSet.collector(null)) :
                 SortedSets.empty();
     }
 
@@ -336,7 +336,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
                 references.stream()
                         .skip(offset)
                         .limit(count)
-                        .collect(ImmutableSortedSet.collector()) :
+                        .collect(ImmutableSortedSet.collector(null)) :
                 SortedSets.empty();
     }
 

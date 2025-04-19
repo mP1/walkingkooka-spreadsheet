@@ -946,7 +946,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return values.stream()
                 .filter(windowTester)
                 .collect(
-                        ImmutableSortedSet.collector()
+                        ImmutableSortedSet.collector(null)
                 );
     }
 
