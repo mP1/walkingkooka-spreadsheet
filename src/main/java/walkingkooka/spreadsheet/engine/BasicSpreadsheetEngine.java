@@ -2132,7 +2132,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // j2cl helpers....................................................................................................
 
     // The J2CL Optional does not support map.
-    static <V extends SpreadsheetColumnOrRow<R>, R extends SpreadsheetSelection> Set<V> toSet(final Optional<V> columnOrRow) {
+    static <V extends SpreadsheetColumnOrRow<R>, R extends SpreadsheetSelection & Comparable<R>> Set<V> toSet(final Optional<V> columnOrRow) {
         return columnOrRow.isPresent() ?
                 Sets.of(columnOrRow.get()) :
                 Sets.empty();

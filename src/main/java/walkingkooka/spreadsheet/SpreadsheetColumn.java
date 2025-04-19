@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
@@ -34,7 +33,6 @@ import java.util.Objects;
  */
 public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetColumnReference>
         implements Comparable<SpreadsheetColumn>,
-        HasSpreadsheetReference<SpreadsheetColumnReference>,
         Patchable<SpreadsheetColumn> {
 
     /**

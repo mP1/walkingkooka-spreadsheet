@@ -30,7 +30,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.Optional;
 
-public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumnOrRow<R> & Comparable<T>, R extends SpreadsheetSelection>
+public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumnOrRow<R> & Comparable<T>,
+        R extends SpreadsheetSelection & Comparable<R>>
         implements ClassTesting2<T>,
         ComparableTesting2<T>,
         JsonNodeMarshallingTesting<T>,
