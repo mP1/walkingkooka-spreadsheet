@@ -536,7 +536,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                 SpreadsheetFormula.EMPTY.setText("'Hello")
         );
 
-        final Set<SpreadsheetCell> loaded = SortedSets.tree();
+        final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
@@ -603,7 +603,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(a1);
 
-        final Set<SpreadsheetCell> loaded = SortedSets.tree();
+        final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         store.addDeleteWatcher(
                 (s) -> loaded.addAll(

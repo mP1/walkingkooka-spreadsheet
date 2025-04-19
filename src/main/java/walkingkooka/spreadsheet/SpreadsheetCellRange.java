@@ -55,7 +55,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
+import java.util.SortedSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -71,7 +71,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
         checkRange(range);
         Objects.requireNonNull(value, "value");
 
-        final Set<SpreadsheetCell> copy = SortedSets.tree();
+        final Set<SpreadsheetCell> copy = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         copy.addAll(value);
         checkValues(range, copy);
 
@@ -129,9 +129,10 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
     public SpreadsheetCellRange setValue(final Set<SpreadsheetCell> value) {
         Objects.requireNonNull(value, "value");
 
-        final Set<SpreadsheetCell> copy = SortedSets.immutable(
-                new TreeSet<>(value)
-        );
+        final SortedSet<SpreadsheetCell> treeSet = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        treeSet.addAll(value);
+
+        final Set<SpreadsheetCell> copy = SortedSets.immutable(treeSet);
         checkValues(this.range, copy);
 
         return this.value.equals(copy) ?
@@ -186,7 +187,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
 
     private SpreadsheetCellRange move0(final SpreadsheetCellRangeReference to,
                                        final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
-        final Set<SpreadsheetCell> movedCells = SortedSets.tree();
+        final Set<SpreadsheetCell> movedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         for (final SpreadsheetCell cell : this.value) {
             final Optional<SpreadsheetCellReference> maybeMoved = mapper.apply(cell.reference());
@@ -296,7 +297,7 @@ public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
                 )
         );
 
-        final Set<SpreadsheetCell> newCells = SortedSets.tree();
+        final Set<SpreadsheetCell> newCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         SpreadsheetSelection actualY = heightKind.columnOrRow(home);
 
         for (final SpreadsheetCellRangeSortList yCells : allCells) {

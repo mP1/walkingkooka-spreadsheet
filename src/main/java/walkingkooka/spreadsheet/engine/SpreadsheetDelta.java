@@ -288,17 +288,26 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     windowPredicate;
         }
 
-        return null != predicate ?
-                filter(
-                        cells,
-                        predicate,
-                        null // Comparator
-                ) :
-                cells instanceof ImmutableSortedSet ?
-                        cells :
-                        SortedSets.immutable(
-                                new TreeSet<>(cells)
-                        );
+        Set<SpreadsheetCell> result;
+
+        if (null != predicate) {
+            result = filter(
+                    cells,
+                    predicate,
+                    SpreadsheetCell.REFERENCE_COMPARATOR
+            );
+        } else {
+            if (cells instanceof ImmutableSortedSet) {
+                result = cells;
+            } else {
+                final SortedSet<SpreadsheetCell> sortedSet = new TreeSet<>(SpreadsheetCell.REFERENCE_COMPARATOR);
+                sortedSet.addAll(cells);
+                result = SortedSets.immutable(sortedSet);
+            }
+        }
+        ;
+
+        return result;
     }
 
     /**
@@ -1819,7 +1828,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                       final Set<SpreadsheetCell> cells,
                                                       final Function<SpreadsheetCell, SpreadsheetCell> patcher,
                                                       final Function<SpreadsheetCellReference, SpreadsheetCell> creator) {
-        final Set<SpreadsheetCell> patched = SortedSets.tree();
+        final Set<SpreadsheetCell> patched = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final Set<SpreadsheetCellReference> patchedCellReferences = SortedSets.tree(
                 SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
         );

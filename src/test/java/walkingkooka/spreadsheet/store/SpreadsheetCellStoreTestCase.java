@@ -361,10 +361,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     private void checkCells(final String message,
                             final Collection<SpreadsheetCell> cells,
                             final SpreadsheetCell... expected) {
-        final Set<SpreadsheetCell> actual = SortedSets.tree();
+        final Set<SpreadsheetCell> actual = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         actual.addAll(cells);
 
-        final Set<SpreadsheetCell> expectedSets = SortedSets.tree();
+        final Set<SpreadsheetCell> expectedSets = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         expectedSets.addAll(Lists.of(expected));
 
         this.checkEquals(expectedSets, actual, message);

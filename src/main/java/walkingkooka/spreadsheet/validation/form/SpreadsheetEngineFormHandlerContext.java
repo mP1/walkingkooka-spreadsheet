@@ -184,7 +184,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
         }
 
         // try and merge $loadedCellToSpreadsheetCell with *NEW* values from fields.
-        final Set<SpreadsheetCell> saving = SortedSets.tree();
+        final Set<SpreadsheetCell> saving = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         for (final FormField<SpreadsheetExpressionReference> field : fields) {
             final SpreadsheetCellReference cell = cellOrLabelToCell.get(
                     field.reference()

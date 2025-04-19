@@ -46,6 +46,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -56,12 +57,16 @@ import java.util.function.Function;
  */
 public final class SpreadsheetCell implements CanBeEmpty,
         CanReplaceReferences<SpreadsheetCell>,
-        Comparable<SpreadsheetCell>,
         HasSpreadsheetReference<SpreadsheetCellReference>,
         HateosResource<SpreadsheetCellReference>,
         Patchable<SpreadsheetCell>,
         TreePrintable,
         UsesToStringBuilder {
+
+    /**
+     * A {@link Comparator} that only uses the {@link SpreadsheetCell#REFERENCE_COMPARATOR}.
+     */
+    public static Comparator<SpreadsheetCell> REFERENCE_COMPARATOR = Comparator.comparing(SpreadsheetCell::reference);
 
     /**
      * Holds an absent {@link SpreadsheetFormatterSelector}.
@@ -390,14 +395,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 false == this.parser.isPresent() &&
                 this.style.isEmpty() &&
                 false == this.validator.isPresent();
-    }
-
-    // Comparable.......................................................................................................
-
-    @Override
-    public int compareTo(final SpreadsheetCell other) {
-        return this.reference()
-                .compareTo(other.reference());
     }
 
     // replaceReferences................................................................................................
