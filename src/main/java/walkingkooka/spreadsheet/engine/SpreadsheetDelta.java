@@ -2706,6 +2706,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     static {
         // force static initializers to run, preventing Json type name lookup failures.
+        Form.nameComparator();
         SpreadsheetViewport.SEPARATOR.toString();
         SpreadsheetViewportWindows.EMPTY.toString();
         SpreadsheetFunctionName.with("forceJsonRegister");
