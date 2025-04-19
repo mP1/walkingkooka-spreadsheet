@@ -67,7 +67,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
             throw new IllegalArgumentException("Expected several sorted column/rows got 0");
         }
 
-        final Set<SpreadsheetSelection> duplicates = SortedSets.tree();
+        final Set<SpreadsheetSelection> duplicates = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         for (final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators : comparatorNames) {
             final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = columnOrRowComparators.columnOrRow();

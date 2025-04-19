@@ -163,6 +163,40 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     }
 
     @Test
+    public void testWithDuplicateColumnFails2() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("A"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text UP")
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("$A"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text UP")
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseColumn("B"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text-case-sensitive UP")
+                                        )
+                                )
+                        )
+                )
+        );
+        this.checkEquals(
+                "Duplicate column $A",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
     public void testWithDuplicateRowFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
@@ -176,6 +210,40 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                                 ),
                                 SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                                         SpreadsheetSelection.parseRow("2"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text UP")
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseRow("$1"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text-case-sensitive UP")
+                                        )
+                                )
+                        )
+                )
+        );
+        this.checkEquals(
+                "Duplicate row $1",
+                thrown.getMessage(),
+                "message"
+        );
+    }
+
+    @Test
+    public void testWithDuplicateRowFails2() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
+                        Lists.of(
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseRow("1"),
+                                        Lists.of(
+                                                SpreadsheetComparatorNameAndDirection.parse("text UP")
+                                        )
+                                ),
+                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                                        SpreadsheetSelection.parseRow("$1"),
                                         Lists.of(
                                                 SpreadsheetComparatorNameAndDirection.parse("text UP")
                                         )
