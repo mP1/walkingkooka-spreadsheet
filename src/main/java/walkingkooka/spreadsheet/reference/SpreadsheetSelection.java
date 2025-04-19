@@ -26,7 +26,6 @@ import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.set.ImmutableSortedSet;
-import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -124,13 +123,7 @@ public abstract class SpreadsheetSelection implements HasText,
      * Returns a {@link Collector} that places all {@link SpreadsheetSelection} into a {@link SortedSet} that ignores {@link #IGNORES_REFERENCE_KIND_COMPARATOR}.
      */
     public static <SS extends SpreadsheetSelection> Collector<SS, ?, ImmutableSortedSet<SS>> sortedSetIgnoresReferenceKindCollector() {
-        return Collectors.collectingAndThen(
-                Collectors.toCollection(
-                        () -> SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
-                        )
-                ),
-                SortedSets::immutable
-        );
+        return ImmutableSortedSet.collector(IGNORES_REFERENCE_KIND_COMPARATOR);
     }
 
     /**
