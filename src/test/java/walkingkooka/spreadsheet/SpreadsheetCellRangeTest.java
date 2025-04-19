@@ -670,7 +670,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA");
         final SpreadsheetCell newA2 = this.cellWithValue("A2", "BBB");
 
-        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted();
+        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         this.sortAndCheck(
                 cellRange,
@@ -710,7 +710,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         final SpreadsheetCell newA1 = this.cellWithValue("A1", "AAA");
         final SpreadsheetCell newB1 = this.cellWithValue("B1", "BBB");
 
-        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted();
+        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         this.sortAndCheck(
                 cellRange,
@@ -1095,7 +1095,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                               final String comparators,
                               final SpreadsheetCellRange expected,
                               final Map<SpreadsheetCell, SpreadsheetCell> expectedMovedCells) {
-        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted();
+        final Map<SpreadsheetCell, SpreadsheetCell> remapped = Maps.sorted(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         this.sortAndCheck(
                 range,

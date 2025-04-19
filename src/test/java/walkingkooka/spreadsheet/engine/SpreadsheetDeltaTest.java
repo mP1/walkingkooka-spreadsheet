@@ -574,8 +574,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 patch
         );
 
-        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree();
-        final Set<SpreadsheetCell> patchedCells = SortedSets.tree();
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final TextStyle style = TextStyle.EMPTY.set(
                 TextStylePropertyName.COLOR,
                 Color.BLACK
@@ -751,8 +751,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 patch
         );
 
-        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree();
-        final Set<SpreadsheetCell> patchedCells = SortedSets.tree();
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
 
@@ -929,8 +929,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 patch
         );
 
-        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree();
-        final Set<SpreadsheetCell> patchedCells = SortedSets.tree();
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1");
 
@@ -1081,8 +1081,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 patch
         );
 
-        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree();
-        final Set<SpreadsheetCell> patchedCells = SortedSets.tree();
+        final Set<SpreadsheetCell> beforePatchCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+        final Set<SpreadsheetCell> patchedCells = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
         final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("=1+2");
 
         for (final Map.Entry<SpreadsheetCellReference, TextStyle> cellAndStyle : cellToStyles.entrySet()) {

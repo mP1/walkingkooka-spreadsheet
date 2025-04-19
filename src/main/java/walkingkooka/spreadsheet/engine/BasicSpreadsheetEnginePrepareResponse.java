@@ -133,7 +133,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
             delta = delta.setCells(
                     extractSavedOrUpdated(
                             this.cells,
-                            null // Comparator
+                            SpreadsheetCell.REFERENCE_COMPARATOR
                     )
             );
         }

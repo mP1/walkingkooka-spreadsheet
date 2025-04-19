@@ -560,7 +560,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context
         );
         try {
-            final Set<SpreadsheetCell> loaded = SortedSets.tree();
+            final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
             final SpreadsheetCellStore cellStore = context.storeRepository()
                     .cells();
 
@@ -577,7 +577,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             final SpreadsheetCellRange range = cellRange.setValue(loaded);
 
-            final Map<SpreadsheetCell, SpreadsheetCell> movedFromTo = Maps.sorted();
+            final Map<SpreadsheetCell, SpreadsheetCell> movedFromTo = Maps.sorted(SpreadsheetCell.REFERENCE_COMPARATOR);
 
             this.sortCells1(
                     range,

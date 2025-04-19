@@ -767,7 +767,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final BasicSpreadsheetEngineChangesMode backupMode = this.setImmediate();
         final SpreadsheetEngineEvaluation backupEvaluation = this.setEvaluation(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE);
         try {
-            final SortedSet<SpreadsheetCell> all = SortedSets.tree();
+            final SortedSet<SpreadsheetCell> all = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
             for (final SpreadsheetCellReference cell : range) {
                 BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(

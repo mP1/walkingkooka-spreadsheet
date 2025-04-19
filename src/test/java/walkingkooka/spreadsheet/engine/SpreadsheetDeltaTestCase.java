@@ -56,7 +56,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -263,7 +262,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     final Set<SpreadsheetCell> cells0(final String... cellReferences) {
         return Arrays.stream(cellReferences)
                 .map(r -> this.cell(r, "55"))
-                .collect(Collectors.toCollection(TreeSet::new));
+                .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)));
     }
 
     final SpreadsheetCell a1() {

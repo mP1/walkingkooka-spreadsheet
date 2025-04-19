@@ -336,7 +336,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         return this.all()
                 .stream()
                 .filter(filter)
-                .collect(Collectors.toCollection(SortedSets::tree));
+                .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)));
     }
 
     /**
@@ -446,7 +446,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                         range,
                         valueTypeName
                 ).limit(max)
-                .collect(Collectors.toCollection(SortedSets::tree));
+                .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)));
     }
 
     @Override

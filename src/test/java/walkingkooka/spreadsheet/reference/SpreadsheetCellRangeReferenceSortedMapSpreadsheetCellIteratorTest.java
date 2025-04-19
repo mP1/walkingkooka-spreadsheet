@@ -263,14 +263,14 @@ public final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator
                 SpreadsheetSelection.parseCellRange(range),
                 cells.stream()
                         .map(c -> SpreadsheetSelection.parseCell(c).setFormula(SpreadsheetFormula.EMPTY))
-                        .collect(Collectors.toCollection(SortedSets::tree))
+                        .collect(Collectors.toCollection(() -> SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR)))
         );
     }
 
     private void iteratorCheck(final SpreadsheetCellRangeReference range,
                                final Set<SpreadsheetCell> cells) {
         final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cellMap = Maps.sorted();
-        final Set<SpreadsheetCell> iterated = SortedSets.tree();
+        final Set<SpreadsheetCell> iterated = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         cells.forEach(
                 (c) -> {

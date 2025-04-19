@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.CanBeEmptyTesting;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -72,7 +72,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         ClassTesting2<SpreadsheetCell>,
         CanReplaceReferencesTesting<SpreadsheetCell>,
-        ComparableTesting2<SpreadsheetCell>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
         JsonNodeMarshallingTesting<SpreadsheetCell>,
         HasSpreadsheetReferenceTesting,
         HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
@@ -912,9 +912,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     // equals ..........................................................................................................
 
     @Test
-    public void testCompareDifferentParser() {
-        this.compareToAndCheckEquals(
-                this.createComparable()
+    public void testEqualsDifferentParser() {
+        this.checkNotEquals(
+                this.createObject()
                         .setParser(
                                 Optional.of(
                                         SpreadsheetPattern.parseNumberParsePattern("\"different-pattern\"")
@@ -925,9 +925,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testCompareDifferentFormulaEquals() {
+    public void testEqualsDifferentFormulaEquals() {
         this.checkNotEquals(
-                this.createComparable(
+                this.createObject(
                         COLUMN,
                         ROW,
                         FORMULA + "99"
@@ -936,9 +936,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testCompareDifferentColumn() {
-        this.compareToAndCheckLess(
-                this.createComparable(
+    public void testEqualsDifferentColumn() {
+        this.checkNotEquals(
+                this.createObject(
                         99,
                         ROW,
                         FORMULA
@@ -947,9 +947,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testCompareDifferentRow() {
-        this.compareToAndCheckLess(
-                this.createComparable(
+    public void testEqualsDifferentRow() {
+        this.checkNotEquals(
+                this.createObject(
                         COLUMN,
                         99,
                         FORMULA
@@ -958,9 +958,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testCompareDifferentTextStyle() {
-        this.compareToAndCheckEquals(
-                this.createComparable()
+    public void testEqualsDifferentTextStyle() {
+        this.checkNotEquals(
+                this.createObject()
                         .setStyle(
                                 TextStyle.EMPTY.set(
                                         TextStylePropertyName.FONT_STYLE,
@@ -971,9 +971,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testCompareDifferentValidator() {
-        this.compareToAndCheckEquals(
-                this.createComparable()
+    public void testEqualsDifferentValidator() {
+        this.checkNotEquals(
+                this.createObject()
                         .setValidator(
                                 this.differentValidator()
                         )
@@ -981,21 +981,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testCompareDifferentFormatter() {
-        this.compareToAndCheckEquals(this.createComparable()
-                .setFormatter(
-                        Optional.of(
-                                SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
-                                        .spreadsheetFormatterSelector()
+    public void testEqualsDifferentFormatter() {
+        this.checkNotEquals(
+                this.createObject()
+                        .setFormatter(
+                                Optional.of(
+                                        SpreadsheetPattern.parseTextFormatPattern("\"different-pattern\"")
+                                                .spreadsheetFormatterSelector()
+                                )
                         )
-                )
         );
     }
 
     @Test
-    public void testCompareDifferentFormatted() {
-        this.compareToAndCheckEquals(
-                this.createComparable()
+    public void testEqualsDifferentFormatted() {
+        this.checkNotEquals(
+                this.createObject()
                         .setFormattedValue(
                                 Optional.of(
                                         TextNode.text("different-formattedValue")
@@ -1005,17 +1006,17 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Override
-    public SpreadsheetCell createComparable() {
-        return this.createComparable(
+    public SpreadsheetCell createObject() {
+        return this.createObject(
                 COLUMN,
                 ROW,
                 FORMULA
         );
     }
 
-    private SpreadsheetCell createComparable(final int column,
-                                             final int row,
-                                             final String formula) {
+    private SpreadsheetCell createObject(final int column,
+                                         final int row,
+                                         final String formula) {
         return SpreadsheetCell.with(
                         reference(column, row),
                         formula(formula)
@@ -1024,11 +1025,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 .setFormatter(this.formatter())
                 .setFormattedValue(this.formattedValue())
                 .setValidator(this.validator());
-    }
-
-    @Override
-    public boolean compareAndEqualsMatch() {
-        return false; // comparing does not include all properties, so compareTo == 0 <> equals
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
@@ -2337,7 +2333,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     // helpers..........................................................................................................
 
     private SpreadsheetCell createCell() {
-        return this.createComparable();
+        return this.createObject();
     }
 
     private TextStyle boldAndItalics() {
