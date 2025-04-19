@@ -494,7 +494,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public String treeToString(Indentation indentation, LineEnding eol) {
-        return super.treeToString(indentation, eol);
+    public String treeToString(final Indentation indentation,
+                               final LineEnding eol) {
+        return super.treeToString(
+                indentation,
+                eol
+        );
     }
 }
