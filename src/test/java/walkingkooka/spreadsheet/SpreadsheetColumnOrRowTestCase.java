@@ -19,8 +19,8 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -30,10 +30,10 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.Optional;
 
-public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumnOrRow<R> & Comparable<T>,
+public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumnOrRow<R>,
         R extends SpreadsheetSelection & Comparable<R>>
         implements ClassTesting2<T>,
-        ComparableTesting2<T>,
+        HashCodeEqualsDefinedTesting2<T>,
         JsonNodeMarshallingTesting<T>,
         ToStringTesting<T>,
         TreePrintableTesting {
@@ -77,14 +77,10 @@ public abstract class SpreadsheetColumnOrRowTestCase<T extends SpreadsheetColumn
     }
 
     // ClassTesting.....................................................................................................
+
     @Override
     public final JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    @Override
-    public final boolean compareAndEqualsMatch() {
-        return false; // hidden is not used by compare
     }
 
     // JsonNodeMarshallingTesting.......................................................................................

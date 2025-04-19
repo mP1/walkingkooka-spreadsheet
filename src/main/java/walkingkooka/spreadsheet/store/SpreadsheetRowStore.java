@@ -39,7 +39,7 @@ public interface SpreadsheetRowStore extends SpreadsheetColumnOrRowStore<Spreads
     default Set<SpreadsheetRow> loadRows(final SpreadsheetRowRangeReference range) {
         Objects.requireNonNull(range, "ranges");
 
-        final Set<SpreadsheetRow> rows = SortedSets.tree();
+        final Set<SpreadsheetRow> rows = SortedSets.tree(SpreadsheetRow.REFERENCE_COMPARATOR);
 
         for (final SpreadsheetRowReference rowReference : range) {
             final Optional<SpreadsheetRow> row = this.load(rowReference);

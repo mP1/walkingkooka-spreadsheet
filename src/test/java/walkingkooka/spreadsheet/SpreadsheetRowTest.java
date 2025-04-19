@@ -97,34 +97,21 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
         this.checkHidden(row);
     }
 
-    // equals .............................................................................................
+    // equals ..........................................................................................................
 
     @Test
-    public void testCompareDifferentRow() {
-        this.compareToAndCheckLess(
-                this.createComparable(ROW + 999)
+    public void testEqualsDifferentRow() {
+        this.checkNotEquals(
+                this.createObject(ROW + 999)
         );
     }
 
     @Test
-    public void testCompareDifferentHidden() {
-        this.compareToAndCheckEquals(
-                this.createComparable()
+    public void testEqualsDifferentHidden() {
+        this.checkNotEquals(
+                this.createObject()
                         .setHidden(differentHidden())
         );
-    }
-
-    // compareTo0..........................................................................................................
-
-    @Test
-    public void testArraySort() {
-        final SpreadsheetRow row1 = SpreadsheetSelection.parseRow("1").row();
-        final SpreadsheetRow row2 = SpreadsheetSelection.parseRow("2").row();
-        final SpreadsheetRow row3 = SpreadsheetSelection.parseRow("3").row();
-        final SpreadsheetRow row4 = SpreadsheetSelection.parseRow("$4").row();
-
-        this.compareToArraySortAndCheck(row3, row1, row4, row2,
-                row1, row2, row3, row4);
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
@@ -242,15 +229,15 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     // helpers.........................................................................................................
 
     private SpreadsheetRow createRow() {
-        return this.createComparable();
+        return this.createObject();
     }
 
     @Override
-    public SpreadsheetRow createComparable() {
-        return this.createComparable(ROW);
+    public SpreadsheetRow createObject() {
+        return this.createObject(ROW);
     }
 
-    private SpreadsheetRow createComparable(final int row) {
+    private SpreadsheetRow createObject(final int row) {
         return reference(row).row();
     }
 
