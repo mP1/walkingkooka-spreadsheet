@@ -770,7 +770,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 different
         );
 
-        this.columnsAndCheck(after);
+        this.cellsAndCheck(after);
         this.columnsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
@@ -855,8 +855,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 different
         );
 
-        this.rowsAndCheck(after);
-        this.rowsAndCheck(after);
+        this.cellsAndCheck(after);
+        this.columnsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
 
@@ -946,7 +946,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 different
         );
 
-        this.labelsAndCheck(after);
+        this.cellsAndCheck(after);
         this.columnsAndCheck(after);
         this.labelsAndCheck(after);
         this.rowsAndCheck(after);
