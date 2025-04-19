@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
@@ -26,14 +27,19 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
  * Represents a single column within a spreadsheet.
  */
 public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetColumnReference>
-        implements Comparable<SpreadsheetColumn>,
-        Patchable<SpreadsheetColumn> {
+        implements Patchable<SpreadsheetColumn> {
+
+    /**
+     * A {@link Comparator} that may be used to compare {@link SpreadsheetColumn} within a {@link java.util.SortedSet}.
+     */
+    public static Comparator<SpreadsheetColumn> REFERENCE_COMPARATOR = HasSpreadsheetReference.hasSpreadsheetReferenceComparator();
 
     /**
      * Factory that creates a new {@link SpreadsheetColumn}
@@ -139,13 +145,6 @@ public final class SpreadsheetColumn extends SpreadsheetColumnOrRow<SpreadsheetC
                 SpreadsheetColumn::marshall,
                 SpreadsheetColumn.class
         );
-    }
-
-    // Comparable..........................................................................................
-
-    @Override
-    public int compareTo(final SpreadsheetColumn other) {
-        return this.reference.compareTo(other.reference);
     }
 
     // Patchable........................................................................................................

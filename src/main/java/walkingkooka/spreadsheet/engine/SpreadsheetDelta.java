@@ -62,6 +62,7 @@ import walkingkooka.tree.text.TextStyle;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -290,7 +291,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return null != predicate ?
                 filter(
                         cells,
-                        predicate
+                        predicate,
+                        null // Comparator
                 ) :
                 cells instanceof ImmutableSortedSet ?
                         cells :
@@ -344,9 +346,10 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private static Set<SpreadsheetColumn> filterColumns(final Set<SpreadsheetColumn> columns,
                                                         final SpreadsheetViewportWindows window) {
         return filter(
-                        columns,
-                        (c) -> window.test(c.reference())
-                );
+                columns,
+                (c) -> window.test(c.reference()),
+                SpreadsheetColumn.REFERENCE_COMPARATOR
+        );
     }
 
     abstract SpreadsheetDelta replaceColumns(final Set<SpreadsheetColumn> columns);
@@ -407,7 +410,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                     window.cellRanges()
                                             .stream()
                                             .anyMatch(r::testCellRange);
-                        }
+                        },
+                null // Comparator
         );
     }
 
@@ -447,7 +451,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                                                   final SpreadsheetViewportWindows window) {
         return filter(
                 rows,
-                r -> window.test(r.reference())
+                r -> window.test(r.reference()),
+                SpreadsheetRow.REFERENCE_COMPARATOR
         );
     }
 
@@ -942,11 +947,12 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     // filter...........................................................................................................
 
     static <T> Set<T> filter(final Set<T> values,
-                             final Predicate<T> windowTester) {
+                             final Predicate<T> windowTester,
+                             final Comparator<? super T> comparator) {
         return values.stream()
                 .filter(windowTester)
                 .collect(
-                        ImmutableSortedSet.collector(null)
+                        ImmutableSortedSet.collector(comparator)
                 );
     }
 

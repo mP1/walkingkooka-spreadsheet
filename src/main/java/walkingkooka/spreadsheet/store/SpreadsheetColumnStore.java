@@ -38,7 +38,7 @@ public interface SpreadsheetColumnStore extends SpreadsheetColumnOrRowStore<Spre
     default Set<SpreadsheetColumn> loadColumns(final SpreadsheetColumnRangeReference range) {
         Objects.requireNonNull(range, "ranges");
 
-        final Set<SpreadsheetColumn> columns = SortedSets.tree();
+        final Set<SpreadsheetColumn> columns = SortedSets.tree(SpreadsheetColumn.REFERENCE_COMPARATOR);
 
         for (final SpreadsheetColumnReference columnReference : range) {
             final Optional<SpreadsheetColumn> column = this.load(columnReference);

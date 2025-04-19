@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -113,24 +114,36 @@ final class BasicSpreadsheetEnginePrepareResponse {
         SpreadsheetDelta delta = SpreadsheetDelta.EMPTY;
         if (this.shouldSaveUpdateColumns) {
             delta = delta.setColumns(
-                    extractSavedOrUpdated(this.columns)
+                    extractSavedOrUpdated(
+                            this.columns,
+                            SpreadsheetColumn.REFERENCE_COMPARATOR
+                    )
             );
         }
         if (this.shouldSaveUpdateRows) {
             delta = delta.setRows(
-                    extractSavedOrUpdated(this.rows)
+                    extractSavedOrUpdated(
+                            this.rows,
+                            SpreadsheetRow.REFERENCE_COMPARATOR
+                    )
             );
         }
 
         if (this.shouldSaveUpdateCells) {
             delta = delta.setCells(
-                    extractSavedOrUpdated(this.cells)
+                    extractSavedOrUpdated(
+                            this.cells,
+                            null // Comparator
+                    )
             );
         }
 
         if (this.shouldSaveUpdateLabels) {
             delta = delta.setLabels(
-                    extractSavedOrUpdated(this.labels)
+                    extractSavedOrUpdated(
+                            this.labels,
+                            null // Comparator
+                    )
             );
         }
 
@@ -551,8 +564,9 @@ final class BasicSpreadsheetEnginePrepareResponse {
         return added;
     }
 
-    private static <T extends HateosResource<? extends SpreadsheetSelection>> Set<T> extractSavedOrUpdated(final Map<?, T> referenceToEntities) {
-        final Set<T> saveOrUpdated = SortedSets.tree();
+    private static <T extends HateosResource<? extends SpreadsheetSelection>> Set<T> extractSavedOrUpdated(final Map<?, T> referenceToEntities,
+                                                                                                           final Comparator<? super T> comparator) {
+        final Set<T> saveOrUpdated = SortedSets.tree(comparator);
 
         for (final T value : referenceToEntities.values()) {
             if (null != value) {

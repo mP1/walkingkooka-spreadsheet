@@ -97,32 +97,21 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
         this.checkHidden(column);
     }
 
-    // equals .............................................................................................
+    // equals ..........................................................................................................
 
     @Test
-    public void testCompareDifferentColumn() {
-        this.compareToAndCheckLess(
-                this.createComparable(COLUMN + 999)
+    public void testEqualsDifferentColumn() {
+        this.checkNotEquals(
+                this.createObject(COLUMN + 999)
         );
     }
 
     @Test
     public void testCompareDifferentHidden() {
-        this.compareToAndCheckEquals(
-                this.createComparable()
+        this.checkNotEquals(
+                this.createObject()
                         .setHidden(differentHidden())
         );
-    }
-
-    @Test
-    public void testArraySort() {
-        final SpreadsheetColumn column1 = SpreadsheetSelection.parseColumn("A").column();
-        final SpreadsheetColumn column2 = SpreadsheetSelection.parseColumn("$B").column();
-        final SpreadsheetColumn column3 = SpreadsheetSelection.parseColumn("C").column();
-        final SpreadsheetColumn column4 = SpreadsheetSelection.parseColumn("$D").column();
-
-        this.compareToArraySortAndCheck(column3, column1, column4, column2,
-                column1, column2, column3, column4);
     }
 
     // JsonNodeMarshallingTesting.......................................................................................
@@ -243,15 +232,15 @@ public final class SpreadsheetColumnTest extends SpreadsheetColumnOrRowTestCase<
     // helpers.........................................................................................................
 
     private SpreadsheetColumn createColumn() {
-        return this.createComparable();
+        return this.createObject();
     }
 
     @Override
-    public SpreadsheetColumn createComparable() {
-        return this.createComparable(COLUMN);
+    public SpreadsheetColumn createObject() {
+        return this.createObject(COLUMN);
     }
 
-    private SpreadsheetColumn createComparable(final int column) {
+    private SpreadsheetColumn createObject(final int column) {
         return reference(column)
                 .column();
     }
