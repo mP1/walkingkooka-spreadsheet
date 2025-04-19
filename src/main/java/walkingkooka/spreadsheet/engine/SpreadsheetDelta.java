@@ -59,6 +59,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -91,6 +93,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
     public final static Set<SpreadsheetColumn> NO_COLUMNS = Sets.empty();
+    public final static Set<Form<SpreadsheetExpressionReference>> NO_FORMS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
     public final static Set<SpreadsheetRow> NO_ROWS = Sets.empty();
 
@@ -118,6 +121,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             NO_VIEWPORT,
             NO_CELLS,
             NO_COLUMNS,
+            NO_FORMS,
             NO_LABELS,
             NO_ROWS,
             NO_REFERENCES,
@@ -138,6 +142,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     SpreadsheetDelta(final Optional<SpreadsheetViewport> viewport,
                      final Set<SpreadsheetCell> cells,
                      final Set<SpreadsheetColumn> columns,
+                     final Set<Form<SpreadsheetExpressionReference>> forms,
                      final Set<SpreadsheetLabelMapping> labels,
                      final Set<SpreadsheetRow> rows,
                      final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
@@ -155,6 +160,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         this.viewport = viewport;
         this.cells = cells;
         this.columns = columns;
+        this.forms = forms;
         this.labels = labels;
         this.rows = rows;
 
@@ -375,6 +381,52 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .findFirst();
     }
 
+    // forms............................................................................................................
+
+    /**
+     * Returns any forms.
+     */
+    public final Set<Form<SpreadsheetExpressionReference>> forms() {
+        return this.forms;
+    }
+
+    final Set<Form<SpreadsheetExpressionReference>> forms;
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given forms after they are possibly filtered
+     * using the {@link #window()}
+     */
+    public final SpreadsheetDelta setForms(final Set<Form<SpreadsheetExpressionReference>> forms) {
+        Objects.requireNonNull(forms, "forms");
+
+        SortedSet<Form<SpreadsheetExpressionReference>> copy;
+        if(forms instanceof SortedSet) {
+            copy = (SortedSet<Form<SpreadsheetExpressionReference>>) forms;
+        } else {
+            copy = new TreeSet<>(Form.nameComparator());
+            copy.addAll(forms);
+        }
+
+        final Set<Form<SpreadsheetExpressionReference>> copy2 = SortedSets.immutable(copy);
+        return setElementEquals(this.forms, copy2) ?
+                this :
+                this.replaceForms(copy2);
+    }
+
+    abstract SpreadsheetDelta replaceForms(final Set<Form<SpreadsheetExpressionReference>> forms);
+
+    /**
+     * Finds a {@link Form} with the given {@link FormName}.
+     */
+    public Optional<Form<SpreadsheetExpressionReference>> form(final FormName form) {
+        Objects.requireNonNull(form, "form");
+
+        return this.forms()
+                .stream()
+                .filter(f -> f.name().equals(form))
+                .findFirst();
+    }
+    
     // labels...........................................................................................................
 
     /**
@@ -885,6 +937,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         final Set<SpreadsheetCell> cells = this.cells;
         final Set<SpreadsheetColumn> columns = this.columns;
+        final Set<Form<SpreadsheetExpressionReference>> forms = this.forms;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
         final Set<SpreadsheetRow> rows = this.rows;
 
@@ -916,6 +969,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     viewport,
                     filteredCells,
                     filterColumns(columns, window),
+                    forms,
                     filterLabels(labels, window),
                     filterRows(rows, window),
                     filterReferences(references, window),
@@ -935,6 +989,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     viewport,
                     filteredCells,
                     columns,
+                    forms,
                     labels,
                     rows,
                     references,
@@ -1943,6 +1998,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
             printTreeCollectionTreePrinter("cells", this.cells(), printer);
             printTreeCollectionTreePrinter("columns", this.columns(), printer);
+            printTreeCollectionTreePrinter("forms", this.forms(), printer);
             printTreeCollectionTreePrinter("labels", this.labels(), printer);
             printTreeCollectionTreePrinter("rows", this.rows(), printer);
 
@@ -2139,6 +2195,14 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             )
                     );
                     break;
+                case FORMS_PROPERTY_STRING:
+                    unmarshalled = unmarshalled.setForms(
+                            context.unmarshallSet(
+                                child,
+                                    FORM_SPREADSHEET_EXPRESSION_REFERENCE_CLASS
+                            )
+                    );
+                    break;
                 case LABELS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setLabels(
                             context.unmarshallSet(
@@ -2318,6 +2382,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         );
     }
 
+    private final static Class<Form<SpreadsheetExpressionReference>> FORM_SPREADSHEET_EXPRESSION_REFERENCE_CLASS = Cast.to(Form.class);
+
     /**
      * <pre>
      * {
@@ -2375,6 +2441,16 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             final Set<SpreadsheetColumn> columns = this.columns;
             if (false == columns.isEmpty()) {
                 children.add(marshallCellOrColumnsOrRow(columns, context).setName(COLUMNS_PROPERTY));
+            }
+        }
+
+        {
+            final Set<Form<SpreadsheetExpressionReference>> forms = this.forms;
+            if (false == forms.isEmpty()) {
+                children.add(
+                        context.marshallCollection(forms)
+                                .setName(FORMS_PROPERTY)
+                );
             }
         }
 
@@ -2553,6 +2629,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
+    private final static String FORMS_PROPERTY_STRING = "forms";
     private final static String LABELS_PROPERTY_STRING = "labels";
     private final static String PARSER_PROPERTY_STRING = "parser";
     private final static String REFERENCES_PROPERTY_STRING = "references";
@@ -2587,6 +2664,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // @VisibleForTesting
     final static JsonPropertyName FORMATTER_PROPERTY = JsonPropertyName.with(FORMATTER_PROPERTY_STRING);
+    // @VisibleForTesting
+    final static JsonPropertyName FORMS_PROPERTY = JsonPropertyName.with(FORMS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName LABELS_PROPERTY = JsonPropertyName.with(LABELS_PROPERTY_STRING);
     // @VisibleForTesting
@@ -2649,6 +2728,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.viewport,
                 this.cells,
                 this.columns,
+                this.forms,
                 this.labels,
                 this.rows,
                 this.deletedCells,
@@ -2674,6 +2754,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.viewport.equals(other.viewport) &&
                 setElementEquals(this.cells, other.cells) &&
                 setElementEquals(this.columns, other.columns) &&
+                setElementEquals(this.forms, other.forms) &&
                 setElementEquals(this.labels, other.labels) &&
                 setElementEquals(this.rows, other.rows) &&
                 this.references.equals(other.references) &&
@@ -2732,6 +2813,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .value(this.cells)
                 .label("columns")
                 .value(this.columns)
+                .label("forms")
+                .value(this.forms)
                 .label("labels")
                 .value(this.labels)
                 .label("rows")
