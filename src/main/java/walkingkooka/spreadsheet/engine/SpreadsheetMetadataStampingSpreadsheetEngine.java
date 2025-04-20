@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.validation.form.FormName;
 
 import java.util.Collection;
 import java.util.List;
@@ -272,6 +273,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                        final SpreadsheetEngineContext context) {
         return this.stamp(
                 () -> this.engine.insertRows(row, count, context),
+                context
+        );
+    }
+
+    @Override
+    public SpreadsheetDelta loadForm(final FormName name,
+                                     final SpreadsheetEngineContext context) {
+        return this.engine.loadForm(
+                name,
                 context
         );
     }
