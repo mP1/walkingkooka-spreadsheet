@@ -977,73 +977,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             // form loaded, add to SpreadsheetDelta#forms
             if (null != form) {
-                final Map<SpreadsheetExpressionReference, Integer> cellOrLabelToCount = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
-
-                for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
-                    final SpreadsheetExpressionReference cellOrLabel = field.reference();
-
-                    Integer count = cellOrLabelToCount.get(cellOrLabel);
-                    if(null == count) {
-                        count = 0;
-                    }
-                    count++;
-
-                    cellOrLabelToCount.put(
-                            cellOrLabel,
-                            count
-                    );
-                }
-
-                final Set<SpreadsheetExpressionReference> duplicates = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
-
-                for(final Map.Entry<SpreadsheetExpressionReference, Integer> cellOrLabelAndCount : cellOrLabelToCount.entrySet()) {
-                    final SpreadsheetExpressionReference cellOrLabel = cellOrLabelAndCount.getKey();
-                    int count = cellOrLabelAndCount.getValue();
-
-                    if(cellOrLabel.isLabelName()) {
-                        final SpreadsheetLabelName labelName = cellOrLabel.toLabelName();
-                        final SpreadsheetSelection labelNameTarget = context.resolveLabel(labelName)
-                                .orElse(null);
-                        if(null != labelNameTarget) {
-                            final Integer cellCount = cellOrLabelToCount.get(labelNameTarget);
-                            if(null != cellCount) {
-                                count = count + cellCount;
-
-                                if(count > 1) {
-                                    duplicates.add(
-                                            labelNameTarget.toExpressionReference()
-                                    );
-                                }
-                            }
-                        }
-                    }
-
-                    if(count > 1) {
-                        duplicates.add(cellOrLabel);
-                    }
-                }
-
-                final List<ValidationError<SpreadsheetExpressionReference>> errors = Lists.array();
-                for(final SpreadsheetExpressionReference duplicateCellOrLabel : duplicates) {
-                    errors.add(
-                            ValidationError.with(
-                                    duplicateCellOrLabel,
-                                    "Multiple fields with same reference"
-                            )
-                    );
-                }
-
-                if(false == errors.isEmpty()) {
-                    errors.addAll(
-                            0,
-                            form.errors()
-                    );
-                    form = form.setErrors(errors);
-                }
-
                 delta = delta.setForms(
                         Sets.of(
-                                form
+                                this.validateFormFields(
+                                        form,
+                                        context
+                                )
                         )
                 );
             }
@@ -1052,6 +991,126 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         } finally {
             changes.close();
         }
+    }
+
+    @Override
+    public SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
+                                     final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(form, "form");
+        Objects.requireNonNull(context, "context");
+
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
+                this,
+                context
+        );
+        try {
+            Form<SpreadsheetExpressionReference> savedForm = context.storeRepository()
+                    .forms()
+                    .save(form);
+
+            if (null != form) {
+                for (final FormField<SpreadsheetExpressionReference> field : savedForm.fields()) {
+                    BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor.acceptFormField(
+                            field,
+                            changes
+                    );
+                }
+            }
+
+            SpreadsheetDelta delta = this.prepareResponse(
+                    changes,
+                    context
+            );
+
+            // form loaded, add to SpreadsheetDelta#forms
+            if (null != savedForm) {
+                delta = delta.setForms(
+                        Sets.of(
+                                this.validateFormFields(
+                                        savedForm,
+                                        context
+                                )
+                        )
+                );
+            }
+
+            return delta;
+        } finally {
+            changes.close();
+        }
+    }
+
+    /**
+     * Adds {@link ValidationError} to a {@link Form} if the fields have duplicate {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
+     */
+    private Form<SpreadsheetExpressionReference> validateFormFields(final Form<SpreadsheetExpressionReference> form,
+                                                                    final SpreadsheetEngineContext context) {
+        final Map<SpreadsheetExpressionReference, Integer> cellOrLabelToCount = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+
+        for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
+            final SpreadsheetExpressionReference cellOrLabel = field.reference();
+
+            Integer count = cellOrLabelToCount.get(cellOrLabel);
+            if(null == count) {
+                count = 0;
+            }
+            count++;
+
+            cellOrLabelToCount.put(
+                    cellOrLabel,
+                    count
+            );
+        }
+
+        final Set<SpreadsheetExpressionReference> duplicates = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+
+        for(final Map.Entry<SpreadsheetExpressionReference, Integer> cellOrLabelAndCount : cellOrLabelToCount.entrySet()) {
+            final SpreadsheetExpressionReference cellOrLabel = cellOrLabelAndCount.getKey();
+            int count = cellOrLabelAndCount.getValue();
+
+            if(cellOrLabel.isLabelName()) {
+                final SpreadsheetLabelName labelName = cellOrLabel.toLabelName();
+                final SpreadsheetSelection labelNameTarget = context.resolveLabel(labelName)
+                        .orElse(null);
+                if(null != labelNameTarget) {
+                    final Integer cellCount = cellOrLabelToCount.get(labelNameTarget);
+                    if(null != cellCount) {
+                        count = count + cellCount;
+
+                        if(count > 1) {
+                            duplicates.add(
+                                    labelNameTarget.toExpressionReference()
+                            );
+                        }
+                    }
+                }
+            }
+
+            if(count > 1) {
+                duplicates.add(cellOrLabel);
+            }
+        }
+
+        final List<ValidationError<SpreadsheetExpressionReference>> errors = Lists.array();
+        for(final SpreadsheetExpressionReference duplicateCellOrLabel : duplicates) {
+            errors.add(
+                    ValidationError.with(
+                            duplicateCellOrLabel,
+                            "Multiple fields with same reference"
+                    )
+            );
+        }
+
+        Form<SpreadsheetExpressionReference> result = form;
+        if(false == errors.isEmpty()) {
+            errors.addAll(
+                    0,
+                    form.errors()
+            );
+            result = form.setErrors(errors);
+        }
+
+        return result;
     }
 
     // SAVE LABEL.......................................................................................................

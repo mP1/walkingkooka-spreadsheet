@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.store.Store;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.util.Collection;
@@ -216,6 +217,14 @@ public interface SpreadsheetEngine {
      * duplicate references errors will be added.
      */
     SpreadsheetDelta loadForm(final FormName name,
+                              final SpreadsheetEngineContext context);
+
+    /**
+     * Saves the given {@link Form} replacing an existing form with the same {@link FormName} if one exists.
+     * If the form includes duplicate form fields, the form returned in {@link SpreadsheetDelta#forms} will contain
+     * {@link walkingkooka.validation.ValidationError}.
+     */
+    SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
                               final SpreadsheetEngineContext context);
 
     /**

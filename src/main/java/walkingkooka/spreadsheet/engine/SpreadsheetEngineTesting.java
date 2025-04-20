@@ -59,6 +59,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
@@ -1747,6 +1748,47 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 expected,
                 engine.loadForm(
                         formName,
+                        context
+                )
+        );
+    }
+
+    // saveForm.........................................................................................................
+
+    @Test
+    default void testSaveFormWithNullFormFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveForm(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testSaveFormWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .saveForm(
+                                Form.with(
+                                        FormName.with("HelloForm123")
+                                ),
+                                null
+                        )
+        );
+    }
+
+    default void saveFormAndCheck(final SpreadsheetEngine engine,
+                                  final Form<SpreadsheetExpressionReference> form,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.saveForm(
+                        form,
                         context
                 )
         );

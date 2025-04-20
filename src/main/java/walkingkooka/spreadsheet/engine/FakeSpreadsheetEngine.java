@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.util.Collection;
@@ -178,6 +179,12 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
     public SpreadsheetDelta loadForm(final FormName name,
+                                     final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
