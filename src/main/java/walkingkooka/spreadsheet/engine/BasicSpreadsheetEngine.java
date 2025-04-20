@@ -1041,7 +1041,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     /**
-     * Adds {@link ValidationError} to a {@link Form} if the fields have duplicate {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
+     * Saves {@link ValidationError errors} to a {@link Form} if the fields have duplicate {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
      */
     private Form<SpreadsheetExpressionReference> validateFormFields(final Form<SpreadsheetExpressionReference> form,
                                                                     final SpreadsheetEngineContext context) {
@@ -1101,16 +1101,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             );
         }
 
-        Form<SpreadsheetExpressionReference> result = form;
-        if(false == errors.isEmpty()) {
-            errors.addAll(
-                    0,
-                    form.errors()
-            );
-            result = form.setErrors(errors);
-        }
-
-        return result;
+        return form.setErrors(errors);
     }
 
     // SAVE LABEL.......................................................................................................

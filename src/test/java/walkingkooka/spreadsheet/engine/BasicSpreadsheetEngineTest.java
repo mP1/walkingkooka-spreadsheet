@@ -22140,6 +22140,63 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveFormMissingCellClearsPreviousErrors() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetExpressionReference cell = SpreadsheetSelection.A1;
+
+        final FormName formName = FormName.with("Form123");
+
+        final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+                .setFields(
+                        Lists.of(
+                                FormField.with(cell)
+                                        .setLabel("A1Label")
+                                        .setType(
+                                                Optional.of(ValidationValueTypeName.TEXT)
+                                        ).setValue(
+                                                Optional.of("Initial value")
+                                        ).setValidator(
+                                                Optional.of(ValidatorSelector.parse("Validator123"))
+                                        )
+                        )
+                ).setErrors(
+                        Lists.of(
+                                ValidationError.with(
+                                        cell,
+                                        "This error should be lost"
+                                )
+                        )
+                );
+
+        context.storeRepository()
+                .forms()
+                .save(form);
+
+        this.saveFormAndCheck(
+                engine,
+                form,
+                context,
+                SpreadsheetDelta.EMPTY.setForms(
+                        Sets.of(
+                                form.clearErrors()
+                        )
+                ).setDeletedCells(
+                        cells("A1")
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(0)
+                ).setRowCount(
+                        OptionalInt.of(0)
+                )
+        );
+    }
+
+    @Test
     public void testSaveFormMissingLabel() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
