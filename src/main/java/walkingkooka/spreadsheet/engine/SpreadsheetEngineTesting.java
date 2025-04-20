@@ -1794,6 +1794,63 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // loadForms........................................................................................................
+
+    @Test
+    default void testLoadFormsWithInvalidOffsetFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadForms(
+                                -1, // offset
+                                0, // count
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadFormsWithInvalidCountFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadForms(
+                                0, // offset
+                                -1, // count
+                                SpreadsheetEngineContexts.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadFormsWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadForms(
+                                0, // offset
+                                1, // count
+                                null
+                        )
+        );
+    }
+
+    default void loadFormsAndCheck(final SpreadsheetEngine engine,
+                                   final int offset,
+                                   final int count,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.loadForms(
+                        offset,
+                        count,
+                        context
+                ),
+                () -> "loadForms offset=" + offset + " count=" + count
+        );
+    }
+
     // saveLabel........................................................................................................
 
     @Test
@@ -1916,7 +1973,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "deleteLabel " + label
         );
     }
-    
+
     // loadLabel........................................................................................................
 
     @Test
@@ -2037,7 +2094,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final int offset,
                                     final int count,
                                     final SpreadsheetEngineContext context,
-                                    final SpreadsheetLabelMapping...mappings) {
+                                    final SpreadsheetLabelMapping... mappings) {
         this.loadLabelsAndCheck(
                 engine,
                 offset,
@@ -2232,11 +2289,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void findCellsWithReferencesAndCheck(final SpreadsheetEngine engine,
-                                        final SpreadsheetExpressionReference reference,
-                                        final int offset,
-                                        final int count,
-                                        final SpreadsheetEngineContext context,
-                                        final SpreadsheetDelta expected) {
+                                                 final SpreadsheetExpressionReference reference,
+                                                 final int offset,
+                                                 final int count,
+                                                 final SpreadsheetEngineContext context,
+                                                 final SpreadsheetDelta expected) {
         this.checkEquals(
                 expected,
                 engine.findCellsWithReferences(
@@ -2248,7 +2305,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "findCellsWithReferences " + reference + " offset=" + offset + " count=" + count
         );
     }
-    
+
     // columnCount......................................................................................................
 
     @Test
@@ -2384,9 +2441,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 NullPointerException.class,
                 () -> this.createSpreadsheetEngine()
                         .navigate(
-                        null,
-                        SpreadsheetEngineContexts.fake()
-                )
+                                null,
+                                SpreadsheetEngineContexts.fake()
+                        )
         );
     }
 

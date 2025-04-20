@@ -22839,7 +22839,91 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
     }
-    
+
+    // loadForms........................................................................................................
+
+    @Test
+    public void testLoadForms() {
+        final SpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setInputValue(
+                        Optional.of("A1InputValue")
+                )
+        ).setStyle(STYLE);
+
+        this.saveCellAndCheck(
+                engine,
+                a1Cell,
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                this.formatCell(a1Cell)
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+
+        final List<Form<SpreadsheetExpressionReference>> forms = Lists.array();
+
+        for (int i = 1; i < 1 + 5; i++) {
+            final FormName formName = FormName.with("Form" + i);
+
+            final Form<SpreadsheetExpressionReference> form = Form.<SpreadsheetExpressionReference>with(formName)
+                    .setFields(
+                            Lists.of(
+                                    FormField.<SpreadsheetExpressionReference>with(a1Cell.reference())
+                                            .setLabel("TextLabel1")
+                                            .setType(
+                                                    Optional.of(ValidationValueTypeName.TEXT)
+                                            ).setValue(
+                                                    Optional.of(i)
+                                            )
+                            )
+                    );
+
+            forms.add(form);
+
+            context.storeRepository()
+                    .forms()
+                    .save(form);
+        }
+
+        this.loadFormsAndCheck(
+                engine,
+                1, // offset
+                3, // count
+                context,
+                SpreadsheetDelta.EMPTY.setCells(
+                        Sets.of(
+                                formatCell(a1Cell)
+                        )
+                ).setForms(
+                        Sets.of(
+                                forms.get(1), // offset=1
+                                forms.get(2),
+                                forms.get(3)
+                        )
+                ).setColumnWidths(
+                        columnWidths("A")
+                ).setRowHeights(
+                        rowHeights("1")
+                ).setColumnCount(
+                        OptionalInt.of(1)
+                ).setRowCount(
+                        OptionalInt.of(1)
+                )
+        );
+    }
+
     //  helpers.........................................................................................................
 
     @Override
