@@ -1004,37 +1004,28 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context
         );
         try {
-            Form<SpreadsheetExpressionReference> savedForm = context.storeRepository()
+            final Form<SpreadsheetExpressionReference> savedForm = context.storeRepository()
                     .forms()
                     .save(form);
 
-            if (null != form) {
-                for (final FormField<SpreadsheetExpressionReference> field : savedForm.fields()) {
-                    BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor.acceptFormField(
-                            field,
-                            changes
-                    );
-                }
-            }
-
-            SpreadsheetDelta delta = this.prepareResponse(
-                    changes,
-                    context
-            );
-
-            // form loaded, add to SpreadsheetDelta#forms
-            if (null != savedForm) {
-                delta = delta.setForms(
-                        Sets.of(
-                                this.validateFormFields(
-                                        savedForm,
-                                        context
-                                )
-                        )
+            for (final FormField<SpreadsheetExpressionReference> field : savedForm.fields()) {
+                BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor.acceptFormField(
+                        field,
+                        changes
                 );
             }
 
-            return delta;
+            return this.prepareResponse(
+                    changes,
+                    context
+            ).setForms(
+                    Sets.of(
+                            this.validateFormFields(
+                                    savedForm,
+                                    context
+                            )
+                    )
+            );
         } finally {
             changes.close();
         }
