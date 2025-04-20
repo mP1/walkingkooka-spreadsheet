@@ -190,6 +190,13 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public SpreadsheetDelta loadForms(final int offset,
+                                      final int count,
+                                      final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

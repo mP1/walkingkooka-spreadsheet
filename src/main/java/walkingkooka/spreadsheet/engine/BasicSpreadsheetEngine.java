@@ -1031,6 +1031,58 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    @Override
+    public SpreadsheetDelta loadForms(final int offset,
+                                      final int count,
+                                      final SpreadsheetEngineContext context) {
+        SpreadsheetEngine.checkOffsetAndCount(
+                offset,
+                count
+        );
+        Objects.requireNonNull(context, "context");
+
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.BATCH.changes(
+                this,
+                context
+        );
+        try {
+            final List<Form<SpreadsheetExpressionReference>> forms = context.storeRepository()
+                    .forms()
+                    .values(
+                            offset,
+                            count
+                    );
+
+            for (final Form<SpreadsheetExpressionReference> form : forms) {
+                for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
+                    BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor.acceptFormField(
+                            field,
+                            changes
+                    );
+                }
+            }
+
+            final SpreadsheetDelta delta = this.prepareResponse(
+                    changes,
+                    context
+            );
+
+            final Set<Form<SpreadsheetExpressionReference>> validatedForms = SortedSets.tree(Form.nameComparator());
+            for (final Form<SpreadsheetExpressionReference> form : forms) {
+                validatedForms.add(
+                        this.validateFormFields(
+                                form,
+                                context
+                        )
+                );
+            }
+
+            return delta.setForms(validatedForms);
+        } finally {
+            changes.close();
+        }
+    }
+
     /**
      * Saves {@link ValidationError errors} to a {@link Form} if the fields have duplicate {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
      */
