@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.store.Store;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.validation.form.FormName;
 
 import java.util.Collection;
 import java.util.List;
@@ -208,6 +209,14 @@ public interface SpreadsheetEngine {
     SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
                                 final int count,
                                 final SpreadsheetEngineContext context);
+
+    /**
+     * Loads the given {@link FormName} and also returns the cells mentioned.
+     * If the {@link walkingkooka.validation.form.Form} contains {@link walkingkooka.validation.form.FormField} with
+     * duplicate references errors will be added.
+     */
+    SpreadsheetDelta loadForm(final FormName name,
+                              final SpreadsheetEngineContext context);
 
     /**
      * Sets a new label mapping or replaces an existing one returning a {@link SpreadsheetDelta} which may or may not

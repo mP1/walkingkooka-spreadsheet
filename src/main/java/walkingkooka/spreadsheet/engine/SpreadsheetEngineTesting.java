@@ -59,6 +59,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -1709,6 +1710,45 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 delta,
                 engine.insertRows(row, count, context),
                 () -> "insertRows row: " + row + " count: " + count
+        );
+    }
+
+    // loadForm.........................................................................................................
+
+    @Test
+    default void testLoadFormWithNullFormNameFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadForm(
+                                null,
+                                this.createContext()
+                        )
+        );
+    }
+
+    @Test
+    default void testLoadFormWithNullContextFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createSpreadsheetEngine()
+                        .loadForm(
+                                FormName.with("HelloForm123"),
+                                null
+                        )
+        );
+    }
+
+    default void loadFormAndCheck(final SpreadsheetEngine engine,
+                                  final FormName formName,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetDelta expected) {
+        this.checkEquals(
+                expected,
+                engine.loadForm(
+                        formName,
+                        context
+                )
         );
     }
 
