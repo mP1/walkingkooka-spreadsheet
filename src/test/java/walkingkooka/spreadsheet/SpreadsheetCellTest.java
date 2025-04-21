@@ -1278,7 +1278,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "    },\n" +
                         "    \"formatter\": \"text-format-pattern @@\",\n" +
                         "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
-                        "    \"formatted-value\": {\n" +
+                        "    \"formattedValue\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
                         "    },\n" +
@@ -1310,7 +1310,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         "      \"fontStyle\": \"ITALIC\",\n" +
                         "      \"fontWeight\": \"bold\"\n" +
                         "    },\n" +
-                        "    \"formatted-value\": {\n" +
+                        "    \"formattedValue\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"formattedValue-text\"\n" +
                         "    },\n" +
