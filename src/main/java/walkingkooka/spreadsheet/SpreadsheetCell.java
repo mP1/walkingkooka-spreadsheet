@@ -800,7 +800,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String STYLE_PROPERTY_STRING = "style";
 
-    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formatted-value";
+    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
 
     private final static String VALIDATOR_PROPERTY_STRING = "validator";
 

@@ -81,7 +81,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         "    \"style\": {\n" +
                         "      \"color\": \"black\"\n" +
                         "    },\n" +
-                        "    \"formatted-value\": {\n" +
+                        "    \"formattedValue\": {\n" +
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"Formatted text 123\"\n" +
                         "    }\n" +
