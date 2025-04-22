@@ -141,6 +141,154 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
         );
     }
 
+    // loadFieldValue...................................................................................................
+
+    @Test
+    public void testLoadFieldValueCellMissing() {
+        this.loadFieldValueAndCheck(
+                SpreadsheetEngineFormHandlerContext.with(
+                        Form.with(FormName.with("Form123")),
+                        new FakeSpreadsheetEngine() {
+
+                            @Override
+                            public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                              final SpreadsheetEngineEvaluation evaluation,
+                                                              final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                              final SpreadsheetEngineContext context) {
+                                return SpreadsheetDelta.EMPTY;
+                            }
+                        },
+                        SpreadsheetEngineContexts.fake()
+                ),
+                SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testLoadFieldValueCellMissingInputValue() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        this.loadFieldValueAndCheck(
+                SpreadsheetEngineFormHandlerContext.with(
+                        Form.with(FormName.with("Form123")),
+                        new FakeSpreadsheetEngine() {
+
+                            @Override
+                            public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                              final SpreadsheetEngineEvaluation evaluation,
+                                                              final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                              final SpreadsheetEngineContext context) {
+                                return SpreadsheetDelta.EMPTY.setCells(
+                                        Sets.of(
+                                                cell.setFormula(SpreadsheetFormula.EMPTY)
+                                        )
+                                );
+                            }
+                        },
+                        SpreadsheetEngineContexts.fake()
+                ),
+                cell
+        );
+    }
+
+    @Test
+    public void testLoadFieldValueCellWithInputValue() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final String value = "*VALUE123*";
+
+        this.loadFieldValueAndCheck(
+                SpreadsheetEngineFormHandlerContext.with(
+                        Form.with(FormName.with("Form123")),
+                        new FakeSpreadsheetEngine() {
+
+                            @Override
+                            public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                              final SpreadsheetEngineEvaluation evaluation,
+                                                              final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                              final SpreadsheetEngineContext context) {
+                                return SpreadsheetDelta.EMPTY.setCells(
+                                        Sets.of(
+                                                cell.setFormula(SpreadsheetFormula.EMPTY.setInputValue(
+                                                        Optional.of(value)
+                                                ))
+                                        )
+                                );
+                            }
+                        },
+                        SpreadsheetEngineContexts.fake()
+                ),
+                cell,
+                value
+        );
+    }
+
+    @Test
+    public void testLoadFieldValueCellWithUnknownLabel() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("UnknownLabel");
+
+        this.loadFieldValueAndCheck(
+                SpreadsheetEngineFormHandlerContext.with(
+                        Form.with(FormName.with("Form123")),
+                        new FakeSpreadsheetEngine() {
+
+                            @Override
+                            public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                              final SpreadsheetEngineEvaluation evaluation,
+                                                              final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                              final SpreadsheetEngineContext context) {
+                                return SpreadsheetDelta.EMPTY;
+                            }
+                        },
+                        new FakeSpreadsheetEngineContext() {
+                            @Override
+                            public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+                                return Optional.empty();
+                            }
+                        }
+                ),
+                label
+        );
+    }
+
+    @Test
+    public void testLoadFieldValueCellWithLabel() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label111");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final String value = "*VALUE123*";
+
+        this.loadFieldValueAndCheck(
+                SpreadsheetEngineFormHandlerContext.with(
+                        Form.with(FormName.with("Form123")),
+                        new FakeSpreadsheetEngine() {
+
+                            @Override
+                            public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
+                                                              final SpreadsheetEngineEvaluation evaluation,
+                                                              final Set<SpreadsheetDeltaProperties> deltaProperties,
+                                                              final SpreadsheetEngineContext context) {
+                                return SpreadsheetDelta.EMPTY.setCells(
+                                        Sets.of(
+                                                cell.setFormula(
+                                                        SpreadsheetFormula.EMPTY.setInputValue(
+                                                                Optional.of(value)
+                                                        )
+                                                )
+                                        )
+                                );
+                            }
+                        },
+                        new FakeSpreadsheetEngineContext() {
+                            @Override
+                            public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+                                return Optional.of(cell);
+                            }
+                        }
+                ),
+                label,
+                value
+        );
+    }
+
     // saveFieldValues..................................................................................................
 
     @Test
