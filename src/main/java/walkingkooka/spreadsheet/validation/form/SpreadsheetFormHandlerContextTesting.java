@@ -17,9 +17,24 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.form.FormHandlerContextTesting;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetFormHandlerContextTesting<C extends SpreadsheetFormHandlerContext> extends FormHandlerContextTesting<C, SpreadsheetExpressionReference, SpreadsheetDelta> {
+
+    @Test
+    default void testLoadFieldValueWithCellRangeFails() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> this.createContext()
+                        .loadFieldValue(
+                                SpreadsheetSelection.A1.toCellRange()
+                        )
+        );
+    }
 }

@@ -118,6 +118,42 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
     }
 
     @Override
+    public Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        if (reference.isCellRange()) {
+            throw new IllegalArgumentException("Invalid reference " + reference + " expected only cell or label");
+        }
+
+        final SpreadsheetEngineContext context = this.context;
+
+        final SpreadsheetDelta delta = this.engine.loadCells(
+                reference,
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE, // only interested in SpreadsheetCell#inputValue
+                Sets.of(
+                        SpreadsheetDeltaProperties.CELLS
+                ),
+                context
+        );
+
+        SpreadsheetSelection maybeCell = reference.isCell() ?
+                reference :
+                context.resolveLabel(reference.toLabelName())
+                        .orElse(null);
+
+        Object value = null;
+
+        // cell may be present and may or may not have an inputValue.
+        if (null != maybeCell) {
+            value = delta.cell(maybeCell.toCell())
+                    .flatMap(c -> c.formula().inputValue())
+                    .orElse(null);
+        }
+
+        return Optional.ofNullable(value);
+    }
+
+    @Override
     public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
         return this.saveFieldValues0(
                 FormFieldList.with(
