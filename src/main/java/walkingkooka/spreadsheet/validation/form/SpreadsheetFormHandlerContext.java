@@ -17,12 +17,23 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
+import walkingkooka.Cast;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.validation.form.FormHandlerContext;
 
+import java.util.Comparator;
+
 public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
+
+    /**
+     * {@link SpreadsheetSelection#IGNORES_REFERENCE_KIND_COMPARATOR}
+     */
+    default Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
+        return Cast.to(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    }
 
     @Override
     SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference spreadsheetExpressionReference);
