@@ -94,6 +94,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.WordWrap;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -2652,6 +2653,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 50
                         ).spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
+                                (final ValidatorSelector validatorSelector) -> {
+                                    throw new UnsupportedOperationException();
+                                },
                                 (final Object value,
                                  final SpreadsheetCellReference cell) -> {
                                     throw new UnsupportedOperationException();

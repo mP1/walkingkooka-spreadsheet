@@ -42,6 +42,7 @@ import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 import walkingkooka.validation.form.FormFieldList;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.List;
 import java.util.Map;
@@ -103,6 +104,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
         return SpreadsheetValidatorContexts.basic(
                 ValidatorContexts.basic(
                         reference,
+                        (final ValidatorSelector validatorSelector) -> context.validator(validatorSelector, context),
                         (final Object validatingValue,
                          final SpreadsheetExpressionReference r) -> context.spreadsheetExpressionEvaluationContext(
                                 cell,
