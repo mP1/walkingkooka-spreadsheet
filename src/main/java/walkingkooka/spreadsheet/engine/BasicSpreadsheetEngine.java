@@ -1585,6 +1585,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                 SpreadsheetValidatorContexts.basic(
                                                         ValidatorContexts.basic(
                                                                 cell.reference(), // reference
+                                                                (final ValidatorSelector v) -> context.validator(v, context),
                                                                 (final Object v,
                                                                  final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
                                                                         Optional.ofNullable(cell),

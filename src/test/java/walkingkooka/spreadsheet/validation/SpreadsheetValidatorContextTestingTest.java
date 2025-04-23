@@ -27,6 +27,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.validation.Validator;
+import walkingkooka.validation.ValidatorContext;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -78,6 +81,13 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         @Override
         public SpreadsheetCellReference validationReference() {
             return SpreadsheetSelection.A1;
+        }
+
+        @Override
+        public Validator<SpreadsheetExpressionReference, ? extends ValidatorContext<SpreadsheetExpressionReference>> validator(final ValidatorSelector validatorSelector) {
+            Objects.requireNonNull(validatorSelector, "validatorSelector");
+
+            throw new UnsupportedOperationException();
         }
 
         @Override

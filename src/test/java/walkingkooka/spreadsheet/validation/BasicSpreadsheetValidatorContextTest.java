@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.ValidatorContexts;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -62,6 +63,9 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
                 BasicSpreadsheetValidatorContext.with(
                         ValidatorContexts.basic(
                                 SpreadsheetSelection.A1,
+                                (final ValidatorSelector validatorSelector) -> {
+                                    throw new UnsupportedOperationException();
+                                },
                                 (final Object value,
                                  final SpreadsheetExpressionReference cellOrLabel) -> {
                                     throw new UnsupportedOperationException();

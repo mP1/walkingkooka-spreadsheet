@@ -83,6 +83,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
@@ -111,9 +112,11 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -1128,12 +1131,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Creates a {@link SpreadsheetValidatorContext} with the given {@link SpreadsheetCellReference}.
      */
     public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetCellReference cell,
+                                                                         final Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
                                                                          final BiFunction<Object, SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
         Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -1147,6 +1152,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return SpreadsheetValidatorContexts.basic(
                 ValidatorContexts.basic(
                         cell,
+                        Cast.to(validatorSelectorToValidator),
                         Cast.to(referenceToExpressionEvaluationContext),
                         this.spreadsheetConverterContext(
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,

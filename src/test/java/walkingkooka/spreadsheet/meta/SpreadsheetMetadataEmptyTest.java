@@ -31,6 +31,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -227,6 +228,9 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 IllegalStateException.class,
                 () -> SpreadsheetMetadata.EMPTY.spreadsheetValidatorContext(
                         SpreadsheetSelection.A1,
+                        (final ValidatorSelector validatorSelector) -> {
+                            throw new UnsupportedOperationException();
+                        },
                         (final Object value,
                          final SpreadsheetCellReference cell) -> {
                             throw new UnsupportedOperationException();
