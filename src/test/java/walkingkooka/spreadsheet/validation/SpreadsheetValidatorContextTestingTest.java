@@ -84,7 +84,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public Validator<SpreadsheetExpressionReference, ? extends ValidatorContext<SpreadsheetExpressionReference>> validator(final ValidatorSelector validatorSelector) {
+        public Validator<SpreadsheetExpressionReference, ? super ValidatorContext<SpreadsheetExpressionReference>> validator(final ValidatorSelector validatorSelector) {
             Objects.requireNonNull(validatorSelector, "validatorSelector");
 
             throw new UnsupportedOperationException();
