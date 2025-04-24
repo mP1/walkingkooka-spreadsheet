@@ -345,6 +345,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitValidatorConverter(final ConverterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitValidatorFormHandlers(final FormHandlerAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
