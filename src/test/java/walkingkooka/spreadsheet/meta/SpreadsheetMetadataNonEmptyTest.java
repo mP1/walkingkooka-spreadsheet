@@ -2999,10 +2999,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 ExpressionFunctionAliasSet.parse("hello")
         );
-        properties.put(
-                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
-                ValidatorAliasSet.parse("hello")
-        );
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"));
         properties.put(
@@ -3061,6 +3057,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(
                 SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
                 ExpressionFunctionAliasSet.parse("hello")
+        );
+        properties.put(
+                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                ValidatorAliasSet.parse("hello")
         );
         properties.put(SpreadsheetMetadataPropertyName.VALIDATORS, ValidatorAliasSet.EMPTY);
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
