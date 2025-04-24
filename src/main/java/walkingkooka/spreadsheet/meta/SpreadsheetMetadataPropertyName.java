@@ -368,6 +368,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within validator expressions.
+     */
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> VALIDATOR_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be the validator for the {@link SpreadsheetFormula#value}
      */
     public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATOR_VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidatorValidators.instance());

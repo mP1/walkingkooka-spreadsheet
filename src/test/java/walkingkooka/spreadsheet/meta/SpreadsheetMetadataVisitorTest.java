@@ -751,6 +751,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitValidatorFunctions() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitValidatorFunctions(final ExpressionFunctionAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
+                ExpressionFunctionAliasSet.parse("requiredFormFields")
+        );
+    }
+
+    @Test
     public void testVisitValidatorValidators() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

@@ -328,6 +328,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitValidatorFunctions(final ExpressionFunctionAliasSet aliases) {
+        // nop
+    }
+
     protected void visitValidatorValidators(final ValidatorAliasSet aliases) {
         // nop
     }
