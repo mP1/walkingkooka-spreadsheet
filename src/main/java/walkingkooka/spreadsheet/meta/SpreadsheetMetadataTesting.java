@@ -296,6 +296,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.VALIDATORS,
                     ValidatorAliasSet.EMPTY
             ).set(
+                    SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                    ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
+            ).set(
                     SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
                     FormHandlerAliasSet.EMPTY
             ).set(

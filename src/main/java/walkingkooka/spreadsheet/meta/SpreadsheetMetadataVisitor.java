@@ -324,6 +324,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitValidatorConverter(final ConverterSelector selector) {
+        // nop
+    }
+
     protected void visitValidatorFormHandlers(final FormHandlerAliasSet aliases) {
         // nop
     }

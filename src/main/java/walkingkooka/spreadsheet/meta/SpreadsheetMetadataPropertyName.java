@@ -368,6 +368,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerTwoDigitYear.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ConverterSelector}</code> which will be used to convert values by a {@link SpreadsheetCell#validator()}.
+     */
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> VALIDATOR_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorValidator.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within validator expressions.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> VALIDATOR_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator.instance());

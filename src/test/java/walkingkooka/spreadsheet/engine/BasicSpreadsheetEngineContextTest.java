@@ -987,6 +987,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
+                        "  \"validatorConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"validatorFormHandlers\": \"\",\n" +
                         "  \"validatorFunctions\": \"\",\n" +
                         "  \"validatorValidators\": \"\",\n" +
@@ -1159,6 +1160,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
+                        "  \"validatorConverter\": \"collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"validatorFormHandlers\": \"\",\n" +
                         "  \"validatorFunctions\": \"\",\n" +
                         "  \"validatorValidators\": \"\",\n" +

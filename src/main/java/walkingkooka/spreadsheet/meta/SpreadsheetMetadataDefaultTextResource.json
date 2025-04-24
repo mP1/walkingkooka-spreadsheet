@@ -122,6 +122,7 @@
     "word-wrap": "NORMAL"
   },
   "twoDigitYear": 20,
+  "validatorConverter": "collection(error-to-number, error-throwing, plugin-selector-like-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
   "validatorFormHandlers": "",
   "validatorFunctions": "",
   "validatorValidators": "",

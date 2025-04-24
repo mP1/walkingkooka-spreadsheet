@@ -751,6 +751,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitValidatorConverter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitValidatorConverter(final ConverterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                ConverterSelector.parse("hello-converter")
+        );
+    }
+
+    @Test
     public void testVisitValidatorFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
