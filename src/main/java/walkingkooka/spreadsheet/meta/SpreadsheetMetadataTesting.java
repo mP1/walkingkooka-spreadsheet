@@ -238,9 +238,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                     ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
-                    SpreadsheetMetadataPropertyName.FORMULA_FORM_HANDLERS,
-                    FormHandlerAliasSet.EMPTY
-            ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     ExpressionFunctionAliasSet.parse("")
             ).set(
@@ -301,6 +298,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATORS,
                     ValidatorAliasSet.EMPTY
+            ).set(
+                    SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
+                    FormHandlerAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.numberedColor(1),
                     Color.BLACK

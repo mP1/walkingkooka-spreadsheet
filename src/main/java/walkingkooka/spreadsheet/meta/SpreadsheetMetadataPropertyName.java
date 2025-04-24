@@ -233,11 +233,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> FORMULA_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFormula.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#formula()}.
-     */
-    public static final SpreadsheetMetadataPropertyName<FormHandlerAliasSet> FORMULA_FORM_HANDLERS = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#formula()}.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FORMULA_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFormula.instance());
@@ -380,6 +375,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be used to pick available validators within {@link SpreadsheetCell#validator()}.
      */
     public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidators.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#validator()}.
+     */
+    public static final SpreadsheetMetadataPropertyName<FormHandlerAliasSet> VALIDATOR_FORM_HANDLERS = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>value-separator</code> {@link Character}

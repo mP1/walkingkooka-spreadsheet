@@ -203,10 +203,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitFormulaFormHandlers(final FormHandlerAliasSet aliases) {
-        // nop
-    }
-
     protected void visitFormulaFunctions(final ExpressionFunctionAliasSet aliases) {
         // nop
     }
@@ -329,6 +325,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitValidators(final ValidatorAliasSet aliases) {
+        // nop
+    }
+
+    protected void visitValidatorFormHandlers(final FormHandlerAliasSet aliases) {
         // nop
     }
 
