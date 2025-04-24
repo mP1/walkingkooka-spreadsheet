@@ -207,10 +207,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitFormulaValidators(final ValidatorAliasSet aliases) {
-        // nop
-    }
-
     protected void visitFrozenColumns(final SpreadsheetColumnRangeReference range) {
         // nop
     }
@@ -329,6 +325,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitValidatorFormHandlers(final FormHandlerAliasSet aliases) {
+        // nop
+    }
+
+    protected void visitValidatorValidators(final ValidatorAliasSet aliases) {
         // nop
     }
 

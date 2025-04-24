@@ -2625,7 +2625,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                                 ConverterSelector.parse("never")
                         ).set(
-                                SpreadsheetMetadataPropertyName.FORMULA_VALIDATORS,
+                                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
                                 ValidatorAliasSet.EMPTY
                         ).set(
                                 SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
@@ -3000,7 +3000,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ExpressionFunctionAliasSet.parse("hello")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.FORMULA_VALIDATORS,
+                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
                 ValidatorAliasSet.parse("hello")
         );
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
