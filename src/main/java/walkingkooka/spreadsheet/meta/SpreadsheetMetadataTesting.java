@@ -241,9 +241,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     ExpressionFunctionAliasSet.parse("")
             ).set(
-                    SpreadsheetMetadataPropertyName.FORMULA_VALIDATORS,
-                    ValidatorAliasSet.parse("")
-            ).set(
                     SpreadsheetMetadataPropertyName.FUNCTIONS,
                     ExpressionFunctionAliasSet.EMPTY
             ).set(
@@ -301,6 +298,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
                     FormHandlerAliasSet.EMPTY
+            ).set(
+                    SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                    ValidatorAliasSet.EMPTY
             ).set(
                     SpreadsheetMetadataPropertyName.numberedColor(1),
                     Color.BLACK

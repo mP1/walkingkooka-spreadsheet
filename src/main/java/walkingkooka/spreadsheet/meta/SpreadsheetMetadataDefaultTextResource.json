@@ -77,7 +77,6 @@
   "formHandlers": "",
   "formulaConverter": "collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)",
   "formulaFunctions": "",
-  "formulaValidators": "",
   "generalNumberFormatDigitCount": 9,
   "hideZeroValues": false,
   "importers": "",
@@ -124,6 +123,7 @@
   },
   "twoDigitYear": 20,
   "validatorFormHandlers": "",
+  "validatorValidators": "",
   "validators": "",
   "viewport": {
     "rectangle": "A1:100:100"

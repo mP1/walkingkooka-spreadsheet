@@ -204,11 +204,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitFormulaValidators(final ValidatorAliasSet aliases) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitFrozenColumns(final SpreadsheetColumnRangeReference range) {
         throw new UnsupportedOperationException();
     }
@@ -351,6 +346,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitValidatorFormHandlers(final FormHandlerAliasSet aliases) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitValidatorValidators(final ValidatorAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 

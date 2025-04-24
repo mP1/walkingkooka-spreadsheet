@@ -930,7 +930,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formulaConverter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formulaFunctions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"formulaValidators\": \"\",\n" +
                         "  \"functions\": \"\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
                         "  \"groupSeparator\": \",\",\n" +
@@ -989,6 +988,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
                         "  \"validatorFormHandlers\": \"\",\n" +
+                        "  \"validatorValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
                         "  \"viewport\": {\n" +
@@ -1101,7 +1101,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formulaConverter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formulaFunctions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"formulaValidators\": \"\",\n" +
                         "  \"functions\": \"\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
                         "  \"groupSeparator\": \",\",\n" +
@@ -1160,6 +1159,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
                         "  \"validatorFormHandlers\": \"\",\n" +
+                        "  \"validatorValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
                         "  \"viewport\": {\n" +
