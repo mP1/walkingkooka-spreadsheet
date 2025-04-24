@@ -391,19 +391,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitFormulaFormHandlers() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitFormulaFormHandlers(final FormHandlerAliasSet a) {
-                this.visited = a;
-            }
-        }.accept(
-                SpreadsheetMetadataPropertyName.FORMULA_FORM_HANDLERS,
-                FormHandlerAliasSet.EMPTY
-        );
-    }
-
-    @Test
     public void testVisitFormulaFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -786,6 +773,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.VALIDATORS,
                 ValidatorAliasSet.parse("nonNull")
+        );
+    }
+
+    @Test
+    public void testVisitValidatorFormHandlers() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitValidatorFormHandlers(final FormHandlerAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
+                FormHandlerAliasSet.EMPTY
         );
     }
 

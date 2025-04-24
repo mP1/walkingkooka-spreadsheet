@@ -33,12 +33,12 @@ final class SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula extends Sp
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula() {
-        super("formulaFormHandlers");
+        super("validatorFormHandlers");
     }
 
     @Override
     void accept(final FormHandlerAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFormulaFormHandlers(aliases);
+        visitor.visitValidatorFormHandlers(aliases);
     }
 }

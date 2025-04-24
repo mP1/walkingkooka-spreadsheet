@@ -2996,10 +2996,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterSelector.parse("general")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.FORMULA_FORM_HANDLERS,
-                FormHandlerAliasSet.parse("hello-form-handler")
-        );
-        properties.put(
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 ExpressionFunctionAliasSet.parse("hello")
         );
@@ -3059,6 +3055,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss.000").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31);
         properties.put(SpreadsheetMetadataPropertyName.VALIDATORS, ValidatorAliasSet.EMPTY);
+        properties.put(
+                SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
+                FormHandlerAliasSet.parse("hello-form-handler")
+        );
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
         properties.put(
                 SpreadsheetMetadataPropertyName.VIEWPORT,

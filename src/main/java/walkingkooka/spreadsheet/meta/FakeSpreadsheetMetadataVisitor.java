@@ -199,11 +199,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitFormulaFormHandlers(final FormHandlerAliasSet aliases) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitFormulaFunctions(final ExpressionFunctionAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
@@ -351,6 +346,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitTwoDigitYear(final int value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitValidatorFormHandlers(final FormHandlerAliasSet aliases) {
         throw new UnsupportedOperationException();
     }
 
