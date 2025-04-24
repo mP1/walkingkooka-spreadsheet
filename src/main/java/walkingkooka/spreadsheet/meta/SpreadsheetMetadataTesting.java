@@ -299,6 +299,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
                     FormHandlerAliasSet.EMPTY
             ).set(
+                    SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
+                    ExpressionFunctionAliasSet.EMPTY
+            ).set(
                     SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
                     ValidatorAliasSet.EMPTY
             ).set(

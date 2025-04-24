@@ -350,6 +350,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitValidatorFunctions(final ExpressionFunctionAliasSet aliases) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitValidatorValidators(final ValidatorAliasSet aliases) {
         throw new UnsupportedOperationException();
     }

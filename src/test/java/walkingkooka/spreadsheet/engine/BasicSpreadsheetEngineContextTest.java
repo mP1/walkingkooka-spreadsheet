@@ -988,6 +988,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
                         "  \"validatorFormHandlers\": \"\",\n" +
+                        "  \"validatorFunctions\": \"\",\n" +
                         "  \"validatorValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"valueSeparator\": \",\",\n" +
@@ -1159,6 +1160,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                         "  \"twoDigitYear\": 20,\n" +
                         "  \"validatorFormHandlers\": \"\",\n" +
+                        "  \"validatorFunctions\": \"\",\n" +
                         "  \"validatorValidators\": \"\",\n" +
                         "  \"validators\": \"collection, expression, non-null\",\n" +
                         "  \"valueSeparator\": \",\",\n" +

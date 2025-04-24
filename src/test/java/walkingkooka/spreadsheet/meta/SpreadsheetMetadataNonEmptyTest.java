@@ -3054,11 +3054,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm;hh:mm:ss.000").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31);
-        properties.put(SpreadsheetMetadataPropertyName.VALIDATORS, ValidatorAliasSet.EMPTY);
         properties.put(
                 SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
                 FormHandlerAliasSet.parse("hello-form-handler")
         );
+        properties.put(
+                SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
+                ExpressionFunctionAliasSet.parse("hello")
+        );
+        properties.put(SpreadsheetMetadataPropertyName.VALIDATORS, ValidatorAliasSet.EMPTY);
         properties.put(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR);
         properties.put(
                 SpreadsheetMetadataPropertyName.VIEWPORT,
