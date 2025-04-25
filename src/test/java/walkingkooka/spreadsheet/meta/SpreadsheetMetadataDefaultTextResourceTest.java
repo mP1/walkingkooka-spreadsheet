@@ -44,7 +44,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
         this.checkEquals(
                 Converters.EXCEL_1900_DATE_SYSTEM_OFFSET,
                 metadata.getOrFail(
-                        SpreadsheetMetadataPropertyName.DATETIME_OFFSET
+                        SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET
                 ),
                 resource::toString
         );

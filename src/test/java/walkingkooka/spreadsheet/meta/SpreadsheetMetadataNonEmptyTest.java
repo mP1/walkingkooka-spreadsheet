@@ -1263,7 +1263,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetColorName name2 = SpreadsheetColorName.with("that");
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(2), color1)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(4), color2)
                 .set(SpreadsheetMetadataPropertyName.namedColor(name1), 2)
@@ -1284,7 +1284,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetColorName blackName = SpreadsheetColorName.BLACK;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(1), black)
                 .set(SpreadsheetMetadataPropertyName.namedColor(blackName), 1)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
@@ -1302,7 +1302,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetColorName redName = SpreadsheetColorName.RED;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(12), red)
                 .set(SpreadsheetMetadataPropertyName.namedColor(redName), 12)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
@@ -1320,7 +1320,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetColorName redName = SpreadsheetColorName.RED;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .setDefaults(
                         SpreadsheetMetadata.EMPTY
@@ -1342,7 +1342,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int number = 12;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number), red)
                 .setDefaults(
@@ -1369,7 +1369,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int number = 23;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number), red)
                 .setDefaults(
@@ -1399,7 +1399,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final SpreadsheetColorName name2 = SpreadsheetColorName.with("that");
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(2), color1)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(4), color2)
                 .set(SpreadsheetMetadataPropertyName.namedColor(name1), 2)
@@ -1439,7 +1439,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int number7 = 7;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
@@ -1460,7 +1460,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int number = 23;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .setDefaults(
                         SpreadsheetMetadata.EMPTY
@@ -1483,7 +1483,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int number = 23;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number), color)
                 .setDefaults(
@@ -1520,7 +1520,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int number7 = 7;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.namedColor(colorName1), number1)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
@@ -1548,7 +1548,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int number = 4;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .setDefaults(
                         SpreadsheetMetadata.EMPTY
@@ -1575,7 +1575,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final int number = 4;
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.numberedColor(number), color)
                 .set(SpreadsheetMetadataPropertyName.namedColor(colorName), number)
@@ -1903,7 +1903,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithConverter(final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelector) {
         return SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd").spreadsheetFormatterSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("\"Date\" yyyy mm dd").spreadsheetParserSelector())
                 .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh").spreadsheetFormatterSelector())
@@ -2608,7 +2608,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
                                 CURRENCY
                         ).set(
-                                SpreadsheetMetadataPropertyName.DATETIME_OFFSET,
+                                SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
                                 Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
                         ).set(
                                 SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
@@ -2951,7 +2951,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY").spreadsheetParserSelector());
-        properties.put(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
+        properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, DECIMAL_SEPARATOR);

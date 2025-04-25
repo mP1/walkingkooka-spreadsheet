@@ -204,7 +204,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
                     SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm").spreadsheetFormatterSelector()
             ).set(
-                    SpreadsheetMetadataPropertyName.DATETIME_OFFSET,
+                    SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
                     Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
             ).set(
                     SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,

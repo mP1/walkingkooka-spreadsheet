@@ -99,7 +99,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             .loadFromLocale()
             .set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
-            .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, 0L)
+            .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, 0L)
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
             .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("general"))
