@@ -133,7 +133,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final SpreadsheetMetadata nonLocaleDefaults = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
 
         this.checkNotEquals(SpreadsheetMetadata.EMPTY, nonLocaleDefaults);
-        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATETIME_OFFSET));
+        this.checkNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET));
 
         final Length<?> borderWidth = Length.pixel(1.0);
         final Color borderColor = Color.BLACK;
@@ -1078,7 +1078,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Test
     public void testUrlFragmentSpreadsheetDateTimeOffset() {
         this.urlFragmentAndCheck(
-                SpreadsheetMetadataPropertyName.DATETIME_OFFSET,
+                SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
                 "dateTimeOffset"
         );
     }

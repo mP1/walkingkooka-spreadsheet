@@ -155,14 +155,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> DATE_PARSER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetParserDate.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerConstant(SpreadsheetMetadataPropertyNameDateTimeOffset.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the default {@link SpreadsheetFormatterSelector} for {@link LocalDateTime} values.
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTime.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Long> DATE_TIME_OFFSET = registerConstant(SpreadsheetMetadataPropertyNameDateTimeOffset.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parser</code>

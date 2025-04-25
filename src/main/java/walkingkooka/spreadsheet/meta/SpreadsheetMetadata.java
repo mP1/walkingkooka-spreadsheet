@@ -705,7 +705,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a general {@link Converter} using the required properties.
      * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_OFFSET}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
@@ -953,7 +953,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final ConverterSelector converterSelector = components.getOrNull(converterSelectorPropertyName);
-        final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_OFFSET);
+        final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
         final ExpressionNumberKind expressionNumberKind = components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
 
         components.reportIfMissing();
