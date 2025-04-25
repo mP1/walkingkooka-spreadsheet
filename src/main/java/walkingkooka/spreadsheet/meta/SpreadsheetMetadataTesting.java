@@ -78,6 +78,7 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
@@ -299,8 +300,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
                     ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
-                    FormHandlerAliasSet.EMPTY
+                    SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER,
+                    FormHandlerSelector.parse("non-null")
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
                     ExpressionFunctionAliasSet.EMPTY

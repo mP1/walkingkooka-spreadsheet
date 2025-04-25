@@ -93,6 +93,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.WordWrap;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -3055,8 +3056,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ConverterSelector.parse("validator-converter-123")
         );
         properties.put(
-                SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
-                FormHandlerAliasSet.parse("hello-form-handler")
+                SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER,
+                FormHandlerSelector.parse("hello-form-handler")
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,

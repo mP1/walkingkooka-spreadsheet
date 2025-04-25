@@ -42,6 +42,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
@@ -328,7 +329,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitValidatorFormHandlers(final FormHandlerAliasSet aliases) {
+    protected void visitValidatorFormHandler(final FormHandlerSelector selector) {
         // nop
     }
 

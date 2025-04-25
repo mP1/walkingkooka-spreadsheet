@@ -18,24 +18,24 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 
-public final class SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormulaTest extends SpreadsheetMetadataPropertyNameFormHandlerAliasSetTestCase<SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula> {
+public final class SpreadsheetMetadataPropertyNameFormHandlerSelectorValidatorTest extends SpreadsheetMetadataPropertyNameFormHandlerSelectorTestCase<SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator> {
 
     @Override
-    SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula createName() {
-        return SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula.instance();
+    SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator createName() {
+        return SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator.instance();
     }
 
     @Override
-    FormHandlerAliasSet propertyValue() {
-        return FormHandlerAliasSet.parse("hello-form-handler");
+    FormHandlerSelector propertyValue() {
+        return FormHandlerSelector.parse("hello");
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula> type() {
-        return SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula.class;
+    public Class<SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator> type() {
+        return SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator.class;
     }
 }
