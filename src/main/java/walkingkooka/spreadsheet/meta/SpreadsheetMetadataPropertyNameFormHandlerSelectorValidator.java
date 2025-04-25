@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -17,28 +18,32 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 
-import walkingkooka.validation.form.provider.FormHandlerAliasSet;
-
-final class SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula extends SpreadsheetMetadataPropertyNameFormHandlerAliasSet {
+/**
+ * This {@link SpreadsheetMetadataPropertyName} holds the default {@link FormHandlerSelector}.
+ */
+final class SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator extends SpreadsheetMetadataPropertyNameFormHandlerSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula instance() {
-        return new SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula();
+    static SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator instance() {
+        return new SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula() {
-        super("validatorFormHandlers");
+    private SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator() {
+        super(
+                "validatorFormHandler"
+        );
     }
 
     @Override
-    void accept(final FormHandlerAliasSet aliases,
+    void accept(final FormHandlerSelector value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitValidatorFormHandlers(aliases);
+        visitor.visitValidatorFormHandler(value);
     }
 }

@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
@@ -764,6 +765,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitValidatorFormHandler() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitValidatorFormHandler(final FormHandlerSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+                SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER,
+                FormHandlerSelector.parse("hello-form-handler")
+        );
+    }
+
+    @Test
     public void testVisitValidatorFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -799,19 +813,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(
                 SpreadsheetMetadataPropertyName.VALIDATORS,
                 ValidatorAliasSet.parse("nonNull")
-        );
-    }
-
-    @Test
-    public void testVisitValidatorFormHandlers() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitValidatorFormHandlers(final FormHandlerAliasSet a) {
-                this.visited = a;
-            }
-        }.accept(
-                SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLERS,
-                FormHandlerAliasSet.EMPTY
         );
     }
 

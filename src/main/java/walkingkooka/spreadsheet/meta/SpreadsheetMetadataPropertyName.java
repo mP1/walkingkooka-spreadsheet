@@ -71,6 +71,8 @@ import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerName;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
 import java.math.RoundingMode;
@@ -373,6 +375,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ConverterSelector> VALIDATOR_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorValidator.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerSelector}</code> which will be used to pick available functions within {@link SpreadsheetCell#validator()}.
+     */
+    public static final SpreadsheetMetadataPropertyName<FormHandlerSelector> VALIDATOR_FORM_HANDLER = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerSelectorValidator.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ExpressionFunctionAliasSet}</code> which will be used to pick available functions within validator expressions.
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> VALIDATOR_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator.instance());
@@ -386,11 +393,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link ValidatorAliasSet}</code> which will be used to pick available validators within {@link SpreadsheetCell#validator()}.
      */
     public static final SpreadsheetMetadataPropertyName<ValidatorAliasSet> VALIDATORS = registerConstant(SpreadsheetMetadataPropertyNameValidatorAliasSetValidators.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link FormHandlerAliasSet}</code> which will be used to pick available functions within {@link SpreadsheetCell#validator()}.
-     */
-    public static final SpreadsheetMetadataPropertyName<FormHandlerAliasSet> VALIDATOR_FORM_HANDLERS = registerConstant(SpreadsheetMetadataPropertyNameFormHandlerAliasSetFormula.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>value-separator</code> {@link Character}
@@ -826,6 +828,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         );
         ConverterSelector.with(
                 ConverterName.NEVER,
+                ""
+        );
+        FormHandlerAliasSet.parse("helloFormHandler");
+        FormHandlerSelector.with(
+                FormHandlerName.with("HelloFormHandler"),
                 ""
         );
         SpreadsheetExporterAliasSet.parse("json");
