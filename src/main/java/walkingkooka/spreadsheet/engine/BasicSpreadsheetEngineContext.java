@@ -227,7 +227,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                     if (SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.equals(functionAliases)) {
                         converterSelector = SpreadsheetMetadataPropertyName.FIND_CONVERTER;
                     } else {
-                        throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
+                        if (SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS.equals(functionAliases)) {
+                            converterSelector = SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER;
+                        } else {
+                            throw new IllegalArgumentException("Missing " + ConverterSelector.class.getSimpleName() + " for  " + functionAliases);
+                        }
                     }
                 }
 

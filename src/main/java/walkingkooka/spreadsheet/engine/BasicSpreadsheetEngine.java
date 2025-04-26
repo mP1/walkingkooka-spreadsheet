@@ -1570,16 +1570,34 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (null != validatorSelector) {
             final SpreadsheetFormula formula = cell.formula();
             if (false == formula.error().isPresent()) {
-                final Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext> validator = context.validator(
+                result = validate0(
+                        cell,
                         validatorSelector,
-                        context // providerContext
+                        loader,
+                        context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS)
                 );
+            }
+        }
 
-                final Optional<Object> value = formula.value();
+        return result;
+    }
 
-                final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+    private static SpreadsheetCell validate0(final SpreadsheetCell cell,
+                                             final ValidatorSelector validatorSelector,
+                                             final SpreadsheetExpressionReferenceLoader loader,
+                                             final SpreadsheetEngineContext context) {
+        final Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext> validator = context.validator(
+                validatorSelector,
+                context // providerContext
+        );
 
-                final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext = (final Object v,
+        final SpreadsheetFormula formula = cell.formula();
+        final Optional<Object> value = formula.value();
+
+        final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+
+        final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext =
+                (final Object v,
                  final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
                         Optional.ofNullable(cell),
                         loader
@@ -1588,27 +1606,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         value
                 );
 
-                result = result.setFormula(
-                        formula.setError(
-                                SpreadsheetError.validationErrors(
-                                        validator.validate(
-                                                value.orElse(null), // unwrap Optionals
-                                                metadata.spreadsheetValidatorContext(
-                                                        cell.reference(), // reference
-                                                        (final ValidatorSelector v) -> context.validator(v, context),
-                                                        referenceToExpressionEvaluationContext,
-                                                        context, // SpreadsheetLabelNameResolver
-                                                        context, // ConverterProvider
-                                                        context // ProviderContext
-                                                )
+        return cell.setFormula(
+                formula.setError(
+                        SpreadsheetError.validationErrors(
+                                validator.validate(
+                                        value.orElse(null), // unwrap Optionals
+                                        metadata.spreadsheetValidatorContext(
+                                                cell.reference(), // reference
+                                                (final ValidatorSelector v) -> context.validator(v, context),
+                                                referenceToExpressionEvaluationContext,
+                                                context, // SpreadsheetLabelNameResolver
+                                                context, // ConverterProvider
+                                                context // ProviderContext
                                         )
                                 )
                         )
-                );
-            }
-        }
-
-        return result;
+                )
+        );
     }
 
     private final static SpreadsheetLabelName VALUE = SpreadsheetSelection.labelName("VALUE");
