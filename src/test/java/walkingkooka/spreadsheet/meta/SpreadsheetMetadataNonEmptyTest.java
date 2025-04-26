@@ -2623,12 +2623,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
                                 EXPRESSION_NUMBER_KIND
                         ).set(
-                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                ConverterSelector.parse("never")
-                        ).set(
-                                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
-                                ValidatorAliasSet.EMPTY
-                        ).set(
                                 SpreadsheetMetadataPropertyName.GROUP_SEPARATOR,
                                 GROUP_SEPARATOR
                         ).set(
@@ -2652,6 +2646,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ).set(
                                 SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR,
                                 50
+                        ).set(
+                                SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER,
+                                ConverterSelector.parse("never")
+                        ).set(
+                                SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
+                                ValidatorAliasSet.EMPTY
                         ).spreadsheetValidatorContext(
                                 SpreadsheetSelection.A1,
                                 (final ValidatorSelector validatorSelector) -> {

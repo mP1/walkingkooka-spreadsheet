@@ -1145,7 +1145,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
-        components.getOrNull(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER);
+        final SpreadsheetMetadataPropertyName<ConverterSelector> converter = SpreadsheetMetadataPropertyName.VALIDATOR_CONVERTER;
+
+        components.getOrNull(converter);
 
         components.reportIfMissing();
 
@@ -1155,7 +1157,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         Cast.to(validatorSelectorToValidator),
                         Cast.to(referenceToExpressionEvaluationContext),
                         this.spreadsheetConverterContext(
-                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                                converter,
                                 labelNameResolver,
                                 converterProvider, // ConverterProvider
                                 providerContext // ProviderContext
