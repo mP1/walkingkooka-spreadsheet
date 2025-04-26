@@ -52,7 +52,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class BasicSpreadsheetEngineFilterPredicateTest implements PredicateTesting2<BasicSpreadsheetEngineFilterPredicate, SpreadsheetCell>,
+public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements PredicateTesting2<BasicSpreadsheetEngineFilterCellsPredicate, SpreadsheetCell>,
         SpreadsheetMetadataTesting {
 
     private final static String CONTEXT_TO_STRING = "FakeSpreadsheetEngineContext123";
@@ -126,13 +126,13 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     }
 
     @Override
-    public BasicSpreadsheetEngineFilterPredicate createPredicate() {
+    public BasicSpreadsheetEngineFilterCellsPredicate createPredicate() {
         return this.createPredicate(
                 SpreadsheetValueType.ANY
         );
     }
 
-    private BasicSpreadsheetEngineFilterPredicate createPredicate(final String valueType) {
+    private BasicSpreadsheetEngineFilterCellsPredicate createPredicate(final String valueType) {
         final Expression expression = Expression.call(
                 Expression.namedFunction(
                         ExpressionFunctionName.with("Test123")
@@ -141,7 +141,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
                 Expression.NO_CHILDREN
         );
 
-        return BasicSpreadsheetEngineFilterPredicate.with(
+        return BasicSpreadsheetEngineFilterCellsPredicate.with(
                 valueType,
                 expression,
                 new FakeSpreadsheetEngineContext() {
@@ -240,7 +240,7 @@ public final class BasicSpreadsheetEngineFilterPredicateTest implements Predicat
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetEngineFilterPredicate> type() {
-        return BasicSpreadsheetEngineFilterPredicate.class;
+    public Class<BasicSpreadsheetEngineFilterCellsPredicate> type() {
+        return BasicSpreadsheetEngineFilterCellsPredicate.class;
     }
 }

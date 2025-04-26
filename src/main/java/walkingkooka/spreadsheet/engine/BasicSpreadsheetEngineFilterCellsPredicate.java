@@ -33,13 +33,13 @@ import java.util.function.Predicate;
  * It is assumed the {@link Expression} returns a {@link Boolean} result otherwise an {@link IllegalStateException} will be thrown.
  * Note cells without formula text and no value are always skipped
  */
-final class BasicSpreadsheetEngineFilterPredicate implements Predicate<SpreadsheetCell> {
+final class BasicSpreadsheetEngineFilterCellsPredicate implements Predicate<SpreadsheetCell> {
 
-    static BasicSpreadsheetEngineFilterPredicate with(final String valueType,
-                                                      final Expression expression,
-                                                      final SpreadsheetEngineContext context,
-                                                      final SpreadsheetExpressionReferenceLoader loader) {
-        return new BasicSpreadsheetEngineFilterPredicate(
+    static BasicSpreadsheetEngineFilterCellsPredicate with(final String valueType,
+                                                           final Expression expression,
+                                                           final SpreadsheetEngineContext context,
+                                                           final SpreadsheetExpressionReferenceLoader loader) {
+        return new BasicSpreadsheetEngineFilterCellsPredicate(
                 valueType,
                 expression,
                 context,
@@ -47,10 +47,10 @@ final class BasicSpreadsheetEngineFilterPredicate implements Predicate<Spreadshe
         );
     }
 
-    private BasicSpreadsheetEngineFilterPredicate(final String valueType,
-                                                  final Expression expression,
-                                                  final SpreadsheetEngineContext context,
-                                                  final SpreadsheetExpressionReferenceLoader loader) {
+    private BasicSpreadsheetEngineFilterCellsPredicate(final String valueType,
+                                                       final Expression expression,
+                                                       final SpreadsheetEngineContext context,
+                                                       final SpreadsheetExpressionReferenceLoader loader) {
         this.valueType = Predicates.customToString(
                 SpreadsheetValueType.ANY.equals(valueType) ?
                         v -> Boolean.TRUE :

@@ -423,7 +423,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         try {
             return cells.stream()
                     .filter(
-                            BasicSpreadsheetEngineFilterPredicate.with(
+                            BasicSpreadsheetEngineFilterCellsPredicate.with(
                                     valueType,
                                     expression,
                                     context.spreadsheetEngineContext(
@@ -468,7 +468,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         try {
             // this will be used to filter individual cells matching the find range and type.
-            final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterPredicate.with(
+            final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterCellsPredicate.with(
                     valueType,
                     expression,
                     context.spreadsheetEngineContext(
