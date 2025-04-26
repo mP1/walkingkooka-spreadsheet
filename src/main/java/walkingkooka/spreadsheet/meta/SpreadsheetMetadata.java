@@ -1132,7 +1132,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetCellReference cell,
                                                                          final Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
-                                                                         final BiFunction<Object, SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
+                                                                         final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final ConverterProvider converterProvider,
                                                                          final ProviderContext providerContext) {
