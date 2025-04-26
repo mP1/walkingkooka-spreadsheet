@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetCompara
 import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -62,7 +63,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
-import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
@@ -71,7 +71,6 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.Validator;
-import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 import walkingkooka.validation.form.FormName;
@@ -84,6 +83,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -1577,32 +1577,29 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                 final Optional<Object> value = formula.value();
 
+                final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+
+                final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext = (final Object v,
+                 final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
+                        Optional.ofNullable(cell),
+                        loader
+                ).addLocalVariable(
+                        VALUE,
+                        value
+                );
+
                 result = result.setFormula(
                         formula.setError(
                                 SpreadsheetError.validationErrors(
                                         validator.validate(
                                                 value.orElse(null), // unwrap Optionals
-                                                SpreadsheetValidatorContexts.basic(
-                                                        ValidatorContexts.basic(
-                                                                cell.reference(), // reference
-                                                                (final ValidatorSelector v) -> context.validator(v, context),
-                                                                (final Object v,
-                                                                 final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
-                                                                        Optional.ofNullable(cell),
-                                                                        loader
-                                                                ).addLocalVariable(
-                                                                        VALUE,
-                                                                        value
-                                                                ),
-                                                                context.spreadsheetMetadata()
-                                                                        .spreadsheetConverterContext(
-                                                                                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                                                                context, // SpreadsheetLabelNameResolver,
-                                                                                context, // SpreadsheetConverterProvider
-                                                                                context
-                                                                        ), // ConverterContext
-                                                                context // EnvironmentContext
-                                                        )
+                                                metadata.spreadsheetValidatorContext(
+                                                        cell.reference(), // reference
+                                                        (final ValidatorSelector v) -> context.validator(v, context),
+                                                        referenceToExpressionEvaluationContext,
+                                                        context, // SpreadsheetLabelNameResolver
+                                                        context, // ConverterProvider
+                                                        context // ProviderContext
                                                 )
                                         )
                                 )
