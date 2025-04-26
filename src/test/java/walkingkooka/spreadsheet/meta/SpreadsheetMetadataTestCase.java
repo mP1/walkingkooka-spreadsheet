@@ -40,7 +40,6 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -82,8 +81,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         throw new UnsupportedOperationException();
     };
 
-    final static BiFunction<Object, SpreadsheetCellReference, SpreadsheetExpressionEvaluationContext> VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = (final Object value,
-                                                                                                                                                                   final SpreadsheetCellReference cell) -> {
+    final static BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = (final Object value,
+                                                                                                                                                                         final SpreadsheetExpressionReference cellOrLabel) -> {
         throw new UnsupportedOperationException();
     };
 
