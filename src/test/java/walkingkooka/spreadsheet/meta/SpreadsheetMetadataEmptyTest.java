@@ -241,7 +241,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 )
         );
         this.checkEquals(
-                "Metadata missing: formulaConverter",
+                "Metadata missing: validatorConverter",
                 thrown.getMessage(),
                 "message"
         );
