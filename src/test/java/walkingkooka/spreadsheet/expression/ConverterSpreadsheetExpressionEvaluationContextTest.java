@@ -26,15 +26,18 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -42,12 +45,14 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
@@ -67,6 +72,8 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
+import walkingkooka.validation.form.FakeFormHandlerContext;
+import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
 import java.util.List;
@@ -539,6 +546,37 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                                 converterProvider,
                                 PROVIDER_CONTEXT
                         ),
+                        new FakeFormHandlerContext<>() {
+                            @Override
+                            public Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+                                Objects.requireNonNull(reference, "reference");
+                                throw new UnsupportedOperationException();
+                            }
+
+                            @Override
+                            public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+                                Objects.requireNonNull(fields, "fields");
+                                throw new UnsupportedOperationException();
+                            }
+
+                            @Override
+                            public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+                                Objects.requireNonNull(name, "name");
+                                throw new UnsupportedOperationException();
+                            }
+
+                            @Override
+                            public Optional<EmailAddress> user() {
+                                return Optional.empty();
+                            }
+
+                            @Override
+                            public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+                                Objects.requireNonNull(reference, "reference");
+
+                                throw new UnsupportedOperationException();
+                            }
+                        },
                         EXPRESSION_FUNCTION_PROVIDER,
                         PROVIDER_CONTEXT
                 )

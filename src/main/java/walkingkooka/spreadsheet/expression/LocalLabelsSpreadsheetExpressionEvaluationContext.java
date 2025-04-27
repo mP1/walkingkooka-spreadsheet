@@ -28,15 +28,18 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -46,7 +49,10 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.validation.form.FormHandlerContext;
+import walkingkooka.validation.form.FormHandlerContextDelegator;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -62,9 +68,10 @@ import java.util.function.Function;
 final class LocalLabelsSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
+        FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
         UsesToStringBuilder {
 
-    static SpreadsheetExpressionEvaluationContext with(
+    static LocalLabelsSpreadsheetExpressionEvaluationContext with(
             final Function<SpreadsheetLabelName, Optional<Optional<Object>>> labelToValues,
             final SpreadsheetExpressionEvaluationContext context) {
         Objects.requireNonNull(labelToValues, "labelToValues");
@@ -287,6 +294,23 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
+        return this.context;
+    }
+
+    // FormHandlerContextDelegator......................................................................................
+
+    @Override
+    public LocalDateTime now() {
+        return this.context.now();
+    }
+
+    @Override
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+        return this.context.validatorContext(reference);
+    }
+
+    @Override
+    public FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext() {
         return this.context;
     }
 

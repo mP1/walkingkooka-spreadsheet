@@ -17,10 +17,14 @@
 
 package walkingkooka.spreadsheet.template;
 
+import walkingkooka.Either;
+import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContextDelegator;
+import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
@@ -28,10 +32,17 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -43,8 +54,7 @@ import java.util.function.Function;
  * {@link SpreadsheetExpressionEvaluationContext} and template values from a {@link Function}.
  */
 final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContext,
-        SpreadsheetParserContextDelegator,
-        SpreadsheetExpressionEvaluationContextDelegator {
+        SpreadsheetParserContextDelegator {
 
     static BasicSpreadsheetTemplateContext with(final SpreadsheetParserContext spreadsheetParserContext,
                                                 final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext,
@@ -93,52 +103,26 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     // ExpressionEvaluationContext......................................................................................
 
     @Override
-    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        Optional<Optional<Object>> value;
-
-        // TemplateValueName gets passed into a SpreadsheetLabelName by SpreadsheetFormulaParsers#expression
-        if (reference instanceof TemplateValueName) {
-            final TemplateValueName templateValueName = (TemplateValueName) reference;
-
-            final Expression expression = this.templateValueNameToExpression.apply(templateValueName);
-            if(null == expression) {
-                throw new IllegalStateException("Missing expression for " + templateValueName);
-            }
-
-            value = Optional.of(
-                    Optional.ofNullable(
-                        this.evaluateExpression(expression)
-                    )
-            );
-        } else {
-            value = Optional.empty(); // unknown references have no value
-        }
-
-        return value;
+    public boolean canConvert(final Object value,
+                              final Class<?> type) {
+        return this.spreadsheetExpressionEvaluationContext.canConvert(
+                value,
+                type
+        );
     }
 
     @Override
-    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
-        this.spreadsheetExpressionEvaluationContext.setSpreadsheetMetadata(metadata);
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> type) {
+        return this.spreadsheetExpressionEvaluationContext.convert(
+                value,
+                type
+        );
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
-        return this.spreadsheetExpressionEvaluationContext;
-    }
-
-    private final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.spreadsheetParserContext.expressionNumberKind();
-    }
-
-    @Override
-    public Locale locale() {
-        return this.spreadsheetParserContext.locale();
+    public Converter<SpreadsheetConverterContext> converter() {
+        return this.spreadsheetExpressionEvaluationContext.converter();
     }
 
     @Override
@@ -150,6 +134,104 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     public DecimalNumberContext decimalNumberContext() {
         return this.spreadsheetParserContext;
     }
+
+    @Override
+    public long dateOffset() {
+        return this.spreadsheetExpressionEvaluationContext.dateOffset();
+    }
+
+    @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+        return this.spreadsheetExpressionEvaluationContext.expressionFunction(name);
+    }
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.spreadsheetParserContext.expressionNumberKind();
+    }
+
+    @Override
+    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
+                                  final Object value) {
+        return this.spreadsheetExpressionEvaluationContext.prepareParameter(
+                parameter,
+                value
+        );
+    }
+
+    @Override
+    public Object handleException(final RuntimeException caught) {
+        return this.spreadsheetExpressionEvaluationContext.handleException(caught);
+    }
+
+    @Override
+    public boolean isPure(final ExpressionFunctionName name) {
+        return this.spreadsheetExpressionEvaluationContext.isPure(name);
+    }
+
+    @Override
+    public Locale locale() {
+        return this.spreadsheetParserContext.locale();
+    }
+
+    @Override
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+        return this.spreadsheetExpressionEvaluationContext.parseFormula(formula);
+    }
+
+    @Override
+    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        Optional<Optional<Object>> value;
+
+        // TemplateValueName gets passed into a SpreadsheetLabelName by SpreadsheetFormulaParsers#expression
+        if (reference instanceof TemplateValueName) {
+            final TemplateValueName templateValueName = (TemplateValueName) reference;
+
+            final Expression expression = this.templateValueNameToExpression.apply(templateValueName);
+            if (null == expression) {
+                throw new IllegalStateException("Missing expression for " + templateValueName);
+            }
+
+            value = Optional.of(
+                    Optional.ofNullable(
+                            this.evaluateExpression(expression)
+                    )
+            );
+        } else {
+            value = Optional.empty(); // unknown references have no value
+        }
+
+        return value;
+    }
+
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return this.spreadsheetExpressionEvaluationContext.serverUrl();
+    }
+
+    @Override
+    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        this.spreadsheetExpressionEvaluationContext.setSpreadsheetMetadata(metadata);
+    }
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        return this.spreadsheetExpressionEvaluationContext.spreadsheetMetadata();
+    }
+
+    @Override
+    public StorageStore storage() {
+        return this.spreadsheetExpressionEvaluationContext.storage();
+    }
+
+    @Override
+    public CaseSensitivity stringEqualsCaseSensitivity() {
+        return this.spreadsheetExpressionEvaluationContext.stringEqualsCaseSensitivity();
+    }
+
+    private final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
 
     // templateValue....................................................................................................
 

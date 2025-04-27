@@ -17,7 +17,9 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.CanConvert;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -26,6 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -40,6 +43,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -50,12 +54,16 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.validation.form.FormHandlerContext;
+import walkingkooka.validation.form.FormHandlerContextDelegator;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
+        FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
         SpreadsheetConverterContextDelegator {
 
     static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
@@ -64,6 +72,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                            final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                             final ExpressionFunctionProvider expressionFunctionProvider,
                                                             final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
@@ -72,6 +81,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(spreadsheetStoreRepository, "spreadsheetStoreRepository");
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
+        Objects.requireNonNull(formHandlerContext, "formHandlerContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -82,6 +92,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 spreadsheetMetadata,
                 spreadsheetStoreRepository,
                 spreadsheetConverterContext,
+                formHandlerContext,
                 expressionFunctionProvider,
                 providerContext
         );
@@ -93,6 +104,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                        final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                         final ExpressionFunctionProvider expressionFunctionProvider,
                                                         final ProviderContext providerContext) {
         super();
@@ -100,7 +112,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
+
+        this.formHandlerContext = formHandlerContext;
         this.spreadsheetStoreRepository = spreadsheetStoreRepository;
+
         this.spreadsheetConverterContext = spreadsheetConverterContext;
         this.expressionFunctionProvider = expressionFunctionProvider;
         this.providerContext = providerContext;
@@ -276,6 +291,16 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     // SpreadsheetConverterContextDelegator.............................................................................
 
     @Override
+    public CanConvert canConvert() {
+        return this.spreadsheetConverterContext; // inherit unrelated defaults
+    }
+
+    @Override
+    public LocalDateTime now() {
+        return this.spreadsheetConverterContext.now(); // inherit unrelated defaults
+    }
+
+    @Override
     public SpreadsheetConverterContext spreadsheetConverterContext() {
         return this.spreadsheetConverterContext;
     }
@@ -286,6 +311,22 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
      * ProviderContext required by the numerous {@link walkingkooka.plugin.Provider providers}
      */
     private final ProviderContext providerContext;
+
+    // FormHandlerContext...............................................................................................
+
+    @Override
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+        return Cast.to(
+                this.formHandlerContext.validatorContext(reference)
+        );
+    }
+
+    @Override
+    public FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext() {
+        return this.formHandlerContext;
+    }
+
+    private final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
 
     // Object...........................................................................................................
 

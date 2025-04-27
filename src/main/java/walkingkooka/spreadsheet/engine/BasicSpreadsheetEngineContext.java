@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -53,6 +54,8 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.form.FormHandlerContext;
+import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -242,6 +245,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                         this.providerContext
                 );
             }
+
+            if(null == this.formHandlerContext) {
+                final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
+                if(SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS.equals(functionAliases)) {
+                    // create from spreadsheetProvider using SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER
+                    // https://github.com/mP1/walkingkooka-spreadsheet/issues/6342
+                    formHandlerContext = FormHandlerContexts.fake();
+                } else {
+                    formHandlerContext = FormHandlerContexts.fake();
+                }
+            }
         }
 
         return SpreadsheetExpressionEvaluationContexts.basic(
@@ -251,6 +265,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 metadata,
                 this.storeRepository,
                 this.spreadsheetConverterContext,
+                FormHandlerContexts.fake(),
                 this.expressionFunctionProvider,
                 this // ProviderContext
         );
@@ -262,6 +277,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
      */
     private SpreadsheetConverterContext spreadsheetConverterContext;
+
+    /**
+     * Cached {@link FormHandlerContext}.
+     */
+    private FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
 
     /**
      * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.

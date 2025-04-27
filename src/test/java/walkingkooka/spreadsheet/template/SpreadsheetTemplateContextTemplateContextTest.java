@@ -42,6 +42,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.util.Collections;
 import java.util.List;
@@ -204,6 +205,7 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
                                     private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
                                 },
                                 SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
+                                FormHandlerContexts.fake(),
                                 new FakeExpressionFunctionProvider() {
                                     @Override
                                     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,

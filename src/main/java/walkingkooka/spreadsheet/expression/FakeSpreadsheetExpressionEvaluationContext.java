@@ -18,31 +18,40 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.storage.expression.function.FakeStorageExpressionEvaluationContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.storage.StorageStore;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormField;
+import walkingkooka.validation.function.FakeValidatorExpressionEvaluationContext;
 
-import java.util.Objects;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext {
-    @Override
-    public Optional<SpreadsheetCell> cell() {
-        throw new UnsupportedOperationException();
+public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta> implements SpreadsheetExpressionEvaluationContext {
+
+    public FakeSpreadsheetExpressionEvaluationContext() {
+        super();
     }
 
     @Override
@@ -51,12 +60,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public Converter<SpreadsheetConverterContext> converter() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
         throw new UnsupportedOperationException();
     }
 
@@ -76,20 +80,17 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor expression) {
+    public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-        // required so SpreadsheetLabelNameResolverTesting.testResolveLabelWithNullFails passes
-        Objects.requireNonNull(labelName, "label");
-
+    public Optional<SpreadsheetCell> cell() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
+    public AbsoluteUrl serverUrl() {
         throw new UnsupportedOperationException();
     }
 
@@ -109,7 +110,66 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public AbsoluteUrl serverUrl() {
+    public Converter<SpreadsheetConverterContext> converter() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public StorageStore storage() {
+        throw new UnsupportedOperationException();
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<EnvironmentValueName<?>> environmentValueNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        throw new UnsupportedOperationException();
+    }
+
+    // FormHandlerContext...............................................................................................
+
+    @Override
+    public Form<SpreadsheetExpressionReference> form() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 }
