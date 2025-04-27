@@ -21,20 +21,25 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -45,7 +50,10 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormField;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -243,6 +251,50 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public StorageStore storage() {
         return this.context.storage();
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        return this.context.environmentValue(name);
+    }
+
+    @Override
+    public Set<EnvironmentValueName<?>> environmentValueNames() {
+        return this.context.environmentValueNames();
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        return this.context.user();
+    }
+
+    // FormHandlerContext...............................................................................................
+
+    @Override
+    public Form<SpreadsheetExpressionReference> form() {
+        return this.context.form();
+    }
+
+    @Override
+    public Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
+        return this.context.formFieldReferenceComparator();
+    }
+
+    @Override
+    public Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+        return this.context.loadFieldValue(reference);
+    }
+
+    @Override
+    public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+        return this.context.saveFieldValues(fields);
+    }
+
+    @Override
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+        return this.context.validatorContext(reference);
     }
 
     // eval scoped......................................................................................................

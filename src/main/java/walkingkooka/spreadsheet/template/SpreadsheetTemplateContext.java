@@ -17,19 +17,29 @@
 
 package walkingkooka.spreadsheet.template;
 
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormField;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -96,6 +106,57 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     @Override
     default void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
+        throw new UnsupportedOperationException();
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        Objects.requireNonNull(name, "name");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Set<EnvironmentValueName<?>> environmentValueNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Optional<EmailAddress> user() {
+        throw new UnsupportedOperationException();
+    }
+
+    // FormHandlerContext...............................................................................................
+
+    @Override
+    default Form<SpreadsheetExpressionReference> form() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default List<ValidationError<SpreadsheetExpressionReference>> validateFormFields(final List<FormField<SpreadsheetExpressionReference>> fields) {
         throw new UnsupportedOperationException();
     }
 }

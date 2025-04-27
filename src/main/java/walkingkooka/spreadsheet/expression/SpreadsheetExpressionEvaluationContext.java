@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -34,11 +35,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.validation.ValidationReference;
+import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
 
 import java.util.Optional;
 import java.util.Set;
@@ -50,7 +54,8 @@ import java.util.function.Function;
  */
 public interface SpreadsheetExpressionEvaluationContext extends StorageExpressionEvaluationContext,
         SpreadsheetConverterContext,
-        HasSpreadsheetMetadata {
+        HasSpreadsheetMetadata,
+        ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
 
     /**
      * Helper that makes it easy to add a variable with a value. This is especially useful when executing a {@link Expression}
@@ -182,4 +187,10 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * Returns the next empty {@link SpreadsheetRowReference} for the requested {@link SpreadsheetColumnReference}.
      */
     Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column);
+
+    /**
+     * {@link ValidatorExpressionEvaluationContext#validatorContext(ValidationReference)}.
+     */
+    @Override
+    SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference);
 }

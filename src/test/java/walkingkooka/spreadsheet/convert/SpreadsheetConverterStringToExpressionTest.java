@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
+import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.util.Optional;
 
@@ -87,6 +88,7 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
                                 METADATA_EN_AU,
                                 SpreadsheetStoreRepositories.fake(),
                                 SPREADSHEET_FORMATTER_CONTEXT,
+                                FormHandlerContexts.fake(),
                                 ExpressionFunctionProviders.fake(),
                                 ProviderContexts.fake()
                         )

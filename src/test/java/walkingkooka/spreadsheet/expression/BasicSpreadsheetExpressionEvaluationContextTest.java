@@ -26,6 +26,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -33,6 +34,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -43,6 +45,8 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.validation.form.FormHandlerContext;
+import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.math.MathContext;
 import java.util.Optional;
@@ -70,6 +74,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static SpreadsheetStoreRepository SPREADSHEET_STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
+    private final static FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> FORM_HANDLER_CONTEXT = FormHandlerContexts.fake();
     // with.............................................................................................................
 
     @Test
@@ -82,6 +87,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -96,6 +102,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -110,6 +117,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -124,6 +132,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -138,6 +147,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 null,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -152,9 +162,25 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 null,
+                FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
 
+        );
+    }
+
+    @Test
+    public void testWithNullFormHandlerContextFails() {
+        this.withFails(
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SERVER_URL,
+                METADATA,
+                SPREADSHEET_STORE_REPOSITORY,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                null,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
         );
     }
 
@@ -167,6 +193,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                FORM_HANDLER_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
         );
@@ -181,6 +208,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 null
         );
@@ -192,6 +220,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                            final SpreadsheetMetadata spreadsheetMetadata,
                            final SpreadsheetStoreRepository spreadsheetStoreRepository,
                            final SpreadsheetConverterContext spreadsheetConverterContext,
+                           final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                            final ExpressionFunctionProvider expressionFunctionProvider,
                            final ProviderContext providerContext) {
         assertThrows(
@@ -203,6 +232,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         spreadsheetMetadata,
                         spreadsheetStoreRepository,
                         spreadsheetConverterContext,
+                        formHandlerContext,
                         expressionFunctionProvider,
                         providerContext
                 )
@@ -286,6 +316,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                             }
                         },
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         PROVIDER_CONTEXT
                 ),
@@ -319,6 +350,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                             }
                         },
                         SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                        FORM_HANDLER_CONTEXT,
                         EXPRESSION_FUNCTION_PROVIDER,
                         PROVIDER_CONTEXT
                 ),
@@ -433,6 +465,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 PROVIDER_CONTEXT
         );
@@ -530,6 +563,36 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Override
     public void testLoadLabelWithNullLabelFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testEnvironmentValueWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testLoadFieldValueWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSaveFieldValuesWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testUser() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testValidateFormWithNullFormFieldsFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testValidatorContextWithNullReferenceFails() {
         throw new UnsupportedOperationException();
     }
 

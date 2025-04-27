@@ -23,13 +23,11 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -37,13 +35,13 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
+import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -60,15 +58,9 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
@@ -83,14 +75,12 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.FakeStorageStoreContext;
-import walkingkooka.storage.StorageStore;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -107,7 +97,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -431,8 +420,7 @@ public final class Sample {
         };
     }
 
-    static class SampleSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
-            ExpressionEvaluationContextDelegator {
+    static class SampleSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetExpressionEvaluationContext {
 
         SampleSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                      final ExpressionEvaluationContext context) {
@@ -448,28 +436,8 @@ public final class Sample {
         private final Optional<SpreadsheetCell> cell;
 
         @Override
-        public AbsoluteUrl serverUrl() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public Optional<Optional<Object>> reference(final ExpressionReference reference) {
             return this.context.reference(reference);
-        }
-
-        @Override
-        public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
-            throw new UnsupportedOperationException();
         }
 
         @Override
@@ -478,58 +446,11 @@ public final class Sample {
         }
 
         @Override
-        public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell) {
             return SpreadsheetExpressionEvaluationContexts.cell(
                     cell,
                     this
             );
-        }
-
-        @Override
-        public Converter<SpreadsheetConverterContext> converter() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public SpreadsheetMetadata spreadsheetMetadata() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public StorageStore storage() {
-            throw new UnsupportedOperationException();
-        }
-
-        // ExpressionEvaluationContext..................................................................................
-
-        @Override
-        public ExpressionEvaluationContext expressionEvaluationContext() {
-            return this.context;
         }
 
         private final ExpressionEvaluationContext context;

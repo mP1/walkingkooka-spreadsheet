@@ -87,6 +87,33 @@ public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplate
         throw new UnsupportedOperationException();
     }
 
+    // FormHandlerContextTesting........................................................................................
+
+    @Override
+    default void testLoadFieldValueWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testSaveFieldValuesWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testUser() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testValidateFormWithNullFormFieldsFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testValidatorContextWithNullReferenceFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // class............................................................................................................
 
     @Override

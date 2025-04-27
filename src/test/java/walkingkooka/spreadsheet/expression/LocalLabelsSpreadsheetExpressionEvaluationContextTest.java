@@ -18,18 +18,22 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -38,6 +42,7 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
 import java.util.List;
@@ -316,78 +321,106 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
 
     @Override
     public LocalLabelsSpreadsheetExpressionEvaluationContext createContext() {
-        return Cast.to(
-                LocalLabelsSpreadsheetExpressionEvaluationContext.with(
-                        LABEL_TO_VALUES,
-                        new FakeSpreadsheetExpressionEvaluationContext() {
+        return LocalLabelsSpreadsheetExpressionEvaluationContext.with(
+                LABEL_TO_VALUES,
+                new FakeSpreadsheetExpressionEvaluationContext() {
 
-                            @Override
-                            public Optional<SpreadsheetCell> cell() {
-                                return Optional.empty();
-                            }
+                    @Override
+                    public Optional<SpreadsheetCell> cell() {
+                        return Optional.empty();
+                    }
 
-                            @Override
-                            public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-                                Objects.requireNonNull(cell, "cell");
+                    @Override
+                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+                        Objects.requireNonNull(cell, "cell");
 
-                                throw new UnsupportedOperationException();
-                            }
+                        throw new UnsupportedOperationException();
+                    }
 
-                            @Override
-                            public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-                                Objects.requireNonNull(range, "range");
+                    @Override
+                    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+                        Objects.requireNonNull(range, "range");
 
-                                throw new UnsupportedOperationException();
-                            }
+                        throw new UnsupportedOperationException();
+                    }
 
-                            @Override
-                            public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-                                Objects.requireNonNull(labelName, "labelName");
+                    @Override
+                    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+                        Objects.requireNonNull(labelName, "labelName");
 
-                                throw new UnsupportedOperationException();
-                            }
+                        throw new UnsupportedOperationException();
+                    }
 
-                            @Override
-                            public String currencySymbol() {
-                                return CURRENCY_SYMBOL;
-                            }
+                    @Override
+                    public String currencySymbol() {
+                        return CURRENCY_SYMBOL;
+                    }
 
-                            @Override
-                            public char decimalSeparator() {
-                                return DECIMAL_SEPARATOR;
-                            }
+                    @Override
+                    public char decimalSeparator() {
+                        return DECIMAL_SEPARATOR;
+                    }
 
-                            @Override
-                            public String exponentSymbol() {
-                                return EXPONENT_SYMBOL;
-                            }
+                    @Override
+                    public String exponentSymbol() {
+                        return EXPONENT_SYMBOL;
+                    }
 
-                            @Override
-                            public char groupSeparator() {
-                                return GROUP_SEPARATOR;
-                            }
+                    @Override
+                    public char groupSeparator() {
+                        return GROUP_SEPARATOR;
+                    }
 
-                            @Override
-                            public MathContext mathContext() {
-                                return MATH_CONTEXT;
-                            }
+                    @Override
+                    public MathContext mathContext() {
+                        return MATH_CONTEXT;
+                    }
 
-                            @Override
-                            public char negativeSign() {
-                                return NEGATIVE_SYMBOL;
-                            }
+                    @Override
+                    public char negativeSign() {
+                        return NEGATIVE_SYMBOL;
+                    }
 
-                            @Override
-                            public char percentageSymbol() {
-                                return PERCENTAGE_SYMBOL;
-                            }
+                    @Override
+                    public char percentageSymbol() {
+                        return PERCENTAGE_SYMBOL;
+                    }
 
-                            @Override
-                            public char positiveSign() {
-                                return POSITIVE_SYMBOL;
-                            }
-                        }
-                )
+                    @Override
+                    public char positiveSign() {
+                        return POSITIVE_SYMBOL;
+                    }
+
+                    @Override
+                    public Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+                        Objects.requireNonNull(reference, "reference");
+                        throw new UnsupportedOperationException();
+                    }
+
+                    @Override
+                    public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+                        Objects.requireNonNull(fields, "fields");
+                        throw new UnsupportedOperationException();
+                    }
+
+                    @Override
+                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+                        Objects.requireNonNull(name, "name");
+                        throw new UnsupportedOperationException();
+                    }
+
+                    @Override
+                    public Optional<EmailAddress> user() {
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+                        Objects.requireNonNull(reference, "reference");
+
+                        throw new UnsupportedOperationException();
+                    }
+                }
         );
     }
 
