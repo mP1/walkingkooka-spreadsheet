@@ -18,9 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -37,13 +35,10 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
-import walkingkooka.validation.form.Form;
-import walkingkooka.validation.form.FormField;
+import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
+import walkingkooka.validation.function.ValidatorExpressionEvaluationContextDelegator;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Delegates all {@link ExpressionEvaluationContextDelegator} and most {@link SpreadsheetExpressionEvaluationContext}
@@ -55,6 +50,7 @@ import java.util.Set;
  * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
+        ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
         StorageExpressionEvaluationContextDelegator {
 
     @Override
@@ -67,18 +63,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default Converter<SpreadsheetConverterContext> converter() {
         return this.spreadsheetExpressionEvaluationContext().converter();
-    }
-
-    @Override
-    default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-        return this.spreadsheetExpressionEvaluationContext()
-                .environmentValue(name);
-    }
-
-    @Override
-    default Set<EnvironmentValueName<?>> environmentValueNames() {
-        return this.spreadsheetExpressionEvaluationContext()
-                .environmentValueNames();
     }
 
     @Override
@@ -130,45 +114,15 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default Optional<EmailAddress> user() {
-        return this.spreadsheetExpressionEvaluationContext()
-                .user();
-    }
-
-    // FormHandlerContext...............................................................................................
-
-    @Override
-    default Form<SpreadsheetExpressionReference> form() {
-        return this.spreadsheetExpressionEvaluationContext()
-                .form();
-    }
-
-    @Override
-    default SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-        return this.spreadsheetExpressionEvaluationContext()
-                .saveFieldValues(fields);
-    }
-
-    @Override
-    default Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
-        return this.spreadsheetExpressionEvaluationContext()
-                .loadFieldValue(reference);
-    }
-
-    @Override
     default SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
         return this.spreadsheetExpressionEvaluationContext()
                 .validatorContext(reference);
     }
 
     @Override
-    default Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
-        return this.spreadsheetExpressionEvaluationContext()
-                .formFieldReferenceComparator();
+    default ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta> expressionEvaluationContext() {
+        return this.spreadsheetExpressionEvaluationContext();
     }
-
-
-    // ExpressionEvaluationContextDelegator.............................................................................
 
     SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
 }
