@@ -63,7 +63,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("'CurrentCell"))
     );
 
-    private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT = SpreadsheetExpressionReferenceLoaders.fake(); // SpreadsheetExpressionReferenceContextREPOSITORY
+    private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_LOADER = SpreadsheetExpressionReferenceLoaders.fake(); // SpreadsheetExpressionReferenceContextREPOSITORY
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -81,7 +81,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullCellFails() {
         this.withFails(
                 null,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 //REFERENCE_TO_VALUE,
                 METADATA,
@@ -94,7 +94,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
-    public void testWithNullSpreadsheetExpressionReferenceContextFails() {
+    public void testWithNullSpreadsheetExpressionReferenceLoaderFails() {
         this.withFails(
                 CELL,
                 null,
@@ -112,7 +112,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullServerUrlFails() {
         this.withFails(
                 CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -127,7 +127,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullMetadataFails() {
         this.withFails(
                 CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 null,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -142,7 +142,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullStorageFails() {
         this.withFails(
                 CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 null,
@@ -157,7 +157,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullSpreadsheetConverterContextFails() {
         this.withFails(
                 CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -173,7 +173,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullFormHandlerContextFails() {
         this.withFails(
                 CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -188,7 +188,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullExpressionFunctionProviderFails() {
         this.withFails(
                 CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -203,7 +203,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testWithNullProviderContextFails() {
         this.withFails(
                 CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -454,7 +454,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Override
     public BasicSpreadsheetExpressionEvaluationContext createContext() {
-        return this.createContext(SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT);
+        return this.createContext(SPREADSHEET_EXPRESSION_REFERENCE_LOADER);
     }
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
