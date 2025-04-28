@@ -128,12 +128,14 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
         throw new UnsupportedOperationException();
     }
 
-    // FormHandlerContext...............................................................................................
+    // HasForm..........................................................................................................
 
     @Override
     default Form<SpreadsheetExpressionReference> form() {
         throw new UnsupportedOperationException();
     }
+
+    // FormHandlerContext...............................................................................................
 
     @Override
     default Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {

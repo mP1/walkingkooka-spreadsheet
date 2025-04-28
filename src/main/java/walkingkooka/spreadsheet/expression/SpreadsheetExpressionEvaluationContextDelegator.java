@@ -35,7 +35,8 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
-import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContextDelegator;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContextDelegator;
 
 import java.util.Optional;
@@ -50,7 +51,8 @@ import java.util.Optional;
  * </ul>
  */
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
-        ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
+        FormHandlerExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
+        ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference>,
         StorageExpressionEvaluationContextDelegator {
 
     @Override
@@ -120,7 +122,13 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta> expressionEvaluationContext() {
+    default Form<SpreadsheetExpressionReference> form() {
+        return this.spreadsheetExpressionEvaluationContext()
+                .form();
+    }
+
+    @Override
+    default SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }
 

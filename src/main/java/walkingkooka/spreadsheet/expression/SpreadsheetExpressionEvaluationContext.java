@@ -42,6 +42,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.ValidationReference;
+import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContext;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
 
 import java.util.Optional;
@@ -55,7 +56,8 @@ import java.util.function.Function;
 public interface SpreadsheetExpressionEvaluationContext extends StorageExpressionEvaluationContext,
         SpreadsheetConverterContext,
         HasSpreadsheetMetadata,
-        ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
+        FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
+        ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
 
     /**
      * Helper that makes it easy to add a variable with a value. This is especially useful when executing a {@link Expression}

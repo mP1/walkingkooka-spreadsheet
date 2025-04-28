@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporterException;
+import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContextTesting;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContextTesting;
 
 import java.util.Optional;
@@ -42,7 +43,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C> {
+public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
+        ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C> {
 
     // parseExpression......................................................................................................
 
@@ -298,5 +300,12 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     @Override
     default String typeNameSuffix() {
         return SpreadsheetExpressionEvaluationContext.class.getSimpleName();
+    }
+
+    // SpreadsheetExpressionEvaluationContext...........................................................................
+
+    @Override
+    default C createCanConvert() {
+        return this.createContext();
     }
 }
