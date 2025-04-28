@@ -28,11 +28,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetFormHandlerContextTesting<C extends SpreadsheetFormHandlerContext> extends FormHandlerContextTesting<C, SpreadsheetExpressionReference, SpreadsheetDelta> {
 
     @Test
-    default void testLoadFieldValueWithCellRangeFails() {
+    default void testLoadFormFieldValueWithCellRangeFails() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createContext()
-                        .loadFieldValue(
+                        .loadFormFieldValue(
                                 SpreadsheetSelection.A1.toCellRange()
                         )
         );

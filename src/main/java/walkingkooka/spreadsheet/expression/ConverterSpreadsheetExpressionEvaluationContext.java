@@ -283,13 +283,13 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
-    public Optional<Object> loadFieldValue(final SpreadsheetExpressionReference reference) {
-        return this.context.loadFieldValue(reference);
+    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+        return this.context.loadFormFieldValue(reference);
     }
 
     @Override
-    public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-        return this.context.saveFieldValues(fields);
+    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+        return this.context.saveFormFieldValues(fields);
     }
 
     @Override
