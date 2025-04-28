@@ -392,7 +392,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                     }
 
                     @Override
-                    public Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+                    public Optional<Object> loadFieldValue(final SpreadsheetExpressionReference reference) {
                         Objects.requireNonNull(reference, "reference");
                         throw new UnsupportedOperationException();
                     }

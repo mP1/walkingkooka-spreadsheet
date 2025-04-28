@@ -148,7 +148,7 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     }
 
     @Override
-    default Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+    default Optional<Object> loadFieldValue(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 

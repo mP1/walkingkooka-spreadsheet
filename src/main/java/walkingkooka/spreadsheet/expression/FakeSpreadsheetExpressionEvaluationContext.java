@@ -159,7 +159,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExp
     }
 
     @Override
-    public Optional<?> loadFieldValue(final SpreadsheetExpressionReference reference) {
+    public Optional<Object> loadFieldValue(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 
