@@ -148,12 +148,12 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
     }
 
     @Override
-    default Optional<Object> loadFieldValue(final SpreadsheetExpressionReference reference) {
+    default Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    default SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+    default SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
         throw new UnsupportedOperationException();
     }
 

@@ -548,13 +548,13 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         ),
                         new FakeFormHandlerContext<>() {
                             @Override
-                            public Optional<Object> loadFieldValue(final SpreadsheetExpressionReference reference) {
+                            public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
                                 Objects.requireNonNull(reference, "reference");
                                 throw new UnsupportedOperationException();
                             }
 
                             @Override
-                            public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+                            public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
                                 Objects.requireNonNull(fields, "fields");
                                 throw new UnsupportedOperationException();
                             }

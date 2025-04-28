@@ -141,11 +141,11 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
         );
     }
 
-    // loadFieldValue...................................................................................................
+    // loadFormFieldValue...............................................................................................
 
     @Test
-    public void testLoadFieldValueCellMissing() {
-        this.loadFieldValueAndCheck(
+    public void testLoadFormFieldValueCellMissing() {
+        this.loadFormFieldValueAndCheck(
                 SpreadsheetEngineFormHandlerContext.with(
                         Form.with(FormName.with("Form123")),
                         new FakeSpreadsheetEngine() {
@@ -165,10 +165,10 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
     }
 
     @Test
-    public void testLoadFieldValueCellMissingInputValue() {
+    public void testLoadFormFieldValueCellMissingInputValue() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
-        this.loadFieldValueAndCheck(
+        this.loadFormFieldValueAndCheck(
                 SpreadsheetEngineFormHandlerContext.with(
                         Form.with(FormName.with("Form123")),
                         new FakeSpreadsheetEngine() {
@@ -192,11 +192,11 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
     }
 
     @Test
-    public void testLoadFieldValueCellWithInputValue() {
+    public void testLoadFormFieldValueCellWithInputValue() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final String value = "*VALUE123*";
 
-        this.loadFieldValueAndCheck(
+        this.loadFormFieldValueAndCheck(
                 SpreadsheetEngineFormHandlerContext.with(
                         Form.with(FormName.with("Form123")),
                         new FakeSpreadsheetEngine() {
@@ -223,10 +223,10 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
     }
 
     @Test
-    public void testLoadFieldValueCellWithUnknownLabel() {
+    public void testLoadFormFieldValueCellWithUnknownLabel() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("UnknownLabel");
 
-        this.loadFieldValueAndCheck(
+        this.loadFormFieldValueAndCheck(
                 SpreadsheetEngineFormHandlerContext.with(
                         Form.with(FormName.with("Form123")),
                         new FakeSpreadsheetEngine() {
@@ -251,12 +251,12 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
     }
 
     @Test
-    public void testLoadFieldValueCellWithLabel() {
+    public void testLoadFormFieldValueCellWithLabel() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final String value = "*VALUE123*";
 
-        this.loadFieldValueAndCheck(
+        this.loadFormFieldValueAndCheck(
                 SpreadsheetEngineFormHandlerContext.with(
                         Form.with(FormName.with("Form123")),
                         new FakeSpreadsheetEngine() {
@@ -289,16 +289,16 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
         );
     }
 
-    // saveFieldValues..................................................................................................
+    // saveFormFieldValues..............................................................................................
 
     @Test
-    public void testSaveFieldValuesWithFormFieldWithCell() {
+    public void testSaveFormFieldValuesWithFormFieldWithCell() {
         final SpreadsheetEngineFormHandlerContext context = this.createContext();
 
         final SpreadsheetCellReference a1Cell = SpreadsheetSelection.A1;
         final String a1Value = "A1Value111";
 
-        this.saveFieldValuesAndCheck(
+        this.saveFormFieldValuesAndCheck(
                 context,
                 Lists.of(
                         FormField.<SpreadsheetExpressionReference>with(a1Cell)
@@ -321,13 +321,13 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
     private final static SpreadsheetLabelName A1LABEL = SpreadsheetSelection.labelName("A1LABEL");
 
     @Test
-    public void testSaveFieldValuesWithFormFieldWithLabel() {
+    public void testSaveFormFieldValuesWithFormFieldWithLabel() {
         final SpreadsheetEngineFormHandlerContext context = this.createContext();
 
         final SpreadsheetCellReference a1Cell = SpreadsheetSelection.A1;
         final String a1Value = "A1Value111";
 
-        this.saveFieldValuesAndCheck(
+        this.saveFormFieldValuesAndCheck(
                 context,
                 Lists.of(
                         FormField.<SpreadsheetExpressionReference>with(A1LABEL)
@@ -348,7 +348,7 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
     }
 
     @Test
-    public void testSaveFieldValuesWithFormFieldWithUnknownLabel() {
+    public void testSaveFormFieldValuesWithFormFieldWithUnknownLabel() {
         final SpreadsheetEngineFormHandlerContext context = this.createContext();
 
         final SpreadsheetCellReference a1Cell = SpreadsheetSelection.A1;
@@ -356,7 +356,7 @@ public final class SpreadsheetEngineFormHandlerContextTest implements Spreadshee
 
         assertThrows(
                 LabelNotFoundException.class,
-                () -> context.saveFieldValues(
+                () -> context.saveFormFieldValues(
                         Lists.of(
                                 FormField.<SpreadsheetExpressionReference>with(
                                                 SpreadsheetSelection.labelName("UNKNOWNLABEL")

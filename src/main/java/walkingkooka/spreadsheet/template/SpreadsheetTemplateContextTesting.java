@@ -90,12 +90,12 @@ public interface SpreadsheetTemplateContextTesting<C extends SpreadsheetTemplate
     // FormHandlerContextTesting........................................................................................
 
     @Override
-    default void testLoadFieldValueWithNullFails() {
+    default void testLoadFormFieldValueWithNullFails() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    default void testSaveFieldValuesWithNullFails() {
+    default void testSaveFormFieldValuesWithNullFails() {
         throw new UnsupportedOperationException();
     }
 

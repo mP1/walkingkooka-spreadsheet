@@ -159,12 +159,12 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExp
     }
 
     @Override
-    public Optional<Object> loadFieldValue(final SpreadsheetExpressionReference reference) {
+    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
         throw new UnsupportedOperationException();
     }
 

@@ -120,7 +120,7 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
     }
 
     @Override
-    public Optional<Object> loadFieldValue(final SpreadsheetExpressionReference reference) {
+    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
         if (reference.isCellRange()) {
@@ -156,15 +156,15 @@ final class SpreadsheetEngineFormHandlerContext implements SpreadsheetFormHandle
     }
 
     @Override
-    public SpreadsheetDelta saveFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-        return this.saveFieldValues0(
+    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+        return this.saveFormFieldValues0(
                 FormFieldList.with(
                         Objects.requireNonNull(fields, "fields")
                 )
         );
     }
 
-    private SpreadsheetDelta saveFieldValues0(final FormFieldList<SpreadsheetExpressionReference> fields) {
+    private SpreadsheetDelta saveFormFieldValues0(final FormFieldList<SpreadsheetExpressionReference> fields) {
         final SpreadsheetEngine engine = this.engine;
         final SpreadsheetEngineContext context = this.context;
 
