@@ -48,7 +48,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta> implements SpreadsheetExpressionEvaluationContext {
+public class FakeSpreadsheetExpressionEvaluationContext extends FakeValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> implements SpreadsheetExpressionEvaluationContext {
 
     public FakeSpreadsheetExpressionEvaluationContext() {
         super();

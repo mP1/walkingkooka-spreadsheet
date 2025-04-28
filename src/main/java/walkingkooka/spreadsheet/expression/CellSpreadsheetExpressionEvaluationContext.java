@@ -20,9 +20,11 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.validation.form.Form;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -88,6 +90,11 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     }
 
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................
+
+    @Override
+    public Form<SpreadsheetExpressionReference> form() {
+        return this.context.form();
+    }
 
     /**
      * All other {@link SpreadsheetExpressionEvaluationContext} methods are delegated to the wrapped.
