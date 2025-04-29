@@ -33,6 +33,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderDelegator;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderDelegator;
+import walkingkooka.validation.form.provider.FormHandlerProvider;
+import walkingkooka.validation.form.provider.FormHandlerProviderDelegator;
 import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviderDelegator;
 
@@ -46,6 +48,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
         SpreadsheetComparatorProviderDelegator,
         SpreadsheetExporterProviderDelegator,
+        FormHandlerProviderDelegator,
         SpreadsheetFormatterProviderDelegator,
         SpreadsheetImporterProviderDelegator,
         SpreadsheetParserProviderDelegator,
@@ -56,6 +59,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                                          final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                          final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                         final FormHandlerProvider formHandlerProvider,
                                          final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                          final SpreadsheetParserProvider spreadsheetParserProvider,
                                          final ValidatorProvider validatorProvider) {
@@ -65,6 +69,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 Objects.requireNonNull(spreadsheetComparatorProvider, "spreadsheetComparatorProvider"),
                 Objects.requireNonNull(spreadsheetExporterProvider, "spreadsheetExporterProvider"),
                 Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider"),
+                Objects.requireNonNull(formHandlerProvider, "formHandlerProvider"),
                 Objects.requireNonNull(spreadsheetImporterProvider, "spreadsheetImporterProvider"),
                 Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider"),
                 Objects.requireNonNull(validatorProvider, "validatorProvider")
@@ -76,6 +81,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                                      final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                      final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                      final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                     final FormHandlerProvider formHandlerProvider,
                                      final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                      final SpreadsheetParserProvider spreadsheetParserProvider,
                                      final ValidatorProvider validatorProvider) {
@@ -84,6 +90,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         this.spreadsheetComparatorProvider = spreadsheetComparatorProvider;
         this.spreadsheetExporterProvider = spreadsheetExporterProvider;
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
+        this.formHandlerProvider = formHandlerProvider;
         this.spreadsheetImporterProvider = spreadsheetImporterProvider;
         this.spreadsheetParserProvider = spreadsheetParserProvider;
         this.validatorProvider = validatorProvider;
@@ -125,6 +132,13 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     private final SpreadsheetFormatterProvider spreadsheetFormatterProvider;
 
     @Override
+    public FormHandlerProvider formHandlerProvider() {
+        return this.formHandlerProvider;
+    }
+
+    private final FormHandlerProvider formHandlerProvider;
+
+    @Override
     public SpreadsheetImporterProvider spreadsheetImporterProvider() {
         return this.spreadsheetImporterProvider;
     }
@@ -155,6 +169,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 this.spreadsheetComparatorProvider,
                 this.spreadsheetExporterProvider,
                 this.spreadsheetFormatterProvider,
+                this.formHandlerProvider,
                 this.spreadsheetImporterProvider,
                 this.spreadsheetParserProvider,
                 this.validatorProvider
@@ -174,6 +189,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 this.spreadsheetComparatorProvider.equals(other.spreadsheetComparatorProvider) &&
                 this.spreadsheetExporterProvider.equals(other.spreadsheetExporterProvider) &&
                 this.spreadsheetFormatterProvider.equals(other.spreadsheetFormatterProvider) &&
+                this.formHandlerProvider.equals(other.formHandlerProvider) &&
                 this.spreadsheetImporterProvider.equals(other.spreadsheetImporterProvider) &&
                 this.spreadsheetParserProvider.equals(other.spreadsheetParserProvider) &&
                 this.validatorProvider.equals(other.validatorProvider);
@@ -188,6 +204,8 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
                 this.spreadsheetComparatorProvider +
                 " " +
                 this.spreadsheetFormatterProvider +
+                " " +
+                this.formHandlerProvider +
                 " " +
                 this.spreadsheetImporterProvider +
                 " " +

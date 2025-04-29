@@ -79,6 +79,8 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerProvider;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProvider;
@@ -132,6 +134,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
     SpreadsheetExporterProvider SPREADSHEET_EXPORTER_PROVIDER = SpreadsheetExporterProviders.spreadsheetExport();
 
     SpreadsheetFormatterProvider SPREADSHEET_FORMATTER_PROVIDER = SpreadsheetFormatterProviders.spreadsheetFormatPattern();
+
+    FormHandlerProvider FORM_HANDLER_PROVIDER = FormHandlerProviders.validation();
 
     SpreadsheetImporterProvider SPREADSHEET_IMPORTER_PROVIDER = SpreadsheetImporterProviders.spreadsheetImport();
 
@@ -389,6 +393,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     SPREADSHEET_COMPARATOR_PROVIDER,
                     SPREADSHEET_EXPORTER_PROVIDER,
                     SPREADSHEET_FORMATTER_PROVIDER,
+                    FORM_HANDLER_PROVIDER,
                     SPREADSHEET_IMPORTER_PROVIDER,
                     SPREADSHEET_PARSER_PROVIDER,
                     VALIDATOR_PROVIDER

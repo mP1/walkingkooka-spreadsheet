@@ -32,6 +32,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderDelegator;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderDelegator;
+import walkingkooka.validation.form.provider.FormHandlerProvider;
+import walkingkooka.validation.form.provider.FormHandlerProviderDelegator;
 import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviderDelegator;
 
@@ -41,6 +43,7 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
         SpreadsheetComparatorProviderDelegator,
         SpreadsheetExporterProviderDelegator,
         SpreadsheetFormatterProviderDelegator,
+        FormHandlerProviderDelegator,
         SpreadsheetImporterProviderDelegator,
         SpreadsheetParserProviderDelegator,
         ValidatorProviderDelegator {
@@ -67,6 +70,11 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
 
     @Override
     default SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
+        return this.spreadsheetProvider();
+    }
+
+    @Override
+    default FormHandlerProvider formHandlerProvider() {
         return this.spreadsheetProvider();
     }
 

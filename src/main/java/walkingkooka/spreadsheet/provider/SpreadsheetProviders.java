@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.validation.form.provider.FormHandlerProvider;
 import walkingkooka.validation.provider.ValidatorProvider;
 
 public final class SpreadsheetProviders implements PublicStaticHelper {
@@ -38,6 +39,7 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
                                             final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                             final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                             final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                            final FormHandlerProvider formHandlerProvider,
                                             final SpreadsheetImporterProvider spreadsheetImporterProvider,
                                             final SpreadsheetParserProvider spreadsheetParserProvider,
                                             final ValidatorProvider validatorProvider) {
@@ -47,6 +49,7 @@ public final class SpreadsheetProviders implements PublicStaticHelper {
                 spreadsheetComparatorProvider,
                 spreadsheetExporterProvider,
                 spreadsheetFormatterProvider,
+                formHandlerProvider,
                 spreadsheetImporterProvider,
                 spreadsheetParserProvider,
                 validatorProvider

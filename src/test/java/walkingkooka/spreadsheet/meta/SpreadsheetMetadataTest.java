@@ -89,6 +89,8 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.VerticalAlign;
 import walkingkooka.tree.text.WordBreak;
 import walkingkooka.tree.text.WordWrap;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
@@ -758,7 +760,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-                "Metadata missing: comparators, converters, exporters, formatters, functions, importers, parsers, validators",
+                "Metadata missing: comparators, converters, exporters, formHandlers, formatters, functions, importers, parsers, validators",
                 thrown.getMessage()
         );
     }
@@ -776,6 +778,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 ).set(
                         SpreadsheetMetadataPropertyName.EXPORTERS,
                         SpreadsheetExporterAliasSet.parse("exporter1")
+                ).set(
+                        SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                        FormHandlerAliasSet.parse("formHandler1")
                 ).set(
                         SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                         ExpressionFunctionAliasSet.parse("function1")
@@ -829,6 +834,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetComparatorProviders.spreadsheetComparators(),
                 SpreadsheetExporterProviders.spreadsheetExport(),
                 SpreadsheetFormatterProviders.spreadsheetFormatPattern(),
+                FormHandlerProviders.validation(),
                 SpreadsheetImporterProviders.spreadsheetImport(),
                 SpreadsheetParserProviders.spreadsheetParsePattern(
                         SpreadsheetFormatterProviders.spreadsheetFormatPattern()

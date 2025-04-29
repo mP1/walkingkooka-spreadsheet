@@ -114,6 +114,8 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContexts;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -1182,6 +1184,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetComparatorAliasSet comparators = components.getOrNull(SpreadsheetMetadataPropertyName.COMPARATORS);
         final SpreadsheetExporterAliasSet exporters = components.getOrNull(SpreadsheetMetadataPropertyName.EXPORTERS);
         final SpreadsheetFormatterAliasSet formatters = components.getOrNull(SpreadsheetMetadataPropertyName.FORMATTERS);
+        final FormHandlerAliasSet formHandlers = components.getOrNull(SpreadsheetMetadataPropertyName.FORM_HANDLERS);
         final SpreadsheetImporterAliasSet importers = components.getOrNull(SpreadsheetMetadataPropertyName.IMPORTERS);
         final SpreadsheetParserAliasSet parsers = components.getOrNull(SpreadsheetMetadataPropertyName.PARSERS);
         final ValidatorAliasSet validators = components.getOrNull(SpreadsheetMetadataPropertyName.VALIDATORS);
@@ -1207,6 +1210,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 ),
                 SpreadsheetFormatterProviders.aliases(
                         formatters,
+                        provider
+                ),
+                FormHandlerProviders.aliases(
+                        formHandlers,
                         provider
                 ),
                 SpreadsheetImporterProviders.aliases(

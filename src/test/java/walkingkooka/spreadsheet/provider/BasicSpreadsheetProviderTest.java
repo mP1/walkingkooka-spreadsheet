@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -50,6 +51,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -67,6 +69,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -84,6 +87,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         null,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -101,6 +105,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         null,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -117,6 +122,25 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         EXPRESSION_FUNCTION_PROVIDER,
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
+                        null,
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                )
+        );
+    }
+
+    @Test
+    public void testWithNullFormHandlerProviderFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetProvider.with(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
                         null,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
@@ -135,6 +159,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         null,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -152,6 +177,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         null,
                         VALIDATOR_PROVIDER
@@ -169,6 +195,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         null
@@ -184,6 +211,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                 SPREADSHEET_COMPARATOR_PROVIDER,
                 SPREADSHEET_EXPORTER_PROVIDER,
                 SPREADSHEET_FORMATTER_PROVIDER,
+                FORM_HANDLER_PROVIDER,
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
@@ -200,6 +228,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -216,6 +245,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -232,6 +262,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SpreadsheetComparatorProviders.fake(),
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -248,6 +279,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SpreadsheetExporterProviders.fake(),
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -264,6 +296,24 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SpreadsheetFormatterProviders.fake(),
+                        FORM_HANDLER_PROVIDER,
+                        SPREADSHEET_IMPORTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        VALIDATOR_PROVIDER
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentFormHandlerProvider() {
+        this.checkNotEquals(
+                BasicSpreadsheetProvider.with(
+                        CONVERTER_PROVIDER,
+                        EXPRESSION_FUNCTION_PROVIDER,
+                        SPREADSHEET_COMPARATOR_PROVIDER,
+                        SPREADSHEET_EXPORTER_PROVIDER,
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        FormHandlerProviders.fake(),
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -280,6 +330,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SpreadsheetImporterProviders.fake(),
                         SPREADSHEET_PARSER_PROVIDER,
                         VALIDATOR_PROVIDER
@@ -296,6 +347,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SpreadsheetParserProviders.fake(),
                         VALIDATOR_PROVIDER
@@ -312,6 +364,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         SPREADSHEET_COMPARATOR_PROVIDER,
                         SPREADSHEET_EXPORTER_PROVIDER,
                         SPREADSHEET_FORMATTER_PROVIDER,
+                        FORM_HANDLER_PROVIDER,
                         SPREADSHEET_IMPORTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         ValidatorProviders.fake()
@@ -334,6 +387,7 @@ public final class BasicSpreadsheetProviderTest implements SpreadsheetProviderTe
                         EXPRESSION_FUNCTION_PROVIDER + " " +
                         SPREADSHEET_COMPARATOR_PROVIDER + " " +
                         SPREADSHEET_FORMATTER_PROVIDER + " " +
+                        FORM_HANDLER_PROVIDER + " " +
                         SPREADSHEET_IMPORTER_PROVIDER + " " +
                         SPREADSHEET_PARSER_PROVIDER + " " +
                         VALIDATOR_PROVIDER

@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.validation.form.provider.FormHandlerProvider;
 import walkingkooka.validation.provider.ValidatorProvider;
 
 /**
@@ -37,6 +38,7 @@ public interface SpreadsheetProvider extends ConverterProvider,
         SpreadsheetComparatorProvider,
         SpreadsheetExporterProvider,
         SpreadsheetFormatterProvider,
+        FormHandlerProvider,
         SpreadsheetParserProvider,
         SpreadsheetImporterProvider,
         ValidatorProvider {
