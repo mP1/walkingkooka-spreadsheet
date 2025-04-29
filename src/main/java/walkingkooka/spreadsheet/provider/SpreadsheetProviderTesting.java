@@ -25,11 +25,13 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;
+import walkingkooka.validation.form.provider.FormHandlerProviderTesting;
 
 public interface SpreadsheetProviderTesting<T extends SpreadsheetProvider> extends ConverterProviderTesting<T>,
         ExpressionFunctionProviderTesting<T, SpreadsheetExpressionEvaluationContext>,
         SpreadsheetComparatorProviderTesting<T>,
         SpreadsheetFormatterProviderTesting<T>,
+        FormHandlerProviderTesting<T>,
         SpreadsheetParserProviderTesting<T> {
 
     @Override
@@ -44,6 +46,11 @@ public interface SpreadsheetProviderTesting<T extends SpreadsheetProvider> exten
 
     @Override
     default T createSpreadsheetFormatterProvider() {
+        return this.createSpreadsheetProvider();
+    }
+
+    @Override
+    default T createFormHandlerProvider() {
         return this.createSpreadsheetProvider();
     }
 

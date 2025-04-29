@@ -51,6 +51,11 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector
 import walkingkooka.validation.ValidationReference;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
+import walkingkooka.validation.form.FormHandler;
+import walkingkooka.validation.form.FormHandlerContext;
+import walkingkooka.validation.form.provider.FormHandlerInfoSet;
+import walkingkooka.validation.form.provider.FormHandlerName;
+import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorInfoSet;
 import walkingkooka.validation.provider.ValidatorName;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -120,6 +125,26 @@ public class FakeSpreadsheetProvider extends FakeSpreadsheetFormatterProvider im
 
     @Override
     public SpreadsheetExporterInfoSet spreadsheetExporterInfos() {
+        throw new UnsupportedOperationException();
+    }
+
+    // FormHandlerContext...............................................................................................
+
+    @Override
+    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                   final ProviderContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerName name,
+                                                                                                                   final List<?> values,
+                                                                                                                   final ProviderContext providerContext) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public FormHandlerInfoSet formHandlerInfos() {
         throw new UnsupportedOperationException();
     }
 
