@@ -46,7 +46,7 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
     @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                           final ProviderContext context) {
-        Objects.requireNonNull(selector, "name");
+        Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
         return selector.evaluateValueText(
