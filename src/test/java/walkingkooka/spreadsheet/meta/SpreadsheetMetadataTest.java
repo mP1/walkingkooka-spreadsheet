@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -60,7 +61,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.ExpressionFunction;
@@ -801,7 +801,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     private SpreadsheetProvider spreadsheetProvider() {
-        final ExpressionFunction<?, ExpressionEvaluationContext> function1 = new FakeExpressionFunction<>() {
+        final ExpressionFunction<Object, SpreadsheetExpressionEvaluationContext> function1 = new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
             @Override
             public Optional<ExpressionFunctionName> name() {
                 return Optional.of(
@@ -812,7 +812,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
             @Override
             public Object apply(final List<Object> parameters,
-                                final ExpressionEvaluationContext context) {
+                                final SpreadsheetExpressionEvaluationContext context) {
                 return "Hello";
             }
         };

@@ -73,7 +73,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
                                                             final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
-                                                            final ExpressionFunctionProvider expressionFunctionProvider,
+                                                            final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                             final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
@@ -105,7 +105,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
                                                         final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
-                                                        final ExpressionFunctionProvider expressionFunctionProvider,
+                                                        final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                         final ProviderContext providerContext) {
         super();
         this.cell = cell;
@@ -239,10 +239,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
-        return this.expressionFunctionProvider.expressionFunction(
-                name,
-                Lists.empty(),
-                this.providerContext
+        return Cast.to(
+                this.expressionFunctionProvider.expressionFunction(
+                        name,
+                        Lists.empty(),
+                        this.providerContext
+                )
         );
     }
 
@@ -252,7 +254,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .isPure(this);
     }
 
-    private final ExpressionFunctionProvider expressionFunctionProvider;
+    private final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
     @Override
     public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,

@@ -286,7 +286,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
      */
-    private ExpressionFunctionProvider expressionFunctionProvider;
+    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
     @Override
     public boolean isPure(final ExpressionFunctionName function) {
