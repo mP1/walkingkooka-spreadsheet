@@ -34,7 +34,6 @@ import walkingkooka.template.TemplateContext;
 import walkingkooka.template.TemplateContextTesting2;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
@@ -206,11 +205,11 @@ public final class SpreadsheetTemplateContextTemplateContextTest implements Temp
                                 },
                                 SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
                                 FormHandlerContexts.fake(),
-                                new FakeExpressionFunctionProvider() {
+                                new FakeExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>() {
                                     @Override
-                                    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                                 final List<?> values,
-                                                                                                                 final ProviderContext context) {
+                                    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                                            final List<?> values,
+                                                                                                                            final ProviderContext context) {
                                         checkEquals(
                                                 "hello",
                                                 name.value(),

@@ -20,13 +20,14 @@ package walkingkooka.spreadsheet.provider;
 import walkingkooka.convert.provider.ConverterProviderTesting;
 import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderTesting;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;
 
 public interface SpreadsheetProviderTesting<T extends SpreadsheetProvider> extends ConverterProviderTesting<T>,
-        ExpressionFunctionProviderTesting<T>,
+        ExpressionFunctionProviderTesting<T, SpreadsheetExpressionEvaluationContext>,
         SpreadsheetComparatorProviderTesting<T>,
         SpreadsheetFormatterProviderTesting<T>,
         SpreadsheetParserProviderTesting<T> {

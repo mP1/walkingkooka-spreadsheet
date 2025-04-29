@@ -184,11 +184,11 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
     };
 
-    private final ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider() {
+    private final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider<>() {
 
         @Override
-        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                     final ProviderContext context) {
+        public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                                final ProviderContext context) {
             Objects.requireNonNull(selector, "selector");
             Objects.requireNonNull(context, "context");
 
@@ -199,9 +199,9 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         }
 
         @Override
-        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName n,
-                                                                                     final List<?> v,
-                                                                                     final ProviderContext c) {
+        public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName n,
+                                                                                                final List<?> v,
+                                                                                                final ProviderContext c) {
             Objects.requireNonNull(n, "name");
 
             if (CONCAT.name().get().equals(n)) {
