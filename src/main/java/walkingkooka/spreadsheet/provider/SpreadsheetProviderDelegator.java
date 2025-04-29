@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderDelegator;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviderDelegator;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderDelegator;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
@@ -36,7 +37,7 @@ import walkingkooka.validation.provider.ValidatorProviderDelegator;
 
 public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
         ConverterProviderDelegator,
-        ExpressionFunctionProviderDelegator,
+        ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
         SpreadsheetComparatorProviderDelegator,
         SpreadsheetExporterProviderDelegator,
         SpreadsheetFormatterProviderDelegator,
@@ -50,7 +51,7 @@ public interface SpreadsheetProviderDelegator extends SpreadsheetProvider,
     }
 
     @Override
-    default ExpressionFunctionProvider expressionFunctionProvider() {
+    default ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
         return this.spreadsheetProvider();
     }
 

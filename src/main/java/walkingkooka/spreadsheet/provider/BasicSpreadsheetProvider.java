@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderDelegator;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviderDelegator;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderDelegator;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
@@ -42,7 +43,7 @@ import java.util.Objects;
  */
 final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         ConverterProviderDelegator,
-        ExpressionFunctionProviderDelegator,
+        ExpressionFunctionProviderDelegator<SpreadsheetExpressionEvaluationContext>,
         SpreadsheetComparatorProviderDelegator,
         SpreadsheetExporterProviderDelegator,
         SpreadsheetFormatterProviderDelegator,
@@ -51,7 +52,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
         ValidatorProviderDelegator {
 
     static BasicSpreadsheetProvider with(final ConverterProvider converterProvider,
-                                         final ExpressionFunctionProvider expressionFunctionProvider,
+                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                          final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                          final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                          final SpreadsheetFormatterProvider spreadsheetFormatterProvider,

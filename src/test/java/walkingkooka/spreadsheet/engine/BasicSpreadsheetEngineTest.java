@@ -101,7 +101,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -343,10 +342,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static String TEST_VALUE = "BasicSpreadsheetEngineTestValue";
 
-    private final static ExpressionFunctionProvider EXPRESSION_FUNCTION_PROVIDER = new FakeExpressionFunctionProvider() {
+    private final static ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = new FakeExpressionFunctionProvider<>() {
 
         @Override
-        public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+        public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                      final List<?> values,
                                                                                      final ProviderContext context) {
             switch (name.value()) {
@@ -354,7 +353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
-                                            final ExpressionEvaluationContext context) {
+                                            final SpreadsheetExpressionEvaluationContext context) {
                             assertEquals(
                                     Lists.empty(),
                                     parameters,
@@ -362,8 +361,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             );
 
                             return Boolean.valueOf(
-                                    SpreadsheetExpressionEvaluationContext.class.cast(context)
-                                            .cellOrFail()
+                                    context.cellOrFail()
                                             .formula()
                                             .text()
                             );
@@ -386,7 +384,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
-                                            final ExpressionEvaluationContext context) {
+                                            final SpreadsheetExpressionEvaluationContext context) {
                             return NUMBER.getOrFail(
                                     parameters,
                                     0
@@ -411,7 +409,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
-                                            final ExpressionEvaluationContext context) {
+                                            final SpreadsheetExpressionEvaluationContext context) {
                             return STRING.getOrFail(
                                     parameters,
                                     0
@@ -436,7 +434,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
-                                            final ExpressionEvaluationContext context) {
+                                            final SpreadsheetExpressionEvaluationContext context) {
                             return parameters.stream()
                                     .filter(Objects::nonNull)
                                     .map(ExpressionNumber.class::cast)
@@ -460,7 +458,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return new FakeExpressionFunction<>() {
                         @Override
                         public Object apply(final List<Object> parameters,
-                                            final ExpressionEvaluationContext context) {
+                                            final SpreadsheetExpressionEvaluationContext context) {
                             return VALUE;
                         }
 
