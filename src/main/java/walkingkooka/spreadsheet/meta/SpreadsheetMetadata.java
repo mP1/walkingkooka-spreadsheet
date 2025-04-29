@@ -636,8 +636,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link ExpressionFunctionProvider} that applies the {@link ExpressionFunctionAliasSet} for the given
      * {@link SpreadsheetMetadataPropertyName}.
      */
-    public final ExpressionFunctionProvider expressionFunctionProvider(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> propertyName,
-                                                                       final ExpressionFunctionProvider provider) {
+    public final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> propertyName,
+                                                                                                               final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> provider) {
         Objects.requireNonNull(propertyName, "propertyName");
         Objects.requireNonNull(provider, "provider");
 

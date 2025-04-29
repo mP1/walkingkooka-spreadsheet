@@ -72,7 +72,7 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     }
 
     private BasicSpreadsheetProvider(final ConverterProvider converterProvider,
-                                     final ExpressionFunctionProvider expressionFunctionProvider,
+                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                      final SpreadsheetComparatorProvider spreadsheetComparatorProvider,
                                      final SpreadsheetExporterProvider spreadsheetExporterProvider,
                                      final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
@@ -97,11 +97,11 @@ final class BasicSpreadsheetProvider implements SpreadsheetProvider,
     private final ConverterProvider converterProvider;
 
     @Override
-    public ExpressionFunctionProvider expressionFunctionProvider() {
+    public ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
         return expressionFunctionProvider;
     }
 
-    private final ExpressionFunctionProvider expressionFunctionProvider;
+    private final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
     @Override
     public SpreadsheetComparatorProvider spreadsheetComparatorProvider() {

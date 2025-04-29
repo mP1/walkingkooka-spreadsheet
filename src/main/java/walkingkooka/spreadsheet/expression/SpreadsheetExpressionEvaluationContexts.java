@@ -52,7 +52,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                                final SpreadsheetConverterContext spreadsheetConverterContext,
                                                                final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
-                                                               final ExpressionFunctionProvider expressionFunctionProvider,
+                                                               final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
                 cell,
