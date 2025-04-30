@@ -2219,7 +2219,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case CELLS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setCells(
-                            unmarshallCsv(
+                            unmarshallReferenceTo(
                                     child,
                                     SpreadsheetCell.class,
                                     context
@@ -2228,7 +2228,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case COLUMNS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setColumns(
-                            unmarshallCsv(
+                            unmarshallReferenceTo(
                                     child,
                                     SpreadsheetColumn.class,
                                     context
@@ -2253,7 +2253,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case ROWS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setRows(
-                            unmarshallCsv(
+                            unmarshallReferenceTo(
                                     child,
                                     SpreadsheetRow.class,
                                     context
@@ -2387,9 +2387,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 .collect(Collectors.toCollection(Sets::ordered));
     }
 
-    private static <T> Set<T> unmarshallCsv(final JsonNode node,
-                                            final Class<T> type,
-                                            final JsonNodeUnmarshallContext context) {
+    private static <T> Set<T> unmarshallReferenceTo(final JsonNode node,
+                                                    final Class<T> type,
+                                                    final JsonNodeUnmarshallContext context) {
 
         final Set<T> cells = Sets.ordered();
 
