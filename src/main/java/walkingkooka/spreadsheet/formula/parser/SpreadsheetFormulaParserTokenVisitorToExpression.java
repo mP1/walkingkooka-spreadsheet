@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.formula.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserException;
+import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -54,7 +54,7 @@ final class SpreadsheetFormulaParserTokenVisitorToExpression extends Spreadsheet
     }
 
     private static Optional<Expression> fail(final int count, final List<Expression> nodes) {
-        throw new SpreadsheetParserException("Expected either 0 or 1 Expressions but got " + count + "=" + nodes);
+        throw new ParserException("Expected either 0 or 1 Expressions but got " + count + "=" + nodes);
     }
 
     // @VisibleForTesting
