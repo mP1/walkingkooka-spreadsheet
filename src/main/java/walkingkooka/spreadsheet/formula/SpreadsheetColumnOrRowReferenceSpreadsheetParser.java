@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.formula;
 
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserException;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RequiredParser;
 
@@ -138,7 +138,7 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                     )
             );
         } catch (final RuntimeException cause) {
-            throw new SpreadsheetParserException(
+            throw new ParserException(
                     cause.getMessage(),
                     cause
             );
