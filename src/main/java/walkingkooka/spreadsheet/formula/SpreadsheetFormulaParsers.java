@@ -795,6 +795,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
 
     /**
      * Given a column letter such as A or B, returns the numeric column number, so A returns 0, B = 2 etc.
+     * A value of -1 is returned if the column letter code is invalid.
      */
     public static int columnLetterValue(final char c) {
         final int digit = Character.toUpperCase(c) - 'A';
