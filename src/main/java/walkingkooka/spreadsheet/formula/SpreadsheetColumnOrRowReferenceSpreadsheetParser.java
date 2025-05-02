@@ -54,14 +54,18 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
 
         if (cursor.isNotEmpty()) {
             final TextCursorSavePoint save = cursor.save();
-            SpreadsheetReferenceKind absoluteOrRelativer = SpreadsheetReferenceKind.RELATIVE;
+            SpreadsheetReferenceKind absoluteOrRelative = SpreadsheetReferenceKind.RELATIVE;
 
             final char c = cursor.at();
             if (SpreadsheetReferenceKind.ABSOLUTE_PREFIX == c) {
-                absoluteOrRelativer = SpreadsheetReferenceKind.ABSOLUTE;
+                absoluteOrRelative = SpreadsheetReferenceKind.ABSOLUTE;
                 cursor.next();
             }
-            result = this.parseReference(cursor, absoluteOrRelativer, save);
+            result = this.parseReference(
+                    cursor,
+                    absoluteOrRelative,
+                    save
+            );
             if (!result.isPresent()) {
                 save.restore();
             }
@@ -81,13 +85,23 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
 
         for (; ; ) {
             if (cursor.isEmpty()) {
-                result = token(digitCounter, absoluteOrRelative, value - 1, save);
+                result = token(
+                        digitCounter,
+                        absoluteOrRelative,
+                        value - 1,
+                        save
+                );
                 break;
             }
 
             final int digit = valueFromDigit(cursor.at());
             if (-1 == digit) {
-                result = token(digitCounter, absoluteOrRelative, value - 1, save);
+                result = token(
+                        digitCounter,
+                        absoluteOrRelative,
+                        value - 1,
+                        save
+                );
                 break;
             }
 
@@ -116,7 +130,13 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                                          final int value,
                                          final TextCursorSavePoint save) {
         try {
-            return Optional.of(this.token1(absoluteOrRelative, value, save.textBetween().toString()));
+            return Optional.of(
+                    this.token1(
+                            absoluteOrRelative,
+                            value,
+                            save.textBetween().toString()
+                    )
+            );
         } catch (final RuntimeException cause) {
             throw new SpreadsheetParserException(
                     cause.getMessage(),
