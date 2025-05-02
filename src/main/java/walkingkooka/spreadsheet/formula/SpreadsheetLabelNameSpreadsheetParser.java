@@ -61,18 +61,20 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
     public Optional<ParserToken> parse(final TextCursor cursor, final SpreadsheetParserContext context) {
         final TextCursorSavePoint save = cursor.save();
         final Optional<ParserToken> stringParserToken = LABEL.parse(cursor, context);
-        return stringParserToken.isPresent() ?
-                token(
-                        cursor,
-                        stringParserToken.get(),
-                        save
-                ) :
-                Optional.empty();
+        return Optional.ofNullable(
+                stringParserToken.isPresent() ?
+                        token(
+                                cursor,
+                                stringParserToken.get(),
+                                save
+                        ) :
+                        null
+        );
     }
 
-    private static Optional<ParserToken> token(final TextCursor cursor,
-                                               final ParserToken stringParserToken,
-                                               final TextCursorSavePoint save) {
+    private static ParserToken token(final TextCursor cursor,
+                                     final ParserToken stringParserToken,
+                                     final TextCursorSavePoint save) {
         ParserToken token = null;
 
         // if the label is followed by a dollar-sign, abort, its probably a cell eg: A$1
@@ -90,7 +92,7 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
             save.restore();
         }
 
-        return Optional.ofNullable(token);
+        return token;
     }
 
     // @see SpreadsheetLabelName
