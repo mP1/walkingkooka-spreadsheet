@@ -57,7 +57,7 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
             SpreadsheetReferenceKind absoluteOrRelativer = SpreadsheetReferenceKind.RELATIVE;
 
             final char c = cursor.at();
-            if ('$' == c) {
+            if (SpreadsheetReferenceKind.ABSOLUTE_PREFIX == c) {
                 absoluteOrRelativer = SpreadsheetReferenceKind.ABSOLUTE;
                 cursor.next();
             }
