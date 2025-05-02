@@ -58,7 +58,8 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
     }
 
     @Override
-    public Optional<ParserToken> parse(final TextCursor cursor, final SpreadsheetParserContext context) {
+    public Optional<ParserToken> parse(final TextCursor cursor,
+                                       final SpreadsheetParserContext context) {
         final TextCursorSavePoint save = cursor.save();
         final Optional<ParserToken> stringParserToken = LABEL.parse(cursor, context);
         return Optional.ofNullable(
@@ -97,12 +98,21 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
 
     // @see SpreadsheetLabelName
     static {
-        @SuppressWarnings("UnnecessaryLocalVariable") final CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
+        @SuppressWarnings("UnnecessaryLocalVariable") final CharPredicate LETTER = CharPredicates.range(
+                'A',
+                'Z'
+        ).or(
+                CharPredicates.range('a', 'z')
+        );
 
         @SuppressWarnings("UnnecessaryLocalVariable") final CharPredicate INITIAL = LETTER;
 
         final CharPredicate DIGIT = CharPredicates.range('0', '9');
-        final CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('_')));
+        final CharPredicate PART = INITIAL.or(
+                DIGIT.or(
+                        CharPredicates.is('_')
+                )
+        );
 
         LABEL = Parsers.initialAndPartCharPredicateString(
                 INITIAL,
