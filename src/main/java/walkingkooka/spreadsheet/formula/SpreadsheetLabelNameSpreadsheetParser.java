@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -75,7 +76,7 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
         ParserToken token = null;
 
         // if the label is followed by a dollar-sign, abort, its probably a cell eg: A$1
-        if (cursor.isEmpty() || '$' != cursor.at()) {
+        if (cursor.isEmpty() || SpreadsheetReferenceKind.ABSOLUTE_PREFIX != cursor.at()) {
             final String text = stringParserToken.text();
             if (SpreadsheetSelection.isLabelText(text)) {
                 token = SpreadsheetFormulaParserToken.label(

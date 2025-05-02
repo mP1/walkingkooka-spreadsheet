@@ -134,7 +134,7 @@ public enum SpreadsheetReferenceKind {
     // only called by {@link SpreadsheetRowReference#toString()} or {@link SpreadsheetColumnReference#toString()}
     abstract String prefix();
 
-    final static char ABSOLUTE_PREFIX = '$';
+    public final static char ABSOLUTE_PREFIX = '$';
 
     public abstract SpreadsheetReferenceKind flip();
 
