@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.formula;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
@@ -40,8 +41,9 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
     /**
      * Package private ctor use singleton
      */
-    SpreadsheetColumnOrRowReferenceSpreadsheetParser() {
+    SpreadsheetColumnOrRowReferenceSpreadsheetParser(final boolean required) {
         super();
+        this.required = required;
     }
 
     // optional dollar sign
@@ -66,7 +68,17 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                     absoluteOrRelative,
                     save
             );
-            if (!result.isPresent()) {
+            if (false == result.isPresent()) {
+                if (this.isRequired()) {
+                    if(cursor.lineInfo().textOffset() != save.lineInfo().textOffset()) {
+                        final InvalidCharacterException ice = cursor.lineInfo()
+                                .invalidCharacterException()
+                                .orElse(null);
+                        if(null != ice) {
+                            throw ice;
+                        }
+                    }
+                }
                 save.restore();
             }
         }
@@ -154,5 +166,29 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
         Objects.requireNonNull(context, "context");
 
         return NO_TOKENS;
+    }
+
+    @Override
+    public boolean isOptional() {
+        return false == this.isRequired();
+    }
+
+    @Override
+    public boolean isRequired() {
+        return this.required;
+    }
+
+    private final boolean required;
+
+    @Override
+    public int minCount() {
+        return this.isRequired() ?
+                1 :
+                0;
+    }
+
+    @Override
+    public int maxCount() {
+        return 1;
     }
 }

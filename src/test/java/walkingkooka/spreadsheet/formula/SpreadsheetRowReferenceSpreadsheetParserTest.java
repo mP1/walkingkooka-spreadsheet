@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.formula;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -42,8 +43,16 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
     }
 
     @Test
-    public void testParseDollarFails2() {
-        this.parseFailAndCheck("$ABC");
+    public void testParseDollarColumnFails() {
+        final String text = "$ABC";
+
+        this.parseThrows(
+                text,
+                new InvalidCharacterException(
+                        text,
+                        1
+                ).getMessage()
+        );
     }
 
     @Test
