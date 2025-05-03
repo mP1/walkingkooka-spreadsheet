@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserTok
 import walkingkooka.spreadsheet.formula.parser.TimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -131,6 +132,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 parserValueType, // parserValueType
                 parser, // parser
                 (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
                         scc,
                         scc,
                         '0' // valueSeparator not required because not parsing multiple values.

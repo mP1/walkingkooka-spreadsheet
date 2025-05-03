@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.template;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -34,6 +35,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
@@ -62,6 +65,12 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
 
     @Override
     default Optional<SpreadsheetCell> cell() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                final TextCursor cursor) {
         throw new UnsupportedOperationException();
     }
 

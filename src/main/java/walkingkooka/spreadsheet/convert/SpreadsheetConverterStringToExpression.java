@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationCo
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -59,6 +60,7 @@ final class SpreadsheetConverterStringToExpression extends SpreadsheetConverter 
                             .parseText(
                                     value.toString(),
                                     SpreadsheetParserContexts.basic(
+                                            InvalidCharacterExceptionFactory.POSITION,
                                             context,
                                             context,
                                             ';' // valueSeparator

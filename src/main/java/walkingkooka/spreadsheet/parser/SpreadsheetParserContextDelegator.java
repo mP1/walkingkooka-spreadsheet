@@ -17,8 +17,11 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContextDelegator;
 
@@ -42,6 +45,16 @@ public interface SpreadsheetParserContextDelegator extends SpreadsheetParserCont
     @Override
     default ExpressionNumberContext expressionNumberContext() {
         return this.spreadsheetParserContext();
+    }
+
+    @Override
+    default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                final TextCursor cursor) {
+        return this.spreadsheetParserContext()
+                .invalidCharacterException(
+                        parser,
+                        cursor
+                );
     }
 
     @Override

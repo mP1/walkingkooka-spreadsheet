@@ -28,6 +28,16 @@ import java.math.MathContext;
 public final class BasicSpreadsheetFormatParserContextTest implements ClassTesting2<BasicSpreadsheetFormatParserContext>,
         SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext> {
 
+    @Override
+    public void testInvalidCharacterExceptionWithNullParserFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testInvalidCharacterExceptionWithNullTextCursorFails() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     public void testLocale() {
         this.hasLocaleAndCheck(BasicSpreadsheetFormatParserContext.INSTANCE, this.decimalNumberContext().locale());

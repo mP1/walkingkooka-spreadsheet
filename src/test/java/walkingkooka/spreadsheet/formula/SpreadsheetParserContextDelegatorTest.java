@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextDelegator;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContextTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -88,6 +89,7 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
         @Override
         public SpreadsheetParserContext spreadsheetParserContext() {
             return SpreadsheetParserContexts.basic(
+                    InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
                     DateTimeContexts.locale(
                             Locale.ENGLISH,
                             1950, // defaultYear

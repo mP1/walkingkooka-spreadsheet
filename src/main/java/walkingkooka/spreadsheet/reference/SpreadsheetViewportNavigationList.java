@@ -36,6 +36,7 @@ import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.LongParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -435,6 +436,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     );
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+            InvalidCharacterExceptionFactory.POSITION,
             DateTimeContexts.fake(),
             ExpressionNumberContexts.basic(
                     ExpressionNumberKind.BIG_DECIMAL,

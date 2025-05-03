@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -339,7 +340,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
             private final Converter<ExpressionNumberConverterContext> converter = Converters.parser(
                     BigDecimal.class,
                     Parsers.bigDecimal(),
-                    (c) -> ParserContexts.basic(c, c),
+                    (c) -> ParserContexts.basic(
+                            InvalidCharacterExceptionFactory.POSITION,
+                            c,
+                            c
+                    ),
                     (t, c) -> t.cast(BigDecimalParserToken.class).value()
             );
         };

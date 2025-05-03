@@ -23,6 +23,7 @@ import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -44,6 +45,7 @@ public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetPars
     @Override
     public final SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.basic(
+                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
                 this.dateTimeContext(),
                 ExpressionNumberContexts.basic(
                         EXPRESSION_NUMBER_KIND,
