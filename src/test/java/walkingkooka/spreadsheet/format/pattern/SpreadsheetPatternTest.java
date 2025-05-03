@@ -51,6 +51,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -1531,6 +1532,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 .parse(
                         TextCursors.charSequence(text),
                         SpreadsheetParserContexts.basic(
+                                InvalidCharacterExceptionFactory.POSITION,
                                 DateTimeContexts.fake(),
                                 ExpressionNumberContexts.basic(
                                         kind,

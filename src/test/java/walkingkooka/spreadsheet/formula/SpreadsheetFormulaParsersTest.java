@@ -85,6 +85,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.DoubleParserToken;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.LocalDateParserToken;
 import walkingkooka.text.cursor.parser.LocalDateTimeParserToken;
 import walkingkooka.text.cursor.parser.LocalTimeParserToken;
@@ -4055,7 +4056,11 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     }
 
     private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
-        final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c, c);
+        final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                c,
+                c
+        );
 
         final Converter<ExpressionNumberConverterContext> stringDouble = Converters.parser(
                 Double.class,

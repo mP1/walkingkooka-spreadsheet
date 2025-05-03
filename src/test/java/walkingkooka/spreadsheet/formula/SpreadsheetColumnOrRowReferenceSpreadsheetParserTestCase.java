@@ -23,6 +23,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -52,6 +53,7 @@ public abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<P
     @Override
     public final SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
                 this.dateTimeContext(),
                 ExpressionNumberContexts.basic(
                         EXPRESSION_NUMBER_KIND,

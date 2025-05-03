@@ -99,6 +99,7 @@ import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -23253,6 +23254,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 ).orFailIfCursorNotEmpty(ParserReporters.basic())
                                 .parse(TextCursors.charSequence(text),
                                         SpreadsheetParserContexts.basic(
+                                                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
                                                 this.dateTimeContext(),
                                                 ExpressionNumberContexts.basic(
                                                         EXPRESSION_NUMBER_KIND,

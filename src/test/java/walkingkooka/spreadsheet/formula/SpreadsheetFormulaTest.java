@@ -50,6 +50,7 @@ import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -1517,6 +1518,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private SpreadsheetParserContext parserContext() {
         return SpreadsheetParserContexts.basic(
+                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
                 DateTimeContexts.locale(
                         Locale.forLanguageTag("EN-AU"), // locale
                         1920,

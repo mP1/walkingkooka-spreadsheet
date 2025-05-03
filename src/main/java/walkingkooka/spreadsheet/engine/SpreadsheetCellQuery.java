@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.HasText;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -101,6 +102,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+            InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
             DateTimeContexts.fake(),
             ExpressionNumberContexts.basic(
                     EXPRESSION_NUMBER_KIND,

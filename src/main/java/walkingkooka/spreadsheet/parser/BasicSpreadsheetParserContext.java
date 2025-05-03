@@ -17,14 +17,18 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContextDelegator;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 /**
  * A {@link SpreadsheetParserContext} without any functionality.
@@ -36,15 +40,14 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     /**
      * Creates a new {@link BasicSpreadsheetParserContext}.
      */
-    static BasicSpreadsheetParserContext with(final DateTimeContext dateTimeContext,
+    static BasicSpreadsheetParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                                              final DateTimeContext dateTimeContext,
                                               final ExpressionNumberContext expressionNumberContext,
                                               final char valueSeparator) {
-        Objects.requireNonNull(dateTimeContext, "dateTimeContext");
-        Objects.requireNonNull(expressionNumberContext, "expressionNumberContext");
-
         return new BasicSpreadsheetParserContext(
-                dateTimeContext,
-                expressionNumberContext,
+                Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory"),
+                Objects.requireNonNull(dateTimeContext, "dateTimeContext"),
+                Objects.requireNonNull(expressionNumberContext, "expressionNumberContext"),
                 valueSeparator
         );
     }
@@ -52,10 +55,12 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     /**
      * Private ctor use factory
      */
-    private BasicSpreadsheetParserContext(final DateTimeContext dateTimeContext,
+    private BasicSpreadsheetParserContext(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                                          final DateTimeContext dateTimeContext,
                                           final ExpressionNumberContext expressionNumberContext,
                                           final char valueSeparator) {
         super();
+        this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
         this.dateTimeContext = dateTimeContext;
         this.expressionNumberContext = expressionNumberContext;
         this.valueSeparator = valueSeparator;
@@ -67,6 +72,17 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     }
 
     private final char valueSeparator;
+
+    @Override
+    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                               final TextCursor cursor) {
+        return this.invalidCharacterExceptionFactory.apply(
+                parser,
+                cursor
+        );
+    }
+
+    private final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory;
 
     @Override
     public Locale locale() {
@@ -93,6 +109,12 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
 
     @Override
     public String toString() {
-        return this.dateTimeContext + " " + this.expressionNumberContext + " " + CharSequences.quoteIfChars(this.valueSeparator);
+        return this.invalidCharacterExceptionFactory +
+                " " +
+                this.dateTimeContext +
+                " " +
+                this.expressionNumberContext +
+                " " +
+                CharSequences.quoteIfChars(this.valueSeparator);
     }
 }

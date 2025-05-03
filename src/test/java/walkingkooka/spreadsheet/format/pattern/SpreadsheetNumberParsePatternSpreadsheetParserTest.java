@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -597,6 +598,7 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
     @Override
     public SpreadsheetParserContext createContext() {
         return SpreadsheetParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 ExpressionNumberContexts.basic(
                         ExpressionNumberKind.BIG_DECIMAL,

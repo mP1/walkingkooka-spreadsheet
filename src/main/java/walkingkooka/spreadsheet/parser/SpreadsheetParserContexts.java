@@ -17,19 +17,26 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
+
+import java.util.function.BiFunction;
 
 public final class SpreadsheetParserContexts implements PublicStaticHelper {
 
     /**
      * {@see BasicSpreadsheetParserContext}
      */
-    public static SpreadsheetParserContext basic(final DateTimeContext dateTimeContext,
+    public static SpreadsheetParserContext basic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                                                 final DateTimeContext dateTimeContext,
                                                  final ExpressionNumberContext expressionNumberContext,
                                                  final char valueSeparator) {
         return BasicSpreadsheetParserContext.with(
+                invalidCharacterExceptionFactory,
                 dateTimeContext,
                 expressionNumberContext,
                 valueSeparator

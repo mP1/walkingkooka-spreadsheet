@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.template;
 
 import walkingkooka.Either;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -36,6 +37,7 @@ import walkingkooka.storage.StorageStore;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -92,6 +94,16 @@ final class BasicSpreadsheetTemplateContext implements SpreadsheetTemplateContex
     }
 
     // SpreadsheetParserContext.........................................................................................
+
+    @Override
+    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                               final TextCursor cursor) {
+        return this.spreadsheetParserContext()
+                .invalidCharacterException(
+                        parser,
+                        cursor
+                );
+    }
 
     @Override
     public SpreadsheetParserContext spreadsheetParserContext() {

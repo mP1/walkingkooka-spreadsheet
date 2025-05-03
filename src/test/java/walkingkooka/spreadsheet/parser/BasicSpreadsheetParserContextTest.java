@@ -18,24 +18,31 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.util.Locale;
+import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
         SpreadsheetParserContextTesting<BasicSpreadsheetParserContext>,
         ToStringTesting<BasicSpreadsheetParserContext> {
+
+    private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY = InvalidCharacterExceptionFactory.POSITION;
 
     private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.fake();
 
@@ -67,8 +74,23 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static char VALUE_SEPARATOR = ',';
 
     @Test
+    public void testWithNullInvalidCharacterExceptionFactoryFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetParserContext.with(
+                        null,
+                        DATE_TIME_CONTEXT,
+                        EXPRESSION_NUMBER_CONTEXT,
+                        VALUE_SEPARATOR)
+        );
+    }
+
+    @Test
     public void testWithNullDateTimeContextFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetParserContext.with(
+                INVALID_CHARACTER_EXCEPTION_FACTORY,
                 null,
                 EXPRESSION_NUMBER_CONTEXT,
                 VALUE_SEPARATOR)
@@ -77,10 +99,14 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
 
     @Test
     public void testWithNullExpressionNumberContextFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetParserContext.with(
+                INVALID_CHARACTER_EXCEPTION_FACTORY,
                 DATE_TIME_CONTEXT,
                 null,
-                VALUE_SEPARATOR)
+                VALUE_SEPARATOR
+                )
         );
     }
 
@@ -99,13 +125,14 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                DATE_TIME_CONTEXT + " " + EXPRESSION_NUMBER_CONTEXT + " ','"
+                INVALID_CHARACTER_EXCEPTION_FACTORY + " " + DATE_TIME_CONTEXT + " " + EXPRESSION_NUMBER_CONTEXT + " ','"
         );
     }
 
     @Override
     public BasicSpreadsheetParserContext createContext() {
         return BasicSpreadsheetParserContext.with(
+                INVALID_CHARACTER_EXCEPTION_FACTORY,
                 DATE_TIME_CONTEXT,
                 EXPRESSION_NUMBER_CONTEXT,
                 VALUE_SEPARATOR

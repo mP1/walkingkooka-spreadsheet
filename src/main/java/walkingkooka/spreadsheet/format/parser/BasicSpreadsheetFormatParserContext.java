@@ -17,8 +17,11 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
@@ -65,6 +68,12 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     @Override
     public char groupSeparator() {
         return this.context.groupSeparator();
+    }
+
+    @Override
+    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                               final TextCursor cursor) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
