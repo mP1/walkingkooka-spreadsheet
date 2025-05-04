@@ -22,11 +22,22 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 
 import java.math.MathContext;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class BasicSpreadsheetFormatParserContextTest implements ClassTesting2<BasicSpreadsheetFormatParserContext>,
         SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext> {
+
+    @Test
+    public void testWithNullInvalidCharacterExceptionFactoryFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicSpreadsheetFormatParserContext.with(null)
+        );
+    }
 
     @Override
     public void testInvalidCharacterExceptionWithNullParserFails() {
@@ -40,17 +51,24 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
 
     @Test
     public void testLocale() {
-        this.hasLocaleAndCheck(BasicSpreadsheetFormatParserContext.INSTANCE, this.decimalNumberContext().locale());
+        this.hasLocaleAndCheck(
+                this.createContext(),
+                this.decimalNumberContext()
+                        .locale()
+        );
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(BasicSpreadsheetFormatParserContext.INSTANCE, DecimalNumberContexts.american(MathContext.UNLIMITED).toString());
+        this.toStringAndCheck(
+                this.createContext(),
+                InvalidCharacterExceptionFactory.POSITION + " " + DecimalNumberContexts.american(MathContext.UNLIMITED).toString()
+        );
     }
 
     @Override
     public BasicSpreadsheetFormatParserContext createContext() {
-        return BasicSpreadsheetFormatParserContext.INSTANCE;
+        return BasicSpreadsheetFormatParserContext.with(InvalidCharacterExceptionFactory.POSITION);
     }
 
     @Override

@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -109,8 +110,10 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     private SpreadsheetFormatter formatter(final String pattern) {
         return SpreadsheetFormatParsers.numberFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(NumberSpreadsheetFormatParserToken.class))
+                .parse(
+                        TextCursors.charSequence(pattern),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(NumberSpreadsheetFormatParserToken.class))
                 .map(SpreadsheetFormatters::number)
                 .orElseThrow(UnsupportedOperationException::new);
     }

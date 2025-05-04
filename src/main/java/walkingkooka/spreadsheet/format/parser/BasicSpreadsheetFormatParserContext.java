@@ -27,16 +27,23 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.function.BiFunction;
 
 /**
  * A {@link SpreadsheetFormatParserContext} without any functionality.
  */
 final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatParserContext {
 
-    static final BasicSpreadsheetFormatParserContext INSTANCE = new BasicSpreadsheetFormatParserContext();
+    static BasicSpreadsheetFormatParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory){
+        return new BasicSpreadsheetFormatParserContext(
+                Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory")
+        );
+    }
 
-    private BasicSpreadsheetFormatParserContext() {
+    private BasicSpreadsheetFormatParserContext(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
         super();
+        this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
         this.context = DecimalNumberContexts.american(MathContext.UNLIMITED);
     }
 
@@ -73,8 +80,13 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     @Override
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                final TextCursor cursor) {
-        throw new UnsupportedOperationException();
+        return this.invalidCharacterExceptionFactory.apply(
+                parser,
+                cursor
+        );
     }
+
+    private final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory;
 
     @Override
     public Locale locale() {
@@ -135,6 +147,6 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
 
     @Override
     public String toString() {
-        return this.context.toString();
+        return this.invalidCharacterExceptionFactory + " " + this.context;
     }
 }

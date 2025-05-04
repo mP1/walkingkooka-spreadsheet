@@ -17,15 +17,20 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.Parser;
+
+import java.util.function.BiFunction;
 
 public final class SpreadsheetFormatParserContexts implements PublicStaticHelper {
 
     /**
      * {@see BasicSpreadsheetFormatParserContext}
      */
-    public static SpreadsheetFormatParserContext basic() {
-        return BasicSpreadsheetFormatParserContext.INSTANCE;
+    public static SpreadsheetFormatParserContext basic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory) {
+        return BasicSpreadsheetFormatParserContext.with(invalidCharacterExceptionFactory);
     }
 
     /**

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTesting2;
@@ -14195,7 +14196,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Override
     public SpreadsheetFormatParserContext createContext() {
-        return SpreadsheetFormatParserContexts.basic();
+        return SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION);
     }
 
     @Override

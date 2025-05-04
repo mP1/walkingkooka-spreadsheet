@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
 public final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitorTest extends
@@ -73,9 +74,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreads
                                 final boolean ampm) {
         final SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetPatternSpreadsheetFormatterDateTimeAnalysisSpreadsheetFormatParserTokenVisitor.with();
         visitor.accept(SpreadsheetFormatParsers.timeFormat().orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(pattern),
-                        SpreadsheetFormatParserContexts.basic())
-                .get());
+                .parse(
+                        TextCursors.charSequence(pattern),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).get());
         this.checkEquals(ampm, visitor.twelveHour, "twelveHour");
         this.checkEquals(millisecondDecimals, visitor.millisecondDecimals, "millisecondDecimals");
     }
