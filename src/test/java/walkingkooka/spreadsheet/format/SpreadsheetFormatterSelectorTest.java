@@ -90,7 +90,7 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         );
 
         this.checkEquals(
-                "Invalid character '!' at 25 in \"date-format-pattern yyyy/!\"",
+                "Invalid character '!' at 25",
                 thrown.getMessage(),
                 "message"
         );

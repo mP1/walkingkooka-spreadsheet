@@ -79,7 +79,7 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
         );
 
         this.checkEquals(
-                "Invalid character '!' at 24 in \"date-parse-pattern yyyy/!\"",
+                "Invalid character '!' at 24",
                 thrown.getMessage(),
                 "message"
         );

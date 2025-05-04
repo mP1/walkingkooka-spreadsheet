@@ -3213,7 +3213,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testParseMissingBeginFails() {
         this.parseStringFails(
                 ":A2",
-                new IllegalArgumentException("Invalid character ':' at 0 in \":A2\"")
+                new IllegalArgumentException("Invalid character ':' at 0")
         );
     }
 
@@ -3229,7 +3229,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testParseInvalidBeginFails() {
         this.parseStringFails(
                 "##:A2",
-                new IllegalArgumentException("Invalid character '#' at 0 in \"##:A2\"")
+                new IllegalArgumentException("Invalid character '#' at 0")
         );
     }
 
@@ -3237,7 +3237,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testParseInvalidEndFails() {
         this.parseStringFails(
                 "A1:##",
-                new IllegalArgumentException("Invalid character '#' at 3 in \"A1:##\"")
+                new IllegalArgumentException("Invalid character '#' at 3")
         );
     }
 

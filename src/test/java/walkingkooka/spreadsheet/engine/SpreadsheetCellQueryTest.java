@@ -151,7 +151,7 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     public void testParseInvalidExpressionFails() {
         this.parseStringFails(
                 "1+",
-                new IllegalArgumentException("Invalid character '+' at 1 in \"1+\"")
+                new IllegalArgumentException("Invalid character '+' at 1")
         );
     }
 
@@ -171,7 +171,7 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     public void testParseStringLiteralFails() {
         this.parseStringFails(
                 "'Hello",
-                new IllegalArgumentException("Invalid character '\\'' at 0 in \"'Hello\"")
+                new IllegalArgumentException("Invalid character '\\'' at 0")
         );
     }
 

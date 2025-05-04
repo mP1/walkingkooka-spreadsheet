@@ -285,7 +285,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 "A1",
-                "Invalid character '1' at 1 in \"A1\""
+                "Invalid character '1' at 1"
         );
     }
 
@@ -303,7 +303,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 "B:C",
-                "Invalid character ':' at 1 in \"B:C\""
+                "Invalid character ':' at 1"
         );
     }
 
@@ -321,7 +321,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.COLUMN,
                 "321",
-                "Invalid character '3' at 0 in \"321\""
+                "Invalid character '3' at 0"
         );
     }
 
@@ -330,7 +330,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.ROW,
                 "A1",
-                "Invalid character 'A' at 0 in \"A1\""
+                "Invalid character 'A' at 0"
         );
     }
 
@@ -339,7 +339,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.ROW,
                 "A",
-                "Invalid character 'A' at 0 in \"A\""
+                "Invalid character 'A' at 0"
         );
     }
 
@@ -348,7 +348,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.ROW,
                 "Label123",
-                "Invalid character 'L' at 0 in \"Label123\""
+                "Invalid character 'L' at 0"
         );
     }
 
@@ -366,7 +366,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
                 SpreadsheetColumnOrRowReferenceKind.ROW,
                 "1:2",
-                "Invalid character ':' at 1 in \"1:2\""
+                "Invalid character ':' at 1"
         );
     }
 

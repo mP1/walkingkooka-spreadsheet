@@ -51,7 +51,7 @@ public final class SpreadsheetConverterStringToExpressionTest extends Spreadshee
                 "1+xyz(",
                 Expression.class,
                 this.createContext(),
-                "Invalid character \'(\' at 5 in \"1+xyz(\""
+                "Invalid character \'(\' at 5"
         );
     }
 
