@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.FakeParser;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -242,7 +243,7 @@ public final class SpreadsheetFormatParsersFormatColorParserTest implements Pars
 
     @Override
     public SpreadsheetFormatParserContext createContext() {
-        return SpreadsheetFormatParserContexts.basic();
+        return SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION);
     }
 
     // ToStringTesting..................................................................................................

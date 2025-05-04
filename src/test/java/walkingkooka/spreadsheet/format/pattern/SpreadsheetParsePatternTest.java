@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.TimeSpreadsheetFormatParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTokens;
@@ -180,8 +181,10 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
     private NumberSpreadsheetFormatParserToken numberParseParse(final String text) {
         return SpreadsheetFormatParsers.numberParse()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .get()
+                .parse(
+                        TextCursors.charSequence(text),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).get()
                 .cast(SequenceParserToken.class)
                 .value()
                 .get(0)
@@ -210,7 +213,7 @@ public final class SpreadsheetParsePatternTest implements ClassTesting2<Spreadsh
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(
                         TextCursors.charSequence(text),
-                        SpreadsheetFormatParserContexts.basic()
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
                 ).get()
                 .cast(type);
     }

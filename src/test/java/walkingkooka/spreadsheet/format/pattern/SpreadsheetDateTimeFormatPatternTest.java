@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
@@ -132,8 +133,10 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     ParserToken parseFormatParserToken(final String text) {
         return SpreadsheetFormatParsers.dateTimeFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .get();
+                .parse(
+                        TextCursors.charSequence(text),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).get();
     }
 
     // HasFormatter.....................................................................................................

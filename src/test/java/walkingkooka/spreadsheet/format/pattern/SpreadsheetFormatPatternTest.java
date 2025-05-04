@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -76,29 +77,37 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     private ParserToken dmyy() {
         return SpreadsheetFormatParsers.dateFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence("dmyy"), SpreadsheetFormatParserContexts.basic())
-                .get();
+                .parse(
+                        TextCursors.charSequence("dmyy"),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).get();
     }
 
     private ParserToken hhmmyyyy() {
         return SpreadsheetFormatParsers.dateTimeFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence("hhmmyyyy"), SpreadsheetFormatParserContexts.basic())
-                .get();
+                .parse(
+                        TextCursors.charSequence("hhmmyyyy"),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).get();
     }
 
     private ParserToken number() {
         return SpreadsheetFormatParsers.numberParse()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence("#0.0"), SpreadsheetFormatParserContexts.basic())
-                .get();
+                .parse(
+                        TextCursors.charSequence("#0.0"),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).get();
     }
 
     private ParserToken hhmm() {
         return SpreadsheetFormatParsers.timeFormat()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence("hhmm"), SpreadsheetFormatParserContexts.basic())
-                .get();
+                .parse(
+                        TextCursors.charSequence("hhmm"),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).get();
     }
 
     // spreadsheetFormatterSelector.....................................................................................

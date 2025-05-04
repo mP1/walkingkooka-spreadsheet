@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
@@ -1359,8 +1360,10 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                                                                                     final Class<T> token,
                                                                                     final Function<T, SpreadsheetFormatter> formatterFactory) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map(t -> t instanceof SequenceParserToken ?
+                .parse(
+                        TextCursors.charSequence(pattern),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).map(t -> t instanceof SequenceParserToken ?
                         t.cast(SequenceParserToken.class).value().get(0) :
                         t
                 ).map(t -> t.cast(token))

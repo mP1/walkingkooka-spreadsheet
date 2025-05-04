@@ -37,6 +37,7 @@ import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -685,7 +686,9 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
                                                   final Parser<SpreadsheetFormatParserContext> parser) {
         return parser.parseText(
                 text,
-                SpreadsheetFormatParserContexts.basic()
+                SpreadsheetFormatParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION_EXPECTED
+                )
         );
     }
 

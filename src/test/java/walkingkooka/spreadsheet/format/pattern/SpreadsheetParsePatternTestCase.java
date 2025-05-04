@@ -452,8 +452,10 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     final ParserToken parseFormatParserToken(final String text) {
         return this.parser()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .get();
+                .parse(
+                        TextCursors.charSequence(text),
+                        SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
+                ).get();
     }
 
     abstract Parser<SpreadsheetFormatParserContext> parser();
