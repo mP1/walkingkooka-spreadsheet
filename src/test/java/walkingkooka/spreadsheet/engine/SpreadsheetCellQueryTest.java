@@ -36,6 +36,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.EndOfTextException;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
@@ -152,7 +153,7 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     public void testParseInvalidExpressionFails() {
         this.parseStringFails(
                 "1+",
-                new IllegalArgumentException("Invalid character '+' at 1")
+                new EndOfTextException("End of text at (3,1) expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
         );
     }
 

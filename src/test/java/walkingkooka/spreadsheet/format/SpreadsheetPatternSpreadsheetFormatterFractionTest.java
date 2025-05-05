@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserReporterException;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -162,7 +161,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
     private void parsePatternFails(final String pattern) {
         try {
             this.parsePatternOrFail(pattern);
-            fail("Expected " + ParserReporterException.class.getSimpleName() + " to be thrown with pattern " + CharSequences.quote(pattern));
+            fail("Expected " + RuntimeException.class.getSimpleName() + " to be thrown with pattern " + CharSequences.quote(pattern));
         } catch (final RuntimeException expected) {
         }
     }
