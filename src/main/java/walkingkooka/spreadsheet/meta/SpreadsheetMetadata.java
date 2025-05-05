@@ -1122,7 +1122,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         components.reportIfMissing();
 
         return SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
+                InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
                 this.dateTimeContext(now),
                 this.expressionNumberContext(),
                 valueSeparator

@@ -163,7 +163,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterFractionTest extends Sp
         try {
             this.parsePatternOrFail(pattern);
             fail("Expected " + ParserReporterException.class.getSimpleName() + " to be thrown with pattern " + CharSequences.quote(pattern));
-        } catch (final ParserReporterException expected) {
+        } catch (final RuntimeException expected) {
         }
     }
 

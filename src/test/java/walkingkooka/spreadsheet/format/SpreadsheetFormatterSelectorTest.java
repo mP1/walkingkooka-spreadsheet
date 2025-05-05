@@ -90,7 +90,7 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         );
 
         this.checkEquals(
-                "Invalid character '!' at 25",
+                "Invalid character '!' at 25 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}",
                 thrown.getMessage(),
                 "message"
         );
