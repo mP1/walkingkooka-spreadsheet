@@ -259,7 +259,7 @@ public enum SpreadsheetErrorKind implements HasText {
                 kind = ERROR;
 
                 final InvalidCharacterException invalidCharacterException = (InvalidCharacterException) cause;
-                message = invalidCharacterException.getShortMessage();
+                message = invalidCharacterException.getMessage();
                 break;
             }
 
