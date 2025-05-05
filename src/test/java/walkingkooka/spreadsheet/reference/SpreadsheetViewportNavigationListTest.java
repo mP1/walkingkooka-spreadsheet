@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.EndOfTextException;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
@@ -26,8 +27,6 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
-import walkingkooka.text.cursor.TextCursorLineInfos;
-import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -114,10 +113,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
 
         this.parseStringFails(
                 text,
-                new ParserReporterException(
-                        "End of text at (9,1) expected \"px\"",
-                        TextCursorLineInfos.fake()
-                )
+                new EndOfTextException("End of text at (9,1) expected \"px\"")
         );
     }
 
