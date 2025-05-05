@@ -26,6 +26,8 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.text.cursor.TextCursorLineInfos;
+import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -112,9 +114,9 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
 
         this.parseStringFails(
                 text,
-                new InvalidCharacterException(
-                        text,
-                        0
+                new ParserReporterException(
+                        "End of text at (9,1) expected \"px\"",
+                        TextCursorLineInfos.fake()
                 )
         );
     }

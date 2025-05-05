@@ -585,7 +585,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testLoadMultipleCellRangesWithFormulaWithInvalidValueFails() {
         this.loadCellFails(
                 "1.X",
-                SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'1\' at 0 expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
+                SpreadsheetErrorKind.ERROR.setMessage("Invalid character \'1\' at (1,1) expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
         );
     }
 
@@ -958,7 +958,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b2,
                 SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 context,
-                "Invalid character '=' at 0"
+                "Invalid character '=' at (1,1)"
         );
     }
 

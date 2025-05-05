@@ -79,7 +79,7 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
         );
 
         this.checkEquals(
-                "Invalid character '!' at 24",
+                "Invalid character '!' at 24 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]",
                 thrown.getMessage(),
                 "message"
         );

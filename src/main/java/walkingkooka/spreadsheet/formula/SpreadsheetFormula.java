@@ -141,7 +141,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
         try {
             final Optional<ParserToken> token = parser.orFailIfCursorNotEmpty(
-                    ParserReporters.invalidCharacterExceptionAndExpected()
+                    ParserReporters.basic()
             ).parse(
                     text,
                     context

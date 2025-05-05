@@ -33,7 +33,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContextTesting;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContextTesting;
 
@@ -89,8 +88,8 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     default void parseFormulaAndFail(final SpreadsheetExpressionEvaluationContext context,
                                      final String formula,
                                      final String expected) {
-        final ParserReporterException thrown = assertThrows(
-                ParserReporterException.class,
+        final RuntimeException thrown = assertThrows(
+                RuntimeException.class,
                 () -> context.parseFormula(
                         TextCursors.charSequence(formula)
                 )

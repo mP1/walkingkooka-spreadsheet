@@ -1518,7 +1518,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private SpreadsheetParserContext parserContext() {
         return SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
+                InvalidCharacterExceptionFactory.POSITION_EXPECTED,
                 DateTimeContexts.locale(
                         Locale.forLanguageTag("EN-AU"), // locale
                         1920,

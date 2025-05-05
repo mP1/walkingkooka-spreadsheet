@@ -37,6 +37,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
@@ -171,7 +172,8 @@ public final class SpreadsheetCellQueryTest implements HasUrlFragmentTesting,
     public void testParseStringLiteralFails() {
         this.parseStringFails(
                 "'Hello",
-                new IllegalArgumentException("Invalid character '\\'' at 0")
+                new InvalidCharacterException("'Hello", 0)
+                        .appendToMessage("expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"true\" | \"false\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
         );
     }
 

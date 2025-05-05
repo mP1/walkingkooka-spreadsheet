@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetColors;
@@ -26,7 +27,6 @@ import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserReporterException;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -2211,12 +2211,18 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
 
     @Test
     public void testFormatExponentDecimalFails() {
-        assertThrows(ParserReporterException.class, () -> this.createFormatter("#E#."));
+        assertThrows(
+                InvalidCharacterException.class,
+                () -> this.createFormatter("#E#.")
+        );
     }
 
     @Test
     public void testFormatExponentExponentFails() {
-        assertThrows(ParserReporterException.class, () -> this.createFormatter("#E0E0"));
+        assertThrows(
+                InvalidCharacterException.class,
+                () -> this.createFormatter("#E0E0")
+        );
     }
 
     //Number............................................................................................................

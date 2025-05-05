@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserTok
 import walkingkooka.spreadsheet.formula.parser.LeafSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.store.HasNotFoundText;
@@ -48,8 +49,10 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.MaxPositionTextCursor;
+import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorLineInfo;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -395,8 +398,8 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     static final Parser<SpreadsheetParserContext> CELL_PARSER = SpreadsheetFormulaParsers.cell()
-            .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
-            .orReport(ParserReporters.invalidCharacterException());
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .orReport(ParserReporters.basic());
 
     /**
      * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
@@ -474,8 +477,8 @@ public abstract class SpreadsheetSelection implements HasText,
      * Leverages the {@link SpreadsheetFormulaParsers#column()} combined with an error reporter.
      */
     private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetFormulaParsers.column()
-            .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
-            .orReport(ParserReporters.invalidCharacterException());
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .orReport(ParserReporters.basic());
 
 
     /**
@@ -494,8 +497,8 @@ public abstract class SpreadsheetSelection implements HasText,
     private static final Parser<SpreadsheetParserContext> COLUMN_OR_ROW_PARSER = SpreadsheetFormulaParsers.column()
             .or(
                     SpreadsheetFormulaParsers.row()
-            ).orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
-            .orReport(ParserReporters.invalidCharacterException());
+            ).orFailIfCursorNotEmpty(ParserReporters.basic())
+            .orReport(ParserReporters.basic());
 
 
     /**
@@ -536,8 +539,8 @@ public abstract class SpreadsheetSelection implements HasText,
      * Leverages the {@link SpreadsheetFormulaParsers#row()} combined with an error reporter.
      */
     private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetFormulaParsers.row()
-            .orFailIfCursorNotEmpty(ParserReporters.invalidCharacterException())
-            .orReport(ParserReporters.invalidCharacterException());
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .orReport(ParserReporters.basic());
 
     /**
      * Parsers the text into a {@link ParserToken} or fails.
@@ -557,7 +560,16 @@ public abstract class SpreadsheetSelection implements HasText,
                             TextCursors.maxPosition(
                                     TextCursors.charSequence(text)
                             ),
-                            SpreadsheetParserContexts.fake()
+                            new FakeSpreadsheetParserContext() {
+                                @Override
+                                public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                                           final TextCursor cursor) {
+                                    return InvalidCharacterExceptionFactory.POSITION.apply(
+                                            parser,
+                                            cursor
+                                    );
+                                }
+                            }
                     )
                     .get();
         } catch (final ParserException cause) {

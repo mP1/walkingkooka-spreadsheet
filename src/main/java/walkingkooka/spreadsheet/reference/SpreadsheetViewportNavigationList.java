@@ -323,7 +323,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
-            .orReport(ParserReporters.invalidCharacterException());
+            .orReport(ParserReporters.basic());
 
     private final static Parser<ParserContext> CELL = stringParser("cell");
 
@@ -332,7 +332,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     private final static Parser<ParserContext> ROW = stringParser("row");
 
     private final static Parser<ParserContext> PX = stringParser("px")
-            .orReport(ParserReporters.invalidCharacterException());
+            .orReport(ParserReporters.basic());
 
 
     // select cell A1
@@ -403,15 +403,15 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     private final static Parser<ParserContext> CELL_PARSER = SpreadsheetFormulaParsers.cell()
-            .orReport(ParserReporters.invalidCharacterException())
+            .orReport(ParserReporters.basic())
             .cast();
 
     private final static Parser<ParserContext> COLUMN_PARSER = SpreadsheetFormulaParsers.column()
-            .orReport(ParserReporters.invalidCharacterException())
+            .orReport(ParserReporters.basic())
             .cast();
 
     private final static Parser<ParserContext> ROW_PARSER = SpreadsheetFormulaParsers.row()
-            .orReport(ParserReporters.invalidCharacterException())
+            .orReport(ParserReporters.basic())
             .cast();
 
     private static <T extends SpreadsheetFormulaParserToken> T parseSelection(final Parser<ParserContext> parser,
@@ -450,7 +450,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
      */
     private static Parser<ParserContext> characterParserOrReport(final CharPredicate predicate) {
         return Parsers.character(predicate)
-                .orReport(ParserReporters.invalidCharacterException());
+                .orReport(ParserReporters.basic());
     }
 
     /**
