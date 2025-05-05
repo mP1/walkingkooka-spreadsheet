@@ -253,7 +253,7 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         this.translateAndCheck(
                 ice,
                 SpreadsheetErrorKind.ERROR,
-                ice.getShortMessage()
+                ice.getMessage()
         );
     }
 
