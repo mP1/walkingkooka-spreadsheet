@@ -26,6 +26,7 @@ import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.set.ImmutableSortedSet;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -40,7 +41,6 @@ import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserTok
 import walkingkooka.spreadsheet.formula.parser.LeafSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.store.HasNotFoundText;
@@ -49,7 +49,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.MaxPositionTextCursor;
-import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorLineInfo;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -59,6 +58,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -560,16 +560,7 @@ public abstract class SpreadsheetSelection implements HasText,
                             TextCursors.maxPosition(
                                     TextCursors.charSequence(text)
                             ),
-                            new FakeSpreadsheetParserContext() {
-                                @Override
-                                public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
-                                                                                           final TextCursor cursor) {
-                                    return InvalidCharacterExceptionFactory.POSITION.apply(
-                                            parser,
-                                            cursor
-                                    );
-                                }
-                            }
+                            PARSER_CONTEXT
                     )
                     .get();
         } catch (final ParserException cause) {
@@ -588,6 +579,13 @@ public abstract class SpreadsheetSelection implements HasText,
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
     }
+
+    private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
+            InvalidCharacterExceptionFactory.POSITION,
+            DateTimeContexts.fake(),
+            ExpressionNumberContexts.fake(),
+            ' ' // not important
+    );
 
     /**
      * Parsers a range of rows.
