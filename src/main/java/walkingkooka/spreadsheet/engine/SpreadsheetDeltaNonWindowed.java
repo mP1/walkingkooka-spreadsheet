@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -52,11 +53,11 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final Set<SpreadsheetLabelMapping> labels,
                                                        final Set<SpreadsheetRow> rows,
                                                        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
-                                                       final Set<SpreadsheetCellReference> deletedCells,
+                                                       final SpreadsheetCellReferenceSet deletedCells,
                                                        final Set<SpreadsheetColumnReference> deletedColumns,
                                                        final Set<SpreadsheetRowReference> deletedRows,
                                                        final Set<SpreadsheetLabelName> deletedLabels,
-                                                       final Set<SpreadsheetCellReference> matchedCells,
+                                                       final SpreadsheetCellReferenceSet matchedCells,
                                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
                                                        final Map<SpreadsheetRowReference, Double> rowHeights,
                                                        final OptionalInt columnCount,
@@ -88,11 +89,11 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                         final Set<SpreadsheetLabelMapping> labels,
                                         final Set<SpreadsheetRow> rows,
                                         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
-                                        final Set<SpreadsheetCellReference> deletedCells,
+                                        final SpreadsheetCellReferenceSet deletedCells,
                                         final Set<SpreadsheetColumnReference> deletedColumns,
                                         final Set<SpreadsheetRowReference> deletedRows,
                                         final Set<SpreadsheetLabelName> deletedLabels,
-                                        final Set<SpreadsheetCellReference> matchedCells,
+                                        final SpreadsheetCellReferenceSet matchedCells,
                                         final Map<SpreadsheetColumnReference, Double> columnWidths,
                                         final Map<SpreadsheetRowReference, Double> rowHeights,
                                         final OptionalInt columnCount,
@@ -283,7 +284,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    SpreadsheetDelta replaceDeletedCells(final Set<SpreadsheetCellReference> deletedCells) {
+    SpreadsheetDelta replaceDeletedCells(final SpreadsheetCellReferenceSet deletedCells) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
                 this.cells,
@@ -371,7 +372,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    SpreadsheetDelta replaceMatchedCells(final Set<SpreadsheetCellReference> matchedCells) {
+    SpreadsheetDelta replaceMatchedCells(final SpreadsheetCellReferenceSet matchedCells) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
                 this.cells,
