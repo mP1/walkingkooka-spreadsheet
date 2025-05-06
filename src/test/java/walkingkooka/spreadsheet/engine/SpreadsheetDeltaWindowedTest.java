@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.json.JsonNode;
@@ -228,8 +229,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         );
 
         final SpreadsheetRowReference row5 = SpreadsheetSelection.parseRow("5");
-        final Set<SpreadsheetRowReference> deletedRows = Sets.of(
-                row5
+        final SpreadsheetRowReferenceSet deletedRows = SpreadsheetRowReferenceSet.parse(
+                row5.text()
         );
 
         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = this.references();

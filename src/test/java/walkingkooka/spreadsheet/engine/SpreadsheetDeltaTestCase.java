@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewportAnchor;
@@ -1641,17 +1642,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final Set<SpreadsheetRowReference> deletedRows() {
-        return Sets.of(
-                SpreadsheetSelection.parseRow("3"),
-                SpreadsheetSelection.parseRow("4")
-        );
+    final SpreadsheetRowReferenceSet deletedRows() {
+        return SpreadsheetRowReferenceSet.parse("3,4");
     }
 
-    final Set<SpreadsheetRowReference> differentDeletedRows() {
-        return Set.of(
-                SpreadsheetSelection.parseRow("5")
-        );
+    final SpreadsheetRowReferenceSet differentDeletedRows() {
+        return SpreadsheetRowReferenceSet.parse("5");
     }
 
     final void deletedRowsAndCheck(final SpreadsheetDelta delta) {
