@@ -1796,6 +1796,7 @@ public abstract class SpreadsheetSelection implements HasText,
         SpreadsheetReferenceKind.ABSOLUTE.firstRow();
 
         SpreadsheetCellReferenceSet.register();
+        SpreadsheetColumnReferenceSet.register();
     }
 
     private static <T extends SpreadsheetSelection> void register(final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
