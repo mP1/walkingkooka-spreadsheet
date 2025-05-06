@@ -81,20 +81,20 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
 
     @Override
     public SpreadsheetColumnReferenceSet setElements(final SortedSet<SpreadsheetColumnReference> columns) {
-        final SpreadsheetColumnReferenceSet SpreadsheetColumnReferenceSet;
+        final SpreadsheetColumnReferenceSet spreadsheetColumnReferenceSet;
 
         if(columns instanceof SpreadsheetColumnReferenceSet) {
-            SpreadsheetColumnReferenceSet = (SpreadsheetColumnReferenceSet) columns;
+            spreadsheetColumnReferenceSet = (SpreadsheetColumnReferenceSet) columns;
         } else {
             final TreeSet<SpreadsheetColumnReference> copy = new TreeSet<>(
                     Objects.requireNonNull(columns, "columns")
             );
-            SpreadsheetColumnReferenceSet = this.references.equals(copy) ?
+            spreadsheetColumnReferenceSet = this.references.equals(copy) ?
                     this :
                     withCopy(copy);
         }
 
-        return SpreadsheetColumnReferenceSet;
+        return spreadsheetColumnReferenceSet;
     }
 
     @Override
