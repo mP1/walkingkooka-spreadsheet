@@ -32,13 +32,15 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
     /**
      * Singleton
      */
-    final static SpreadsheetRowReferenceSpreadsheetParser INSTANCE = new SpreadsheetRowReferenceSpreadsheetParser();
+    final static SpreadsheetRowReferenceSpreadsheetParser INSTANCE = new SpreadsheetRowReferenceSpreadsheetParser(
+            true // REQUIRED
+    );
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetRowReferenceSpreadsheetParser() {
-        super();
+    private SpreadsheetRowReferenceSpreadsheetParser(final boolean required) {
+        super(required);
     }
 
     @Override
@@ -54,6 +56,22 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
     @Override
     ParserToken token1(final SpreadsheetReferenceKind absoluteOrRelative, final int row, final String text) {
         return SpreadsheetFormulaParserToken.row(absoluteOrRelative.row(row), text);
+    }
+
+    @Override
+    public SpreadsheetRowReferenceSpreadsheetParser optional() {
+        return this.setRequired(false);
+    }
+
+    @Override
+    public SpreadsheetRowReferenceSpreadsheetParser required() {
+        return this.setRequired(true);
+    }
+
+    private SpreadsheetRowReferenceSpreadsheetParser setRequired(final boolean required) {
+        return required == this.isRequired() ?
+                this :
+                new SpreadsheetRowReferenceSpreadsheetParser(required);
     }
 
     @Override

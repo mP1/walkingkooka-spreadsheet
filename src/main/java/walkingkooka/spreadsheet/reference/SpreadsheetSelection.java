@@ -495,8 +495,10 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     private static final Parser<SpreadsheetParserContext> COLUMN_OR_ROW_PARSER = SpreadsheetFormulaParsers.column()
+            .optional()
             .or(
                     SpreadsheetFormulaParsers.row()
+                            .optional()
             ).orFailIfCursorNotEmpty(ParserReporters.basic())
             .orReport(ParserReporters.basic());
 
@@ -565,17 +567,9 @@ public abstract class SpreadsheetSelection implements HasText,
                     .get();
         } catch (final ParserException cause) {
             final Throwable wrapped = cause.getCause();
-
-            if (wrapped instanceof NullPointerException) {
-                throw (NullPointerException) wrapped;
+            if(wrapped instanceof RuntimeException) {
+                throw (RuntimeException) wrapped;
             }
-            if (wrapped instanceof IllegalColumnOrRowArgumentException) {
-                throw (IllegalColumnOrRowArgumentException) wrapped;
-            }
-            if (wrapped instanceof IllegalArgumentException) {
-                throw (IllegalArgumentException) wrapped;
-            }
-
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
     }

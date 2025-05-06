@@ -404,18 +404,25 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseCellFails() {
         final String text = "ABC!123";
 
-        final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> SpreadsheetSelection.parseCell(text)
-        );
-
-        this.checkEquals(
+        this.parseStringFails(
+                text,
                 new InvalidCharacterException(
                         text,
                         text.indexOf('!')
-                ).getMessage(),
-                thrown.getMessage(),
-                () -> thrown.getClass().getName()
+                )
+        );
+    }
+
+    @Test
+    public void testParseCellFails2() {
+        final String text = "ABC123!456";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf('!')
+                )
         );
     }
 
@@ -423,19 +430,27 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParseCellRangeFails() {
-        final String text = "A1:B!Hello";
+        final String text = "A1:!B";
 
-        final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> SpreadsheetSelection.parseCellRange(text)
-        );
-
-        this.checkEquals(
+        this.parseStringFails(
+                text,
                 new InvalidCharacterException(
                         text,
-                        text.indexOf("!")
-                ).getMessage(),
-                thrown.getMessage()
+                        text.indexOf('!')
+                )
+        );
+    }
+
+    @Test
+    public void testParseCellRangeFails2() {
+        final String text = "A1:B!Hello";
+
+        this.parseStringFails(
+                text,
+                new InvalidCharacterException(
+                        text,
+                        text.indexOf('!')
+                )
         );
     }
 

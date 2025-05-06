@@ -33,13 +33,15 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
     /**
      * Singleton
      */
-    final static SpreadsheetColumnReferenceSpreadsheetParser INSTANCE = new SpreadsheetColumnReferenceSpreadsheetParser();
+    final static SpreadsheetColumnReferenceSpreadsheetParser INSTANCE = new SpreadsheetColumnReferenceSpreadsheetParser(
+        true // REQUIRED
+    );
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetColumnReferenceSpreadsheetParser() {
-        super();
+    private SpreadsheetColumnReferenceSpreadsheetParser(final boolean required) {
+        super(required);
     }
 
     @Override
@@ -69,6 +71,22 @@ final class SpreadsheetColumnReferenceSpreadsheetParser extends SpreadsheetColum
                     "Invalid column " + CharSequences.quoteAndEscape(text) + " not between \"A\" and \"" + SpreadsheetColumnReference.MAX_VALUE_STRING + "\""
             );
         }
+    }
+
+    @Override
+    public SpreadsheetColumnReferenceSpreadsheetParser optional() {
+        return this.setRequired(false);
+    }
+
+    @Override
+    public SpreadsheetColumnReferenceSpreadsheetParser required() {
+        return this.setRequired(true);
+    }
+
+    private SpreadsheetColumnReferenceSpreadsheetParser setRequired(final boolean required) {
+        return required == this.isRequired() ?
+                this :
+                new SpreadsheetColumnReferenceSpreadsheetParser(required);
     }
 
     @Override
