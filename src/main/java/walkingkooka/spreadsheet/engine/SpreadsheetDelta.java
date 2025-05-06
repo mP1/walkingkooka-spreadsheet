@@ -566,7 +566,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     private static Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> filterReferences(final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
                                                                                                        final SpreadsheetViewportWindows window) {
-        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> filtered = Maps.sorted();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> filtered = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
         for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellAndReferences : references.entrySet()) {
             final SpreadsheetCellReference cell = cellAndReferences.getKey();
@@ -2272,7 +2272,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case REFERENCES_PROPERTY_STRING:
-                    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = Maps.sorted();
+                    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
                     for (final JsonNode reference : child.objectOrFail().children()) {
                         references.put(
