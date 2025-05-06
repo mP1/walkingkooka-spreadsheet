@@ -1798,6 +1798,7 @@ public abstract class SpreadsheetSelection implements HasText,
         SpreadsheetCellReferenceSet.register();
         SpreadsheetColumnReferenceSet.register();
         SpreadsheetLabelNameSet.register();
+        SpreadsheetRowReferenceSet.register();
     }
 
     private static <T extends SpreadsheetSelection> void register(final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
