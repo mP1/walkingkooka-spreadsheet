@@ -2570,10 +2570,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             final Set<SpreadsheetCellReference> deletedCells = this.deletedCells;
             if (false == deletedCells.isEmpty()) {
                 children.add(
-                        marshallSelection(
-                                deletedCells,
-                                DELETED_CELLS_PROPERTY
-                        )
+                        context.marshall(deletedCells)
+                                .setName(DELETED_CELLS_PROPERTY)
                 );
             }
         }
@@ -2616,10 +2614,8 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             final SpreadsheetCellReferenceSet matchedCells = this.matchedCells;
             if (false == matchedCells.isEmpty()) {
                 children.add(
-                        marshallSelection(
-                                matchedCells,
-                                MATCHED_CELLS_PROPERTY
-                        )
+                        context.marshall(matchedCells)
+                                .setName(MATCHED_CELLS_PROPERTY)
                 );
             }
         }
