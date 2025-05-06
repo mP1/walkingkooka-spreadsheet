@@ -32,7 +32,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * A {@link Set} or {@link SpreadsheetCellReference}.
+ * An immutable {@link Set} containing unique {@link SpreadsheetCellReference cells} with the {@link SpreadsheetReferenceKind}
+ * of both the column and row components.
  */
 public final class SpreadsheetCellReferenceSet extends SpreadsheetSelectionSet<SpreadsheetCellReference, SpreadsheetCellReferenceSet> {
 
