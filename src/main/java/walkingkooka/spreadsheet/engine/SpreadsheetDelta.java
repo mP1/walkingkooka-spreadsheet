@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -105,7 +106,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final static SpreadsheetCellReferenceSet NO_DELETED_CELLS = SpreadsheetCellReferenceSet.EMPTY;
     public final static SpreadsheetColumnReferenceSet NO_DELETED_COLUMNS = SpreadsheetColumnReferenceSet.EMPTY;
     public final static SpreadsheetRowReferenceSet NO_DELETED_ROWS = SpreadsheetRowReferenceSet.EMPTY;
-    public final static Set<SpreadsheetLabelName> NO_DELETED_LABELS = Sets.empty();
+    public final static SpreadsheetLabelNameSet NO_DELETED_LABELS = SpreadsheetLabelNameSet.EMPTY;
 
     public final static SpreadsheetCellReferenceSet NO_MATCHED_CELLS = SpreadsheetCellReferenceSet.EMPTY;
 
@@ -152,7 +153,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                      final SpreadsheetCellReferenceSet deletedCells,
                      final SpreadsheetColumnReferenceSet deletedColumns,
                      final SpreadsheetRowReferenceSet deletedRows,
-                     final Set<SpreadsheetLabelName> deletedLabels,
+                     final SpreadsheetLabelNameSet deletedLabels,
                      final SpreadsheetCellReferenceSet matchedCells,
                      final Map<SpreadsheetColumnReference, Double> columnWidths,
                      final Map<SpreadsheetRowReference, Double> rowHeights,
@@ -730,7 +731,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.deletedLabels;
     }
 
-    final Set<SpreadsheetLabelName> deletedLabels;
+    final SpreadsheetLabelNameSet deletedLabels;
 
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given deletedLabels after they are possibly filtered
@@ -739,7 +740,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final SpreadsheetDelta setDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels) {
         Objects.requireNonNull(deletedLabels, "deletedLabels");
 
-        final Set<SpreadsheetLabelName> copy = this.filterDeletedLabels(deletedLabels);
+        final SpreadsheetLabelNameSet copy = this.filterDeletedLabels(deletedLabels);
         return this.deletedLabels.equals(copy) ?
                 this :
                 this.replaceDeletedLabels(copy);
@@ -748,15 +749,15 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Takes a copy of the deleted labels, because no target is present actual filtering is NOT possible.
      */
-    private Set<SpreadsheetLabelName> filterDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels) {
-        return SortedSets.immutable(
+    private SpreadsheetLabelNameSet filterDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels) {
+        return SpreadsheetLabelNameSet.with(
                 deletedLabels instanceof SortedSet ?
                         (SortedSet<SpreadsheetLabelName>) deletedLabels :
                         new TreeSet<>(deletedLabels)
         );
     }
 
-    abstract SpreadsheetDelta replaceDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels);
+    abstract SpreadsheetDelta replaceDeletedLabels(final SpreadsheetLabelNameSet deletedLabels);
 
     // matchedCells.....................................................................................................
 
@@ -959,7 +960,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final SpreadsheetCellReferenceSet deletedCells = this.deletedCells;
         final SpreadsheetColumnReferenceSet deletedColumns = this.deletedColumns;
         final SpreadsheetRowReferenceSet deletedRows = this.deletedRows;
-        final Set<SpreadsheetLabelName> deletedLabels = this.deletedLabels;
+        final SpreadsheetLabelNameSet deletedLabels = this.deletedLabels;
 
         final SpreadsheetCellReferenceSet matchedCells = this.matchedCells;
 
@@ -2312,9 +2313,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case DELETED_LABELS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setDeletedLabels(
-                            unmarshallSelectionCsv(
+                            context.unmarshall(
                                     child,
-                                    SpreadsheetSelection::labelName
+                                    SpreadsheetLabelNameSet.class
                             )
                     );
                     break;
@@ -2593,13 +2594,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         {
-            final Set<SpreadsheetLabelName> deletedLabels = this.deletedLabels;
+            final SpreadsheetLabelNameSet deletedLabels = this.deletedLabels;
             if (false == deletedLabels.isEmpty()) {
                 children.add(
-                        marshallSelection(
-                                deletedLabels,
-                                DELETED_LABELS_PROPERTY
-                        )
+                         context.marshall(deletedLabels)
+                                 .setName(DELETED_LABELS_PROPERTY)
                 );
             }
         }
