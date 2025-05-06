@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -1380,15 +1381,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final Set<SpreadsheetCellReference> deletedCells() {
-        return Sets.of(
-                SpreadsheetSelection.parseCell("C1"),
-                SpreadsheetSelection.parseCell("C2")
-        );
+    final SpreadsheetCellReferenceSet deletedCells() {
+        return SpreadsheetCellReferenceSet.parse("C1,C2");
     }
 
-    final Set<SpreadsheetCellReference> differentDeletedCells() {
-        return Set.of(SpreadsheetSelection.parseCell("C2"));
+    final SpreadsheetCellReferenceSet differentDeletedCells() {
+        return SpreadsheetCellReferenceSet.parse("C2");
     }
 
     final void deletedCellsAndCheck(final SpreadsheetDelta delta) {
@@ -1883,16 +1881,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final Set<SpreadsheetCellReference> matchedCells() {
-        return Sets.of(
-                SpreadsheetSelection.A1,
-                SpreadsheetSelection.parseCell("B2"),
-                SpreadsheetSelection.parseCell("C3")
-        );
+    final SpreadsheetCellReferenceSet matchedCells() {
+        return SpreadsheetCellReferenceSet.parse("A1,B2,C3");
     }
 
-    final Set<SpreadsheetCellReference> differentMatchedCells() {
-        return Set.of(SpreadsheetSelection.parseCell("C2"));
+    final SpreadsheetCellReferenceSet differentMatchedCells() {
+        return SpreadsheetCellReferenceSet.parse("C2");
     }
 
     final void matchedCellsAndCheck(final SpreadsheetDelta delta,

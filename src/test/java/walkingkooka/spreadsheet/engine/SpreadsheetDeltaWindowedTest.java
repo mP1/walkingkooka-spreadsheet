@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -216,9 +217,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
         final SpreadsheetCellReference e5 = SpreadsheetSelection.parseCell("e5");
-        final Set<SpreadsheetCellReference> deletedCells = Sets.of(
-                d4,
-                e5
+        final SpreadsheetCellReferenceSet deletedCells = SpreadsheetCellReferenceSet.parse(
+                d4 + "," + e5
         );
 
         final SpreadsheetColumnReference e = SpreadsheetSelection.parseColumn("f");
@@ -238,7 +238,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 SpreadsheetSelection.labelName("DeletedLabel222")
         );
 
-        final Set<SpreadsheetCellReference> matchedCells = Sets.of(SpreadsheetSelection.parseCell("Z99"));
+        final SpreadsheetCellReferenceSet matchedCells = SpreadsheetCellReferenceSet.parse("Z99");
 
         final Map<SpreadsheetColumnReference, Double> columnWidths = Maps.of(
                 a.reference(), 10.0,
