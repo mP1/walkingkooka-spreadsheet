@@ -765,7 +765,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Returns matched cells (if selected) for a given find parameters
      */
-    public final SpreadsheetCellReferenceSet matchedCells() {
+    public final Set<SpreadsheetCellReference> matchedCells() {
         return this.matchedCells;
     }
 
