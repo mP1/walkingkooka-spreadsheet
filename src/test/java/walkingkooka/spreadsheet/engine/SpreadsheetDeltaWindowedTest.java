@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -235,10 +236,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = this.references();
 
-        final Set<SpreadsheetLabelName> deletedLabels = Sets.of(
-                SpreadsheetSelection.labelName("DeletedLabel111"),
-                SpreadsheetSelection.labelName("DeletedLabel222")
-        );
+        final SpreadsheetLabelNameSet deletedLabels = SpreadsheetLabelNameSet.parse("DeletedLabel111,DeletedLabel222");
 
         final SpreadsheetCellReferenceSet matchedCells = SpreadsheetCellReferenceSet.parse("Z99");
 
@@ -1113,10 +1111,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         SpreadsheetDelta.NO_DELETED_CELLS,
                         SpreadsheetDelta.NO_DELETED_COLUMNS,
                         SpreadsheetDelta.NO_DELETED_ROWS,
-                        Sets.of(
-                                SpreadsheetSelection.labelName("DeletedLabel111"),
-                                SpreadsheetSelection.labelName("DeletedLabel222")
-                        ),
+                        SpreadsheetLabelNameSet.parse("DeletedLabel111,DeletedLabel222"),
                         SpreadsheetDelta.NO_MATCHED_CELLS,
                         SpreadsheetDelta.NO_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_ROW_HEIGHTS,
