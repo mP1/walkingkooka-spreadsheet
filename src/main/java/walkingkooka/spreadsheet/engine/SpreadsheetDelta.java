@@ -309,7 +309,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             if (cells instanceof ImmutableSortedSet) {
                 result = cells;
             } else {
-                final SortedSet<SpreadsheetCell> sortedSet = new TreeSet<>(SpreadsheetCell.REFERENCE_COMPARATOR);
+                final SortedSet<SpreadsheetCell> sortedSet = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
                 sortedSet.addAll(cells);
                 result = SortedSets.immutable(sortedSet);
             }
@@ -406,7 +406,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         if (forms instanceof SortedSet) {
             copy = (SortedSet<Form<SpreadsheetExpressionReference>>) forms;
         } else {
-            copy = new TreeSet<>(Form.nameComparator());
+            copy = SortedSets.tree(Form.nameComparator());
             copy.addAll(forms);
         }
 
@@ -579,7 +579,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 if (cellReferences instanceof SortedSet) {
                     spreadsheetExpressionReferences = (SortedSet<SpreadsheetExpressionReference>) cellReferences;
                 } else {
-                    spreadsheetExpressionReferences = new TreeSet<>(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+                    spreadsheetExpressionReferences = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
                     spreadsheetExpressionReferences.addAll(cellReferences);
                 }
 
