@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetViewportWindows;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -222,8 +223,8 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
         );
 
         final SpreadsheetColumnReference e = SpreadsheetSelection.parseColumn("f");
-        final Set<SpreadsheetColumnReference> deletedColumns = Sets.of(
-                e
+        final SpreadsheetColumnReferenceSet deletedColumns = SpreadsheetColumnReferenceSet.parse(
+                e.toString()
         );
 
         final SpreadsheetRowReference row5 = SpreadsheetSelection.parseRow("5");
