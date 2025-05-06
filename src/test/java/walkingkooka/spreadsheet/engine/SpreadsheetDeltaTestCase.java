@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -1510,15 +1511,12 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final Set<SpreadsheetColumnReference> deletedColumns() {
-        return Sets.of(
-                SpreadsheetSelection.parseColumn("C"),
-                SpreadsheetSelection.parseColumn("D")
-        );
+    final SpreadsheetColumnReferenceSet deletedColumns() {
+        return SpreadsheetColumnReferenceSet.parse("C,D");
     }
 
-    final Set<SpreadsheetColumnReference> differentDeletedColumns() {
-        return Set.of(SpreadsheetSelection.parseColumn("E"));
+    final SpreadsheetColumnReferenceSet differentDeletedColumns() {
+        return SpreadsheetColumnReferenceSet.parse("E");
     }
 
     final void deletedColumnsAndCheck(final SpreadsheetDelta delta) {

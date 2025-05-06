@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -102,7 +103,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final static Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> NO_REFERENCES = Maps.empty();
 
     public final static SpreadsheetCellReferenceSet NO_DELETED_CELLS = SpreadsheetCellReferenceSet.EMPTY;
-    public final static Set<SpreadsheetColumnReference> NO_DELETED_COLUMNS = Sets.empty();
+    public final static SpreadsheetColumnReferenceSet NO_DELETED_COLUMNS = SpreadsheetColumnReferenceSet.EMPTY;
     public final static Set<SpreadsheetRowReference> NO_DELETED_ROWS = Sets.empty();
     public final static Set<SpreadsheetLabelName> NO_DELETED_LABELS = Sets.empty();
 
@@ -149,7 +150,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                      final Set<SpreadsheetRow> rows,
                      final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
                      final SpreadsheetCellReferenceSet deletedCells,
-                     final Set<SpreadsheetColumnReference> deletedColumns,
+                     final SpreadsheetColumnReferenceSet deletedColumns,
                      final Set<SpreadsheetRowReference> deletedRows,
                      final Set<SpreadsheetLabelName> deletedLabels,
                      final SpreadsheetCellReferenceSet matchedCells,
@@ -657,7 +658,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return this.deletedColumns;
     }
 
-    final Set<SpreadsheetColumnReference> deletedColumns;
+    final SpreadsheetColumnReferenceSet deletedColumns;
 
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given deletedColumns after they are possibly filtered
@@ -666,7 +667,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     public final SpreadsheetDelta setDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns) {
         Objects.requireNonNull(deletedColumns, "deletedColumns");
 
-        final Set<SpreadsheetColumnReference> copy = filterDeletedColumns(
+        final SpreadsheetColumnReferenceSet copy = filterDeletedColumns(
                 deletedColumns,
                 this.window()
         );
@@ -675,17 +676,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 this.replaceDeletedColumns(copy);
     }
 
-    private static Set<SpreadsheetColumnReference> filterDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns,
-                                                                        final SpreadsheetViewportWindows window) {
+    private static SpreadsheetColumnReferenceSet filterDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns,
+                                                                      final SpreadsheetViewportWindows window) {
         return filterSelectionSet(
                 deletedColumns,
                 window::test,
                 SpreadsheetColumnReference::toRelative,
-                SpreadsheetSelection.sortedSetIgnoresReferenceKindCollector()
+                Collectors.collectingAndThen(
+                        SpreadsheetSelection.sortedSetIgnoresReferenceKindCollector(),
+                        SpreadsheetColumnReferenceSet::with
+                )
         );
     }
 
-    abstract SpreadsheetDelta replaceDeletedColumns(final Set<SpreadsheetColumnReference> deletedColumns);
+    abstract SpreadsheetDelta replaceDeletedColumns(final SpreadsheetColumnReferenceSet deletedColumns);
 
     // deletedRows......................................................................................................
 
@@ -962,7 +966,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = this.references;
 
         final SpreadsheetCellReferenceSet deletedCells = this.deletedCells;
-        final Set<SpreadsheetColumnReference> deletedColumns = this.deletedColumns;
+        final SpreadsheetColumnReferenceSet deletedColumns = this.deletedColumns;
         final Set<SpreadsheetRowReference> deletedRows = this.deletedRows;
         final Set<SpreadsheetLabelName> deletedLabels = this.deletedLabels;
 
@@ -2296,9 +2300,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case DELETED_COLUMNS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setDeletedColumns(
-                            unmarshallSelectionCsv(
+                            context.unmarshall(
                                     child,
-                                    SpreadsheetSelection::parseColumn
+                                    SpreadsheetColumnReferenceSet.class
                             )
                     );
                     break;
@@ -2575,13 +2579,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         {
-            final Set<SpreadsheetColumnReference> deletedColumns = this.deletedColumns;
+            final SpreadsheetColumnReferenceSet deletedColumns = this.deletedColumns;
             if (false == deletedColumns.isEmpty()) {
                 children.add(
-                        marshallSelection(
-                                deletedColumns,
-                                DELETED_COLUMNS_PROPERTY
-                        )
+                        context.marshall(deletedColumns)
+                                        .setName(DELETED_COLUMNS_PROPERTY)
                 );
             }
         }
