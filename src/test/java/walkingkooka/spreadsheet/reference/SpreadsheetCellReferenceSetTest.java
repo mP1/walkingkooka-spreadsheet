@@ -56,6 +56,17 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
         );
     }
 
+    @Test
+    public void testSetElementsWithSpreadsheetCellReferenceSet() {
+        final SpreadsheetCellReferenceSet set = SpreadsheetCellReferenceSet.parse("A1,B2,C3");
+
+        assertSame(
+                set,
+                SpreadsheetCellReferenceSet.parse("D4")
+                        .setElements(set)
+        );
+    }
+
     @Override
     public SpreadsheetCellReferenceSet createSet() {
         return SpreadsheetCellReferenceSet.with(

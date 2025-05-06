@@ -146,12 +146,20 @@ public final class SpreadsheetCellReferenceSet extends AbstractSet<SpreadsheetCe
 
     @Override
     public SpreadsheetCellReferenceSet setElements(final SortedSet<SpreadsheetCellReference> cells) {
-        final TreeSet<SpreadsheetCellReference> copy = new TreeSet<>(
-                Objects.requireNonNull(cells, "cells")
-        );
-        return this.cells.equals(copy) ?
-                this :
-                withCopy(copy);
+        final SpreadsheetCellReferenceSet spreadsheetCellReferenceSet;
+
+        if(cells instanceof SpreadsheetCellReferenceSet) {
+            spreadsheetCellReferenceSet = (SpreadsheetCellReferenceSet) cells;
+        } else {
+            final TreeSet<SpreadsheetCellReference> copy = new TreeSet<>(
+                    Objects.requireNonNull(cells, "cells")
+            );
+            spreadsheetCellReferenceSet = this.cells.equals(copy) ?
+                    this :
+                    withCopy(copy);
+        }
+
+        return spreadsheetCellReferenceSet;
     }
 
     @Override
