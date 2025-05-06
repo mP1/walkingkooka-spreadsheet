@@ -66,7 +66,6 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -2305,9 +2304,9 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     break;
                 case DELETED_ROWS_PROPERTY_STRING:
                     unmarshalled = unmarshalled.setDeletedRows(
-                            unmarshallSelectionCsv(
+                            context.unmarshall(
                                     child,
-                                    SpreadsheetSelection::parseRow
+                                    SpreadsheetRowReferenceSet.class
                             )
                     );
                     break;
@@ -2388,15 +2387,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return Optional.ofNullable(
                 context.unmarshall(node, SpreadsheetViewport.class)
         );
-    }
-
-    private static <S extends SpreadsheetSelection> Set<S> unmarshallSelectionCsv(final JsonNode csv,
-                                                                                  final Function<String, S> parser) {
-        return Arrays.stream(
-                        csv.stringOrFail()
-                                .split(CSV_COMMA.string())
-                ).map(parser)
-                .collect(Collectors.toCollection(Sets::ordered));
     }
 
     private static <T> Set<T> unmarshallReferenceTo(final JsonNode node,
