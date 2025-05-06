@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.validation.form.Form;
@@ -56,7 +57,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
                                                        final SpreadsheetCellReferenceSet deletedCells,
                                                        final SpreadsheetColumnReferenceSet deletedColumns,
-                                                       final Set<SpreadsheetRowReference> deletedRows,
+                                                       final SpreadsheetRowReferenceSet deletedRows,
                                                        final Set<SpreadsheetLabelName> deletedLabels,
                                                        final SpreadsheetCellReferenceSet matchedCells,
                                                        final Map<SpreadsheetColumnReference, Double> columnWidths,
@@ -92,7 +93,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
                                         final SpreadsheetCellReferenceSet deletedCells,
                                         final SpreadsheetColumnReferenceSet deletedColumns,
-                                        final Set<SpreadsheetRowReference> deletedRows,
+                                        final SpreadsheetRowReferenceSet deletedRows,
                                         final Set<SpreadsheetLabelName> deletedLabels,
                                         final SpreadsheetCellReferenceSet matchedCells,
                                         final Map<SpreadsheetColumnReference, Double> columnWidths,
@@ -329,7 +330,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    SpreadsheetDelta replaceDeletedRows(final Set<SpreadsheetRowReference> deletedRows) {
+    SpreadsheetDelta replaceDeletedRows(final SpreadsheetRowReferenceSet deletedRows) {
         return new SpreadsheetDeltaNonWindowed(
                 this.viewport,
                 this.cells,
