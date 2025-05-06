@@ -1760,6 +1760,16 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
                 .collect(SpreadsheetSelection.sortedSetIgnoresReferenceKindCollector());
     }
 
+    // parser constants.................................................................................................
+
+    @Test
+    public void testCellParserToString() {
+        this.checkEquals(
+                "CELL",
+                SpreadsheetSelection.CELL_PARSER.toString()
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

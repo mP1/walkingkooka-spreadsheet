@@ -399,7 +399,8 @@ public abstract class SpreadsheetSelection implements HasText,
 
     static final Parser<SpreadsheetParserContext> CELL_PARSER = SpreadsheetFormulaParsers.cell()
             .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .orReport(ParserReporters.basic());
+            .orReport(ParserReporters.basic())
+            .setToString("CELL");
 
     /**
      * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
