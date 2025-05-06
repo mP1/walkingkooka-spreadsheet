@@ -17,25 +17,15 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.Cast;
-import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.CellSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.CharacterConstant;
-import walkingkooka.text.HasText;
-import walkingkooka.text.printer.IndentingPrinter;
-import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.AbstractSet;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -44,10 +34,7 @@ import java.util.TreeSet;
 /**
  * A {@link Set} or {@link SpreadsheetCellReference}.
  */
-public final class SpreadsheetCellReferenceSet extends AbstractSet<SpreadsheetCellReference>
-        implements ImmutableSortedSetDefaults<SpreadsheetCellReferenceSet, SpreadsheetCellReference>,
-        HasText,
-        TreePrintable {
+public final class SpreadsheetCellReferenceSet extends SpreadsheetSelectionSet<SpreadsheetCellReference, SpreadsheetCellReferenceSet> {
 
     /**
      * An empty {@link SpreadsheetCellReferenceSet}.
@@ -57,7 +44,7 @@ public final class SpreadsheetCellReferenceSet extends AbstractSet<SpreadsheetCe
     /**
      * The comma which separates the CSV text representation.
      */
-    public final static CharacterConstant SEPARATOR = SpreadsheetSelectionCsvParser.SEPARATOR;
+    public final static CharacterConstant SEPARATOR = SpreadsheetCellReferenceSet.SEPARATOR;
 
     /**
      * Factory that creates {@link SpreadsheetCellReferenceSet} with the given cells.
@@ -87,62 +74,10 @@ public final class SpreadsheetCellReferenceSet extends AbstractSet<SpreadsheetCe
     }
 
     private SpreadsheetCellReferenceSet(final SortedSet<SpreadsheetCellReference> cells) {
-        this.cells = cells;
+        super(cells);
     }
 
-    // ImmutableSortedSet...............................................................................................
-
-    @Override
-    public Iterator<SpreadsheetCellReference> iterator() {
-        return Iterators.readOnly(this.cells.iterator());
-    }
-
-    @Override
-    public int size() {
-        return this.cells.size();
-    }
-
-    @Override
-    public Comparator<SpreadsheetCellReference> comparator() {
-        return Cast.to(
-                SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
-        ); // no comparator
-    }
-
-    @Override
-    public SpreadsheetCellReferenceSet subSet(final SpreadsheetCellReference from,
-                                              final SpreadsheetCellReference to) {
-        return withCopy(
-                this.cells.subSet(
-                        from,
-                        to
-                )
-        );
-    }
-
-    @Override
-    public SpreadsheetCellReferenceSet headSet(final SpreadsheetCellReference name) {
-        return withCopy(
-                this.cells.headSet(name)
-        );
-    }
-
-    @Override
-    public SpreadsheetCellReferenceSet tailSet(final SpreadsheetCellReference name) {
-        return withCopy(
-                this.cells.tailSet(name)
-        );
-    }
-
-    @Override
-    public SpreadsheetCellReference first() {
-        return this.cells.first();
-    }
-
-    @Override
-    public SpreadsheetCellReference last() {
-        return this.cells.last();
-    }
+    // SpreadsheetSelectionSet..........................................................................................
 
     @Override
     public SpreadsheetCellReferenceSet setElements(final SortedSet<SpreadsheetCellReference> cells) {
@@ -154,7 +89,7 @@ public final class SpreadsheetCellReferenceSet extends AbstractSet<SpreadsheetCe
             final TreeSet<SpreadsheetCellReference> copy = new TreeSet<>(
                     Objects.requireNonNull(cells, "cells")
             );
-            spreadsheetCellReferenceSet = this.cells.equals(copy) ?
+            spreadsheetCellReferenceSet = this.references.equals(copy) ?
                     this :
                     withCopy(copy);
         }
@@ -163,44 +98,14 @@ public final class SpreadsheetCellReferenceSet extends AbstractSet<SpreadsheetCe
     }
 
     @Override
-    public SortedSet<SpreadsheetCellReference> toSet() {
-        return new TreeSet<>(this);
-    }
-
-    private final SortedSet<SpreadsheetCellReference> cells;
-
-    // HasText..........................................................................................................
-
-    @Override
-    public String text() {
-        return SEPARATOR.toSeparatedString(
-                this.cells,
-                SpreadsheetCellReference::text
-        );
-    }
-
-    // TreePrintable....................................................................................................
-
-    @Override
-    public void printTree(final IndentingPrinter printer) {
-        for (final SpreadsheetCellReference cell : this) {
-            printer.println(cell.toString());
-        }
+    SpreadsheetCellReferenceSet createWithCopy(final SortedSet<SpreadsheetCellReference> cells) {
+        return new SpreadsheetCellReferenceSet(cells);
     }
 
     // Json.............................................................................................................
 
     static void register() {
         // helps force registry of json marshaller
-    }
-
-    /**
-     * Returns a CSV string with cell references separated by commas.
-     */
-    private JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonNode.string(
-                this.text()
-        );
     }
 
     static SpreadsheetCellReferenceSet unmarshall(final JsonNode node,
