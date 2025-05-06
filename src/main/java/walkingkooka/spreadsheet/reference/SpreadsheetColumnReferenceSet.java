@@ -45,7 +45,7 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
     /**
      * The comma which separates the CSV text representation.
      */
-    public final static CharacterConstant SEPARATOR = SpreadsheetColumnReferenceSet.SEPARATOR;
+    public final static CharacterConstant SEPARATOR = SpreadsheetSelectionSet.SEPARATOR;
 
     /**
      * Factory that creates {@link SpreadsheetColumnReferenceSet} with the given columns.
