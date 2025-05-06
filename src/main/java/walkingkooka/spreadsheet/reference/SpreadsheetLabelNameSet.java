@@ -81,20 +81,20 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
 
     @Override
     public SpreadsheetLabelNameSet setElements(final SortedSet<SpreadsheetLabelName> labels) {
-        final SpreadsheetLabelNameSet SpreadsheetLabelNameSet;
+        final SpreadsheetLabelNameSet spreadsheetLabelNameSet;
 
         if (labels instanceof SpreadsheetLabelNameSet) {
-            SpreadsheetLabelNameSet = (SpreadsheetLabelNameSet) labels;
+            spreadsheetLabelNameSet = (SpreadsheetLabelNameSet) labels;
         } else {
             final TreeSet<SpreadsheetLabelName> copy = new TreeSet<>(
                     Objects.requireNonNull(labels, "labels")
             );
-            SpreadsheetLabelNameSet = this.references.equals(copy) ?
+            spreadsheetLabelNameSet = this.references.equals(copy) ?
                     this :
                     withCopy(copy);
         }
 
-        return SpreadsheetLabelNameSet;
+        return spreadsheetLabelNameSet;
     }
 
     @Override
