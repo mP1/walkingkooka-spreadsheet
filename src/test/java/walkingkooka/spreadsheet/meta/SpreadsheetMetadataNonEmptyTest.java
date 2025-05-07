@@ -34,6 +34,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
@@ -1875,6 +1876,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 PROVIDER_CONTEXT
         );
 
+        final Locale locale = Locale.ENGLISH;
+
         this.convertAndCheck3(
                 value,
                 expected,
@@ -1887,8 +1890,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 ConverterContexts.basic(
                                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                         Converters.fake(),
-                                        DateTimeContexts.locale(
-                                                Locale.ENGLISH,
+                                        DateTimeContexts.basic(
+                                                DateTimeSymbols.fromDateFormatSymbols(
+                                                        new DateFormatSymbols(locale)
+                                                ),
+                                                locale,
                                                 DEFAULT_YEAR,
                                                 20,
                                                 NOW

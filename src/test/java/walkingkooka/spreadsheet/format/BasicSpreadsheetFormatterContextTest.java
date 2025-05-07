@@ -25,6 +25,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -42,6 +43,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -53,7 +55,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<BasicSpreadsheetFormatterContext> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-    private final static Locale LOCALE = Locale.CANADA_FRENCH;
+    private final static Locale LOCALE = Locale.FRANCE;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -249,7 +251,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_FR precision=7 roundingMode=HALF_EVEN DOUBLE"
         );
     }
 
@@ -349,7 +351,10 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(
+        return DateTimeContexts.basic(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(LOCALE)
+                ),
                 LOCALE,
                 1900,
                 50,

@@ -29,6 +29,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
@@ -63,6 +64,7 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -136,12 +138,12 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    private final static Locale EN_AU = Locale.forLanguageTag("EN-AU");
+    private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
 
     @Test
     public void testDateFormatPatternLocale() {
         this.formatPatternFormatAndCheck(
-                SpreadsheetPattern.dateFormatPatternLocale(EN_AU),
+                SpreadsheetPattern.dateFormatPatternLocale(LOCALE),
                 LocalDate.of(2000, 12, 31),
                 "Sunday, 31 December 2000"
         );
@@ -150,7 +152,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testDateTimeFormatPatternLocale() {
         this.formatPatternFormatAndCheck(
-                SpreadsheetPattern.dateTimeFormatPatternLocale(EN_AU),
+                SpreadsheetPattern.dateTimeFormatPatternLocale(LOCALE),
                 LocalDateTime.of(2000, 12, 31, 12, 58),
                 "Sunday, 31 December 2000 at 12:58:00 PM"
         );
@@ -159,7 +161,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     @Test
     public void testTimeFormatPatternLocale() {
         this.formatPatternFormatAndCheck(
-                SpreadsheetPattern.timeFormatPatternLocale(EN_AU),
+                SpreadsheetPattern.timeFormatPatternLocale(LOCALE),
                 LocalTime.of(12, 58, 59),
                 "12:58:59 PM"
         );
@@ -237,8 +239,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                     }
 
                     private DateTimeContext dateTimeContext() {
-                        return DateTimeContexts.locale(
-                                EN_AU,
+                        return DateTimeContexts.basic(
+                                DateTimeSymbols.fromDateFormatSymbols(
+                                        new DateFormatSymbols(LOCALE)
+                                ),
+                                LOCALE,
                                 1900,
                                 50,
                                 LocalDateTime::now
@@ -291,7 +296,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     private void dateParsePatternLocaleParseAndCheck(final String text,
                                                      final LocalDate expected) {
         this.parsePatternAndCheck(
-                SpreadsheetPattern.dateParsePatternLocale(EN_AU),
+                SpreadsheetPattern.dateParsePatternLocale(LOCALE),
                 text,
                 (t, c) -> t.cast(DateSpreadsheetFormulaParserToken.class).toLocalDate(c),
                 expected
@@ -399,7 +404,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     private void dateTimeParsePatternParseAndCheck(final String text,
                                                    final LocalDateTime expected) {
         this.parsePatternAndCheck(
-                SpreadsheetPattern.dateTimeParsePatternLocale(EN_AU),
+                SpreadsheetPattern.dateTimeParsePatternLocale(LOCALE),
                 text,
                 (t, c) -> t.cast(DateTimeSpreadsheetFormulaParserToken.class).toLocalDateTime(c),
                 expected
@@ -454,7 +459,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     private void timeParsePatternLocaleAndCheck(final String text,
                                                 final LocalTime expected) {
         this.parsePatternAndCheck(
-                SpreadsheetPattern.timeParsePatternLocale(EN_AU),
+                SpreadsheetPattern.timeParsePatternLocale(LOCALE),
                 text,
                 (t, c) -> t.cast(TimeSpreadsheetFormulaParserToken.class).toLocalTime(),
                 expected
@@ -468,8 +473,11 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         final Parser<SpreadsheetParserContext> parser = pattern.parser();
         final TextCursor cursor = TextCursors.charSequence(text);
 
-        final DateTimeContext dateTimeContext = DateTimeContexts.locale(
-                EN_AU,
+        final DateTimeContext dateTimeContext = DateTimeContexts.basic(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(LOCALE)
+                ),
+                LOCALE,
                 1800,
                 50,
                 LocalDateTime::now

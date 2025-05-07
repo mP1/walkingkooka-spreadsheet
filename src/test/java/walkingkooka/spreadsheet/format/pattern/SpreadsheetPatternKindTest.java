@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.HasUrlFragmentTesting;
@@ -45,6 +46,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.visit.Visiting;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -401,7 +403,10 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                         return this.dateTimeContext.weekDayNameAbbreviation(day);
                     }
 
-                    private final DateTimeContext dateTimeContext = DateTimeContexts.locale(
+                    private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
+                            DateTimeSymbols.fromDateFormatSymbols(
+                                    new DateFormatSymbols(LOCALE)
+                            ),
                             LOCALE,
                             1950,
                             50,
@@ -497,7 +502,10 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                         return this.dateTimeContext.weekDayNameAbbreviation(day);
                     }
 
-                    private final DateTimeContext dateTimeContext = DateTimeContexts.locale(
+                    private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
+                            DateTimeSymbols.fromDateFormatSymbols(
+                                    new DateFormatSymbols(LOCALE)
+                            ),
                             LOCALE,
                             1950,
                             50,
@@ -679,7 +687,10 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
                         return this.dateTimeContext.weekDayNameAbbreviation(day);
                     }
 
-                    private final DateTimeContext dateTimeContext = DateTimeContexts.locale(
+                    private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
+                            DateTimeSymbols.fromDateFormatSymbols(
+                                    new DateFormatSymbols(LOCALE)
+                            ),
                             LOCALE,
                             1950,
                             50,

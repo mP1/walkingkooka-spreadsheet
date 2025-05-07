@@ -23,6 +23,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
@@ -72,6 +73,7 @@ import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.validation.ValidationValueTypeName;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -1517,10 +1519,15 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private SpreadsheetParserContext parserContext() {
+        final Locale locale = Locale.forLanguageTag("EN-AU");
+
         return SpreadsheetParserContexts.basic(
                 InvalidCharacterExceptionFactory.POSITION_EXPECTED,
-                DateTimeContexts.locale(
-                        Locale.forLanguageTag("EN-AU"), // locale
+                DateTimeContexts.basic(
+                        DateTimeSymbols.fromDateFormatSymbols(
+                                new DateFormatSymbols(locale)
+                        ),
+                        locale,
                         1920,
                         50,
                         () -> {

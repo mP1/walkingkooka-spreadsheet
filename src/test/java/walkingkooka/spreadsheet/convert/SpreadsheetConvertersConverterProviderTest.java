@@ -26,6 +26,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderTesting;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -35,6 +36,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
@@ -178,7 +180,10 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                                         ConverterContexts.basic(
                                                 Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                                 Converters.fake(),
-                                                DateTimeContexts.locale(
+                                                DateTimeContexts.basic(
+                                                        DateTimeSymbols.fromDateFormatSymbols(
+                                                                new DateFormatSymbols(Locale.ENGLISH)
+                                                        ),
                                                         Locale.ENGLISH,
                                                         1900,
                                                         20,

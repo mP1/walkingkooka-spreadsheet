@@ -25,6 +25,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -43,6 +44,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -523,7 +525,10 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             }
 
             private DateTimeContext dateTimeContext() {
-                return DateTimeContexts.locale(
+                return DateTimeContexts.basic(
+                        DateTimeSymbols.fromDateFormatSymbols(
+                                new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
+                        ),
                         Locale.forLanguageTag("EN-AU"),
                         1900,
                         20,

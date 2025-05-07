@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -34,6 +35,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -139,7 +141,10 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         ConverterContexts.basic(
                                 Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),
-                                DateTimeContexts.locale(
+                                DateTimeContexts.basic(
+                                        DateTimeSymbols.fromDateFormatSymbols(
+                                                new DateFormatSymbols(Locale.forLanguageTag("EN-AU"))
+                                        ),
                                         Locale.forLanguageTag("EN-AU"),
                                         1950,
                                         50,

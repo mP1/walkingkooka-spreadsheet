@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -32,6 +33,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -84,7 +86,10 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                                 ConverterContexts.basic(
                                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                         Converters.fake(),
-                                        DateTimeContexts.locale(
+                                        DateTimeContexts.basic(
+                                                DateTimeSymbols.fromDateFormatSymbols(
+                                                        new DateFormatSymbols(locale)
+                                                ),
                                                 locale,
                                                 1900,
                                                 20,

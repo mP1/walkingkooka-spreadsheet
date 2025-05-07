@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -32,6 +33,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,6 +41,8 @@ import java.time.LocalTime;
 import java.util.Locale;
 
 public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<SpreadsheetFormatterConverterSpreadsheetFormatterContext> {
+
+    private final static Locale LOCALE = Locale.FRANCE;
 
     @Test
     public void testConvertSameType() {
@@ -164,8 +168,11 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(
-                this.locale(),
+        return DateTimeContexts.basic(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(LOCALE)
+                ),
+                LOCALE,
                 1900,
                 19,
                 LocalDateTime::now
@@ -173,15 +180,12 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     private DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.decimalFormatSymbols(DecimalFormatSymbols.getInstance(this.locale()),
+        return DecimalNumberContexts.decimalFormatSymbols(
+                DecimalFormatSymbols.getInstance(LOCALE),
                 '+',
-                this.locale(),
-                MathContext.UNLIMITED);
-    }
-
-    @SuppressWarnings("SameReturnValue")
-    private Locale locale() {
-        return Locale.FRANCE;
+                LOCALE,
+                MathContext.UNLIMITED
+        );
     }
 
     @Override
