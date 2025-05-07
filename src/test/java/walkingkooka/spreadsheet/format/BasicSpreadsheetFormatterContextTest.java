@@ -28,6 +28,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -251,7 +252,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     public void testToString() {
         this.toStringAndCheck(
                 this.createContext(),
-                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_FR precision=7 roundingMode=HALF_EVEN DOUBLE"
+                "cellCharacterWidth=1 numberToColor=1=#123456 nameToColor=bingo=#123456 context=Number to Boolean | SpreadsheetError to String | SpreadsheetError to Number " + LABEL_NAME_RESOLVER + " symbols=ampms=\"AM\", \"PM\" monthNames=\"janvier\", \"février\", \"mars\", \"avril\", \"mai\", \"juin\", \"juillet\", \"août\", \"septembre\", \"octobre\", \"novembre\", \"décembre\" monthNameAbbreviations=\"janv.\", \"févr.\", \"mars\", \"avr.\", \"mai\", \"juin\", \"juil.\", \"août\", \"sept.\", \"oct.\", \"nov.\", \"déc.\" weekDayNames=\"dimanche\", \"lundi\", \"mardi\", \"mercredi\", \"jeudi\", \"vendredi\", \"samedi\" weekDayNameAbbreviations=\"dim.\", \"lun.\", \"mar.\", \"mer.\", \"jeu.\", \"ven.\", \"sam.\" locale=\"fr-FR\" twoDigitYear=50 negativeSign='N' positiveSign='L' currencySymbol=\"$$\" decimalSeparator='!' exponentSymbol=\"E\" groupSeparator='G' percentageSymbol='P' fr_FR precision=7 roundingMode=HALF_EVEN DOUBLE"
         );
     }
 
@@ -363,15 +364,19 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     private DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic(this.currencySymbol(),
-                this.decimalSeparator(),
-                this.exponentSymbol(),
-                this.groupSeparator(),
-                this.negativeSign(),
-                this.percentageSymbol(),
-                this.positiveSign(),
+        return DecimalNumberContexts.basic(
+                DecimalNumberSymbols.with(
+                        this.negativeSign(),
+                        this.positiveSign(),
+                        this.currencySymbol(),
+                        this.decimalSeparator(),
+                        this.exponentSymbol(),
+                        this.groupSeparator(),
+                        this.percentageSymbol()
+                ),
                 LOCALE,
-                this.mathContext());
+                this.mathContext()
+        );
     }
 
     @Override

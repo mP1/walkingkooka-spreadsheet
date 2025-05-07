@@ -26,6 +26,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -1408,15 +1409,19 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                                         20,
                                         LocalDateTime::now
                                 ),
-                                DecimalNumberContexts.basic("C",
-                                        'D',
-                                        "E",
-                                        'G',
-                                        'M',
-                                        'P',
-                                        'L',
+                                DecimalNumberContexts.basic(
+                                        DecimalNumberSymbols.with(
+                                                'M',
+                                                'P',
+                                                "C",
+                                                'D',
+                                                "E",
+                                                'G',
+                                                'L'
+                                        ),
                                         Locale.ENGLISH,
-                                        MathContext.DECIMAL32)
+                                        MathContext.DECIMAL32
+                                )
                         ),
                         EXPRESSION_NUMBER_KIND
                 )

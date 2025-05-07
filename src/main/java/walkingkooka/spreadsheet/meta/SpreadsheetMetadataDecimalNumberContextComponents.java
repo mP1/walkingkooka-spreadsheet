@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -58,15 +59,22 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
 
         components.reportIfMissing();
 
-        return DecimalNumberContexts.basic(currencySymbol,
-                decimalSeparator,
-                exponentSymbol,
-                groupSeparator,
-                negativeSign,
-                percentSymbol,
-                positiveSign,
+        return DecimalNumberContexts.basic(
+                DecimalNumberSymbols.with(
+                        negativeSign,
+                        positiveSign,
+                        currencySymbol,
+                        decimalSeparator,
+                        exponentSymbol,
+                        groupSeparator,
+                        percentSymbol
+                ),
                 locale,
-                new MathContext(precision, roundingMode));
+                new MathContext(
+                        precision,
+                        roundingMode
+                )
+        );
     }
 
     // this list should match the properties used in the method above.
