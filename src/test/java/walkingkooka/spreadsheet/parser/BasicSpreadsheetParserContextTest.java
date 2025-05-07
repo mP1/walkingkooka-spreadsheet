@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.cursor.TextCursor;
@@ -60,13 +61,15 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(
             EXPRESSION_NUMBER_KIND,
             DecimalNumberContexts.basic(
-                    CURRENCY,
-                    DECIMAL,
-                    EXPONENT,
-                    GROUP_SEPARATOR,
-                    NEGATIVE,
-                    PERCENTAGE,
-                    POSITIVE,
+                    DecimalNumberSymbols.with(
+                            NEGATIVE,
+                            POSITIVE,
+                            CURRENCY,
+                            DECIMAL,
+                            EXPONENT,
+                            GROUP_SEPARATOR,
+                            PERCENTAGE
+                    ),
                     LOCALE,
                     MATH_CONTEXT
             )

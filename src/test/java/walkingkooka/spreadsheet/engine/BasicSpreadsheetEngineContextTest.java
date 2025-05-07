@@ -25,6 +25,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
@@ -1300,15 +1301,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Override
     public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
-                CURRENCY,
-                DECIMAL,
-                EXPONENT,
-                GROUP_SEPARATOR,
-                MINUS,
-                PERCENT,
-                PLUS,
+                DecimalNumberSymbols.with(
+                        MINUS,
+                        PLUS,
+                        CURRENCY,
+                        DECIMAL,
+                        EXPONENT,
+                        GROUP_SEPARATOR,
+                        PERCENT
+                ),
                 LOCALE,
-                new MathContext(MathContext.DECIMAL32.getPrecision(), RoundingMode.HALF_UP)
+                new MathContext(
+                        MathContext.DECIMAL32.getPrecision(),
+                        RoundingMode.HALF_UP
+                )
         );
     }
 
