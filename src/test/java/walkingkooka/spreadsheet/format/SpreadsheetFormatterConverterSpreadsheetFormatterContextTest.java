@@ -25,6 +25,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -180,9 +181,11 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     private DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.decimalFormatSymbols(
-                DecimalFormatSymbols.getInstance(LOCALE),
-                '+',
+        return DecimalNumberContexts.basic(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        DecimalFormatSymbols.getInstance(LOCALE)
+                ),
                 LOCALE,
                 MathContext.UNLIMITED
         );
