@@ -24,6 +24,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -34,6 +35,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -279,6 +281,8 @@ public final class SpreadsheetConverterStringToFormatPatternTest extends Spreads
                 )
         );
 
+        final Locale locale = Locale.FRANCE;
+
         return SpreadsheetConverterContexts.basic(
                 converter,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -287,8 +291,11 @@ public final class SpreadsheetConverterStringToFormatPatternTest extends Spreads
                         ConverterContexts.basic(
                                 Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 converter.cast(ConverterContext.class),
-                                DateTimeContexts.locale(
-                                        Locale.FRANCE,
+                                DateTimeContexts.basic(
+                                        DateTimeSymbols.fromDateFormatSymbols(
+                                                new DateFormatSymbols(locale)
+                                        ),
+                                        locale,
                                         1900,
                                         50,
                                         LocalDateTime::now

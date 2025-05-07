@@ -24,6 +24,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -60,6 +61,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -1397,7 +1399,10 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
                         ConverterContexts.basic(
                                 DATE_OFFSET, // dateOffset
                                 Converters.fake(),
-                                DateTimeContexts.locale(
+                                DateTimeContexts.basic(
+                                        DateTimeSymbols.fromDateFormatSymbols(
+                                                new DateFormatSymbols(Locale.ENGLISH)
+                                        ),
                                         Locale.ENGLISH,
                                         1900,
                                         20,

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -28,6 +29,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -86,7 +88,12 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     ConverterContexts.basic(
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Converters.objectToString(),
-                            DateTimeContexts.locale(
+                            DateTimeContexts.basic(
+                                    DateTimeSymbols.fromDateFormatSymbols(
+                                            new DateFormatSymbols(
+                                                    Locale.forLanguageTag("EN-AU")
+                                            )
+                                    ),
                                     Locale.forLanguageTag("EN-AU"),
                                     1950, // default year
                                     50, // two-digit-year

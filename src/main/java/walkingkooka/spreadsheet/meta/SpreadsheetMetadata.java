@@ -34,6 +34,7 @@ import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.HasLocale;
@@ -123,6 +124,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DateFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -580,7 +582,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         components.reportIfMissing();
 
-        return DateTimeContexts.locale(
+        return DateTimeContexts.basic(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(locale)
+                ),
                 locale,
                 defaultYear,
                 twoYearDigit,

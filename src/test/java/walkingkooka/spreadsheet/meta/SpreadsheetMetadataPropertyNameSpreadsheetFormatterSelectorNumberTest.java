@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -37,6 +38,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
@@ -85,6 +87,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {
+        final Locale locale = Locale.ENGLISH;
+
         return SpreadsheetFormatterContexts.basic(
                 (n -> {
                     throw new UnsupportedOperationException();
@@ -121,8 +125,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                                 ConverterContexts.basic(
                                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                         Converters.fake(),
-                                        DateTimeContexts.locale(
-                                                Locale.ENGLISH,
+                                        DateTimeContexts.basic(
+                                                DateTimeSymbols.fromDateFormatSymbols(
+                                                        new DateFormatSymbols(locale)
+                                                ),
+                                                locale,
                                                 1900,
                                                 20,
                                                 LocalDateTime::now

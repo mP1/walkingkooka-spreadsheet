@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
@@ -63,9 +64,11 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -2686,8 +2689,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(
-                this.decimalNumberContext().locale(),
+        final Locale locale = this.decimalNumberContext()
+                .locale();
+
+        return DateTimeContexts.basic(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(locale)
+                ),
+                locale,
                 1900,
                 50,
                 LocalDateTime::now
