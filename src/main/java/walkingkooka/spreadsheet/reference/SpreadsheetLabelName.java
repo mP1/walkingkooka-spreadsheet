@@ -95,7 +95,12 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
      * Factory that creates a {@link SpreadsheetLabelName}
      */
     static SpreadsheetLabelName with(final String name) {
-        CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, "Label", INITIAL, PART);
+        CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(
+                name,
+                "Label",
+                INITIAL,
+                PART
+        );
 
         if (CASE_SENSITIVITY.equals("true", name) || CASE_SENSITIVITY.equals("false", name)) {
             throw new IllegalArgumentException("Invalid label with " + CharSequences.quoteAndEscape(name));
