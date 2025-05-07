@@ -67,7 +67,12 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
      * Factory that creates a {@link SpreadsheetFunctionName}
      */
     public static SpreadsheetFunctionName with(final String name) {
-        CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, SpreadsheetFunctionName.class.getSimpleName(), INITIAL, PART);
+        CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(
+                name,
+                SpreadsheetFunctionName.class.getSimpleName(),
+                INITIAL,
+                PART
+        );
 
         InvalidTextLengthException.throwIfFail(
                 "function name",
