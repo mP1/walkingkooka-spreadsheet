@@ -156,30 +156,37 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     public static SpreadsheetError parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
-        final int nextToken = text.indexOf(' ');
-        final String kindText = -1 == nextToken ?
-                text :
-                text.substring(
-                        0,
-                        nextToken
-                );
-        if (kindText.isEmpty()) {
-            throw new IllegalArgumentException("Missing error kind");
-        }
-
         final SpreadsheetErrorKind kind;
+        final String message;
 
-        try {
-            kind = SpreadsheetErrorKind.parse(kindText);
-        } catch (final IllegalArgumentException cause) {
-            throw new IllegalArgumentException("Invalid error kind", cause);
+        // missing prefix text is the message
+        if (text.charAt(0) == SpreadsheetErrorKind.PREFIX) {
+            final int nextToken = text.indexOf(' ');
+            final String kindText = -1 == nextToken ?
+                    text :
+                    text.substring(
+                            0,
+                            nextToken
+                    );
+            if (kindText.isEmpty()) {
+                throw new IllegalArgumentException("Missing error kind");
+            }
+
+            try {
+                kind = SpreadsheetErrorKind.parse(kindText);
+            } catch (final IllegalArgumentException cause) {
+                throw new IllegalArgumentException("Invalid error kind", cause);
+            }
+
+            message = -1 == nextToken ?
+                    "" :
+                    text.substring(nextToken + 1);
+        } else {
+            kind = SpreadsheetErrorKind.ERROR;
+            message = text;
         }
 
-        return kind.setMessage(
-                        -1 == nextToken ?
-                                "" :
-                                text.substring(nextToken + 1)
-                );
+        return kind.setMessage(message);
     }
 
     /**

@@ -414,15 +414,25 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     // parseString......................................................................................................
 
     @Test
+    public void testParseMissingPrefix() {
+        final String text = "Message123";
+
+        this.parseStringAndCheck(
+                text,
+                SpreadsheetErrorKind.ERROR.setMessage(text)
+        );
+    }
+
+    @Test
     public void testParseInvalidKindFails() {
         this.parseStringFails(
-                "Invalid123",
+                "#Invalid123",
                 new IllegalArgumentException("Invalid error kind")
         );
     }
 
     @Test
-    public void testParseWithoutMessage() {
+    public void testParseDiv0WithoutMessage() {
         this.parseStringAndCheck(
                 "#DIV/0!",
                 SpreadsheetErrorKind.DIV0.setMessage("")
@@ -430,7 +440,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
-    public void testParseWithoutMessage2() {
+    public void testParseNaWithoutMessage2() {
         this.parseStringAndCheck(
                 "#N/A",
                 SpreadsheetErrorKind.NA.setMessage("")
@@ -438,7 +448,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
-    public void testParseWithMessage() {
+    public void testParseDiv0WithMessage() {
         this.parseStringAndCheck(
                 "#DIV/0! message123",
                 SpreadsheetErrorKind.DIV0.setMessage("message123")
@@ -446,7 +456,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
-    public void testParseWithMessage2() {
+    public void testParseNaWithMessage2() {
         this.parseStringAndCheck(
                 "#N/A message123",
                 SpreadsheetErrorKind.NA.setMessage("message123")

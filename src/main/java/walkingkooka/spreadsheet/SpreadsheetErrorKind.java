@@ -106,6 +106,12 @@ public enum SpreadsheetErrorKind implements HasText {
 
     CALC("#CALC!", 14);
 
+    /**
+     * A prefix character that precedes all {@link SpreadsheetErrorKind}.
+     * This will be used to identify a message which may or may not have an {@link SpreadsheetErrorKind}.
+     */
+    static char PREFIX = '#';
+
     SpreadsheetErrorKind(final String text,
                          final int value) {
         this.text = text;
