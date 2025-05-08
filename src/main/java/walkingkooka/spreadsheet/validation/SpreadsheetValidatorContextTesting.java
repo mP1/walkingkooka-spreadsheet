@@ -17,10 +17,46 @@
 
 package walkingkooka.spreadsheet.validation;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.ValidatorContextTesting;
 
 public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidatorContext> extends ValidatorContextTesting<C, SpreadsheetExpressionReference> {
+
+    @Test
+    default void testValidationErrorWithCell() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final String message = "Hello";
+
+        final SpreadsheetError error = SpreadsheetErrorKind.ERROR.setMessage(message);
+
+        this.checkEquals(
+                error.toValidationError(cell),
+                this.createContext()
+                        .setValidationReference(cell)
+                        .validationError(message)
+        );
+    }
+
+    @Test
+    default void testValidationErrorWithLabel() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+        final String message = "Hello";
+
+        final SpreadsheetError error = SpreadsheetErrorKind.ERROR.setMessage(message);
+
+        this.checkEquals(
+                error.toValidationError(label),
+                this.createContext()
+                        .setValidationReference(label)
+                        .validationError(message)
+        );
+    }
 
     @Override
     default String typeNameSuffix() {
