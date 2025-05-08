@@ -251,6 +251,13 @@ final class LocalLabelsSpreadsheetExpressionEvaluationContext implements Spreads
         }
     }
 
+    @Override
+    public Optional<Object> validationValue() {
+        return this.context.reference(
+                SpreadsheetSelection.labelName("VALUE")
+        ).orElse(Optional.empty());
+    }
+
     // ConverterContext.................................................................................................
 
     @Override

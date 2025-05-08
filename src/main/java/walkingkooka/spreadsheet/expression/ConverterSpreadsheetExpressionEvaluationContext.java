@@ -246,6 +246,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context.serverUrl();
     }
 
+    @Override
+    public Optional<Object> validationValue() {
+        return this.context.validationValue();
+    }
+
     // StorageExpressionEvaluationContext...............................................................................
 
     @Override
