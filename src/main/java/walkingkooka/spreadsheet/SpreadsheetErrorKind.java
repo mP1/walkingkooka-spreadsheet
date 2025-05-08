@@ -112,6 +112,12 @@ public enum SpreadsheetErrorKind implements HasText {
      */
     static char PREFIX = '#';
 
+    /**
+     * The {@link SpreadsheetErrorKind} that is used as a default by {@link SpreadsheetError#parse(String)} is missing a
+     * {@link SpreadsheetErrorKind}
+     */
+    public final static SpreadsheetErrorKind MISSING_PREFIX = SpreadsheetErrorKind.ERROR;
+
     SpreadsheetErrorKind(final String text,
                          final int value) {
         this.text = text;
