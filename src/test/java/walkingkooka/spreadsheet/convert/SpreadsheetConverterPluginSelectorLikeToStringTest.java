@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
@@ -50,7 +51,10 @@ public final class SpreadsheetConverterPluginSelectorLikeToStringTest extends Sp
         final String selector = "magic-function(123)";
 
         this.convertAndCheck(
-                ExpressionFunctionSelector.parse(selector),
+                ExpressionFunctionSelector.parse(
+                        selector,
+                        SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY
+                ),
                 String.class,
                 selector
         );
