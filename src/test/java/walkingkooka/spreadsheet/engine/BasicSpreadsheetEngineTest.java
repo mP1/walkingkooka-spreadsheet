@@ -4361,7 +4361,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Optional.of(VALIDATOR)
                 ).setStyle(STYLE);
 
-        final SpreadsheetError error = SpreadsheetErrorKind.ERROR.setMessageAndValue(
+        final SpreadsheetError error = SpreadsheetErrorKind.MISSING_PREFIX.setMessageAndValue(
                 VALIDATION_MESSAGE,
                 SpreadsheetSelection.A1
         );
@@ -4463,7 +4463,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 a1Cell.setFormula(
                                         a1Formula.setError(
                                                 Optional.of(
-                                                        SpreadsheetErrorKind.ERROR.setMessageAndValue(
+                                                        SpreadsheetErrorKind.MISSING_PREFIX.setMessageAndValue(
                                                                 VALIDATION_MESSAGE,
                                                                 SpreadsheetSelection.A1
                                                         )

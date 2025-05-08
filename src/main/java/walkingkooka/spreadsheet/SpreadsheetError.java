@@ -182,7 +182,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
                     "" :
                     text.substring(nextToken + 1);
         } else {
-            kind = SpreadsheetErrorKind.ERROR;
+            kind = SpreadsheetErrorKind.MISSING_PREFIX;
             message = text;
         }
 
