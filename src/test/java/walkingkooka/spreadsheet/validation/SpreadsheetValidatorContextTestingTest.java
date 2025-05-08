@@ -24,7 +24,6 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.Validator;
@@ -56,6 +55,14 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
             ConverterContextDelegator,
             EnvironmentContextDelegator {
 
+        TestSpreadsheetValidatorContext() {
+            this(SpreadsheetSelection.A1);
+        }
+
+        TestSpreadsheetValidatorContext(final SpreadsheetExpressionReference reference) {
+            this.reference = reference;
+        }
+
         @Override
         public ConverterContext converterContext() {
             return SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
@@ -75,13 +82,21 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         public SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel) {
             Objects.requireNonNull(cellOrLabel, "cellOrLabel");
 
-            throw new UnsupportedOperationException();
+            return new TestSpreadsheetValidatorContext() {
+
+                @Override
+                public SpreadsheetExpressionReference validationReference() {
+                    return cellOrLabel;
+                }
+            };
         }
 
         @Override
-        public SpreadsheetCellReference validationReference() {
-            return SpreadsheetSelection.A1;
+        public SpreadsheetExpressionReference validationReference() {
+            return this.reference;
         }
+
+        private final SpreadsheetExpressionReference reference;
 
         @Override
         public Validator<SpreadsheetExpressionReference, ? super ValidatorContext<SpreadsheetExpressionReference>> validator(final ValidatorSelector validatorSelector) {
