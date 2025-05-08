@@ -118,6 +118,13 @@ public interface SpreadsheetTemplateContext extends SpreadsheetParserContext,
         throw new UnsupportedOperationException();
     }
 
+    // ValidationExpressionEvaluationContext............................................................................
+
+    @Override
+    default Optional<Object> validationValue() {
+        throw new UnsupportedOperationException();
+    }
+
     // EnvironmentContext...............................................................................................
 
     @Override
