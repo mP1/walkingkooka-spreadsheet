@@ -154,7 +154,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
      * becomes {@link SpreadsheetErrorKind#DIV0} and a {@link String} of <code>Error123</code>.
      */
     public static SpreadsheetError parse(final String text) {
-        Objects.requireNonNull(text, "text");
+        CharSequences.failIfNullOrEmpty(text, "text");
 
         final int nextToken = text.indexOf(' ');
         final String kindText = -1 == nextToken ?
