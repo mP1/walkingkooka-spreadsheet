@@ -60,6 +60,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
         ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
 
     /**
+     * A label that may be used to get the value being validated.
+     */
+    SpreadsheetLabelName VALIDATION_VALUE = SpreadsheetValidatorContext.VALUE;
+
+    /**
      * Helper that makes it easy to add a variable with a value. This is especially useful when executing a {@link Expression}
      * with a parameter such as a Validator.
      */

@@ -1602,7 +1602,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         Optional.ofNullable(cell),
                         loader
                 ).addLocalVariable(
-                        VALUE,
+                        SpreadsheetValidatorContext.VALUE,
                         value
                 );
 
@@ -1624,8 +1624,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 )
         );
     }
-
-    private final static SpreadsheetLabelName VALUE = SpreadsheetSelection.labelName("VALUE");
 
     // SpreadsheetEngineEvaluation #evaluateXXX.........................................................................
 
