@@ -315,9 +315,14 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
     // toValidationError....... ........................................................................................
 
-    public ValidationError<SpreadsheetCellReference> toValidationError(final SpreadsheetCellReference cell) {
+    public <R extends SpreadsheetExpressionReference> ValidationError<R> toValidationError(final R cellOrLabel) {
+        Objects.requireNonNull(cellOrLabel, "cellOrLabel");
+        if (cellOrLabel.isCellRange()) {
+            throw new IllegalArgumentException("ValidationErrors only accept cell or label but got cell-range");
+        }
+
         return ValidationError.with(
-                cell,
+                cellOrLabel,
                 this.message
         ).setValue(this.value);
     }

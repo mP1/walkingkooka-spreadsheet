@@ -17,8 +17,10 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
+import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationReference;
 
 /**
@@ -72,4 +74,11 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      */
     @Override
     abstract public SpreadsheetExpressionReference toRelative();
+
+    // ValidationError..................................................................................................
+
+    @Override
+    public final ValidationError<SpreadsheetExpressionReference> setValidationErrorMessage(final String message) {
+        return SpreadsheetError.parse(message).toValidationError(this);
+    }
 }
