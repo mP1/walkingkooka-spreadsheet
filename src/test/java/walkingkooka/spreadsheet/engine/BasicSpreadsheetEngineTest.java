@@ -4361,7 +4361,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         Optional.of(VALIDATOR)
                 ).setStyle(STYLE);
 
-        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessageAndValue(
+        final SpreadsheetError error = SpreadsheetErrorKind.ERROR.setMessageAndValue(
                 VALIDATION_MESSAGE,
                 SpreadsheetSelection.A1
         );
@@ -4463,7 +4463,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 a1Cell.setFormula(
                                         a1Formula.setError(
                                                 Optional.of(
-                                                        SpreadsheetErrorKind.VALUE.setMessageAndValue(
+                                                        SpreadsheetErrorKind.ERROR.setMessageAndValue(
                                                                 VALIDATION_MESSAGE,
                                                                 SpreadsheetSelection.A1
                                                         )
@@ -4472,7 +4472,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 ).setFormattedValue(
                                         Optional.of(
                                                 STYLE.replace(
-                                                        TextNode.text("#VALUE! FORMATTED_PATTERN_SUFFIX")
+                                                        TextNode.text("#ERROR FORMATTED_PATTERN_SUFFIX")
                                                 )
                                         )
                                 )
