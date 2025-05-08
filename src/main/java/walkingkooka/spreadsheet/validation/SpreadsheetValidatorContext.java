@@ -31,7 +31,6 @@ public interface SpreadsheetValidatorContext extends ValidatorContext<Spreadshee
      */
     SpreadsheetLabelName VALUE = SpreadsheetSelection.labelName(ValidatorContext.VALIDATION_EXPRESSION_VALUE_REFERENCE_STRING);
 
-
     @Override
     SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel);
 

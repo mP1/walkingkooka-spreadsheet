@@ -42,7 +42,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.StorageStore;
@@ -224,9 +223,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<Object> validationValue() {
-        return this.reference(
-                SpreadsheetSelection.labelName("VALUE")
-        ).orElse(Optional.empty());
+        return this.reference(VALIDATION_VALUE)
+                .orElse(Optional.empty());
     }
 
     // StorageExpressionEvaluationContext...............................................................................
