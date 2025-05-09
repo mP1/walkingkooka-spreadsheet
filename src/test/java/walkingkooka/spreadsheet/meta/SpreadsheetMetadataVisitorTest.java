@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -325,7 +326,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("abs")
+                SpreadsheetExpressionFunctions.parseAliasSet("abs")
         );
     }
 
@@ -400,7 +401,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("abs")
+                SpreadsheetExpressionFunctions.parseAliasSet("abs")
         );
     }
 
@@ -439,7 +440,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("abs")
+                SpreadsheetExpressionFunctions.parseAliasSet("abs")
         );
     }
 
@@ -786,7 +787,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
                 SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("requiredFormFields")
+                SpreadsheetExpressionFunctions.parseAliasSet("requiredFormFields")
         );
     }
 

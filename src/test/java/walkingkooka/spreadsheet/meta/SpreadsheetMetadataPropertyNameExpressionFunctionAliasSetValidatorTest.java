@@ -18,6 +18,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidatorTest extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetTestCase<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetValidator> {
@@ -29,7 +30,7 @@ public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetVali
 
     @Override
     ExpressionFunctionAliasSet propertyValue() {
-        return ExpressionFunctionAliasSet.parse("requiredFormFields");
+        return SpreadsheetExpressionFunctions.parseAliasSet("requiredFormFields");
     }
 
     // class............................................................................................................

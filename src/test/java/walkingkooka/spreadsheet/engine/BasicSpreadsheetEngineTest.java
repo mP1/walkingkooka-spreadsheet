@@ -115,7 +115,6 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
@@ -535,12 +534,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
                 .set(
                         SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                        ExpressionFunctionAliasSet.parse(
+                        SpreadsheetExpressionFunctions.parseAliasSet(
                                 TEST_FILTER_CELLS_PREDICATE
                         )
                 ).set(
                         SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                        ExpressionFunctionAliasSet.parse(
+                        SpreadsheetExpressionFunctions.parseAliasSet(
                                 TEST_NUMBER_PARAMETER +
                                         "," +
                                         TEST_STRING_PARAMETER +

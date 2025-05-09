@@ -70,7 +70,6 @@ import walkingkooka.storage.StorageStoreContext;
 import walkingkooka.test.Testing;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -229,7 +228,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                    ExpressionFunctionAliasSet.parse("")
+                    SpreadsheetExpressionFunctions.parseAliasSet("")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMAT_CONVERTER,
                     ConverterSelector.parse("collection (error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
@@ -245,10 +244,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     ConverterSelector.parse("collection (error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)")
             ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                    ExpressionFunctionAliasSet.parse("")
+                    SpreadsheetExpressionFunctions.parseAliasSet("")
             ).set(
                     SpreadsheetMetadataPropertyName.FUNCTIONS,
-                    ExpressionFunctionAliasSet.EMPTY
+                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(
                     SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                     8
@@ -309,7 +308,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                     FormHandlerSelector.parse("non-null")
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
-                    ExpressionFunctionAliasSet.EMPTY
+                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(
                     SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
                     ValidatorAliasSet.EMPTY

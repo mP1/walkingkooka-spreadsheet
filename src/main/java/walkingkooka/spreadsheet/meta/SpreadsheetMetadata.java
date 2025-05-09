@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
@@ -1428,7 +1429,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         .aliasSet()
         ).set(
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
-                ExpressionFunctionAliasSet.EMPTY
+                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         ).set(
                 SpreadsheetMetadataPropertyName.FORMATTERS,
                 spreadsheetFormatterProvider.spreadsheetFormatterInfos()

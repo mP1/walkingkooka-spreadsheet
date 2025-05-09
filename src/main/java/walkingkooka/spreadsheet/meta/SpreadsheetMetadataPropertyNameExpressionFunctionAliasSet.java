@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 import java.util.Locale;
@@ -61,6 +62,6 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
 
     @Override
     final ExpressionFunctionAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
-        return ExpressionFunctionAliasSet.parse(value);
+        return SpreadsheetExpressionFunctions.parseAliasSet(value);
     }
 }
