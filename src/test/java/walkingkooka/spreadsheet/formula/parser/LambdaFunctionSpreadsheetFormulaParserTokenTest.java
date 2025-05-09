@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -96,8 +95,7 @@ public final class LambdaFunctionSpreadsheetFormulaParserTokenTest extends Funct
                 Expression.call(
                         Expression.call(
                                 Expression.namedFunction(
-                                        ExpressionFunctionName.with(FUNCTION)
-                                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                        SpreadsheetExpressionFunctions.name(FUNCTION)
                                 ),
                                 Lists.of(
                                         Expression.reference(

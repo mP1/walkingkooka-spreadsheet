@@ -155,8 +155,7 @@ public final class SpreadsheetFormulaParserTokenVisitorToExpressionTest extends 
                             @Override
                             public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
                                 Objects.requireNonNull(
-                                        ExpressionFunctionName.with("error")
-                                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY),
+                                        SpreadsheetExpressionFunctions.name("error"),
                                         "name"
                                 );
                                 return Cast.to(

@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
@@ -34,6 +35,14 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
      * Function names are {@link CaseSensitivity#INSENSITIVE}
      */
     public static final CaseSensitivity NAME_CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
+
+    /**
+     * Factory that creates a {@link ExpressionFunctionName} with {@link #NAME_CASE_SENSITIVITY}.
+     */
+    public static ExpressionFunctionName name(final String name) {
+        return ExpressionFunctionName.with(name)
+                .setCaseSensitivity(NAME_CASE_SENSITIVITY);
+    }
 
     /**
      * {@link ExpressionFunctionSelector#parse(String, CaseSensitivity)}

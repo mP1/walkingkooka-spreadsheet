@@ -35,7 +35,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
@@ -191,8 +190,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                 IllegalArgumentException.class,
                 () -> this.createContext()
                         .expressionFunction(
-                                ExpressionFunctionName.with(NAME)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                SpreadsheetExpressionFunctions.name(NAME)
                         )
         );
         this.checkEquals(
@@ -206,8 +204,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
                 () -> this.createContext().isPure(
-                        ExpressionFunctionName.with(NAME)
-                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                        SpreadsheetExpressionFunctions.name(NAME)
                 )
         );
         this.checkEquals(

@@ -497,7 +497,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         private ExpressionFunctionInfo info(final String name) {
             return ExpressionFunctionInfo.with(
                     Url.parseAbsolute("https://example.com/" + name),
-                    ExpressionFunctionName.with(name).setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                    SpreadsheetExpressionFunctions.name(name)
             );
         }
 
@@ -620,8 +620,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadCellFails(
                 "=unknownFunction()",
                 SpreadsheetError.functionNotFound(
-                        ExpressionFunctionName.with("unknownFunction")
-                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                        SpreadsheetExpressionFunctions.name("unknownFunction")
                 )
         );
     }

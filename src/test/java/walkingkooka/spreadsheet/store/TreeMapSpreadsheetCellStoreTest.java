@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
@@ -638,8 +637,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                                 .setExpression(
                                         Optional.of(
                                                 Expression.namedFunction(
-                                                        ExpressionFunctionName.with("hello")
-                                                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                                        SpreadsheetExpressionFunctions.name("hello")
                                                 )
                                         )
                                 )
@@ -670,8 +668,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                                 .setExpression(
                                         Optional.of(
                                                 Expression.namedFunction(
-                                                        ExpressionFunctionName.with("hello")
-                                                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                                        SpreadsheetExpressionFunctions.name("hello")
                                                 )
                                         )
                                 )
@@ -716,8 +713,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                                 .setExpression(
                                         Optional.of(
                                                 Expression.namedFunction(
-                                                        ExpressionFunctionName.with("hello")
-                                                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                                        SpreadsheetExpressionFunctions.name("hello")
                                                 )
                                         )
                                 )
@@ -750,8 +746,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                                 .setExpression(
                                         Optional.of(
                                                 Expression.namedFunction(
-                                                        ExpressionFunctionName.with("hello")
-                                                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                                        SpreadsheetExpressionFunctions.name("hello")
                                                 )
                                         )
                                 )

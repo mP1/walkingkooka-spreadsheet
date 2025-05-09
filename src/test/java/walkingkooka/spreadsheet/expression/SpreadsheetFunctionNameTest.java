@@ -22,7 +22,6 @@ import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -38,8 +37,7 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
         final String name = "Hello123";
 
         this.checkEquals(
-                ExpressionFunctionName.with(name)
-                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY),
+                SpreadsheetExpressionFunctions.name(name),
                 SpreadsheetFunctionName.with(name)
                         .toExpressionFunctionName()
         );

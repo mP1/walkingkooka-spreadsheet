@@ -810,8 +810,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             @Override
             public Optional<ExpressionFunctionName> name() {
                 return Optional.of(
-                        ExpressionFunctionName.with("function1")
-                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                        SpreadsheetExpressionFunctions.name("function1")
                 );
             }
 
