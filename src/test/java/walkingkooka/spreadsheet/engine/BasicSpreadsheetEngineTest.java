@@ -483,7 +483,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public ExpressionFunctionInfoSet expressionFunctionInfos() {
-            return ExpressionFunctionInfoSet.with(
+            return SpreadsheetExpressionFunctions.infoSet(
                     Sets.of(
                             info(TEST_FILTER_CELLS_PREDICATE),
                             info(TEST_NUMBER_PARAMETER),

@@ -17,9 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliasSet}. These aliases will
@@ -28,7 +27,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
 
     static {
-        ExpressionFunctionInfoSet.with(Sets.empty()); // force registry of json marshaller
+        SpreadsheetExpressionFunctions.EMPTY_INFO_SET.text(); // force registry of json marshaller
     }
 
     /**

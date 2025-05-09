@@ -214,7 +214,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
         @Override
         public ExpressionFunctionInfoSet expressionFunctionInfos() {
-            return ExpressionFunctionInfoSet.with(
+            return SpreadsheetExpressionFunctions.infoSet(
                     Sets.of(
                             ExpressionFunctionInfo.with(
                                     Url.parseAbsolute("https://example.com/test/" + CONCAT),
