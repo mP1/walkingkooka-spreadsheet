@@ -161,8 +161,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
 
     @Test
     public void testFunctionNotFound() {
-        final ExpressionFunctionName function = ExpressionFunctionName.with("function123")
-                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY);
+        final ExpressionFunctionName function = SpreadsheetExpressionFunctions.name("function123");
 
         final SpreadsheetError error = SpreadsheetError.functionNotFound(function);
         this.checkKind(error, SpreadsheetErrorKind.NAME);

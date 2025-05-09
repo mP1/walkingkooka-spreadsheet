@@ -130,8 +130,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         @Override
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(
-                    ExpressionFunctionName.with("test-concat-1")
-                            .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                    SpreadsheetExpressionFunctions.name("test-concat-1")
             );
         }
 
@@ -163,8 +162,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         @Override
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(
-                    ExpressionFunctionName.with("test-echo-2")
-                            .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                    SpreadsheetExpressionFunctions.name("test-echo-2")
             );
         }
 

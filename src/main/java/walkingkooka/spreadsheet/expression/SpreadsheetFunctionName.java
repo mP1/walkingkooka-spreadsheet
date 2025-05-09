@@ -104,8 +104,7 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
      * Returns a {@link ExpressionFunctionName}.
      */
     public ExpressionFunctionName toExpressionFunctionName() {
-        return ExpressionFunctionName.with(this.name)
-                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY);
+        return SpreadsheetExpressionFunctions.name(this.name);
     }
 
     // Object...........................................................................................................

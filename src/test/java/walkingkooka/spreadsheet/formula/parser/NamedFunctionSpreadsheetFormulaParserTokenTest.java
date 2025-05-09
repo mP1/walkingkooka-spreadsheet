@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
@@ -173,8 +172,7 @@ public final class NamedFunctionSpreadsheetFormulaParserTokenTest extends Functi
         this.toExpressionAndCheck(
                 Expression.call(
                         Expression.namedFunction(
-                                ExpressionFunctionName.with(FUNCTION)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                                SpreadsheetExpressionFunctions.name(FUNCTION)
                         ),
                         Lists.of(
                                 Expression.value(

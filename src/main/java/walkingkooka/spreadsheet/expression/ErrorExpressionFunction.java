@@ -52,8 +52,7 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
     }
 
     private final static Optional<ExpressionFunctionName> NAME = Optional.of(
-            ExpressionFunctionName.with("error")
-                    .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+            SpreadsheetExpressionFunctions.name("error")
     );
 
     @Override

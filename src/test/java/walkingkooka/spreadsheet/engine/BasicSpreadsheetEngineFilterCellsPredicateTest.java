@@ -135,8 +135,7 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
     private BasicSpreadsheetEngineFilterCellsPredicate createPredicate(final String valueType) {
         final Expression expression = Expression.call(
                 Expression.namedFunction(
-                        ExpressionFunctionName.with("Test123")
-                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
+                        SpreadsheetExpressionFunctions.name("Test123")
                 ),
                 Expression.NO_CHILDREN
         );
