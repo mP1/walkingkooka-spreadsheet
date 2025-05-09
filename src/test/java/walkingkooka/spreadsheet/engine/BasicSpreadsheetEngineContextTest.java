@@ -1161,26 +1161,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return this.createContext(SpreadsheetLabelStores.treeMap());
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetCellStore cellStore) {
-        return this.createContext(
-                METADATA,
-                cellStore,
-                SpreadsheetLabelStores.treeMap(),
-                SpreadsheetCellRangeStores.fake()
-        );
-    }
-
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
         return this.createContext(
                 METADATA,
                 labelStore
-        );
-    }
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
-        return this.createContext(
-                metadata,
-                SpreadsheetLabelStores.treeMap()
         );
     }
 
