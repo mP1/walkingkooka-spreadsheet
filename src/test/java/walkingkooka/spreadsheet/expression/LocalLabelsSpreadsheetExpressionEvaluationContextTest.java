@@ -25,7 +25,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -193,7 +192,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                 () -> this.createContext()
                         .expressionFunction(
                                 ExpressionFunctionName.with(NAME)
-                                        .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                        .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                         )
         );
         this.checkEquals(
@@ -208,7 +207,7 @@ public final class LocalLabelsSpreadsheetExpressionEvaluationContextTest impleme
                 IllegalArgumentException.class,
                 () -> this.createContext().isPure(
                         ExpressionFunctionName.with(NAME)
-                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                 )
         );
         this.checkEquals(

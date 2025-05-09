@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.provider.ConverterProviderTesting;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderTesting;
 import walkingkooka.text.CaseSensitivity;
@@ -68,6 +68,6 @@ public interface SpreadsheetProviderTesting<T extends SpreadsheetProvider> exten
 
     @Override
     default CaseSensitivity expressionFunctionNameCaseSensitivity() {
-        return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
+        return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
     }
 }

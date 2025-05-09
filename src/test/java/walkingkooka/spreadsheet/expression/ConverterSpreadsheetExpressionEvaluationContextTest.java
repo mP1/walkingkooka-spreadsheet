@@ -35,7 +35,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
@@ -132,7 +131,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(
                     ExpressionFunctionName.with("test-concat-1")
-                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                            .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
             );
         }
 
@@ -165,7 +164,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         public Optional<ExpressionFunctionName> name() {
             return Optional.of(
                     ExpressionFunctionName.with("test-echo-2")
-                            .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                            .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
             );
         }
 
@@ -233,7 +232,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
         @Override
         public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-            return SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
+            return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
         }
     };
 

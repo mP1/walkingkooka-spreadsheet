@@ -22,7 +22,6 @@ import walkingkooka.InvalidTextLengthException;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.json.JsonNode;
@@ -106,7 +105,7 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
      */
     public ExpressionFunctionName toExpressionFunctionName() {
         return ExpressionFunctionName.with(this.name)
-                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY);
+                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY);
     }
 
     // Object...........................................................................................................
@@ -146,7 +145,7 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
         return CASE_SENSITIVITY;
     }
 
-    private final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY;
+    private final static CaseSensitivity CASE_SENSITIVITY = SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
 
     // Json.............................................................................................................
 

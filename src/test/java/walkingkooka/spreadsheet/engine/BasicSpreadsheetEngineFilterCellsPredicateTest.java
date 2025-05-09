@@ -27,10 +27,10 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -136,7 +136,7 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
         final Expression expression = Expression.call(
                 Expression.namedFunction(
                         ExpressionFunctionName.with("Test123")
-                                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY)
+                                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY)
                 ),
                 Expression.NO_CHILDREN
         );

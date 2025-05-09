@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -161,7 +162,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testFunctionNotFound() {
         final ExpressionFunctionName function = ExpressionFunctionName.with("function123")
-                .setCaseSensitivity(SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY);
+                .setCaseSensitivity(SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY);
 
         final SpreadsheetError error = SpreadsheetError.functionNotFound(function);
         this.checkKind(error, SpreadsheetErrorKind.NAME);

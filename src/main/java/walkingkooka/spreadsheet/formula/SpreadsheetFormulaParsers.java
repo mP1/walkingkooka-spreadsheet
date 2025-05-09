@@ -23,8 +23,8 @@ import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.ConditionRightSpreadsheetFormulaParserToken;
@@ -551,7 +551,7 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName LAMBDA_FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("LAMBDA_FUNCTION_NAME");
     private static final Parser<SpreadsheetParserContext> LAMBDA_FUNCTION_NAME = Parsers.<SpreadsheetParserContext>string(
             "lambda",
-                    SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY
+                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
             ).transform(SpreadsheetFormulaParsers::transformFunctionName)
             .setToString(LAMBDA_FUNCTION_NAME_IDENTIFIER.value())
             .cast();

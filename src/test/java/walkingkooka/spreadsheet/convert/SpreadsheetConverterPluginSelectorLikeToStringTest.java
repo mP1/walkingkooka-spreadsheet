@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetExpressionFunctionNames;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
@@ -53,7 +53,7 @@ public final class SpreadsheetConverterPluginSelectorLikeToStringTest extends Sp
         this.convertAndCheck(
                 ExpressionFunctionSelector.parse(
                         selector,
-                        SpreadsheetExpressionFunctionNames.CASE_SENSITIVITY
+                        SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
                 ),
                 String.class,
                 selector
