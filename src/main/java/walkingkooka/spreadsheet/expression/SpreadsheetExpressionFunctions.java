@@ -24,7 +24,11 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
+
+import java.util.Set;
 
 /**
  * A collection of helpers for getting {@link ExpressionFunction}.
@@ -37,11 +41,30 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     public static final CaseSensitivity NAME_CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
 
     /**
+     * {@link ExpressionFunctionInfoSet#EMPTY}.
+     */
+    public static final ExpressionFunctionInfoSet EMPTY_INFO_SET = ExpressionFunctionInfoSet.EMPTY;
+
+    /**
+     * {@link ExpressionFunctionInfoSet#with(Set)}
+     */
+    public static ExpressionFunctionInfoSet infoSet(final Set<ExpressionFunctionInfo> infos) {
+        return ExpressionFunctionInfoSet.with(infos);
+    }
+
+    /**
      * Factory that creates a {@link ExpressionFunctionName} with {@link #NAME_CASE_SENSITIVITY}.
      */
     public static ExpressionFunctionName name(final String name) {
         return ExpressionFunctionName.with(name)
                 .setCaseSensitivity(NAME_CASE_SENSITIVITY);
+    }
+
+    /**
+     * {@link ExpressionFunctionInfoSet#parse(String)
+     */
+    public static ExpressionFunctionInfoSet parseInfoSet(final String text) {
+        return ExpressionFunctionInfoSet.parse(text);
     }
 
     /**
