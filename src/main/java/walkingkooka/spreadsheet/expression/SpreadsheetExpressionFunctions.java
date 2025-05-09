@@ -94,10 +94,13 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     }
 
     /**
-     * {@link ExpressionFunctionAlias#parse(String)}
+     * {@link ExpressionFunctionAlias#parse(String, CaseSensitivity)}
      */
     public static ExpressionFunctionAlias parseAlias(final String text) {
-        return ExpressionFunctionAlias.parse(text);
+        return ExpressionFunctionAlias.parse(
+                text,
+                NAME_CASE_SENSITIVITY
+        );
     }
 
     /**
