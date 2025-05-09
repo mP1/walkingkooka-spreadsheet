@@ -78,7 +78,6 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
@@ -245,19 +244,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         public ExpressionFunctionInfoSet expressionFunctionInfos() {
             return SpreadsheetExpressionFunctions.infoSet(
                     Sets.of(
-                            ExpressionFunctionInfo.with(
+                            SpreadsheetExpressionFunctions.info(
                                     Url.parseAbsolute("https://example.com/test/xyz"),
                                     SpreadsheetExpressionFunctions.name("xyz")
                             ),
-                            ExpressionFunctionInfo.with(
+                            SpreadsheetExpressionFunctions.info(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
                                     SpreadsheetExpressionFunctions.name(TEST_CONTEXT_LOADCELL)
                             ),
-                            ExpressionFunctionInfo.with(
+                            SpreadsheetExpressionFunctions.info(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
                                     SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
                             ),
-                            ExpressionFunctionInfo.with(
+                            SpreadsheetExpressionFunctions.info(
                                     Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
                                     SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
                             )

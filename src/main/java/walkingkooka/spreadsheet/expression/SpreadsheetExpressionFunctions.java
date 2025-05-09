@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
@@ -46,6 +47,17 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     public static final ExpressionFunctionInfoSet EMPTY_INFO_SET = ExpressionFunctionInfoSet.EMPTY;
 
     /**
+     * {@link ExpressionFunctionInfo#with(AbsoluteUrl, ExpressionFunctionName)}
+     */
+    public static ExpressionFunctionInfo info(final AbsoluteUrl url,
+                                              final ExpressionFunctionName name) {
+        return ExpressionFunctionInfo.with(
+                url,
+                name
+        );
+    }
+
+    /**
      * {@link ExpressionFunctionInfoSet#with(Set)}
      */
     public static ExpressionFunctionInfoSet infoSet(final Set<ExpressionFunctionInfo> infos) {
@@ -58,6 +70,13 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     public static ExpressionFunctionName name(final String name) {
         return ExpressionFunctionName.with(name)
                 .setCaseSensitivity(NAME_CASE_SENSITIVITY);
+    }
+
+    /**
+     * {@link ExpressionFunctionInfo#parse(String)
+     */
+    public static ExpressionFunctionInfo parseInfo(final String text) {
+        return ExpressionFunctionInfo.parse(text);
     }
 
     /**

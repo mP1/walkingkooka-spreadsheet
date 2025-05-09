@@ -495,7 +495,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         private ExpressionFunctionInfo info(final String name) {
-            return ExpressionFunctionInfo.with(
+            return SpreadsheetExpressionFunctions.info(
                     Url.parseAbsolute("https://example.com/" + name),
                     SpreadsheetExpressionFunctions.name(name)
             );
