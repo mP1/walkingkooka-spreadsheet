@@ -25,10 +25,12 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAlias;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -46,6 +48,19 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
      */
     public static final ExpressionFunctionInfoSet EMPTY_INFO_SET = ExpressionFunctionInfoSet.EMPTY;
 
+    /**
+     * {@link ExpressionFunctionAlias#with(ExpressionFunctionName, Optional, Optional)}
+     */
+    public static ExpressionFunctionAlias alias(final ExpressionFunctionName name,
+                                                final Optional<ExpressionFunctionSelector> selector,
+                                                final Optional<AbsoluteUrl> url) {
+        return ExpressionFunctionAlias.with(
+                        name,
+                        selector,
+                        url
+        );
+    }
+    
     /**
      * {@link ExpressionFunctionInfo#with(AbsoluteUrl, ExpressionFunctionName)}
      */
@@ -70,6 +85,13 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     public static ExpressionFunctionName name(final String name) {
         return ExpressionFunctionName.with(name)
                 .setCaseSensitivity(NAME_CASE_SENSITIVITY);
+    }
+
+    /**
+     * {@link ExpressionFunctionAlias#parse(String)}
+     */
+    public static ExpressionFunctionAlias parseAlias(final String text) {
+        return ExpressionFunctionAlias.parse(text);
     }
 
     /**
