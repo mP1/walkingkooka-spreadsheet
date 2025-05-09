@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
 /**
  * A collection of helpers for getting {@link ExpressionFunction}.
@@ -33,6 +34,16 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
      * Function names are {@link CaseSensitivity#INSENSITIVE}
      */
     public static final CaseSensitivity NAME_CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
+
+    /**
+     * {@link ExpressionFunctionSelector#parse(String, CaseSensitivity)}
+     */
+    public static ExpressionFunctionSelector parseSelector(final String selector) {
+        return ExpressionFunctionSelector.parse(
+                selector,
+                NAME_CASE_SENSITIVITY
+        );
+    }
 
     /**
      * {@link ErrorExpressionFunction}
