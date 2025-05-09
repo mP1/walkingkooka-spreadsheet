@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
 public final class SpreadsheetConverterPluginSelectorLikeToStringTest extends SpreadsheetConverterTestCase<SpreadsheetConverterPluginSelectorLikeToString> {
 
@@ -51,10 +50,7 @@ public final class SpreadsheetConverterPluginSelectorLikeToStringTest extends Sp
         final String selector = "magic-function(123)";
 
         this.convertAndCheck(
-                ExpressionFunctionSelector.parse(
-                        selector,
-                        SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
-                ),
+                SpreadsheetExpressionFunctions.parseSelector(selector),
                 String.class,
                 selector
         );
