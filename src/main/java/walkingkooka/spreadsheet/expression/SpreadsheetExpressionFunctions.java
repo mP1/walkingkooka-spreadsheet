@@ -45,9 +45,9 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     public static final CaseSensitivity NAME_CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
 
     /**
-     * {@link ExpressionFunctionAliasSet#EMPTY}.
+     * {@link ExpressionFunctionAliasSet#empty(CaseSensitivity)}.
      */
-    public static ExpressionFunctionAliasSet EMPTY_ALIAS_SET = ExpressionFunctionAliasSet.EMPTY;
+    public static ExpressionFunctionAliasSet EMPTY_ALIAS_SET = ExpressionFunctionAliasSet.empty(NAME_CASE_SENSITIVITY);
 
     /**
      * {@link ExpressionFunctionInfoSet#EMPTY}.
@@ -104,10 +104,13 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     }
 
     /**
-     * {@link ExpressionFunctionAliasSet#parse(String)}
+     * {@link ExpressionFunctionAliasSet#parse(String, CaseSensitivity)}.
      */
     public static ExpressionFunctionAliasSet parseAliasSet(final String text) {
-        return ExpressionFunctionAliasSet.parse(text);
+        return ExpressionFunctionAliasSet.parse(
+                text,
+                NAME_CASE_SENSITIVITY
+        );
     }
 
     /**

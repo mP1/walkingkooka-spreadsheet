@@ -912,8 +912,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"formatConverter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formulaConverter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"formulaFunctions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"functions\": \"\",\n" +
+                        "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                        "  \"functions\": \"@\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
                         "  \"groupSeparator\": \",\",\n" +
                         "  \"hideZeroValues\": false,\n" +
@@ -1085,8 +1085,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         "  \"formatConverter\": \"collection(error-to-number, error-to-string, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
                         "  \"formatters\": \"automatic, collection, date-format-pattern, date-time-format-pattern, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                         "  \"formulaConverter\": \"collection(error-to-number, error-throwing, string-to-error, string-to-expression, string-to-selection, selection-to-selection, selection-to-string, general)\",\n" +
-                        "  \"formulaFunctions\": \"test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                        "  \"functions\": \"\",\n" +
+                        "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                        "  \"functions\": \"@\",\n" +
                         "  \"generalNumberFormatDigitCount\": 9,\n" +
                         "  \"groupSeparator\": \",\",\n" +
                         "  \"hideZeroValues\": false,\n" +
