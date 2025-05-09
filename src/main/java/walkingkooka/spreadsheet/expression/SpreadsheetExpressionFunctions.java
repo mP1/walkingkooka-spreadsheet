@@ -26,6 +26,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAlias;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
@@ -42,6 +43,11 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
      * Function names are {@link CaseSensitivity#INSENSITIVE}
      */
     public static final CaseSensitivity NAME_CASE_SENSITIVITY = SpreadsheetStrings.CASE_SENSITIVITY;
+
+    /**
+     * {@link ExpressionFunctionAliasSet#EMPTY}.
+     */
+    public static ExpressionFunctionAliasSet EMPTY_ALIAS_SET = ExpressionFunctionAliasSet.EMPTY;
 
     /**
      * {@link ExpressionFunctionInfoSet#EMPTY}.
@@ -92,6 +98,13 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
      */
     public static ExpressionFunctionAlias parseAlias(final String text) {
         return ExpressionFunctionAlias.parse(text);
+    }
+
+    /**
+     * {@link ExpressionFunctionAliasSet#parse(String)}
+     */
+    public static ExpressionFunctionAliasSet parseAliasSet(final String text) {
+        return ExpressionFunctionAliasSet.parse(text);
     }
 
     /**

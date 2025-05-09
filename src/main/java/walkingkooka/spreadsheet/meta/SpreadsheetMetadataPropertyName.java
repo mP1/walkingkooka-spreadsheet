@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
@@ -815,7 +816,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         Color.BLACK.alpha();
         ConverterSelector.parse("Dummy");
         ExpressionNumberKind.DEFAULT.name();
-        ExpressionFunctionAliasSet.parse("hello");
+        SpreadsheetExpressionFunctions.parseAliasSet("hello");
         FontFamily.with("MS Sans Serif");
         FontSize.with(1);
         FormHandlerAliasSet.EMPTY.isEmpty();

@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
@@ -83,7 +84,6 @@ import walkingkooka.tree.expression.ExpressionNumberConverters;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FakeExpressionNumberConverterContext;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -2974,7 +2974,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("find-something-something")
+                SpreadsheetExpressionFunctions.parseAliasSet("find-something-something")
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.FIND_HIGHLIGHTING,
@@ -3004,13 +3004,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("hello")
+                SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"));
         properties.put(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"));
         properties.put(
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
-                ExpressionFunctionAliasSet.EMPTY
+                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         );
         properties.put(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 8);
         properties.put(SpreadsheetMetadataPropertyName.GROUP_SEPARATOR, GROUP_SEPARATOR);
@@ -3067,7 +3067,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.VALIDATOR_FUNCTIONS,
-                ExpressionFunctionAliasSet.parse("hello")
+                SpreadsheetExpressionFunctions.parseAliasSet("hello")
         );
         properties.put(
                 SpreadsheetMetadataPropertyName.VALIDATOR_VALIDATORS,
