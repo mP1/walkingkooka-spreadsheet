@@ -67,7 +67,6 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
@@ -216,11 +215,11 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         public ExpressionFunctionInfoSet expressionFunctionInfos() {
             return SpreadsheetExpressionFunctions.infoSet(
                     Sets.of(
-                            ExpressionFunctionInfo.with(
+                            SpreadsheetExpressionFunctions.info(
                                     Url.parseAbsolute("https://example.com/test/" + CONCAT),
                                     CONCAT.name().get()
                             ),
-                            ExpressionFunctionInfo.with(
+                            SpreadsheetExpressionFunctions.info(
                                     Url.parseAbsolute("https://example.com/test/" + ECHO),
                                     ECHO.name().get()
                             )
